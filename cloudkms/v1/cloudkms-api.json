@@ -1,4 +1,7 @@
 {
+  "revision": "20170926",
+  "documentationLink": "https://cloud.google.com/kms/",
+  "id": "cloudkms:v1",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
@@ -17,9 +20,20 @@
       "id": "TestIamPermissionsRequest"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam).",
-      "type": "object",
       "properties": {
+        "iamOwned": {
+          "type": "boolean"
+        },
+        "etag": {
+          "format": "byte",
+          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten blindly.",
+          "type": "string"
+        },
+        "version": {
+          "format": "int32",
+          "description": "Version of the `Policy`. The default version is 0.",
+          "type": "integer"
+        },
         "auditConfigs": {
           "description": "Specifies cloud audit logging configuration for this policy.",
           "items": {
@@ -33,44 +47,31 @@
             "$ref": "Binding"
           },
           "type": "array"
-        },
-        "iamOwned": {
-          "type": "boolean"
-        },
-        "etag": {
-          "format": "byte",
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a policy from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform policy updates in order to avoid race\nconditions: An `etag` is returned in the response to `getIamPolicy`, and\nsystems are expected to put that etag in the request to `setIamPolicy` to\nensure that their change will be applied to the same version of the policy.\n\nIf no `etag` is provided in the call to `setIamPolicy`, then the existing\npolicy is overwritten blindly.",
-          "type": "string"
-        },
-        "version": {
-          "format": "int32",
-          "description": "Version of the `Policy`. The default version is 0.",
-          "type": "integer"
         }
       },
-      "id": "Policy"
+      "id": "Policy",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam).",
+      "type": "object"
     },
     "ListLocationsResponse": {
       "description": "The response message for Locations.ListLocations.",
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        },
         "locations": {
           "description": "A list of locations that matches the specified filter in the request.",
           "items": {
             "$ref": "Location"
           },
           "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
         }
       },
       "id": "ListLocationsResponse"
     },
     "KeyRing": {
-      "description": "A KeyRing is a toplevel logical grouping of CryptoKeys.",
-      "type": "object",
       "properties": {
         "createTime": {
           "format": "google-datetime",
@@ -82,11 +83,11 @@
           "type": "string"
         }
       },
-      "id": "KeyRing"
+      "id": "KeyRing",
+      "description": "A KeyRing is a toplevel logical grouping of CryptoKeys.",
+      "type": "object"
     },
     "EncryptResponse": {
-      "description": "Response message for KeyManagementService.Encrypt.",
-      "type": "object",
       "properties": {
         "ciphertext": {
           "format": "byte",
@@ -98,13 +99,9 @@
           "type": "string"
         }
       },
-      "id": "EncryptResponse"
-    },
-    "RestoreCryptoKeyVersionRequest": {
-      "description": "Request message for KeyManagementService.RestoreCryptoKeyVersion.",
-      "type": "object",
-      "properties": {},
-      "id": "RestoreCryptoKeyVersionRequest"
+      "id": "EncryptResponse",
+      "description": "Response message for KeyManagementService.Encrypt.",
+      "type": "object"
     },
     "UpdateCryptoKeyPrimaryVersionRequest": {
       "description": "Request message for KeyManagementService.UpdateCryptoKeyPrimaryVersion.",
@@ -117,17 +114,16 @@
       },
       "id": "UpdateCryptoKeyPrimaryVersionRequest"
     },
+    "RestoreCryptoKeyVersionRequest": {
+      "properties": {},
+      "id": "RestoreCryptoKeyVersionRequest",
+      "description": "Request message for KeyManagementService.RestoreCryptoKeyVersion.",
+      "type": "object"
+    },
     "ListKeyRingsResponse": {
       "description": "Response message for KeyManagementService.ListKeyRings.",
       "type": "object",
       "properties": {
-        "keyRings": {
-          "description": "The list of KeyRings.",
-          "items": {
-            "$ref": "KeyRing"
-          },
-          "type": "array"
-        },
         "nextPageToken": {
           "description": "A token to retrieve next page of results. Pass this value in\nListKeyRingsRequest.page_token to retrieve the next page of results.",
           "type": "string"
@@ -136,6 +132,13 @@
           "format": "int32",
           "description": "The total number of KeyRings that matched the query.",
           "type": "integer"
+        },
+        "keyRings": {
+          "description": "The list of KeyRings.",
+          "items": {
+            "$ref": "KeyRing"
+          },
+          "type": "array"
         }
       },
       "id": "ListKeyRingsResponse"
@@ -144,6 +147,12 @@
       "description": "Specifies the audit configuration for a service.\nThe configuration determines which permission types are logged, and what\nidentities, if any, are exempted from logging.\nAn AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service,\nthe union of the two AuditConfigs is used for that service: the log_types\nspecified in each AuditConfig are enabled, and the exempted_members in each\nAuditConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n    {\n      \"audit_configs\": [\n        {\n          \"service\": \"allServices\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n              \"exempted_members\": [\n                \"user:foo@gmail.com\"\n              ]\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n            },\n            {\n              \"log_type\": \"ADMIN_READ\",\n            }\n          ]\n        },\n        {\n          \"service\": \"fooservice.googleapis.com\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n              \"exempted_members\": [\n                \"user:bar@gmail.com\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ\nlogging. It also exempts foo@gmail.com from DATA_READ logging, and\nbar@gmail.com from DATA_WRITE logging.",
       "type": "object",
       "properties": {
+        "exemptedMembers": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "service": {
           "description": "Specifies a service that will be enabled for audit logging.\nFor example, `storage.googleapis.com`, `cloudsql.googleapis.com`.\n`allServices` is a special value that covers all services.",
           "type": "string"
@@ -154,12 +163,6 @@
             "$ref": "AuditLogConfig"
           },
           "type": "array"
-        },
-        "exemptedMembers": {
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "id": "AuditConfig"
@@ -168,24 +171,12 @@
       "description": "A CryptoKeyVersion represents an individual cryptographic key, and the\nassociated key material.\n\nIt can be used for cryptographic operations either directly, or via its\nparent CryptoKey, in which case the server will choose the appropriate\nversion for the operation.\n\nFor security reasons, the raw cryptographic key material represented by a\nCryptoKeyVersion can never be viewed or exported. It can only be used to\nencrypt or decrypt data when an authorized user or application invokes Cloud\nKMS.",
       "type": "object",
       "properties": {
-        "destroyEventTime": {
-          "format": "google-datetime",
-          "description": "Output only. The time this CryptoKeyVersion's key material was\ndestroyed. Only present if state is\nDESTROYED.",
-          "type": "string"
-        },
-        "destroyTime": {
-          "format": "google-datetime",
-          "description": "Output only. The time this CryptoKeyVersion's key material is scheduled\nfor destruction. Only present if state is\nDESTROY_SCHEDULED.",
-          "type": "string"
-        },
         "createTime": {
           "format": "google-datetime",
           "description": "Output only. The time at which this CryptoKeyVersion was created.",
           "type": "string"
         },
         "state": {
-          "description": "The current state of the CryptoKeyVersion.",
-          "type": "string",
           "enumDescriptions": [
             "Not specified.",
             "This version may be used in Encrypt and\nDecrypt requests.",
@@ -199,18 +190,28 @@
             "DISABLED",
             "DESTROYED",
             "DESTROY_SCHEDULED"
-          ]
+          ],
+          "description": "The current state of the CryptoKeyVersion.",
+          "type": "string"
         },
         "name": {
           "description": "Output only. The resource name for this CryptoKeyVersion in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`.",
+          "type": "string"
+        },
+        "destroyEventTime": {
+          "format": "google-datetime",
+          "description": "Output only. The time this CryptoKeyVersion's key material was\ndestroyed. Only present if state is\nDESTROYED.",
+          "type": "string"
+        },
+        "destroyTime": {
+          "format": "google-datetime",
+          "description": "Output only. The time this CryptoKeyVersion's key material is scheduled\nfor destruction. Only present if state is\nDESTROY_SCHEDULED.",
           "type": "string"
         }
       },
       "id": "CryptoKeyVersion"
     },
     "SetIamPolicyRequest": {
-      "description": "Request message for `SetIamPolicy` method.",
-      "type": "object",
       "properties": {
         "policy": {
           "$ref": "Policy",
@@ -222,7 +223,9 @@
           "type": "string"
         }
       },
-      "id": "SetIamPolicyRequest"
+      "id": "SetIamPolicyRequest",
+      "description": "Request message for `SetIamPolicy` method.",
+      "type": "object"
     },
     "DecryptRequest": {
       "description": "Request message for KeyManagementService.Decrypt.",
@@ -290,14 +293,14 @@
       "description": "Request message for KeyManagementService.Encrypt.",
       "type": "object",
       "properties": {
-        "additionalAuthenticatedData": {
-          "format": "byte",
-          "description": "Optional data that, if specified, must also be provided during decryption\nthrough DecryptRequest.additional_authenticated_data.  Must be no\nlarger than 64KiB.",
-          "type": "string"
-        },
         "plaintext": {
           "format": "byte",
           "description": "Required. The data to encrypt. Must be no larger than 64KiB.",
+          "type": "string"
+        },
+        "additionalAuthenticatedData": {
+          "format": "byte",
+          "description": "Optional data that, if specified, must also be provided during decryption\nthrough DecryptRequest.additional_authenticated_data.  Must be no\nlarger than 64KiB.",
           "type": "string"
         }
       },
@@ -330,18 +333,6 @@
       "description": "A resource that represents Google Cloud Platform location.",
       "type": "object",
       "properties": {
-        "locationId": {
-          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
-          "type": "string"
-        },
-        "metadata": {
-          "description": "Service-specific metadata. For example the available capacity at the given\nlocation.",
-          "type": "object",
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          }
-        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -352,6 +343,18 @@
         "name": {
           "description": "Resource name for the location, which may vary between implementations.\nFor example: `\"projects/example-project/locations/us-east1\"`",
           "type": "string"
+        },
+        "locationId": {
+          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata. For example the available capacity at the given\nlocation.",
+          "type": "object"
         }
       },
       "id": "Location"
@@ -403,6 +406,13 @@
       "description": "Provides the configuration for logging a type of permissions.\nExample:\n\n    {\n      \"audit_log_configs\": [\n        {\n          \"log_type\": \"DATA_READ\",\n          \"exempted_members\": [\n            \"user:foo@gmail.com\"\n          ]\n        },\n        {\n          \"log_type\": \"DATA_WRITE\",\n        }\n      ]\n    }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting\nfoo@gmail.com from DATA_READ logging.",
       "type": "object",
       "properties": {
+        "exemptedMembers": {
+          "description": "Specifies the identities that do not cause logging for this type of\npermission.\nFollows the same format of Binding.members.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "logType": {
           "enumDescriptions": [
             "Default case. Should never be this.",
@@ -418,38 +428,12 @@
           ],
           "description": "The log type that this config enables.",
           "type": "string"
-        },
-        "exemptedMembers": {
-          "description": "Specifies the identities that do not cause logging for this type of\npermission.\nFollows the same format of Binding.members.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "id": "AuditLogConfig"
     },
     "CryptoKey": {
-      "description": "A CryptoKey represents a logical key that can be used for cryptographic\noperations.\n\nA CryptoKey is made up of one or more versions, which\nrepresent the actual key material used in cryptographic operations.",
-      "type": "object",
       "properties": {
-        "labels": {
-          "description": "Labels with user defined metadata.",
-          "type": "object",
-          "additionalProperties": {
-            "type": "string"
-          }
-        },
-        "createTime": {
-          "format": "google-datetime",
-          "description": "Output only. The time at which this CryptoKey was created.",
-          "type": "string"
-        },
-        "rotationPeriod": {
-          "format": "google-duration",
-          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.",
-          "type": "string"
-        },
         "primary": {
           "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.",
           "$ref": "CryptoKeyVersion"
@@ -474,9 +458,28 @@
           "format": "google-datetime",
           "description": "At next_rotation_time, the Key Management Service will automatically:\n\n1. Create a new version of this CryptoKey.\n2. Mark the new version as primary.\n\nKey rotations performed manually via\nCreateCryptoKeyVersion and\nUpdateCryptoKeyPrimaryVersion\ndo not affect next_rotation_time.",
           "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels with user defined metadata.",
+          "type": "object"
+        },
+        "createTime": {
+          "format": "google-datetime",
+          "description": "Output only. The time at which this CryptoKey was created.",
+          "type": "string"
+        },
+        "rotationPeriod": {
+          "format": "google-duration",
+          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.",
+          "type": "string"
         }
       },
-      "id": "CryptoKey"
+      "id": "CryptoKey",
+      "description": "A CryptoKey represents a logical key that can be used for cryptographic\noperations.\n\nA CryptoKey is made up of one or more versions, which\nrepresent the actual key material used in cryptographic operations.",
+      "type": "object"
     },
     "DecryptResponse": {
       "description": "Response message for KeyManagementService.Decrypt.",
@@ -491,11 +494,11 @@
       "id": "DecryptResponse"
     }
   },
+  "protocol": "rest",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
-  "protocol": "rest",
   "canonicalName": "Cloud KMS",
   "auth": {
     "oauth2": {
@@ -518,31 +521,33 @@
         "locations": {
           "methods": {
             "get": {
-              "response": {
-                "$ref": "Location"
-              },
+              "httpMethod": "GET",
               "parameterOrder": [
                 "name"
               ],
-              "httpMethod": "GET",
-              "parameters": {
-                "name": {
-                  "location": "path",
-                  "description": "Resource name for the location.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/locations/[^/]+$"
-                }
+              "response": {
+                "$ref": "Location"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ],
+              "parameters": {
+                "name": {
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "location": "path",
+                  "description": "Resource name for the location.",
+                  "type": "string",
+                  "required": true
+                }
+              },
               "flatPath": "v1/projects/{projectsId}/locations/{locationsId}",
-              "id": "cloudkms.projects.locations.get",
               "path": "v1/{+name}",
+              "id": "cloudkms.projects.locations.get",
               "description": "Get information about a location."
             },
             "list": {
+              "id": "cloudkms.projects.locations.list",
+              "path": "v1/{+name}/locations",
               "description": "Lists information about the supported locations for this service.",
               "response": {
                 "$ref": "ListLocationsResponse"
@@ -551,9 +556,6 @@
                 "name"
               ],
               "httpMethod": "GET",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
               "parameters": {
                 "pageSize": {
                   "format": "int32",
@@ -562,61 +564,33 @@
                   "location": "query"
                 },
                 "filter": {
-                  "location": "query",
                   "description": "The standard list filter.",
-                  "type": "string"
-                },
-                "pageToken": {
-                  "description": "The standard list page token.",
                   "type": "string",
                   "location": "query"
                 },
+                "pageToken": {
+                  "location": "query",
+                  "description": "The standard list page token.",
+                  "type": "string"
+                },
                 "name": {
+                  "pattern": "^projects/[^/]+$",
                   "location": "path",
                   "description": "The resource that owns the locations collection, if applicable.",
                   "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$"
+                  "required": true
                 }
               },
-              "flatPath": "v1/projects/{projectsId}/locations",
-              "id": "cloudkms.projects.locations.list",
-              "path": "v1/{+name}/locations"
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ],
+              "flatPath": "v1/projects/{projectsId}/locations"
             }
           },
           "resources": {
             "keyRings": {
               "methods": {
-                "get": {
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}",
-                  "path": "v1/{+name}",
-                  "id": "cloudkms.projects.locations.keyRings.get",
-                  "description": "Returns metadata for a given KeyRing.",
-                  "httpMethod": "GET",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "response": {
-                    "$ref": "KeyRing"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the KeyRing to get.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
-                      "location": "path"
-                    }
-                  }
-                },
                 "testIamPermissions": {
-                  "request": {
-                    "$ref": "TestIamPermissionsRequest"
-                  },
-                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
                   "response": {
                     "$ref": "TestIamPermissionsResponse"
                   },
@@ -638,7 +612,11 @@
                   },
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:testIamPermissions",
                   "id": "cloudkms.projects.locations.keyRings.testIamPermissions",
-                  "path": "v1/{+resource}:testIamPermissions"
+                  "path": "v1/{+resource}:testIamPermissions",
+                  "request": {
+                    "$ref": "TestIamPermissionsRequest"
+                  },
+                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning."
                 },
                 "list": {
                   "response": {
@@ -652,6 +630,11 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ],
                   "parameters": {
+                    "pageToken": {
+                      "location": "query",
+                      "description": "Optional pagination token, returned earlier via\nListKeyRingsResponse.next_page_token.",
+                      "type": "string"
+                    },
                     "pageSize": {
                       "location": "query",
                       "format": "int32",
@@ -659,16 +642,11 @@
                       "type": "integer"
                     },
                     "parent": {
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "location": "path",
                       "description": "Required. The resource name of the location associated with the\nKeyRings, in the format `projects/*/locations/*`.",
                       "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/locations/[^/]+$",
-                      "location": "path"
-                    },
-                    "pageToken": {
-                      "location": "query",
-                      "description": "Optional pagination token, returned earlier via\nListKeyRingsResponse.next_page_token.",
-                      "type": "string"
+                      "required": true
                     }
                   },
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings",
@@ -677,46 +655,55 @@
                   "description": "Lists KeyRings."
                 },
                 "create": {
-                  "httpMethod": "POST",
-                  "parameterOrder": [
-                    "parent"
-                  ],
+                  "description": "Create a new KeyRing in a given Project and Location.",
+                  "request": {
+                    "$ref": "KeyRing"
+                  },
                   "response": {
                     "$ref": "KeyRing"
                   },
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "httpMethod": "POST",
                   "parameters": {
-                    "keyRingId": {
-                      "location": "query",
-                      "description": "Required. It must be unique within a location and match the regular\nexpression `[a-zA-Z0-9_-]{1,63}`",
-                      "type": "string"
-                    },
                     "parent": {
+                      "location": "path",
                       "description": "Required. The resource name of the location associated with the\nKeyRings, in the format `projects/*/locations/*`.",
                       "type": "string",
                       "required": true,
-                      "pattern": "^projects/[^/]+/locations/[^/]+$",
-                      "location": "path"
+                      "pattern": "^projects/[^/]+/locations/[^/]+$"
+                    },
+                    "keyRingId": {
+                      "description": "Required. It must be unique within a location and match the regular\nexpression `[a-zA-Z0-9_-]{1,63}`",
+                      "type": "string",
+                      "location": "query"
                     }
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
                   ],
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings",
-                  "path": "v1/{+parent}/keyRings",
                   "id": "cloudkms.projects.locations.keyRings.create",
-                  "description": "Create a new KeyRing in a given Project and Location.",
-                  "request": {
-                    "$ref": "KeyRing"
-                  }
+                  "path": "v1/{+parent}/keyRings"
                 },
                 "setIamPolicy": {
-                  "response": {
-                    "$ref": "Policy"
+                  "path": "v1/{+resource}:setIamPolicy",
+                  "id": "cloudkms.projects.locations.keyRings.setIamPolicy",
+                  "request": {
+                    "$ref": "SetIamPolicyRequest"
                   },
+                  "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                  "httpMethod": "POST",
                   "parameterOrder": [
                     "resource"
                   ],
-                  "httpMethod": "POST",
+                  "response": {
+                    "$ref": "Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ],
                   "parameters": {
                     "resource": {
                       "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
@@ -726,33 +713,48 @@
                       "location": "path"
                     }
                   },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ],
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:setIamPolicy",
-                  "id": "cloudkms.projects.locations.keyRings.setIamPolicy",
-                  "path": "v1/{+resource}:setIamPolicy",
-                  "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
-                  "request": {
-                    "$ref": "SetIamPolicyRequest"
-                  }
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:setIamPolicy"
                 },
                 "getIamPolicy": {
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:getIamPolicy",
-                  "id": "cloudkms.projects.locations.keyRings.getIamPolicy",
                   "path": "v1/{+resource}:getIamPolicy",
+                  "id": "cloudkms.projects.locations.keyRings.getIamPolicy",
                   "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
-                  "response": {
-                    "$ref": "Policy"
-                  },
+                  "httpMethod": "GET",
                   "parameterOrder": [
                     "resource"
                   ],
-                  "httpMethod": "GET",
+                  "response": {
+                    "$ref": "Policy"
+                  },
                   "parameters": {
                     "resource": {
-                      "location": "path",
                       "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}:getIamPolicy"
+                },
+                "get": {
+                  "path": "v1/{+name}",
+                  "id": "cloudkms.projects.locations.keyRings.get",
+                  "description": "Returns metadata for a given KeyRing.",
+                  "httpMethod": "GET",
+                  "response": {
+                    "$ref": "KeyRing"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "location": "path",
+                      "description": "The name of the KeyRing to get.",
                       "type": "string",
                       "required": true,
                       "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$"
@@ -760,32 +762,142 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
-                  ]
+                  ],
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}"
                 }
               },
               "resources": {
                 "cryptoKeys": {
                   "methods": {
-                    "list": {
-                      "description": "Lists CryptoKeys.",
+                    "get": {
+                      "description": "Returns metadata for a given CryptoKey, as well as its\nprimary CryptoKeyVersion.",
+                      "httpMethod": "GET",
+                      "parameterOrder": [
+                        "name"
+                      ],
                       "response": {
-                        "$ref": "ListCryptoKeysResponse"
+                        "$ref": "CryptoKey"
                       },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                          "location": "path",
+                          "description": "The name of the CryptoKey to get.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}",
+                      "path": "v1/{+name}",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.get"
+                    },
+                    "patch": {
+                      "description": "Update a CryptoKey.",
+                      "request": {
+                        "$ref": "CryptoKey"
+                      },
+                      "httpMethod": "PATCH",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "response": {
+                        "$ref": "CryptoKey"
+                      },
+                      "parameters": {
+                        "updateMask": {
+                          "location": "query",
+                          "format": "google-fieldmask",
+                          "description": "Required list of fields to be updated in this request.",
+                          "type": "string"
+                        },
+                        "name": {
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                          "location": "path",
+                          "description": "Output only. The resource name for this CryptoKey in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*`.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}",
+                      "path": "v1/{+name}",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.patch"
+                    },
+                    "testIamPermissions": {
+                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                      "request": {
+                        "$ref": "TestIamPermissionsRequest"
+                      },
+                      "response": {
+                        "$ref": "TestIamPermissionsResponse"
+                      },
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "httpMethod": "POST",
+                      "parameters": {
+                        "resource": {
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                          "location": "path",
+                          "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:testIamPermissions",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.testIamPermissions",
+                      "path": "v1/{+resource}:testIamPermissions"
+                    },
+                    "decrypt": {
+                      "request": {
+                        "$ref": "DecryptRequest"
+                      },
+                      "description": "Decrypts data that was protected by Encrypt.",
+                      "httpMethod": "POST",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "response": {
+                        "$ref": "DecryptResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                          "location": "path",
+                          "description": "Required. The resource name of the CryptoKey to use for decryption.\nThe server will choose the appropriate version.",
+                          "type": "string",
+                          "required": true
+                        }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:decrypt",
+                      "path": "v1/{+name}:decrypt",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.decrypt"
+                    },
+                    "list": {
+                      "httpMethod": "GET",
                       "parameterOrder": [
                         "parent"
                       ],
-                      "httpMethod": "GET",
+                      "response": {
+                        "$ref": "ListCryptoKeysResponse"
+                      },
                       "parameters": {
-                        "pageToken": {
-                          "description": "Optional pagination token, returned earlier via\nListCryptoKeysResponse.next_page_token.",
-                          "type": "string",
-                          "location": "query"
-                        },
                         "pageSize": {
+                          "location": "query",
                           "format": "int32",
                           "description": "Optional limit on the number of CryptoKeys to include in the\nresponse.  Further CryptoKeys can subsequently be obtained by\nincluding the ListCryptoKeysResponse.next_page_token in a subsequent\nrequest.  If unspecified, the server will pick an appropriate default.",
-                          "type": "integer",
-                          "location": "query"
+                          "type": "integer"
                         },
                         "parent": {
                           "location": "path",
@@ -793,20 +905,22 @@
                           "type": "string",
                           "required": true,
                           "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$"
+                        },
+                        "pageToken": {
+                          "location": "query",
+                          "description": "Optional pagination token, returned earlier via\nListCryptoKeysResponse.next_page_token.",
+                          "type": "string"
                         }
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
                       ],
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
+                      "path": "v1/{+parent}/cryptoKeys",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.list",
-                      "path": "v1/{+parent}/cryptoKeys"
+                      "description": "Lists CryptoKeys."
                     },
                     "encrypt": {
-                      "request": {
-                        "$ref": "EncryptRequest"
-                      },
-                      "description": "Encrypts data, so that it can only be recovered by a call to Decrypt.",
                       "httpMethod": "POST",
                       "parameterOrder": [
                         "name"
@@ -814,30 +928,38 @@
                       "response": {
                         "$ref": "EncryptResponse"
                       },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ],
                       "parameters": {
                         "name": {
+                          "location": "path",
                           "description": "Required. The resource name of the CryptoKey or CryptoKeyVersion\nto use for encryption.\n\nIf a CryptoKey is specified, the server will use its\nprimary version.",
                           "type": "string",
                           "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/.+$",
-                          "location": "path"
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/.+$"
                         }
                       },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ],
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:encrypt",
                       "path": "v1/{+name}:encrypt",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.encrypt"
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.encrypt",
+                      "description": "Encrypts data, so that it can only be recovered by a call to Decrypt.",
+                      "request": {
+                        "$ref": "EncryptRequest"
+                      }
                     },
                     "setIamPolicy": {
-                      "httpMethod": "POST",
-                      "parameterOrder": [
-                        "resource"
-                      ],
+                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+                      "request": {
+                        "$ref": "SetIamPolicyRequest"
+                      },
                       "response": {
                         "$ref": "Policy"
                       },
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "httpMethod": "POST",
                       "parameters": {
                         "resource": {
                           "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
@@ -851,21 +973,10 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ],
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:setIamPolicy",
-                      "path": "v1/{+resource}:setIamPolicy",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.setIamPolicy",
-                      "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
-                      "request": {
-                        "$ref": "SetIamPolicyRequest"
-                      }
+                      "path": "v1/{+resource}:setIamPolicy"
                     },
                     "create": {
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
-                      "path": "v1/{+parent}/cryptoKeys",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.create",
-                      "request": {
-                        "$ref": "CryptoKey"
-                      },
-                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose is required.",
                       "httpMethod": "POST",
                       "parameterOrder": [
                         "parent"
@@ -877,24 +988,28 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ],
                       "parameters": {
+                        "parent": {
+                          "description": "Required. The name of the KeyRing associated with the\nCryptoKeys.",
+                          "type": "string",
+                          "required": true,
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$",
+                          "location": "path"
+                        },
                         "cryptoKeyId": {
                           "location": "query",
                           "description": "Required. It must be unique within a KeyRing and match the regular\nexpression `[a-zA-Z0-9_-]{1,63}`",
                           "type": "string"
-                        },
-                        "parent": {
-                          "location": "path",
-                          "description": "Required. The name of the KeyRing associated with the\nCryptoKeys.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+$"
                         }
-                      }
+                      },
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
+                      "path": "v1/{+parent}/cryptoKeys",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.create",
+                      "request": {
+                        "$ref": "CryptoKey"
+                      },
+                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose is required."
                     },
                     "updatePrimaryVersion": {
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:updatePrimaryVersion",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.updatePrimaryVersion",
-                      "path": "v1/{+name}:updatePrimaryVersion",
                       "description": "Update the version of a CryptoKey that will be used in Encrypt",
                       "request": {
                         "$ref": "UpdateCryptoKeyPrimaryVersionRequest"
@@ -908,26 +1023,28 @@
                       "httpMethod": "POST",
                       "parameters": {
                         "name": {
-                          "location": "path",
                           "description": "The resource name of the CryptoKey to update.",
                           "type": "string",
                           "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
+                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                          "location": "path"
                         }
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
-                      ]
+                      ],
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:updatePrimaryVersion",
+                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.updatePrimaryVersion",
+                      "path": "v1/{+name}:updatePrimaryVersion"
                     },
                     "getIamPolicy": {
-                      "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
-                      "response": {
-                        "$ref": "Policy"
-                      },
+                      "httpMethod": "GET",
                       "parameterOrder": [
                         "resource"
                       ],
-                      "httpMethod": "GET",
+                      "response": {
+                        "$ref": "Policy"
+                      },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
                       ],
@@ -941,197 +1058,19 @@
                         }
                       },
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:getIamPolicy",
+                      "path": "v1/{+resource}:getIamPolicy",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.getIamPolicy",
-                      "path": "v1/{+resource}:getIamPolicy"
-                    },
-                    "patch": {
-                      "request": {
-                        "$ref": "CryptoKey"
-                      },
-                      "description": "Update a CryptoKey.",
-                      "response": {
-                        "$ref": "CryptoKey"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "PATCH",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ],
-                      "parameters": {
-                        "updateMask": {
-                          "format": "google-fieldmask",
-                          "description": "Required list of fields to be updated in this request.",
-                          "type": "string",
-                          "location": "query"
-                        },
-                        "name": {
-                          "location": "path",
-                          "description": "Output only. The resource name for this CryptoKey in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*`.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.patch",
-                      "path": "v1/{+name}"
-                    },
-                    "get": {
-                      "description": "Returns metadata for a given CryptoKey, as well as its\nprimary CryptoKeyVersion.",
-                      "response": {
-                        "$ref": "CryptoKey"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "GET",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "location": "path",
-                          "description": "The name of the CryptoKey to get.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.get",
-                      "path": "v1/{+name}"
-                    },
-                    "testIamPermissions": {
-                      "request": {
-                        "$ref": "TestIamPermissionsRequest"
-                      },
-                      "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
-                      "response": {
-                        "$ref": "TestIamPermissionsResponse"
-                      },
-                      "parameterOrder": [
-                        "resource"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ],
-                      "parameters": {
-                        "resource": {
-                          "location": "path",
-                          "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:testIamPermissions",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.testIamPermissions",
-                      "path": "v1/{+resource}:testIamPermissions"
-                    },
-                    "decrypt": {
-                      "response": {
-                        "$ref": "DecryptResponse"
-                      },
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "httpMethod": "POST",
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. The resource name of the CryptoKey to use for decryption.\nThe server will choose the appropriate version.",
-                          "type": "string",
-                          "required": true,
-                          "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
-                          "location": "path"
-                        }
-                      },
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:decrypt",
-                      "id": "cloudkms.projects.locations.keyRings.cryptoKeys.decrypt",
-                      "path": "v1/{+name}:decrypt",
-                      "request": {
-                        "$ref": "DecryptRequest"
-                      },
-                      "description": "Decrypts data that was protected by Encrypt."
+                      "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset."
                     }
                   },
                   "resources": {
                     "cryptoKeyVersions": {
                       "methods": {
-                        "list": {
-                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions",
-                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.list",
-                          "path": "v1/{+parent}/cryptoKeyVersions",
-                          "description": "Lists CryptoKeyVersions.",
-                          "response": {
-                            "$ref": "ListCryptoKeyVersionsResponse"
-                          },
-                          "parameterOrder": [
-                            "parent"
-                          ],
-                          "httpMethod": "GET",
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
-                          ],
-                          "parameters": {
-                            "pageToken": {
-                              "location": "query",
-                              "description": "Optional pagination token, returned earlier via\nListCryptoKeyVersionsResponse.next_page_token.",
-                              "type": "string"
-                            },
-                            "pageSize": {
-                              "format": "int32",
-                              "description": "Optional limit on the number of CryptoKeyVersions to\ninclude in the response. Further CryptoKeyVersions can\nsubsequently be obtained by including the\nListCryptoKeyVersionsResponse.next_page_token in a subsequent request.\nIf unspecified, the server will pick an appropriate default.",
-                              "type": "integer",
-                              "location": "query"
-                            },
-                            "parent": {
-                              "location": "path",
-                              "description": "Required. The resource name of the CryptoKey to list, in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*`.",
-                              "type": "string",
-                              "required": true,
-                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
-                            }
-                          }
-                        },
-                        "create": {
-                          "description": "Create a new CryptoKeyVersion in a CryptoKey.\n\nThe server will assign the next sequential id. If unset,\nstate will be set to\nENABLED.",
+                        "restore": {
                           "request": {
-                            "$ref": "CryptoKeyVersion"
+                            "$ref": "RestoreCryptoKeyVersionRequest"
                           },
-                          "response": {
-                            "$ref": "CryptoKeyVersion"
-                          },
-                          "parameterOrder": [
-                            "parent"
-                          ],
-                          "httpMethod": "POST",
-                          "parameters": {
-                            "parent": {
-                              "location": "path",
-                              "description": "Required. The name of the CryptoKey associated with\nthe CryptoKeyVersions.",
-                              "type": "string",
-                              "required": true,
-                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$"
-                            }
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
-                          ],
-                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions",
-                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.create",
-                          "path": "v1/{+parent}/cryptoKeyVersions"
-                        },
-                        "destroy": {
-                          "request": {
-                            "$ref": "DestroyCryptoKeyVersionRequest"
-                          },
-                          "description": "Schedule a CryptoKeyVersion for destruction.\n\nUpon calling this method, CryptoKeyVersion.state will be set to\nDESTROY_SCHEDULED\nand destroy_time will be set to a time 24\nhours in the future, at which point the state\nwill be changed to\nDESTROYED, and the key\nmaterial will be irrevocably destroyed.\n\nBefore the destroy_time is reached,\nRestoreCryptoKeyVersion may be called to reverse the process.",
+                          "description": "Restore a CryptoKeyVersion in the\nDESTROY_SCHEDULED,\nstate.\n\nUpon restoration of the CryptoKeyVersion, state\nwill be set to DISABLED,\nand destroy_time will be cleared.",
                           "response": {
                             "$ref": "CryptoKeyVersion"
                           },
@@ -1145,74 +1084,17 @@
                           "parameters": {
                             "name": {
                               "location": "path",
-                              "description": "The resource name of the CryptoKeyVersion to destroy.",
+                              "description": "The resource name of the CryptoKeyVersion to restore.",
                               "type": "string",
                               "required": true,
                               "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$"
                             }
                           },
-                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:destroy",
-                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.destroy",
-                          "path": "v1/{+name}:destroy"
-                        },
-                        "restore": {
-                          "response": {
-                            "$ref": "CryptoKeyVersion"
-                          },
-                          "parameterOrder": [
-                            "name"
-                          ],
-                          "httpMethod": "POST",
-                          "parameters": {
-                            "name": {
-                              "description": "The resource name of the CryptoKeyVersion to restore.",
-                              "type": "string",
-                              "required": true,
-                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
-                              "location": "path"
-                            }
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
-                          ],
                           "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:restore",
                           "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.restore",
-                          "path": "v1/{+name}:restore",
-                          "description": "Restore a CryptoKeyVersion in the\nDESTROY_SCHEDULED,\nstate.\n\nUpon restoration of the CryptoKeyVersion, state\nwill be set to DISABLED,\nand destroy_time will be cleared.",
-                          "request": {
-                            "$ref": "RestoreCryptoKeyVersionRequest"
-                          }
-                        },
-                        "get": {
-                          "description": "Returns metadata for a given CryptoKeyVersion.",
-                          "httpMethod": "GET",
-                          "parameterOrder": [
-                            "name"
-                          ],
-                          "response": {
-                            "$ref": "CryptoKeyVersion"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
-                          ],
-                          "parameters": {
-                            "name": {
-                              "description": "The name of the CryptoKeyVersion to get.",
-                              "type": "string",
-                              "required": true,
-                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
-                              "location": "path"
-                            }
-                          },
-                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}",
-                          "path": "v1/{+name}",
-                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.get"
+                          "path": "v1/{+name}:restore"
                         },
                         "patch": {
-                          "description": "Update a CryptoKeyVersion's metadata.\n\nstate may be changed between\nENABLED and\nDISABLED using this\nmethod. See DestroyCryptoKeyVersion and RestoreCryptoKeyVersion to\nmove between other states.",
-                          "request": {
-                            "$ref": "CryptoKeyVersion"
-                          },
                           "response": {
                             "$ref": "CryptoKeyVersion"
                           },
@@ -1228,8 +1110,103 @@
                               "type": "string"
                             },
                             "name": {
-                              "location": "path",
                               "description": "Output only. The resource name for this CryptoKeyVersion in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*/cryptoKeyVersions/*`.",
+                              "type": "string",
+                              "required": true,
+                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+                              "location": "path"
+                            }
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ],
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}",
+                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.patch",
+                          "path": "v1/{+name}",
+                          "description": "Update a CryptoKeyVersion's metadata.\n\nstate may be changed between\nENABLED and\nDISABLED using this\nmethod. See DestroyCryptoKeyVersion and RestoreCryptoKeyVersion to\nmove between other states.",
+                          "request": {
+                            "$ref": "CryptoKeyVersion"
+                          }
+                        },
+                        "get": {
+                          "description": "Returns metadata for a given CryptoKeyVersion.",
+                          "response": {
+                            "$ref": "CryptoKeyVersion"
+                          },
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "httpMethod": "GET",
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$",
+                              "location": "path",
+                              "description": "The name of the CryptoKeyVersion to get.",
+                              "type": "string",
+                              "required": true
+                            }
+                          },
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}",
+                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.get",
+                          "path": "v1/{+name}"
+                        },
+                        "list": {
+                          "description": "Lists CryptoKeyVersions.",
+                          "response": {
+                            "$ref": "ListCryptoKeyVersionsResponse"
+                          },
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "httpMethod": "GET",
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ],
+                          "parameters": {
+                            "pageToken": {
+                              "description": "Optional pagination token, returned earlier via\nListCryptoKeyVersionsResponse.next_page_token.",
+                              "type": "string",
+                              "location": "query"
+                            },
+                            "pageSize": {
+                              "location": "query",
+                              "format": "int32",
+                              "description": "Optional limit on the number of CryptoKeyVersions to\ninclude in the response. Further CryptoKeyVersions can\nsubsequently be obtained by including the\nListCryptoKeyVersionsResponse.next_page_token in a subsequent request.\nIf unspecified, the server will pick an appropriate default.",
+                              "type": "integer"
+                            },
+                            "parent": {
+                              "description": "Required. The resource name of the CryptoKey to list, in the format\n`projects/*/locations/*/keyRings/*/cryptoKeys/*`.",
+                              "type": "string",
+                              "required": true,
+                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                              "location": "path"
+                            }
+                          },
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions",
+                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.list",
+                          "path": "v1/{+parent}/cryptoKeyVersions"
+                        },
+                        "destroy": {
+                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.destroy",
+                          "path": "v1/{+name}:destroy",
+                          "description": "Schedule a CryptoKeyVersion for destruction.\n\nUpon calling this method, CryptoKeyVersion.state will be set to\nDESTROY_SCHEDULED\nand destroy_time will be set to a time 24\nhours in the future, at which point the state\nwill be changed to\nDESTROYED, and the key\nmaterial will be irrevocably destroyed.\n\nBefore the destroy_time is reached,\nRestoreCryptoKeyVersion may be called to reverse the process.",
+                          "request": {
+                            "$ref": "DestroyCryptoKeyVersionRequest"
+                          },
+                          "response": {
+                            "$ref": "CryptoKeyVersion"
+                          },
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "httpMethod": "POST",
+                          "parameters": {
+                            "name": {
+                              "location": "path",
+                              "description": "The resource name of the CryptoKeyVersion to destroy.",
                               "type": "string",
                               "required": true,
                               "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+/cryptoKeyVersions/[^/]+$"
@@ -1238,9 +1215,35 @@
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform"
                           ],
-                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}",
-                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.patch",
-                          "path": "v1/{+name}"
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:destroy"
+                        },
+                        "create": {
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions",
+                          "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.create",
+                          "path": "v1/{+parent}/cryptoKeyVersions",
+                          "request": {
+                            "$ref": "CryptoKeyVersion"
+                          },
+                          "description": "Create a new CryptoKeyVersion in a CryptoKey.\n\nThe server will assign the next sequential id. If unset,\nstate will be set to\nENABLED.",
+                          "response": {
+                            "$ref": "CryptoKeyVersion"
+                          },
+                          "parameterOrder": [
+                            "parent"
+                          ],
+                          "httpMethod": "POST",
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ],
+                          "parameters": {
+                            "parent": {
+                              "description": "Required. The name of the CryptoKey associated with\nthe CryptoKeyVersions.",
+                              "type": "string",
+                              "required": true,
+                              "pattern": "^projects/[^/]+/locations/[^/]+/keyRings/[^/]+/cryptoKeys/[^/]+$",
+                              "location": "path"
+                            }
+                          }
                         }
                       }
                     }
@@ -1254,51 +1257,17 @@
     }
   },
   "parameters": {
-    "pp": {
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
-    },
-    "oauth_token": {
+    "uploadType": {
       "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
     },
     "fields": {
+      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "callback": {
-      "description": "JSONP",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "$.xgafv": {
-      "description": "V1 error format.",
-      "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
@@ -1307,7 +1276,14 @@
       "enum": [
         "1",
         "2"
-      ]
+      ],
+      "description": "V1 error format.",
+      "type": "string"
+    },
+    "callback": {
+      "location": "query",
+      "description": "JSONP",
+      "type": "string"
     },
     "alt": {
       "enum": [
@@ -1325,29 +1301,53 @@
       "description": "Data format for response.",
       "default": "json"
     },
-    "key": {
+    "access_token": {
       "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "description": "OAuth access token.",
       "type": "string"
     },
-    "access_token": {
-      "description": "OAuth access token.",
+    "key": {
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string",
       "location": "query"
     },
     "quotaUser": {
+      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
+    },
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
       "type": "string",
       "location": "query"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean"
     }
   },
   "version": "v1",
   "baseUrl": "https://cloudkms.googleapis.com/",
-  "description": "Manages encryption for your cloud services the same way you do on-premises. You can generate, use, rotate, and destroy AES256 encryption keys.",
   "servicePath": "",
   "kind": "discovery#restDescription",
-  "basePath": "",
-  "documentationLink": "https://cloud.google.com/kms/",
-  "revision": "20170919",
-  "id": "cloudkms:v1"
+  "description": "Manages encryption for your cloud services the same way you do on-premises. You can generate, use, rotate, and destroy AES256 encryption keys.",
+  "basePath": ""
 }

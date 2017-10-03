@@ -1,259 +1,49 @@
 {
-  "ownerName": "Google",
   "resources": {
     "projects": {
       "resources": {
         "configs": {
-          "methods": {
-            "delete": {
-              "httpMethod": "DELETE",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "parameters": {
-                "name": {
-                  "pattern": "^projects/[^/]+/configs/[^/]+$",
-                  "location": "path",
-                  "description": "The RuntimeConfig resource to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
-              "path": "v1beta1/{+name}",
-              "id": "runtimeconfig.projects.configs.delete",
-              "description": "Deletes a RuntimeConfig resource."
-            },
-            "list": {
-              "description": "Lists all the RuntimeConfig resources within project.",
-              "httpMethod": "GET",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "ListConfigsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "location": "query",
-                  "format": "int32",
-                  "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
-                  "type": "integer"
-                },
-                "parent": {
-                  "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                },
-                "pageToken": {
-                  "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
-                  "type": "string",
-                  "location": "query"
-                }
-              },
-              "flatPath": "v1beta1/projects/{projectsId}/configs",
-              "path": "v1beta1/{+parent}/configs",
-              "id": "runtimeconfig.projects.configs.list"
-            },
-            "setIamPolicy": {
-              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
-              "request": {
-                "$ref": "SetIamPolicyRequest"
-              },
-              "response": {
-                "$ref": "Policy"
-              },
-              "parameterOrder": [
-                "resource"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "resource": {
-                  "pattern": "^projects/[^/]+/configs/[^/]+$",
-                  "location": "path",
-                  "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:setIamPolicy",
-              "id": "runtimeconfig.projects.configs.setIamPolicy",
-              "path": "v1beta1/{+resource}:setIamPolicy"
-            },
-            "create": {
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "RuntimeConfig"
-              },
-              "parameters": {
-                "requestId": {
-                  "location": "query",
-                  "description": "An optional but recommended unique `request_id`. If the server\nreceives two `create()` requests  with the same\n`request_id`, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty `request_id` fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n`request_id` strings.\n\n`request_id` strings are limited to 64 characters.",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "flatPath": "v1beta1/projects/{projectsId}/configs",
-              "path": "v1beta1/{+parent}/configs",
-              "id": "runtimeconfig.projects.configs.create",
-              "description": "Creates a new RuntimeConfig resource. The configuration name must be\nunique within project.",
-              "request": {
-                "$ref": "RuntimeConfig"
-              }
-            },
-            "getIamPolicy": {
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:getIamPolicy",
-              "path": "v1beta1/{+resource}:getIamPolicy",
-              "id": "runtimeconfig.projects.configs.getIamPolicy",
-              "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "Policy"
-              },
-              "parameterOrder": [
-                "resource"
-              ],
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "parameters": {
-                "resource": {
-                  "location": "path",
-                  "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/configs/[^/]+$"
-                }
-              }
-            },
-            "get": {
-              "description": "Gets information about a RuntimeConfig resource.",
-              "httpMethod": "GET",
-              "parameterOrder": [
-                "name"
-              ],
-              "response": {
-                "$ref": "RuntimeConfig"
-              },
-              "parameters": {
-                "name": {
-                  "pattern": "^projects/[^/]+/configs/[^/]+$",
-                  "location": "path",
-                  "description": "The name of the RuntimeConfig resource to retrieve, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                  "type": "string",
-                  "required": true
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
-              "path": "v1beta1/{+name}",
-              "id": "runtimeconfig.projects.configs.get"
-            },
-            "update": {
-              "description": "Updates a RuntimeConfig resource. The configuration must exist beforehand.",
-              "request": {
-                "$ref": "RuntimeConfig"
-              },
-              "response": {
-                "$ref": "RuntimeConfig"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "PUT",
-              "parameters": {
-                "name": {
-                  "description": "The name of the RuntimeConfig resource to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/configs/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
-              "id": "runtimeconfig.projects.configs.update",
-              "path": "v1beta1/{+name}"
-            },
-            "testIamPermissions": {
-              "id": "runtimeconfig.projects.configs.testIamPermissions",
-              "path": "v1beta1/{+resource}:testIamPermissions",
-              "request": {
-                "$ref": "TestIamPermissionsRequest"
-              },
-              "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
-              "response": {
-                "$ref": "TestIamPermissionsResponse"
-              },
-              "parameterOrder": [
-                "resource"
-              ],
-              "httpMethod": "POST",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloudruntimeconfig"
-              ],
-              "parameters": {
-                "resource": {
-                  "location": "path",
-                  "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/configs/[^/]+$"
-                }
-              },
-              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:testIamPermissions"
-            }
-          },
           "resources": {
             "variables": {
               "methods": {
+                "watch": {
+                  "path": "v1beta1/{+name}:watch",
+                  "id": "runtimeconfig.projects.configs.variables.watch",
+                  "description": "Watches a specific variable and waits for a change in the variable's value.\nWhen there is a change, this method returns the new value or times out.\n\nIf a variable is deleted while being watched, the `variableState` state is\nset to `DELETED` and the method returns the last known variable `value`.\n\nIf you set the deadline for watching to a larger value than internal timeout\n(60 seconds), the current variable value is returned and the `variableState`\nwill be `VARIABLE_STATE_UNSPECIFIED`.\n\nTo learn more about creating a watcher, read the\n[Watching a Variable for Changes](/deployment-manager/runtime-configurator/watching-a-variable)\ndocumentation.",
+                  "request": {
+                    "$ref": "WatchVariableRequest"
+                  },
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "response": {
+                    "$ref": "Variable"
+                  },
+                  "parameters": {
+                    "name": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
+                      "location": "path",
+                      "description": "The name of the variable to watch, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                      "type": "string",
+                      "required": true
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudruntimeconfig"
+                  ],
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:watch"
+                },
                 "get": {
                   "description": "Gets information about a single variable.",
+                  "httpMethod": "GET",
                   "response": {
                     "$ref": "Variable"
                   },
                   "parameterOrder": [
                     "name"
                   ],
-                  "httpMethod": "GET",
                   "parameters": {
                     "name": {
                       "description": "The name of the variable to return, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIBLE_NAME]`",
@@ -268,39 +58,16 @@
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}",
-                  "id": "runtimeconfig.projects.configs.variables.get",
-                  "path": "v1beta1/{+name}"
-                },
-                "watch": {
-                  "response": {
-                    "$ref": "Variable"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "POST",
-                  "parameters": {
-                    "name": {
-                      "description": "The name of the variable to watch, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
-                      "location": "path"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/cloudruntimeconfig"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}:watch",
-                  "id": "runtimeconfig.projects.configs.variables.watch",
-                  "path": "v1beta1/{+name}:watch",
-                  "description": "Watches a specific variable and waits for a change in the variable's value.\nWhen there is a change, this method returns the new value or times out.\n\nIf a variable is deleted while being watched, the `variableState` state is\nset to `DELETED` and the method returns the last known variable `value`.\n\nIf you set the deadline for watching to a larger value than internal timeout\n(60 seconds), the current variable value is returned and the `variableState`\nwill be `VARIABLE_STATE_UNSPECIFIED`.\n\nTo learn more about creating a watcher, read the\n[Watching a Variable for Changes](/deployment-manager/runtime-configurator/watching-a-variable)\ndocumentation.",
-                  "request": {
-                    "$ref": "WatchVariableRequest"
-                  }
+                  "path": "v1beta1/{+name}",
+                  "id": "runtimeconfig.projects.configs.variables.get"
                 },
                 "update": {
+                  "id": "runtimeconfig.projects.configs.variables.update",
+                  "path": "v1beta1/{+name}",
+                  "request": {
+                    "$ref": "Variable"
+                  },
+                  "description": "Updates an existing variable with a new value.",
                   "response": {
                     "$ref": "Variable"
                   },
@@ -308,26 +75,20 @@
                     "name"
                   ],
                   "httpMethod": "PUT",
-                  "parameters": {
-                    "name": {
-                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
-                      "location": "path",
-                      "description": "The name of the variable to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}",
-                  "id": "runtimeconfig.projects.configs.variables.update",
-                  "path": "v1beta1/{+name}",
-                  "description": "Updates an existing variable with a new value.",
-                  "request": {
-                    "$ref": "Variable"
-                  }
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the variable to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
+                      "location": "path"
+                    }
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}"
                 },
                 "testIamPermissions": {
                   "httpMethod": "POST",
@@ -359,25 +120,26 @@
                   "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning."
                 },
                 "delete": {
+                  "description": "Deletes a variable or multiple variables.\n\nIf you specify a variable name, then that variable is deleted. If you\nspecify a prefix and `recursive` is true, then all variables with that\nprefix are deleted. You must set a `recursive` to true if you delete\nvariables by prefix.",
+                  "httpMethod": "DELETE",
                   "response": {
                     "$ref": "Empty"
                   },
                   "parameterOrder": [
                     "name"
                   ],
-                  "httpMethod": "DELETE",
                   "parameters": {
                     "recursive": {
-                      "location": "query",
                       "description": "Set to `true` to recursively delete multiple variables with the same\nprefix.",
-                      "type": "boolean"
+                      "type": "boolean",
+                      "location": "query"
                     },
                     "name": {
-                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
-                      "location": "path",
                       "description": "The name of the variable to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]`",
                       "type": "string",
-                      "required": true
+                      "required": true,
+                      "pattern": "^projects/[^/]+/configs/[^/]+/variables/.+$",
+                      "location": "path"
                     }
                   },
                   "scopes": [
@@ -385,16 +147,14 @@
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables/{variablesId}",
-                  "id": "runtimeconfig.projects.configs.variables.delete",
                   "path": "v1beta1/{+name}",
-                  "description": "Deletes a variable or multiple variables.\n\nIf you specify a variable name, then that variable is deleted. If you\nspecify a prefix and `recursive` is true, then all variables with that\nprefix are deleted. You must set a `recursive` to true if you delete\nvariables by prefix."
+                  "id": "runtimeconfig.projects.configs.variables.delete"
                 },
                 "list": {
-                  "description": "Lists variables within given a configuration, matching any provided filters.\nThis only lists variable names, not the values, unless `return_values` is\ntrue, in which case only variables that user has IAM permission to GetVariable\nwill be returned.",
+                  "httpMethod": "GET",
                   "response": {
                     "$ref": "ListVariablesResponse"
                   },
-                  "httpMethod": "GET",
                   "parameterOrder": [
                     "parent"
                   ],
@@ -403,6 +163,13 @@
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
                   "parameters": {
+                    "parent": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
+                      "location": "path",
+                      "description": "The path to the RuntimeConfig resource for which you want to list variables.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                      "type": "string",
+                      "required": true
+                    },
                     "filter": {
                       "description": "Filters variables by matching the specified filter. For example:\n\n`projects/example-project/config/[CONFIG_NAME]/variables/example-variable`.",
                       "type": "string",
@@ -419,39 +186,29 @@
                       "type": "string"
                     },
                     "pageSize": {
+                      "location": "query",
                       "format": "int32",
                       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
-                      "type": "integer",
-                      "location": "query"
-                    },
-                    "parent": {
-                      "description": "The path to the RuntimeConfig resource for which you want to list variables.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+$",
-                      "location": "path"
+                      "type": "integer"
                     }
                   },
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
+                  "path": "v1beta1/{+parent}/variables",
                   "id": "runtimeconfig.projects.configs.variables.list",
-                  "path": "v1beta1/{+parent}/variables"
+                  "description": "Lists variables within given a configuration, matching any provided filters.\nThis only lists variable names, not the values, unless `return_values` is\ntrue, in which case only variables that user has IAM permission to GetVariable\nwill be returned."
                 },
                 "create": {
+                  "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/set-and-get-variables)\ndocumentation.",
                   "request": {
                     "$ref": "Variable"
                   },
-                  "description": "Creates a variable within the given configuration. You cannot create\na variable with a name that is a prefix of an existing variable name, or a\nname that has an existing variable name as a prefix.\n\nTo learn more about creating a variable, read the\n[Setting and Getting Data](/deployment-manager/runtime-configurator/set-and-get-variables)\ndocumentation.",
-                  "response": {
-                    "$ref": "Variable"
-                  },
+                  "httpMethod": "POST",
                   "parameterOrder": [
                     "parent"
                   ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/cloudruntimeconfig"
-                  ],
+                  "response": {
+                    "$ref": "Variable"
+                  },
                   "parameters": {
                     "requestId": {
                       "description": "An optional but recommended unique `request_id`. If the server\nreceives two `create()` requests  with the same\n`request_id`, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty `request_id` fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n`request_id` strings.\n\n`request_id` strings are limited to 64 characters.",
@@ -459,33 +216,36 @@
                       "location": "query"
                     },
                     "parent": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
+                      "location": "path",
                       "description": "The path to the RutimeConfig resource that this variable should belong to.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
                       "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+$",
-                      "location": "path"
+                      "required": true
                     }
                   },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudruntimeconfig"
+                  ],
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/variables",
-                  "id": "runtimeconfig.projects.configs.variables.create",
-                  "path": "v1beta1/{+parent}/variables"
+                  "path": "v1beta1/{+parent}/variables",
+                  "id": "runtimeconfig.projects.configs.variables.create"
                 }
               }
             },
             "waiters": {
               "methods": {
                 "delete": {
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}",
                   "id": "runtimeconfig.projects.configs.waiters.delete",
                   "path": "v1beta1/{+name}",
                   "description": "Deletes the waiter with the specified name.",
                   "response": {
                     "$ref": "Empty"
                   },
-                  "httpMethod": "DELETE",
                   "parameterOrder": [
                     "name"
                   ],
+                  "httpMethod": "DELETE",
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
@@ -498,19 +258,17 @@
                       "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
                       "location": "path"
                     }
-                  }
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}"
                 },
                 "get": {
+                  "description": "Gets information about a single waiter.",
                   "httpMethod": "GET",
                   "response": {
                     "$ref": "Waiter"
                   },
                   "parameterOrder": [
                     "name"
-                  ],
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
                   "parameters": {
                     "name": {
@@ -521,47 +279,50 @@
                       "location": "path"
                     }
                   },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudruntimeconfig"
+                  ],
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}",
                   "path": "v1beta1/{+name}",
-                  "id": "runtimeconfig.projects.configs.waiters.get",
-                  "description": "Gets information about a single waiter."
+                  "id": "runtimeconfig.projects.configs.waiters.get"
                 },
                 "list": {
-                  "id": "runtimeconfig.projects.configs.waiters.list",
-                  "path": "v1beta1/{+parent}/waiters",
-                  "description": "List waiters within the given configuration.",
+                  "httpMethod": "GET",
                   "response": {
                     "$ref": "ListWaitersResponse"
                   },
                   "parameterOrder": [
                     "parent"
                   ],
-                  "httpMethod": "GET",
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/cloudruntimeconfig"
                   ],
                   "parameters": {
+                    "parent": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
+                      "location": "path",
+                      "description": "The path to the configuration for which you want to get a list of waiters.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                      "type": "string",
+                      "required": true
+                    },
                     "pageToken": {
                       "location": "query",
                       "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
                       "type": "string"
                     },
                     "pageSize": {
-                      "location": "query",
                       "format": "int32",
                       "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
-                      "type": "integer"
-                    },
-                    "parent": {
-                      "location": "path",
-                      "description": "The path to the configuration for which you want to get a list of waiters.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+$"
+                      "type": "integer",
+                      "location": "query"
                     }
                   },
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters"
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters",
+                  "path": "v1beta1/{+parent}/waiters",
+                  "id": "runtimeconfig.projects.configs.waiters.list",
+                  "description": "List waiters within the given configuration."
                 },
                 "create": {
                   "httpMethod": "POST",
@@ -578,11 +339,11 @@
                       "type": "string"
                     },
                     "parent": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+$",
                       "location": "path",
                       "description": "The path to the configuration that will own the waiter.\nThe configuration must exist beforehand; the path must be in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`.",
                       "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+$"
+                      "required": true
                     }
                   },
                   "scopes": [
@@ -598,42 +359,6 @@
                   }
                 },
                 "testIamPermissions": {
-                  "response": {
-                    "$ref": "TestIamPermissionsResponse"
-                  },
-                  "parameterOrder": [
-                    "resource"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/cloudruntimeconfig"
-                  ],
-                  "parameters": {
-                    "resource": {
-                      "location": "path",
-                      "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}:testIamPermissions",
-                  "id": "runtimeconfig.projects.configs.waiters.testIamPermissions",
-                  "path": "v1beta1/{+resource}:testIamPermissions",
-                  "request": {
-                    "$ref": "TestIamPermissionsRequest"
-                  },
-                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning."
-                }
-              }
-            },
-            "operations": {
-              "methods": {
-                "testIamPermissions": {
-                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}:testIamPermissions",
-                  "id": "runtimeconfig.projects.configs.operations.testIamPermissions",
-                  "path": "v1beta1/{+resource}:testIamPermissions",
                   "request": {
                     "$ref": "TestIamPermissionsRequest"
                   },
@@ -651,14 +376,21 @@
                   ],
                   "parameters": {
                     "resource": {
+                      "pattern": "^projects/[^/]+/configs/[^/]+/waiters/[^/]+$",
+                      "location": "path",
                       "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
                       "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$",
-                      "location": "path"
+                      "required": true
                     }
-                  }
-                },
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/waiters/{waitersId}:testIamPermissions",
+                  "id": "runtimeconfig.projects.configs.waiters.testIamPermissions",
+                  "path": "v1beta1/{+resource}:testIamPermissions"
+                }
+              }
+            },
+            "operations": {
+              "methods": {
                 "get": {
                   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
                   "response": {
@@ -670,11 +402,11 @@
                   "httpMethod": "GET",
                   "parameters": {
                     "name": {
-                      "location": "path",
                       "description": "The name of the operation resource.",
                       "type": "string",
                       "required": true,
-                      "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$"
+                      "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$",
+                      "location": "path"
                     }
                   },
                   "scopes": [
@@ -684,8 +416,275 @@
                   "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}",
                   "id": "runtimeconfig.projects.configs.operations.get",
                   "path": "v1beta1/{+name}"
+                },
+                "testIamPermissions": {
+                  "response": {
+                    "$ref": "TestIamPermissionsResponse"
+                  },
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/configs/[^/]+/operations/.+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudruntimeconfig"
+                  ],
+                  "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}/operations/{operationsId}:testIamPermissions",
+                  "id": "runtimeconfig.projects.configs.operations.testIamPermissions",
+                  "path": "v1beta1/{+resource}:testIamPermissions",
+                  "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+                  "request": {
+                    "$ref": "TestIamPermissionsRequest"
+                  }
                 }
               }
+            }
+          },
+          "methods": {
+            "delete": {
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "DELETE",
+              "parameters": {
+                "name": {
+                  "description": "The RuntimeConfig resource to delete, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
+              "id": "runtimeconfig.projects.configs.delete",
+              "path": "v1beta1/{+name}",
+              "description": "Deletes a RuntimeConfig resource."
+            },
+            "list": {
+              "httpMethod": "GET",
+              "response": {
+                "$ref": "ListConfigsResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path"
+                },
+                "pageToken": {
+                  "description": "Specifies a page token to use. Set `pageToken` to a `nextPageToken`\nreturned by a previous list request to get the next page of results.",
+                  "type": "string",
+                  "location": "query"
+                },
+                "pageSize": {
+                  "location": "query",
+                  "format": "int32",
+                  "description": "Specifies the number of results to return per page. If there are fewer\nelements than the specified number, returns all elements.",
+                  "type": "integer"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs",
+              "path": "v1beta1/{+parent}/configs",
+              "id": "runtimeconfig.projects.configs.list",
+              "description": "Lists all the RuntimeConfig resources within project."
+            },
+            "create": {
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "parent"
+              ],
+              "response": {
+                "$ref": "RuntimeConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "parameters": {
+                "requestId": {
+                  "location": "query",
+                  "description": "An optional but recommended unique `request_id`. If the server\nreceives two `create()` requests  with the same\n`request_id`, then the second request will be ignored and the\nfirst resource created and stored in the backend is returned.\nEmpty `request_id` fields are ignored.\n\nIt is responsibility of the client to ensure uniqueness of the\n`request_id` strings.\n\n`request_id` strings are limited to 64 characters.",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The [project ID](https://support.google.com/cloud/answer/6158840?hl=en&ref_topic=6158848)\nfor this request, in the format `projects/[PROJECT_ID]`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1beta1/projects/{projectsId}/configs",
+              "path": "v1beta1/{+parent}/configs",
+              "id": "runtimeconfig.projects.configs.create",
+              "request": {
+                "$ref": "RuntimeConfig"
+              },
+              "description": "Creates a new RuntimeConfig resource. The configuration name must be\nunique within project."
+            },
+            "setIamPolicy": {
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "resource"
+              ],
+              "response": {
+                "$ref": "Policy"
+              },
+              "parameters": {
+                "resource": {
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path",
+                  "description": "REQUIRED: The resource for which the policy is being specified.\nSee the operation documentation for the appropriate value for this field.",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:setIamPolicy",
+              "path": "v1beta1/{+resource}:setIamPolicy",
+              "id": "runtimeconfig.projects.configs.setIamPolicy",
+              "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
+              "request": {
+                "$ref": "SetIamPolicyRequest"
+              }
+            },
+            "getIamPolicy": {
+              "response": {
+                "$ref": "Policy"
+              },
+              "parameterOrder": [
+                "resource"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "resource": {
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path",
+                  "description": "REQUIRED: The resource for which the policy is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                  "type": "string",
+                  "required": true
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:getIamPolicy",
+              "id": "runtimeconfig.projects.configs.getIamPolicy",
+              "path": "v1beta1/{+resource}:getIamPolicy",
+              "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset."
+            },
+            "get": {
+              "description": "Gets information about a RuntimeConfig resource.",
+              "response": {
+                "$ref": "RuntimeConfig"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "name": {
+                  "description": "The name of the RuntimeConfig resource to retrieve, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
+              "id": "runtimeconfig.projects.configs.get",
+              "path": "v1beta1/{+name}"
+            },
+            "update": {
+              "httpMethod": "PUT",
+              "parameterOrder": [
+                "name"
+              ],
+              "response": {
+                "$ref": "RuntimeConfig"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the RuntimeConfig resource to update, in the format:\n\n`projects/[PROJECT_ID]/configs/[CONFIG_NAME]`",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}",
+              "path": "v1beta1/{+name}",
+              "id": "runtimeconfig.projects.configs.update",
+              "request": {
+                "$ref": "RuntimeConfig"
+              },
+              "description": "Updates a RuntimeConfig resource. The configuration must exist beforehand."
+            },
+            "testIamPermissions": {
+              "path": "v1beta1/{+resource}:testIamPermissions",
+              "id": "runtimeconfig.projects.configs.testIamPermissions",
+              "description": "Returns permissions that a caller has on the specified resource.\nIf the resource does not exist, this will return an empty set of\npermissions, not a NOT_FOUND error.\n\nNote: This operation is designed to be used for building permission-aware\nUIs and command-line tools, not for authorization checking. This operation\nmay \"fail open\" without warning.",
+              "request": {
+                "$ref": "TestIamPermissionsRequest"
+              },
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "resource"
+              ],
+              "response": {
+                "$ref": "TestIamPermissionsResponse"
+              },
+              "parameters": {
+                "resource": {
+                  "description": "REQUIRED: The resource for which the policy detail is being requested.\nSee the operation documentation for the appropriate value for this field.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/configs/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloudruntimeconfig"
+              ],
+              "flatPath": "v1beta1/projects/{projectsId}/configs/{configsId}:testIamPermissions"
             }
           }
         }
@@ -693,59 +692,15 @@
     }
   },
   "parameters": {
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "callback": {
-      "description": "JSONP",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
+    "key": {
       "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ]
-    },
-    "alt": {
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
-      "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string"
     },
-    "key": {
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string",
-      "location": "query"
-    },
     "access_token": {
+      "location": "query",
       "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "quotaUser": {
       "location": "query",
@@ -759,9 +714,9 @@
       "location": "query"
     },
     "oauth_token": {
+      "location": "query",
       "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "bearer_token": {
       "description": "OAuth bearer token.",
@@ -778,13 +733,57 @@
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
       "type": "boolean"
+    },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "callback": {
+      "location": "query",
+      "description": "JSONP",
+      "type": "string"
+    },
+    "$.xgafv": {
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
+    },
+    "alt": {
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
     }
   },
   "version": "v1beta1",
   "baseUrl": "https://runtimeconfig.googleapis.com/",
-  "kind": "discovery#restDescription",
-  "description": "The Runtime Configurator allows you to dynamically configure and expose variables through Google Cloud Platform. In addition, you can also set Watchers and Waiters that will watch for changes to your data and return based on certain conditions.",
   "servicePath": "",
+  "description": "The Runtime Configurator allows you to dynamically configure and expose variables through Google Cloud Platform. In addition, you can also set Watchers and Waiters that will watch for changes to your data and return based on certain conditions.",
+  "kind": "discovery#restDescription",
   "basePath": "",
   "id": "runtimeconfig:v1beta1",
   "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
@@ -792,9 +791,181 @@
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "RuntimeConfig": {
-      "description": "A RuntimeConfig resource is the primary resource in the Cloud RuntimeConfig\nservice. A RuntimeConfig resource consists of metadata and a hierarchy of\nvariables.",
+    "Operation": {
+      "properties": {
+        "response": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "type": "string"
+        },
+        "error": {
+          "description": "The error result of the operation in case of failure or cancellation.",
+          "$ref": "Status"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
+          "type": "object"
+        },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        }
+      },
+      "id": "Operation",
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "type": "object"
+    },
+    "SetIamPolicyRequest": {
+      "description": "Request message for `SetIamPolicy` method.",
       "type": "object",
+      "properties": {
+        "policy": {
+          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them.",
+          "$ref": "Policy"
+        }
+      },
+      "id": "SetIamPolicyRequest"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "type": "object",
+      "properties": {
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "code": {
+          "format": "int32",
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "type": "integer"
+        }
+      },
+      "id": "Status"
+    },
+    "Binding": {
+      "description": "Associates `members` with a `role`.",
+      "type": "object",
+      "properties": {
+        "members": {
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "role": {
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "type": "string"
+        }
+      },
+      "id": "Binding"
+    },
+    "Empty": {
+      "properties": {},
+      "id": "Empty",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object"
+    },
+    "Cardinality": {
+      "description": "A Cardinality condition for the Waiter resource. A cardinality condition is\nmet when the number of variables under a specified path prefix reaches a\npredefined number. For example, if you set a Cardinality condition where\nthe `path` is set to `/foo` and the number of paths is set to 2, the\nfollowing variables would meet the condition in a RuntimeConfig resource:\n\n+ `/foo/variable1 = \"value1\"`\n+ `/foo/variable2 = \"value2\"`\n+ `/bar/variable3 = \"value3\"`\n\nIt would not would not satisify the same condition with the `number` set to\n3, however, because there is only 2 paths that start with `/foo`.\nCardinality conditions are recursive; all subtrees under the specific\npath prefix are counted.",
+      "type": "object",
+      "properties": {
+        "number": {
+          "format": "int32",
+          "description": "The number variables under the `path` that must exist to meet this\ncondition. Defaults to 1 if not specified.",
+          "type": "integer"
+        },
+        "path": {
+          "description": "The root of the variable subtree to monitor. For example, `/foo`.",
+          "type": "string"
+        }
+      },
+      "id": "Cardinality"
+    },
+    "ListConfigsResponse": {
+      "description": "`ListConfigs()` returns the following response. The order of returned\nobjects is arbitrary; that is, it is not ordered in any particular way.",
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "description": "This token allows you to get the next page of results for list requests.\nIf the number of results is larger than `pageSize`, use the `nextPageToken`\nas a value for the query parameter `pageToken` in the next list request.\nSubsequent list requests will have their own `nextPageToken` to continue\npaging through the results",
+          "type": "string"
+        },
+        "configs": {
+          "description": "A list of the configurations in the project. The order of returned\nobjects is arbitrary; that is, it is not ordered in any particular way.",
+          "items": {
+            "$ref": "RuntimeConfig"
+          },
+          "type": "array"
+        }
+      },
+      "id": "ListConfigsResponse"
+    },
+    "EndCondition": {
+      "description": "The condition that a Waiter resource is waiting for.",
+      "type": "object",
+      "properties": {
+        "cardinality": {
+          "$ref": "Cardinality",
+          "description": "The cardinality of the `EndCondition`."
+        }
+      },
+      "id": "EndCondition"
+    },
+    "TestIamPermissionsResponse": {
+      "description": "Response message for `TestIamPermissions` method.",
+      "type": "object",
+      "properties": {
+        "permissions": {
+          "description": "A subset of `TestPermissionsRequest.permissions` that the caller is\nallowed.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "id": "TestIamPermissionsResponse"
+    },
+    "ListVariablesResponse": {
+      "description": "Response for the `ListVariables()` method.",
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "description": "This token allows you to get the next page of results for list requests.\nIf the number of results is larger than `pageSize`, use the `nextPageToken`\nas a value for the query parameter `pageToken` in the next list request.\nSubsequent list requests will have their own `nextPageToken` to continue\npaging through the results",
+          "type": "string"
+        },
+        "variables": {
+          "description": "A list of variables and their values. The order of returned variable\nobjects is arbitrary.",
+          "items": {
+            "$ref": "Variable"
+          },
+          "type": "array"
+        }
+      },
+      "id": "ListVariablesResponse"
+    },
+    "RuntimeConfig": {
       "properties": {
         "name": {
           "description": "The resource name of a runtime config. The name must have the format:\n\n    projects/[PROJECT_ID]/configs/[CONFIG_NAME]\n\nThe `[PROJECT_ID]` must be a valid project ID, and `[CONFIG_NAME]` is an\narbitrary name that matches RFC 1035 segment specification. The length of\n`[CONFIG_NAME]` must be less than 64 bytes.\n\nYou pick the RuntimeConfig resource name, but the server will validate that\nthe name adheres to this format. After you create the resource, you cannot\nchange the resource's name.",
@@ -805,7 +976,9 @@
           "type": "string"
         }
       },
-      "id": "RuntimeConfig"
+      "id": "RuntimeConfig",
+      "description": "A RuntimeConfig resource is the primary resource in the Cloud RuntimeConfig\nservice. A RuntimeConfig resource consists of metadata and a hierarchy of\nvariables.",
+      "type": "object"
     },
     "WatchVariableRequest": {
       "description": "Request for the `WatchVariable()` method.",
@@ -838,8 +1011,6 @@
       "id": "ListWaitersResponse"
     },
     "TestIamPermissionsRequest": {
-      "description": "Request message for `TestIamPermissions` method.",
-      "type": "object",
       "properties": {
         "permissions": {
           "description": "The set of permissions to check for the `resource`. Permissions with\nwildcards (such as '*' or 'storage.*') are not allowed. For more\ninformation see\n[IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
@@ -849,21 +1020,23 @@
           "type": "array"
         }
       },
-      "id": "TestIamPermissionsRequest"
+      "id": "TestIamPermissionsRequest",
+      "description": "Request message for `TestIamPermissions` method.",
+      "type": "object"
     },
     "Waiter": {
       "properties": {
         "error": {
-          "description": "[Output Only] If the waiter ended due to a failure or timeout, this value\nwill be set.",
-          "$ref": "Status"
+          "$ref": "Status",
+          "description": "[Output Only] If the waiter ended due to a failure or timeout, this value\nwill be set."
         },
         "failure": {
           "$ref": "EndCondition",
           "description": "[Optional] The failure condition of this waiter. If this condition is met,\n`done` will be set to `true` and the `error` code will be set to `ABORTED`.\nThe failure condition takes precedence over the success condition. If both\nconditions are met, a failure will be indicated. This value is optional; if\nno failure condition is set, the only failure scenario will be a timeout."
         },
         "success": {
-          "description": "[Required] The success condition. If this condition is met, `done` will be\nset to `true` and the `error` value will remain unset. The failure condition\ntakes precedence over the success condition. If both conditions are met, a\nfailure will be indicated.",
-          "$ref": "EndCondition"
+          "$ref": "EndCondition",
+          "description": "[Required] The success condition. If this condition is met, `done` will be\nset to `true` and the `error` value will remain unset. The failure condition\ntakes precedence over the success condition. If both conditions are met, a\nfailure will be indicated."
         },
         "done": {
           "description": "[Output Only] If the value is `false`, it means the waiter is still waiting\nfor one of its conditions to be met.\n\nIf true, the waiter has finished. If the waiter finished due to a timeout\nor failure, `error` will be set.",
@@ -916,10 +1089,6 @@
       "description": "Describes a single variable within a RuntimeConfig resource.\nThe name denotes the hierarchical variable name. For example,\n`ports/serving_port` is a valid variable name. The variable value is an\nopaque string and only leaf variables can have values (that is, variables\nthat do not have any child variables).",
       "type": "object",
       "properties": {
-        "text": {
-          "description": "The string value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. For example,\n`text: \"my text value\"`. The string must be valid UTF-8.",
-          "type": "string"
-        },
         "value": {
           "format": "byte",
           "description": "The binary value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. The value must be\nbase64 encoded. Only one of `value` or `text` can be set.",
@@ -947,199 +1116,29 @@
         "name": {
           "description": "The name of the variable resource, in the format:\n\n    projects/[PROJECT_ID]/configs/[CONFIG_NAME]/variables/[VARIABLE_NAME]\n\nThe `[PROJECT_ID]` must be a valid project ID, `[CONFIG_NAME]` must be a\nvalid RuntimeConfig reource and `[VARIABLE_NAME]` follows Unix file system\nfile path naming.\n\nThe `[VARIABLE_NAME]` can contain ASCII letters, numbers, slashes and\ndashes. Slashes are used as path element separators and are not part of the\n`[VARIABLE_NAME]` itself, so `[VARIABLE_NAME]` must contain at least one\nnon-slash character. Multiple slashes are coalesced into single slash\ncharacter. Each path segment should follow RFC 1035 segment specification.\nThe length of a `[VARIABLE_NAME]` must be less than 256 bytes.\n\nOnce you create a variable, you cannot change the variable name.",
           "type": "string"
+        },
+        "text": {
+          "description": "The string value of the variable. The length of the value must be less\nthan 4096 bytes. Empty values are also accepted. For example,\n`text: \"my text value\"`. The string must be valid UTF-8.",
+          "type": "string"
         }
       },
       "id": "Variable"
-    },
-    "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "type": "object",
-      "properties": {
-        "response": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
-          "type": "object"
-        },
-        "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
-          "type": "string"
-        },
-        "error": {
-          "description": "The error result of the operation in case of failure or cancellation.",
-          "$ref": "Status"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
-          "type": "object"
-        },
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        }
-      },
-      "id": "Operation"
-    },
-    "SetIamPolicyRequest": {
-      "description": "Request message for `SetIamPolicy` method.",
-      "type": "object",
-      "properties": {
-        "policy": {
-          "$ref": "Policy",
-          "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
-        }
-      },
-      "id": "SetIamPolicyRequest"
-    },
-    "Status": {
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
-      "type": "object",
-      "properties": {
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        },
-        "details": {
-          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
-          "items": {
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            },
-            "type": "object"
-          },
-          "type": "array"
-        },
-        "code": {
-          "format": "int32",
-          "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "type": "integer"
-        }
-      },
-      "id": "Status"
-    },
-    "Binding": {
-      "properties": {
-        "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
-          "type": "string"
-        }
-      },
-      "id": "Binding",
-      "description": "Associates `members` with a `role`.",
-      "type": "object"
-    },
-    "Empty": {
-      "properties": {},
-      "id": "Empty",
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object"
-    },
-    "Cardinality": {
-      "description": "A Cardinality condition for the Waiter resource. A cardinality condition is\nmet when the number of variables under a specified path prefix reaches a\npredefined number. For example, if you set a Cardinality condition where\nthe `path` is set to `/foo` and the number of paths is set to 2, the\nfollowing variables would meet the condition in a RuntimeConfig resource:\n\n+ `/foo/variable1 = \"value1\"`\n+ `/foo/variable2 = \"value2\"`\n+ `/bar/variable3 = \"value3\"`\n\nIt would not would not satisify the same condition with the `number` set to\n3, however, because there is only 2 paths that start with `/foo`.\nCardinality conditions are recursive; all subtrees under the specific\npath prefix are counted.",
-      "type": "object",
-      "properties": {
-        "number": {
-          "format": "int32",
-          "description": "The number variables under the `path` that must exist to meet this\ncondition. Defaults to 1 if not specified.",
-          "type": "integer"
-        },
-        "path": {
-          "description": "The root of the variable subtree to monitor. For example, `/foo`.",
-          "type": "string"
-        }
-      },
-      "id": "Cardinality"
-    },
-    "ListConfigsResponse": {
-      "properties": {
-        "nextPageToken": {
-          "description": "This token allows you to get the next page of results for list requests.\nIf the number of results is larger than `pageSize`, use the `nextPageToken`\nas a value for the query parameter `pageToken` in the next list request.\nSubsequent list requests will have their own `nextPageToken` to continue\npaging through the results",
-          "type": "string"
-        },
-        "configs": {
-          "description": "A list of the configurations in the project. The order of returned\nobjects is arbitrary; that is, it is not ordered in any particular way.",
-          "items": {
-            "$ref": "RuntimeConfig"
-          },
-          "type": "array"
-        }
-      },
-      "id": "ListConfigsResponse",
-      "description": "`ListConfigs()` returns the following response. The order of returned\nobjects is arbitrary; that is, it is not ordered in any particular way.",
-      "type": "object"
-    },
-    "EndCondition": {
-      "description": "The condition that a Waiter resource is waiting for.",
-      "type": "object",
-      "properties": {
-        "cardinality": {
-          "$ref": "Cardinality",
-          "description": "The cardinality of the `EndCondition`."
-        }
-      },
-      "id": "EndCondition"
-    },
-    "TestIamPermissionsResponse": {
-      "properties": {
-        "permissions": {
-          "description": "A subset of `TestPermissionsRequest.permissions` that the caller is\nallowed.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "id": "TestIamPermissionsResponse",
-      "description": "Response message for `TestIamPermissions` method.",
-      "type": "object"
-    },
-    "ListVariablesResponse": {
-      "properties": {
-        "variables": {
-          "description": "A list of variables and their values. The order of returned variable\nobjects is arbitrary.",
-          "items": {
-            "$ref": "Variable"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "This token allows you to get the next page of results for list requests.\nIf the number of results is larger than `pageSize`, use the `nextPageToken`\nas a value for the query parameter `pageToken` in the next list request.\nSubsequent list requests will have their own `nextPageToken` to continue\npaging through the results",
-          "type": "string"
-        }
-      },
-      "id": "ListVariablesResponse",
-      "description": "Response for the `ListVariables()` method.",
-      "type": "object"
     }
   },
-  "protocol": "rest",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
     "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Cloud RuntimeConfig",
   "auth": {
     "oauth2": {
       "scopes": {
-        "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
-        },
         "https://www.googleapis.com/auth/cloudruntimeconfig": {
           "description": "Manage your Google Cloud Platform services' runtime configuration"
+        },
+        "https://www.googleapis.com/auth/cloud-platform": {
+          "description": "View and manage your data across Google Cloud Platform services"
         }
       }
     }
@@ -1149,5 +1148,6 @@
   "name": "runtimeconfig",
   "batchPath": "batch",
   "fullyEncodeReservedExpansion": true,
-  "title": "Google Cloud Runtime Configuration API"
+  "title": "Google Cloud Runtime Configuration API",
+  "ownerName": "Google"
 }

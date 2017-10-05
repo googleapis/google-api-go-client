@@ -2782,8 +2782,8 @@
    "id": "videointelligence:v1beta1",
    "name": "videointelligence",
    "version": "v1beta1",
-   "title": "Google Cloud Video Intelligence API",
-   "description": "Google Cloud Video Intelligence API.",
+   "title": "Cloud Video Intelligence API",
+   "description": "Cloud Video Intelligence API.",
    "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

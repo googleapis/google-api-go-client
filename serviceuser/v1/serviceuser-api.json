@@ -1,29 +1,700 @@
 {
-  "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
-  "servicePath": "",
+  "ownerDomain": "google.com",
+  "name": "serviceuser",
+  "batchPath": "batch",
+  "title": "Google Service User API",
+  "ownerName": "Google",
+  "resources": {
+    "projects": {
+      "resources": {
+        "services": {
+          "methods": {
+            "disable": {
+              "request": {
+                "$ref": "DisableServiceRequest"
+              },
+              "description": "Disable a service so it can no longer be used with a\nproject. This prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
+              "response": {
+                "$ref": "Operation"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "POST",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/service.management"
+              ],
+              "parameters": {
+                "name": {
+                  "location": "path",
+                  "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:disable",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/services/[^/]+$"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/services/{servicesId}:disable",
+              "id": "serviceuser.projects.services.disable",
+              "path": "v1/{+name}:disable"
+            },
+            "enable": {
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "name"
+              ],
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/service.management"
+              ],
+              "parameters": {
+                "name": {
+                  "location": "path",
+                  "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:enable",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+/services/[^/]+$"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/services/{servicesId}:enable",
+              "path": "v1/{+name}:enable",
+              "id": "serviceuser.projects.services.enable",
+              "request": {
+                "$ref": "EnableServiceRequest"
+              },
+              "description": "Enable a service so it can be used with a project.\nSee [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for\nmore information.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e"
+            },
+            "list": {
+              "description": "List enabled services for the specified consumer.",
+              "response": {
+                "$ref": "ListEnabledServicesResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "pageToken": {
+                  "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+                  "type": "string",
+                  "location": "query"
+                },
+                "pageSize": {
+                  "location": "query",
+                  "format": "int32",
+                  "description": "Requested size of the next page of data.",
+                  "type": "integer"
+                },
+                "parent": {
+                  "description": "List enabled services for the specified parent.\n\nAn example valid parent would be:\n- projects/my-project",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ],
+              "flatPath": "v1/projects/{projectsId}/services",
+              "id": "serviceuser.projects.services.list",
+              "path": "v1/{+parent}/services"
+            }
+          }
+        }
+      }
+    },
+    "services": {
+      "methods": {
+        "search": {
+          "flatPath": "v1/services:search",
+          "path": "v1/services:search",
+          "id": "serviceuser.services.search",
+          "description": "Search available services.\n\nWhen no filter is specified, returns all accessible services. For\nauthenticated users, also returns all services the calling user has\n\"servicemanagement.services.bind\" permission for.",
+          "httpMethod": "GET",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "SearchServicesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ],
+          "parameters": {
+            "pageToken": {
+              "description": "Token identifying which result to start with; returned by a previous list\ncall.",
+              "type": "string",
+              "location": "query"
+            },
+            "pageSize": {
+              "location": "query",
+              "format": "int32",
+              "description": "Requested size of the next page of data.",
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "bearer_token": {
+      "location": "query",
+      "description": "OAuth bearer token.",
+      "type": "string"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "$.xgafv": {
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
+    "alt": {
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ]
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
+    },
+    "access_token": {
+      "description": "OAuth access token.",
+      "type": "string",
+      "location": "query"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string",
+      "location": "query"
+    }
+  },
+  "version": "v1",
+  "baseUrl": "https://serviceuser.googleapis.com/",
   "kind": "discovery#restDescription",
+  "servicePath": "",
+  "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
   "basePath": "",
-  "id": "serviceuser:v1",
+  "revision": "20170926",
   "documentationLink": "https://cloud.google.com/service-management/",
-  "revision": "20170929",
+  "id": "serviceuser:v1",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
+    "EnumValue": {
+      "description": "Enum value definition.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Enum value name.",
+          "type": "string"
+        },
+        "options": {
+          "description": "Protocol buffer options.",
+          "items": {
+            "$ref": "Option"
+          },
+          "type": "array"
+        },
+        "number": {
+          "format": "int32",
+          "description": "Enum value number.",
+          "type": "integer"
+        }
+      },
+      "id": "EnumValue"
+    },
+    "Service": {
+      "description": "`Service` is the root object of Google service configuration schema. It\ndescribes basic information about a service, such as the name and the\ntitle, and delegates other aspects to sub-sections. Each sub-section is\neither a proto message or a repeated proto message that configures a\nspecific aspect, such as auth. See each proto message definition for details.\n\nExample:\n\n    type: google.api.Service\n    config_version: 3\n    name: calendar.googleapis.com\n    title: Google Calendar API\n    apis:\n    - name: google.calendar.v3.Calendar\n    authentication:\n      providers:\n      - id: google_calendar_auth\n        jwks_uri: https://www.googleapis.com/oauth2/v1/certs\n        issuer: https://securetoken.google.com\n      rules:\n      - selector: \"*\"\n        requirements:\n          provider_id: google_calendar_auth",
+      "type": "object",
+      "properties": {
+        "customError": {
+          "$ref": "CustomError",
+          "description": "Custom error configuration."
+        },
+        "title": {
+          "description": "The product title for this service.",
+          "type": "string"
+        },
+        "endpoints": {
+          "description": "Configuration for network endpoints.  If this is empty, then an endpoint\nwith the same name as the service is automatically generated to service all\ndefined APIs.",
+          "items": {
+            "$ref": "Endpoint"
+          },
+          "type": "array"
+        },
+        "apis": {
+          "description": "A list of API interfaces exported by this service. Only the `name` field\nof the google.protobuf.Api needs to be provided by the configuration\nauthor, as the remaining fields will be derived from the IDL during the\nnormalization process. It is an error to specify an API interface here\nwhich cannot be resolved against the associated IDL files.",
+          "items": {
+            "$ref": "Api"
+          },
+          "type": "array"
+        },
+        "logs": {
+          "description": "Defines the logs used by this service.",
+          "items": {
+            "$ref": "LogDescriptor"
+          },
+          "type": "array"
+        },
+        "types": {
+          "description": "A list of all proto message types included in this API service.\nTypes referenced directly or indirectly by the `apis` are\nautomatically included.  Messages which are not referenced but\nshall be included, such as types used by the `google.protobuf.Any` type,\nshould be listed here by name. Example:\n\n    types:\n    - name: google.protobuf.Int32",
+          "items": {
+            "$ref": "Type"
+          },
+          "type": "array"
+        },
+        "sourceInfo": {
+          "description": "Output only. The source information for this configuration if available.",
+          "$ref": "SourceInfo"
+        },
+        "http": {
+          "$ref": "Http",
+          "description": "HTTP configuration."
+        },
+        "systemParameters": {
+          "$ref": "SystemParameters",
+          "description": "System parameter configuration."
+        },
+        "backend": {
+          "$ref": "Backend",
+          "description": "API backend configuration."
+        },
+        "documentation": {
+          "description": "Additional API documentation.",
+          "$ref": "Documentation"
+        },
+        "monitoredResources": {
+          "description": "Defines the monitored resources used by this service. This is required\nby the Service.monitoring and Service.logging configurations.",
+          "items": {
+            "$ref": "MonitoredResourceDescriptor"
+          },
+          "type": "array"
+        },
+        "logging": {
+          "description": "Logging configuration.",
+          "$ref": "Logging"
+        },
+        "context": {
+          "$ref": "Context",
+          "description": "Context configuration."
+        },
+        "enums": {
+          "description": "A list of all enum types included in this API service.  Enums\nreferenced directly or indirectly by the `apis` are automatically\nincluded.  Enums which are not referenced but shall be included\nshould be listed here by name. Example:\n\n    enums:\n    - name: google.someapi.v1.SomeEnum",
+          "items": {
+            "$ref": "Enum"
+          },
+          "type": "array"
+        },
+        "id": {
+          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead.",
+          "type": "string"
+        },
+        "usage": {
+          "$ref": "Usage",
+          "description": "Configuration controlling usage of this service."
+        },
+        "metrics": {
+          "description": "Defines the metrics used by this service.",
+          "items": {
+            "$ref": "MetricDescriptor"
+          },
+          "type": "array"
+        },
+        "authentication": {
+          "description": "Auth configuration.",
+          "$ref": "Authentication"
+        },
+        "experimental": {
+          "description": "Experimental configuration.",
+          "$ref": "Experimental"
+        },
+        "control": {
+          "description": "Configuration for the service control plane.",
+          "$ref": "Control"
+        },
+        "configVersion": {
+          "format": "uint32",
+          "description": "The semantic version of the service configuration. The config version\naffects the interpretation of the service configuration. For example,\ncertain features are enabled by default for certain config versions.\nThe latest config version is `3`.",
+          "type": "integer"
+        },
+        "monitoring": {
+          "$ref": "Monitoring",
+          "description": "Monitoring configuration."
+        },
+        "producerProjectId": {
+          "description": "The Google project that owns this service.",
+          "type": "string"
+        },
+        "systemTypes": {
+          "description": "A list of all proto message types included in this API service.\nIt serves similar purpose as [google.api.Service.types], except that\nthese types are not needed by user-defined APIs. Therefore, they will not\nshow up in the generated discovery doc. This field should only be used\nto define system APIs in ESF.",
+          "items": {
+            "$ref": "Type"
+          },
+          "type": "array"
+        },
+        "visibility": {
+          "$ref": "Visibility",
+          "description": "API visibility configuration."
+        },
+        "quota": {
+          "description": "Quota configuration.",
+          "$ref": "Quota"
+        },
+        "billing": {
+          "description": "Billing configuration.",
+          "$ref": "Billing"
+        },
+        "name": {
+          "description": "The DNS address at which this service is available,\ne.g. `calendar.googleapis.com`.",
+          "type": "string"
+        }
+      },
+      "id": "Service"
+    },
+    "OperationMetadata": {
+      "description": "The metadata associated with a long running operation resource.",
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "format": "google-datetime",
+          "description": "The start time of the operation.",
+          "type": "string"
+        },
+        "steps": {
+          "description": "Detailed status information for each step. The order is undetermined.",
+          "items": {
+            "$ref": "Step"
+          },
+          "type": "array"
+        },
+        "resourceNames": {
+          "description": "The full name of the resources that this operation is directly\nassociated with.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "progressPercentage": {
+          "format": "int32",
+          "description": "Percentage of completion of this operation, ranging from 0 to 100.",
+          "type": "integer"
+        }
+      },
+      "id": "OperationMetadata"
+    },
+    "CustomHttpPattern": {
+      "description": "A custom pattern is used for defining custom HTTP verb.",
+      "type": "object",
+      "properties": {
+        "kind": {
+          "description": "The name of this custom HTTP verb.",
+          "type": "string"
+        },
+        "path": {
+          "description": "The path matched by this custom verb.",
+          "type": "string"
+        }
+      },
+      "id": "CustomHttpPattern"
+    },
+    "PublishedService": {
+      "description": "The published version of a Service that is managed by\nGoogle Service Management.",
+      "type": "object",
+      "properties": {
+        "service": {
+          "description": "The service's published configuration.",
+          "$ref": "Service"
+        },
+        "name": {
+          "description": "The resource name of the service.\n\nA valid name would be:\n- services/serviceuser.googleapis.com",
+          "type": "string"
+        }
+      },
+      "id": "PublishedService"
+    },
+    "SystemParameterRule": {
+      "description": "Define a system parameter rule mapping system parameter definitions to\nmethods.",
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "description": "Define parameters. Multiple names may be defined for a parameter.\nFor a given method call, only one of them should be used. If multiple\nnames are used the behavior is implementation-dependent.\nIf none of the specified names are present the behavior is\nparameter-dependent.",
+          "items": {
+            "$ref": "SystemParameter"
+          },
+          "type": "array"
+        },
+        "selector": {
+          "description": "Selects the methods to which this rule applies. Use '*' to indicate all\nmethods in all APIs.\n\nRefer to selector for syntax details.",
+          "type": "string"
+        }
+      },
+      "id": "SystemParameterRule"
+    },
+    "VisibilityRule": {
+      "description": "A visibility rule provides visibility configuration for an individual API\nelement.",
+      "type": "object",
+      "properties": {
+        "restriction": {
+          "description": "A comma-separated list of visibility labels that apply to the `selector`.\nAny of the listed labels can be used to grant the visibility.\n\nIf a rule has multiple labels, removing one of the labels but not all of\nthem can break clients.\n\nExample:\n\n    visibility:\n      rules:\n      - selector: google.calendar.Calendar.EnhancedSearch\n        restriction: GOOGLE_INTERNAL, TRUSTED_TESTER\n\nRemoving GOOGLE_INTERNAL from this restriction will break clients that\nrely on this method and only had access to it through GOOGLE_INTERNAL.",
+          "type": "string"
+        },
+        "selector": {
+          "description": "Selects methods, messages, fields, enums, etc. to which this rule applies.\n\nRefer to selector for syntax details.",
+          "type": "string"
+        }
+      },
+      "id": "VisibilityRule"
+    },
+    "HttpRule": {
+      "description": "`HttpRule` defines the mapping of an RPC method to one or more HTTP\nREST API methods. The mapping specifies how different portions of the RPC\nrequest message are mapped to URL path, URL query parameters, and\nHTTP request body. The mapping is typically specified as an\n`google.api.http` annotation on the RPC method,\nsee \"google/api/annotations.proto\" for details.\n\nThe mapping consists of a field specifying the path template and\nmethod kind.  The path template can refer to fields in the request\nmessage, as in the example below which describes a REST GET\noperation on a resource collection of messages:\n\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http).get = \"/v1/messages/{message_id}/{sub.subfield}\";\n      }\n    }\n    message GetMessageRequest {\n      message SubMessage {\n        string subfield = 1;\n      }\n      string message_id = 1; // mapped to the URL\n      SubMessage sub = 2;    // `sub.subfield` is url-mapped\n    }\n    message Message {\n      string text = 1; // content of the resource\n    }\n\nThe same http annotation can alternatively be expressed inside the\n`GRPC API Configuration` YAML file.\n\n    http:\n      rules:\n        - selector: \u003cproto_package_name\u003e.Messaging.GetMessage\n          get: /v1/messages/{message_id}/{sub.subfield}\n\nThis definition enables an automatic, bidrectional mapping of HTTP\nJSON to RPC. Example:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456/foo`  | `GetMessage(message_id: \"123456\" sub: SubMessage(subfield: \"foo\"))`\n\nIn general, not only fields but also field paths can be referenced\nfrom a path pattern. Fields mapped to the path pattern cannot be\nrepeated and must have a primitive (non-message) type.\n\nAny fields in the request message which are not bound by the path\npattern automatically become (optional) HTTP query\nparameters. Assume the following definition of the request message:\n\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http).get = \"/v1/messages/{message_id}\";\n      }\n    }\n    message GetMessageRequest {\n      message SubMessage {\n        string subfield = 1;\n      }\n      string message_id = 1; // mapped to the URL\n      int64 revision = 2;    // becomes a parameter\n      SubMessage sub = 3;    // `sub.subfield` becomes a parameter\n    }\n\n\nThis enables a HTTP JSON to RPC mapping as below:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456?revision=2&sub.subfield=foo` | `GetMessage(message_id: \"123456\" revision: 2 sub: SubMessage(subfield: \"foo\"))`\n\nNote that fields which are mapped to HTTP parameters must have a\nprimitive type or a repeated primitive type. Message types are not\nallowed. In the case of a repeated type, the parameter can be\nrepeated in the URL, as in `...?param=A&param=B`.\n\nFor HTTP method kinds which allow a request body, the `body` field\nspecifies the mapping. Consider a REST update method on the\nmessage resource collection:\n\n\n    service Messaging {\n      rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n        option (google.api.http) = {\n          put: \"/v1/messages/{message_id}\"\n          body: \"message\"\n        };\n      }\n    }\n    message UpdateMessageRequest {\n      string message_id = 1; // mapped to the URL\n      Message message = 2;   // mapped to the body\n    }\n\n\nThe following HTTP JSON to RPC mapping is enabled, where the\nrepresentation of the JSON in the request body is determined by\nprotos JSON encoding:\n\nHTTP | RPC\n-----|-----\n`PUT /v1/messages/123456 { \"text\": \"Hi!\" }` | `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\nThe special name `*` can be used in the body mapping to define that\nevery field not bound by the path template should be mapped to the\nrequest body.  This enables the following alternative definition of\nthe update method:\n\n    service Messaging {\n      rpc UpdateMessage(Message) returns (Message) {\n        option (google.api.http) = {\n          put: \"/v1/messages/{message_id}\"\n          body: \"*\"\n        };\n      }\n    }\n    message Message {\n      string message_id = 1;\n      string text = 2;\n    }\n\n\nThe following HTTP JSON to RPC mapping is enabled:\n\nHTTP | RPC\n-----|-----\n`PUT /v1/messages/123456 { \"text\": \"Hi!\" }` | `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\nNote that when using `*` in the body mapping, it is not possible to\nhave HTTP parameters, as all fields not bound by the path end in\nthe body. This makes this option more rarely used in practice of\ndefining REST APIs. The common usage of `*` is in custom methods\nwhich don't use the URL at all for transferring data.\n\nIt is possible to define multiple HTTP methods for one RPC by using\nthe `additional_bindings` option. Example:\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http) = {\n          get: \"/v1/messages/{message_id}\"\n          additional_bindings {\n            get: \"/v1/users/{user_id}/messages/{message_id}\"\n          }\n        };\n      }\n    }\n    message GetMessageRequest {\n      string message_id = 1;\n      string user_id = 2;\n    }\n\n\nThis enables the following two alternative HTTP JSON to RPC\nmappings:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456` | `GetMessage(message_id: \"123456\")`\n`GET /v1/users/me/messages/123456` | `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n# Rules for HTTP mapping\n\nThe rules for mapping HTTP path, query parameters, and body fields\nto the request message are as follows:\n\n1. The `body` field specifies either `*` or a field path, or is\n   omitted. If omitted, it indicates there is no HTTP request body.\n2. Leaf fields (recursive expansion of nested messages in the\n   request) can be classified into three types:\n    (a) Matched in the URL template.\n    (b) Covered by body (if body is `*`, everything except (a) fields;\n        else everything under the body field)\n    (c) All other fields.\n3. URL query parameters found in the HTTP request are mapped to (c) fields.\n4. Any body sent with an HTTP request can contain only (b) fields.\n\nThe syntax of the path template is as follows:\n\n    Template = \"/\" Segments [ Verb ] ;\n    Segments = Segment { \"/\" Segment } ;\n    Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n    Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n    FieldPath = IDENT { \".\" IDENT } ;\n    Verb     = \":\" LITERAL ;\n\nThe syntax `*` matches a single path segment. The syntax `**` matches zero\nor more path segments, which must be the last part of the path except the\n`Verb`. The syntax `LITERAL` matches literal text in the path.\n\nThe syntax `Variable` matches part of the URL path as specified by its\ntemplate. A variable template must not contain other variables. If a variable\nmatches a single path segment, its template may be omitted, e.g. `{var}`\nis equivalent to `{var=*}`.\n\nIf a variable contains exactly one path segment, such as `\"{var}\"` or\n`\"{var=*}\"`, when such a variable is expanded into a URL path, all characters\nexcept `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up in the\nDiscovery Document as `{var}`.\n\nIf a variable contains one or more path segments, such as `\"{var=foo/*}\"`\nor `\"{var=**}\"`, when such a variable is expanded into a URL path, all\ncharacters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such variables\nshow up in the Discovery Document as `{+var}`.\n\nNOTE: While the single segment variable matches the semantics of\n[RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2\nSimple String Expansion, the multi segment variable **does not** match\nRFC 6570 Reserved Expansion. The reason is that the Reserved Expansion\ndoes not expand special characters like `?` and `#`, which would lead\nto invalid URLs.\n\nNOTE: the field paths in variables and in the `body` must not refer to\nrepeated fields or map fields.",
+      "type": "object",
+      "properties": {
+        "put": {
+          "description": "Used for updating a resource.",
+          "type": "string"
+        },
+        "delete": {
+          "description": "Used for deleting a resource.",
+          "type": "string"
+        },
+        "body": {
+          "description": "The name of the request field whose value is mapped to the HTTP body, or\n`*` for mapping all fields not captured by the path pattern to the HTTP\nbody. NOTE: the referred field must not be a repeated field and must be\npresent at the top-level of request message type.",
+          "type": "string"
+        },
+        "post": {
+          "description": "Used for creating a resource.",
+          "type": "string"
+        },
+        "mediaDownload": {
+          "description": "Use this only for Scotty Requests. Do not use this for bytestream methods.\nFor media support, add instead [][google.bytestream.RestByteStream] as an\nAPI to your configuration.",
+          "$ref": "MediaDownload"
+        },
+        "additionalBindings": {
+          "description": "Additional HTTP bindings for the selector. Nested bindings must\nnot contain an `additional_bindings` field themselves (that is,\nthe nesting may only be one level deep).",
+          "items": {
+            "$ref": "HttpRule"
+          },
+          "type": "array"
+        },
+        "responseBody": {
+          "description": "The name of the response field whose value is mapped to the HTTP body of\nresponse. Other response fields are ignored. This field is optional. When\nnot set, the response message will be used as HTTP body of response.\nNOTE: the referred field must be not a repeated field and must be present\nat the top-level of response message type.",
+          "type": "string"
+        },
+        "mediaUpload": {
+          "$ref": "MediaUpload",
+          "description": "Use this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead\n[][google.bytestream.RestByteStream] as an API to your\nconfiguration for Bytestream methods."
+        },
+        "selector": {
+          "description": "Selects methods to which this rule applies.\n\nRefer to selector for syntax details.",
+          "type": "string"
+        },
+        "custom": {
+          "$ref": "CustomHttpPattern",
+          "description": "The custom pattern is used for specifying an HTTP method that is not\nincluded in the `pattern` field, such as HEAD, or \"*\" to leave the\nHTTP method unspecified for this rule. The wild-card rule is useful\nfor services that provide content to Web (HTML) clients."
+        },
+        "get": {
+          "description": "Used for listing and getting information about resources.",
+          "type": "string"
+        },
+        "patch": {
+          "description": "Used for updating a resource.",
+          "type": "string"
+        }
+      },
+      "id": "HttpRule"
+    },
+    "MonitoringDestination": {
+      "description": "Configuration of a specific monitoring destination (the producer project\nor the consumer project).",
+      "type": "object",
+      "properties": {
+        "monitoredResource": {
+          "description": "The monitored resource type. The type must be defined in\nService.monitored_resources section.",
+          "type": "string"
+        },
+        "metrics": {
+          "description": "Names of the metrics to report to this monitoring destination.\nEach name must be defined in Service.metrics section.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "id": "MonitoringDestination"
+    },
+    "Visibility": {
+      "description": "`Visibility` defines restrictions for the visibility of service\nelements.  Restrictions are specified using visibility labels\n(e.g., TRUSTED_TESTER) that are elsewhere linked to users and projects.\n\nUsers and projects can have access to more than one visibility label. The\neffective visibility for multiple labels is the union of each label's\nelements, plus any unrestricted elements.\n\nIf an element and its parents have no restrictions, visibility is\nunconditionally granted.\n\nExample:\n\n    visibility:\n      rules:\n      - selector: google.calendar.Calendar.EnhancedSearch\n        restriction: TRUSTED_TESTER\n      - selector: google.calendar.Calendar.Delegate\n        restriction: GOOGLE_INTERNAL\n\nHere, all methods are publicly visible except for the restricted methods\nEnhancedSearch and Delegate.",
+      "type": "object",
+      "properties": {
+        "rules": {
+          "description": "A list of visibility rules that apply to individual API elements.\n\n**NOTE:** All service configuration rules follow \"last one wins\" order.",
+          "items": {
+            "$ref": "VisibilityRule"
+          },
+          "type": "array"
+        }
+      },
+      "id": "Visibility"
+    },
+    "SystemParameters": {
+      "description": "### System parameter configuration\n\nA system parameter is a special kind of parameter defined by the API\nsystem, not by an individual API. It is typically mapped to an HTTP header\nand/or a URL query parameter. This configuration specifies which methods\nchange the names of the system parameters.",
+      "type": "object",
+      "properties": {
+        "rules": {
+          "description": "Define system parameters.\n\nThe parameters defined here will override the default parameters\nimplemented by the system. If this field is missing from the service\nconfig, default system parameters will be used. Default system parameters\nand names is implementation-dependent.\n\nExample: define api key for all methods\n\n    system_parameters\n      rules:\n        - selector: \"*\"\n          parameters:\n            - name: api_key\n              url_query_parameter: api_key\n\n\nExample: define 2 api key names for a specific method.\n\n    system_parameters\n      rules:\n        - selector: \"/ListShelves\"\n          parameters:\n            - name: api_key\n              http_header: Api-Key1\n            - name: api_key\n              http_header: Api-Key2\n\n**NOTE:** All service configuration rules follow \"last one wins\" order.",
+          "items": {
+            "$ref": "SystemParameterRule"
+          },
+          "type": "array"
+        }
+      },
+      "id": "SystemParameters"
+    },
+    "Quota": {
+      "description": "Quota configuration helps to achieve fairness and budgeting in service\nusage.\n\nThe quota configuration works this way:\n- The service configuration defines a set of metrics.\n- For API calls, the quota.metric_rules maps methods to metrics with\n  corresponding costs.\n- The quota.limits defines limits on the metrics, which will be used for\n  quota checks at runtime.\n\nAn example quota configuration in yaml format:\n\n   quota:\n\n     - name: apiWriteQpsPerProject\n       metric: library.googleapis.com/write_calls\n       unit: \"1/min/{project}\"  # rate limit for consumer projects\n       values:\n         STANDARD: 10000\n\n\n     # The metric rules bind all methods to the read_calls metric,\n     # except for the UpdateBook and DeleteBook methods. These two methods\n     # are mapped to the write_calls metric, with the UpdateBook method\n     # consuming at twice rate as the DeleteBook method.\n     metric_rules:\n     - selector: \"*\"\n       metric_costs:\n         library.googleapis.com/read_calls: 1\n     - selector: google.example.library.v1.LibraryService.UpdateBook\n       metric_costs:\n         library.googleapis.com/write_calls: 2\n     - selector: google.example.library.v1.LibraryService.DeleteBook\n       metric_costs:\n         library.googleapis.com/write_calls: 1\n\n Corresponding Metric definition:\n\n     metrics:\n     - name: library.googleapis.com/read_calls\n       display_name: Read requests\n       metric_kind: DELTA\n       value_type: INT64\n\n     - name: library.googleapis.com/write_calls\n       display_name: Write requests\n       metric_kind: DELTA\n       value_type: INT64",
+      "type": "object",
+      "properties": {
+        "limits": {
+          "description": "List of `QuotaLimit` definitions for the service.",
+          "items": {
+            "$ref": "QuotaLimit"
+          },
+          "type": "array"
+        },
+        "metricRules": {
+          "description": "List of `MetricRule` definitions, each one mapping a selected method to one\nor more metrics.",
+          "items": {
+            "$ref": "MetricRule"
+          },
+          "type": "array"
+        }
+      },
+      "id": "Quota"
+    },
+    "Step": {
+      "description": "Represents the status of one operation step.",
+      "type": "object",
+      "properties": {
+        "description": {
+          "description": "The short description of the step.",
+          "type": "string"
+        },
+        "status": {
+          "enumDescriptions": [
+            "Unspecifed code.",
+            "The operation or step has completed without errors.",
+            "The operation or step has not started yet.",
+            "The operation or step is in progress.",
+            "The operation or step has completed with errors. If the operation is\nrollbackable, the rollback completed with errors too.",
+            "The operation or step has completed with cancellation."
+          ],
+          "enum": [
+            "STATUS_UNSPECIFIED",
+            "DONE",
+            "NOT_STARTED",
+            "IN_PROGRESS",
+            "FAILED",
+            "CANCELLED"
+          ],
+          "description": "The status code.",
+          "type": "string"
+        }
+      },
+      "id": "Step"
+    },
+    "LoggingDestination": {
+      "description": "Configuration of a specific logging destination (the producer project\nor the consumer project).",
+      "type": "object",
+      "properties": {
+        "logs": {
+          "description": "Names of the logs to be sent to this destination. Each name must\nbe defined in the Service.logs section. If the log name is\nnot a domain scoped name, it will be automatically prefixed with\nthe service name followed by \"/\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "monitoredResource": {
+          "description": "The monitored resource type. The type must be defined in the\nService.monitored_resources section.",
+          "type": "string"
+        }
+      },
+      "id": "LoggingDestination"
+    },
     "Option": {
       "description": "A protocol buffer option, which can be attached to a message, field,\nenumeration, etc.",
       "type": "object",
       "properties": {
-        "value": {
-          "description": "The option's value packed in an Any message. If the value is a primitive,\nthe corresponding wrapper type defined in google/protobuf/wrappers.proto\nshould be used. If the value is an enum, it should be stored as an int32\nvalue using the google.protobuf.Int32Value type.",
-          "type": "object",
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          }
-        },
         "name": {
           "description": "The option's name. For protobuf built-in options (options defined in\ndescriptor.proto), this is the short name. For example, `\"map_entry\"`.\nFor custom options, it should be the fully-qualified name. For example,\n`\"google.api.http\"`.",
           "type": "string"
+        },
+        "value": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The option's value packed in an Any message. If the value is a primitive,\nthe corresponding wrapper type defined in google/protobuf/wrappers.proto\nshould be used. If the value is an enum, it should be stored as an int32\nvalue using the google.protobuf.Int32Value type.",
+          "type": "object"
         }
       },
       "id": "Option"
@@ -53,6 +724,17 @@
       "description": "Method represents a method of an API interface.",
       "type": "object",
       "properties": {
+        "responseTypeUrl": {
+          "description": "The URL of the output message type.",
+          "type": "string"
+        },
+        "options": {
+          "description": "Any metadata attached to the method.",
+          "items": {
+            "$ref": "Option"
+          },
+          "type": "array"
+        },
         "responseStreaming": {
           "description": "If true, the response is streamed.",
           "type": "boolean"
@@ -70,8 +752,6 @@
           "type": "boolean"
         },
         "syntax": {
-          "description": "The source syntax of this method.",
-          "type": "string",
           "enumDescriptions": [
             "Syntax `proto2`.",
             "Syntax `proto3`."
@@ -79,18 +759,9 @@
           "enum": [
             "SYNTAX_PROTO2",
             "SYNTAX_PROTO3"
-          ]
-        },
-        "responseTypeUrl": {
-          "description": "The URL of the output message type.",
+          ],
+          "description": "The source syntax of this method.",
           "type": "string"
-        },
-        "options": {
-          "description": "Any metadata attached to the method.",
-          "items": {
-            "$ref": "Option"
-          },
-          "type": "array"
         }
       },
       "id": "Method"
@@ -99,13 +770,13 @@
       "description": "`QuotaLimit` defines a specific limit that applies over a specified duration\nfor a limit type. There can be at most one limit for a duration and limit\ntype combination defined within a `QuotaGroup`.",
       "type": "object",
       "properties": {
+        "duration": {
+          "description": "Duration of this limit in textual notation. Example: \"100s\", \"24h\", \"1d\".\nFor duration longer than a day, only multiple of days is supported. We\nsupport only \"100s\" and \"1d\" for now. Additional support will be added in\nthe future. \"0\" indicates indefinite duration.\n\nUsed by group-based quotas only.",
+          "type": "string"
+        },
         "freeTier": {
           "format": "int64",
           "description": "Free tier value displayed in the Developers Console for this limit.\nThe free tier is the number of tokens that will be subtracted from the\nbilled amount when billing is enabled.\nThis field can only be set on a limit with duration \"1d\", in a billable\ngroup; it is invalid on any other limit. If this field is not set, it\ndefaults to 0, indicating that there is no free tier for this service.\n\nUsed by group-based quotas only.",
-          "type": "string"
-        },
-        "duration": {
-          "description": "Duration of this limit in textual notation. Example: \"100s\", \"24h\", \"1d\".\nFor duration longer than a day, only multiple of days is supported. We\nsupport only \"100s\" and \"1d\" for now. Additional support will be added in\nthe future. \"0\" indicates indefinite duration.\n\nUsed by group-based quotas only.",
           "type": "string"
         },
         "defaultLimit": {
@@ -113,16 +784,16 @@
           "description": "Default number of tokens that can be consumed during the specified\nduration. This is the number of tokens assigned when a client\napplication developer activates the service for his/her project.\n\nSpecifying a value of 0 will block all requests. This can be used if you\nare provisioning quota to selected consumers and blocking others.\nSimilarly, a value of -1 will indicate an unlimited quota. No other\nnegative values are allowed.\n\nUsed by group-based quotas only.",
           "type": "string"
         },
-        "description": {
-          "description": "Optional. User-visible, extended description for this quota limit.\nShould be used only when more context is needed to understand this limit\nthan provided by the limit's display name (see: `display_name`).",
+        "displayName": {
+          "description": "User-visible display name for this limit.\nOptional. If not set, the UI will provide a default display name based on\nthe quota configuration. This field can be used to override the default\ndisplay name generated from the configuration.",
           "type": "string"
         },
         "metric": {
           "description": "The name of the metric this quota limit applies to. The quota limits with\nthe same metric will be checked together during runtime. The metric must be\ndefined within the service config.\n\nUsed by metric-based quotas only.",
           "type": "string"
         },
-        "displayName": {
-          "description": "User-visible display name for this limit.\nOptional. If not set, the UI will provide a default display name based on\nthe quota configuration. This field can be used to override the default\ndisplay name generated from the configuration.",
+        "description": {
+          "description": "Optional. User-visible, extended description for this quota limit.\nShould be used only when more context is needed to understand this limit\nthan provided by the limit's display name (see: `display_name`).",
           "type": "string"
         },
         "values": {
@@ -210,11 +881,11 @@
         "sourceFiles": {
           "description": "All files used during config generation.",
           "items": {
+            "type": "object",
             "additionalProperties": {
               "description": "Properties of the object. Contains field @type with type URL.",
               "type": "any"
-            },
-            "type": "object"
+            }
           },
           "type": "array"
         }
@@ -322,6 +993,8 @@
           "type": "boolean"
         },
         "cardinality": {
+          "description": "The field cardinality.",
+          "type": "string",
           "enumDescriptions": [
             "For fields with unknown cardinality.",
             "For optional fields.",
@@ -333,9 +1006,7 @@
             "CARDINALITY_OPTIONAL",
             "CARDINALITY_REQUIRED",
             "CARDINALITY_REPEATED"
-          ],
-          "description": "The field cardinality.",
-          "type": "string"
+          ]
         },
         "defaultValue": {
           "description": "The string value of the default value of this field. Proto2 syntax only.",
@@ -382,29 +1053,6 @@
       "description": "Enum type definition.",
       "type": "object",
       "properties": {
-        "options": {
-          "description": "Protocol buffer options.",
-          "items": {
-            "$ref": "Option"
-          },
-          "type": "array"
-        },
-        "syntax": {
-          "description": "The source syntax.",
-          "type": "string",
-          "enumDescriptions": [
-            "Syntax `proto2`.",
-            "Syntax `proto3`."
-          ],
-          "enum": [
-            "SYNTAX_PROTO2",
-            "SYNTAX_PROTO3"
-          ]
-        },
-        "sourceContext": {
-          "description": "The source context.",
-          "$ref": "SourceContext"
-        },
         "enumvalue": {
           "description": "Enum value definitions.",
           "items": {
@@ -415,6 +1063,29 @@
         "name": {
           "description": "Enum type name.",
           "type": "string"
+        },
+        "options": {
+          "description": "Protocol buffer options.",
+          "items": {
+            "$ref": "Option"
+          },
+          "type": "array"
+        },
+        "syntax": {
+          "enumDescriptions": [
+            "Syntax `proto2`.",
+            "Syntax `proto3`."
+          ],
+          "enum": [
+            "SYNTAX_PROTO2",
+            "SYNTAX_PROTO3"
+          ],
+          "description": "The source syntax.",
+          "type": "string"
+        },
+        "sourceContext": {
+          "description": "The source context.",
+          "$ref": "SourceContext"
         }
       },
       "id": "Enum"
@@ -423,13 +1094,15 @@
       "description": "A description of a label.",
       "type": "object",
       "properties": {
+        "key": {
+          "description": "The label key.",
+          "type": "string"
+        },
         "description": {
           "description": "A human-readable description for the label.",
           "type": "string"
         },
         "valueType": {
-          "description": "The type of data that can be assigned to the label.",
-          "type": "string",
           "enumDescriptions": [
             "A variable-length string. This is the default.",
             "Boolean; true or false.",
@@ -439,10 +1112,8 @@
             "STRING",
             "BOOL",
             "INT64"
-          ]
-        },
-        "key": {
-          "description": "The label key.",
+          ],
+          "description": "The type of data that can be assigned to the label.",
           "type": "string"
         }
       },
@@ -484,6 +1155,8 @@
           "type": "array"
         },
         "syntax": {
+          "description": "The source syntax.",
+          "type": "string",
           "enumDescriptions": [
             "Syntax `proto2`.",
             "Syntax `proto3`."
@@ -491,9 +1164,7 @@
           "enum": [
             "SYNTAX_PROTO2",
             "SYNTAX_PROTO3"
-          ],
-          "description": "The source syntax.",
-          "type": "string"
+          ]
         },
         "sourceContext": {
           "description": "The source context.",
@@ -507,8 +1178,8 @@
       "type": "object",
       "properties": {
         "authorization": {
-          "description": "Authorization configuration.",
-          "$ref": "AuthorizationConfig"
+          "$ref": "AuthorizationConfig",
+          "description": "Authorization configuration."
         }
       },
       "id": "Experimental"
@@ -582,17 +1253,6 @@
       },
       "id": "ContextRule"
     },
-    "SourceContext": {
-      "description": "`SourceContext` represents information about the source of a\nprotobuf element, like the file in which it is defined.",
-      "type": "object",
-      "properties": {
-        "fileName": {
-          "description": "The path-qualified name of the .proto file that contained the associated\nprotobuf element.  For example: `\"google/protobuf/source_context.proto\"`.",
-          "type": "string"
-        }
-      },
-      "id": "SourceContext"
-    },
     "MetricDescriptor": {
       "description": "Defines a metric type and its schema. Once a metric descriptor is created,\ndeleting or altering it stops data collection and makes the metric type's\nexisting data unusable.",
       "type": "object",
@@ -613,6 +1273,8 @@
           "type": "string"
         },
         "valueType": {
+          "description": "Whether the measurement is an integer, a floating-point number, etc.\nSome combinations of `metric_kind` and `value_type` might not be supported.",
+          "type": "string",
           "enumDescriptions": [
             "Do not use this default value.",
             "The value is a boolean.\nThis value type can be used only if the metric kind is `GAUGE`.",
@@ -630,13 +1292,9 @@
             "STRING",
             "DISTRIBUTION",
             "MONEY"
-          ],
-          "description": "Whether the measurement is an integer, a floating-point number, etc.\nSome combinations of `metric_kind` and `value_type` might not be supported.",
-          "type": "string"
+          ]
         },
         "metricKind": {
-          "description": "Whether the metric records instantaneous values, changes to a value, etc.\nSome combinations of `metric_kind` and `value_type` might not be supported.",
-          "type": "string",
           "enumDescriptions": [
             "Do not use this default value.",
             "An instantaneous measurement of a value.",
@@ -648,7 +1306,9 @@
             "GAUGE",
             "DELTA",
             "CUMULATIVE"
-          ]
+          ],
+          "description": "Whether the metric records instantaneous values, changes to a value, etc.\nSome combinations of `metric_kind` and `value_type` might not be supported.",
+          "type": "string"
         },
         "description": {
           "description": "A detailed description of the metric, which can be used in documentation.",
@@ -665,8 +1325,19 @@
       },
       "id": "MetricDescriptor"
     },
+    "SourceContext": {
+      "description": "`SourceContext` represents information about the source of a\nprotobuf element, like the file in which it is defined.",
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "description": "The path-qualified name of the .proto file that contained the associated\nprotobuf element.  For example: `\"google/protobuf/source_context.proto\"`.",
+          "type": "string"
+        }
+      },
+      "id": "SourceContext"
+    },
     "Billing": {
-      "description": "Billing related configuration of the service.\n\nThe following example shows how to configure monitored resources and metrics\nfor billing:\n\n    monitored_resources:\n    - type: library.googleapis.com/branch\n      labels:\n      - key: /city\n        description: The city where the library branch is located in.\n      - key: /name\n        description: The name of the branch.\n    metrics:\n    - name: library.googleapis.com/book/borrowed_count\n      metric_kind: DELTA\n      value_type: INT64\n    billing:\n      consumer_destinations:\n      - monitored_resource: library.googleapis.com/branch\n        metrics:\n        - library.googleapis.com/book/borrowed_count",
+      "description": "Billing related configuration of the service.\n\nThe following example shows how to configure monitored resources and metrics\nfor billing:\n    monitored_resources:\n    - type: library.googleapis.com/branch\n      labels:\n      - key: /city\n        description: The city where the library branch is located in.\n      - key: /name\n        description: The name of the branch.\n    metrics:\n    - name: library.googleapis.com/book/borrowed_count\n      metric_kind: DELTA\n      value_type: INT64\n    billing:\n      consumer_destinations:\n      - monitored_resource: library.googleapis.com/branch\n        metrics:\n        - library.googleapis.com/book/borrowed_count",
       "type": "object",
       "properties": {
         "consumerDestinations": {
@@ -701,13 +1372,6 @@
       "description": "`Endpoint` describes a network endpoint that serves a set of APIs.\nA service may expose any number of endpoints, and all endpoints share the\nsame service configuration, such as quota configuration and monitoring\nconfiguration.\n\nExample service configuration:\n\n    name: library-example.googleapis.com\n    endpoints:\n      # Below entry makes 'google.example.library.v1.Library'\n      # API be served from endpoint address library-example.googleapis.com.\n      # It also allows HTTP OPTIONS calls to be passed to the backend, for\n      # it to decide whether the subsequent cross-origin request is\n      # allowed to proceed.\n    - name: library-example.googleapis.com\n      allow_cors: true",
       "type": "object",
       "properties": {
-        "features": {
-          "description": "The list of features enabled on this endpoint.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "apis": {
           "description": "The list of APIs served by this endpoint.\n\nIf no APIs are specified this translates to \"all APIs\" exported by the\nservice, as defined in the top-level service configuration.",
           "items": {
@@ -726,13 +1390,20 @@
           },
           "type": "array"
         },
+        "target": {
+          "description": "The specification of an Internet routable address of API frontend that will\nhandle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).\nIt should be either a valid IPv4 address or a fully-qualified domain name.\nFor example, \"8.8.8.8\" or \"myservice.appspot.com\".",
+          "type": "string"
+        },
         "name": {
           "description": "The canonical name of this endpoint.",
           "type": "string"
         },
-        "target": {
-          "description": "The specification of an Internet routable address of API frontend that will\nhandle requests to this [API Endpoint](https://cloud.google.com/apis/design/glossary).\nIt should be either a valid IPv4 address or a fully-qualified domain name.\nFor example, \"8.8.8.8\" or \"myservice.appspot.com\".",
-          "type": "string"
+        "features": {
+          "description": "The list of features enabled on this endpoint.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "id": "Endpoint"
@@ -813,6 +1484,21 @@
       },
       "id": "LogDescriptor"
     },
+    "CustomErrorRule": {
+      "description": "A custom error rule.",
+      "type": "object",
+      "properties": {
+        "isErrorType": {
+          "description": "Mark this message as possible payload in error response.  Otherwise,\nobjects of this type will be filtered when they appear in error payload.",
+          "type": "boolean"
+        },
+        "selector": {
+          "description": "Selects messages to which this rule applies.\n\nRefer to selector for syntax details.",
+          "type": "string"
+        }
+      },
+      "id": "CustomErrorRule"
+    },
     "MonitoredResourceDescriptor": {
       "description": "An object that describes the schema of a MonitoredResource object using a\ntype name and a set of labels.  For example, the monitored resource\ndescriptor for Google Compute Engine VM instances has a type of\n`\"gce_instance\"` and specifies the use of the labels `\"instance_id\"` and\n`\"zone\"` to identify particular VM instances.\n\nDifferent APIs can support different monitored resource types. APIs generally\nprovide a `list` method that returns the monitored resource descriptors used\nby the API.",
       "type": "object",
@@ -843,29 +1529,21 @@
       },
       "id": "MonitoredResourceDescriptor"
     },
-    "CustomErrorRule": {
-      "description": "A custom error rule.",
+    "CustomAuthRequirements": {
+      "description": "Configuration for a custom authentication provider.",
       "type": "object",
       "properties": {
-        "isErrorType": {
-          "description": "Mark this message as possible payload in error response.  Otherwise,\nobjects of this type will be filtered when they appear in error payload.",
-          "type": "boolean"
-        },
-        "selector": {
-          "description": "Selects messages to which this rule applies.\n\nRefer to selector for syntax details.",
+        "provider": {
+          "description": "A configuration string containing connection information for the\nauthentication provider, typically formatted as a SmartService string\n(go/smartservice).",
           "type": "string"
         }
       },
-      "id": "CustomErrorRule"
+      "id": "CustomAuthRequirements"
     },
     "MediaDownload": {
       "description": "Defines the Media configuration for a service in case of a download.\nUse this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead [][google.bytestream.RestByteStream] as an API to\nyour configuration for Bytestream methods.",
       "type": "object",
       "properties": {
-        "useDirectDownload": {
-          "description": "A boolean that determines if direct download from ESF should be used for\ndownload of this media.",
-          "type": "boolean"
-        },
         "enabled": {
           "description": "Whether download is enabled.",
           "type": "boolean"
@@ -878,28 +1556,21 @@
           "description": "A boolean that determines whether a notification for the completion of a\ndownload should be sent to the backend.",
           "type": "boolean"
         },
-        "dropzone": {
-          "description": "Name of the Scotty dropzone to use for the current API.",
-          "type": "string"
-        },
         "maxDirectDownloadSize": {
           "format": "int64",
           "description": "Optional maximum acceptable size for direct download.\nThe size is specified in bytes.",
           "type": "string"
+        },
+        "dropzone": {
+          "description": "Name of the Scotty dropzone to use for the current API.",
+          "type": "string"
+        },
+        "useDirectDownload": {
+          "description": "A boolean that determines if direct download from ESF should be used for\ndownload of this media.",
+          "type": "boolean"
         }
       },
       "id": "MediaDownload"
-    },
-    "CustomAuthRequirements": {
-      "description": "Configuration for a custom authentication provider.",
-      "type": "object",
-      "properties": {
-        "provider": {
-          "description": "A configuration string containing connection information for the\nauthentication provider, typically formatted as a SmartService string\n(go/smartservice).",
-          "type": "string"
-        }
-      },
-      "id": "CustomAuthRequirements"
     },
     "DisableServiceRequest": {
       "description": "Request message for DisableService method.",
@@ -929,6 +1600,14 @@
       "description": "Defines the Media configuration for a service in case of an upload.\nUse this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead [][google.bytestream.RestByteStream] as an API to\nyour configuration for Bytestream methods.",
       "type": "object",
       "properties": {
+        "startNotification": {
+          "description": "Whether to receive a notification on the start of media upload.",
+          "type": "boolean"
+        },
+        "uploadService": {
+          "description": "DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING IS REMOVED.\n\nSpecify name of the upload service if one is used for upload.",
+          "type": "string"
+        },
         "mimeTypes": {
           "description": "An array of mimetype patterns. Esf will only accept uploads that match one\nof the given patterns.",
           "items": {
@@ -956,14 +1635,6 @@
         "dropzone": {
           "description": "Name of the Scotty dropzone to use for the current API.",
           "type": "string"
-        },
-        "startNotification": {
-          "description": "Whether to receive a notification on the start of media upload.",
-          "type": "boolean"
-        },
-        "uploadService": {
-          "description": "DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING IS REMOVED.\n\nSpecify name of the upload service if one is used for upload.",
-          "type": "string"
         }
       },
       "id": "MediaUpload"
@@ -972,16 +1643,16 @@
       "description": "Configuration of a specific billing destination (Currently only support\nbill against consumer project).",
       "type": "object",
       "properties": {
-        "monitoredResource": {
-          "description": "The monitored resource type. The type must be defined in\nService.monitored_resources section.",
-          "type": "string"
-        },
         "metrics": {
           "description": "Names of the metrics to report to this billing destination.\nEach name must be defined in Service.metrics section.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "monitoredResource": {
+          "description": "The monitored resource type. The type must be defined in\nService.monitored_resources section.",
+          "type": "string"
         }
       },
       "id": "BillingDestination"
@@ -990,10 +1661,6 @@
       "description": "Usage configuration rules for the service.\n\nNOTE: Under development.\n\n\nUse this rule to configure unregistered calls for the service. Unregistered\ncalls are calls that do not contain consumer project identity.\n(Example: calls that do not contain an API key).\nBy default, API methods do not allow unregistered calls, and each method call\nmust be identified by a consumer project identity. Use this rule to\nallow/disallow unregistered calls.\n\nExample of an API that wants to allow unregistered calls for entire service.\n\n    usage:\n      rules:\n      - selector: \"*\"\n        allow_unregistered_calls: true\n\nExample of a method that wants to allow unregistered calls.\n\n    usage:\n      rules:\n      - selector: \"google.example.library.v1.LibraryService.CreateBook\"\n        allow_unregistered_calls: true",
       "type": "object",
       "properties": {
-        "selector": {
-          "description": "Selects the methods to which this rule applies. Use '*' to indicate all\nmethods in all APIs.\n\nRefer to selector for syntax details.",
-          "type": "string"
-        },
         "skipServiceControl": {
           "description": "True, if the method should skip service control. If so, no control plane\nfeature (like quota and billing) will be enabled.",
           "type": "boolean"
@@ -1001,6 +1668,10 @@
         "allowUnregisteredCalls": {
           "description": "True, if the method allows unregistered calls; false otherwise.",
           "type": "boolean"
+        },
+        "selector": {
+          "description": "Selects the methods to which this rule applies. Use '*' to indicate all\nmethods in all APIs.\n\nRefer to selector for syntax details.",
+          "type": "string"
         }
       },
       "id": "UsageRule"
@@ -1057,14 +1728,6 @@
       "description": "Authentication rules for the service.\n\nBy default, if a method has any authentication requirements, every request\nmust include a valid credential matching one of the requirements.\nIt's an error to include more than one kind of credential in a single\nrequest.\n\nIf a method doesn't have any auth requirements, request credentials will be\nignored.",
       "type": "object",
       "properties": {
-        "customAuth": {
-          "description": "Configuration for custom authentication.",
-          "$ref": "CustomAuthRequirements"
-        },
-        "oauth": {
-          "description": "The requirements for OAuth credentials.",
-          "$ref": "OAuthRequirements"
-        },
         "requirements": {
           "description": "Requirements for additional authentication providers.",
           "items": {
@@ -1079,6 +1742,14 @@
         "selector": {
           "description": "Selects the methods to which this rule applies.\n\nRefer to selector for syntax details.",
           "type": "string"
+        },
+        "customAuth": {
+          "description": "Configuration for custom authentication.",
+          "$ref": "CustomAuthRequirements"
+        },
+        "oauth": {
+          "description": "The requirements for OAuth credentials.",
+          "$ref": "OAuthRequirements"
         }
       },
       "id": "AuthenticationRule"
@@ -1087,11 +1758,6 @@
       "description": "A backend rule provides configuration for an individual API element.",
       "type": "object",
       "properties": {
-        "deadline": {
-          "format": "double",
-          "description": "The number of seconds to wait for a response from a request.  The default\ndeadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.",
-          "type": "number"
-        },
         "minDeadline": {
           "format": "double",
           "description": "Minimum deadline in seconds needed for this method. Calls having deadline\nvalue lower than this will be rejected.",
@@ -1104,6 +1770,11 @@
         "selector": {
           "description": "Selects the methods to which this rule applies.\n\nRefer to selector for syntax details.",
           "type": "string"
+        },
+        "deadline": {
+          "format": "double",
+          "description": "The number of seconds to wait for a response from a request.  The default\ndeadline for gRPC is infinite (no deadline) and HTTP requests is 5 seconds.",
+          "type": "number"
         }
       },
       "id": "BackendRule"
@@ -1112,6 +1783,26 @@
       "description": "Api is a light-weight descriptor for an API Interface.\n\nInterfaces are also described as \"protocol buffer services\" in some contexts,\nsuch as by the \"service\" keyword in a .proto file, but they are different\nfrom API Services, which represent a concrete implementation of an interface\nas opposed to simply a description of methods and bindings. They are also\nsometimes simply referred to as \"APIs\" in other contexts, such as the name of\nthis message itself. See https://cloud.google.com/apis/design/glossary for\ndetailed terminology.",
       "type": "object",
       "properties": {
+        "syntax": {
+          "description": "The source syntax of the service.",
+          "type": "string",
+          "enumDescriptions": [
+            "Syntax `proto2`.",
+            "Syntax `proto3`."
+          ],
+          "enum": [
+            "SYNTAX_PROTO2",
+            "SYNTAX_PROTO3"
+          ]
+        },
+        "sourceContext": {
+          "$ref": "SourceContext",
+          "description": "Source context for the protocol buffer service represented by this\nmessage."
+        },
+        "version": {
+          "description": "A version string for this interface. If specified, must have the form\n`major-version.minor-version`, as in `1.10`. If the minor version is\nomitted, it defaults to zero. If the entire version field is empty, the\nmajor version is derived from the package name, as outlined below. If the\nfield is not empty, the version in the package name will be verified to be\nconsistent with what is provided here.\n\nThe versioning schema uses [semantic\nversioning](http://semver.org) where the major version number\nindicates a breaking change and the minor version an additive,\nnon-breaking change. Both version numbers are signals to users\nwhat to expect from different versions, and should be carefully\nchosen based on the product plan.\n\nThe major version is also reflected in the package name of the\ninterface, which must end in `v\u003cmajor-version\u003e`, as in\n`google.feature.v1`. For major versions 0 and 1, the suffix can\nbe omitted. Zero major versions must only be used for\nexperimental, non-GA interfaces.\n",
+          "type": "string"
+        },
         "mixins": {
           "description": "Included interfaces. See Mixin.",
           "items": {
@@ -1136,26 +1827,6 @@
         "name": {
           "description": "The fully qualified name of this interface, including package name\nfollowed by the interface's simple name.",
           "type": "string"
-        },
-        "syntax": {
-          "description": "The source syntax of the service.",
-          "type": "string",
-          "enumDescriptions": [
-            "Syntax `proto2`.",
-            "Syntax `proto3`."
-          ],
-          "enum": [
-            "SYNTAX_PROTO2",
-            "SYNTAX_PROTO3"
-          ]
-        },
-        "sourceContext": {
-          "$ref": "SourceContext",
-          "description": "Source context for the protocol buffer service represented by this\nmessage."
-        },
-        "version": {
-          "description": "A version string for this interface. If specified, must have the form\n`major-version.minor-version`, as in `1.10`. If the minor version is\nomitted, it defaults to zero. If the entire version field is empty, the\nmajor version is derived from the package name, as outlined below. If the\nfield is not empty, the version in the package name will be verified to be\nconsistent with what is provided here.\n\nThe versioning schema uses [semantic\nversioning](http://semver.org) where the major version number\nindicates a breaking change and the minor version an additive,\nnon-breaking change. Both version numbers are signals to users\nwhat to expect from different versions, and should be carefully\nchosen based on the product plan.\n\nThe major version is also reflected in the package name of the\ninterface, which must end in `v\u003cmajor-version\u003e`, as in\n`google.feature.v1`. For major versions 0 and 1, the suffix can\nbe omitted. Zero major versions must only be used for\nexperimental, non-GA interfaces.\n",
-          "type": "string"
         }
       },
       "id": "Api"
@@ -1165,12 +1836,12 @@
       "type": "object",
       "properties": {
         "metricCosts": {
+          "description": "Metrics to update when the selected methods are called, and the associated\ncost applied to each metric.\n\nThe key of the map is the metric name, and the values are the amount\nincreased for the metric against which the quota limits are defined.\nThe value must not be negative.",
+          "type": "object",
           "additionalProperties": {
             "format": "int64",
             "type": "string"
-          },
-          "description": "Metrics to update when the selected methods are called, and the associated\ncost applied to each metric.\n\nThe key of the map is the metric name, and the values are the amount\nincreased for the metric against which the quota limits are defined.\nThe value must not be negative.",
-          "type": "object"
+          }
         },
         "selector": {
           "description": "Selects the methods to which this rule applies.\n\nRefer to selector for syntax details.",
@@ -1183,17 +1854,17 @@
       "description": "`Authentication` defines the authentication configuration for an API.\n\nExample for an API targeted for external use:\n\n    name: calendar.googleapis.com\n    authentication:\n      providers:\n      - id: google_calendar_auth\n        jwks_uri: https://www.googleapis.com/oauth2/v1/certs\n        issuer: https://securetoken.google.com\n      rules:\n      - selector: \"*\"\n        requirements:\n          provider_id: google_calendar_auth",
       "type": "object",
       "properties": {
-        "providers": {
-          "description": "Defines a set of authentication providers that a service supports.",
-          "items": {
-            "$ref": "AuthProvider"
-          },
-          "type": "array"
-        },
         "rules": {
           "description": "A list of authentication rules that apply to individual API methods.\n\n**NOTE:** All service configuration rules follow \"last one wins\" order.",
           "items": {
             "$ref": "AuthenticationRule"
+          },
+          "type": "array"
+        },
+        "providers": {
+          "description": "Defines a set of authentication providers that a service supports.",
+          "items": {
+            "$ref": "AuthProvider"
           },
           "type": "array"
         }
@@ -1204,33 +1875,33 @@
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object",
       "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
-        "response": {
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
-          "type": "object",
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          }
-        },
-        "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
-          "type": "string"
-        },
         "error": {
           "description": "The error result of the operation in case of failure or cancellation.",
           "$ref": "Status"
         },
         "metadata": {
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
-          "type": "object",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
-          }
+          },
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
+          "type": "object"
+        },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "response": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "type": "string"
         }
       },
       "id": "Operation"
@@ -1261,6 +1932,17 @@
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "type": "object",
       "properties": {
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
         "code": {
           "format": "int32",
           "description": "The status code, which should be an enum value of google.rpc.Code.",
@@ -1269,17 +1951,6 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
-        },
-        "details": {
-          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
-          "items": {
-            "type": "object",
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            }
-          },
-          "type": "array"
         }
       },
       "id": "Status"
@@ -1310,452 +1981,13 @@
         }
       },
       "id": "AuthProvider"
-    },
-    "Service": {
-      "description": "`Service` is the root object of Google service configuration schema. It\ndescribes basic information about a service, such as the name and the\ntitle, and delegates other aspects to sub-sections. Each sub-section is\neither a proto message or a repeated proto message that configures a\nspecific aspect, such as auth. See each proto message definition for details.\n\nExample:\n\n    type: google.api.Service\n    config_version: 3\n    name: calendar.googleapis.com\n    title: Google Calendar API\n    apis:\n    - name: google.calendar.v3.Calendar\n    authentication:\n      providers:\n      - id: google_calendar_auth\n        jwks_uri: https://www.googleapis.com/oauth2/v1/certs\n        issuer: https://securetoken.google.com\n      rules:\n      - selector: \"*\"\n        requirements:\n          provider_id: google_calendar_auth",
-      "type": "object",
-      "properties": {
-        "visibility": {
-          "$ref": "Visibility",
-          "description": "API visibility configuration."
-        },
-        "quota": {
-          "$ref": "Quota",
-          "description": "Quota configuration."
-        },
-        "billing": {
-          "description": "Billing configuration.",
-          "$ref": "Billing"
-        },
-        "name": {
-          "description": "The DNS address at which this service is available,\ne.g. `calendar.googleapis.com`.",
-          "type": "string"
-        },
-        "customError": {
-          "description": "Custom error configuration.",
-          "$ref": "CustomError"
-        },
-        "title": {
-          "description": "The product title for this service.",
-          "type": "string"
-        },
-        "endpoints": {
-          "description": "Configuration for network endpoints.  If this is empty, then an endpoint\nwith the same name as the service is automatically generated to service all\ndefined APIs.",
-          "items": {
-            "$ref": "Endpoint"
-          },
-          "type": "array"
-        },
-        "apis": {
-          "description": "A list of API interfaces exported by this service. Only the `name` field\nof the google.protobuf.Api needs to be provided by the configuration\nauthor, as the remaining fields will be derived from the IDL during the\nnormalization process. It is an error to specify an API interface here\nwhich cannot be resolved against the associated IDL files.",
-          "items": {
-            "$ref": "Api"
-          },
-          "type": "array"
-        },
-        "logs": {
-          "description": "Defines the logs used by this service.",
-          "items": {
-            "$ref": "LogDescriptor"
-          },
-          "type": "array"
-        },
-        "types": {
-          "description": "A list of all proto message types included in this API service.\nTypes referenced directly or indirectly by the `apis` are\nautomatically included.  Messages which are not referenced but\nshall be included, such as types used by the `google.protobuf.Any` type,\nshould be listed here by name. Example:\n\n    types:\n    - name: google.protobuf.Int32",
-          "items": {
-            "$ref": "Type"
-          },
-          "type": "array"
-        },
-        "sourceInfo": {
-          "$ref": "SourceInfo",
-          "description": "Output only. The source information for this configuration if available."
-        },
-        "http": {
-          "$ref": "Http",
-          "description": "HTTP configuration."
-        },
-        "systemParameters": {
-          "$ref": "SystemParameters",
-          "description": "System parameter configuration."
-        },
-        "backend": {
-          "description": "API backend configuration.",
-          "$ref": "Backend"
-        },
-        "documentation": {
-          "description": "Additional API documentation.",
-          "$ref": "Documentation"
-        },
-        "logging": {
-          "$ref": "Logging",
-          "description": "Logging configuration."
-        },
-        "monitoredResources": {
-          "description": "Defines the monitored resources used by this service. This is required\nby the Service.monitoring and Service.logging configurations.",
-          "items": {
-            "$ref": "MonitoredResourceDescriptor"
-          },
-          "type": "array"
-        },
-        "enums": {
-          "description": "A list of all enum types included in this API service.  Enums\nreferenced directly or indirectly by the `apis` are automatically\nincluded.  Enums which are not referenced but shall be included\nshould be listed here by name. Example:\n\n    enums:\n    - name: google.someapi.v1.SomeEnum",
-          "items": {
-            "$ref": "Enum"
-          },
-          "type": "array"
-        },
-        "context": {
-          "description": "Context configuration.",
-          "$ref": "Context"
-        },
-        "id": {
-          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead.",
-          "type": "string"
-        },
-        "usage": {
-          "$ref": "Usage",
-          "description": "Configuration controlling usage of this service."
-        },
-        "metrics": {
-          "description": "Defines the metrics used by this service.",
-          "items": {
-            "$ref": "MetricDescriptor"
-          },
-          "type": "array"
-        },
-        "authentication": {
-          "$ref": "Authentication",
-          "description": "Auth configuration."
-        },
-        "experimental": {
-          "description": "Experimental configuration.",
-          "$ref": "Experimental"
-        },
-        "control": {
-          "$ref": "Control",
-          "description": "Configuration for the service control plane."
-        },
-        "configVersion": {
-          "format": "uint32",
-          "description": "The semantic version of the service configuration. The config version\naffects the interpretation of the service configuration. For example,\ncertain features are enabled by default for certain config versions.\nThe latest config version is `3`.",
-          "type": "integer"
-        },
-        "monitoring": {
-          "description": "Monitoring configuration.",
-          "$ref": "Monitoring"
-        },
-        "systemTypes": {
-          "description": "A list of all proto message types included in this API service.\nIt serves similar purpose as [google.api.Service.types], except that\nthese types are not needed by user-defined APIs. Therefore, they will not\nshow up in the generated discovery doc. This field should only be used\nto define system APIs in ESF.",
-          "items": {
-            "$ref": "Type"
-          },
-          "type": "array"
-        },
-        "producerProjectId": {
-          "description": "The Google project that owns this service.",
-          "type": "string"
-        }
-      },
-      "id": "Service"
-    },
-    "EnumValue": {
-      "description": "Enum value definition.",
-      "type": "object",
-      "properties": {
-        "options": {
-          "description": "Protocol buffer options.",
-          "items": {
-            "$ref": "Option"
-          },
-          "type": "array"
-        },
-        "number": {
-          "format": "int32",
-          "description": "Enum value number.",
-          "type": "integer"
-        },
-        "name": {
-          "description": "Enum value name.",
-          "type": "string"
-        }
-      },
-      "id": "EnumValue"
-    },
-    "CustomHttpPattern": {
-      "description": "A custom pattern is used for defining custom HTTP verb.",
-      "type": "object",
-      "properties": {
-        "kind": {
-          "description": "The name of this custom HTTP verb.",
-          "type": "string"
-        },
-        "path": {
-          "description": "The path matched by this custom verb.",
-          "type": "string"
-        }
-      },
-      "id": "CustomHttpPattern"
-    },
-    "OperationMetadata": {
-      "description": "The metadata associated with a long running operation resource.",
-      "type": "object",
-      "properties": {
-        "startTime": {
-          "format": "google-datetime",
-          "description": "The start time of the operation.",
-          "type": "string"
-        },
-        "steps": {
-          "description": "Detailed status information for each step. The order is undetermined.",
-          "items": {
-            "$ref": "Step"
-          },
-          "type": "array"
-        },
-        "resourceNames": {
-          "description": "The full name of the resources that this operation is directly\nassociated with.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "progressPercentage": {
-          "format": "int32",
-          "description": "Percentage of completion of this operation, ranging from 0 to 100.",
-          "type": "integer"
-        }
-      },
-      "id": "OperationMetadata"
-    },
-    "SystemParameterRule": {
-      "description": "Define a system parameter rule mapping system parameter definitions to\nmethods.",
-      "type": "object",
-      "properties": {
-        "selector": {
-          "description": "Selects the methods to which this rule applies. Use '*' to indicate all\nmethods in all APIs.\n\nRefer to selector for syntax details.",
-          "type": "string"
-        },
-        "parameters": {
-          "description": "Define parameters. Multiple names may be defined for a parameter.\nFor a given method call, only one of them should be used. If multiple\nnames are used the behavior is implementation-dependent.\nIf none of the specified names are present the behavior is\nparameter-dependent.",
-          "items": {
-            "$ref": "SystemParameter"
-          },
-          "type": "array"
-        }
-      },
-      "id": "SystemParameterRule"
-    },
-    "PublishedService": {
-      "description": "The published version of a Service that is managed by\nGoogle Service Management.",
-      "type": "object",
-      "properties": {
-        "service": {
-          "description": "The service's published configuration.",
-          "$ref": "Service"
-        },
-        "name": {
-          "description": "The resource name of the service.\n\nA valid name would be:\n- services/serviceuser.googleapis.com",
-          "type": "string"
-        }
-      },
-      "id": "PublishedService"
-    },
-    "HttpRule": {
-      "description": "`HttpRule` defines the mapping of an RPC method to one or more HTTP\nREST API methods. The mapping specifies how different portions of the RPC\nrequest message are mapped to URL path, URL query parameters, and\nHTTP request body. The mapping is typically specified as an\n`google.api.http` annotation on the RPC method,\nsee \"google/api/annotations.proto\" for details.\n\nThe mapping consists of a field specifying the path template and\nmethod kind.  The path template can refer to fields in the request\nmessage, as in the example below which describes a REST GET\noperation on a resource collection of messages:\n\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http).get = \"/v1/messages/{message_id}/{sub.subfield}\";\n      }\n    }\n    message GetMessageRequest {\n      message SubMessage {\n        string subfield = 1;\n      }\n      string message_id = 1; // mapped to the URL\n      SubMessage sub = 2;    // `sub.subfield` is url-mapped\n    }\n    message Message {\n      string text = 1; // content of the resource\n    }\n\nThe same http annotation can alternatively be expressed inside the\n`GRPC API Configuration` YAML file.\n\n    http:\n      rules:\n        - selector: \u003cproto_package_name\u003e.Messaging.GetMessage\n          get: /v1/messages/{message_id}/{sub.subfield}\n\nThis definition enables an automatic, bidrectional mapping of HTTP\nJSON to RPC. Example:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456/foo`  | `GetMessage(message_id: \"123456\" sub: SubMessage(subfield: \"foo\"))`\n\nIn general, not only fields but also field paths can be referenced\nfrom a path pattern. Fields mapped to the path pattern cannot be\nrepeated and must have a primitive (non-message) type.\n\nAny fields in the request message which are not bound by the path\npattern automatically become (optional) HTTP query\nparameters. Assume the following definition of the request message:\n\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http).get = \"/v1/messages/{message_id}\";\n      }\n    }\n    message GetMessageRequest {\n      message SubMessage {\n        string subfield = 1;\n      }\n      string message_id = 1; // mapped to the URL\n      int64 revision = 2;    // becomes a parameter\n      SubMessage sub = 3;    // `sub.subfield` becomes a parameter\n    }\n\n\nThis enables a HTTP JSON to RPC mapping as below:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456?revision=2&sub.subfield=foo` | `GetMessage(message_id: \"123456\" revision: 2 sub: SubMessage(subfield: \"foo\"))`\n\nNote that fields which are mapped to HTTP parameters must have a\nprimitive type or a repeated primitive type. Message types are not\nallowed. In the case of a repeated type, the parameter can be\nrepeated in the URL, as in `...?param=A&param=B`.\n\nFor HTTP method kinds which allow a request body, the `body` field\nspecifies the mapping. Consider a REST update method on the\nmessage resource collection:\n\n\n    service Messaging {\n      rpc UpdateMessage(UpdateMessageRequest) returns (Message) {\n        option (google.api.http) = {\n          put: \"/v1/messages/{message_id}\"\n          body: \"message\"\n        };\n      }\n    }\n    message UpdateMessageRequest {\n      string message_id = 1; // mapped to the URL\n      Message message = 2;   // mapped to the body\n    }\n\n\nThe following HTTP JSON to RPC mapping is enabled, where the\nrepresentation of the JSON in the request body is determined by\nprotos JSON encoding:\n\nHTTP | RPC\n-----|-----\n`PUT /v1/messages/123456 { \"text\": \"Hi!\" }` | `UpdateMessage(message_id: \"123456\" message { text: \"Hi!\" })`\n\nThe special name `*` can be used in the body mapping to define that\nevery field not bound by the path template should be mapped to the\nrequest body.  This enables the following alternative definition of\nthe update method:\n\n    service Messaging {\n      rpc UpdateMessage(Message) returns (Message) {\n        option (google.api.http) = {\n          put: \"/v1/messages/{message_id}\"\n          body: \"*\"\n        };\n      }\n    }\n    message Message {\n      string message_id = 1;\n      string text = 2;\n    }\n\n\nThe following HTTP JSON to RPC mapping is enabled:\n\nHTTP | RPC\n-----|-----\n`PUT /v1/messages/123456 { \"text\": \"Hi!\" }` | `UpdateMessage(message_id: \"123456\" text: \"Hi!\")`\n\nNote that when using `*` in the body mapping, it is not possible to\nhave HTTP parameters, as all fields not bound by the path end in\nthe body. This makes this option more rarely used in practice of\ndefining REST APIs. The common usage of `*` is in custom methods\nwhich don't use the URL at all for transferring data.\n\nIt is possible to define multiple HTTP methods for one RPC by using\nthe `additional_bindings` option. Example:\n\n    service Messaging {\n      rpc GetMessage(GetMessageRequest) returns (Message) {\n        option (google.api.http) = {\n          get: \"/v1/messages/{message_id}\"\n          additional_bindings {\n            get: \"/v1/users/{user_id}/messages/{message_id}\"\n          }\n        };\n      }\n    }\n    message GetMessageRequest {\n      string message_id = 1;\n      string user_id = 2;\n    }\n\n\nThis enables the following two alternative HTTP JSON to RPC\nmappings:\n\nHTTP | RPC\n-----|-----\n`GET /v1/messages/123456` | `GetMessage(message_id: \"123456\")`\n`GET /v1/users/me/messages/123456` | `GetMessage(user_id: \"me\" message_id: \"123456\")`\n\n# Rules for HTTP mapping\n\nThe rules for mapping HTTP path, query parameters, and body fields\nto the request message are as follows:\n\n1. The `body` field specifies either `*` or a field path, or is\n   omitted. If omitted, it indicates there is no HTTP request body.\n2. Leaf fields (recursive expansion of nested messages in the\n   request) can be classified into three types:\n    (a) Matched in the URL template.\n    (b) Covered by body (if body is `*`, everything except (a) fields;\n        else everything under the body field)\n    (c) All other fields.\n3. URL query parameters found in the HTTP request are mapped to (c) fields.\n4. Any body sent with an HTTP request can contain only (b) fields.\n\nThe syntax of the path template is as follows:\n\n    Template = \"/\" Segments [ Verb ] ;\n    Segments = Segment { \"/\" Segment } ;\n    Segment  = \"*\" | \"**\" | LITERAL | Variable ;\n    Variable = \"{\" FieldPath [ \"=\" Segments ] \"}\" ;\n    FieldPath = IDENT { \".\" IDENT } ;\n    Verb     = \":\" LITERAL ;\n\nThe syntax `*` matches a single path segment. The syntax `**` matches zero\nor more path segments, which must be the last part of the path except the\n`Verb`. The syntax `LITERAL` matches literal text in the path.\n\nThe syntax `Variable` matches part of the URL path as specified by its\ntemplate. A variable template must not contain other variables. If a variable\nmatches a single path segment, its template may be omitted, e.g. `{var}`\nis equivalent to `{var=*}`.\n\nIf a variable contains exactly one path segment, such as `\"{var}\"` or\n`\"{var=*}\"`, when such a variable is expanded into a URL path, all characters\nexcept `[-_.~0-9a-zA-Z]` are percent-encoded. Such variables show up in the\nDiscovery Document as `{var}`.\n\nIf a variable contains one or more path segments, such as `\"{var=foo/*}\"`\nor `\"{var=**}\"`, when such a variable is expanded into a URL path, all\ncharacters except `[-_.~/0-9a-zA-Z]` are percent-encoded. Such variables\nshow up in the Discovery Document as `{+var}`.\n\nNOTE: While the single segment variable matches the semantics of\n[RFC 6570](https://tools.ietf.org/html/rfc6570) Section 3.2.2\nSimple String Expansion, the multi segment variable **does not** match\nRFC 6570 Reserved Expansion. The reason is that the Reserved Expansion\ndoes not expand special characters like `?` and `#`, which would lead\nto invalid URLs.\n\nNOTE: the field paths in variables and in the `body` must not refer to\nrepeated fields or map fields.",
-      "type": "object",
-      "properties": {
-        "custom": {
-          "description": "The custom pattern is used for specifying an HTTP method that is not\nincluded in the `pattern` field, such as HEAD, or \"*\" to leave the\nHTTP method unspecified for this rule. The wild-card rule is useful\nfor services that provide content to Web (HTML) clients.",
-          "$ref": "CustomHttpPattern"
-        },
-        "patch": {
-          "description": "Used for updating a resource.",
-          "type": "string"
-        },
-        "get": {
-          "description": "Used for listing and getting information about resources.",
-          "type": "string"
-        },
-        "put": {
-          "description": "Used for updating a resource.",
-          "type": "string"
-        },
-        "delete": {
-          "description": "Used for deleting a resource.",
-          "type": "string"
-        },
-        "body": {
-          "description": "The name of the request field whose value is mapped to the HTTP body, or\n`*` for mapping all fields not captured by the path pattern to the HTTP\nbody. NOTE: the referred field must not be a repeated field and must be\npresent at the top-level of request message type.",
-          "type": "string"
-        },
-        "mediaDownload": {
-          "$ref": "MediaDownload",
-          "description": "Use this only for Scotty Requests. Do not use this for bytestream methods.\nFor media support, add instead [][google.bytestream.RestByteStream] as an\nAPI to your configuration."
-        },
-        "post": {
-          "description": "Used for creating a resource.",
-          "type": "string"
-        },
-        "additionalBindings": {
-          "description": "Additional HTTP bindings for the selector. Nested bindings must\nnot contain an `additional_bindings` field themselves (that is,\nthe nesting may only be one level deep).",
-          "items": {
-            "$ref": "HttpRule"
-          },
-          "type": "array"
-        },
-        "responseBody": {
-          "description": "The name of the response field whose value is mapped to the HTTP body of\nresponse. Other response fields are ignored. This field is optional. When\nnot set, the response message will be used as HTTP body of response.\nNOTE: the referred field must be not a repeated field and must be present\nat the top-level of response message type.",
-          "type": "string"
-        },
-        "mediaUpload": {
-          "description": "Use this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead\n[][google.bytestream.RestByteStream] as an API to your\nconfiguration for Bytestream methods.",
-          "$ref": "MediaUpload"
-        },
-        "selector": {
-          "description": "Selects methods to which this rule applies.\n\nRefer to selector for syntax details.",
-          "type": "string"
-        }
-      },
-      "id": "HttpRule"
-    },
-    "VisibilityRule": {
-      "description": "A visibility rule provides visibility configuration for an individual API\nelement.",
-      "type": "object",
-      "properties": {
-        "restriction": {
-          "description": "A comma-separated list of visibility labels that apply to the `selector`.\nAny of the listed labels can be used to grant the visibility.\n\nIf a rule has multiple labels, removing one of the labels but not all of\nthem can break clients.\n\nExample:\n\n    visibility:\n      rules:\n      - selector: google.calendar.Calendar.EnhancedSearch\n        restriction: GOOGLE_INTERNAL, TRUSTED_TESTER\n\nRemoving GOOGLE_INTERNAL from this restriction will break clients that\nrely on this method and only had access to it through GOOGLE_INTERNAL.",
-          "type": "string"
-        },
-        "selector": {
-          "description": "Selects methods, messages, fields, enums, etc. to which this rule applies.\n\nRefer to selector for syntax details.",
-          "type": "string"
-        }
-      },
-      "id": "VisibilityRule"
-    },
-    "MonitoringDestination": {
-      "description": "Configuration of a specific monitoring destination (the producer project\nor the consumer project).",
-      "type": "object",
-      "properties": {
-        "metrics": {
-          "description": "Names of the metrics to report to this monitoring destination.\nEach name must be defined in Service.metrics section.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "monitoredResource": {
-          "description": "The monitored resource type. The type must be defined in\nService.monitored_resources section.",
-          "type": "string"
-        }
-      },
-      "id": "MonitoringDestination"
-    },
-    "Visibility": {
-      "description": "`Visibility` defines restrictions for the visibility of service\nelements.  Restrictions are specified using visibility labels\n(e.g., TRUSTED_TESTER) that are elsewhere linked to users and projects.\n\nUsers and projects can have access to more than one visibility label. The\neffective visibility for multiple labels is the union of each label's\nelements, plus any unrestricted elements.\n\nIf an element and its parents have no restrictions, visibility is\nunconditionally granted.\n\nExample:\n\n    visibility:\n      rules:\n      - selector: google.calendar.Calendar.EnhancedSearch\n        restriction: TRUSTED_TESTER\n      - selector: google.calendar.Calendar.Delegate\n        restriction: GOOGLE_INTERNAL\n\nHere, all methods are publicly visible except for the restricted methods\nEnhancedSearch and Delegate.",
-      "type": "object",
-      "properties": {
-        "rules": {
-          "description": "A list of visibility rules that apply to individual API elements.\n\n**NOTE:** All service configuration rules follow \"last one wins\" order.",
-          "items": {
-            "$ref": "VisibilityRule"
-          },
-          "type": "array"
-        }
-      },
-      "id": "Visibility"
-    },
-    "SystemParameters": {
-      "description": "### System parameter configuration\n\nA system parameter is a special kind of parameter defined by the API\nsystem, not by an individual API. It is typically mapped to an HTTP header\nand/or a URL query parameter. This configuration specifies which methods\nchange the names of the system parameters.",
-      "type": "object",
-      "properties": {
-        "rules": {
-          "description": "Define system parameters.\n\nThe parameters defined here will override the default parameters\nimplemented by the system. If this field is missing from the service\nconfig, default system parameters will be used. Default system parameters\nand names is implementation-dependent.\n\nExample: define api key for all methods\n\n    system_parameters\n      rules:\n        - selector: \"*\"\n          parameters:\n            - name: api_key\n              url_query_parameter: api_key\n\n\nExample: define 2 api key names for a specific method.\n\n    system_parameters\n      rules:\n        - selector: \"/ListShelves\"\n          parameters:\n            - name: api_key\n              http_header: Api-Key1\n            - name: api_key\n              http_header: Api-Key2\n\n**NOTE:** All service configuration rules follow \"last one wins\" order.",
-          "items": {
-            "$ref": "SystemParameterRule"
-          },
-          "type": "array"
-        }
-      },
-      "id": "SystemParameters"
-    },
-    "Quota": {
-      "description": "Quota configuration helps to achieve fairness and budgeting in service\nusage.\n\nThe quota configuration works this way:\n- The service configuration defines a set of metrics.\n- For API calls, the quota.metric_rules maps methods to metrics with\n  corresponding costs.\n- The quota.limits defines limits on the metrics, which will be used for\n  quota checks at runtime.\n\nAn example quota configuration in yaml format:\n\n   quota:\n\n     - name: apiWriteQpsPerProject\n       metric: library.googleapis.com/write_calls\n       unit: \"1/min/{project}\"  # rate limit for consumer projects\n       values:\n         STANDARD: 10000\n\n\n     # The metric rules bind all methods to the read_calls metric,\n     # except for the UpdateBook and DeleteBook methods. These two methods\n     # are mapped to the write_calls metric, with the UpdateBook method\n     # consuming at twice rate as the DeleteBook method.\n     metric_rules:\n     - selector: \"*\"\n       metric_costs:\n         library.googleapis.com/read_calls: 1\n     - selector: google.example.library.v1.LibraryService.UpdateBook\n       metric_costs:\n         library.googleapis.com/write_calls: 2\n     - selector: google.example.library.v1.LibraryService.DeleteBook\n       metric_costs:\n         library.googleapis.com/write_calls: 1\n\n Corresponding Metric definition:\n\n     metrics:\n     - name: library.googleapis.com/read_calls\n       display_name: Read requests\n       metric_kind: DELTA\n       value_type: INT64\n\n     - name: library.googleapis.com/write_calls\n       display_name: Write requests\n       metric_kind: DELTA\n       value_type: INT64",
-      "type": "object",
-      "properties": {
-        "limits": {
-          "description": "List of `QuotaLimit` definitions for the service.",
-          "items": {
-            "$ref": "QuotaLimit"
-          },
-          "type": "array"
-        },
-        "metricRules": {
-          "description": "List of `MetricRule` definitions, each one mapping a selected method to one\nor more metrics.",
-          "items": {
-            "$ref": "MetricRule"
-          },
-          "type": "array"
-        }
-      },
-      "id": "Quota"
-    },
-    "Step": {
-      "description": "Represents the status of one operation step.",
-      "type": "object",
-      "properties": {
-        "status": {
-          "enumDescriptions": [
-            "Unspecifed code.",
-            "The operation or step has completed without errors.",
-            "The operation or step has not started yet.",
-            "The operation or step is in progress.",
-            "The operation or step has completed with errors. If the operation is\nrollbackable, the rollback completed with errors too.",
-            "The operation or step has completed with cancellation."
-          ],
-          "enum": [
-            "STATUS_UNSPECIFIED",
-            "DONE",
-            "NOT_STARTED",
-            "IN_PROGRESS",
-            "FAILED",
-            "CANCELLED"
-          ],
-          "description": "The status code.",
-          "type": "string"
-        },
-        "description": {
-          "description": "The short description of the step.",
-          "type": "string"
-        }
-      },
-      "id": "Step"
-    },
-    "LoggingDestination": {
-      "description": "Configuration of a specific logging destination (the producer project\nor the consumer project).",
-      "type": "object",
-      "properties": {
-        "logs": {
-          "description": "Names of the logs to be sent to this destination. Each name must\nbe defined in the Service.logs section. If the log name is\nnot a domain scoped name, it will be automatically prefixed with\nthe service name followed by \"/\".",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "monitoredResource": {
-          "description": "The monitored resource type. The type must be defined in the\nService.monitored_resources section.",
-          "type": "string"
-        }
-      },
-      "id": "LoggingDestination"
     }
   },
-  "icons": {
-    "x32": "http://www.google.com/images/icons/product/search-32.gif",
-    "x16": "http://www.google.com/images/icons/product/search-16.gif"
-  },
   "protocol": "rest",
+  "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  },
   "canonicalName": "Service User",
   "auth": {
     "oauth2": {
@@ -1772,237 +2004,5 @@
       }
     }
   },
-  "rootUrl": "https://serviceuser.googleapis.com/",
-  "ownerDomain": "google.com",
-  "name": "serviceuser",
-  "batchPath": "batch",
-  "title": "Google Service User API",
-  "ownerName": "Google",
-  "resources": {
-    "projects": {
-      "resources": {
-        "services": {
-          "methods": {
-            "list": {
-              "description": "List enabled services for the specified consumer.",
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "ListEnabledServicesResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageToken": {
-                  "location": "query",
-                  "description": "Token identifying which result to start with; returned by a previous list\ncall.",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "location": "query",
-                  "format": "int32",
-                  "description": "Requested size of the next page of data.",
-                  "type": "integer"
-                },
-                "parent": {
-                  "description": "List enabled services for the specified parent.\n\nAn example valid parent would be:\n- projects/my-project",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only"
-              ],
-              "flatPath": "v1/projects/{projectsId}/services",
-              "path": "v1/{+parent}/services",
-              "id": "serviceuser.projects.services.list"
-            },
-            "disable": {
-              "request": {
-                "$ref": "DisableServiceRequest"
-              },
-              "description": "Disable a service so it can no longer be used with a\nproject. This prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
-              "response": {
-                "$ref": "Operation"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "POST",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/service.management"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:disable",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/services/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/projects/{projectsId}/services/{servicesId}:disable",
-              "id": "serviceuser.projects.services.disable",
-              "path": "v1/{+name}:disable"
-            },
-            "enable": {
-              "request": {
-                "$ref": "EnableServiceRequest"
-              },
-              "description": "Enable a service so it can be used with a project.\nSee [Cloud Auth Guide](https://cloud.google.com/docs/authentication) for\nmore information.\n\nOperation\u003cresponse: google.protobuf.Empty\u003e",
-              "response": {
-                "$ref": "Operation"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "POST",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/service.management"
-              ],
-              "parameters": {
-                "name": {
-                  "location": "path",
-                  "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:enable",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+/services/[^/]+$"
-                }
-              },
-              "flatPath": "v1/projects/{projectsId}/services/{servicesId}:enable",
-              "id": "serviceuser.projects.services.enable",
-              "path": "v1/{+name}:enable"
-            }
-          }
-        }
-      }
-    },
-    "services": {
-      "methods": {
-        "search": {
-          "response": {
-            "$ref": "SearchServicesResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
-          "parameters": {
-            "pageToken": {
-              "location": "query",
-              "description": "Token identifying which result to start with; returned by a previous list\ncall.",
-              "type": "string"
-            },
-            "pageSize": {
-              "format": "int32",
-              "description": "Requested size of the next page of data.",
-              "type": "integer",
-              "location": "query"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/cloud-platform.read-only"
-          ],
-          "flatPath": "v1/services:search",
-          "id": "serviceuser.services.search",
-          "path": "v1/services:search",
-          "description": "Search available services.\n\nWhen no filter is specified, returns all accessible services. For\nauthenticated users, also returns all services the calling user has\n\"servicemanagement.services.bind\" permission for."
-        }
-      }
-    }
-  },
-  "parameters": {
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "type": "string",
-      "location": "query"
-    },
-    "oauth_token": {
-      "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
-    },
-    "upload_protocol": {
-      "location": "query",
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
-    "alt": {
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
-      "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string"
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "location": "query",
-      "description": "OAuth access token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string",
-      "location": "query"
-    },
-    "pp": {
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
-    }
-  },
-  "version": "v1",
-  "baseUrl": "https://serviceuser.googleapis.com/"
+  "rootUrl": "https://serviceuser.googleapis.com/"
 }

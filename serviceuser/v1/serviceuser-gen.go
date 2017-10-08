@@ -619,7 +619,6 @@ func (s *BackendRule) UnmarshalJSON(data []byte) error {
 // The following example shows how to configure monitored resources and
 // metrics
 // for billing:
-//
 //     monitored_resources:
 //     - type: library.googleapis.com/branch
 //       labels:

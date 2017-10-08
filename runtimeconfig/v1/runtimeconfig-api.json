@@ -8,49 +8,13 @@
   "resources": {
     "operations": {
       "methods": {
-        "list": {
-          "response": {
-            "$ref": "ListOperationsResponse"
-          },
-          "parameterOrder": [
-            "name"
-          ],
-          "httpMethod": "GET",
-          "parameters": {
-            "filter": {
-              "description": "The standard list filter.",
-              "type": "string",
-              "location": "query"
-            },
-            "pageToken": {
-              "description": "The standard list page token.",
-              "type": "string",
-              "location": "query"
-            },
-            "name": {
-              "description": "The name of the operation's parent resource.",
-              "type": "string",
-              "required": true,
-              "pattern": "^operations$",
-              "location": "path"
-            },
-            "pageSize": {
-              "location": "query",
-              "format": "int32",
-              "description": "The standard list page size.",
-              "type": "integer"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/cloudruntimeconfig"
-          ],
-          "flatPath": "v1/operations",
-          "id": "runtimeconfig.operations.list",
-          "path": "v1/{+name}",
-          "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id."
-        },
         "cancel": {
+          "path": "v1/{+name}:cancel",
+          "id": "runtimeconfig.operations.cancel",
+          "request": {
+            "$ref": "CancelOperationRequest"
+          },
+          "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
           "httpMethod": "POST",
           "parameterOrder": [
             "name"
@@ -58,85 +22,93 @@
           "response": {
             "$ref": "Empty"
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloudruntimeconfig"
+          ],
           "parameters": {
             "name": {
+              "type": "string",
+              "required": true,
               "pattern": "^operations/.+$",
               "location": "path",
-              "description": "The name of the operation resource to be cancelled.",
+              "description": "The name of the operation resource to be cancelled."
+            }
+          },
+          "flatPath": "v1/operations/{operationsId}:cancel"
+        },
+        "delete": {
+          "parameters": {
+            "name": {
+              "location": "path",
+              "description": "The name of the operation resource to be deleted.",
               "type": "string",
-              "required": true
+              "required": true,
+              "pattern": "^operations/.+$"
             }
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloudruntimeconfig"
           ],
-          "flatPath": "v1/operations/{operationsId}:cancel",
-          "path": "v1/{+name}:cancel",
-          "id": "runtimeconfig.operations.cancel",
-          "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
-          "request": {
-            "$ref": "CancelOperationRequest"
-          }
-        },
-        "delete": {
-          "id": "runtimeconfig.operations.delete",
+          "flatPath": "v1/operations/{operationsId}",
           "path": "v1/{+name}",
+          "id": "runtimeconfig.operations.delete",
           "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+          "httpMethod": "DELETE",
+          "parameterOrder": [
+            "name"
+          ],
           "response": {
             "$ref": "Empty"
+          }
+        },
+        "list": {
+          "flatPath": "v1/operations",
+          "id": "runtimeconfig.operations.list",
+          "path": "v1/{+name}",
+          "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+          "response": {
+            "$ref": "ListOperationsResponse"
           },
           "parameterOrder": [
             "name"
           ],
-          "httpMethod": "DELETE",
-          "parameters": {
-            "name": {
-              "description": "The name of the operation resource to be deleted.",
-              "type": "string",
-              "required": true,
-              "pattern": "^operations/.+$",
-              "location": "path"
-            }
-          },
+          "httpMethod": "GET",
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloudruntimeconfig"
           ],
-          "flatPath": "v1/operations/{operationsId}"
+          "parameters": {
+            "filter": {
+              "location": "query",
+              "description": "The standard list filter.",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "The standard list page token.",
+              "type": "string",
+              "location": "query"
+            },
+            "name": {
+              "type": "string",
+              "required": true,
+              "pattern": "^operations$",
+              "location": "path",
+              "description": "The name of the operation's parent resource."
+            },
+            "pageSize": {
+              "location": "query",
+              "format": "int32",
+              "description": "The standard list page size.",
+              "type": "integer"
+            }
+          }
         }
       }
     }
   },
   "parameters": {
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "fields": {
-      "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
-    "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string"
-    },
     "alt": {
       "enum": [
         "json",
@@ -154,14 +126,14 @@
       "default": "json"
     },
     "key": {
-      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "description": "OAuth access token.",
       "type": "string",
       "location": "query"
+    },
+    "access_token": {
+      "location": "query",
+      "description": "OAuth access token.",
+      "type": "string"
     },
     "quotaUser": {
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
@@ -169,10 +141,10 @@
       "location": "query"
     },
     "pp": {
+      "location": "query",
       "description": "Pretty-print response.",
       "default": "true",
-      "type": "boolean",
-      "location": "query"
+      "type": "boolean"
     },
     "oauth_token": {
       "location": "query",
@@ -180,20 +152,48 @@
       "type": "string"
     },
     "bearer_token": {
+      "location": "query",
       "description": "OAuth bearer token.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "upload_protocol": {
+      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "prettyPrint": {
       "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
       "type": "boolean"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
+    },
+    "callback": {
+      "location": "query",
+      "description": "JSONP",
+      "type": "string"
+    },
+    "$.xgafv": {
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
     }
   },
   "version": "v1",
@@ -203,11 +203,17 @@
   "kind": "discovery#restDescription",
   "basePath": "",
   "revision": "20171002",
-  "id": "runtimeconfig:v1",
   "documentationLink": "https://cloud.google.com/deployment-manager/runtime-configurator/",
+  "id": "runtimeconfig:v1",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object",
+      "properties": {},
+      "id": "Empty"
+    },
     "CancelOperationRequest": {
       "description": "The request message for Operations.CancelOperation.",
       "type": "object",
@@ -231,8 +237,8 @@
           "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
           "items": {
             "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
+              "type": "any",
+              "description": "Properties of the object. Contains field @type with type URL."
             },
             "type": "object"
           },
@@ -245,33 +251,33 @@
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object",
       "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
-        "response": {
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+        "metadata": {
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
           "type": "object",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           }
         },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "response": {
+          "additionalProperties": {
+            "type": "any",
+            "description": "Properties of the object. Contains field @type with type URL."
+          },
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object"
+        },
         "name": {
           "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
           "type": "string"
         },
         "error": {
-          "description": "The error result of the operation in case of failure or cancellation.",
-          "$ref": "Status"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
-          "type": "object"
+          "$ref": "Status",
+          "description": "The error result of the operation in case of failure or cancellation."
         }
       },
       "id": "Operation"
@@ -280,32 +286,26 @@
       "description": "The response message for Operations.ListOperations.",
       "type": "object",
       "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        },
         "operations": {
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
           },
           "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
         }
       },
       "id": "ListOperationsResponse"
-    },
-    "Empty": {
-      "properties": {},
-      "id": "Empty",
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object"
     }
   },
-  "protocol": "rest",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Cloud RuntimeConfig",
   "auth": {
     "oauth2": {

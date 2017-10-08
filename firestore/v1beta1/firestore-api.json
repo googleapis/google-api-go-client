@@ -1,24 +1,12 @@
 {
+  "documentationLink": "https://cloud.google.com/firestore",
+  "revision": "0",
+  "id": "firestore:v1beta1",
+  "discoveryVersion": "v1",
+  "version_module": true,
   "schemas": {
-    "ListDocumentsResponse": {
-      "properties": {
-        "documents": {
-          "description": "The Documents found.",
-          "items": {
-            "$ref": "Document"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The next page token.",
-          "type": "string"
-        }
-      },
-      "id": "ListDocumentsResponse",
-      "description": "The response for Firestore.ListDocuments.",
-      "type": "object"
-    },
     "RollbackRequest": {
+      "description": "The request for Firestore.Rollback.",
       "type": "object",
       "properties": {
         "transaction": {
@@ -27,21 +15,15 @@
           "type": "string"
         }
       },
-      "id": "RollbackRequest",
-      "description": "The request for Firestore.Rollback."
+      "id": "RollbackRequest"
     },
     "CompositeFilter": {
       "description": "A filter that merges multiple other filters using the given operator.",
       "type": "object",
       "properties": {
-        "filters": {
-          "items": {
-            "$ref": "Filter"
-          },
-          "type": "array",
-          "description": "The list of filters to combine.\nMust contain at least one filter."
-        },
         "op": {
+          "description": "The operator for combining multiple filters.",
+          "type": "string",
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
             "The results are required to satisfy each of the combined filters."
@@ -49,9 +31,14 @@
           "enum": [
             "OPERATOR_UNSPECIFIED",
             "AND"
-          ],
-          "description": "The operator for combining multiple filters.",
-          "type": "string"
+          ]
+        },
+        "filters": {
+          "description": "The list of filters to combine.\nMust contain at least one filter.",
+          "items": {
+            "$ref": "Filter"
+          },
+          "type": "array"
         }
       },
       "id": "CompositeFilter"
@@ -71,18 +58,18 @@
       "id": "DocumentsTarget"
     },
     "DocumentMask": {
+      "description": "A set of field paths on a document.\nUsed to restrict a get or update operation on a document to a subset of its\nfields.\nThis is different from standard field masks, as this is always scoped to a\nDocument, and takes in account the dynamic nature of Value.",
+      "type": "object",
       "properties": {
         "fieldPaths": {
+          "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
           "items": {
             "type": "string"
           },
-          "type": "array",
-          "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference."
+          "type": "array"
         }
       },
-      "id": "DocumentMask",
-      "description": "A set of field paths on a document.\nUsed to restrict a get or update operation on a document to a subset of its\nfields.\nThis is different from standard field masks, as this is always scoped to a\nDocument, and takes in account the dynamic nature of Value.",
-      "type": "object"
+      "id": "DocumentMask"
     },
     "DocumentTransform": {
       "description": "A transformation of a document.",
@@ -103,12 +90,11 @@
       "id": "DocumentTransform"
     },
     "FieldTransform": {
+      "description": "A transformation of a field of the document.",
+      "type": "object",
       "properties": {
-        "fieldPath": {
-          "description": "The path of the field. See Document.fields for the field path syntax\nreference.",
-          "type": "string"
-        },
         "setToServerValue": {
+          "description": "Sets the field to the given server value.",
           "type": "string",
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
@@ -117,29 +103,30 @@
           "enum": [
             "SERVER_VALUE_UNSPECIFIED",
             "REQUEST_TIME"
-          ],
-          "description": "Sets the field to the given server value."
+          ]
+        },
+        "fieldPath": {
+          "description": "The path of the field. See Document.fields for the field path syntax\nreference.",
+          "type": "string"
         }
       },
-      "id": "FieldTransform",
-      "description": "A transformation of a field of the document.",
-      "type": "object"
+      "id": "FieldTransform"
     },
     "CommitResponse": {
       "description": "The response for Firestore.Commit.",
       "type": "object",
       "properties": {
+        "commitTime": {
+          "format": "google-datetime",
+          "description": "The time at which the commit occurred.",
+          "type": "string"
+        },
         "writeResults": {
           "description": "The result of applying the writes.\n\nThis i-th write result corresponds to the i-th write in the\nrequest.",
           "items": {
             "$ref": "WriteResult"
           },
           "type": "array"
-        },
-        "commitTime": {
-          "format": "google-datetime",
-          "description": "The time at which the commit occurred.",
-          "type": "string"
         }
       },
       "id": "CommitResponse"
@@ -162,9 +149,44 @@
       },
       "id": "ListCollectionIdsResponse"
     },
-    "WriteResponse": {
+    "Order": {
+      "description": "An order on a field.",
       "type": "object",
       "properties": {
+        "direction": {
+          "description": "The direction to order by. Defaults to `ASCENDING`.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unspecified.",
+            "Ascending.",
+            "Descending."
+          ],
+          "enum": [
+            "DIRECTION_UNSPECIFIED",
+            "ASCENDING",
+            "DESCENDING"
+          ]
+        },
+        "field": {
+          "description": "The field to order by.",
+          "$ref": "FieldReference"
+        }
+      },
+      "id": "Order"
+    },
+    "WriteResponse": {
+      "description": "The response for Firestore.Write.",
+      "type": "object",
+      "properties": {
+        "commitTime": {
+          "format": "google-datetime",
+          "description": "The time at which the commit occurred.",
+          "type": "string"
+        },
+        "streamId": {
+          "description": "The ID of the stream.\nOnly set on the first message, when a new stream was created.",
+          "type": "string"
+        },
         "streamToken": {
           "format": "byte",
           "description": "A token that represents the position of this response in the stream.\nThis can be used by a client to resume the stream at this point.\n\nThis field is always set.",
@@ -176,58 +198,17 @@
             "$ref": "WriteResult"
           },
           "type": "array"
-        },
-        "commitTime": {
-          "format": "google-datetime",
-          "description": "The time at which the commit occurred.",
-          "type": "string"
-        },
-        "streamId": {
-          "description": "The ID of the stream.\nOnly set on the first message, when a new stream was created.",
-          "type": "string"
         }
       },
-      "id": "WriteResponse",
-      "description": "The response for Firestore.Write."
-    },
-    "Order": {
-      "description": "An order on a field.",
-      "type": "object",
-      "properties": {
-        "field": {
-          "$ref": "FieldReference",
-          "description": "The field to order by."
-        },
-        "direction": {
-          "enumDescriptions": [
-            "Unspecified.",
-            "Ascending.",
-            "Descending."
-          ],
-          "enum": [
-            "DIRECTION_UNSPECIFIED",
-            "ASCENDING",
-            "DESCENDING"
-          ],
-          "description": "The direction to order by. Defaults to `ASCENDING`.",
-          "type": "string"
-        }
-      },
-      "id": "Order"
+      "id": "WriteResponse"
     },
     "FieldFilter": {
       "description": "A filter on a specific field.",
       "type": "object",
       "properties": {
-        "field": {
-          "$ref": "FieldReference",
-          "description": "The field to filter by."
-        },
-        "value": {
-          "$ref": "Value",
-          "description": "The value to compare to."
-        },
         "op": {
+          "description": "The operator to filter by.",
+          "type": "string",
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
             "Less than. Requires that the field come first in `order_by`.",
@@ -243,9 +224,15 @@
             "GREATER_THAN",
             "GREATER_THAN_OR_EQUAL",
             "EQUAL"
-          ],
-          "description": "The operator to filter by.",
-          "type": "string"
+          ]
+        },
+        "field": {
+          "description": "The field to filter by.",
+          "$ref": "FieldReference"
+        },
+        "value": {
+          "description": "The value to compare to.",
+          "$ref": "Value"
         }
       },
       "id": "FieldFilter"
@@ -254,23 +241,7 @@
       "description": "Targets being watched have changed.",
       "type": "object",
       "properties": {
-        "readTime": {
-          "format": "google-datetime",
-          "description": "The consistent `read_time` for the given `target_ids` (omitted when the\ntarget_ids are not at a consistent snapshot).\n\nThe stream is guaranteed to send a `read_time` with `target_ids` empty\nwhenever the entire stream reaches a new consistent snapshot. ADD,\nCURRENT, and RESET messages are guaranteed to (eventually) result in a\nnew consistent snapshot (while NO_CHANGE and REMOVE messages are not).\n\nFor a given stream, `read_time` is guaranteed to be monotonically\nincreasing.",
-          "type": "string"
-        },
-        "cause": {
-          "$ref": "Status",
-          "description": "The error that resulted in this change, if applicable."
-        },
         "targetChangeType": {
-          "enum": [
-            "NO_CHANGE",
-            "ADD",
-            "REMOVE",
-            "CURRENT",
-            "RESET"
-          ],
           "description": "The type of change that occurred.",
           "type": "string",
           "enumDescriptions": [
@@ -279,12 +250,19 @@
             "The targets have been removed.",
             "The targets reflect all changes committed before the targets were added\nto the stream.\n\nThis will be sent after or with a `read_time` that is greater than or\nequal to the time at which the targets were added.\n\nListeners can wait for this change if read-after-write semantics\nare desired.",
             "The targets have been reset, and a new initial state for the targets\nwill be returned in subsequent changes.\n\nAfter the initial state is complete, `CURRENT` will be returned even\nif the target was previously indicated to be `CURRENT`."
+          ],
+          "enum": [
+            "NO_CHANGE",
+            "ADD",
+            "REMOVE",
+            "CURRENT",
+            "RESET"
           ]
         },
         "resumeToken": {
-          "type": "string",
           "format": "byte",
-          "description": "A token that can be used to resume the stream for the given `target_ids`,\nor all targets if `target_ids` is empty.\n\nNot set on every target change."
+          "description": "A token that can be used to resume the stream for the given `target_ids`,\nor all targets if `target_ids` is empty.\n\nNot set on every target change.",
+          "type": "string"
         },
         "targetIds": {
           "description": "The target IDs of targets that have changed.\n\nIf empty, the change applies to all targets.\n\nFor `target_change_type=ADD`, the order of the target IDs matches the order\nof the requests to add the targets. This allows clients to unambiguously\nassociate server-assigned target IDs with added targets.\n\nFor other states, the order of the target IDs is not defined.",
@@ -293,6 +271,15 @@
             "type": "integer"
           },
           "type": "array"
+        },
+        "readTime": {
+          "format": "google-datetime",
+          "description": "The consistent `read_time` for the given `target_ids` (omitted when the\ntarget_ids are not at a consistent snapshot).\n\nThe stream is guaranteed to send a `read_time` with `target_ids` empty\nwhenever the entire stream reaches a new consistent snapshot. ADD,\nCURRENT, and RESET messages are guaranteed to (eventually) result in a\nnew consistent snapshot (while NO_CHANGE and REMOVE messages are not).\n\nFor a given stream, `read_time` is guaranteed to be monotonically\nincreasing.",
+          "type": "string"
+        },
+        "cause": {
+          "description": "The error that resulted in this change, if applicable.",
+          "$ref": "Status"
         }
       },
       "id": "TargetChange"
@@ -312,10 +299,17 @@
       "id": "MapValue"
     },
     "DocumentDelete": {
-      "id": "DocumentDelete",
       "description": "A Document has been deleted.\n\nMay be the result of multiple writes, including updates, the\nlast of which deleted the Document.\n\nMultiple DocumentDelete messages may be returned for the same logical\ndelete, if multiple targets are affected.",
       "type": "object",
       "properties": {
+        "removedTargetIds": {
+          "description": "A set of target IDs for targets that previously matched this entity.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
         "document": {
           "description": "The resource name of the Document that was deleted.",
           "type": "string"
@@ -324,16 +318,9 @@
           "format": "google-datetime",
           "description": "The read timestamp at which the delete was observed.\n\nGreater or equal to the `commit_time` of the delete.",
           "type": "string"
-        },
-        "removedTargetIds": {
-          "description": "A set of target IDs for targets that previously matched this entity.",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          },
-          "type": "array"
         }
-      }
+      },
+      "id": "DocumentDelete"
     },
     "BeginTransactionResponse": {
       "description": "The response for Firestore.BeginTransaction.",
@@ -348,10 +335,13 @@
       "id": "BeginTransactionResponse"
     },
     "IndexField": {
-      "id": "IndexField",
       "description": "A field of an index.",
       "type": "object",
       "properties": {
+        "fieldPath": {
+          "description": "The path of the field. Must match the field path specification described\nby google.firestore.v1beta1.Document.fields.\nSpecial field path `__name__` may be used by itself or at the end of a\npath. `__type__` may be used only at the end of path.",
+          "type": "string"
+        },
         "mode": {
           "description": "The field's mode.",
           "type": "string",
@@ -365,35 +355,32 @@
             "ASCENDING",
             "DESCENDING"
           ]
-        },
-        "fieldPath": {
-          "description": "The path of the field. Must match the field path specification described\nby google.firestore.v1beta1.Document.fields.\nSpecial field path `__name__` may be used by itself or at the end of a\npath. `__type__` may be used only at the end of path.",
-          "type": "string"
         }
-      }
+      },
+      "id": "IndexField"
     },
     "RunQueryResponse": {
       "description": "The response for Firestore.RunQuery.",
       "type": "object",
       "properties": {
-        "document": {
-          "$ref": "Document",
-          "description": "A query result.\nNot set when reporting partial progress."
-        },
-        "readTime": {
-          "format": "google-datetime",
-          "description": "The time at which the document was read. This may be monotonically\nincreasing; in this case, the previous documents in the result stream are\nguaranteed not to have changed between their `read_time` and this one.\n\nIf the query returns no results, a response with `read_time` and no\n`document` will be sent, and this represents the time at which the query\nwas run.",
-          "type": "string"
-        },
         "skippedResults": {
           "format": "int32",
           "description": "The number of results that have been skipped due to an offset between\nthe last response and the current response.",
           "type": "integer"
         },
         "transaction": {
-          "type": "string",
           "format": "byte",
-          "description": "The transaction that was started as part of this request.\nCan only be set in the first response, and only if\nRunQueryRequest.new_transaction was set in the request.\nIf set, no other fields will be set in this response."
+          "description": "The transaction that was started as part of this request.\nCan only be set in the first response, and only if\nRunQueryRequest.new_transaction was set in the request.\nIf set, no other fields will be set in this response.",
+          "type": "string"
+        },
+        "document": {
+          "description": "A query result.\nNot set when reporting partial progress.",
+          "$ref": "Document"
+        },
+        "readTime": {
+          "format": "google-datetime",
+          "description": "The time at which the document was read. This may be monotonically\nincreasing; in this case, the previous documents in the result stream are\nguaranteed not to have changed between their `read_time` and this one.\n\nIf the query returns no results, a response with `read_time` and no\n`document` will be sent, and this represents the time at which the query\nwas run.",
+          "type": "string"
         }
       },
       "id": "RunQueryResponse"
@@ -402,17 +389,17 @@
       "description": "The request for Firestore.Commit.",
       "type": "object",
       "properties": {
+        "transaction": {
+          "format": "byte",
+          "description": "If non-empty, applies all writes in this transaction, and commits it.\nOtherwise, applies the writes as if they were in their own transaction.",
+          "type": "string"
+        },
         "writes": {
           "description": "The writes to apply.\n\nAlways executed atomically and in order.",
           "items": {
             "$ref": "Write"
           },
           "type": "array"
-        },
-        "transaction": {
-          "format": "byte",
-          "description": "If non-empty, applies all writes in this transaction, and commits it.\nOtherwise, applies the writes as if they were in their own transaction.",
-          "type": "string"
         }
       },
       "id": "CommitRequest"
@@ -438,8 +425,8 @@
           "type": "integer"
         },
         "addTarget": {
-          "description": "A target to add to this stream.",
-          "$ref": "Target"
+          "$ref": "Target",
+          "description": "A target to add to this stream."
         },
         "labels": {
           "additionalProperties": {
@@ -452,7 +439,6 @@
       "id": "ListenRequest"
     },
     "LatLng": {
-      "id": "LatLng",
       "description": "An object representing a latitude/longitude pair. This is expressed as a pair\nof doubles representing degrees latitude and degrees longitude. Unless\nspecified otherwise, this must conform to the\n\u003ca href=\"http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf\"\u003eWGS84\nstandard\u003c/a\u003e. Values must be within normalized ranges.\n\nExample of normalization code in Python:\n\n    def NormalizeLongitude(longitude):\n      \"\"\"Wraps decimal degrees longitude to [-180.0, 180.0].\"\"\"\n      q, r = divmod(longitude, 360.0)\n      if r \u003e 180.0 or (r == 180.0 and q \u003c= -1.0):\n        return r - 360.0\n      return r\n\n    def NormalizeLatLng(latitude, longitude):\n      \"\"\"Wraps decimal degrees latitude and longitude to\n      [-90.0, 90.0] and [-180.0, 180.0], respectively.\"\"\"\n      r = latitude % 360.0\n      if r \u003c= 90.0:\n        return r, NormalizeLongitude(longitude)\n      elif r \u003e= 270.0:\n        return r - 360, NormalizeLongitude(longitude)\n      else:\n        return 180 - r, NormalizeLongitude(longitude + 180.0)\n\n    assert 180.0 == NormalizeLongitude(180.0)\n    assert -180.0 == NormalizeLongitude(-180.0)\n    assert -179.0 == NormalizeLongitude(181.0)\n    assert (0.0, 0.0) == NormalizeLatLng(360.0, 0.0)\n    assert (0.0, 0.0) == NormalizeLatLng(-360.0, 0.0)\n    assert (85.0, 180.0) == NormalizeLatLng(95.0, 0.0)\n    assert (-85.0, -170.0) == NormalizeLatLng(-95.0, 10.0)\n    assert (90.0, 10.0) == NormalizeLatLng(90.0, 10.0)\n    assert (-90.0, -10.0) == NormalizeLatLng(-90.0, -10.0)\n    assert (0.0, -170.0) == NormalizeLatLng(-180.0, 10.0)\n    assert (0.0, -170.0) == NormalizeLatLng(180.0, 10.0)\n    assert (-90.0, 10.0) == NormalizeLatLng(270.0, 10.0)\n    assert (90.0, 10.0) == NormalizeLatLng(-270.0, 10.0)",
       "type": "object",
       "properties": {
@@ -466,19 +452,20 @@
           "description": "The longitude in degrees. It must be in the range [-180.0, +180.0].",
           "type": "number"
         }
-      }
+      },
+      "id": "LatLng"
     },
     "CollectionSelector": {
       "description": "A selection of a collection, such as `messages as m1`.",
       "type": "object",
       "properties": {
+        "collectionId": {
+          "description": "The collection ID.\nWhen set, selects only collections with this ID.",
+          "type": "string"
+        },
         "allDescendants": {
           "description": "When false, selects only collections that are immediate children of\nthe `parent` specified in the containing `RunQueryRequest`.\nWhen true, selects all descendant collections.",
           "type": "boolean"
-        },
-        "collectionId": {
-          "type": "string",
-          "description": "The collection ID.\nWhen set, selects only collections with this ID."
         }
       },
       "id": "CollectionSelector"
@@ -498,8 +485,16 @@
       "id": "ArrayValue"
     },
     "Index": {
+      "description": "An index definition.",
+      "type": "object",
       "properties": {
         "state": {
+          "enumDescriptions": [
+            "The state is unspecified.",
+            "The index is being created.\nThere is an active long-running operation for the index.\nThe index is updated when writing a document.\nSome index data may exist.",
+            "The index is ready to be used.\nThe index is updated when writing a document.\nThe index is fully populated from all stored documents it applies to.",
+            "The index was being created, but something went wrong.\nThere is no active long-running operation for the index,\nand the most recently finished long-running operation failed.\nThe index is not updated when writing a document.\nSome index data may exist."
+          ],
           "enum": [
             "STATE_UNSPECIFIED",
             "CREATING",
@@ -507,13 +502,7 @@
             "ERROR"
           ],
           "description": "The state of the index.\nThe state is read-only.\n@OutputOnly",
-          "type": "string",
-          "enumDescriptions": [
-            "The state is unspecified.",
-            "The index is being created.\nThere is an active long-running operation for the index.\nThe index is updated when writing a document.\nSome index data may exist.",
-            "The index is ready to be used.\nThe index is updated when writing a document.\nThe index is fully populated from all stored documents it applies to.",
-            "The index was being created, but something went wrong.\nThere is no active long-running operation for the index,\nand the most recently finished long-running operation failed.\nThe index is not updated when writing a document.\nSome index data may exist."
-          ]
+          "type": "string"
         },
         "fields": {
           "description": "The fields to index.",
@@ -531,16 +520,12 @@
           "type": "string"
         }
       },
-      "id": "Index",
-      "description": "An index definition.",
-      "type": "object"
+      "id": "Index"
     },
     "StructuredQuery": {
+      "description": "A Firestore query.",
+      "type": "object",
       "properties": {
-        "where": {
-          "$ref": "Filter",
-          "description": "The filter to apply."
-        },
         "orderBy": {
           "description": "The order to apply to the query results.\n\nFirestore guarantees a stable ordering through the following rules:\n\n * Any field required to appear in `order_by`, that is not already\n   specified in `order_by`, is appended to the order in field name order\n   by default.\n * If an order on `__name__` is not specified, it is appended by default.\n\nFields are appended with the same sort direction as the last order\nspecified, or 'ASCENDING' if no order was specified. For example:\n\n * `SELECT * FROM Foo ORDER BY A` becomes\n   `SELECT * FROM Foo ORDER BY A, __name__`\n * `SELECT * FROM Foo ORDER BY A DESC` becomes\n   `SELECT * FROM Foo ORDER BY A DESC, __name__ DESC`\n * `SELECT * FROM Foo WHERE A \u003e 1` becomes\n   `SELECT * FROM Foo WHERE A \u003e 1 ORDER BY A, __name__`",
           "items": {
@@ -570,27 +555,29 @@
           "type": "integer"
         },
         "endAt": {
-          "$ref": "Cursor",
-          "description": "A end point for the query results."
+          "description": "A end point for the query results.",
+          "$ref": "Cursor"
         },
         "startAt": {
-          "$ref": "Cursor",
-          "description": "A starting point for the query results."
+          "description": "A starting point for the query results.",
+          "$ref": "Cursor"
+        },
+        "where": {
+          "$ref": "Filter",
+          "description": "The filter to apply."
         }
       },
-      "id": "StructuredQuery",
-      "description": "A Firestore query.",
-      "type": "object"
+      "id": "StructuredQuery"
     },
     "UnaryFilter": {
+      "description": "A filter with a single operand.",
       "type": "object",
       "properties": {
         "field": {
-          "$ref": "FieldReference",
-          "description": "The field to which to apply the operator."
+          "description": "The field to which to apply the operator.",
+          "$ref": "FieldReference"
         },
         "op": {
-          "type": "string",
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
             "Test if a field is equal to NaN.",
@@ -601,38 +588,63 @@
             "IS_NAN",
             "IS_NULL"
           ],
-          "description": "The unary operator to apply."
+          "description": "The unary operator to apply.",
+          "type": "string"
         }
       },
-      "id": "UnaryFilter",
-      "description": "A filter with a single operand."
+      "id": "UnaryFilter"
     },
     "Filter": {
       "description": "A filter.",
       "type": "object",
       "properties": {
+        "fieldFilter": {
+          "description": "A filter on a document field.",
+          "$ref": "FieldFilter"
+        },
         "unaryFilter": {
-          "description": "A filter that takes exactly one argument.",
-          "$ref": "UnaryFilter"
+          "$ref": "UnaryFilter",
+          "description": "A filter that takes exactly one argument."
         },
         "compositeFilter": {
           "$ref": "CompositeFilter",
           "description": "A composite filter."
-        },
-        "fieldFilter": {
-          "$ref": "FieldFilter",
-          "description": "A filter on a document field."
         }
       },
       "id": "Filter"
+    },
+    "BatchGetDocumentsResponse": {
+      "description": "The streamed response for Firestore.BatchGetDocuments.",
+      "type": "object",
+      "properties": {
+        "missing": {
+          "description": "A document name that was requested but does not exist. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+          "type": "string"
+        },
+        "found": {
+          "description": "A document that was requested.",
+          "$ref": "Document"
+        },
+        "transaction": {
+          "format": "byte",
+          "description": "The transaction that was started as part of this request.\nWill only be set in the first response, and only if\nBatchGetDocumentsRequest.new_transaction was set in the request.",
+          "type": "string"
+        },
+        "readTime": {
+          "format": "google-datetime",
+          "description": "The time at which the document was read.\nThis may be monotically increasing, in this case the previous documents in\nthe result stream are guaranteed not to have changed between their\nread_time and this one.",
+          "type": "string"
+        }
+      },
+      "id": "BatchGetDocumentsResponse"
     },
     "WriteRequest": {
       "description": "The request for Firestore.Write.\n\nThe first request creates a stream, or resumes an existing one from a token.\n\nWhen creating a new stream, the server replies with a response containing\nonly an ID and a token, to use in the next request.\n\nWhen resuming a stream, the server first streams any responses later than the\ngiven token, then a response containing only an up-to-date token, to use in\nthe next request.",
       "type": "object",
       "properties": {
         "streamId": {
-          "type": "string",
-          "description": "The ID of the write stream to resume.\nThis may only be set in the first message. When left empty, a new write\nstream will be created."
+          "description": "The ID of the write stream to resume.\nThis may only be set in the first message. When left empty, a new write\nstream will be created.",
+          "type": "string"
         },
         "streamToken": {
           "format": "byte",
@@ -656,35 +668,23 @@
       },
       "id": "WriteRequest"
     },
-    "BatchGetDocumentsResponse": {
-      "description": "The streamed response for Firestore.BatchGetDocuments.",
-      "type": "object",
-      "properties": {
-        "readTime": {
-          "format": "google-datetime",
-          "description": "The time at which the document was read.\nThis may be monotically increasing, in this case the previous documents in\nthe result stream are guaranteed not to have changed between their\nread_time and this one.",
-          "type": "string"
-        },
-        "missing": {
-          "description": "A document name that was requested but does not exist. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
-          "type": "string"
-        },
-        "found": {
-          "description": "A document that was requested.",
-          "$ref": "Document"
-        },
-        "transaction": {
-          "type": "string",
-          "format": "byte",
-          "description": "The transaction that was started as part of this request.\nWill only be set in the first response, and only if\nBatchGetDocumentsRequest.new_transaction was set in the request."
-        }
-      },
-      "id": "BatchGetDocumentsResponse"
-    },
     "Target": {
       "description": "A specification of a set of documents to listen to.",
       "type": "object",
       "properties": {
+        "targetId": {
+          "format": "int32",
+          "description": "A client provided target ID.\n\nIf not set, the server will assign an ID for the target.\n\nUsed for resuming a target without changing IDs. The IDs can either be\nclient-assigned or be server-assigned in a previous stream. All targets\nwith client provided IDs must be added before adding a target that needs\na server-assigned id.",
+          "type": "integer"
+        },
+        "documents": {
+          "description": "A target specified by a set of document names.",
+          "$ref": "DocumentsTarget"
+        },
+        "query": {
+          "description": "A target specified by a query.",
+          "$ref": "QueryTarget"
+        },
         "resumeToken": {
           "format": "byte",
           "description": "A resume token from a prior TargetChange for an identical target.\n\nUsing a resume token with a different target is unsupported and may fail.",
@@ -698,19 +698,6 @@
           "format": "google-datetime",
           "description": "Start listening after a specific `read_time`.\n\nThe client must know the state of matching documents at this time.",
           "type": "string"
-        },
-        "targetId": {
-          "format": "int32",
-          "description": "A client provided target ID.\n\nIf not set, the server will assign an ID for the target.\n\nUsed for resuming a target without changing IDs. The IDs can either be\nclient-assigned or be server-assigned in a previous stream. All targets\nwith client provided IDs must be added before adding a target that needs\na server-assigned id.",
-          "type": "integer"
-        },
-        "documents": {
-          "$ref": "DocumentsTarget",
-          "description": "A target specified by a set of document names."
-        },
-        "query": {
-          "$ref": "QueryTarget",
-          "description": "A target specified by a query."
         }
       },
       "id": "Target"
@@ -719,29 +706,28 @@
       "description": "The request for Firestore.RunQuery.",
       "type": "object",
       "properties": {
+        "structuredQuery": {
+          "description": "A structured query.",
+          "$ref": "StructuredQuery"
+        },
+        "readTime": {
+          "format": "google-datetime",
+          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+          "type": "string"
+        },
+        "newTransaction": {
+          "description": "Starts a new transaction and reads the documents.\nDefaults to a read-only transaction.\nThe new transaction ID will be returned as the first response in the\nstream.",
+          "$ref": "TransactionOptions"
+        },
         "transaction": {
           "format": "byte",
           "description": "Reads documents in a transaction.",
           "type": "string"
-        },
-        "structuredQuery": {
-          "$ref": "StructuredQuery",
-          "description": "A structured query."
-        },
-        "readTime": {
-          "type": "string",
-          "format": "google-datetime",
-          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds."
-        },
-        "newTransaction": {
-          "$ref": "TransactionOptions",
-          "description": "Starts a new transaction and reads the documents.\nDefaults to a read-only transaction.\nThe new transaction ID will be returned as the first response in the\nstream."
         }
       },
       "id": "RunQueryRequest"
     },
     "Precondition": {
-      "id": "Precondition",
       "description": "A precondition on a document, used for conditional operations.",
       "type": "object",
       "properties": {
@@ -754,7 +740,8 @@
           "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
           "type": "boolean"
         }
-      }
+      },
+      "id": "Precondition"
     },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
@@ -781,19 +768,19 @@
       "id": "ListIndexesResponse"
     },
     "TransactionOptions": {
+      "description": "Options for creating a new transaction.",
       "type": "object",
       "properties": {
         "readWrite": {
-          "$ref": "ReadWrite",
-          "description": "The transaction can be used for both read and write operations."
+          "description": "The transaction can be used for both read and write operations.",
+          "$ref": "ReadWrite"
         },
         "readOnly": {
           "$ref": "ReadOnly",
           "description": "The transaction can only be used for read operations."
         }
       },
-      "id": "TransactionOptions",
-      "description": "Options for creating a new transaction."
+      "id": "TransactionOptions"
     },
     "FieldReference": {
       "description": "A reference to a field, such as `max(messages.time) as max_time`.",
@@ -809,6 +796,14 @@
       "description": "The response for Firestore.Listen.",
       "type": "object",
       "properties": {
+        "documentDelete": {
+          "description": "A Document has been deleted.",
+          "$ref": "DocumentDelete"
+        },
+        "filter": {
+          "$ref": "ExistenceFilter",
+          "description": "A filter to apply to the set of documents previously returned for the\ngiven target.\n\nReturned when documents may have been removed from the given target, but\nthe exact documents are unknown."
+        },
         "documentChange": {
           "$ref": "DocumentChange",
           "description": "A Document has changed."
@@ -818,16 +813,8 @@
           "description": "A Document has been removed from a target (because it is no longer\nrelevant to that target)."
         },
         "targetChange": {
-          "$ref": "TargetChange",
-          "description": "Targets have changed."
-        },
-        "documentDelete": {
-          "description": "A Document has been deleted.",
-          "$ref": "DocumentDelete"
-        },
-        "filter": {
-          "description": "A filter to apply to the set of documents previously returned for the\ngiven target.\n\nReturned when documents may have been removed from the given target, but\nthe exact documents are unknown.",
-          "$ref": "ExistenceFilter"
+          "description": "Targets have changed.",
+          "$ref": "TargetChange"
         }
       },
       "id": "ListenResponse"
@@ -849,6 +836,18 @@
       },
       "id": "ExistenceFilter"
     },
+    "ReadOnly": {
+      "description": "Options for a transaction that can only be used to read documents.",
+      "type": "object",
+      "properties": {
+        "readTime": {
+          "format": "google-datetime",
+          "description": "Reads documents at the given time.\nThis may not be older than 60 seconds.",
+          "type": "string"
+        }
+      },
+      "id": "ReadOnly"
+    },
     "WriteResult": {
       "description": "The result of applying a write.",
       "type": "object",
@@ -868,35 +867,10 @@
       },
       "id": "WriteResult"
     },
-    "ReadOnly": {
-      "id": "ReadOnly",
-      "description": "Options for a transaction that can only be used to read documents.",
-      "type": "object",
-      "properties": {
-        "readTime": {
-          "format": "google-datetime",
-          "description": "Reads documents at the given time.\nThis may not be older than 60 seconds.",
-          "type": "string"
-        }
-      }
-    },
     "IndexOperationMetadata": {
       "description": "Metadata for index operations. This metadata populates\nthe metadata field of google.longrunning.Operation.",
       "type": "object",
       "properties": {
-        "startTime": {
-          "type": "string",
-          "format": "google-datetime",
-          "description": "The time that work began on the operation."
-        },
-        "documentProgress": {
-          "$ref": "Progress",
-          "description": "Progress of the existing operation, measured in number of documents."
-        },
-        "cancelled": {
-          "description": "True if the [google.longrunning.Operation] was cancelled. If the\ncancellation is in progress, cancelled will be true but\ngoogle.longrunning.Operation.done will be false.",
-          "type": "boolean"
-        },
         "endTime": {
           "format": "google-datetime",
           "description": "The time the operation ended, either successfully or otherwise. Unset if\nthe operation is still active.",
@@ -907,7 +881,6 @@
           "type": "string"
         },
         "operationType": {
-          "type": "string",
           "enumDescriptions": [
             "Unspecified. Never set by server.",
             "The operation is creating the index. Initiated from a `CreateIndex` call."
@@ -916,7 +889,21 @@
             "OPERATION_TYPE_UNSPECIFIED",
             "CREATING_INDEX"
           ],
-          "description": "The type of index operation."
+          "description": "The type of index operation.",
+          "type": "string"
+        },
+        "startTime": {
+          "format": "google-datetime",
+          "description": "The time that work began on the operation.",
+          "type": "string"
+        },
+        "documentProgress": {
+          "$ref": "Progress",
+          "description": "Progress of the existing operation, measured in number of documents."
+        },
+        "cancelled": {
+          "description": "True if the [google.longrunning.Operation] was cancelled. If the\ncancellation is in progress, cancelled will be true but\ngoogle.longrunning.Operation.done will be false.",
+          "type": "boolean"
         }
       },
       "id": "IndexOperationMetadata"
@@ -925,6 +912,18 @@
       "description": "A message that can hold any of the supported value types.",
       "type": "object",
       "properties": {
+        "stringValue": {
+          "description": "A string value.\n\nThe string, represented as UTF-8, must not exceed 1 MiB - 89 bytes.\nOnly the first 1,500 bytes of the UTF-8 representation are considered by\nqueries.",
+          "type": "string"
+        },
+        "referenceValue": {
+          "description": "A reference to a document. For example:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+          "type": "string"
+        },
+        "arrayValue": {
+          "description": "An array value.\n\nCannot contain another array value.",
+          "$ref": "ArrayValue"
+        },
         "doubleValue": {
           "format": "double",
           "description": "A double value.",
@@ -935,60 +934,45 @@
           "description": "A timestamp value.\n\nPrecise only to microseconds. When stored, any additional precision is\nrounded down.",
           "type": "string"
         },
-        "booleanValue": {
-          "description": "A boolean value.",
-          "type": "boolean"
-        },
         "nullValue": {
+          "enumDescriptions": [
+            "Null value."
+          ],
           "enum": [
             "NULL_VALUE"
           ],
           "description": "A null value.",
-          "type": "string",
-          "enumDescriptions": [
-            "Null value."
-          ]
+          "type": "string"
+        },
+        "booleanValue": {
+          "description": "A boolean value.",
+          "type": "boolean"
         },
         "mapValue": {
           "description": "A map value.",
           "$ref": "MapValue"
-        },
-        "geoPointValue": {
-          "$ref": "LatLng",
-          "description": "A geo point value representing a point on the surface of Earth."
         },
         "bytesValue": {
           "format": "byte",
           "description": "A bytes value.\n\nMust not exceed 1 MiB - 89 bytes.\nOnly the first 1,500 bytes are considered by queries.",
           "type": "string"
         },
+        "geoPointValue": {
+          "description": "A geo point value representing a point on the surface of Earth.",
+          "$ref": "LatLng"
+        },
         "integerValue": {
           "format": "int64",
           "description": "An integer value.",
-          "type": "string"
-        },
-        "arrayValue": {
-          "description": "An array value.\n\nCannot contain another array value.",
-          "$ref": "ArrayValue"
-        },
-        "referenceValue": {
-          "type": "string",
-          "description": "A reference to a document. For example:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`."
-        },
-        "stringValue": {
-          "description": "A string value.\n\nThe string, represented as UTF-8, must not exceed 1 MiB - 89 bytes.\nOnly the first 1,500 bytes of the UTF-8 representation are considered by\nqueries.",
           "type": "string"
         }
       },
       "id": "Value"
     },
     "Write": {
+      "description": "A write on a document.",
       "type": "object",
       "properties": {
-        "update": {
-          "description": "A document to write.",
-          "$ref": "Document"
-        },
         "transform": {
           "description": "Applies a tranformation to a document.\nAt most one `transform` per document is allowed in a given request.\nAn `update` cannot follow a `transform` on the same document in a given\nrequest.",
           "$ref": "DocumentTransform"
@@ -1002,12 +986,15 @@
           "description": "An optional precondition on the document.\n\nThe write will fail if this is set and not met by the target document."
         },
         "updateMask": {
-          "description": "The fields to update in this write.\n\nThis field can be set only when the operation is `update`.\nNone of the field paths in the mask may contain a reserved name.\nIf the document exists on the server and has fields not referenced in the\nmask, they are left unchanged.\nFields referenced in the mask, but not present in the input document, are\ndeleted from the document on the server.\nThe field paths in this mask must not contain a reserved field name.",
-          "$ref": "DocumentMask"
+          "$ref": "DocumentMask",
+          "description": "The fields to update in this write.\n\nThis field can be set only when the operation is `update`.\nNone of the field paths in the mask may contain a reserved name.\nIf the document exists on the server and has fields not referenced in the\nmask, they are left unchanged.\nFields referenced in the mask, but not present in the input document, are\ndeleted from the document on the server.\nThe field paths in this mask must not contain a reserved field name."
+        },
+        "update": {
+          "$ref": "Document",
+          "description": "A document to write."
         }
       },
-      "id": "Write",
-      "description": "A write on a document."
+      "id": "Write"
     },
     "Cursor": {
       "description": "A position in a query result set.",
@@ -1043,6 +1030,18 @@
       "description": "The request for Firestore.BatchGetDocuments.",
       "type": "object",
       "properties": {
+        "documents": {
+          "description": "The names of the documents to retrieve. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nThe request will fail if any of the document is not a child resource of the\ngiven `database`. Duplicate names will be elided.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "readTime": {
+          "format": "google-datetime",
+          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+          "type": "string"
+        },
         "newTransaction": {
           "$ref": "TransactionOptions",
           "description": "Starts a new transaction and reads the documents.\nDefaults to a read-only transaction.\nThe new transaction ID will be returned as the first response in the\nstream."
@@ -1055,25 +1054,22 @@
           "format": "byte",
           "description": "Reads documents in a transaction.",
           "type": "string"
-        },
-        "documents": {
-          "description": "The names of the documents to retrieve. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nThe request will fail if any of the document is not a child resource of the\ngiven `database`. Duplicate names will be elided.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "readTime": {
-          "format": "google-datetime",
-          "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
-          "type": "string"
         }
       },
       "id": "BatchGetDocumentsRequest"
     },
     "DocumentChange": {
+      "description": "A Document has changed.\n\nMay be the result of multiple writes, including deletes, that\nultimately resulted in a new value for the Document.\n\nMultiple DocumentChange messages may be returned for the same logical\nchange, if multiple targets are affected.",
       "type": "object",
       "properties": {
+        "removedTargetIds": {
+          "description": "A set of target IDs for targets that no longer match this document.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
         "document": {
           "$ref": "Document",
           "description": "The new state of the Document.\n\nIf `mask` is set, contains only fields that were updated or added."
@@ -1085,42 +1081,17 @@
             "type": "integer"
           },
           "type": "array"
-        },
-        "removedTargetIds": {
-          "description": "A set of target IDs for targets that no longer match this document.",
-          "items": {
-            "format": "int32",
-            "type": "integer"
-          },
-          "type": "array"
         }
       },
-      "id": "DocumentChange",
-      "description": "A Document has changed.\n\nMay be the result of multiple writes, including deletes, that\nultimately resulted in a new value for the Document.\n\nMultiple DocumentChange messages may be returned for the same logical\nchange, if multiple targets are affected."
+      "id": "DocumentChange"
     },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object",
       "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
-        "response": {
-          "type": "object",
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`."
-        },
-        "name": {
-          "type": "string",
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`."
-        },
         "error": {
-          "$ref": "Status",
-          "description": "The error result of the operation in case of failure or cancellation."
+          "description": "The error result of the operation in case of failure or cancellation.",
+          "$ref": "Status"
         },
         "metadata": {
           "additionalProperties": {
@@ -1129,6 +1100,22 @@
           },
           "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
           "type": "object"
+        },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "response": {
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          }
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "type": "string"
         }
       },
       "id": "Operation"
@@ -1142,8 +1129,8 @@
           "type": "string"
         },
         "structuredQuery": {
-          "description": "A structured query.",
-          "$ref": "StructuredQuery"
+          "$ref": "StructuredQuery",
+          "description": "A structured query."
         }
       },
       "id": "QueryTarget"
@@ -1164,9 +1151,9 @@
           "type": "array"
         },
         "code": {
-          "type": "integer",
           "format": "int32",
-          "description": "The status code, which should be an enum value of google.rpc.Code."
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "type": "integer"
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
@@ -1176,7 +1163,6 @@
       "id": "Status"
     },
     "Document": {
-      "id": "Document",
       "description": "A Firestore document.\n\nMust not exceed 1 MiB - 4 bytes.",
       "type": "object",
       "properties": {
@@ -1191,17 +1177,18 @@
           "type": "string"
         },
         "fields": {
+          "description": "The document's fields.\n\nThe map keys represent field names.\n\nA simple field name contains only characters `a` to `z`, `A` to `Z`,\n`0` to `9`, or `_`, and must not start with `0` to `9` or `_`. For example,\n`foo_bar_17`.\n\nField names matching the regular expression `__.*__` are reserved. Reserved\nfield names are forbidden except in certain documented contexts. The map\nkeys, represented as UTF-8, must not exceed 1,500 bytes and cannot be\nempty.\n\nField paths may be used in other contexts to refer to structured fields\ndefined here. For `map_value`, the field path is represented by the simple\nor quoted field names of the containing fields, delimited by `.`. For\nexample, the structured field\n`\"foo\" : { map_value: { \"x&y\" : { string_value: \"hello\" }}}` would be\nrepresented by the field path `foo.x&y`.\n\nWithin a field path, a quoted field name starts and ends with `` ` `` and\nmay contain any character. Some characters, including `` ` ``, must be\nescaped using a `\\`. For example, `` `x&y` `` represents `x&y` and\n`` `bak\\`tik` `` represents `` bak`tik ``.",
+          "type": "object",
           "additionalProperties": {
             "$ref": "Value"
-          },
-          "description": "The document's fields.\n\nThe map keys represent field names.\n\nA simple field name contains only characters `a` to `z`, `A` to `Z`,\n`0` to `9`, or `_`, and must not start with `0` to `9` or `_`. For example,\n`foo_bar_17`.\n\nField names matching the regular expression `__.*__` are reserved. Reserved\nfield names are forbidden except in certain documented contexts. The map\nkeys, represented as UTF-8, must not exceed 1,500 bytes and cannot be\nempty.\n\nField paths may be used in other contexts to refer to structured fields\ndefined here. For `map_value`, the field path is represented by the simple\nor quoted field names of the containing fields, delimited by `.`. For\nexample, the structured field\n`\"foo\" : { map_value: { \"x&y\" : { string_value: \"hello\" }}}` would be\nrepresented by the field path `foo.x&y`.\n\nWithin a field path, a quoted field name starts and ends with `` ` `` and\nmay contain any character. Some characters, including `` ` ``, must be\nescaped using a `\\`. For example, `` `x&y` `` represents `x&y` and\n`` `bak\\`tik` `` represents `` bak`tik ``.",
-          "type": "object"
+          }
         },
         "name": {
           "description": "The resource name of the document, for example\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
           "type": "string"
         }
-      }
+      },
+      "id": "Document"
     },
     "Progress": {
       "description": "Measures the progress of a particular metric.",
@@ -1221,18 +1208,18 @@
       "id": "Progress"
     },
     "Projection": {
+      "description": "The projection of document's fields to return.",
+      "type": "object",
       "properties": {
         "fields": {
+          "description": "The fields to return.\n\nIf empty, all fields are returned. To only return the name\nof the document, use `['__name__']`.",
           "items": {
             "$ref": "FieldReference"
           },
-          "type": "array",
-          "description": "The fields to return.\n\nIf empty, all fields are returned. To only return the name\nof the document, use `['__name__']`."
+          "type": "array"
         }
       },
-      "id": "Projection",
-      "description": "The projection of document's fields to return.",
-      "type": "object"
+      "id": "Projection"
     },
     "DocumentRemove": {
       "description": "A Document has been removed from the view of the targets.\n\nSent if the document is no longer relevant to a target and is out of view.\nCan be sent instead of a DocumentDelete or a DocumentChange if the server\ncan not send the new value of the document.\n\nMultiple DocumentRemove messages may be returned for the same logical\nwrite or delete, if multiple targets are affected.",
@@ -1241,8 +1228,8 @@
         "removedTargetIds": {
           "description": "A set of target IDs for targets that previously matched this document.",
           "items": {
-            "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "type": "integer"
           },
           "type": "array"
         },
@@ -1257,13 +1244,31 @@
         }
       },
       "id": "DocumentRemove"
+    },
+    "ListDocumentsResponse": {
+      "description": "The response for Firestore.ListDocuments.",
+      "type": "object",
+      "properties": {
+        "documents": {
+          "description": "The Documents found.",
+          "items": {
+            "$ref": "Document"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The next page token.",
+          "type": "string"
+        }
+      },
+      "id": "ListDocumentsResponse"
     }
   },
-  "protocol": "rest",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Firestore",
   "auth": {
     "oauth2": {
@@ -1290,17 +1295,127 @@
           "resources": {
             "documents": {
               "methods": {
-                "write": {
-                  "httpMethod": "POST",
+                "commit": {
+                  "request": {
+                    "$ref": "CommitRequest"
+                  },
+                  "description": "Commits a transaction, while optionally updating documents.",
+                  "response": {
+                    "$ref": "CommitResponse"
+                  },
                   "parameterOrder": [
                     "database"
                   ],
-                  "response": {
-                    "$ref": "WriteResponse"
-                  },
+                  "httpMethod": "POST",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
                   "parameters": {
                     "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.\nThis is only required in the first message.",
+                      "location": "path",
+                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$"
+                    }
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:commit",
+                  "id": "firestore.projects.databases.documents.commit",
+                  "path": "v1beta1/{+database}/documents:commit"
+                },
+                "delete": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}",
+                  "id": "firestore.projects.databases.documents.delete",
+                  "path": "v1beta1/{+name}",
+                  "description": "Deletes a document.",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "DELETE",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "parameters": {
+                    "currentDocument.updateTime": {
+                      "format": "google-datetime",
+                      "description": "When set, the target document must exist and have been last updated at\nthat time.",
+                      "type": "string",
+                      "location": "query"
+                    },
+                    "currentDocument.exists": {
+                      "location": "query",
+                      "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "location": "path",
+                      "description": "The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$"
+                    }
+                  }
+                },
+                "listCollectionIds": {
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "response": {
+                    "$ref": "ListCollectionIdsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "parameters": {
+                    "pageSize": {
+                      "location": "query",
+                      "format": "int32",
+                      "description": "The maximum number of results to return.",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "location": "path"
+                    },
+                    "pageToken": {
+                      "location": "query",
+                      "description": "A page token. Must be a value from\nListCollectionIdsResponse.",
+                      "type": "string"
+                    }
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:listCollectionIds",
+                  "path": "v1beta1/{+parent}:listCollectionIds",
+                  "id": "firestore.projects.databases.documents.listCollectionIds",
+                  "description": "Lists all the collection IDs underneath a document."
+                },
+                "rollback": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:rollback",
+                  "id": "firestore.projects.databases.documents.rollback",
+                  "path": "v1beta1/{+database}/documents:rollback",
+                  "description": "Rolls back a transaction.",
+                  "request": {
+                    "$ref": "RollbackRequest"
+                  },
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "database": {
+                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "type": "string",
                       "required": true,
                       "pattern": "^projects/[^/]+/databases/[^/]+$",
@@ -1310,25 +1425,47 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:write",
-                  "path": "v1beta1/{+database}/documents:write",
-                  "id": "firestore.projects.databases.documents.write",
+                  ]
+                },
+                "write": {
                   "description": "Streams batches of document updates and deletes, in order.",
                   "request": {
                     "$ref": "WriteRequest"
-                  }
-                },
-                "beginTransaction": {
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:beginTransaction",
-                  "id": "firestore.projects.databases.documents.beginTransaction",
-                  "path": "v1beta1/{+database}/documents:beginTransaction",
-                  "request": {
-                    "$ref": "BeginTransactionRequest"
                   },
-                  "description": "Starts a new transaction.",
                   "response": {
-                    "$ref": "BeginTransactionResponse"
+                    "$ref": "WriteResponse"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "database": {
+                      "location": "path",
+                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.\nThis is only required in the first message.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:write",
+                  "id": "firestore.projects.databases.documents.write",
+                  "path": "v1beta1/{+database}/documents:write"
+                },
+                "batchGet": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:batchGet",
+                  "id": "firestore.projects.databases.documents.batchGet",
+                  "path": "v1beta1/{+database}/documents:batchGet",
+                  "request": {
+                    "$ref": "BatchGetDocumentsRequest"
+                  },
+                  "description": "Gets multiple documents.\n\nDocuments returned by this method are not guaranteed to be returned in the\nsame order that they were requested.",
+                  "response": {
+                    "$ref": "BatchGetDocumentsResponse"
                   },
                   "parameterOrder": [
                     "database"
@@ -1348,13 +1485,190 @@
                     }
                   }
                 },
-                "batchGet": {
+                "beginTransaction": {
+                  "description": "Starts a new transaction.",
                   "request": {
-                    "$ref": "BatchGetDocumentsRequest"
+                    "$ref": "BeginTransactionRequest"
                   },
-                  "description": "Gets multiple documents.\n\nDocuments returned by this method are not guaranteed to be returned in the\nsame order that they were requested.",
                   "response": {
-                    "$ref": "BatchGetDocumentsResponse"
+                    "$ref": "BeginTransactionResponse"
+                  },
+                  "parameterOrder": [
+                    "database"
+                  ],
+                  "httpMethod": "POST",
+                  "parameters": {
+                    "database": {
+                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$",
+                      "location": "path"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:beginTransaction",
+                  "id": "firestore.projects.databases.documents.beginTransaction",
+                  "path": "v1beta1/{+database}/documents:beginTransaction"
+                },
+                "list": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}/{collectionId}",
+                  "id": "firestore.projects.databases.documents.list",
+                  "path": "v1beta1/{+parent}/{collectionId}",
+                  "description": "Lists documents.",
+                  "response": {
+                    "$ref": "ListDocumentsResponse"
+                  },
+                  "parameterOrder": [
+                    "parent",
+                    "collectionId"
+                  ],
+                  "httpMethod": "GET",
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "parameters": {
+                    "orderBy": {
+                      "location": "query",
+                      "description": "The order to sort results by. For example: `priority desc, name`.",
+                      "type": "string"
+                    },
+                    "readTime": {
+                      "format": "google-datetime",
+                      "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
+                      "type": "string",
+                      "location": "query"
+                    },
+                    "showMissing": {
+                      "description": "If the list should show missing documents. A missing document is a\ndocument that does not exist but has sub-documents. These documents will\nbe returned with a key but will not have fields, Document.create_time,\nor Document.update_time set.\n\nRequests with `show_missing` may not specify `where` or\n`order_by`.",
+                      "type": "boolean",
+                      "location": "query"
+                    },
+                    "mask.fieldPaths": {
+                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+                      "type": "string",
+                      "repeated": true,
+                      "location": "query"
+                    },
+                    "pageToken": {
+                      "location": "query",
+                      "description": "The `next_page_token` value returned from a previous List request, if any.",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "format": "int32",
+                      "description": "The maximum number of documents to return.",
+                      "type": "integer",
+                      "location": "query"
+                    },
+                    "collectionId": {
+                      "location": "path",
+                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`\nor `messages`.",
+                      "type": "string",
+                      "required": true
+                    },
+                    "transaction": {
+                      "location": "query",
+                      "format": "byte",
+                      "description": "Reads documents in a transaction.",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "location": "path",
+                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$"
+                    }
+                  }
+                },
+                "runQuery": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runQuery",
+                  "path": "v1beta1/{+parent}:runQuery",
+                  "id": "firestore.projects.databases.documents.runQuery",
+                  "request": {
+                    "$ref": "RunQueryRequest"
+                  },
+                  "description": "Runs a query.",
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "response": {
+                    "$ref": "RunQueryResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "location": "path"
+                    }
+                  }
+                },
+                "createDocument": {
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "parent",
+                    "collectionId"
+                  ],
+                  "response": {
+                    "$ref": "Document"
+                  },
+                  "parameters": {
+                    "collectionId": {
+                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`.",
+                      "type": "string",
+                      "required": true,
+                      "location": "path"
+                    },
+                    "documentId": {
+                      "location": "query",
+                      "description": "The client-assigned document ID to use for this document.\n\nOptional. If not specified, an ID will be assigned by the service.",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "location": "path",
+                      "description": "The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/.+$"
+                    },
+                    "mask.fieldPaths": {
+                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+                      "type": "string",
+                      "repeated": true,
+                      "location": "query"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{collectionId}",
+                  "path": "v1beta1/{+parent}/{collectionId}",
+                  "id": "firestore.projects.databases.documents.createDocument",
+                  "description": "Creates a new document.",
+                  "request": {
+                    "$ref": "Document"
+                  }
+                },
+                "listen": {
+                  "request": {
+                    "$ref": "ListenRequest"
+                  },
+                  "description": "Listens to changes.",
+                  "response": {
+                    "$ref": "ListenResponse"
                   },
                   "parameterOrder": [
                     "database"
@@ -1366,218 +1680,45 @@
                   ],
                   "parameters": {
                     "database": {
-                      "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "location": "path",
                       "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
                       "type": "string",
-                      "required": true
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$"
                     }
                   },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:batchGet",
-                  "id": "firestore.projects.databases.documents.batchGet",
-                  "path": "v1beta1/{+database}/documents:batchGet"
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:listen",
+                  "id": "firestore.projects.databases.documents.listen",
+                  "path": "v1beta1/{+database}/documents:listen"
                 },
-                "list": {
+                "patch": {
+                  "request": {
+                    "$ref": "Document"
+                  },
+                  "description": "Updates or inserts a document.",
+                  "httpMethod": "PATCH",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "response": {
+                    "$ref": "Document"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/datastore"
+                  ],
                   "parameters": {
-                    "orderBy": {
-                      "location": "query",
-                      "description": "The order to sort results by. For example: `priority desc, name`.",
-                      "type": "string"
-                    },
-                    "readTime": {
-                      "location": "query",
+                    "currentDocument.updateTime": {
                       "format": "google-datetime",
-                      "description": "Reads documents as they were at the given time.\nThis may not be older than 60 seconds.",
-                      "type": "string"
-                    },
-                    "showMissing": {
-                      "location": "query",
-                      "description": "If the list should show missing documents. A missing document is a\ndocument that does not exist but has sub-documents. These documents will\nbe returned with a key but will not have fields, Document.create_time,\nor Document.update_time set.\n\nRequests with `show_missing` may not specify `where` or\n`order_by`.",
-                      "type": "boolean"
-                    },
-                    "mask.fieldPaths": {
-                      "location": "query",
-                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
-                      "type": "string",
-                      "repeated": true
-                    },
-                    "pageToken": {
-                      "type": "string",
-                      "location": "query",
-                      "description": "The `next_page_token` value returned from a previous List request, if any."
-                    },
-                    "pageSize": {
-                      "location": "query",
-                      "format": "int32",
-                      "description": "The maximum number of documents to return.",
-                      "type": "integer"
-                    },
-                    "collectionId": {
-                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`\nor `messages`.",
-                      "type": "string",
-                      "required": true,
-                      "location": "path"
-                    },
-                    "transaction": {
-                      "format": "byte",
-                      "description": "Reads documents in a transaction.",
+                      "description": "When set, the target document must exist and have been last updated at\nthat time.",
                       "type": "string",
                       "location": "query"
                     },
-                    "parent": {
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
-                      "location": "path",
-                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}/{collectionId}",
-                  "id": "firestore.projects.databases.documents.list",
-                  "path": "v1beta1/{+parent}/{collectionId}",
-                  "description": "Lists documents.",
-                  "response": {
-                    "$ref": "ListDocumentsResponse"
-                  },
-                  "httpMethod": "GET",
-                  "parameterOrder": [
-                    "parent",
-                    "collectionId"
-                  ]
-                },
-                "runQuery": {
-                  "description": "Runs a query.",
-                  "request": {
-                    "$ref": "RunQueryRequest"
-                  },
-                  "response": {
-                    "$ref": "RunQueryResponse"
-                  },
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "httpMethod": "POST",
-                  "parameters": {
-                    "parent": {
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
-                      "location": "path",
-                      "description": "The parent resource name. In the format:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents` or\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:runQuery",
-                  "id": "firestore.projects.databases.documents.runQuery",
-                  "path": "v1beta1/{+parent}:runQuery"
-                },
-                "createDocument": {
-                  "parameters": {
-                    "documentId": {
+                    "currentDocument.exists": {
                       "location": "query",
-                      "description": "The client-assigned document ID to use for this document.\n\nOptional. If not specified, an ID will be assigned by the service.",
-                      "type": "string"
+                      "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
+                      "type": "boolean"
                     },
-                    "parent": {
-                      "description": "The parent resource. For example:\n`projects/{project_id}/databases/{database_id}/documents` or\n`projects/{project_id}/databases/{database_id}/documents/chatrooms/{chatroom_id}`",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/.+$",
-                      "location": "path"
-                    },
-                    "mask.fieldPaths": {
-                      "repeated": true,
-                      "location": "query",
-                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
-                      "type": "string"
-                    },
-                    "collectionId": {
-                      "description": "The collection ID, relative to `parent`, to list. For example: `chatrooms`.",
-                      "type": "string",
-                      "required": true,
-                      "location": "path"
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{collectionId}",
-                  "id": "firestore.projects.databases.documents.createDocument",
-                  "path": "v1beta1/{+parent}/{collectionId}",
-                  "description": "Creates a new document.",
-                  "request": {
-                    "$ref": "Document"
-                  },
-                  "response": {
-                    "$ref": "Document"
-                  },
-                  "parameterOrder": [
-                    "parent",
-                    "collectionId"
-                  ],
-                  "httpMethod": "POST"
-                },
-                "get": {
-                  "path": "v1beta1/{+name}",
-                  "id": "firestore.projects.databases.documents.get",
-                  "description": "Gets a single document.",
-                  "httpMethod": "GET",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "response": {
-                    "$ref": "Document"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "readTime": {
-                      "location": "query",
-                      "format": "google-datetime",
-                      "description": "Reads the version of the document at the given time.\nThis may not be older than 60 seconds.",
-                      "type": "string"
-                    },
-                    "mask.fieldPaths": {
-                      "type": "string",
-                      "repeated": true,
-                      "location": "query",
-                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference."
-                    },
-                    "name": {
-                      "location": "path",
-                      "description": "The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$"
-                    },
-                    "transaction": {
-                      "location": "query",
-                      "format": "byte",
-                      "description": "Reads the document in a transaction.",
-                      "type": "string"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}"
-                },
-                "patch": {
-                  "response": {
-                    "$ref": "Document"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "httpMethod": "PATCH",
-                  "parameters": {
                     "mask.fieldPaths": {
                       "location": "query",
                       "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
@@ -1596,17 +1737,46 @@
                       "type": "string",
                       "required": true,
                       "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$"
-                    },
-                    "currentDocument.updateTime": {
+                    }
+                  },
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}",
+                  "path": "v1beta1/{+name}",
+                  "id": "firestore.projects.databases.documents.patch"
+                },
+                "get": {
+                  "description": "Gets a single document.",
+                  "response": {
+                    "$ref": "Document"
+                  },
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "httpMethod": "GET",
+                  "parameters": {
+                    "transaction": {
                       "location": "query",
-                      "format": "google-datetime",
-                      "description": "When set, the target document must exist and have been last updated at\nthat time.",
+                      "format": "byte",
+                      "description": "Reads the document in a transaction.",
                       "type": "string"
                     },
-                    "currentDocument.exists": {
-                      "type": "boolean",
+                    "readTime": {
                       "location": "query",
-                      "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist."
+                      "format": "google-datetime",
+                      "description": "Reads the version of the document at the given time.\nThis may not be older than 60 seconds.",
+                      "type": "string"
+                    },
+                    "mask.fieldPaths": {
+                      "description": "The list of field paths in the mask. See Document.fields for a field\npath syntax reference.",
+                      "type": "string",
+                      "repeated": true,
+                      "location": "query"
+                    },
+                    "name": {
+                      "description": "The resource name of the Document to get. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
+                      "location": "path"
                     }
                   },
                   "scopes": [
@@ -1614,173 +1784,8 @@
                     "https://www.googleapis.com/auth/datastore"
                   ],
                   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}",
-                  "id": "firestore.projects.databases.documents.patch",
-                  "path": "v1beta1/{+name}",
-                  "description": "Updates or inserts a document.",
-                  "request": {
-                    "$ref": "Document"
-                  }
-                },
-                "listen": {
-                  "httpMethod": "POST",
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "response": {
-                    "$ref": "ListenResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "database": {
-                      "location": "path",
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+$"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:listen",
-                  "path": "v1beta1/{+database}/documents:listen",
-                  "id": "firestore.projects.databases.documents.listen",
-                  "request": {
-                    "$ref": "ListenRequest"
-                  },
-                  "description": "Listens to changes."
-                },
-                "delete": {
-                  "path": "v1beta1/{+name}",
-                  "id": "firestore.projects.databases.documents.delete",
-                  "description": "Deletes a document.",
-                  "httpMethod": "DELETE",
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
-                      "location": "path",
-                      "description": "The resource name of the Document to delete. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`."
-                    },
-                    "currentDocument.updateTime": {
-                      "location": "query",
-                      "format": "google-datetime",
-                      "description": "When set, the target document must exist and have been last updated at\nthat time.",
-                      "type": "string"
-                    },
-                    "currentDocument.exists": {
-                      "location": "query",
-                      "description": "When set to `true`, the target document must exist.\nWhen set to `false`, the target document must not exist.",
-                      "type": "boolean"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}"
-                },
-                "listCollectionIds": {
-                  "description": "Lists all the collection IDs underneath a document.",
-                  "response": {
-                    "$ref": "ListCollectionIdsResponse"
-                  },
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "httpMethod": "POST",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "pageToken": {
-                      "location": "query",
-                      "description": "A page token. Must be a value from\nListCollectionIdsResponse.",
-                      "type": "string"
-                    },
-                    "pageSize": {
-                      "location": "query",
-                      "format": "int32",
-                      "description": "The maximum number of results to return.",
-                      "type": "integer"
-                    },
-                    "parent": {
-                      "pattern": "^projects/[^/]+/databases/[^/]+/documents/[^/]+/.+$",
-                      "location": "path",
-                      "description": "The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
-                      "type": "string",
-                      "required": true
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents/{documentsId}/{documentsId1}:listCollectionIds",
-                  "id": "firestore.projects.databases.documents.listCollectionIds",
-                  "path": "v1beta1/{+parent}:listCollectionIds"
-                },
-                "commit": {
-                  "description": "Commits a transaction, while optionally updating documents.",
-                  "request": {
-                    "$ref": "CommitRequest"
-                  },
-                  "response": {
-                    "$ref": "CommitResponse"
-                  },
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "httpMethod": "POST",
-                  "parameters": {
-                    "database": {
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+$",
-                      "location": "path",
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`."
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:commit",
-                  "id": "firestore.projects.databases.documents.commit",
-                  "path": "v1beta1/{+database}/documents:commit"
-                },
-                "rollback": {
-                  "httpMethod": "POST",
-                  "parameterOrder": [
-                    "database"
-                  ],
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "database": {
-                      "description": "The database name. In the format:\n`projects/{project_id}/databases/{database_id}`.",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+$",
-                      "location": "path"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/documents:rollback",
-                  "path": "v1beta1/{+database}/documents:rollback",
-                  "id": "firestore.projects.databases.documents.rollback",
-                  "request": {
-                    "$ref": "RollbackRequest"
-                  },
-                  "description": "Rolls back a transaction."
+                  "id": "firestore.projects.databases.documents.get",
+                  "path": "v1beta1/{+name}"
                 }
               }
             },
@@ -1800,11 +1805,11 @@
                   ],
                   "parameters": {
                     "name": {
+                      "location": "path",
+                      "description": "The index name. For example:\n`projects/{project_id}/databases/{database_id}/indexes/{index_id}`",
                       "type": "string",
                       "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/indexes/[^/]+$",
-                      "location": "path",
-                      "description": "The index name. For example:\n`projects/{project_id}/databases/{database_id}/indexes/{index_id}`"
+                      "pattern": "^projects/[^/]+/databases/[^/]+/indexes/[^/]+$"
                     }
                   },
                   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/indexes/{indexesId}",
@@ -1814,39 +1819,49 @@
                 },
                 "get": {
                   "description": "Gets an index.",
-                  "response": {
-                    "$ref": "Index"
-                  },
+                  "httpMethod": "GET",
                   "parameterOrder": [
                     "name"
                   ],
-                  "httpMethod": "GET",
+                  "response": {
+                    "$ref": "Index"
+                  },
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the index. For example:\n`projects/{project_id}/databases/{database_id}/indexes/{index_id}`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+/indexes/[^/]+$",
+                      "location": "path"
+                    }
+                  },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/datastore"
                   ],
-                  "parameters": {
-                    "name": {
-                      "location": "path",
-                      "description": "The name of the index. For example:\n`projects/{project_id}/databases/{database_id}/indexes/{index_id}`",
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+/indexes/[^/]+$"
-                    }
-                  },
                   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/indexes/{indexesId}",
-                  "id": "firestore.projects.databases.indexes.get",
-                  "path": "v1beta1/{+name}"
+                  "path": "v1beta1/{+name}",
+                  "id": "firestore.projects.databases.indexes.get"
                 },
                 "list": {
+                  "description": "Lists the indexes that match the specified filters.",
                   "response": {
                     "$ref": "ListIndexesResponse"
                   },
-                  "httpMethod": "GET",
                   "parameterOrder": [
                     "parent"
                   ],
+                  "httpMethod": "GET",
                   "parameters": {
+                    "filter": {
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageToken": {
+                      "description": "The standard List page token.",
+                      "type": "string",
+                      "location": "query"
+                    },
                     "pageSize": {
                       "location": "query",
                       "format": "int32",
@@ -1854,20 +1869,11 @@
                       "type": "integer"
                     },
                     "parent": {
-                      "pattern": "^projects/[^/]+/databases/[^/]+$",
                       "location": "path",
                       "description": "The database name. For example:\n`projects/{project_id}/databases/{database_id}`",
                       "type": "string",
-                      "required": true
-                    },
-                    "filter": {
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "pageToken": {
-                      "location": "query",
-                      "description": "The standard List page token.",
-                      "type": "string"
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$"
                     }
                   },
                   "scopes": [
@@ -1876,37 +1882,36 @@
                   ],
                   "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/indexes",
                   "id": "firestore.projects.databases.indexes.list",
-                  "path": "v1beta1/{+parent}/indexes",
-                  "description": "Lists the indexes that match the specified filters."
+                  "path": "v1beta1/{+parent}/indexes"
                 },
                 "create": {
+                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/indexes",
+                  "path": "v1beta1/{+parent}/indexes",
+                  "id": "firestore.projects.databases.indexes.create",
+                  "description": "Creates the specified index.\nA newly created index's initial state is `CREATING`. On completion of the\nreturned google.longrunning.Operation, the state will be `READY`.\nIf the index already exists, the call will return an `ALREADY_EXISTS`\nstatus.\n\nDuring creation, the process could result in an error, in which case the\nindex will move to the `ERROR` state. The process can be recovered by\nfixing the data that caused the error, removing the index with\ndelete, then re-creating the index with\ncreate.\n\nIndexes with a single field cannot be created.",
                   "request": {
                     "$ref": "Index"
                   },
-                  "description": "Creates the specified index.\nA newly created index's initial state is `CREATING`. On completion of the\nreturned google.longrunning.Operation, the state will be `READY`.\nIf the index already exists, the call will return an `ALREADY_EXISTS`\nstatus.\n\nDuring creation, the process could result in an error, in which case the\nindex will move to the `ERROR` state. The process can be recovered by\nfixing the data that caused the error, removing the index with\ndelete, then re-creating the index with\ncreate.\n\nIndexes with a single field cannot be created.",
-                  "response": {
-                    "$ref": "Operation"
-                  },
+                  "httpMethod": "POST",
                   "parameterOrder": [
                     "parent"
                   ],
-                  "httpMethod": "POST",
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "parameters": {
+                    "parent": {
+                      "location": "path",
+                      "description": "The name of the database this index will apply to. For example:\n`projects/{project_id}/databases/{database_id}`",
+                      "type": "string",
+                      "required": true,
+                      "pattern": "^projects/[^/]+/databases/[^/]+$"
+                    }
+                  },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/datastore"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "type": "string",
-                      "required": true,
-                      "pattern": "^projects/[^/]+/databases/[^/]+$",
-                      "location": "path",
-                      "description": "The name of the database this index will apply to. For example:\n`projects/{project_id}/databases/{database_id}`"
-                    }
-                  },
-                  "flatPath": "v1beta1/projects/{projectsId}/databases/{databasesId}/indexes",
-                  "id": "firestore.projects.databases.indexes.create",
-                  "path": "v1beta1/{+parent}/indexes"
+                  ]
                 }
               }
             }
@@ -1916,61 +1921,6 @@
     }
   },
   "parameters": {
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
-    "alt": {
-      "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string",
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query"
-    },
     "access_token": {
       "description": "OAuth access token.",
       "type": "string",
@@ -1987,31 +1937,81 @@
       "type": "string"
     },
     "pp": {
-      "default": "true",
-      "type": "boolean",
       "location": "query",
-      "description": "Pretty-print response."
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
     },
     "bearer_token": {
       "location": "query",
       "description": "OAuth bearer token.",
       "type": "string"
     },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string",
       "location": "query"
+    },
+    "prettyPrint": {
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
+    },
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
+    "$.xgafv": {
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
+    "alt": {
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ]
     }
   },
   "version": "v1beta1",
   "baseUrl": "https://firestore.googleapis.com/",
   "servicePath": "",
-  "kind": "discovery#restDescription",
   "description": "",
-  "basePath": "",
-  "id": "firestore:v1beta1",
-  "revision": "0",
-  "documentationLink": "https://cloud.google.com/firestore",
-  "discoveryVersion": "v1",
-  "version_module": true
+  "kind": "discovery#restDescription",
+  "basePath": ""
 }

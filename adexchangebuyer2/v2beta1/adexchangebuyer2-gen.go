@@ -1509,18 +1509,6 @@ type FilterSet struct {
 	//   "VIDEO" - The ad impression is video format.
 	Format string `json:"format,omitempty"`
 
-	// Name: A user-defined name of the filter set. Filter set names must be
-	// unique
-	// globally and match one of the patterns:
-	//
-	// - `bidders/*/filterSets/*` (for accessing bidder-level
-	// troubleshooting
-	// data)
-	// - `bidders/*/accounts/*/filterSets/*` (for accessing
-	// buyer-level
-	// troubleshooting data)
-	Name string `json:"name,omitempty"`
-
 	// OwnerAccountId: The account ID of the buyer who owns this filter
 	// set.
 	// The value of this field is ignored in create operations.

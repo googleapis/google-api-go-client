@@ -1,31 +1,262 @@
 {
-  "batchPath": "batch",
-  "revision": "20170918",
-  "documentationLink": "https://cloud.google.com/pubsub/docs",
-  "id": "pubsub:v1beta1a",
-  "title": "Google Cloud Pub/Sub API",
-  "discoveryVersion": "v1",
-  "ownerName": "Google",
   "resources": {
-    "topics": {
+    "subscriptions": {
       "methods": {
-        "list": {
-          "description": "Lists matching topics.",
-          "parameterOrder": [],
-          "httpMethod": "GET",
+        "modifyAckDeadline": {
+          "id": "pubsub.subscriptions.modifyAckDeadline",
+          "path": "v1beta1a/subscriptions/modifyAckDeadline",
+          "request": {
+            "$ref": "ModifyAckDeadlineRequest"
+          },
+          "description": "Modifies the Ack deadline for a message received from a pull request.",
           "response": {
-            "$ref": "ListTopicsResponse"
+            "$ref": "Empty"
+          },
+          "parameterOrder": [],
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {},
+          "flatPath": "v1beta1a/subscriptions/modifyAckDeadline"
+        },
+        "acknowledge": {
+          "response": {
+            "$ref": "Empty"
+          },
+          "parameterOrder": [],
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {},
+          "flatPath": "v1beta1a/subscriptions/acknowledge",
+          "id": "pubsub.subscriptions.acknowledge",
+          "path": "v1beta1a/subscriptions/acknowledge",
+          "request": {
+            "$ref": "AcknowledgeRequest"
+          },
+          "description": "Acknowledges a particular received message: the Pub/Sub system can remove\nthe given message from the subscription. Acknowledging a message whose\nAck deadline has expired may succeed, but the message could have been\nalready redelivered. Acknowledging a message more than once will not\nresult in an error. This is only used for messages received via pull."
+        },
+        "pullBatch": {
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "PullBatchResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {},
+          "flatPath": "v1beta1a/subscriptions/pullBatch",
+          "path": "v1beta1a/subscriptions/pullBatch",
+          "id": "pubsub.subscriptions.pullBatch",
+          "request": {
+            "$ref": "PullBatchRequest"
+          },
+          "description": "Pulls messages from the server. Returns an empty list if there are no\nmessages available in the backlog. The system is free to return UNAVAILABLE\nif there are too many pull requests outstanding for the given subscription."
+        },
+        "get": {
+          "response": {
+            "$ref": "Subscription"
+          },
+          "parameterOrder": [
+            "subscription"
+          ],
+          "httpMethod": "GET",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {
+            "subscription": {
+              "description": "The name of the subscription to get.",
+              "type": "string",
+              "required": true,
+              "pattern": "^.+$",
+              "location": "path"
+            }
+          },
+          "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
+          "id": "pubsub.subscriptions.get",
+          "path": "v1beta1a/subscriptions/{+subscription}",
+          "description": "Gets the configuration details of a subscription."
+        },
+        "modifyPushConfig": {
+          "parameters": {},
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "flatPath": "v1beta1a/subscriptions/modifyPushConfig",
+          "path": "v1beta1a/subscriptions/modifyPushConfig",
+          "id": "pubsub.subscriptions.modifyPushConfig",
+          "description": "Modifies the \u003ccode\u003ePushConfig\u003c/code\u003e for a specified subscription.\nThis method can be used to suspend the flow of messages to an endpoint\nby clearing the \u003ccode\u003ePushConfig\u003c/code\u003e field in the request. Messages\nwill be accumulated for delivery even if no push configuration is\ndefined or while the configuration is modified.",
+          "request": {
+            "$ref": "ModifyPushConfigRequest"
+          },
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "Empty"
+          }
+        },
+        "delete": {
+          "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
+          "path": "v1beta1a/subscriptions/{+subscription}",
+          "id": "pubsub.subscriptions.delete",
+          "description": "Deletes an existing subscription. All pending messages in the subscription\nare immediately dropped. Calls to Pull after deletion will return\nNOT_FOUND.",
+          "httpMethod": "DELETE",
+          "parameterOrder": [
+            "subscription"
+          ],
+          "response": {
+            "$ref": "Empty"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/pubsub"
           ],
           "parameters": {
-            "pageToken": {
-              "description": "The value obtained in the last \u003ccode\u003eListTopicsResponse\u003c/code\u003e\nfor continuation.",
+            "subscription": {
+              "description": "The subscription to delete.",
               "type": "string",
+              "required": true,
+              "pattern": "^.+$",
+              "location": "path"
+            }
+          }
+        },
+        "pull": {
+          "request": {
+            "$ref": "PullRequest"
+          },
+          "description": "Pulls a single message from the server.\nIf return_immediately is true, and no messages are available in the\nsubscription, this method returns FAILED_PRECONDITION. The system is free\nto return an UNAVAILABLE error if no messages are available in a\nreasonable amount of time (to reduce system load).",
+          "response": {
+            "$ref": "PullResponse"
+          },
+          "parameterOrder": [],
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {},
+          "flatPath": "v1beta1a/subscriptions/pull",
+          "id": "pubsub.subscriptions.pull",
+          "path": "v1beta1a/subscriptions/pull"
+        },
+        "list": {
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {
+            "pageToken": {
+              "location": "query",
+              "description": "The value obtained in the last \u003ccode\u003eListSubscriptionsResponse\u003c/code\u003e\nfor continuation.",
+              "type": "string"
+            },
+            "maxResults": {
+              "format": "int32",
+              "description": "Maximum number of subscriptions to return.",
+              "type": "integer",
               "location": "query"
             },
+            "query": {
+              "description": "A valid label query expression.",
+              "type": "string",
+              "location": "query"
+            }
+          },
+          "flatPath": "v1beta1a/subscriptions",
+          "id": "pubsub.subscriptions.list",
+          "path": "v1beta1a/subscriptions",
+          "description": "Lists matching subscriptions.",
+          "response": {
+            "$ref": "ListSubscriptionsResponse"
+          },
+          "parameterOrder": [],
+          "httpMethod": "GET"
+        },
+        "create": {
+          "httpMethod": "POST",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "Subscription"
+          },
+          "parameters": {},
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "flatPath": "v1beta1a/subscriptions",
+          "path": "v1beta1a/subscriptions",
+          "id": "pubsub.subscriptions.create",
+          "description": "Creates a subscription on a given topic for a given subscriber.\nIf the subscription already exists, returns ALREADY_EXISTS.\nIf the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic.",
+          "request": {
+            "$ref": "Subscription"
+          }
+        }
+      }
+    },
+    "topics": {
+      "methods": {
+        "delete": {
+          "httpMethod": "DELETE",
+          "parameterOrder": [
+            "topic"
+          ],
+          "response": {
+            "$ref": "Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {
+            "topic": {
+              "pattern": "^.+$",
+              "location": "path",
+              "description": "Name of the topic to delete.",
+              "type": "string",
+              "required": true
+            }
+          },
+          "flatPath": "v1beta1a/topics/{topicsId}",
+          "path": "v1beta1a/topics/{+topic}",
+          "id": "pubsub.topics.delete",
+          "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does\nnot exist. After a topic is deleted, a new topic may be created with the\nsame name."
+        },
+        "publishBatch": {
+          "response": {
+            "$ref": "PublishBatchResponse"
+          },
+          "parameterOrder": [],
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
+          "parameters": {},
+          "flatPath": "v1beta1a/topics/publishBatch",
+          "id": "pubsub.topics.publishBatch",
+          "path": "v1beta1a/topics/publishBatch",
+          "request": {
+            "$ref": "PublishBatchRequest"
+          },
+          "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does\nnot exist."
+        },
+        "list": {
+          "response": {
+            "$ref": "ListTopicsResponse"
+          },
+          "parameterOrder": [],
+          "httpMethod": "GET",
+          "parameters": {
             "maxResults": {
               "location": "query",
               "format": "int32",
@@ -36,11 +267,21 @@
               "location": "query",
               "description": "A valid label query expression.",
               "type": "string"
+            },
+            "pageToken": {
+              "location": "query",
+              "description": "The value obtained in the last \u003ccode\u003eListTopicsResponse\u003c/code\u003e\nfor continuation.",
+              "type": "string"
             }
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/pubsub"
+          ],
           "flatPath": "v1beta1a/topics",
           "id": "pubsub.topics.list",
-          "path": "v1beta1a/topics"
+          "path": "v1beta1a/topics",
+          "description": "Lists matching topics."
         },
         "create": {
           "response": {
@@ -62,20 +303,13 @@
           "description": "Creates the given topic with the given name."
         },
         "get": {
-          "response": {
-            "$ref": "Topic"
-          },
-          "parameterOrder": [
-            "topic"
-          ],
-          "httpMethod": "GET",
           "parameters": {
             "topic": {
-              "pattern": "^.+$",
-              "location": "path",
               "description": "The name of the topic to get.",
               "type": "string",
-              "required": true
+              "required": true,
+              "pattern": "^.+$",
+              "location": "path"
             }
           },
           "scopes": [
@@ -85,7 +319,14 @@
           "flatPath": "v1beta1a/topics/{topicsId}",
           "id": "pubsub.topics.get",
           "path": "v1beta1a/topics/{+topic}",
-          "description": "Gets the configuration of a topic. Since the topic only has the name\nattribute, this method is only useful to check the existence of a topic.\nIf other attributes are added in the future, they will be returned here."
+          "description": "Gets the configuration of a topic. Since the topic only has the name\nattribute, this method is only useful to check the existence of a topic.\nIf other attributes are added in the future, they will be returned here.",
+          "response": {
+            "$ref": "Topic"
+          },
+          "parameterOrder": [
+            "topic"
+          ],
+          "httpMethod": "GET"
         },
         "publish": {
           "response": {
@@ -105,267 +346,19 @@
             "$ref": "PublishRequest"
           },
           "description": "Adds a message to the topic.  Returns NOT_FOUND if the topic does not\nexist."
-        },
-        "delete": {
-          "flatPath": "v1beta1a/topics/{topicsId}",
-          "id": "pubsub.topics.delete",
-          "path": "v1beta1a/topics/{+topic}",
-          "description": "Deletes the topic with the given name. Returns NOT_FOUND if the topic does\nnot exist. After a topic is deleted, a new topic may be created with the\nsame name.",
-          "parameterOrder": [
-            "topic"
-          ],
-          "response": {
-            "$ref": "Empty"
-          },
-          "httpMethod": "DELETE",
-          "parameters": {
-            "topic": {
-              "pattern": "^.+$",
-              "location": "path",
-              "description": "Name of the topic to delete.",
-              "type": "string",
-              "required": true
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ]
-        },
-        "publishBatch": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "PublishBatchResponse"
-          },
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/topics/publishBatch",
-          "path": "v1beta1a/topics/publishBatch",
-          "id": "pubsub.topics.publishBatch",
-          "description": "Adds one or more messages to the topic. Returns NOT_FOUND if the topic does\nnot exist.",
-          "request": {
-            "$ref": "PublishBatchRequest"
-          }
-        }
-      }
-    },
-    "subscriptions": {
-      "methods": {
-        "modifyAckDeadline": {
-          "response": {
-            "$ref": "Empty"
-          },
-          "parameterOrder": [],
-          "httpMethod": "POST",
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/subscriptions/modifyAckDeadline",
-          "id": "pubsub.subscriptions.modifyAckDeadline",
-          "path": "v1beta1a/subscriptions/modifyAckDeadline",
-          "description": "Modifies the Ack deadline for a message received from a pull request.",
-          "request": {
-            "$ref": "ModifyAckDeadlineRequest"
-          }
-        },
-        "acknowledge": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "parameters": {},
-          "flatPath": "v1beta1a/subscriptions/acknowledge",
-          "path": "v1beta1a/subscriptions/acknowledge",
-          "id": "pubsub.subscriptions.acknowledge",
-          "request": {
-            "$ref": "AcknowledgeRequest"
-          },
-          "description": "Acknowledges a particular received message: the Pub/Sub system can remove\nthe given message from the subscription. Acknowledging a message whose\nAck deadline has expired may succeed, but the message could have been\nalready redelivered. Acknowledging a message more than once will not\nresult in an error. This is only used for messages received via pull."
-        },
-        "get": {
-          "description": "Gets the configuration details of a subscription.",
-          "httpMethod": "GET",
-          "response": {
-            "$ref": "Subscription"
-          },
-          "parameterOrder": [
-            "subscription"
-          ],
-          "parameters": {
-            "subscription": {
-              "type": "string",
-              "required": true,
-              "pattern": "^.+$",
-              "location": "path",
-              "description": "The name of the subscription to get."
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
-          "path": "v1beta1a/subscriptions/{+subscription}",
-          "id": "pubsub.subscriptions.get"
-        },
-        "pullBatch": {
-          "description": "Pulls messages from the server. Returns an empty list if there are no\nmessages available in the backlog. The system is free to return UNAVAILABLE\nif there are too many pull requests outstanding for the given subscription.",
-          "request": {
-            "$ref": "PullBatchRequest"
-          },
-          "response": {
-            "$ref": "PullBatchResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "POST",
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/subscriptions/pullBatch",
-          "id": "pubsub.subscriptions.pullBatch",
-          "path": "v1beta1a/subscriptions/pullBatch"
-        },
-        "modifyPushConfig": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "Empty"
-          },
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/subscriptions/modifyPushConfig",
-          "path": "v1beta1a/subscriptions/modifyPushConfig",
-          "id": "pubsub.subscriptions.modifyPushConfig",
-          "description": "Modifies the \u003ccode\u003ePushConfig\u003c/code\u003e for a specified subscription.\nThis method can be used to suspend the flow of messages to an endpoint\nby clearing the \u003ccode\u003ePushConfig\u003c/code\u003e field in the request. Messages\nwill be accumulated for delivery even if no push configuration is\ndefined or while the configuration is modified.",
-          "request": {
-            "$ref": "ModifyPushConfigRequest"
-          }
-        },
-        "delete": {
-          "flatPath": "v1beta1a/subscriptions/{subscriptionsId}",
-          "id": "pubsub.subscriptions.delete",
-          "path": "v1beta1a/subscriptions/{+subscription}",
-          "description": "Deletes an existing subscription. All pending messages in the subscription\nare immediately dropped. Calls to Pull after deletion will return\nNOT_FOUND.",
-          "response": {
-            "$ref": "Empty"
-          },
-          "parameterOrder": [
-            "subscription"
-          ],
-          "httpMethod": "DELETE",
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "parameters": {
-            "subscription": {
-              "location": "path",
-              "description": "The subscription to delete.",
-              "type": "string",
-              "required": true,
-              "pattern": "^.+$"
-            }
-          }
-        },
-        "pull": {
-          "response": {
-            "$ref": "PullResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "POST",
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "parameters": {},
-          "flatPath": "v1beta1a/subscriptions/pull",
-          "id": "pubsub.subscriptions.pull",
-          "path": "v1beta1a/subscriptions/pull",
-          "request": {
-            "$ref": "PullRequest"
-          },
-          "description": "Pulls a single message from the server.\nIf return_immediately is true, and no messages are available in the\nsubscription, this method returns FAILED_PRECONDITION. The system is free\nto return an UNAVAILABLE error if no messages are available in a\nreasonable amount of time (to reduce system load)."
-        },
-        "list": {
-          "response": {
-            "$ref": "ListSubscriptionsResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
-          "parameters": {
-            "pageToken": {
-              "description": "The value obtained in the last \u003ccode\u003eListSubscriptionsResponse\u003c/code\u003e\nfor continuation.",
-              "type": "string",
-              "location": "query"
-            },
-            "maxResults": {
-              "type": "integer",
-              "location": "query",
-              "format": "int32",
-              "description": "Maximum number of subscriptions to return."
-            },
-            "query": {
-              "location": "query",
-              "description": "A valid label query expression.",
-              "type": "string"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "flatPath": "v1beta1a/subscriptions",
-          "id": "pubsub.subscriptions.list",
-          "path": "v1beta1a/subscriptions",
-          "description": "Lists matching subscriptions."
-        },
-        "create": {
-          "httpMethod": "POST",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "Subscription"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/pubsub"
-          ],
-          "parameters": {},
-          "flatPath": "v1beta1a/subscriptions",
-          "path": "v1beta1a/subscriptions",
-          "id": "pubsub.subscriptions.create",
-          "request": {
-            "$ref": "Subscription"
-          },
-          "description": "Creates a subscription on a given topic for a given subscriber.\nIf the subscription already exists, returns ALREADY_EXISTS.\nIf the corresponding topic doesn't exist, returns NOT_FOUND.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic."
         }
       }
     }
   },
   "parameters": {
-    "uploadType": {
+    "fields": {
       "type": "string",
       "location": "query",
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\")."
+      "description": "Selector specifying which fields to include in a partial response."
     },
-    "fields": {
+    "uploadType": {
       "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
     },
     "$.xgafv": {
@@ -382,17 +375,11 @@
       "type": "string"
     },
     "callback": {
+      "location": "query",
       "description": "JSONP",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "alt": {
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
       "description": "Data format for response.",
       "default": "json",
       "enum": [
@@ -400,179 +387,67 @@
         "media",
         "proto"
       ],
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query"
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
-    },
-    "key": {
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string",
       "location": "query"
     },
     "quotaUser": {
-      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
-    },
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "oauth_token": {
-      "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
-    },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
-    "prettyPrint": {
+    "pp": {
       "default": "true",
       "type": "boolean",
       "location": "query",
-      "description": "Returns response with indentations and line breaks."
+      "description": "Pretty-print response."
+    },
+    "bearer_token": {
+      "type": "string",
+      "location": "query",
+      "description": "OAuth bearer token."
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string",
+      "location": "query"
+    },
+    "upload_protocol": {
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean"
     }
   },
   "schemas": {
-    "PubsubEvent": {
-      "type": "object",
-      "properties": {
-        "deleted": {
-          "description": "Indicates that this subscription has been deleted. (Note that pull\nsubscribers will always receive NOT_FOUND in response in their pull\nrequest on the subscription, rather than seeing this boolean.)",
-          "type": "boolean"
-        },
-        "truncated": {
-          "description": "Indicates that this subscription has been truncated.",
-          "type": "boolean"
-        },
-        "message": {
-          "description": "A received message.",
-          "$ref": "PubsubMessage"
-        },
-        "subscription": {
-          "description": "The subscription that received the event.",
-          "type": "string"
-        }
-      },
-      "id": "PubsubEvent",
-      "description": "An event indicating a received message or truncation event."
-    },
-    "ListSubscriptionsResponse": {
-      "description": "Response for the ListSubscriptions method.",
-      "type": "object",
-      "properties": {
-        "subscription": {
-          "description": "The subscriptions that match the request.",
-          "items": {
-            "$ref": "Subscription"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "If not empty, indicates that there are more subscriptions that match the\nrequest and this value should be passed to the next\n\u003ccode\u003eListSubscriptionsRequest\u003c/code\u003e to continue.",
-          "type": "string"
-        }
-      },
-      "id": "ListSubscriptionsResponse"
-    },
-    "PublishRequest": {
-      "properties": {
-        "topic": {
-          "type": "string",
-          "description": "The message in the request will be published on this topic."
-        },
-        "message": {
-          "description": "The message to publish.",
-          "$ref": "PubsubMessage"
-        }
-      },
-      "id": "PublishRequest",
-      "description": "Request for the Publish method.",
-      "type": "object"
-    },
-    "PublishBatchResponse": {
-      "description": "Response for the PublishBatch method.",
-      "type": "object",
-      "properties": {
-        "messageIds": {
-          "description": "The server-assigned ID of each published message, in the same order as\nthe messages in the request. IDs are guaranteed to be unique within\nthe topic.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "id": "PublishBatchResponse"
-    },
-    "Subscription": {
-      "description": "A subscription resource.",
-      "type": "object",
-      "properties": {
-        "pushConfig": {
-          "description": "If push delivery is used with this subscription, this field is\nused to configure it.",
-          "$ref": "PushConfig"
-        },
-        "ackDeadlineSeconds": {
-          "format": "int32",
-          "description": "For either push or pull delivery, the value is the maximum time after a\nsubscriber receives a message before the subscriber should acknowledge or\nNack the message. If the Ack deadline for a message passes without an\nAck or a Nack, the Pub/Sub system will eventually redeliver the message.\nIf a subscriber acknowledges after the deadline, the Pub/Sub system may\naccept the Ack, but it is possible that the message has been already\ndelivered again. Multiple Acks to the message are allowed and will\nsucceed.\n\nFor push delivery, this value is used to set the request timeout for\nthe call to the push endpoint.\n\nFor pull delivery, this value is used as the initial value for the Ack\ndeadline. It may be overridden for each message using its corresponding\nack_id with \u003ccode\u003eModifyAckDeadline\u003c/code\u003e.\nWhile a message is outstanding (i.e. it has been delivered to a pull\nsubscriber and the subscriber has not yet Acked or Nacked), the Pub/Sub\nsystem will not deliver that message to another pull subscriber\n(on a best-effort basis).",
-          "type": "integer"
-        },
-        "name": {
-          "description": "Name of the subscription.",
-          "type": "string"
-        },
-        "topic": {
-          "type": "string",
-          "description": "The name of the topic from which this subscription is receiving messages."
-        }
-      },
-      "id": "Subscription"
-    },
-    "Topic": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Name of the topic.",
-          "type": "string"
-        }
-      },
-      "id": "Topic",
-      "description": "A topic resource."
-    },
-    "Label": {
-      "type": "object",
-      "properties": {
-        "strValue": {
-          "description": "A string value.",
-          "type": "string"
-        },
-        "numValue": {
-          "format": "int64",
-          "description": "An integer value.",
-          "type": "string"
-        },
-        "key": {
-          "description": "The key of a label is a syntactically valid URL (as per RFC 1738) with\nthe \"scheme\" and initial slashes omitted and with the additional\nrestrictions noted below.  Each key should be globally unique.  The\n\"host\" portion is called the \"namespace\" and is not necessarily\nresolvable to a network endpoint.  Instead, the namespace indicates what\nsystem or entity defines the semantics of the label.  Namespaces do not\nrestrict the set of objects to which a label may be associated.\n\nKeys are defined by the following grammar:\n\n  key          = hostname \"/\" kpath\n  kpath        = ksegment *[ \"/\" ksegment ]\n  ksegment     = alphadigit | *[ alphadigit | \"-\" | \"_\" | \".\" ]\n\nwhere \"hostname\" and \"alphadigit\" are defined as in RFC 1738.\n\nExample key:\n  spanner.google.com/universe",
-          "type": "string"
-        }
-      },
-      "id": "Label",
-      "description": "A key-value pair applied to a given object."
-    },
     "ModifyAckDeadlineRequest": {
+      "description": "Request for the ModifyAckDeadline method.",
+      "type": "object",
       "properties": {
+        "ackDeadlineSeconds": {
+          "type": "integer",
+          "format": "int32",
+          "description": "The new ack deadline with respect to the time this request was sent to the\nPub/Sub system. Must be \u003e= 0. For example, if the value is 10, the new ack\ndeadline will expire 10 seconds after the ModifyAckDeadline call was made.\nSpecifying zero may immediately make the message available for another pull\nrequest."
+        },
         "ackIds": {
           "description": "List of acknowledgment IDs. Either this field or ack_id\nshould be populated, not both.",
           "items": {
@@ -581,25 +456,17 @@
           "type": "array"
         },
         "subscription": {
-          "type": "string",
-          "description": "Next Index: 5\nThe name of the subscription from which messages are being pulled."
+          "description": "Next Index: 5\nThe name of the subscription from which messages are being pulled.",
+          "type": "string"
         },
         "ackId": {
           "description": "The acknowledgment ID. Either this or ack_ids must be populated,\nnot both.",
           "type": "string"
-        },
-        "ackDeadlineSeconds": {
-          "format": "int32",
-          "description": "The new ack deadline with respect to the time this request was sent to the\nPub/Sub system. Must be \u003e= 0. For example, if the value is 10, the new ack\ndeadline will expire 10 seconds after the ModifyAckDeadline call was made.\nSpecifying zero may immediately make the message available for another pull\nrequest.",
-          "type": "integer"
         }
       },
-      "id": "ModifyAckDeadlineRequest",
-      "description": "Request for the ModifyAckDeadline method.",
-      "type": "object"
+      "id": "ModifyAckDeadlineRequest"
     },
     "PullBatchRequest": {
-      "description": "Request for the PullBatch method.",
       "type": "object",
       "properties": {
         "maxEvents": {
@@ -616,19 +483,36 @@
           "type": "boolean"
         }
       },
-      "id": "PullBatchRequest"
+      "id": "PullBatchRequest",
+      "description": "Request for the PullBatch method."
+    },
+    "ModifyPushConfigRequest": {
+      "description": "Request for the ModifyPushConfig method.",
+      "type": "object",
+      "properties": {
+        "pushConfig": {
+          "$ref": "PushConfig",
+          "description": "An empty \u003ccode\u003epush_config\u003c/code\u003e indicates that the Pub/Sub system should\npause pushing messages from the given subscription."
+        },
+        "subscription": {
+          "type": "string",
+          "description": "The name of the subscription."
+        }
+      },
+      "id": "ModifyPushConfigRequest"
     },
     "PubsubMessage": {
+      "description": "A message data and its labels.",
       "type": "object",
       "properties": {
         "messageId": {
-          "type": "string",
-          "description": "ID of this message assigned by the server at publication time. Guaranteed\nto be unique within the topic. This value may be read by a subscriber\nthat receives a PubsubMessage via a Pull call or a push delivery. It must\nnot be populated by a publisher in a Publish call."
+          "description": "ID of this message assigned by the server at publication time. Guaranteed\nto be unique within the topic. This value may be read by a subscriber\nthat receives a PubsubMessage via a Pull call or a push delivery. It must\nnot be populated by a publisher in a Publish call.",
+          "type": "string"
         },
         "publishTime": {
-          "type": "string",
           "format": "int64",
-          "description": "The time at which the message was published.\nThe time is milliseconds since the UNIX epoch."
+          "description": "The time at which the message was published.\nThe time is milliseconds since the UNIX epoch.",
+          "type": "string"
         },
         "label": {
           "description": "Optional list of labels for this message. Keys in this collection must\nbe unique.",
@@ -643,25 +527,30 @@
           "type": "string"
         }
       },
-      "id": "PubsubMessage",
-      "description": "A message data and its labels."
+      "id": "PubsubMessage"
     },
-    "ModifyPushConfigRequest": {
-      "description": "Request for the ModifyPushConfig method.",
+    "PublishBatchRequest": {
+      "description": "Request for the PublishBatch method.",
       "type": "object",
       "properties": {
-        "pushConfig": {
-          "$ref": "PushConfig",
-          "description": "An empty \u003ccode\u003epush_config\u003c/code\u003e indicates that the Pub/Sub system should\npause pushing messages from the given subscription."
-        },
-        "subscription": {
-          "description": "The name of the subscription.",
+        "topic": {
+          "description": "The messages in the request will be published on this topic.",
           "type": "string"
+        },
+        "messages": {
+          "description": "The messages to publish.",
+          "items": {
+            "$ref": "PubsubMessage"
+          },
+          "type": "array"
         }
       },
-      "id": "ModifyPushConfigRequest"
+      "id": "PublishBatchRequest"
     },
     "ListTopicsResponse": {
+      "id": "ListTopicsResponse",
+      "description": "Response for the ListTopics method.",
+      "type": "object",
       "properties": {
         "topic": {
           "description": "The resulting topics.",
@@ -672,27 +561,6 @@
         },
         "nextPageToken": {
           "description": "If not empty, indicates that there are more topics that match the request,\nand this value should be passed to the next \u003ccode\u003eListTopicsRequest\u003c/code\u003e\nto continue.",
-          "type": "string"
-        }
-      },
-      "id": "ListTopicsResponse",
-      "description": "Response for the ListTopics method.",
-      "type": "object"
-    },
-    "PublishBatchRequest": {
-      "id": "PublishBatchRequest",
-      "description": "Request for the PublishBatch method.",
-      "type": "object",
-      "properties": {
-        "messages": {
-          "description": "The messages to publish.",
-          "items": {
-            "$ref": "PubsubMessage"
-          },
-          "type": "array"
-        },
-        "topic": {
-          "description": "The messages in the request will be published on this topic.",
           "type": "string"
         }
       }
@@ -718,22 +586,22 @@
       "id": "PullBatchResponse"
     },
     "AcknowledgeRequest": {
+      "description": "Request for the Acknowledge method.",
+      "type": "object",
       "properties": {
-        "subscription": {
-          "description": "The subscription whose message is being acknowledged.",
-          "type": "string"
-        },
         "ackId": {
           "description": "The acknowledgment ID for the message being acknowledged. This was\nreturned by the Pub/Sub system in the Pull response.",
           "items": {
             "type": "string"
           },
           "type": "array"
+        },
+        "subscription": {
+          "description": "The subscription whose message is being acknowledged.",
+          "type": "string"
         }
       },
-      "id": "AcknowledgeRequest",
-      "description": "Request for the Acknowledge method.",
-      "type": "object"
+      "id": "AcknowledgeRequest"
     },
     "PullResponse": {
       "description": "Either a \u003ccode\u003ePubsubMessage\u003c/code\u003e or a truncation event. One of these two\nmust be populated.",
@@ -744,8 +612,8 @@
           "type": "string"
         },
         "pubsubEvent": {
-          "description": "A pubsub message or truncation event.",
-          "$ref": "PubsubEvent"
+          "$ref": "PubsubEvent",
+          "description": "A pubsub message or truncation event."
         }
       },
       "id": "PullResponse"
@@ -775,11 +643,136 @@
         }
       },
       "id": "PullRequest"
+    },
+    "PubsubEvent": {
+      "description": "An event indicating a received message or truncation event.",
+      "type": "object",
+      "properties": {
+        "deleted": {
+          "description": "Indicates that this subscription has been deleted. (Note that pull\nsubscribers will always receive NOT_FOUND in response in their pull\nrequest on the subscription, rather than seeing this boolean.)",
+          "type": "boolean"
+        },
+        "truncated": {
+          "description": "Indicates that this subscription has been truncated.",
+          "type": "boolean"
+        },
+        "message": {
+          "$ref": "PubsubMessage",
+          "description": "A received message."
+        },
+        "subscription": {
+          "description": "The subscription that received the event.",
+          "type": "string"
+        }
+      },
+      "id": "PubsubEvent"
+    },
+    "ListSubscriptionsResponse": {
+      "description": "Response for the ListSubscriptions method.",
+      "type": "object",
+      "properties": {
+        "subscription": {
+          "description": "The subscriptions that match the request.",
+          "items": {
+            "$ref": "Subscription"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "If not empty, indicates that there are more subscriptions that match the\nrequest and this value should be passed to the next\n\u003ccode\u003eListSubscriptionsRequest\u003c/code\u003e to continue.",
+          "type": "string"
+        }
+      },
+      "id": "ListSubscriptionsResponse"
+    },
+    "PublishRequest": {
+      "description": "Request for the Publish method.",
+      "type": "object",
+      "properties": {
+        "message": {
+          "$ref": "PubsubMessage",
+          "description": "The message to publish."
+        },
+        "topic": {
+          "description": "The message in the request will be published on this topic.",
+          "type": "string"
+        }
+      },
+      "id": "PublishRequest"
+    },
+    "Subscription": {
+      "description": "A subscription resource.",
+      "type": "object",
+      "properties": {
+        "topic": {
+          "description": "The name of the topic from which this subscription is receiving messages.",
+          "type": "string"
+        },
+        "pushConfig": {
+          "description": "If push delivery is used with this subscription, this field is\nused to configure it.",
+          "$ref": "PushConfig"
+        },
+        "ackDeadlineSeconds": {
+          "format": "int32",
+          "description": "For either push or pull delivery, the value is the maximum time after a\nsubscriber receives a message before the subscriber should acknowledge or\nNack the message. If the Ack deadline for a message passes without an\nAck or a Nack, the Pub/Sub system will eventually redeliver the message.\nIf a subscriber acknowledges after the deadline, the Pub/Sub system may\naccept the Ack, but it is possible that the message has been already\ndelivered again. Multiple Acks to the message are allowed and will\nsucceed.\n\nFor push delivery, this value is used to set the request timeout for\nthe call to the push endpoint.\n\nFor pull delivery, this value is used as the initial value for the Ack\ndeadline. It may be overridden for each message using its corresponding\nack_id with \u003ccode\u003eModifyAckDeadline\u003c/code\u003e.\nWhile a message is outstanding (i.e. it has been delivered to a pull\nsubscriber and the subscriber has not yet Acked or Nacked), the Pub/Sub\nsystem will not deliver that message to another pull subscriber\n(on a best-effort basis).",
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the subscription."
+        }
+      },
+      "id": "Subscription"
+    },
+    "PublishBatchResponse": {
+      "description": "Response for the PublishBatch method.",
+      "type": "object",
+      "properties": {
+        "messageIds": {
+          "description": "The server-assigned ID of each published message, in the same order as\nthe messages in the request. IDs are guaranteed to be unique within\nthe topic.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "id": "PublishBatchResponse"
+    },
+    "Topic": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "description": "Name of the topic.",
+          "type": "string"
+        }
+      },
+      "id": "Topic",
+      "description": "A topic resource."
+    },
+    "Label": {
+      "description": "A key-value pair applied to a given object.",
+      "type": "object",
+      "properties": {
+        "strValue": {
+          "description": "A string value.",
+          "type": "string"
+        },
+        "numValue": {
+          "format": "int64",
+          "description": "An integer value.",
+          "type": "string"
+        },
+        "key": {
+          "description": "The key of a label is a syntactically valid URL (as per RFC 1738) with\nthe \"scheme\" and initial slashes omitted and with the additional\nrestrictions noted below.  Each key should be globally unique.  The\n\"host\" portion is called the \"namespace\" and is not necessarily\nresolvable to a network endpoint.  Instead, the namespace indicates what\nsystem or entity defines the semantics of the label.  Namespaces do not\nrestrict the set of objects to which a label may be associated.\n\nKeys are defined by the following grammar:\n\n  key          = hostname \"/\" kpath\n  kpath        = ksegment *[ \"/\" ksegment ]\n  ksegment     = alphadigit | *[ alphadigit | \"-\" | \"_\" | \".\" ]\n\nwhere \"hostname\" and \"alphadigit\" are defined as in RFC 1738.\n\nExample key:\n  spanner.google.com/universe",
+          "type": "string"
+        }
+      },
+      "id": "Label"
     }
   },
   "icons": {
-    "x32": "http://www.google.com/images/icons/product/search-32.gif",
-    "x16": "http://www.google.com/images/icons/product/search-16.gif"
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
   "protocol": "rest",
   "version": "v1beta1a",
@@ -803,5 +796,12 @@
   "rootUrl": "https://pubsub.googleapis.com/",
   "basePath": "",
   "ownerDomain": "google.com",
-  "name": "pubsub"
+  "name": "pubsub",
+  "batchPath": "batch",
+  "revision": "20170918",
+  "id": "pubsub:v1beta1a",
+  "documentationLink": "https://cloud.google.com/pubsub/docs",
+  "title": "Google Cloud Pub/Sub API",
+  "discoveryVersion": "v1",
+  "ownerName": "Google"
 }

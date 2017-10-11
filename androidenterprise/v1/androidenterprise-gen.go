@@ -1127,7 +1127,7 @@ func (s *EntitlementsListResponse) MarshalJSON() ([]byte, error) {
 //
 // Use the API to query group licenses. A Grouplicenses resource
 // includes the total number of licenses purchased (paid apps only) and
-// the total number of licenses currently in use. Iyn other words, the
+// the total number of licenses currently in use. In other words, the
 // total number of Entitlements that exist for the product.
 //
 // Only one group license object is created per product and group
@@ -2217,11 +2217,10 @@ type ProductSet struct {
 	// per user.
 	ProductSetBehavior string `json:"productSetBehavior,omitempty"`
 
-	// ProductVisibility: Other products that are part of the set, in
-	// addition to those specified in the productId array. The only
-	// difference between this field and the productId array is that it's
-	// possible to specify additional information about this product
-	// visibility, see ProductVisibility and its fields for more
+	// ProductVisibility: Additional list of product IDs making up the
+	// product set. Unlike the productID array, in this list It's possible
+	// to specify which tracks (alpha, beta, production) of a product are
+	// visible to the user. See ProductVisibility and its fields for more
 	// information. Specifying the same product ID both here and in the
 	// productId array is not allowed and it will result in an error.
 	ProductVisibility []*ProductVisibility `json:"productVisibility,omitempty"`
@@ -2289,22 +2288,21 @@ func (s *ProductSigningCertificate) MarshalJSON() ([]byte, error) {
 
 // ProductVisibility: A product to be made visible to a user.
 type ProductVisibility struct {
-	// ProductId: The product ID that should be made visible to the user.
-	// This is required.
+	// ProductId: The product ID to make visible to the user. Required for
+	// each item in the productVisibility list.
 	ProductId string `json:"productId,omitempty"`
 
-	// Tracks: This allows to only grant visibility to the specified tracks
-	// of the app. For example, if an app has a prod version, a beta version
-	// and an alpha version and the enterprise has been granted visibility
-	// to both the alpha and beta tracks, if tracks is {"beta",
-	// "production"} the user will be able to install the app and they will
-	// get the beta version of the app. If there are no app versions in the
-	// specified track or if the enterprise wasn't granted visibility for
-	// the track, adding the "alpha" and "beta" values to the list of tracks
-	// will have no effect for now; however they will take effect once both
-	// conditions are met. Note that the enterprise itself needs to be
-	// granted access to the alpha and/or beta tracks, regardless of whether
-	// individual users or admins have access to those tracks.
+	// Tracks: Grants visibility to the specified track(s) of the product to
+	// the user. The track available to the user is based on the following
+	// order of preference: alpha, beta, production. For example, if an app
+	// has a prod version, a beta version and an alpha version and the
+	// enterprise has been granted visibility to both the alpha and beta
+	// tracks, if tracks is {"beta", "production"} the user will be able to
+	// install the app and they will get the beta version of the app. If
+	// there are no app versions in the specified track adding the "alpha"
+	// and "beta" values to the list of tracks will have no effect. Note
+	// that the enterprise requires access to alpha and/or beta tracks
+	// before users can be granted visibility to apps in those tracks.
 	//
 	// The allowed sets are: {} (considered equivalent to {"production"})
 	// {"production"} {"beta", "production"} {"alpha", "beta", "production"}

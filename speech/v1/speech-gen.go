@@ -572,8 +572,9 @@ type SpeechRecognitionAlternative struct {
 	// hypothesis, and
 	// only for `is_final=true` results. Clients should not rely on
 	// the
-	// `confidence` field as it is not guaranteed to be accurate or
-	// consistent.
+	// `confidence` field as it is not guaranteed to be accurate, or even
+	// set, in
+	// any of the results.
 	// The default of 0.0 is a sentinel value indicating `confidence` was
 	// not set.
 	Confidence float64 `json:"confidence,omitempty"`

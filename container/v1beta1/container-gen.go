@@ -1968,6 +1968,7 @@ type NodeTaint struct {
 	// Effect: Effect for taint.
 	//
 	// Possible values:
+	//   "EFFECT_UNSPECIFIED" - Not set
 	//   "NO_SCHEDULE" - NoSchedule
 	//   "PREFER_NO_SCHEDULE" - PreferNoSchedule
 	//   "NO_EXECUTE" - NoExecute

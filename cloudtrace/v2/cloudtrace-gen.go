@@ -365,13 +365,17 @@ func (s *Links) MarshalJSON() ([]byte, error) {
 // MessageEvent: An event describing a message sent/received between
 // Spans.
 type MessageEvent struct {
-	// CompressedSize: The number of compressed bytes sent or received. If
-	// missing assumed to
+	// CompressedSizeBytes: The number of compressed bytes sent or received.
+	// If missing assumed to
 	// be the same size as uncompressed.
-	CompressedSize uint64 `json:"compressedSize,omitempty,string"`
+	CompressedSizeBytes int64 `json:"compressedSizeBytes,omitempty,string"`
 
-	// Id: An identifier for the message, which must be unique in this span.
-	Id uint64 `json:"id,omitempty,string"`
+	// Id: An identifier for the MessageEvent's message that can be used to
+	// match
+	// SENT and RECEIVED MessageEvents. It is recommended to be unique
+	// within
+	// a Span.
+	Id int64 `json:"id,omitempty,string"`
 
 	// Type: Type of MessageEvent. Indicates whether the message was sent
 	// or
@@ -383,18 +387,19 @@ type MessageEvent struct {
 	//   "RECEIVED" - Indicates a received message.
 	Type string `json:"type,omitempty"`
 
-	// UncompressedSize: The number of uncompressed bytes sent or received.
-	UncompressedSize uint64 `json:"uncompressedSize,omitempty,string"`
+	// UncompressedSizeBytes: The number of uncompressed bytes sent or
+	// received.
+	UncompressedSizeBytes int64 `json:"uncompressedSizeBytes,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "CompressedSize") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "CompressedSizeBytes")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompressedSize") to
+	// NullFields is a list of field names (e.g. "CompressedSizeBytes") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -667,7 +672,7 @@ type StackTrace struct {
 	//
 	// Subsequent spans within the same request can refer
 	// to that stack trace by only setting `stackTraceHashId`.
-	StackTraceHashId uint64 `json:"stackTraceHashId,omitempty,string"`
+	StackTraceHashId int64 `json:"stackTraceHashId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "StackFrames") to
 	// unconditionally include in API requests. By default, fields with

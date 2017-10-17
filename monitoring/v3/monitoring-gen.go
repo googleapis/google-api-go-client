@@ -5466,22 +5466,6 @@ func (r *ProjectsUptimeCheckConfigsService) List(parent string) *ProjectsUptimeC
 	return c
 }
 
-// Filter sets the optional parameter "filter": If provided, specifies
-// the criteria that must be met by uptime check configurations in the
-// provided project to be included in the response. One of the following
-// filters can be provided.  uptime_check_config.id = {uptime_check_id}
-// resource.type = gce_instance AND resource.label.instance_id =
-// {instance_id}  resource.type = aws_ec2_instance AND
-// resource.label.instance_id =  {instance_id}  resource.type =
-// aws_elb_load_balancer AND  resource.label.name = {name}
-// resource.type = gae_app AND resource.label.module_id = {module_id}
-// resource.type = uptime_url AND resource.label.host = {host}  group.id
-// = {group_id}
-func (c *ProjectsUptimeCheckConfigsListCall) Filter(filter string) *ProjectsUptimeCheckConfigsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results to return in a single response. The server may further
 // constrain the maximum number of results returned in a single page. If
@@ -5603,11 +5587,6 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "filter": {
-	//       "description": "If provided, specifies the criteria that must be met by uptime check configurations in the provided project to be included in the response. One of the following filters can be provided.  uptime_check_config.id = {uptime_check_id}  resource.type = gce_instance AND resource.label.instance_id =  {instance_id}  resource.type = aws_ec2_instance AND resource.label.instance_id =  {instance_id}  resource.type = aws_elb_load_balancer AND  resource.label.name = {name}  resource.type = gae_app AND resource.label.module_id = {module_id}  resource.type = uptime_url AND resource.label.host = {host}  group.id = {group_id}",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageSize": {
 	//       "description": "The maximum number of results to return in a single response. The server may further constrain the maximum number of results returned in a single page. If the page_size is \u003c=0, the server will decide the number of results to be returned.",
 	//       "format": "int32",

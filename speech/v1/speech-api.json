@@ -1,16 +1,24 @@
 {
-  "version": "v1",
-  "baseUrl": "https://speech.googleapis.com/",
-  "kind": "discovery#restDescription",
-  "description": "Converts audio to text by applying powerful neural network models.",
-  "servicePath": "",
-  "basePath": "",
-  "revision": "20171010",
-  "documentationLink": "https://cloud.google.com/speech/",
   "id": "speech:v1",
+  "documentationLink": "https://cloud.google.com/speech/",
+  "revision": "20171010",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
+    "SpeechRecognitionResult": {
+      "description": "A speech recognition result corresponding to a portion of the audio.",
+      "type": "object",
+      "properties": {
+        "alternatives": {
+          "description": "*Output-only* May contain one or more recognition hypotheses (up to the\nmaximum specified in `max_alternatives`).\nThese alternatives are ordered in terms of accuracy, with the top (first)\nalternative being the most probable, as ranked by the recognizer.",
+          "items": {
+            "$ref": "SpeechRecognitionAlternative"
+          },
+          "type": "array"
+        }
+      },
+      "id": "SpeechRecognitionResult"
+    },
     "RecognitionAudio": {
       "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[audio limits](https://cloud.google.com/speech/limits#content).",
       "type": "object",
@@ -32,12 +40,12 @@
       "type": "object",
       "properties": {
         "audio": {
-          "description": "*Required* The audio data to be recognized.",
-          "$ref": "RecognitionAudio"
+          "$ref": "RecognitionAudio",
+          "description": "*Required* The audio data to be recognized."
         },
         "config": {
-          "$ref": "RecognitionConfig",
-          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request."
+          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request.",
+          "$ref": "RecognitionConfig"
         }
       },
       "id": "LongRunningRecognizeRequest"
@@ -63,25 +71,7 @@
       "id": "CancelOperationRequest"
     },
     "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "type": "object",
       "properties": {
-        "error": {
-          "description": "The error result of the operation in case of failure or cancellation.",
-          "$ref": "Status"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
-          "type": "object"
-        },
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
         "response": {
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
@@ -93,9 +83,27 @@
         "name": {
           "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
           "type": "string"
+        },
+        "error": {
+          "description": "The error result of the operation in case of failure or cancellation.",
+          "$ref": "Status"
+        },
+        "metadata": {
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          }
+        },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
         }
       },
-      "id": "Operation"
+      "id": "Operation",
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "type": "object"
     },
     "RecognitionConfig": {
       "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
@@ -114,9 +122,18 @@
           "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](https://cloud.google.com/speech/docs/languages)\nfor a list of the currently supported language codes.",
           "type": "string"
         },
+        "speechContexts": {
+          "description": "*Optional* A means to provide context to assist the speech recognition.",
+          "items": {
+            "$ref": "SpeechContext"
+          },
+          "type": "array"
+        },
+        "profanityFilter": {
+          "description": "*Optional* If set to `true`, the server will attempt to filter out\nprofanities, replacing all but the initial character in each filtered word\nwith asterisks, e.g. \"f***\". If set to `false` or omitted, profanities\nwon't be filtered out.",
+          "type": "boolean"
+        },
         "encoding": {
-          "description": "*Required* Encoding of audio data sent in all `RecognitionAudio` messages.",
-          "type": "string",
           "enumDescriptions": [
             "Not specified. Will return result google.rpc.Code.INVALID_ARGUMENT.",
             "Uncompressed 16-bit signed little-endian samples (Linear PCM).",
@@ -136,18 +153,9 @@
             "AMR_WB",
             "OGG_OPUS",
             "SPEEX_WITH_HEADER_BYTE"
-          ]
-        },
-        "profanityFilter": {
-          "description": "*Optional* If set to `true`, the server will attempt to filter out\nprofanities, replacing all but the initial character in each filtered word\nwith asterisks, e.g. \"f***\". If set to `false` or omitted, profanities\nwon't be filtered out.",
-          "type": "boolean"
-        },
-        "speechContexts": {
-          "description": "*Optional* A means to provide context to assist the speech recognition.",
-          "items": {
-            "$ref": "SpeechContext"
-          },
-          "type": "array"
+          ],
+          "description": "*Required* Encoding of audio data sent in all `RecognitionAudio` messages.",
+          "type": "string"
         },
         "sampleRateHertz": {
           "format": "int32",
@@ -216,19 +224,49 @@
       "type": "object",
       "properties": {
         "audio": {
-          "$ref": "RecognitionAudio",
-          "description": "*Required* The audio data to be recognized."
+          "description": "*Required* The audio data to be recognized.",
+          "$ref": "RecognitionAudio"
         },
         "config": {
-          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request.",
-          "$ref": "RecognitionConfig"
+          "$ref": "RecognitionConfig",
+          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request."
         }
       },
       "id": "RecognizeRequest"
     },
-    "SpeechRecognitionAlternative": {
-      "description": "Alternative hypotheses (a.k.a. n-best list).",
+    "SpeechContext": {
+      "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
       "type": "object",
+      "properties": {
+        "phrases": {
+          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "id": "SpeechContext"
+    },
+    "ListOperationsResponse": {
+      "description": "The response message for Operations.ListOperations.",
+      "type": "object",
+      "properties": {
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        },
+        "operations": {
+          "description": "A list of operations that matches the specified filter in the request.",
+          "items": {
+            "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "id": "ListOperationsResponse"
+    },
+    "SpeechRecognitionAlternative": {
       "properties": {
         "confidence": {
           "format": "float",
@@ -247,53 +285,9 @@
           "type": "string"
         }
       },
-      "id": "SpeechRecognitionAlternative"
-    },
-    "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "type": "object",
-      "properties": {
-        "operations": {
-          "description": "A list of operations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Operation"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        }
-      },
-      "id": "ListOperationsResponse"
-    },
-    "SpeechContext": {
-      "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
-      "type": "object",
-      "properties": {
-        "phrases": {
-          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "id": "SpeechContext"
-    },
-    "SpeechRecognitionResult": {
-      "description": "A speech recognition result corresponding to a portion of the audio.",
-      "type": "object",
-      "properties": {
-        "alternatives": {
-          "description": "*Output-only* May contain one or more recognition hypotheses (up to the\nmaximum specified in `max_alternatives`).\nThese alternatives are ordered in terms of accuracy, with the top (first)\nalternative being the most probable, as ranked by the recognizer.",
-          "items": {
-            "$ref": "SpeechRecognitionAlternative"
-          },
-          "type": "array"
-        }
-      },
-      "id": "SpeechRecognitionResult"
+      "id": "SpeechRecognitionAlternative",
+      "description": "Alternative hypotheses (a.k.a. n-best list).",
+      "type": "object"
     }
   },
   "icons": {
@@ -322,23 +316,23 @@
       "methods": {
         "get": {
           "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
-          "response": {
-            "$ref": "Operation"
-          },
           "parameterOrder": [
             "name"
           ],
           "httpMethod": "GET",
+          "response": {
+            "$ref": "Operation"
+          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
           "parameters": {
             "name": {
+              "pattern": "^[^/]+$",
               "location": "path",
               "description": "The name of the operation resource.",
               "type": "string",
-              "required": true,
-              "pattern": "^[^/]+$"
+              "required": true
             }
           },
           "flatPath": "v1/operations/{operationsId}",
@@ -346,26 +340,12 @@
           "path": "v1/operations/{+name}"
         },
         "list": {
-          "httpMethod": "GET",
-          "parameterOrder": [],
           "response": {
             "$ref": "ListOperationsResponse"
           },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ],
+          "parameterOrder": [],
+          "httpMethod": "GET",
           "parameters": {
-            "pageSize": {
-              "location": "query",
-              "format": "int32",
-              "description": "The standard list page size.",
-              "type": "integer"
-            },
-            "filter": {
-              "location": "query",
-              "description": "The standard list filter.",
-              "type": "string"
-            },
             "pageToken": {
               "location": "query",
               "description": "The standard list page token.",
@@ -375,50 +355,63 @@
               "description": "The name of the operation's parent resource.",
               "type": "string",
               "location": "query"
+            },
+            "pageSize": {
+              "location": "query",
+              "format": "int32",
+              "description": "The standard list page size.",
+              "type": "integer"
+            },
+            "filter": {
+              "description": "The standard list filter.",
+              "type": "string",
+              "location": "query"
             }
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ],
           "flatPath": "v1/operations",
-          "path": "v1/operations",
           "id": "speech.operations.list",
+          "path": "v1/operations",
           "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id."
         },
         "cancel": {
-          "response": {
-            "$ref": "Empty"
+          "path": "v1/operations/{+name}:cancel",
+          "id": "speech.operations.cancel",
+          "request": {
+            "$ref": "CancelOperationRequest"
           },
+          "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+          "httpMethod": "POST",
           "parameterOrder": [
             "name"
           ],
-          "httpMethod": "POST",
+          "response": {
+            "$ref": "Empty"
+          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
           "parameters": {
             "name": {
+              "location": "path",
               "description": "The name of the operation resource to be cancelled.",
               "type": "string",
               "required": true,
-              "pattern": "^[^/]+$",
-              "location": "path"
+              "pattern": "^[^/]+$"
             }
           },
-          "flatPath": "v1/operations/{operationsId}:cancel",
-          "id": "speech.operations.cancel",
-          "path": "v1/operations/{+name}:cancel",
-          "request": {
-            "$ref": "CancelOperationRequest"
-          },
-          "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`."
+          "flatPath": "v1/operations/{operationsId}:cancel"
         },
         "delete": {
-          "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
-          "response": {
-            "$ref": "Empty"
-          },
+          "httpMethod": "DELETE",
           "parameterOrder": [
             "name"
           ],
-          "httpMethod": "DELETE",
+          "response": {
+            "$ref": "Empty"
+          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
@@ -432,71 +425,72 @@
             }
           },
           "flatPath": "v1/operations/{operationsId}",
+          "path": "v1/operations/{+name}",
           "id": "speech.operations.delete",
-          "path": "v1/operations/{+name}"
+          "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`."
         }
       }
     },
     "speech": {
       "methods": {
         "longrunningrecognize": {
-          "flatPath": "v1/speech:longrunningrecognize",
-          "id": "speech.speech.longrunningrecognize",
-          "path": "v1/speech:longrunningrecognize",
+          "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `LongRunningRecognizeResponse` message.",
           "request": {
             "$ref": "LongRunningRecognizeRequest"
           },
-          "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `LongRunningRecognizeResponse` message.",
           "response": {
             "$ref": "Operation"
           },
           "parameterOrder": [],
           "httpMethod": "POST",
+          "parameters": {},
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "parameters": {}
+          "flatPath": "v1/speech:longrunningrecognize",
+          "id": "speech.speech.longrunningrecognize",
+          "path": "v1/speech:longrunningrecognize"
         },
         "recognize": {
+          "id": "speech.speech.recognize",
+          "path": "v1/speech:recognize",
+          "description": "Performs synchronous speech recognition: receive results after all audio\nhas been sent and processed.",
           "request": {
             "$ref": "RecognizeRequest"
           },
-          "description": "Performs synchronous speech recognition: receive results after all audio\nhas been sent and processed.",
           "response": {
             "$ref": "RecognizeResponse"
           },
           "parameterOrder": [],
           "httpMethod": "POST",
+          "parameters": {},
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "parameters": {},
-          "flatPath": "v1/speech:recognize",
-          "id": "speech.speech.recognize",
-          "path": "v1/speech:recognize"
+          "flatPath": "v1/speech:recognize"
         }
       }
     }
   },
   "parameters": {
     "upload_protocol": {
-      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
-    },
-    "prettyPrint": {
-      "location": "query",
-      "description": "Returns response with indentations and line breaks.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
+    "prettyPrint": {
+      "description": "Returns response with indentations and line breaks.",
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
+    },
     "fields": {
+      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
@@ -534,14 +528,14 @@
         "proto"
       ]
     },
+    "access_token": {
+      "description": "OAuth access token.",
+      "type": "string",
+      "location": "query"
+    },
     "key": {
       "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "location": "query",
-      "description": "OAuth access token.",
       "type": "string"
     },
     "quotaUser": {
@@ -550,10 +544,10 @@
       "location": "query"
     },
     "pp": {
-      "location": "query",
       "description": "Pretty-print response.",
       "default": "true",
-      "type": "boolean"
+      "type": "boolean",
+      "location": "query"
     },
     "bearer_token": {
       "description": "OAuth bearer token.",
@@ -561,9 +555,15 @@
       "location": "query"
     },
     "oauth_token": {
-      "location": "query",
       "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     }
-  }
+  },
+  "version": "v1",
+  "baseUrl": "https://speech.googleapis.com/",
+  "servicePath": "",
+  "description": "Converts audio to text by applying powerful neural network models.",
+  "kind": "discovery#restDescription",
+  "basePath": ""
 }

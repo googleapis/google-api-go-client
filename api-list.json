@@ -2116,22 +2116,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "qpxExpress:v1",
-   "name": "qpxExpress",
-   "version": "v1",
-   "title": "QPX Express API",
-   "description": "Finds the least expensive flights between an origin and a destination.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/qpxExpress/v1/rest",
-   "discoveryLink": "./apis/qpxExpress/v1/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "http://developers.google.com/qpx-express",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "replicapool:v1beta1",
    "name": "replicapool",
    "version": "v1beta1",

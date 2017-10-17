@@ -2134,7 +2134,7 @@ type ImageProperties struct {
 	// link.
 	Link *Link `json:"link,omitempty"`
 
-	// Outline: The outline of the image. If not set, the the image has no
+	// Outline: The outline of the image. If not set, the image has no
 	// outline.
 	Outline *Outline `json:"outline,omitempty"`
 
@@ -5053,7 +5053,7 @@ func (s *Shape) MarshalJSON() ([]byte, error) {
 type ShapeBackgroundFill struct {
 	// PropertyState: The background fill property state.
 	//
-	// Updating the the fill on a shape will implicitly update this field
+	// Updating the fill on a shape will implicitly update this field
 	// to
 	// `RENDERED`, unless another value is specified in the same request.
 	// To
@@ -5740,7 +5740,7 @@ func (s *TableCell) MarshalJSON() ([]byte, error) {
 type TableCellBackgroundFill struct {
 	// PropertyState: The background fill property state.
 	//
-	// Updating the the fill on a table cell will implicitly update this
+	// Updating the fill on a table cell will implicitly update this
 	// field
 	// to `RENDERED`, unless another value is specified in the same request.
 	// To

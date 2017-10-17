@@ -6249,9 +6249,7 @@ type PivotValue struct {
 	// with an `=` character.
 	Formula string `json:"formula,omitempty"`
 
-	// Name: A name to use for the value. This is only used if formula was
-	// set.
-	// Otherwise, the column name is used.
+	// Name: A name to use for the value.
 	Name string `json:"name,omitempty"`
 
 	// SourceColumnOffset: The column offset of the source range that this

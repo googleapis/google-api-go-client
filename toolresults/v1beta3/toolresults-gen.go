@@ -2526,6 +2526,7 @@ type TestIssue struct {
 	//   "fatalException"
 	//   "nativeCrash"
 	//   "unspecifiedType"
+	//   "unusedRoboDirective"
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should

@@ -364,10 +364,8 @@ func (s *CollectionSelector) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Firestore.Commit.
 type CommitRequest struct {
-	// Transaction: If non-empty, applies all writes in this transaction,
-	// and commits it.
-	// Otherwise, applies the writes as if they were in their own
-	// transaction.
+	// Transaction: If set, applies all writes in this transaction, and
+	// commits it.
 	Transaction string `json:"transaction,omitempty"`
 
 	// Writes: The writes to apply.
@@ -1063,11 +1061,11 @@ type Index struct {
 	Fields []*IndexField `json:"fields,omitempty"`
 
 	// Name: The resource name of the index.
+	// Output only.
 	Name string `json:"name,omitempty"`
 
 	// State: The state of the index.
-	// The state is read-only.
-	// @OutputOnly
+	// Output only.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unspecified.
@@ -1154,66 +1152,6 @@ type IndexField struct {
 
 func (s *IndexField) MarshalJSON() ([]byte, error) {
 	type noMethod IndexField
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// IndexOperationMetadata: Metadata for index operations. This metadata
-// populates
-// the metadata field of google.longrunning.Operation.
-type IndexOperationMetadata struct {
-	// Cancelled: True if the [google.longrunning.Operation] was cancelled.
-	// If the
-	// cancellation is in progress, cancelled will be true
-	// but
-	// google.longrunning.Operation.done will be false.
-	Cancelled bool `json:"cancelled,omitempty"`
-
-	// DocumentProgress: Progress of the existing operation, measured in
-	// number of documents.
-	DocumentProgress *Progress `json:"documentProgress,omitempty"`
-
-	// EndTime: The time the operation ended, either successfully or
-	// otherwise. Unset if
-	// the operation is still active.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Index: The index resource that this operation is acting on. For
-	// example:
-	// `projects/{project_id}/databases/{database_id}/indexes/{index
-	// _id}`
-	Index string `json:"index,omitempty"`
-
-	// OperationType: The type of index operation.
-	//
-	// Possible values:
-	//   "OPERATION_TYPE_UNSPECIFIED" - Unspecified. Never set by server.
-	//   "CREATING_INDEX" - The operation is creating the index. Initiated
-	// from a `CreateIndex` call.
-	OperationType string `json:"operationType,omitempty"`
-
-	// StartTime: The time that work began on the operation.
-	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Cancelled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Cancelled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IndexOperationMetadata) MarshalJSON() ([]byte, error) {
-	type noMethod IndexOperationMetadata
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1307,6 +1245,40 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 	s.Latitude = float64(s1.Latitude)
 	s.Longitude = float64(s1.Longitude)
 	return nil
+}
+
+// ListCollectionIdsRequest: The request for
+// Firestore.ListCollectionIds.
+type ListCollectionIdsRequest struct {
+	// PageSize: The maximum number of results to return.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: A page token. Must be a value
+	// from
+	// ListCollectionIdsResponse.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCollectionIdsRequest) MarshalJSON() ([]byte, error) {
+	type noMethod ListCollectionIdsRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListCollectionIdsResponse: The response from
@@ -1680,41 +1652,6 @@ type Precondition struct {
 
 func (s *Precondition) MarshalJSON() ([]byte, error) {
 	type noMethod Precondition
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Progress: Measures the progress of a particular metric.
-type Progress struct {
-	// WorkCompleted: An estimate of how much work has been completed. Note
-	// that this may be
-	// greater than `work_estimated`.
-	WorkCompleted int64 `json:"workCompleted,omitempty,string"`
-
-	// WorkEstimated: An estimate of how much work needs to be performed.
-	// Zero if the
-	// work estimate is unavailable. May change as work progresses.
-	WorkEstimated int64 `json:"workEstimated,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "WorkCompleted") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "WorkCompleted") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Progress) MarshalJSON() ([]byte, error) {
-	type noMethod Progress
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3916,33 +3853,20 @@ func (c *ProjectsDatabasesDocumentsListCall) Pages(ctx context.Context, f func(*
 // method id "firestore.projects.databases.documents.listCollectionIds":
 
 type ProjectsDatabasesDocumentsListCollectionIdsCall struct {
-	s          *Service
-	parent     string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                        *Service
+	parent                   string
+	listcollectionidsrequest *ListCollectionIdsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
 }
 
 // ListCollectionIds: Lists all the collection IDs underneath a
 // document.
-func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string) *ProjectsDatabasesDocumentsListCollectionIdsCall {
+func (r *ProjectsDatabasesDocumentsService) ListCollectionIds(parent string, listcollectionidsrequest *ListCollectionIdsRequest) *ProjectsDatabasesDocumentsListCollectionIdsCall {
 	c := &ProjectsDatabasesDocumentsListCollectionIdsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return.
-func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) PageSize(pageSize int64) *ProjectsDatabasesDocumentsListCollectionIdsCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token. Must
-// be a value from
-// ListCollectionIdsResponse.
-func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) PageToken(pageToken string) *ProjectsDatabasesDocumentsListCollectionIdsCall {
-	c.urlParams_.Set("pageToken", pageToken)
+	c.listcollectionidsrequest = listcollectionidsrequest
 	return c
 }
 
@@ -3978,6 +3902,11 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) doRequest(alt string) 
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.listcollectionidsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}:listCollectionIds")
 	urls += "?" + c.urlParams_.Encode()
@@ -4035,17 +3964,6 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token. Must be a value from\nListCollectionIdsResponse.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "parent": {
 	//       "description": "The parent document. In the format:\n`projects/{project_id}/databases/{database_id}/documents/{document_path}`.\nFor example:\n`projects/my-project/databases/my-database/documents/chatrooms/my-chatroom`",
 	//       "location": "path",
@@ -4055,6 +3973,9 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}:listCollectionIds",
+	//   "request": {
+	//     "$ref": "ListCollectionIdsRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "ListCollectionIdsResponse"
 	//   },
@@ -4071,7 +3992,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Do(opts ...googleapi.C
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Pages(ctx context.Context, f func(*ListCollectionIdsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer func(pt string) { c.listcollectionidsrequest.PageToken = pt }(c.listcollectionidsrequest.PageToken) // reset paging to original point
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4083,7 +4004,7 @@ func (c *ProjectsDatabasesDocumentsListCollectionIdsCall) Pages(ctx context.Cont
 		if x.NextPageToken == "" {
 			return nil
 		}
-		c.PageToken(x.NextPageToken)
+		c.listcollectionidsrequest.PageToken = x.NextPageToken
 	}
 }
 

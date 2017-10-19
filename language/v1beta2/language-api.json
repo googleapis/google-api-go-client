@@ -1,10 +1,14 @@
 {
+  "rootUrl": "https://language.googleapis.com/",
+  "ownerDomain": "google.com",
+  "name": "language",
+  "batchPath": "batch",
+  "title": "Google Cloud Natural Language API",
   "ownerName": "Google",
   "resources": {
     "documents": {
       "methods": {
         "annotateText": {
-          "flatPath": "v1beta2/documents:annotateText",
           "id": "language.documents.annotateText",
           "path": "v1beta2/documents:annotateText",
           "description": "A convenience method that provides all syntax, sentiment, entity, and\nclassification features in one call.",
@@ -20,32 +24,29 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-language",
             "https://www.googleapis.com/auth/cloud-platform"
-          ]
+          ],
+          "flatPath": "v1beta2/documents:annotateText"
         },
         "classifyText": {
-          "path": "v1beta2/documents:classifyText",
-          "id": "language.documents.classifyText",
-          "description": "Classifies a document into categories.",
-          "request": {
-            "$ref": "ClassifyTextRequest"
-          },
           "httpMethod": "POST",
           "parameterOrder": [],
           "response": {
             "$ref": "ClassifyTextResponse"
           },
-          "parameters": {},
           "scopes": [
             "https://www.googleapis.com/auth/cloud-language",
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "flatPath": "v1beta2/documents:classifyText"
+          "parameters": {},
+          "flatPath": "v1beta2/documents:classifyText",
+          "path": "v1beta2/documents:classifyText",
+          "id": "language.documents.classifyText",
+          "request": {
+            "$ref": "ClassifyTextRequest"
+          },
+          "description": "Classifies a document into categories."
         },
         "analyzeSentiment": {
-          "description": "Analyzes the sentiment of the provided text.",
-          "request": {
-            "$ref": "AnalyzeSentimentRequest"
-          },
           "response": {
             "$ref": "AnalyzeSentimentResponse"
           },
@@ -58,9 +59,17 @@
           ],
           "flatPath": "v1beta2/documents:analyzeSentiment",
           "id": "language.documents.analyzeSentiment",
-          "path": "v1beta2/documents:analyzeSentiment"
+          "path": "v1beta2/documents:analyzeSentiment",
+          "description": "Analyzes the sentiment of the provided text.",
+          "request": {
+            "$ref": "AnalyzeSentimentRequest"
+          }
         },
         "analyzeEntitySentiment": {
+          "description": "Finds entities, similar to AnalyzeEntities in the text and analyzes\nsentiment associated with each entity and its mentions.",
+          "request": {
+            "$ref": "AnalyzeEntitySentimentRequest"
+          },
           "httpMethod": "POST",
           "parameterOrder": [],
           "response": {
@@ -73,32 +82,32 @@
           ],
           "flatPath": "v1beta2/documents:analyzeEntitySentiment",
           "path": "v1beta2/documents:analyzeEntitySentiment",
-          "id": "language.documents.analyzeEntitySentiment",
-          "description": "Finds entities, similar to AnalyzeEntities in the text and analyzes\nsentiment associated with each entity and its mentions.",
-          "request": {
-            "$ref": "AnalyzeEntitySentimentRequest"
-          }
+          "id": "language.documents.analyzeEntitySentiment"
         },
         "analyzeEntities": {
-          "description": "Finds named entities (currently proper names and common nouns) in the text\nalong with entity types, salience, mentions for each entity, and\nother properties.",
           "request": {
             "$ref": "AnalyzeEntitiesRequest"
           },
+          "description": "Finds named entities (currently proper names and common nouns) in the text\nalong with entity types, salience, mentions for each entity, and\nother properties.",
           "httpMethod": "POST",
           "parameterOrder": [],
           "response": {
             "$ref": "AnalyzeEntitiesResponse"
           },
-          "parameters": {},
           "scopes": [
             "https://www.googleapis.com/auth/cloud-language",
             "https://www.googleapis.com/auth/cloud-platform"
           ],
+          "parameters": {},
           "flatPath": "v1beta2/documents:analyzeEntities",
           "path": "v1beta2/documents:analyzeEntities",
           "id": "language.documents.analyzeEntities"
         },
         "analyzeSyntax": {
+          "request": {
+            "$ref": "AnalyzeSyntaxRequest"
+          },
+          "description": "Analyzes the syntax of the text and provides sentence boundaries and\ntokenization along with part of speech tags, dependency trees, and other\nproperties.",
           "httpMethod": "POST",
           "parameterOrder": [],
           "response": {
@@ -111,54 +120,50 @@
           "parameters": {},
           "flatPath": "v1beta2/documents:analyzeSyntax",
           "path": "v1beta2/documents:analyzeSyntax",
-          "id": "language.documents.analyzeSyntax",
-          "request": {
-            "$ref": "AnalyzeSyntaxRequest"
-          },
-          "description": "Analyzes the syntax of the text and provides sentence boundaries and\ntokenization along with part of speech tags, dependency trees, and other\nproperties."
+          "id": "language.documents.analyzeSyntax"
         }
       }
     }
   },
   "parameters": {
     "upload_protocol": {
+      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "prettyPrint": {
+      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
-      "type": "boolean",
-      "location": "query"
+      "type": "boolean"
+    },
+    "fields": {
+      "type": "string",
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response."
     },
     "uploadType": {
       "location": "query",
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
     },
-    "fields": {
+    "callback": {
+      "type": "string",
       "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
+      "description": "JSONP"
     },
     "$.xgafv": {
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
       "description": "V1 error format.",
       "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
       ]
-    },
-    "callback": {
-      "description": "JSONP",
-      "type": "string",
-      "location": "query"
     },
     "alt": {
       "location": "query",
@@ -182,14 +187,14 @@
       "location": "query"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "type": "string",
       "location": "query"
+    },
+    "quotaUser": {
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
     },
     "pp": {
       "description": "Pretty-print response.",
@@ -197,38 +202,234 @@
       "type": "boolean",
       "location": "query"
     },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
     "oauth_token": {
-      "location": "query",
       "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
+    },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
+      "type": "string",
+      "location": "query"
     }
   },
   "version": "v1beta2",
   "baseUrl": "https://language.googleapis.com/",
   "servicePath": "",
-  "kind": "discovery#restDescription",
   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
+  "kind": "discovery#restDescription",
   "basePath": "",
   "id": "language:v1beta2",
-  "revision": "20171016",
   "documentationLink": "https://cloud.google.com/natural-language/",
+  "revision": "20171016",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "AnalyzeSentimentResponse": {
-      "id": "AnalyzeSentimentResponse",
-      "description": "The sentiment analysis response message.",
+    "AnnotateTextRequest": {
+      "type": "object",
+      "properties": {
+        "encodingType": {
+          "description": "The encoding type used by the API to calculate offsets.",
+          "type": "string",
+          "enumDescriptions": [
+            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
+          ],
+          "enum": [
+            "NONE",
+            "UTF8",
+            "UTF16",
+            "UTF32"
+          ]
+        },
+        "document": {
+          "description": "Input document.",
+          "$ref": "Document"
+        },
+        "features": {
+          "$ref": "Features",
+          "description": "The enabled features."
+        }
+      },
+      "id": "AnnotateTextRequest",
+      "description": "The request message for the text annotation API, which can perform multiple\nanalysis types (sentiment, entities, and syntax) in one call."
+    },
+    "AnalyzeSentimentRequest": {
+      "properties": {
+        "encodingType": {
+          "description": "The encoding type used by the API to calculate sentence offsets for the\nsentence sentiment.",
+          "type": "string",
+          "enumDescriptions": [
+            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
+          ],
+          "enum": [
+            "NONE",
+            "UTF8",
+            "UTF16",
+            "UTF32"
+          ]
+        },
+        "document": {
+          "description": "Input document.",
+          "$ref": "Document"
+        }
+      },
+      "id": "AnalyzeSentimentRequest",
+      "description": "The sentiment analysis request message.",
+      "type": "object"
+    },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "type": "object",
+      "properties": {
+        "code": {
+          "format": "int32",
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "type": "integer"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "items": {
+            "type": "object",
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            }
+          },
+          "type": "array"
+        }
+      },
+      "id": "Status"
+    },
+    "Features": {
+      "id": "Features",
+      "description": "All available features for sentiment, syntax, and semantic analysis.\nSetting each one to true will enable that specific analysis for the input.",
+      "type": "object",
+      "properties": {
+        "extractEntities": {
+          "description": "Extract entities.",
+          "type": "boolean"
+        },
+        "classifyText": {
+          "description": "Classify the full document into categories.",
+          "type": "boolean"
+        },
+        "extractEntitySentiment": {
+          "description": "Extract entities and their associated sentiment.",
+          "type": "boolean"
+        },
+        "extractDocumentSentiment": {
+          "description": "Extract document-level sentiment.",
+          "type": "boolean"
+        },
+        "extractSyntax": {
+          "description": "Extract syntax information.",
+          "type": "boolean"
+        }
+      }
+    },
+    "Document": {
+      "description": "################################################################ #\n\nRepresents the input to API methods.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "The content of the input in string format.",
+          "type": "string"
+        },
+        "type": {
+          "enumDescriptions": [
+            "The content type is not specified.",
+            "Plain text",
+            "HTML"
+          ],
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "PLAIN_TEXT",
+            "HTML"
+          ],
+          "description": "Required. If the type is not set or is `TYPE_UNSPECIFIED`,\nreturns an `INVALID_ARGUMENT` error.",
+          "type": "string"
+        },
+        "gcsContentUri": {
+          "description": "The Google Cloud Storage URI where the file content is located.\nThis URI must be of the form: gs://bucket_name/object_name. For more\ndetails, see https://cloud.google.com/storage/docs/reference-uris.\nNOTE: Cloud Storage object versioning is not supported.",
+          "type": "string"
+        },
+        "language": {
+          "description": "The language of the document (if not specified, the language is\nautomatically detected). Both ISO and BCP-47 language codes are\naccepted.\u003cbr\u003e\n[Language Support](/natural-language/docs/languages)\nlists currently supported languages for each API method.\nIf the language (either specified by the caller or automatically detected)\nis not supported by the called API method, an `INVALID_ARGUMENT` error\nis returned.",
+          "type": "string"
+        }
+      },
+      "id": "Document"
+    },
+    "AnalyzeEntitiesRequest": {
+      "properties": {
+        "encodingType": {
+          "enumDescriptions": [
+            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
+          ],
+          "enum": [
+            "NONE",
+            "UTF8",
+            "UTF16",
+            "UTF32"
+          ],
+          "description": "The encoding type used by the API to calculate offsets.",
+          "type": "string"
+        },
+        "document": {
+          "$ref": "Document",
+          "description": "Input document."
+        }
+      },
+      "id": "AnalyzeEntitiesRequest",
+      "description": "The entity analysis request message.",
+      "type": "object"
+    },
+    "ClassifyTextRequest": {
+      "description": "The document classification request message.",
+      "type": "object",
+      "properties": {
+        "document": {
+          "description": "Input document.",
+          "$ref": "Document"
+        }
+      },
+      "id": "ClassifyTextRequest"
+    },
+    "AnalyzeEntitySentimentResponse": {
+      "description": "The entity-level sentiment analysis response message.",
       "type": "object",
       "properties": {
         "language": {
           "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
           "type": "string"
         },
+        "entities": {
+          "description": "The recognized entities in the input document with associated sentiments.",
+          "items": {
+            "$ref": "Entity"
+          },
+          "type": "array"
+        }
+      },
+      "id": "AnalyzeEntitySentimentResponse"
+    },
+    "AnalyzeSentimentResponse": {
+      "description": "The sentiment analysis response message.",
+      "type": "object",
+      "properties": {
         "sentences": {
           "description": "The sentiment for all the sentences in the document.",
           "items": {
@@ -239,8 +440,13 @@
         "documentSentiment": {
           "description": "The overall sentiment of the input document.",
           "$ref": "Sentiment"
+        },
+        "language": {
+          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
+          "type": "string"
         }
-      }
+      },
+      "id": "AnalyzeSentimentResponse"
     },
     "AnalyzeSyntaxResponse": {
       "description": "The syntax analysis response message.",
@@ -258,18 +464,16 @@
           "type": "array"
         },
         "tokens": {
-          "description": "Tokens, along with their syntactic information, in the input document.",
           "items": {
             "$ref": "Token"
           },
-          "type": "array"
+          "type": "array",
+          "description": "Tokens, along with their syntactic information, in the input document."
         }
       },
       "id": "AnalyzeSyntaxResponse"
     },
     "AnnotateTextResponse": {
-      "description": "The text annotations response message.",
-      "type": "object",
       "properties": {
         "sentences": {
           "description": "Sentences in the input document. Populated if the user enables\nAnnotateTextRequest.Features.extract_syntax.",
@@ -285,16 +489,16 @@
           "type": "array",
           "description": "Tokens, along with their syntactic information, in the input document.\nPopulated if the user enables\nAnnotateTextRequest.Features.extract_syntax."
         },
+        "documentSentiment": {
+          "$ref": "Sentiment",
+          "description": "The overall sentiment for the document. Populated if the user enables\nAnnotateTextRequest.Features.extract_document_sentiment."
+        },
         "categories": {
           "description": "Categories identified in the input document.",
           "items": {
             "$ref": "ClassificationCategory"
           },
           "type": "array"
-        },
-        "documentSentiment": {
-          "$ref": "Sentiment",
-          "description": "The overall sentiment for the document. Populated if the user enables\nAnnotateTextRequest.Features.extract_document_sentiment."
         },
         "language": {
           "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
@@ -308,19 +512,16 @@
           "type": "array"
         }
       },
-      "id": "AnnotateTextResponse"
+      "id": "AnnotateTextResponse",
+      "description": "The text annotations response message.",
+      "type": "object"
     },
     "DependencyEdge": {
-      "id": "DependencyEdge",
       "description": "Represents dependency parse tree information for a token.",
       "type": "object",
       "properties": {
-        "headTokenIndex": {
-          "format": "int32",
-          "description": "Represents the head of this token in the dependency tree.\nThis is the index of the token which has an arc going to this token.\nThe index is the position of the token in the array of tokens returned\nby the API method. If this token is a root token, then the\n`head_token_index` is its own index.",
-          "type": "integer"
-        },
         "label": {
+          "type": "string",
           "enumDescriptions": [
             "Unknown",
             "Abbreviation modifier",
@@ -491,80 +692,57 @@
             "MES",
             "NCOMP"
           ],
-          "description": "The parse label for the token.",
-          "type": "string"
+          "description": "The parse label for the token."
+        },
+        "headTokenIndex": {
+          "format": "int32",
+          "description": "Represents the head of this token in the dependency tree.\nThis is the index of the token which has an arc going to this token.\nThe index is the position of the token in the array of tokens returned\nby the API method. If this token is a root token, then the\n`head_token_index` is its own index.",
+          "type": "integer"
         }
-      }
+      },
+      "id": "DependencyEdge"
+    },
+    "Token": {
+      "description": "Represents the smallest syntactic building block of the text.",
+      "type": "object",
+      "properties": {
+        "dependencyEdge": {
+          "description": "Dependency tree parse for this token.",
+          "$ref": "DependencyEdge"
+        },
+        "text": {
+          "$ref": "TextSpan",
+          "description": "The token text."
+        },
+        "lemma": {
+          "description": "[Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29) of the token.",
+          "type": "string"
+        },
+        "partOfSpeech": {
+          "description": "Parts of speech tag for this token.",
+          "$ref": "PartOfSpeech"
+        }
+      },
+      "id": "Token"
     },
     "TextSpan": {
+      "description": "Represents an output piece of text.",
       "type": "object",
       "properties": {
         "beginOffset": {
-          "type": "integer",
           "format": "int32",
-          "description": "The API calculates the beginning offset of the content in the original\ndocument according to the EncodingType specified in the API request."
+          "description": "The API calculates the beginning offset of the content in the original\ndocument according to the EncodingType specified in the API request.",
+          "type": "integer"
         },
         "content": {
           "description": "The content of the output text.",
           "type": "string"
         }
       },
-      "id": "TextSpan",
-      "description": "Represents an output piece of text."
-    },
-    "Token": {
-      "type": "object",
-      "properties": {
-        "partOfSpeech": {
-          "$ref": "PartOfSpeech",
-          "description": "Parts of speech tag for this token."
-        },
-        "dependencyEdge": {
-          "$ref": "DependencyEdge",
-          "description": "Dependency tree parse for this token."
-        },
-        "text": {
-          "description": "The token text.",
-          "$ref": "TextSpan"
-        },
-        "lemma": {
-          "description": "[Lemma](https://en.wikipedia.org/wiki/Lemma_%28morphology%29) of the token.",
-          "type": "string"
-        }
-      },
-      "id": "Token",
-      "description": "Represents the smallest syntactic building block of the text."
-    },
-    "EntityMention": {
-      "properties": {
-        "type": {
-          "enumDescriptions": [
-            "Unknown",
-            "Proper name",
-            "Common noun (or noun compound)"
-          ],
-          "enum": [
-            "TYPE_UNKNOWN",
-            "PROPER",
-            "COMMON"
-          ],
-          "description": "The type of the entity mention.",
-          "type": "string"
-        },
-        "text": {
-          "description": "The mention text.",
-          "$ref": "TextSpan"
-        },
-        "sentiment": {
-          "$ref": "Sentiment",
-          "description": "For calls to AnalyzeEntitySentiment or if\nAnnotateTextRequest.Features.extract_entity_sentiment is set to\ntrue, this field will contain the sentiment expressed for this mention of\nthe entity in the provided document."
-        }
-      },
-      "id": "EntityMention",
-      "description": "Represents a mention for an entity in the text. Currently, proper noun\nmentions are supported.",
-      "type": "object"
+      "id": "TextSpan"
     },
     "ClassifyTextResponse": {
+      "id": "ClassifyTextResponse",
       "description": "The document classification response message.",
       "type": "object",
       "properties": {
@@ -575,60 +753,88 @@
           },
           "type": "array"
         }
+      }
+    },
+    "EntityMention": {
+      "description": "Represents a mention for an entity in the text. Currently, proper noun\nmentions are supported.",
+      "type": "object",
+      "properties": {
+        "type": {
+          "description": "The type of the entity mention.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unknown",
+            "Proper name",
+            "Common noun (or noun compound)"
+          ],
+          "enum": [
+            "TYPE_UNKNOWN",
+            "PROPER",
+            "COMMON"
+          ]
+        },
+        "text": {
+          "$ref": "TextSpan",
+          "description": "The mention text."
+        },
+        "sentiment": {
+          "$ref": "Sentiment",
+          "description": "For calls to AnalyzeEntitySentiment or if\nAnnotateTextRequest.Features.extract_entity_sentiment is set to\ntrue, this field will contain the sentiment expressed for this mention of\nthe entity in the provided document."
+        }
       },
-      "id": "ClassifyTextResponse"
+      "id": "EntityMention"
     },
     "Sentence": {
       "description": "Represents a sentence in the input document.",
       "type": "object",
       "properties": {
-        "sentiment": {
-          "$ref": "Sentiment",
-          "description": "For calls to AnalyzeSentiment or if\nAnnotateTextRequest.Features.extract_document_sentiment is set to\ntrue, this field will contain the sentiment for the sentence."
-        },
         "text": {
           "$ref": "TextSpan",
           "description": "The sentence text."
+        },
+        "sentiment": {
+          "$ref": "Sentiment",
+          "description": "For calls to AnalyzeSentiment or if\nAnnotateTextRequest.Features.extract_document_sentiment is set to\ntrue, this field will contain the sentiment for the sentence."
         }
       },
       "id": "Sentence"
     },
     "Sentiment": {
+      "description": "Represents the feeling associated with the entire text or entities in\nthe text.",
       "type": "object",
       "properties": {
-        "score": {
-          "format": "float",
-          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment).",
-          "type": "number"
-        },
         "magnitude": {
           "format": "float",
           "description": "A non-negative number in the [0, +inf) range, which represents\nthe absolute magnitude of sentiment regardless of score (positive or\nnegative).",
           "type": "number"
+        },
+        "score": {
+          "format": "float",
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0\n(positive sentiment).",
+          "type": "number"
         }
       },
-      "id": "Sentiment",
-      "description": "Represents the feeling associated with the entire text or entities in\nthe text."
+      "id": "Sentiment"
     },
     "AnalyzeEntitySentimentRequest": {
       "description": "The entity-level sentiment analysis request message.",
       "type": "object",
       "properties": {
         "encodingType": {
-          "type": "string",
-          "enumDescriptions": [
-            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
-          ],
           "enum": [
             "NONE",
             "UTF8",
             "UTF16",
             "UTF32"
           ],
-          "description": "The encoding type used by the API to calculate offsets."
+          "description": "The encoding type used by the API to calculate offsets.",
+          "type": "string",
+          "enumDescriptions": [
+            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
+          ]
         },
         "document": {
           "$ref": "Document",
@@ -638,6 +844,9 @@
       "id": "AnalyzeEntitySentimentRequest"
     },
     "PartOfSpeech": {
+      "id": "PartOfSpeech",
+      "description": "Represents part of speech information for a token.",
+      "type": "object",
       "properties": {
         "form": {
           "enumDescriptions": [
@@ -672,6 +881,7 @@
           "type": "string"
         },
         "number": {
+          "type": "string",
           "enumDescriptions": [
             "Number is not applicable in the analyzed language or is not predicted.",
             "Singular",
@@ -684,10 +894,10 @@
             "PLURAL",
             "DUAL"
           ],
-          "description": "The grammatical number.",
-          "type": "string"
+          "description": "The grammatical number."
         },
         "voice": {
+          "description": "The grammatical voice.",
           "type": "string",
           "enumDescriptions": [
             "Voice is not applicable in the analyzed language or is not predicted.",
@@ -700,16 +910,9 @@
             "ACTIVE",
             "CAUSATIVE",
             "PASSIVE"
-          ],
-          "description": "The grammatical voice."
+          ]
         },
         "aspect": {
-          "enumDescriptions": [
-            "Aspect is not applicable in the analyzed language or is not predicted.",
-            "Perfective",
-            "Imperfective",
-            "Progressive"
-          ],
           "enum": [
             "ASPECT_UNKNOWN",
             "PERFECTIVE",
@@ -717,9 +920,24 @@
             "PROGRESSIVE"
           ],
           "description": "The grammatical aspect.",
-          "type": "string"
+          "type": "string",
+          "enumDescriptions": [
+            "Aspect is not applicable in the analyzed language or is not predicted.",
+            "Perfective",
+            "Imperfective",
+            "Progressive"
+          ]
         },
         "mood": {
+          "enumDescriptions": [
+            "Mood is not applicable in the analyzed language or is not predicted.",
+            "Conditional",
+            "Imperative",
+            "Indicative",
+            "Interrogative",
+            "Jussive",
+            "Subjunctive"
+          ],
           "enum": [
             "MOOD_UNKNOWN",
             "CONDITIONAL_MOOD",
@@ -730,16 +948,7 @@
             "SUBJUNCTIVE"
           ],
           "description": "The grammatical mood.",
-          "type": "string",
-          "enumDescriptions": [
-            "Mood is not applicable in the analyzed language or is not predicted.",
-            "Conditional",
-            "Imperative",
-            "Indicative",
-            "Interrogative",
-            "Jussive",
-            "Subjunctive"
-          ]
+          "type": "string"
         },
         "tag": {
           "enumDescriptions": [
@@ -778,12 +987,6 @@
           "type": "string"
         },
         "gender": {
-          "enumDescriptions": [
-            "Gender is not applicable in the analyzed language or is not predicted.",
-            "Feminine",
-            "Masculine",
-            "Neuter"
-          ],
           "enum": [
             "GENDER_UNKNOWN",
             "FEMININE",
@@ -791,11 +994,15 @@
             "NEUTER"
           ],
           "description": "The grammatical gender.",
-          "type": "string"
+          "type": "string",
+          "enumDescriptions": [
+            "Gender is not applicable in the analyzed language or is not predicted.",
+            "Feminine",
+            "Masculine",
+            "Neuter"
+          ]
         },
         "person": {
-          "description": "The grammatical person.",
-          "type": "string",
           "enumDescriptions": [
             "Person is not applicable in the analyzed language or is not predicted.",
             "First",
@@ -809,7 +1016,9 @@
             "SECOND",
             "THIRD",
             "REFLEXIVE_PERSON"
-          ]
+          ],
+          "description": "The grammatical person.",
+          "type": "string"
         },
         "proper": {
           "enumDescriptions": [
@@ -899,38 +1108,29 @@
           "description": "The grammatical reciprocity.",
           "type": "string"
         }
-      },
-      "id": "PartOfSpeech",
-      "description": "Represents part of speech information for a token.",
-      "type": "object"
+      }
     },
     "ClassificationCategory": {
-      "description": "Represents a category returned from the text classifier.",
-      "type": "object",
       "properties": {
-        "name": {
-          "description": "The name of the category representing the document.",
-          "type": "string"
-        },
         "confidence": {
           "format": "float",
           "description": "The classifier's confidence of the category. Number represents how certain\nthe classifier is that this category represents the given text.",
           "type": "number"
+        },
+        "name": {
+          "description": "The name of the category representing the document.",
+          "type": "string"
         }
       },
-      "id": "ClassificationCategory"
+      "id": "ClassificationCategory",
+      "description": "Represents a category returned from the text classifier.",
+      "type": "object"
     },
     "AnalyzeSyntaxRequest": {
       "description": "The syntax analysis request message.",
       "type": "object",
       "properties": {
         "encodingType": {
-          "enum": [
-            "NONE",
-            "UTF8",
-            "UTF16",
-            "UTF32"
-          ],
           "description": "The encoding type used by the API to calculate offsets.",
           "type": "string",
           "enumDescriptions": [
@@ -938,6 +1138,12 @@
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
+          ],
+          "enum": [
+            "NONE",
+            "UTF8",
+            "UTF16",
+            "UTF32"
           ]
         },
         "document": {
@@ -948,7 +1154,6 @@
       "id": "AnalyzeSyntaxRequest"
     },
     "AnalyzeEntitiesResponse": {
-      "id": "AnalyzeEntitiesResponse",
       "description": "The entity analysis response message.",
       "type": "object",
       "properties": {
@@ -963,24 +1168,21 @@
           },
           "type": "array"
         }
-      }
+      },
+      "id": "AnalyzeEntitiesResponse"
     },
     "Entity": {
+      "id": "Entity",
       "description": "Represents a phrase in the text that is a known entity, such as\na person, an organization, or location. The API associates information, such\nas salience and mentions, with entities.",
       "type": "object",
       "properties": {
-        "mentions": {
-          "description": "The mentions of this entity in the input document. The API currently\nsupports proper noun mentions.",
-          "items": {
-            "$ref": "EntityMention"
-          },
-          "type": "array"
-        },
         "name": {
           "description": "The representative name for the entity.",
           "type": "string"
         },
         "type": {
+          "description": "The entity type.",
+          "type": "string",
           "enumDescriptions": [
             "Unknown",
             "Person",
@@ -1000,9 +1202,7 @@
             "WORK_OF_ART",
             "CONSUMER_GOOD",
             "OTHER"
-          ],
-          "description": "The entity type.",
-          "type": "string"
+          ]
         },
         "metadata": {
           "additionalProperties": {
@@ -1019,210 +1219,15 @@
         "sentiment": {
           "$ref": "Sentiment",
           "description": "For calls to AnalyzeEntitySentiment or if\nAnnotateTextRequest.Features.extract_entity_sentiment is set to\ntrue, this field will contain the aggregate sentiment expressed for this\nentity in the provided document."
-        }
-      },
-      "id": "Entity"
-    },
-    "AnnotateTextRequest": {
-      "description": "The request message for the text annotation API, which can perform multiple\nanalysis types (sentiment, entities, and syntax) in one call.",
-      "type": "object",
-      "properties": {
-        "features": {
-          "description": "The enabled features.",
-          "$ref": "Features"
         },
-        "encodingType": {
-          "enum": [
-            "NONE",
-            "UTF8",
-            "UTF16",
-            "UTF32"
-          ],
-          "description": "The encoding type used by the API to calculate offsets.",
-          "type": "string",
-          "enumDescriptions": [
-            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
-          ]
-        },
-        "document": {
-          "$ref": "Document",
-          "description": "Input document."
-        }
-      },
-      "id": "AnnotateTextRequest"
-    },
-    "AnalyzeSentimentRequest": {
-      "description": "The sentiment analysis request message.",
-      "type": "object",
-      "properties": {
-        "encodingType": {
-          "enum": [
-            "NONE",
-            "UTF8",
-            "UTF16",
-            "UTF32"
-          ],
-          "description": "The encoding type used by the API to calculate sentence offsets for the\nsentence sentiment.",
-          "type": "string",
-          "enumDescriptions": [
-            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
-          ]
-        },
-        "document": {
-          "$ref": "Document",
-          "description": "Input document."
-        }
-      },
-      "id": "AnalyzeSentimentRequest"
-    },
-    "Status": {
-      "id": "Status",
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
-      "type": "object",
-      "properties": {
-        "code": {
-          "format": "int32",
-          "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "type": "integer"
-        },
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        },
-        "details": {
-          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+        "mentions": {
+          "description": "The mentions of this entity in the input document. The API currently\nsupports proper noun mentions.",
           "items": {
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            },
-            "type": "object"
+            "$ref": "EntityMention"
           },
           "type": "array"
         }
       }
-    },
-    "Features": {
-      "id": "Features",
-      "description": "All available features for sentiment, syntax, and semantic analysis.\nSetting each one to true will enable that specific analysis for the input.",
-      "type": "object",
-      "properties": {
-        "classifyText": {
-          "description": "Classify the full document into categories.",
-          "type": "boolean"
-        },
-        "extractEntitySentiment": {
-          "description": "Extract entities and their associated sentiment.",
-          "type": "boolean"
-        },
-        "extractDocumentSentiment": {
-          "description": "Extract document-level sentiment.",
-          "type": "boolean"
-        },
-        "extractSyntax": {
-          "description": "Extract syntax information.",
-          "type": "boolean"
-        },
-        "extractEntities": {
-          "description": "Extract entities.",
-          "type": "boolean"
-        }
-      }
-    },
-    "Document": {
-      "type": "object",
-      "properties": {
-        "language": {
-          "description": "The language of the document (if not specified, the language is\nautomatically detected). Both ISO and BCP-47 language codes are\naccepted.\u003cbr\u003e\n[Language Support](/natural-language/docs/languages)\nlists currently supported languages for each API method.\nIf the language (either specified by the caller or automatically detected)\nis not supported by the called API method, an `INVALID_ARGUMENT` error\nis returned.",
-          "type": "string"
-        },
-        "content": {
-          "description": "The content of the input in string format.",
-          "type": "string"
-        },
-        "type": {
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "PLAIN_TEXT",
-            "HTML"
-          ],
-          "description": "Required. If the type is not set or is `TYPE_UNSPECIFIED`,\nreturns an `INVALID_ARGUMENT` error.",
-          "type": "string",
-          "enumDescriptions": [
-            "The content type is not specified.",
-            "Plain text",
-            "HTML"
-          ]
-        },
-        "gcsContentUri": {
-          "description": "The Google Cloud Storage URI where the file content is located.\nThis URI must be of the form: gs://bucket_name/object_name. For more\ndetails, see https://cloud.google.com/storage/docs/reference-uris.\nNOTE: Cloud Storage object versioning is not supported.",
-          "type": "string"
-        }
-      },
-      "id": "Document",
-      "description": "################################################################ #\n\nRepresents the input to API methods."
-    },
-    "AnalyzeEntitiesRequest": {
-      "description": "The entity analysis request message.",
-      "type": "object",
-      "properties": {
-        "encodingType": {
-          "type": "string",
-          "enumDescriptions": [
-            "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
-          ],
-          "enum": [
-            "NONE",
-            "UTF8",
-            "UTF16",
-            "UTF32"
-          ],
-          "description": "The encoding type used by the API to calculate offsets."
-        },
-        "document": {
-          "description": "Input document.",
-          "$ref": "Document"
-        }
-      },
-      "id": "AnalyzeEntitiesRequest"
-    },
-    "ClassifyTextRequest": {
-      "type": "object",
-      "properties": {
-        "document": {
-          "$ref": "Document",
-          "description": "Input document."
-        }
-      },
-      "id": "ClassifyTextRequest",
-      "description": "The document classification request message."
-    },
-    "AnalyzeEntitySentimentResponse": {
-      "properties": {
-        "entities": {
-          "items": {
-            "$ref": "Entity"
-          },
-          "type": "array",
-          "description": "The recognized entities in the input document with associated sentiments."
-        },
-        "language": {
-          "description": "The language of the text, which will be the same as the language specified\nin the request or, if not specified, the automatically-detected language.\nSee Document.language field for more details.",
-          "type": "string"
-        }
-      },
-      "id": "AnalyzeEntitySentimentResponse",
-      "description": "The entity-level sentiment analysis response message.",
-      "type": "object"
     }
   },
   "protocol": "rest",
@@ -1242,10 +1247,5 @@
         }
       }
     }
-  },
-  "rootUrl": "https://language.googleapis.com/",
-  "ownerDomain": "google.com",
-  "name": "language",
-  "batchPath": "batch",
-  "title": "Google Cloud Natural Language API"
+  }
 }

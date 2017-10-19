@@ -394,10 +394,10 @@ func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppEngineQueueConfig: Deprecated. Use AppEngineTarget.
+// AppEngineQueueConfig: Deprecated. Use AppEngineHttpTarget.
 type AppEngineQueueConfig struct {
 	// AppEngineRoutingOverride: Deprecated. Use
-	// AppEngineTarget.app_engine_routing_override.
+	// AppEngineHttpTarget.app_engine_routing_override.
 	AppEngineRoutingOverride *AppEngineRouting `json:"appEngineRoutingOverride,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

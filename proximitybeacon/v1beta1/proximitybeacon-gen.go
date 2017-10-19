@@ -617,18 +617,27 @@ type Diagnostics struct {
 	//
 	// Possible values:
 	//   "ALERT_UNSPECIFIED" - Invalid value. Should never appear.
-	//   "WRONG_LOCATION" - The beacon has been reported in a location
-	// different than its registered
-	// location. This may indicate that the beacon has been moved. This
-	// signal
-	// is not 100% accurate, but indicates that further investigation is
-	// worth
-	// while.
+	//   "WRONG_LOCATION" - The beacon has been reported far from its
+	// expected location (the beacon's
+	// lat_lng field if populated, otherwise, if the beacon's place_id field
+	// is
+	// present, the center of that place). This may indicate that the beacon
+	// has
+	// been moved. This signal is not 100% accurate, but indicates that
+	// further
+	// investigation is worthwhile.
 	//   "LOW_BATTERY" - The battery level for the beacon is low enough
 	// that, given the beacon's
 	// current use, its battery will run out with in the next 60 days.
 	// This
 	// indicates that the battery should be replaced soon.
+	//   "LOW_ACTIVITY" - The beacon has been reported at a very low rate or
+	// not at all. This may
+	// indicate that the beacon is broken or just that no one has gone near
+	// the
+	// beacon in recent days. If this status appears unexpectedly, the
+	// beacon
+	// owner should investigate further.
 	Alerts []string `json:"alerts,omitempty"`
 
 	// BeaconName: Resource name of the beacon. For Eddystone-EID beacons,
@@ -3518,6 +3527,7 @@ func (r *BeaconsDiagnosticsService) List(beaconName string) *BeaconsDiagnosticsL
 //   "ALERT_UNSPECIFIED"
 //   "WRONG_LOCATION"
 //   "LOW_BATTERY"
+//   "LOW_ACTIVITY"
 func (c *BeaconsDiagnosticsListCall) AlertFilter(alertFilter string) *BeaconsDiagnosticsListCall {
 	c.urlParams_.Set("alertFilter", alertFilter)
 	return c
@@ -3656,7 +3666,8 @@ func (c *BeaconsDiagnosticsListCall) Do(opts ...googleapi.CallOption) (*ListDiag
 	//       "enum": [
 	//         "ALERT_UNSPECIFIED",
 	//         "WRONG_LOCATION",
-	//         "LOW_BATTERY"
+	//         "LOW_BATTERY",
+	//         "LOW_ACTIVITY"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

@@ -1850,8 +1850,8 @@ type Endpoint struct {
 	// Aliases: DEPRECATED: This field is no longer supported. Instead of
 	// using aliases,
 	// please specify multiple google.api.Endpoint for each of the
-	// intented
-	// alias.
+	// intended
+	// aliases.
 	//
 	// Additional names that this endpoint will be hosted on.
 	Aliases []string `json:"aliases,omitempty"`

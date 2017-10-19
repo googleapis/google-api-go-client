@@ -2523,6 +2523,7 @@ type TestIssue struct {
 	//
 	// Possible values:
 	//   "anr"
+	//   "compatibleWithOrchestrator"
 	//   "fatalException"
 	//   "nativeCrash"
 	//   "unspecifiedType"

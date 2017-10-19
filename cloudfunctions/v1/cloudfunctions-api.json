@@ -3,8 +3,6 @@
   "version_module": true,
   "schemas": {
     "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "type": "object",
       "properties": {
         "done": {
           "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
@@ -35,25 +33,27 @@
           "type": "object"
         }
       },
-      "id": "Operation"
+      "id": "Operation",
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "type": "object"
     },
     "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "type": "object",
       "properties": {
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        },
         "operations": {
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
           },
           "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
         }
       },
-      "id": "ListOperationsResponse"
+      "id": "ListOperationsResponse",
+      "description": "The response message for Operations.ListOperations.",
+      "type": "object"
     },
     "OperationMetadataV1Beta2": {
       "description": "Metadata describing an Operation",
@@ -69,14 +69,20 @@
           "type": "string"
         },
         "request": {
-          "description": "The original request that started the operation.",
-          "type": "object",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
-          }
+          },
+          "description": "The original request that started the operation.",
+          "type": "object"
         },
         "type": {
+          "enumDescriptions": [
+            "Unknown operation type.",
+            "Triggered by CreateFunction call",
+            "Triggered by UpdateFunction call",
+            "Triggered by DeleteFunction call."
+          ],
           "enum": [
             "OPERATION_UNSPECIFIED",
             "CREATE_FUNCTION",
@@ -84,13 +90,7 @@
             "DELETE_FUNCTION"
           ],
           "description": "Type of operation.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unknown operation type.",
-            "Triggered by CreateFunction call",
-            "Triggered by UpdateFunction call",
-            "Triggered by DeleteFunction call."
-          ]
+          "type": "string"
         }
       },
       "id": "OperationMetadataV1Beta2"
@@ -99,6 +99,10 @@
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "type": "object",
       "properties": {
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        },
         "details": {
           "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
           "items": {
@@ -114,10 +118,6 @@
           "format": "int32",
           "description": "The status code, which should be an enum value of google.rpc.Code.",
           "type": "integer"
-        },
-        "message": {
-          "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
         }
       },
       "id": "Status"
@@ -141,19 +141,9 @@
       "id": "ListLocationsResponse"
     },
     "Location": {
+      "description": "A resource that represents Google Cloud Platform location.",
+      "type": "object",
       "properties": {
-        "locationId": {
-          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
-          "type": "string"
-        },
-        "metadata": {
-          "description": "Service-specific metadata. For example the available capacity at the given\nlocation.",
-          "type": "object",
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          }
-        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -164,17 +154,27 @@
         "name": {
           "description": "Resource name for the location, which may vary between implementations.\nFor example: `\"projects/example-project/locations/us-east1\"`",
           "type": "string"
+        },
+        "locationId": {
+          "description": "The canonical id for this location. For example: `\"us-east1\"`.",
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata. For example the available capacity at the given\nlocation.",
+          "type": "object"
         }
       },
-      "id": "Location",
-      "description": "A resource that represents Google Cloud Platform location.",
-      "type": "object"
+      "id": "Location"
     }
   },
   "protocol": "rest",
   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+    "x32": "http://www.google.com/images/icons/product/search-32.gif",
+    "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
   "canonicalName": "Cloud Functions",
   "auth": {
@@ -194,95 +194,42 @@
   "title": "Google Cloud Functions API",
   "ownerName": "Google",
   "resources": {
-    "projects": {
-      "resources": {
-        "locations": {
-          "methods": {
-            "list": {
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "ListLocationsResponse"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "filter": {
-                  "description": "The standard list filter.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "pageToken": {
-                  "description": "The standard list page token.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "name": {
-                  "description": "The resource that owns the locations collection, if applicable.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^projects/[^/]+$",
-                  "location": "path"
-                },
-                "pageSize": {
-                  "format": "int32",
-                  "description": "The standard list page size.",
-                  "type": "integer",
-                  "location": "query"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ],
-              "flatPath": "v1/projects/{projectsId}/locations",
-              "path": "v1/{+name}/locations",
-              "id": "cloudfunctions.projects.locations.list",
-              "description": "Lists information about the supported locations for this service."
-            }
-          }
-        }
-      }
-    },
     "operations": {
       "methods": {
         "get": {
-          "id": "cloudfunctions.operations.get",
-          "path": "v1/{+name}",
-          "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
-          "parameterOrder": [
-            "name"
-          ],
           "response": {
             "$ref": "Operation"
           },
+          "parameterOrder": [
+            "name"
+          ],
           "httpMethod": "GET",
+          "parameters": {
+            "name": {
+              "description": "The name of the operation resource.",
+              "type": "string",
+              "required": true,
+              "pattern": "^operations/[^/]+$",
+              "location": "path"
+            }
+          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "parameters": {
-            "name": {
-              "pattern": "^operations/[^/]+$",
-              "location": "path",
-              "description": "The name of the operation resource.",
-              "type": "string",
-              "required": true
-            }
-          },
-          "flatPath": "v1/operations/{operationsId}"
+          "flatPath": "v1/operations/{operationsId}",
+          "id": "cloudfunctions.operations.get",
+          "path": "v1/{+name}",
+          "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice."
         },
         "list": {
-          "flatPath": "v1/operations",
-          "id": "cloudfunctions.operations.list",
           "path": "v1/operations",
+          "id": "cloudfunctions.operations.list",
           "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
+          "httpMethod": "GET",
+          "parameterOrder": [],
           "response": {
             "$ref": "ListOperationsResponse"
           },
-          "parameterOrder": [],
-          "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ],
           "parameters": {
             "pageToken": {
               "description": "The standard list page token.",
@@ -295,15 +242,68 @@
               "type": "string"
             },
             "pageSize": {
-              "location": "query",
               "format": "int32",
               "description": "The standard list page size.",
-              "type": "integer"
+              "type": "integer",
+              "location": "query"
             },
             "filter": {
               "location": "query",
               "description": "The standard list filter.",
               "type": "string"
+            }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ],
+          "flatPath": "v1/operations"
+        }
+      }
+    },
+    "projects": {
+      "resources": {
+        "locations": {
+          "methods": {
+            "list": {
+              "id": "cloudfunctions.projects.locations.list",
+              "path": "v1/{+name}/locations",
+              "description": "Lists information about the supported locations for this service.",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ],
+              "parameters": {
+                "filter": {
+                  "location": "query",
+                  "description": "The standard list filter.",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "The standard list page token.",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The resource that owns the locations collection, if applicable.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path"
+                },
+                "pageSize": {
+                  "location": "query",
+                  "format": "int32",
+                  "description": "The standard list page size.",
+                  "type": "integer"
+                }
+              },
+              "flatPath": "v1/projects/{projectsId}/locations"
             }
           }
         }
@@ -311,37 +311,16 @@
     }
   },
   "parameters": {
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string",
-      "location": "query"
-    },
-    "pp": {
-      "location": "query",
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
-      "location": "query"
-    },
     "upload_protocol": {
       "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string"
     },
     "prettyPrint": {
+      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "default": "true",
-      "type": "boolean",
-      "location": "query"
+      "type": "boolean"
     },
     "fields": {
       "location": "query",
@@ -354,24 +333,26 @@
       "type": "string"
     },
     "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
       "enum": [
         "1",
         "2"
       ],
       "description": "V1 error format.",
-      "type": "string"
-    },
-    "callback": {
-      "description": "JSONP",
       "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
       "location": "query"
     },
+    "callback": {
+      "location": "query",
+      "description": "JSONP",
+      "type": "string"
+    },
     "alt": {
+      "description": "Data format for response.",
+      "default": "json",
       "enum": [
         "json",
         "media",
@@ -383,19 +364,38 @@
         "Media download with context-dependent Content-Type",
         "Responses with Content-Type of application/x-protobuf"
       ],
-      "location": "query",
-      "description": "Data format for response.",
-      "default": "json"
+      "location": "query"
     },
     "key": {
-      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "access_token": {
       "description": "OAuth access token.",
       "type": "string",
       "location": "query"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string",
+      "location": "query"
+    },
+    "pp": {
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
+    },
+    "bearer_token": {
+      "location": "query",
+      "description": "OAuth bearer token.",
+      "type": "string"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
     }
   },
   "version": "v1",
@@ -404,7 +404,7 @@
   "description": "API for managing lightweight user-provided functions executed in response to events.",
   "kind": "discovery#restDescription",
   "basePath": "",
-  "revision": "20171009",
+  "id": "cloudfunctions:v1",
   "documentationLink": "https://cloud.google.com/functions",
-  "id": "cloudfunctions:v1"
+  "revision": "20171009"
 }

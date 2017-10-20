@@ -1129,7 +1129,7 @@ func (c *TranslationsTranslateCall) doRequest(alt string) (*http.Response, error
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithDataWrapper.JSONReader(c.translatetextrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.translatetextrequest)
 	if err != nil {
 		return nil, err
 	}

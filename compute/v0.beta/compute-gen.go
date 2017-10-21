@@ -863,7 +863,9 @@ type AcceleratorTypeAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1017,7 +1019,9 @@ type AcceleratorTypeListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1150,7 +1154,9 @@ type AcceleratorTypesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1482,7 +1488,9 @@ type AddressAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1635,7 +1643,9 @@ type AddressListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1766,7 +1776,9 @@ type AddressesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -1985,7 +1997,8 @@ type AttachedDisk struct {
 
 	// Source: Specifies a valid partial or full URL to an existing
 	// Persistent Disk resource. When creating a new instance, one of
-	// initializeParams.sourceImage or disks.source is required.
+	// initializeParams.sourceImage or disks.source is required except for
+	// local SSD.
 	//
 	// If desired, you can also attach existing non-root persistent disks
 	// using this property. This field is only applicable for persistent
@@ -2068,7 +2081,7 @@ type AttachedDiskInitializeParams struct {
 
 	// SourceImage: The source image to create this disk. When creating a
 	// new instance, one of initializeParams.sourceImage or disks.source is
-	// required.
+	// required except for local SSD.
 	//
 	// To create a disk with one of the public operating system images,
 	// specify the image by its family name. For example, specify
@@ -2432,7 +2445,9 @@ type AutoscalerAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -2585,7 +2600,9 @@ type AutoscalerListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -2764,7 +2781,9 @@ type AutoscalersScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -2979,7 +2998,7 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	// Filter: A filter string, compatible with a Stackdriver Monitoring
 	// filter string for TimeSeries.list API call. This filter is used to
 	// select a specific TimeSeries for the purpose of autoscaling and to
-	// determine whether the metric is exporting per-instance or global
+	// determine whether the metric is exporting per-instance or per-group
 	// data.
 	//
 	// For the filter to be valid for autoscaling purposes, the following
@@ -2997,8 +3016,8 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	// If the resource type is any other value, the autoscaler expects this
 	// metric to contain values that apply to the entire autoscaled instance
 	// group and resource label filtering can be performed to point
-	// autoscaler at the correct TimeSeries to scale upon. This is / called
-	// a global metric for the purpose of autoscaling.
+	// autoscaler at the correct TimeSeries to scale upon. This is called a
+	// per-group metric for the purpose of autoscaling.
 	//
 	// If not specified, the type defaults to gce_instance.
 	//
@@ -3010,15 +3029,12 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	Filter string `json:"filter,omitempty"`
 
 	// Metric: The identifier (type) of the Stackdriver Monitoring metric.
-	// The metric cannot have negative values and should be a utilization
-	// metric, which means that the number of virtual machines handling
-	// requests should increase or decrease proportionally to the
-	// metric.
+	// The metric cannot have negative values.
 	//
 	// The metric must have a value type of INT64 or DOUBLE.
 	Metric string `json:"metric,omitempty"`
 
-	// SingleInstanceAssignment: If scaling is based on a global metric
+	// SingleInstanceAssignment: If scaling is based on a per-group metric
 	// value that represents the total amount of work to be done or resource
 	// usage, set this value to an amount assigned for a single instance of
 	// the scaled group. Autoscaler will keep the number of instances
@@ -3037,7 +3053,9 @@ type AutoscalingPolicyCustomMetricUtilization struct {
 	SingleInstanceAssignment float64 `json:"singleInstanceAssignment,omitempty"`
 
 	// UtilizationTarget: The target value of the metric that autoscaler
-	// should maintain. This must be a positive value.
+	// should maintain. This must be a positive value. A utilization metric
+	// scales number of virtual machines handling requests to increase or
+	// decrease proportionally to the metric.
 	//
 	// For example, a good metric to use as a utilization_target is
 	// compute.googleapis.com/instance/network/received_bytes_count. The
@@ -3393,7 +3411,9 @@ type BackendBucketListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -3720,7 +3740,9 @@ type BackendServiceAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -3973,7 +3995,9 @@ type BackendServiceListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -4105,7 +4129,9 @@ type BackendServicesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -4513,7 +4539,9 @@ type CommitmentAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -4666,7 +4694,9 @@ type CommitmentListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -4798,7 +4828,9 @@ type CommitmentsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -5398,7 +5430,9 @@ type DiskAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -5551,7 +5585,9 @@ type DiskListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -5813,7 +5849,9 @@ type DiskTypeAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -5966,7 +6004,9 @@ type DiskTypeListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -6097,7 +6137,9 @@ type DiskTypesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -6256,7 +6298,9 @@ type DisksScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -6574,10 +6618,11 @@ type Firewall struct {
 	// applies to all instances on the specified network.
 	TargetServiceAccounts []string `json:"targetServiceAccounts,omitempty"`
 
-	// TargetTags: A list of instance tags indicating sets of instances
-	// located in the network that may make network connections as specified
-	// in allowed[]. If no targetTags are specified, the firewall rule
-	// applies to all instances on the specified network.
+	// TargetTags: A list of tags that controls which instances the firewall
+	// rule applies to. If targetTags are specified, then the firewall rule
+	// applies only to instances in the VPC network that have one of those
+	// tags. If no targetTags are specified, the firewall rule applies to
+	// all instances on the specified network.
 	TargetTags []string `json:"targetTags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6746,7 +6791,9 @@ type FirewallListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -6889,19 +6936,34 @@ type ForwardingRule struct {
 	// IPAddress: The IP address that this forwarding rule is serving on
 	// behalf of.
 	//
-	// For global forwarding rules, the address must be a global IP. For
-	// regional forwarding rules, the address must live in the same region
-	// as the forwarding rule. By default, this field is empty and an
-	// ephemeral IPv4 address from the same scope (global or regional) will
-	// be assigned. A regional forwarding rule supports IPv4 only. A global
-	// forwarding rule supports either IPv4 or IPv6.
+	// Addresses are restricted based on the forwarding rule's load
+	// balancing scheme (EXTERNAL or INTERNAL) and scope (global or
+	// regional).
+	//
+	// When the load balancing scheme is EXTERNAL, for global forwarding
+	// rules, the address must be a global IP, and for regional forwarding
+	// rules, the address must live in the same region as the forwarding
+	// rule. If this field is empty, an ephemeral IPv4 address from the same
+	// scope (global or regional) will be assigned. A regional forwarding
+	// rule supports IPv4 only. A global forwarding rule supports either
+	// IPv4 or IPv6.
 	//
 	// When the load balancing scheme is INTERNAL, this can only be an RFC
-	// 1918 IP address belonging to the network/subnetwork configured for
-	// the forwarding rule. A reserved address cannot be used. If the field
-	// is empty, the IP address will be automatically allocated from the
-	// internal IP range of the subnetwork or network configured for this
-	// forwarding rule.
+	// 1918 IP address belonging to the network/subnet configured for the
+	// forwarding rule. By default, if this field is empty, an ephemeral
+	// internal IP address will be automatically allocated from the IP range
+	// of the subnet or network configured for this forwarding rule.
+	//
+	// An address can be specified either by a literal IP address or a URL
+	// reference to an existing Address resource. The following examples are
+	// all valid:
+	// - 100.1.2.3
+	// -
+	// https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address
+	// - projects/project/regions/region/addresses/address
+	// - regions/region/addresses/address
+	// - global/addresses/address
+	// - address
 	IPAddress string `json:"IPAddress,omitempty"`
 
 	// IPProtocol: The IP protocol to which this rule applies. Valid options
@@ -7167,7 +7229,9 @@ type ForwardingRuleAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -7320,7 +7384,9 @@ type ForwardingRuleListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -7452,7 +7518,9 @@ type ForwardingRulesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -7595,6 +7663,8 @@ type GuestOsFeature struct {
 	// Possible values:
 	//   "FEATURE_TYPE_UNSPECIFIED"
 	//   "MULTI_IP_SUBNET"
+	//   "SECURE_BOOT"
+	//   "UEFI_COMPATIBLE"
 	//   "VIRTIO_SCSI_MULTIQUEUE"
 	//   "WINDOWS"
 	Type string `json:"type,omitempty"`
@@ -7895,7 +7965,9 @@ type HealthCheckListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -8251,7 +8323,9 @@ type HttpHealthCheckListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -8494,7 +8568,9 @@ type HttpsHealthCheckListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -8870,7 +8946,9 @@ type ImageListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -8974,6 +9052,10 @@ type Instance struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// DeletionProtection: Whether the resource should be protected against
+	// deletion.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
 
 	// Description: An optional description of this resource. Provide this
 	// property when you create the resource.
@@ -9198,7 +9280,9 @@ type InstanceAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -9441,7 +9525,9 @@ type InstanceGroupAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -9595,7 +9681,9 @@ type InstanceGroupListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -9971,7 +10059,9 @@ type InstanceGroupManagerAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -10163,7 +10253,9 @@ type InstanceGroupManagerListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -10640,7 +10732,9 @@ type InstanceGroupManagersScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -10917,7 +11011,9 @@ type InstanceGroupsListInstancesWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -11112,7 +11208,9 @@ type InstanceGroupsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -11300,7 +11398,9 @@ type InstanceListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -11454,7 +11554,9 @@ type InstanceListReferrersWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -11827,7 +11929,9 @@ type InstanceTemplateListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -12002,7 +12106,9 @@ type InstancesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -12277,7 +12383,7 @@ func (s *InstancesStartWithEncryptionKeyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Interconnect: Protocol definitions for Mixer API to support
-// Interconnect. Next available tag: 23
+// Interconnect. Next available tag: 25
 type Interconnect struct {
 	// AdminEnabled: Administrative status of the interconnect. When this is
 	// set to ?true?, the Interconnect is functional and may carry traffic
@@ -12290,12 +12396,6 @@ type Interconnect struct {
 	// CircuitInfos: [Output Only] List of CircuitInfo objects, that
 	// describe the individual circuits in this LAG.
 	CircuitInfos []*InterconnectCircuitInfo `json:"circuitInfos,omitempty"`
-
-	// ConnectionAuthorization: [Output Only] URL to retrieve the Letter Of
-	// Authority and Customer Facility Assignment (LOA-CFA) documentation
-	// relating to this Interconnect. This documentation authorizes the
-	// facility provider to connect to the specified crossconnect ports.
-	ConnectionAuthorization string `json:"connectionAuthorization,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
@@ -12331,6 +12431,7 @@ type Interconnect struct {
 	InterconnectAttachments []string `json:"interconnectAttachments,omitempty"`
 
 	// Possible values:
+	//   "DEDICATED"
 	//   "IT_PRIVATE"
 	InterconnectType string `json:"interconnectType,omitempty"`
 
@@ -12366,8 +12467,10 @@ type Interconnect struct {
 	// this Interconnect is functional.
 	//
 	// Possible values:
+	//   "ACTIVE"
 	//   "OS_ACTIVE"
 	//   "OS_UNPROVISIONED"
+	//   "UNPROVISIONED"
 	OperationalStatus string `json:"operationalStatus,omitempty"`
 
 	// PeerIpAddress: [Output Only] IP address configured on the customer
@@ -12415,7 +12518,7 @@ func (s *Interconnect) MarshalJSON() ([]byte, error) {
 }
 
 // InterconnectAttachment: Protocol definitions for Mixer API to support
-// InterconnectAttachment. Next available tag: 18
+// InterconnectAttachment. Next available tag: 23
 type InterconnectAttachment struct {
 	// CloudRouterIpAddress: [Output Only] IPv4 address + prefix length to
 	// be configured on Cloud Router Interface for this interconnect
@@ -12465,8 +12568,10 @@ type InterconnectAttachment struct {
 	// this interconnect attachment is functional.
 	//
 	// Possible values:
+	//   "ACTIVE"
 	//   "OS_ACTIVE"
 	//   "OS_UNPROVISIONED"
+	//   "UNPROVISIONED"
 	OperationalStatus string `json:"operationalStatus,omitempty"`
 
 	// PrivateInterconnectInfo: [Output Only] Information specific to a
@@ -12580,7 +12685,9 @@ type InterconnectAttachmentAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -12736,7 +12843,9 @@ type InterconnectAttachmentListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -12902,7 +13011,9 @@ type InterconnectAttachmentsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -13097,7 +13208,9 @@ type InterconnectListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -13208,11 +13321,16 @@ type InterconnectLocation struct {
 	// in the Interconnect UI.
 	//
 	// Possible values:
+	//   "AFRICA"
+	//   "ASIA_PAC"
 	//   "C_AFRICA"
 	//   "C_ASIA_PAC"
 	//   "C_EUROPE"
 	//   "C_NORTH_AMERICA"
 	//   "C_SOUTH_AMERICA"
+	//   "EUROPE"
+	//   "NORTH_AMERICA"
+	//   "SOUTH_AMERICA"
 	Continent string `json:"continent,omitempty"`
 
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
@@ -13345,7 +13463,9 @@ type InterconnectLocationListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -13446,15 +13566,14 @@ type InterconnectLocationRegionInfo struct {
 	// LocationPresence: Identifies the network presence of this location.
 	//
 	// Possible values:
+	//   "GLOBAL"
+	//   "LOCAL_REGION"
 	//   "LP_GLOBAL"
 	//   "LP_LOCAL_REGION"
 	LocationPresence string `json:"locationPresence,omitempty"`
 
 	// Region: URL for the region of this location.
 	Region string `json:"region,omitempty"`
-
-	// RegionKey: Scope key for the region of this location.
-	RegionKey string `json:"regionKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpectedRttMs") to
 	// unconditionally include in API requests. By default, fields with
@@ -13495,12 +13614,15 @@ type InterconnectOutageNotification struct {
 	// Possible values:
 	//   "IT_OUTAGE"
 	//   "IT_PARTIAL_OUTAGE"
+	//   "OUTAGE"
+	//   "PARTIAL_OUTAGE"
 	IssueType string `json:"issueType,omitempty"`
 
 	// Name: Unique identifier for this outage notification.
 	Name string `json:"name,omitempty"`
 
 	// Possible values:
+	//   "GOOGLE"
 	//   "NSRC_GOOGLE"
 	Source string `json:"source,omitempty"`
 
@@ -13509,6 +13631,8 @@ type InterconnectOutageNotification struct {
 	StartTime int64 `json:"startTime,omitempty,string"`
 
 	// Possible values:
+	//   "ACTIVE"
+	//   "CANCELLED"
 	//   "NS_ACTIVE"
 	//   "NS_CANCELED"
 	State string `json:"state,omitempty"`
@@ -13885,7 +14009,9 @@ type MachineTypeAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -14038,7 +14164,9 @@ type MachineTypeListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -14170,7 +14298,9 @@ type MachineTypesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -14823,7 +14953,9 @@ type NetworkListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -15280,7 +15412,9 @@ type OperationWarnings struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -15433,7 +15567,9 @@ type OperationAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -15586,7 +15722,9 @@ type OperationListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -15717,7 +15855,9 @@ type OperationsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -16456,7 +16596,9 @@ type RegionAutoscalerListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -16609,7 +16751,9 @@ type RegionInstanceGroupListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -16765,7 +16909,9 @@ type RegionInstanceGroupManagerListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -17134,7 +17280,9 @@ type RegionInstanceGroupsListInstancesWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -17360,7 +17508,9 @@ type RegionListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -17690,7 +17840,9 @@ type RouteWarnings struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -17842,7 +17994,9 @@ type RouteListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -18071,7 +18225,9 @@ type RouterAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -18351,7 +18507,9 @@ type RouterListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -18642,7 +18800,9 @@ type RoutersScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -19033,7 +19193,9 @@ type SecurityPolicyListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -19515,7 +19677,9 @@ type SnapshotListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -19736,7 +19900,9 @@ type SslCertificateListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -20006,7 +20172,9 @@ type SubnetworkAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -20159,7 +20327,9 @@ type SubnetworkListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -20360,7 +20530,9 @@ type SubnetworksScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -20696,7 +20868,9 @@ type TargetHttpProxyListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -20953,7 +21127,9 @@ type TargetHttpsProxyListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -21185,7 +21361,9 @@ type TargetInstanceAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -21338,7 +21516,9 @@ type TargetInstanceListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -21470,7 +21650,9 @@ type TargetInstancesScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -21767,7 +21949,9 @@ type TargetPoolAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -21955,7 +22139,9 @@ type TargetPoolListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -22205,7 +22391,9 @@ type TargetPoolsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -22550,7 +22738,9 @@ type TargetSslProxyListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -22834,7 +23024,9 @@ type TargetTcpProxyListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -23072,7 +23264,9 @@ type TargetVpnGatewayAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -23226,7 +23420,9 @@ type TargetVpnGatewayListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -23359,7 +23555,9 @@ type TargetVpnGatewaysScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -23725,7 +23923,9 @@ type UrlMapListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -24196,7 +24396,9 @@ type VpnTunnelAggregatedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -24349,7 +24551,9 @@ type VpnTunnelListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -24480,7 +24684,9 @@ type VpnTunnelsScopedListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -24632,7 +24838,9 @@ type XpnHostListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -24892,7 +25100,9 @@ type ZoneListWarning struct {
 	// Possible values:
 	//   "CLEANUP_FAILED"
 	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
 	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
 	//   "EXTERNAL_API_WARNING"
 	//   "FIELD_VALUE_OVERRIDEN"
 	//   "INJECTED_KERNELS_DEPRECATED"
@@ -53263,6 +53473,190 @@ func (c *InstancesResetCall) Do(opts ...googleapi.CallOption) (*Operation, error
 
 }
 
+// method id "compute.instances.setDeletionProtection":
+
+type InstancesSetDeletionProtectionCall struct {
+	s          *Service
+	project    string
+	zone       string
+	resource   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// SetDeletionProtection: Sets deletion protection on the instance.
+func (r *InstancesService) SetDeletionProtection(project string, zone string, resource string) *InstancesSetDeletionProtectionCall {
+	c := &InstancesSetDeletionProtectionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.zone = zone
+	c.resource = resource
+	return c
+}
+
+// DeletionProtection sets the optional parameter "deletionProtection":
+// Whether the resource should be protected against deletion.
+func (c *InstancesSetDeletionProtectionCall) DeletionProtection(deletionProtection bool) *InstancesSetDeletionProtectionCall {
+	c.urlParams_.Set("deletionProtection", fmt.Sprint(deletionProtection))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments.
+//
+// The request ID must be a valid UUID with the exception that zero UUID
+// is not supported (00000000-0000-0000-0000-000000000000).
+func (c *InstancesSetDeletionProtectionCall) RequestId(requestId string) *InstancesSetDeletionProtectionCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesSetDeletionProtectionCall) Fields(s ...googleapi.Field) *InstancesSetDeletionProtectionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesSetDeletionProtectionCall) Context(ctx context.Context) *InstancesSetDeletionProtectionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesSetDeletionProtectionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesSetDeletionProtectionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/zones/{zone}/instances/{resource}/setDeletionProtection")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"zone":     c.zone,
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.instances.setDeletionProtection" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InstancesSetDeletionProtectionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets deletion protection on the instance.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.instances.setDeletionProtection",
+	//   "parameterOrder": [
+	//     "project",
+	//     "zone",
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "deletionProtection": {
+	//       "default": "true",
+	//       "description": "Whether the resource should be protected against deletion.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "resource": {
+	//       "description": "Name of the resource for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the zone for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/zones/{zone}/instances/{resource}/setDeletionProtection",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.instances.setDiskAutoDelete":
 
 type InstancesSetDiskAutoDeleteCall struct {
@@ -55285,11 +55679,10 @@ type InstancesStopCall struct {
 
 // Stop: Stops a running instance, shutting it down cleanly, and allows
 // you to restart the instance at a later time. Stopped instances do not
-// incur per-minute, virtual machine usage charges while they are
-// stopped, but any resources that the virtual machine is using, such as
-// persistent disks and static IP addresses, will continue to be charged
-// until they are deleted. For more information, see Stopping an
-// instance.
+// incur VM usage charges while they are stopped. However, resources
+// that the VM is using, such as persistent disks and static IP
+// addresses, will continue to be charged until they are deleted. For
+// more information, see Stopping an instance.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instances/stop
 func (r *InstancesService) Stop(project string, zone string, instance string) *InstancesStopCall {
 	c := &InstancesStopCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -55401,7 +55794,7 @@ func (c *InstancesStopCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Stops a running instance, shutting it down cleanly, and allows you to restart the instance at a later time. Stopped instances do not incur per-minute, virtual machine usage charges while they are stopped, but any resources that the virtual machine is using, such as persistent disks and static IP addresses, will continue to be charged until they are deleted. For more information, see Stopping an instance.",
+	//   "description": "Stops a running instance, shutting it down cleanly, and allows you to restart the instance at a later time. Stopped instances do not incur VM usage charges while they are stopped. However, resources that the VM is using, such as persistent disks and static IP addresses, will continue to be charged until they are deleted. For more information, see Stopping an instance.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.stop",
 	//   "parameterOrder": [

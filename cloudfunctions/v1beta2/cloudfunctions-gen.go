@@ -796,6 +796,53 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OperationMetadataV1: Metadata describing an Operation
+type OperationMetadataV1 struct {
+	// Request: The original request that started the operation.
+	Request googleapi.RawMessage `json:"request,omitempty"`
+
+	// Target: Target of the operation - for
+	// example
+	// projects/project-1/locations/region-1/functions/function-1
+	Target string `json:"target,omitempty"`
+
+	// Type: Type of operation.
+	//
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Unknown operation type.
+	//   "CREATE_FUNCTION" - Triggered by CreateFunction call
+	//   "UPDATE_FUNCTION" - Triggered by UpdateFunction call
+	//   "DELETE_FUNCTION" - Triggered by DeleteFunction call.
+	Type string `json:"type,omitempty"`
+
+	// VersionId: Version id of the function created or updated by an API
+	// call.
+	// This field is only pupulated for Create and Update operations.
+	VersionId int64 `json:"versionId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Request") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Request") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationMetadataV1) MarshalJSON() ([]byte, error) {
+	type noMethod OperationMetadataV1
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadataV1Beta2: Metadata describing an Operation
 type OperationMetadataV1Beta2 struct {
 	// Request: The original request that started the operation.

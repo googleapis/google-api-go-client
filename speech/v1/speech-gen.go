@@ -635,6 +635,13 @@ type SpeechRecognitionResult struct {
 	// alternative being the most probable, as ranked by the recognizer.
 	Alternatives []*SpeechRecognitionAlternative `json:"alternatives,omitempty"`
 
+	// ChannelTag: For multi-channel audio, this is the channel number
+	// corresponding to the
+	// recognized result for the audio from that channel.
+	// For audio_channel_count = N, its output values can range from '0' to
+	// 'N-1'.
+	ChannelTag int64 `json:"channelTag,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Alternatives") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

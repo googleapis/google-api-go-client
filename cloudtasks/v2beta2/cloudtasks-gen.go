@@ -3503,7 +3503,6 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return.\n\nTo request the first page results, page_token must be empty. To\nrequest the next page of results, page_token must be the value of\nListQueuesResponse.next_page_token returned from the previous\ncall to CloudTasks.ListQueues method. It is an error to\nswitch the value of ListQueuesRequest.filter while iterating\nthrough pages.",
-	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5219,7 +5218,7 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 // the query. The fields supported for sorting
 // are Task.schedule_time and PullMessage.tag. All results will
 // be
-// returned in ascending order. The default ordering is
+// returned in approximately ascending order. The default ordering is
 // by
 // Task.schedule_time.
 func (c *ProjectsLocationsQueuesTasksListCall) OrderBy(orderBy string) *ProjectsLocationsQueuesTasksListCall {
@@ -5386,7 +5385,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "\nSort order used for the query. The fields supported for sorting\nare Task.schedule_time and PullMessage.tag. All results will be\nreturned in ascending order. The default ordering is by\nTask.schedule_time.",
+	//       "description": "\nSort order used for the query. The fields supported for sorting\nare Task.schedule_time and PullMessage.tag. All results will be\nreturned in approximately ascending order. The default ordering is by\nTask.schedule_time.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5398,7 +5397,6 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return.\n\nTo request the first page results, page_token must be empty. To\nrequest the next page of results, page_token must be the value of\nListTasksResponse.next_page_token returned from the previous\ncall to CloudTasks.ListTasks method.\n\nThe page token is valid for only 2 hours.",
-	//       "format": "byte",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

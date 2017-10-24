@@ -1675,6 +1675,8 @@ type FilterSet struct {
 	// - `bidders/*/accounts/*/filterSets/*` (for accessing
 	// buyer-level
 	// troubleshooting data)
+	//
+	// This field is required in create operations.
 	Name string `json:"name,omitempty"`
 
 	// OwnerAccountId: The account ID of the buyer who owns this filter
@@ -6654,7 +6656,7 @@ func (c *BiddersAccountsFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "boolean"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n- For a bidder-level filter set for bidder 123: \"bidders/123\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456\"",
+	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
 	//       "required": true,
@@ -6810,7 +6812,7 @@ func (c *BiddersAccountsFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Full name of the resource to delete.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Full name of the resource to delete.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -6977,7 +6979,7 @@ func (c *BiddersAccountsFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*Fi
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Full name of the resource being requested.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Full name of the resource being requested.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -7152,7 +7154,7 @@ func (c *BiddersAccountsFilterSetsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n- For a bidder-level filter set for bidder 123: \"bidders/123\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456\"",
+	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
 	//       "required": true,
@@ -7369,7 +7371,7 @@ func (c *BiddersAccountsFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -7588,7 +7590,7 @@ func (c *BiddersAccountsFilterSetsBidResponseErrorsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -7810,7 +7812,7 @@ func (c *BiddersAccountsFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -8030,7 +8032,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidRequestsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -8249,7 +8251,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -8482,7 +8484,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -8715,7 +8717,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -8933,7 +8935,7 @@ func (c *BiddersAccountsFilterSetsImpressionMetricsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -9152,7 +9154,7 @@ func (c *BiddersAccountsFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -9373,7 +9375,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -9569,6 +9571,8 @@ func (c *BiddersFilterSetsCreateCall) FilterSetFormat(filterSetFormat string) *B
 // - `bidders/*/accounts/*/filterSets/*` (for accessing
 // buyer-level
 // troubleshooting data)
+//
+// This field is required in create operations.
 func (c *BiddersFilterSetsCreateCall) FilterSetName(filterSetName string) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("filterSet.name", filterSetName)
 	return c
@@ -9846,7 +9850,7 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//       "type": "string"
 	//     },
 	//     "filterSet.name": {
-	//       "description": "A user-defined name of the filter set. Filter set names must be unique\nglobally and match one of the patterns:\n\n- `bidders/*/filterSets/*` (for accessing bidder-level troubleshooting\ndata)\n- `bidders/*/accounts/*/filterSets/*` (for accessing buyer-level\ntroubleshooting data)",
+	//       "description": "A user-defined name of the filter set. Filter set names must be unique\nglobally and match one of the patterns:\n\n- `bidders/*/filterSets/*` (for accessing bidder-level troubleshooting\ndata)\n- `bidders/*/accounts/*/filterSets/*` (for accessing buyer-level\ntroubleshooting data)\n\nThis field is required in create operations.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9909,7 +9913,7 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//       "type": "boolean"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n- For a bidder-level filter set for bidder 123: \"bidders/123\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456\"",
+	//       "description": "Name of the owner (bidder or account) of the filter set to be created.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
@@ -10062,7 +10066,7 @@ func (c *BiddersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Full name of the resource to delete.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Full name of the resource to delete.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -10229,7 +10233,7 @@ func (c *BiddersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet,
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Full name of the resource being requested.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Full name of the resource being requested.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -10404,7 +10408,7 @@ func (c *BiddersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilte
 	//       "type": "string"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n- For a bidder-level filter set for bidder 123: \"bidders/123\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456\"",
+	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed.\nFor example:\n\n- For a bidder-level filter set for bidder 123: `bidders/123`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+$",
 	//       "required": true,
@@ -10621,7 +10625,7 @@ func (c *BiddersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -10840,7 +10844,7 @@ func (c *BiddersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -11062,7 +11066,7 @@ func (c *BiddersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -11282,7 +11286,7 @@ func (c *BiddersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -11501,7 +11505,7 @@ func (c *BiddersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -11734,7 +11738,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -11967,7 +11971,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -12185,7 +12189,7 @@ func (c *BiddersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -12404,7 +12408,7 @@ func (c *BiddersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,
@@ -12625,7 +12629,7 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "filterSetName": {
-	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n- For a bidder-level filter set for bidder 123:\n  \"bidders/123/filterSets/abc\"\n- For an account-level filter set for the buyer account representing bidder\n  123: \"bidders/123/accounts/123/filterSets/abc\"\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: \"bidders/123/accounts/456/filterSets/abc\"",
+	//       "description": "Name of the filter set that should be applied to the requested metrics.\nFor example:\n\n- For a bidder-level filter set for bidder 123:\n  `bidders/123/filterSets/abc`\n\n- For an account-level filter set for the buyer account representing bidder\n  123: `bidders/123/accounts/123/filterSets/abc`\n\n- For an account-level filter set for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/filterSets/[^/]+$",
 	//       "required": true,

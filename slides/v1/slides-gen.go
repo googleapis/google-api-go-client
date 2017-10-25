@@ -470,7 +470,7 @@ type CreateImageRequest struct {
 	// GIF
 	// format.
 	//
-	// The provided URL can be at maximum 2K bytes large.
+	// The provided URL can be at most 2 kB in length.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ElementProperties")
@@ -3055,12 +3055,12 @@ type Outline struct {
 
 	// PropertyState: The outline property state.
 	//
-	// Updating the the outline on a page element will implicitly update
-	// this
-	// field to`RENDERED`, unless another value is specified in the same
-	// request.
-	// To have no outline on a page element, set this field to
-	// `NOT_RENDERED`. In
+	// Updating the outline on a page element will implicitly update this
+	// field
+	// to `RENDERED`, unless another value is specified in the same request.
+	// To
+	// have no outline on a page element, set this field to `NOT_RENDERED`.
+	// In
 	// this case, any other outline fields set in the same request will
 	// be
 	// ignored.
@@ -4032,7 +4032,7 @@ type ReplaceAllShapesWithImageRequest struct {
 	// GIF
 	// format.
 	//
-	// The provided URL can be at maximum 2K bytes large.
+	// The provided URL can be at most 2 kB in length.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
 	// PageObjectIds: If non-empty, limits the matches to page elements only
@@ -4589,12 +4589,12 @@ type Shadow struct {
 
 	// PropertyState: The shadow property state.
 	//
-	// Updating the the shadow on a page element will implicitly update this
-	// field
-	// to `RENDERED`, unless another value is specified in the same request.
-	// To
-	// have no shadow on a page element, set this field to `NOT_RENDERED`.
-	// In this
+	// Updating the shadow on a page element will implicitly update this
+	// field to
+	// `RENDERED`, unless another value is specified in the same request. To
+	// have
+	// no shadow on a page element, set this field to `NOT_RENDERED`. In
+	// this
 	// case, any other shadow fields set in the same request will be
 	// ignored.
 	//
@@ -5422,7 +5422,7 @@ type StretchedPictureFill struct {
 	// GIF
 	// format.
 	//
-	// The provided URL can be at maximum 2K bytes large.
+	// The provided URL can be at most 2 kB in length.
 	ContentUrl string `json:"contentUrl,omitempty"`
 
 	// Size: The original size of the picture fill. This field is read-only.

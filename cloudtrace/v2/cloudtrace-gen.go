@@ -515,6 +515,7 @@ type Span struct {
 	SameProcessAsParentSpan bool `json:"sameProcessAsParentSpan,omitempty"`
 
 	// SpanId: The [SPAN_ID] portion of the span's resource name.
+	// The ID is a 16-character hexadecimal encoding of an 8-byte array.
 	SpanId string `json:"spanId,omitempty"`
 
 	// StackTrace: Stack trace captured at the start of the span.

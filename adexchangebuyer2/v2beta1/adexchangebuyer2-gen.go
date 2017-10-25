@@ -1633,10 +1633,20 @@ type FilterSet struct {
 	// optional.
 	BuyerAccountId int64 `json:"buyerAccountId,omitempty,string"`
 
-	// CreativeId: The ID of the creative on which to filter; optional.
+	// CreativeId: The ID of the creative on which to filter; optional. This
+	// field may be set
+	// only for a filter set that accesses buyer-level troubleshooting data,
+	// i.e.
+	// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+	// pattern.
 	CreativeId string `json:"creativeId,omitempty"`
 
-	// DealId: The ID of the deal on which to filter; optional.
+	// DealId: The ID of the deal on which to filter; optional. This field
+	// may be set
+	// only for a filter set that accesses buyer-level troubleshooting data,
+	// i.e.
+	// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+	// pattern.
 	DealId int64 `json:"dealId,omitempty,string"`
 
 	// Environment: The environment on which to filter; optional.
@@ -9512,14 +9522,23 @@ func (c *BiddersFilterSetsCreateCall) FilterSetBuyerAccountId(filterSetBuyerAcco
 
 // FilterSetCreativeId sets the optional parameter
 // "filterSet.creativeId": The ID of the creative on which to filter;
-// optional.
+// optional. This field may be set
+// only for a filter set that accesses buyer-level troubleshooting data,
+// i.e.
+// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+// pattern.
 func (c *BiddersFilterSetsCreateCall) FilterSetCreativeId(filterSetCreativeId string) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("filterSet.creativeId", filterSetCreativeId)
 	return c
 }
 
 // FilterSetDealId sets the optional parameter "filterSet.dealId": The
-// ID of the deal on which to filter; optional.
+// ID of the deal on which to filter; optional. This field may be
+// set
+// only for a filter set that accesses buyer-level troubleshooting data,
+// i.e.
+// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+// pattern.
 func (c *BiddersFilterSetsCreateCall) FilterSetDealId(filterSetDealId int64) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("filterSet.dealId", fmt.Sprint(filterSetDealId))
 	return c
@@ -9813,12 +9832,12 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//       "type": "string"
 	//     },
 	//     "filterSet.creativeId": {
-	//       "description": "The ID of the creative on which to filter; optional.",
+	//       "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses buyer-level troubleshooting data, i.e.\none whose name matches the `bidders/*/accounts/*/filterSets/*` pattern.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filterSet.dealId": {
-	//       "description": "The ID of the deal on which to filter; optional.",
+	//       "description": "The ID of the deal on which to filter; optional. This field may be set\nonly for a filter set that accesses buyer-level troubleshooting data, i.e.\none whose name matches the `bidders/*/accounts/*/filterSets/*` pattern.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

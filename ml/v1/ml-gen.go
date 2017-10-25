@@ -1420,16 +1420,39 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   <dd>
 	//   A machine equivalent to <code
 	// suppresswarning="true">standard</code> that
-	//   also includes a
+	//   also includes a single NVIDIA Tesla K80 GPU. See more about
 	//   <a href="/ml-engine/docs/how-tos/using-gpus">
-	//   GPU that you can use in your trainer</a>.
+	//   using GPUs for training your model</a>.
 	//   </dd>
 	//   <dt>complex_model_m_gpu</dt>
 	//   <dd>
 	//   A machine equivalent to
 	//   <code suppresswarning="true">complex_model_m</code> that also
 	// includes
-	//   four GPUs.
+	//   four NVIDIA Tesla K80 GPUs.
+	//   </dd>
+	//   <dt>complex_model_l_gpu</dt>
+	//   <dd>
+	//   A machine equivalent to
+	//   <code suppresswarning="true">complex_model_l</code> that also
+	// includes
+	//   eight NVIDIA Tesla K80 GPUs.
+	//   </dd>
+	//   <dt>standard_p100</dt>
+	//   <dd>
+	//   A machine equivalent to <code
+	// suppresswarning="true">standard</code> that
+	//   also includes a single NVIDIA Tesla P100 GPU. The availability of
+	// these
+	//   GPUs is in the Alpha launch stage.
+	//   </dd>
+	//   <dt>complex_model_m_p100</dt>
+	//   <dd>
+	//   A machine equivalent to
+	//   <code suppresswarning="true">complex_model_m</code> that also
+	// includes
+	//   four NVIDIA Tesla P100 GPUs. The availability of these GPUs is in
+	//   the Alpha launch stage.
 	//   </dd>
 	// </dl>
 	//
@@ -4415,6 +4438,13 @@ func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the subset of
+// models to retrieve.
+func (c *ProjectsModelsListCall) Filter(filter string) *ProjectsModelsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The number of models
 // to retrieve per "page" of results. If there
 // are more remaining results than this number, the response message
@@ -4541,6 +4571,11 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Specifies the subset of models to retrieve.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The number of models to retrieve per \"page\" of results. If there\nare more remaining results than this number, the response message will\ncontain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",
@@ -5504,6 +5539,13 @@ func (r *ProjectsModelsVersionsService) List(parent string) *ProjectsModelsVersi
 	return c
 }
 
+// Filter sets the optional parameter "filter": Specifies the subset of
+// versions to retrieve.
+func (c *ProjectsModelsVersionsListCall) Filter(filter string) *ProjectsModelsVersionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The number of
 // versions to retrieve per "page" of results. If
 // there are more remaining results than this number, the response
@@ -5630,6 +5672,11 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Specifies the subset of versions to retrieve.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional. The number of versions to retrieve per \"page\" of results. If\nthere are more remaining results than this number, the response message\nwill contain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
 	//       "format": "int32",

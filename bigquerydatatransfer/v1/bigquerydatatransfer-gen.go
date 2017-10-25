@@ -1017,10 +1017,6 @@ type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`
 
-	// DatasetRegion: Output only. Region in which BigQuery dataset is
-	// located.
-	DatasetRegion string `json:"datasetRegion,omitempty"`
-
 	// DestinationDatasetId: The BigQuery target dataset id.
 	DestinationDatasetId string `json:"destinationDatasetId,omitempty"`
 
@@ -1061,8 +1057,7 @@ type TransferRun struct {
 	// Parameter ignored by server for input requests.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: Output only. Data transfer run state. Ignored for input
-	// requests.
+	// State: Data transfer run state. Ignored for input requests.
 	//
 	// Possible values:
 	//   "TRANSFER_STATE_UNSPECIFIED" - State placeholder.
@@ -1084,7 +1079,9 @@ type TransferRun struct {
 	// is done.
 	// Applicable only to data sources that do not support service
 	// accounts.
-	// When set to 0, the data source service account credentials are used.
+	// When set to 0, the data source service account credentials are
+	// used.
+	// May be negative.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the

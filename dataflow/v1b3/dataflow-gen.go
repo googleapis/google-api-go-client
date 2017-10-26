@@ -837,9 +837,10 @@ type CounterStructuredName struct {
 	// counter's origin.
 	OriginNamespace string `json:"originNamespace,omitempty"`
 
-	// OriginalShuffleStepName: The GroupByKey step name from the original
-	// graph.
-	OriginalShuffleStepName string `json:"originalShuffleStepName,omitempty"`
+	// OriginalRequestingStepName: The step name requesting an operation,
+	// such as GBK.
+	// I.e. the ParDo causing a read/write from shuffle to occur.
+	OriginalRequestingStepName string `json:"originalRequestingStepName,omitempty"`
 
 	// OriginalStepName: System generated name of the original step in the
 	// user's graph, before
@@ -858,8 +859,8 @@ type CounterStructuredName struct {
 	// are identified
 	// by a pair of (reader, input_index). The reader is usually equal to
 	// the
-	// original name, but it may be different, if a ParDo emits it's
-	// Iterator /
+	// original name, but it may be different, if a ParDo emits its Iterator
+	// /
 	// Map side input object.
 	SideInput *SideInputId `json:"sideInput,omitempty"`
 
@@ -4537,8 +4538,26 @@ type SourceOperationRequest struct {
 	// source.
 	GetMetadata *SourceGetMetadataRequest `json:"getMetadata,omitempty"`
 
+	// Name: User-provided name of the Read instruction for this source.
+	Name string `json:"name,omitempty"`
+
+	// OriginalName: System-defined name for the Read instruction for this
+	// source
+	// in the original workflow graph.
+	OriginalName string `json:"originalName,omitempty"`
+
 	// Split: Information about a request to split a source.
 	Split *SourceSplitRequest `json:"split,omitempty"`
+
+	// StageName: System-defined name of the stage containing the source
+	// operation.
+	// Unique across the workflow.
+	StageName string `json:"stageName,omitempty"`
+
+	// SystemName: System-defined name of the Read instruction for this
+	// source.
+	// Unique across the workflow.
+	SystemName string `json:"systemName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GetMetadata") to
 	// unconditionally include in API requests. By default, fields with

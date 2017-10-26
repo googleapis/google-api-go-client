@@ -364,6 +364,7 @@ type CreateServiceAccountKeyRequest struct {
 	//   "KEY_ALG_UNSPECIFIED" - An unspecified key algorithm.
 	//   "KEY_ALG_RSA_1024" - 1k RSA Key.
 	//   "KEY_ALG_RSA_2048" - 2k RSA Key.
+	//   "KEY_ALG_GCS_SYMMETRIC_HMAC" - HMAC.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
 
 	// PrivateKeyType: The output format of the private key.
@@ -1175,6 +1176,7 @@ type ServiceAccountKey struct {
 	//   "KEY_ALG_UNSPECIFIED" - An unspecified key algorithm.
 	//   "KEY_ALG_RSA_1024" - 1k RSA Key.
 	//   "KEY_ALG_RSA_2048" - 2k RSA Key.
+	//   "KEY_ALG_GCS_SYMMETRIC_HMAC" - HMAC.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
 
 	// Name: The resource name of the service account key in the following

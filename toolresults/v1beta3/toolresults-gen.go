@@ -238,11 +238,7 @@ type AndroidInstrumentationTest struct {
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// UseOrchestrator: The flag indicates whether Android Test Orchestrator
-	// will be used to run test or not. Test orchestrator is used if either:
-	// - orchestrator_option field is USE_ORCHESTRATOR, and test runner is
-	// compatible with orchestrator. Or - orchestrator_option field is
-	// unspecified or ORCHESTRATOR_OPTION_UNSPECIFIED, and test runner is
-	// compatible with orchestrator.
+	// will be used to run test or not.
 	UseOrchestrator bool `json:"useOrchestrator,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TestPackageId") to

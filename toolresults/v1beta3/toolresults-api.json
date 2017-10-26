@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/qTGcqTfP2AvSFxr0hOGEezA1IHs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/iPK-vjMYmSVli1_768B0W7bZENU\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3",
- "revision": "20171017",
+ "revision": "20171024",
  "title": "Cloud Tool Results API",
  "description": "Reads and publishes results from Firebase Test Lab.",
  "ownerDomain": "google.com",
@@ -122,7 +122,7 @@
     },
     "useOrchestrator": {
      "type": "boolean",
-     "description": "The flag indicates whether Android Test Orchestrator will be used to run test or not. Test orchestrator is used if either: - orchestrator_option field is USE_ORCHESTRATOR, and test runner is compatible with orchestrator. Or - orchestrator_option field is unspecified or ORCHESTRATOR_OPTION_UNSPECIFIED, and test runner is compatible with orchestrator."
+     "description": "The flag indicates whether Android Test Orchestrator will be used to run test or not."
     }
    }
   },

@@ -3275,7 +3275,7 @@ func (c *BucketsInsertCall) Projection(projection string) *BucketsInsertCall {
 }
 
 // UserProject sets the optional parameter "userProject": The project to
-// be billed for this request
+// be billed for this request.
 func (c *BucketsInsertCall) UserProject(userProject string) *BucketsInsertCall {
 	c.urlParams_.Set("userProject", userProject)
 	return c
@@ -3431,7 +3431,7 @@ func (c *BucketsInsertCall) Do(opts ...googleapi.CallOption) (*Bucket, error) {
 	//       "type": "string"
 	//     },
 	//     "userProject": {
-	//       "description": "The project to be billed for this request",
+	//       "description": "The project to be billed for this request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

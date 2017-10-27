@@ -5215,12 +5215,12 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 }
 
 // OrderBy sets the optional parameter "orderBy": Sort order used for
-// the query. The fields supported for sorting
-// are Task.schedule_time and PullMessage.tag. All results will
+// the query. The only fields supported for sorting
+// are `schedule_time` and `pull_message.tag`. All results will
 // be
 // returned in approximately ascending order. The default ordering is
 // by
-// Task.schedule_time.
+// `schedule_time`.
 func (c *ProjectsLocationsQueuesTasksListCall) OrderBy(orderBy string) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5385,7 +5385,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "\nSort order used for the query. The fields supported for sorting\nare Task.schedule_time and PullMessage.tag. All results will be\nreturned in approximately ascending order. The default ordering is by\nTask.schedule_time.",
+	//       "description": "Sort order used for the query. The only fields supported for sorting\nare `schedule_time` and `pull_message.tag`. All results will be\nreturned in approximately ascending order. The default ordering is by\n`schedule_time`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -320,7 +320,7 @@ func (s *ApiEndpointHandler) MarshalJSON() ([]byte, error) {
 }
 
 // Application: An Application resource contains the top-level
-// configuration of an App Engine application. Next tag: 20
+// configuration of an App Engine application.
 type Application struct {
 	// AuthDomain: Google Apps authentication domain that controls which
 	// users can access this application.Defaults to open access for any
@@ -1049,7 +1049,11 @@ type Empty struct {
 // (https://cloud.google.com/service-management/overview).
 type EndpointsApiService struct {
 	// ConfigId: Endpoints service configuration id as specified by the
-	// Service Management API. For example "2016-09-19r1"
+	// Service Management API. For example "2016-09-19r1"By default, the
+	// Endpoints service configuration id is fixed and config_id must be
+	// specified. To keep the Endpoints service configuration id updated
+	// with each rollout, specify RolloutStrategy.MANAGED and omit
+	// config_id.
 	ConfigId string `json:"configId,omitempty"`
 
 	// Name: Endpoints service name which is the name of the "service"
@@ -1993,6 +1997,18 @@ type ManagedCertificate struct {
 	// serving.
 	//   "FAILED_PERMANENT" - All renewal attempts have been exhausted,
 	// likely due to an invalid DNS setup.
+	//   "FAILED_RETRYING_CAA_FORBIDDEN" - Most recent renewal failed due to
+	// an explicit CAA record that does not include the in-use CA, Let's
+	// Encrypt. Renewals will continue to fail until the CAA is
+	// reconfigured. The last successfully provisioned certificate may still
+	// be serving.
+	//   "FAILED_RETRYING_CAA_CHECKING" - Most recent renewal failed due to
+	// a CAA retrieval failure. This means that the domain's DNS provider
+	// does not properly handle CAA records, failing requests for CAA
+	// records when no CAA records are defined. Renewals will continue to
+	// fail until the DNS provider is changed or a CAA record is added for
+	// the given domain. The last successfully provisioned certificate may
+	// still be serving.
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LastRenewalTime") to
@@ -2254,50 +2270,6 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OperationMetadataExperimental: Metadata for the given
-// google.longrunning.Operation.
-type OperationMetadataExperimental struct {
-	// EndTime: Time that this operation completed.@OutputOnly
-	EndTime string `json:"endTime,omitempty"`
-
-	// InsertTime: Time that this operation was created.@OutputOnly
-	InsertTime string `json:"insertTime,omitempty"`
-
-	// Method: API method that initiated this operation. Example:
-	// google.appengine.experimental.CustomDomains.CreateCustomDomain.@Output
-	// Only
-	Method string `json:"method,omitempty"`
-
-	// Target: Name of the resource that this operation is acting on.
-	// Example: apps/myapp/customDomains/example.com.@OutputOnly
-	Target string `json:"target,omitempty"`
-
-	// User: User who requested this operation.@OutputOnly
-	User string `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationMetadataExperimental) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadataExperimental
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5083,6 +5055,19 @@ func (r *AppsDomainMappingsService) Create(appsId string, domainmapping *DomainM
 	return c
 }
 
+// OverrideStrategy sets the optional parameter "overrideStrategy":
+// Whether the domain creation should override any existing mappings for
+// this domain. By default, overrides are rejected.
+//
+// Possible values:
+//   "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY"
+//   "STRICT"
+//   "OVERRIDE"
+func (c *AppsDomainMappingsCreateCall) OverrideStrategy(overrideStrategy string) *AppsDomainMappingsCreateCall {
+	c.urlParams_.Set("overrideStrategy", overrideStrategy)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5181,6 +5166,16 @@ func (c *AppsDomainMappingsCreateCall) Do(opts ...googleapi.CallOption) (*Operat
 	//       "description": "Part of `parent`. Name of the parent Application resource. Example: apps/myapp.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "overrideStrategy": {
+	//       "description": "Whether the domain creation should override any existing mappings for this domain. By default, overrides are rejected.",
+	//       "enum": [
+	//         "UNSPECIFIED_DOMAIN_OVERRIDE_STRATEGY",
+	//         "STRICT",
+	//         "OVERRIDE"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

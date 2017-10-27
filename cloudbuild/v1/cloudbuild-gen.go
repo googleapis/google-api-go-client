@@ -2478,13 +2478,13 @@ type ProjectsBuildsRetryCall struct {
 //
 // For builds that specify StorageSource:
 //
-// * If the original build pulled source from a GCS object without
+// * If the original build pulled source from Cloud Storage without
 // specifying
 // the generation of the object, the new build will use the current
 // object,
 // which may be different from the original build source.
-// * If the original build pulled source from a GCS object and specified
-// the
+// * If the original build pulled source from Cloud Storage and
+// specified the
 // generation of the object, the new build will attempt to use the
 // same
 // object, which may or may not be available depending on the
@@ -2585,7 +2585,7 @@ func (c *ProjectsBuildsRetryCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new build based on the given build.\n\nThis API creates a new build using the original build request,  which may\nor may not result in an identical build.\n\nFor triggered builds:\n\n* Triggered builds resolve to a precise revision, so a retry of a triggered\nbuild will result in a build that uses the same revision.\n\nFor non-triggered builds that specify RepoSource:\n\n* If the original build built from the tip of a branch, the retried build\nwill build from the tip of that branch, which may not be the same revision\nas the original build.\n* If the original build specified a commit sha or revision ID, the retried\nbuild will use the identical source.\n\nFor builds that specify StorageSource:\n\n* If the original build pulled source from a GCS object without specifying\nthe generation of the object, the new build will use the current object,\nwhich may be different from the original build source.\n* If the original build pulled source from a GCS object and specified the\ngeneration of the object, the new build will attempt to use the same\nobject, which may or may not be available depending on the bucket's\nlifecycle management settings.",
+	//   "description": "Creates a new build based on the given build.\n\nThis API creates a new build using the original build request,  which may\nor may not result in an identical build.\n\nFor triggered builds:\n\n* Triggered builds resolve to a precise revision, so a retry of a triggered\nbuild will result in a build that uses the same revision.\n\nFor non-triggered builds that specify RepoSource:\n\n* If the original build built from the tip of a branch, the retried build\nwill build from the tip of that branch, which may not be the same revision\nas the original build.\n* If the original build specified a commit sha or revision ID, the retried\nbuild will use the identical source.\n\nFor builds that specify StorageSource:\n\n* If the original build pulled source from Cloud Storage without specifying\nthe generation of the object, the new build will use the current object,\nwhich may be different from the original build source.\n* If the original build pulled source from Cloud Storage and specified the\ngeneration of the object, the new build will attempt to use the same\nobject, which may or may not be available depending on the bucket's\nlifecycle management settings.",
 	//   "flatPath": "v1/projects/{projectId}/builds/{id}:retry",
 	//   "httpMethod": "POST",
 	//   "id": "cloudbuild.projects.builds.retry",

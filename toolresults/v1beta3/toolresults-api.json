@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/iPK-vjMYmSVli1_768B0W7bZENU\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/W_qo2LD5wB_o8tqOBoiq0maSkdk\"",
  "discoveryVersion": "v1",
  "id": "toolresults:v1beta3",
  "name": "toolresults",
  "canonicalName": "Tool Results",
  "version": "v1beta3",
- "revision": "20171024",
+ "revision": "20171025",
  "title": "Cloud Tool Results API",
  "description": "Reads and publishes results from Firebase Test Lab.",
  "ownerDomain": "google.com",
@@ -1220,7 +1220,7 @@
     },
     "warning": {
      "$ref": "Any",
-     "description": "Warning message with additional details of the issue. Should always be a message from com.google.devtools.toolresults.v1.warnings Required."
+     "description": "Warning message with additional details of the issue. Should always be a message from com.google.devtools.toolresults.v1.warnings"
     }
    }
   },

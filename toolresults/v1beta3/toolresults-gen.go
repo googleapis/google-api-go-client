@@ -2528,7 +2528,6 @@ type TestIssue struct {
 
 	// Warning: Warning message with additional details of the issue. Should
 	// always be a message from com.google.devtools.toolresults.v1.warnings
-	// Required.
 	Warning *Any `json:"warning,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to

@@ -651,7 +651,11 @@ func (s *DiskUtilization) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/service-management/overview).
 type EndpointsApiService struct {
 	// ConfigId: Endpoints service configuration id as specified by the
-	// Service Management API. For example "2016-09-19r1"
+	// Service Management API. For example "2016-09-19r1"By default, the
+	// Endpoints service configuration id is fixed and config_id must be
+	// specified. To keep the Endpoints service configuration id updated
+	// with each rollout, specify RolloutStrategy.MANAGED and omit
+	// config_id.
 	ConfigId string `json:"configId,omitempty"`
 
 	// Name: Endpoints service name which is the name of the "service"
@@ -1505,50 +1509,6 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type noMethod OperationMetadata
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OperationMetadataExperimental: Metadata for the given
-// google.longrunning.Operation.
-type OperationMetadataExperimental struct {
-	// EndTime: Time that this operation completed.@OutputOnly
-	EndTime string `json:"endTime,omitempty"`
-
-	// InsertTime: Time that this operation was created.@OutputOnly
-	InsertTime string `json:"insertTime,omitempty"`
-
-	// Method: API method that initiated this operation. Example:
-	// google.appengine.experimental.CustomDomains.CreateCustomDomain.@Output
-	// Only
-	Method string `json:"method,omitempty"`
-
-	// Target: Name of the resource that this operation is acting on.
-	// Example: apps/myapp/customDomains/example.com.@OutputOnly
-	Target string `json:"target,omitempty"`
-
-	// User: User who requested this operation.@OutputOnly
-	User string `json:"user,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationMetadataExperimental) MarshalJSON() ([]byte, error) {
-	type noMethod OperationMetadataExperimental
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

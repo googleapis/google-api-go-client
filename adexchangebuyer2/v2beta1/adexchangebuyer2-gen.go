@@ -1629,10 +1629,6 @@ type FilterSet struct {
 	// Interpreted relative to Pacific time zone.
 	AbsoluteDateRange *AbsoluteDateRange `json:"absoluteDateRange,omitempty"`
 
-	// BuyerAccountId: The ID of the buyer account on which to filter;
-	// optional.
-	BuyerAccountId int64 `json:"buyerAccountId,omitempty,string"`
-
 	// CreativeId: The ID of the creative on which to filter; optional. This
 	// field may be set
 	// only for a filter set that accesses buyer-level troubleshooting data,
@@ -1688,11 +1684,6 @@ type FilterSet struct {
 	//
 	// This field is required in create operations.
 	Name string `json:"name,omitempty"`
-
-	// OwnerAccountId: The account ID of the buyer who owns this filter
-	// set.
-	// The value of this field is ignored in create operations.
-	OwnerAccountId int64 `json:"ownerAccountId,omitempty,string"`
 
 	// Platforms: The list of platforms on which to filter; may be empty.
 	// The filters
@@ -9512,14 +9503,6 @@ func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeStartDateYear(fi
 	return c
 }
 
-// FilterSetBuyerAccountId sets the optional parameter
-// "filterSet.buyerAccountId": The ID of the buyer account on which to
-// filter; optional.
-func (c *BiddersFilterSetsCreateCall) FilterSetBuyerAccountId(filterSetBuyerAccountId int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.buyerAccountId", fmt.Sprint(filterSetBuyerAccountId))
-	return c
-}
-
 // FilterSetCreativeId sets the optional parameter
 // "filterSet.creativeId": The ID of the creative on which to filter;
 // optional. This field may be set
@@ -9594,15 +9577,6 @@ func (c *BiddersFilterSetsCreateCall) FilterSetFormat(filterSetFormat string) *B
 // This field is required in create operations.
 func (c *BiddersFilterSetsCreateCall) FilterSetName(filterSetName string) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("filterSet.name", filterSetName)
-	return c
-}
-
-// FilterSetOwnerAccountId sets the optional parameter
-// "filterSet.ownerAccountId": The account ID of the buyer who owns this
-// filter set.
-// The value of this field is ignored in create operations.
-func (c *BiddersFilterSetsCreateCall) FilterSetOwnerAccountId(filterSetOwnerAccountId int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.ownerAccountId", fmt.Sprint(filterSetOwnerAccountId))
 	return c
 }
 
@@ -9825,12 +9799,6 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
-	//     "filterSet.buyerAccountId": {
-	//       "description": "The ID of the buyer account on which to filter; optional.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "filterSet.creativeId": {
 	//       "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses buyer-level troubleshooting data, i.e.\none whose name matches the `bidders/*/accounts/*/filterSets/*` pattern.",
 	//       "location": "query",
@@ -9870,12 +9838,6 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//     },
 	//     "filterSet.name": {
 	//       "description": "A user-defined name of the filter set. Filter set names must be unique\nglobally and match one of the patterns:\n\n- `bidders/*/filterSets/*` (for accessing bidder-level troubleshooting\ndata)\n- `bidders/*/accounts/*/filterSets/*` (for accessing buyer-level\ntroubleshooting data)\n\nThis field is required in create operations.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.ownerAccountId": {
-	//       "description": "The account ID of the buyer who owns this filter set.\nThe value of this field is ignored in create operations.",
-	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

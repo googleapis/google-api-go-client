@@ -167,6 +167,40 @@ type TypesService struct {
 	s *Service
 }
 
+// AsyncOptions: Async options that determine when a resource should
+// finish.
+type AsyncOptions struct {
+	// MethodMatch: Method regex where this policy will apply.
+	MethodMatch string `json:"methodMatch,omitempty"`
+
+	// PollingOptions: Deployment manager will poll instances for this API
+	// resource setting a RUNNING state, and blocking until polling
+	// conditions tell whether the resource is completed or failed.
+	PollingOptions *PollingOptions `json:"pollingOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MethodMatch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MethodMatch") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AsyncOptions) MarshalJSON() ([]byte, error) {
+	type noMethod AsyncOptions
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -1037,6 +1071,37 @@ func (s *DeploymentsStopRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type Diagnostic struct {
+	// Field: JsonPath expression on the resource that if non empty,
+	// indicates that this field needs to be extracted as a diagnostic.
+	Field string `json:"field,omitempty"`
+
+	// Level: Level to record this diagnostic.
+	Level string `json:"level,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Diagnostic) MarshalJSON() ([]byte, error) {
+	type noMethod Diagnostic
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents an expression text. Example:
 //
 // title: "User account presence" description: "Determines whether the
@@ -1706,6 +1771,9 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // Options: Options allows customized resource handling by Deployment
 // Manager.
 type Options struct {
+	// AsyncOptions: Options regarding how to thread async requests.
+	AsyncOptions []*AsyncOptions `json:"asyncOptions,omitempty"`
+
 	// InputMappings: The mappings that apply for requests.
 	InputMappings []*InputMapping `json:"inputMappings,omitempty"`
 
@@ -1718,7 +1786,7 @@ type Options struct {
 	// on a resource.
 	ValidationOptions *ValidationOptions `json:"validationOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputMappings") to
+	// ForceSendFields is a list of field names (e.g. "AsyncOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1726,7 +1794,7 @@ type Options struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputMappings") to include
+	// NullFields is a list of field names (e.g. "AsyncOptions") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1823,6 +1891,50 @@ type Policy struct {
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type noMethod Policy
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type PollingOptions struct {
+	// Diagnostics: An array of diagnostics to be collected by Deployment
+	// Manager, these diagnostics will be displayed to the user.
+	Diagnostics []*Diagnostic `json:"diagnostics,omitempty"`
+
+	// FailCondition: JsonPath expression that determines if the request
+	// failed.
+	FailCondition string `json:"failCondition,omitempty"`
+
+	// FinishCondition: JsonPath expression that determines if the request
+	// is completed.
+	FinishCondition string `json:"finishCondition,omitempty"`
+
+	// PollingLink: JsonPath expression that evaluates to string, it
+	// indicates where to poll.
+	PollingLink string `json:"pollingLink,omitempty"`
+
+	// TargetLink: JsonPath expression, after polling is completed,
+	// indicates where to fetch the resource.
+	TargetLink string `json:"targetLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Diagnostics") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Diagnostics") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PollingOptions) MarshalJSON() ([]byte, error) {
+	type noMethod PollingOptions
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2369,6 +2481,9 @@ type TemplateContents struct {
 	// Interpreter: Which interpreter (python or jinja) should be used
 	// during expansion.
 	Interpreter string `json:"interpreter,omitempty"`
+
+	// MainTemplate: The filename of the mainTemplate
+	MainTemplate string `json:"mainTemplate,omitempty"`
 
 	// Schema: The contents of the template schema.
 	Schema string `json:"schema,omitempty"`

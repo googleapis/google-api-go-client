@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/fjbnlFC4GTEIX5zCJ4_9R1qQWCw\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/cyMB4Vg5cNVg1PhWNoVc664w6RE\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:v2beta",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager V2Beta",
  "version": "v2beta",
- "revision": "20170925",
+ "revision": "20171025",
  "title": "Google Cloud Deployment Manager API V2Beta Methods",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1222,6 +1222,10 @@
     "interpreter": {
      "type": "string",
      "description": "Which interpreter (python or jinja) should be used during expansion."
+    },
+    "mainTemplate": {
+     "type": "string",
+     "description": "The filename of the mainTemplate"
     },
     "schema": {
      "type": "string",

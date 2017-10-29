@@ -2328,6 +2328,9 @@ type TemplateContents struct {
 	// during expansion.
 	Interpreter string `json:"interpreter,omitempty"`
 
+	// MainTemplate: The filename of the mainTemplate
+	MainTemplate string `json:"mainTemplate,omitempty"`
+
 	// Schema: The contents of the template schema.
 	Schema string `json:"schema,omitempty"`
 

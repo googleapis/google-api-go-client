@@ -5,16 +5,14 @@
     "sites": {
       "methods": {
         "get": {
-          "response": {
-            "$ref": "SiteSummaryResponse"
-          },
+          "description": "Gets a summary of the ad experience rating of a site.",
+          "httpMethod": "GET",
           "parameterOrder": [
             "name"
           ],
-          "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/xapi.zoo"
-          ],
+          "response": {
+            "$ref": "SiteSummaryResponse"
+          },
           "parameters": {
             "name": {
               "description": "The required site name. It should be the site property whose ad experiences\nmay have been reviewed, and it should be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field returned by the\nAPI will lead to the verification page, prompting the user to go through\nthat process before they can gain access to the Ad Experience Report.",
@@ -24,38 +22,40 @@
               "location": "path"
             }
           },
+          "scopes": [
+            "https://www.googleapis.com/auth/xapi.zoo"
+          ],
           "flatPath": "v1/sites/{sitesId}",
-          "id": "adexperiencereport.sites.get",
           "path": "v1/{+name}",
-          "description": "Gets a summary of the ad experience rating of a site."
+          "id": "adexperiencereport.sites.get"
         }
       }
     },
     "violatingSites": {
       "methods": {
         "list": {
-          "httpMethod": "GET",
-          "parameterOrder": [],
+          "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\".",
           "response": {
             "$ref": "ViolatingSitesResponse"
           },
+          "parameterOrder": [],
+          "httpMethod": "GET",
+          "parameters": {},
           "scopes": [
             "https://www.googleapis.com/auth/xapi.zoo"
           ],
-          "parameters": {},
           "flatPath": "v1/violatingSites",
-          "path": "v1/violatingSites",
           "id": "adexperiencereport.violatingSites.list",
-          "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\"."
+          "path": "v1/violatingSites"
         }
       }
     }
   },
   "parameters": {
     "upload_protocol": {
-      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "prettyPrint": {
       "description": "Returns response with indentations and line breaks.",
@@ -63,19 +63,14 @@
       "type": "boolean",
       "location": "query"
     },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
       "type": "string",
       "location": "query"
     },
-    "fields": {
-      "type": "string",
+    "uploadType": {
       "location": "query",
-      "description": "Selector specifying which fields to include in a partial response."
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
     },
     "$.xgafv": {
@@ -91,7 +86,18 @@
       "description": "V1 error format.",
       "type": "string"
     },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
     "alt": {
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
       "description": "Data format for response.",
       "default": "json",
       "enum": [
@@ -99,17 +105,6 @@
         "media",
         "proto"
       ],
-      "type": "string",
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query"
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string"
     },
     "access_token": {
@@ -117,33 +112,38 @@
       "description": "OAuth access token.",
       "type": "string"
     },
+    "key": {
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string",
+      "location": "query"
+    },
     "quotaUser": {
-      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "pp": {
-      "location": "query",
       "description": "Pretty-print response.",
       "default": "true",
-      "type": "boolean"
-    },
-    "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string",
+      "type": "boolean",
       "location": "query"
     },
     "bearer_token": {
       "description": "OAuth bearer token.",
       "type": "string",
       "location": "query"
+    },
+    "oauth_token": {
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string"
     }
   },
   "version": "v1",
   "baseUrl": "https://adexperiencereport.googleapis.com/",
-  "kind": "discovery#restDescription",
   "description": "View Ad Experience Report data, and get a list of sites that have a significant number of annoying ads.",
   "servicePath": "",
+  "kind": "discovery#restDescription",
   "basePath": "",
   "revision": "20171002",
   "documentationLink": "https://developers.google.com/ad-experience-report/",
@@ -156,8 +156,6 @@
       "type": "object",
       "properties": {
         "filterStatus": {
-          "description": "The ad filtering status of the site.",
-          "type": "string",
           "enumDescriptions": [
             "N/A.",
             "Ad filtering is on.",
@@ -171,7 +169,9 @@
             "OFF",
             "PAUSED",
             "PENDING"
-          ]
+          ],
+          "description": "The ad filtering status of the site.",
+          "type": "string"
         },
         "underReview": {
           "description": "Whether the site is currently under review.",
@@ -202,6 +202,11 @@
             "Failing."
           ]
         },
+        "enforcementTime": {
+          "format": "google-datetime",
+          "description": "The date on which ad filtering begins.",
+          "type": "string"
+        },
         "region": {
           "enumDescriptions": [
             "Ad standard not yet defined for your region.",
@@ -210,19 +215,14 @@
           ],
           "description": "The assigned regions for the site and platform.",
           "items": {
-            "type": "string",
             "enum": [
               "REGION_UNKNOWN",
               "REGION_A",
               "REGION_B"
-            ]
+            ],
+            "type": "string"
           },
           "type": "array"
-        },
-        "enforcementTime": {
-          "format": "google-datetime",
-          "description": "The date on which ad filtering begins.",
-          "type": "string"
         }
       },
       "id": "PlatformSummary"
@@ -261,11 +261,11 @@
       "id": "SiteSummaryResponse"
     }
   },
-  "protocol": "rest",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",
     "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
+  "protocol": "rest",
   "canonicalName": "Ad Experience Report",
   "auth": {
     "oauth2": {

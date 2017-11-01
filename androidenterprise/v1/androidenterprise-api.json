@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/c_-peugeTpeeazYGijvbxbAUiRg\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Jh8zTmykcmyP74LXSyyp14SatQA\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20171006",
+ "revision": "20171025",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -3969,6 +3969,33 @@
      "response": {
       "$ref": "User"
      },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    },
+    "revokeDeviceAccess": {
+     "id": "androidenterprise.users.revokeDeviceAccess",
+     "path": "enterprises/{enterpriseId}/users/{userId}/deviceAccess",
+     "httpMethod": "DELETE",
+     "description": "Revokes access to all devices currently provisioned to the user. The user will no longer be able to use the managed Play store on any of their managed devices.\n\nThis call only works with EMM-managed accounts.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "userId": {
+       "type": "string",
+       "description": "The ID of the user.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "userId"
+     ],
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"
      ]

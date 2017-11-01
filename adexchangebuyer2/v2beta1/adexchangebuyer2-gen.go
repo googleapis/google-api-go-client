@@ -9431,6 +9431,7 @@ func (c *BiddersAccountsFilterSetsNonBillableWinningBidsListCall) Pages(ctx cont
 type BiddersFilterSetsCreateCall struct {
 	s          *Service
 	ownerName  string
+	filterset  *FilterSet
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
 	header_    http.Header
@@ -9438,9 +9439,10 @@ type BiddersFilterSetsCreateCall struct {
 
 // Create: Creates the specified filter set for the account with the
 // given account ID.
-func (r *BiddersFilterSetsService) Create(ownerName string) *BiddersFilterSetsCreateCall {
+func (r *BiddersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BiddersFilterSetsCreateCall {
 	c := &BiddersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ownerName = ownerName
+	c.filterset = filterset
 	return c
 }
 
@@ -9448,213 +9450,6 @@ func (r *BiddersFilterSetsService) Create(ownerName string) *BiddersFilterSetsCr
 // buyer.
 func (c *BiddersFilterSetsCreateCall) AccountId(accountId int64) *BiddersFilterSetsCreateCall {
 	c.urlParams_.Set("accountId", fmt.Sprint(accountId))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeEndDateDay sets the optional parameter
-// "filterSet.absoluteDateRange.endDate.day": Day of month. Must be from
-// 1 to 31 and valid for the year and month, or 0
-// if specifying a year/month where the day is not significant.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeEndDateDay(filterSetAbsoluteDateRangeEndDateDay int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.endDate.day", fmt.Sprint(filterSetAbsoluteDateRangeEndDateDay))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeEndDateMonth sets the optional parameter
-// "filterSet.absoluteDateRange.endDate.month": Month of year. Must be
-// from 1 to 12.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeEndDateMonth(filterSetAbsoluteDateRangeEndDateMonth int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.endDate.month", fmt.Sprint(filterSetAbsoluteDateRangeEndDateMonth))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeEndDateYear sets the optional parameter
-// "filterSet.absoluteDateRange.endDate.year": Year of date. Must be
-// from 1 to 9999, or 0 if specifying a date without
-// a year.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeEndDateYear(filterSetAbsoluteDateRangeEndDateYear int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.endDate.year", fmt.Sprint(filterSetAbsoluteDateRangeEndDateYear))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeStartDateDay sets the optional parameter
-// "filterSet.absoluteDateRange.startDate.day": Day of month. Must be
-// from 1 to 31 and valid for the year and month, or 0
-// if specifying a year/month where the day is not significant.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeStartDateDay(filterSetAbsoluteDateRangeStartDateDay int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.startDate.day", fmt.Sprint(filterSetAbsoluteDateRangeStartDateDay))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeStartDateMonth sets the optional parameter
-// "filterSet.absoluteDateRange.startDate.month": Month of year. Must be
-// from 1 to 12.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeStartDateMonth(filterSetAbsoluteDateRangeStartDateMonth int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.startDate.month", fmt.Sprint(filterSetAbsoluteDateRangeStartDateMonth))
-	return c
-}
-
-// FilterSetAbsoluteDateRangeStartDateYear sets the optional parameter
-// "filterSet.absoluteDateRange.startDate.year": Year of date. Must be
-// from 1 to 9999, or 0 if specifying a date without
-// a year.
-func (c *BiddersFilterSetsCreateCall) FilterSetAbsoluteDateRangeStartDateYear(filterSetAbsoluteDateRangeStartDateYear int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.absoluteDateRange.startDate.year", fmt.Sprint(filterSetAbsoluteDateRangeStartDateYear))
-	return c
-}
-
-// FilterSetCreativeId sets the optional parameter
-// "filterSet.creativeId": The ID of the creative on which to filter;
-// optional. This field may be set
-// only for a filter set that accesses buyer-level troubleshooting data,
-// i.e.
-// one whose name matches the `bidders/*/accounts/*/filterSets/*`
-// pattern.
-func (c *BiddersFilterSetsCreateCall) FilterSetCreativeId(filterSetCreativeId string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.creativeId", filterSetCreativeId)
-	return c
-}
-
-// FilterSetDealId sets the optional parameter "filterSet.dealId": The
-// ID of the deal on which to filter; optional. This field may be
-// set
-// only for a filter set that accesses buyer-level troubleshooting data,
-// i.e.
-// one whose name matches the `bidders/*/accounts/*/filterSets/*`
-// pattern.
-func (c *BiddersFilterSetsCreateCall) FilterSetDealId(filterSetDealId int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.dealId", fmt.Sprint(filterSetDealId))
-	return c
-}
-
-// FilterSetEnvironment sets the optional parameter
-// "filterSet.environment": The environment on which to filter;
-// optional.
-//
-// Possible values:
-//   "ENVIRONMENT_UNSPECIFIED"
-//   "WEB"
-//   "APP"
-func (c *BiddersFilterSetsCreateCall) FilterSetEnvironment(filterSetEnvironment string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.environment", filterSetEnvironment)
-	return c
-}
-
-// FilterSetFilterSetId sets the optional parameter
-// "filterSet.filterSetId": The ID of the filter set; unique within the
-// account of the filter set
-// owner.
-// The value of this field is ignored in create operations.
-func (c *BiddersFilterSetsCreateCall) FilterSetFilterSetId(filterSetFilterSetId int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.filterSetId", fmt.Sprint(filterSetFilterSetId))
-	return c
-}
-
-// FilterSetFormat sets the optional parameter "filterSet.format": The
-// format on which to filter; optional.
-//
-// Possible values:
-//   "FORMAT_UNSPECIFIED"
-//   "DISPLAY"
-//   "VIDEO"
-func (c *BiddersFilterSetsCreateCall) FilterSetFormat(filterSetFormat string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.format", filterSetFormat)
-	return c
-}
-
-// FilterSetName sets the optional parameter "filterSet.name": A
-// user-defined name of the filter set. Filter set names must be
-// unique
-// globally and match one of the patterns:
-//
-// - `bidders/*/filterSets/*` (for accessing bidder-level
-// troubleshooting
-// data)
-// - `bidders/*/accounts/*/filterSets/*` (for accessing
-// buyer-level
-// troubleshooting data)
-//
-// This field is required in create operations.
-func (c *BiddersFilterSetsCreateCall) FilterSetName(filterSetName string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.name", filterSetName)
-	return c
-}
-
-// FilterSetPlatforms sets the optional parameter "filterSet.platforms":
-// The list of platforms on which to filter; may be empty. The
-// filters
-// represented by multiple platforms are ORed together (i.e. if
-// non-empty,
-// results must match any one of the platforms).
-//
-// Possible values:
-//   "PLATFORM_UNSPECIFIED"
-//   "DESKTOP"
-//   "TABLET"
-//   "MOBILE"
-func (c *BiddersFilterSetsCreateCall) FilterSetPlatforms(filterSetPlatforms ...string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.SetMulti("filterSet.platforms", append([]string{}, filterSetPlatforms...))
-	return c
-}
-
-// FilterSetRealtimeTimeRangeStartTimestamp sets the optional parameter
-// "filterSet.realtimeTimeRange.startTimestamp": The start timestamp of
-// the real-time RTB metrics aggregation.
-func (c *BiddersFilterSetsCreateCall) FilterSetRealtimeTimeRangeStartTimestamp(filterSetRealtimeTimeRangeStartTimestamp string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.realtimeTimeRange.startTimestamp", filterSetRealtimeTimeRangeStartTimestamp)
-	return c
-}
-
-// FilterSetRelativeDateRangeDurationDays sets the optional parameter
-// "filterSet.relativeDateRange.durationDays": The number of days in the
-// requested date range. E.g. for a range spanning
-// today, 1. For a range spanning the last 7 days, 7.
-func (c *BiddersFilterSetsCreateCall) FilterSetRelativeDateRangeDurationDays(filterSetRelativeDateRangeDurationDays int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.relativeDateRange.durationDays", fmt.Sprint(filterSetRelativeDateRangeDurationDays))
-	return c
-}
-
-// FilterSetRelativeDateRangeOffsetDays sets the optional parameter
-// "filterSet.relativeDateRange.offsetDays": The end date of the filter
-// set, specified as the number of days before
-// today. E.g. for a range where the last date is today, 0.
-func (c *BiddersFilterSetsCreateCall) FilterSetRelativeDateRangeOffsetDays(filterSetRelativeDateRangeOffsetDays int64) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.relativeDateRange.offsetDays", fmt.Sprint(filterSetRelativeDateRangeOffsetDays))
-	return c
-}
-
-// FilterSetSellerNetworkIds sets the optional parameter
-// "filterSet.sellerNetworkIds": The list of IDs of the seller
-// (publisher) networks on which to filter;
-// may be empty. The filters represented by multiple seller network IDs
-// are
-// ORed together (i.e. if non-empty, results must match any one of
-// the
-// publisher networks).
-// See
-// [seller-network-ids](https://developers.google.com/ad-exchange/rtb/dow
-// nloads/seller-network-ids)
-// file for the set of existing seller network IDs.
-func (c *BiddersFilterSetsCreateCall) FilterSetSellerNetworkIds(filterSetSellerNetworkIds ...int64) *BiddersFilterSetsCreateCall {
-	var filterSetSellerNetworkIds_ []string
-	for _, v := range filterSetSellerNetworkIds {
-		filterSetSellerNetworkIds_ = append(filterSetSellerNetworkIds_, fmt.Sprint(v))
-	}
-	c.urlParams_.SetMulti("filterSet.sellerNetworkIds", filterSetSellerNetworkIds_)
-	return c
-}
-
-// FilterSetTimeSeriesGranularity sets the optional parameter
-// "filterSet.timeSeriesGranularity": The granularity of time intervals
-// if a time series breakdown is desired;
-// optional.
-//
-// Possible values:
-//   "TIME_SERIES_GRANULARITY_UNSPECIFIED"
-//   "HOURLY"
-//   "DAILY"
-func (c *BiddersFilterSetsCreateCall) FilterSetTimeSeriesGranularity(filterSetTimeSeriesGranularity string) *BiddersFilterSetsCreateCall {
-	c.urlParams_.Set("filterSet.timeSeriesGranularity", filterSetTimeSeriesGranularity)
 	return c
 }
 
@@ -9700,6 +9495,11 @@ func (c *BiddersFilterSetsCreateCall) doRequest(alt string) (*http.Response, err
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.filterset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+ownerName}/filterSets")
 	urls += "?" + c.urlParams_.Encode()
@@ -9763,131 +9563,6 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//       "location": "query",
 	//       "type": "string"
 	//     },
-	//     "filterSet.absoluteDateRange.endDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.absoluteDateRange.endDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.absoluteDateRange.endDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.absoluteDateRange.startDate.day": {
-	//       "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.absoluteDateRange.startDate.month": {
-	//       "description": "Month of year. Must be from 1 to 12.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.absoluteDateRange.startDate.year": {
-	//       "description": "Year of date. Must be from 1 to 9999, or 0 if specifying a date without\na year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.creativeId": {
-	//       "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses buyer-level troubleshooting data, i.e.\none whose name matches the `bidders/*/accounts/*/filterSets/*` pattern.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.dealId": {
-	//       "description": "The ID of the deal on which to filter; optional. This field may be set\nonly for a filter set that accesses buyer-level troubleshooting data, i.e.\none whose name matches the `bidders/*/accounts/*/filterSets/*` pattern.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.environment": {
-	//       "description": "The environment on which to filter; optional.",
-	//       "enum": [
-	//         "ENVIRONMENT_UNSPECIFIED",
-	//         "WEB",
-	//         "APP"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.filterSetId": {
-	//       "description": "The ID of the filter set; unique within the account of the filter set\nowner.\nThe value of this field is ignored in create operations.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.format": {
-	//       "description": "The format on which to filter; optional.",
-	//       "enum": [
-	//         "FORMAT_UNSPECIFIED",
-	//         "DISPLAY",
-	//         "VIDEO"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.name": {
-	//       "description": "A user-defined name of the filter set. Filter set names must be unique\nglobally and match one of the patterns:\n\n- `bidders/*/filterSets/*` (for accessing bidder-level troubleshooting\ndata)\n- `bidders/*/accounts/*/filterSets/*` (for accessing buyer-level\ntroubleshooting data)\n\nThis field is required in create operations.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.platforms": {
-	//       "description": "The list of platforms on which to filter; may be empty. The filters\nrepresented by multiple platforms are ORed together (i.e. if non-empty,\nresults must match any one of the platforms).",
-	//       "enum": [
-	//         "PLATFORM_UNSPECIFIED",
-	//         "DESKTOP",
-	//         "TABLET",
-	//         "MOBILE"
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "filterSet.realtimeTimeRange.startTimestamp": {
-	//       "description": "The start timestamp of the real-time RTB metrics aggregation.",
-	//       "format": "google-datetime",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filterSet.relativeDateRange.durationDays": {
-	//       "description": "The number of days in the requested date range. E.g. for a range spanning\ntoday, 1. For a range spanning the last 7 days, 7.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.relativeDateRange.offsetDays": {
-	//       "description": "The end date of the filter set, specified as the number of days before\ntoday. E.g. for a range where the last date is today, 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "filterSet.sellerNetworkIds": {
-	//       "description": "The list of IDs of the seller (publisher) networks on which to filter;\nmay be empty. The filters represented by multiple seller network IDs are\nORed together (i.e. if non-empty, results must match any one of the\npublisher networks).\nSee [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\nfile for the set of existing seller network IDs.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "integer"
-	//     },
-	//     "filterSet.timeSeriesGranularity": {
-	//       "description": "The granularity of time intervals if a time series breakdown is desired;\noptional.",
-	//       "enum": [
-	//         "TIME_SERIES_GRANULARITY_UNSPECIFIED",
-	//         "HOURLY",
-	//         "DAILY"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "isTransient": {
 	//       "description": "Whether the filter set is transient, or should be persisted indefinitely.\nBy default, filter sets are not transient.\nIf transient, it will be available for at least 1 hour after creation.",
 	//       "location": "query",
@@ -9902,6 +9577,9 @@ func (c *BiddersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterS
 	//     }
 	//   },
 	//   "path": "v2beta1/{+ownerName}/filterSets",
+	//   "request": {
+	//     "$ref": "FilterSet"
+	//   },
 	//   "response": {
 	//     "$ref": "FilterSet"
 	//   },

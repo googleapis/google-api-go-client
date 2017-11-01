@@ -885,6 +885,10 @@ type RepoSource struct {
 	// CommitSha: Explicit commit SHA to build.
 	CommitSha string `json:"commitSha,omitempty"`
 
+	// Dir: Directory, relative to the source root, in which to run the
+	// build.
+	Dir string `json:"dir,omitempty"`
+
 	// ProjectId: ID of the project that owns the repo. If omitted, the
 	// project ID requesting
 	// the build is assumed.

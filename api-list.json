@@ -1945,21 +1945,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "playmoviespartner:v1",
-   "name": "playmoviespartner",
-   "version": "v1",
-   "title": "Google Play Movies Partner API",
-   "description": "Gets the delivery status of titles for Google Play Movies Partners.",
-   "discoveryRestUrl": "https://playmoviespartner.googleapis.com/$discovery/rest?version=v1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/playmoviespartner/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "plus:v1",
    "name": "plus",
    "version": "v1",

@@ -90,6 +90,9 @@ const (
 	// View the profile photos of people in your classes
 	ClassroomProfilePhotosScope = "https://www.googleapis.com/auth/classroom.profile.photos"
 
+	// Receive notifications about your Google Classroom data
+	ClassroomPushNotificationsScope = "https://www.googleapis.com/auth/classroom.push-notifications"
+
 	// Manage your Google Classroom class rosters
 	ClassroomRostersScope = "https://www.googleapis.com/auth/classroom.rosters"
 
@@ -10330,6 +10333,7 @@ func (c *RegistrationsCreateCall) Do(opts ...googleapi.CallOption) (*Registratio
 	//     "$ref": "Registration"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.push-notifications",
 	//     "https://www.googleapis.com/auth/classroom.rosters",
 	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
 	//   ]
@@ -10457,6 +10461,7 @@ func (c *RegistrationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.push-notifications",
 	//     "https://www.googleapis.com/auth/classroom.rosters",
 	//     "https://www.googleapis.com/auth/classroom.rosters.readonly"
 	//   ]

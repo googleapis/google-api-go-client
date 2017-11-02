@@ -2455,9 +2455,9 @@ func (r *ProjectsLocationsRegistriesService) Patch(name string, deviceregistry *
 // The field mask must not be empty, and it must not contain fields
 // that
 // are immutable or only set by the server.
-// Mutable top-level fields: `event_notification_config`, `mqtt_config`,
-// and
-// `state_notification_config`.
+// Mutable top-level fields: `event_notification_config`,
+// `http_config`,
+// `mqtt_config`, and `state_notification_config`.
 func (c *ProjectsLocationsRegistriesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRegistriesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -2565,7 +2565,7 @@ func (c *ProjectsLocationsRegistriesPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Only updates the `device_registry` fields indicated by this mask.\nThe field mask must not be empty, and it must not contain fields that\nare immutable or only set by the server.\nMutable top-level fields: `event_notification_config`, `mqtt_config`, and\n`state_notification_config`.",
+	//       "description": "Only updates the `device_registry` fields indicated by this mask.\nThe field mask must not be empty, and it must not contain fields that\nare immutable or only set by the server.\nMutable top-level fields: `event_notification_config`, `http_config`,\n`mqtt_config`, and `state_notification_config`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -3144,6 +3144,14 @@ func (r *ProjectsLocationsRegistriesDevicesService) Get(name string) *ProjectsLo
 	return c
 }
 
+// FieldMask sets the optional parameter "fieldMask": The fields of the
+// `Device` resource to be returned in the response. If the
+// field mask is unset or empty, all fields are returned.
+func (c *ProjectsLocationsRegistriesDevicesGetCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesDevicesGetCall {
+	c.urlParams_.Set("fieldMask", fieldMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3246,6 +3254,12 @@ func (c *ProjectsLocationsRegistriesDevicesGetCall) Do(opts ...googleapi.CallOpt
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "fieldMask": {
+	//       "description": "The fields of the `Device` resource to be returned in the response. If the\nfield mask is unset or empty, all fields are returned.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
 	//       "location": "path",

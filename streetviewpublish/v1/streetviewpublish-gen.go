@@ -1046,7 +1046,9 @@ type PhotoCreateCall struct {
 //
 // This method returns the following error codes:
 //
-// * google.rpc.Code.INVALID_ARGUMENT if the request is malformed.
+// * google.rpc.Code.INVALID_ARGUMENT if the request is malformed or
+// if
+// the uploaded photo is not a 360 photo.
 // * google.rpc.Code.NOT_FOUND if the upload reference does not exist.
 // * google.rpc.Code.RESOURCE_EXHAUSTED if the account has reached
 // the
@@ -1140,7 +1142,7 @@ func (c *PhotoCreateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "After the client finishes uploading the photo with the returned\nUploadRef,\nCreatePhoto\npublishes the uploaded Photo to\nStreet View on Google Maps.\n\nCurrently, the only way to set heading, pitch, and roll in CreatePhoto is\nthrough the [Photo Sphere XMP\nmetadata](https://developers.google.com/streetview/spherical-metadata) in\nthe photo bytes. The `pose.heading`, `pose.pitch`, `pose.roll`,\n`pose.altitude`, and `pose.level` fields in Pose are ignored for\nCreatePhoto.\n\nThis method returns the following error codes:\n\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed.\n* google.rpc.Code.NOT_FOUND if the upload reference does not exist.\n* google.rpc.Code.RESOURCE_EXHAUSTED if the account has reached the\nstorage limit.",
+	//   "description": "After the client finishes uploading the photo with the returned\nUploadRef,\nCreatePhoto\npublishes the uploaded Photo to\nStreet View on Google Maps.\n\nCurrently, the only way to set heading, pitch, and roll in CreatePhoto is\nthrough the [Photo Sphere XMP\nmetadata](https://developers.google.com/streetview/spherical-metadata) in\nthe photo bytes. The `pose.heading`, `pose.pitch`, `pose.roll`,\n`pose.altitude`, and `pose.level` fields in Pose are ignored for\nCreatePhoto.\n\nThis method returns the following error codes:\n\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed or if\nthe uploaded photo is not a 360 photo.\n* google.rpc.Code.NOT_FOUND if the upload reference does not exist.\n* google.rpc.Code.RESOURCE_EXHAUSTED if the account has reached the\nstorage limit.",
 	//   "flatPath": "v1/photo",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photo.create",

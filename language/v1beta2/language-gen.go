@@ -1025,7 +1025,11 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 // Setting each one to true will enable that specific analysis for the
 // input.
 type Features struct {
-	// ClassifyText: Classify the full document into categories.
+	// ClassifyText: Classify the full document into categories. If this is
+	// true,
+	// the API will use the default model which classifies into
+	// a
+	// [predefined taxonomy](/natural-language/docs/categories).
 	ClassifyText bool `json:"classifyText,omitempty"`
 
 	// ExtractDocumentSentiment: Extract document-level sentiment.

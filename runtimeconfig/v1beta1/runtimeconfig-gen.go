@@ -622,11 +622,9 @@ type RuntimeConfig struct {
 	//
 	// The `[PROJECT_ID]` must be a valid project ID, and `[CONFIG_NAME]` is
 	// an
-	// arbitrary name that
-	// matches
-	// [0-9A-Za-z](?:[_.A-Za-z0-9-]{0,62}[_.A-Za-z0-9])? regular
-	// expression.
-	// The length of `[CONFIG_NAME]` must be less than 64 characters.
+	// arbitrary name that matches RFC 1035 segment specification. The
+	// length of
+	// `[CONFIG_NAME]` must be less than 64 bytes.
 	//
 	// You pick the RuntimeConfig resource name, but the server will
 	// validate that
@@ -914,12 +912,9 @@ type Variable struct {
 	// one
 	// non-slash character. Multiple slashes are coalesced into single
 	// slash
-	// character. Each path segment should
-	// match
-	// [0-9A-Za-z](?:[_.A-Za-z0-9-]{0,62}[_.A-Za-z0-9])? regular
-	// expression.
-	// The length of a `[VARIABLE_NAME]` must be less than 256
-	// characters.
+	// character. Each path segment should follow RFC 1035 segment
+	// specification.
+	// The length of a `[VARIABLE_NAME]` must be less than 256 bytes.
 	//
 	// Once you create a variable, you cannot change the variable name.
 	Name string `json:"name,omitempty"`

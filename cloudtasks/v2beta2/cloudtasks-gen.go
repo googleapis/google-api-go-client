@@ -3727,13 +3727,6 @@ type ProjectsLocationsQueuesPauseCall struct {
 // Queue.queue_state; if paused it will be set
 // to
 // Queue.QueueState.PAUSED.
-//
-// WARNING: This method is only available to whitelisted
-// users. Using this method carries some risk. Read
-// [Overview of Queue Management and
-// queue.yaml](/cloud-tasks/docs/queue-yaml)
-// carefully and then sign up for
-// [whitelist access to this method](https://goo.gl/Fe5mUy).
 func (r *ProjectsLocationsQueuesService) Pause(name string, pausequeuerequest *PauseQueueRequest) *ProjectsLocationsQueuesPauseCall {
 	c := &ProjectsLocationsQueuesPauseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3827,7 +3820,7 @@ func (c *ProjectsLocationsQueuesPauseCall) Do(opts ...googleapi.CallOption) (*Qu
 	}
 	return ret, nil
 	// {
-	//   "description": "Pauses the queue.\n\nIf a queue is paused then the system will stop executing the\ntasks in the queue until it is resumed via\nCloudTasks.ResumeQueue. Tasks can still be added when the\nqueue is paused. The state of the queue is stored in\nQueue.queue_state; if paused it will be set to\nQueue.QueueState.PAUSED.\n\nWARNING: This method is only available to whitelisted\nusers. Using this method carries some risk. Read\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully and then sign up for\n[whitelist access to this method](https://goo.gl/Fe5mUy).",
+	//   "description": "Pauses the queue.\n\nIf a queue is paused then the system will stop executing the\ntasks in the queue until it is resumed via\nCloudTasks.ResumeQueue. Tasks can still be added when the\nqueue is paused. The state of the queue is stored in\nQueue.queue_state; if paused it will be set to\nQueue.QueueState.PAUSED.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:pause",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.pause",
@@ -4019,13 +4012,6 @@ type ProjectsLocationsQueuesResumeCall struct {
 // it
 // will be set to Queue.QueueState.RUNNING.
 //
-// WARNING: This method is only available to whitelisted
-// users. Using this method carries some risk. Read
-// [Overview of Queue Management and
-// queue.yaml](/cloud-tasks/docs/queue-yaml)
-// carefully and then sign up for
-// [whitelist access to this method](https://goo.gl/Fe5mUy).
-//
 // WARNING: Resuming many high-QPS queues at the same time can
 // lead to target overloading. If you are resuming high-QPS
 // queues, follow the 500/50/5 pattern described in
@@ -4125,7 +4111,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Do(opts ...googleapi.CallOption) (*Q
 	}
 	return ret, nil
 	// {
-	//   "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nQueue.QueueState.PAUSED or Queue.QueueState.DISABLED. The state of\na queue is stored in Queue.queue_state; after calling this method it\nwill be set to Queue.QueueState.RUNNING.\n\nWARNING: This method is only available to whitelisted\nusers. Using this method carries some risk. Read\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully and then sign up for\n[whitelist access to this method](https://goo.gl/Fe5mUy).\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling Risks](/cloud-tasks/pdfs/managing-cloud-tasks-scaling-risks-2017-06-05.pdf).",
+	//   "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nQueue.QueueState.PAUSED or Queue.QueueState.DISABLED. The state of\na queue is stored in Queue.queue_state; after calling this method it\nwill be set to Queue.QueueState.RUNNING.\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling Risks](/cloud-tasks/pdfs/managing-cloud-tasks-scaling-risks-2017-06-05.pdf).",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:resume",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.resume",

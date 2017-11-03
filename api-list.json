@@ -743,22 +743,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudmonitoring:v2beta2",
-   "name": "cloudmonitoring",
-   "version": "v2beta2",
-   "title": "Cloud Monitoring API",
-   "description": "Accesses Google Cloud Monitoring data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/cloudmonitoring/v2beta2/rest",
-   "discoveryLink": "./apis/cloudmonitoring/v2beta2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/monitoring/v2beta2/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "cloudresourcemanager:v1",
    "name": "cloudresourcemanager",
    "version": "v1",

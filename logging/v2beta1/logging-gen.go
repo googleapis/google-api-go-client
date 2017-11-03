@@ -906,6 +906,12 @@ type LogEntry struct {
 	// with the log entry, if any.
 	SourceLocation *LogEntrySourceLocation `json:"sourceLocation,omitempty"`
 
+	// SpanId: Optional. Id of the span within the trace associated with the
+	// log entry. e.g. "0000000000000042" For Stackdriver trace spans, this
+	// is the same format that the Stackdriver trace API uses. The ID is a
+	// 16-character hexadecimal encoding of an 8-byte array.
+	SpanId string `json:"spanId,omitempty"`
+
 	// TextPayload: The log entry payload, represented as a Unicode string
 	// (UTF-8).
 	TextPayload string `json:"textPayload,omitempty"`

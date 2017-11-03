@@ -2368,6 +2368,62 @@ func (s *SetLegacyAbacRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SetLoggingServiceRequest: SetLoggingServiceRequest sets the logging
+// service of a cluster.
+type SetLoggingServiceRequest struct {
+	// ClusterId: The name of the cluster to upgrade.
+	// This field is deprecated, use name instead.
+	ClusterId string `json:"clusterId,omitempty"`
+
+	// LoggingService: The logging service the cluster should use to write
+	// metrics.
+	// Currently available options:
+	//
+	// * "logging.googleapis.com" - the Google Cloud Logging service
+	// * "none" - no metrics will be exported from the cluster
+	LoggingService string `json:"loggingService,omitempty"`
+
+	// Name: The name (project, location, cluster) of the cluster to set
+	// logging.
+	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	Name string `json:"name,omitempty"`
+
+	// ProjectId: The Google Developers Console [project ID or
+	// project
+	// number](https://support.google.com/cloud/answer/6158840).
+	// This
+	//  field is deprecated, use name instead.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Zone: The name of the Google Compute
+	// Engine
+	// [zone](/compute/docs/zones#available) in which the cluster
+	// resides.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SetLoggingServiceRequest) MarshalJSON() ([]byte, error) {
+	type noMethod SetLoggingServiceRequest
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetMaintenancePolicyRequest: SetMaintenancePolicyRequest sets the
 // maintenance policy for a cluster.
 type SetMaintenancePolicyRequest struct {
@@ -3822,6 +3878,141 @@ func (c *ProjectsLocationsClustersSetLegacyAbacCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1beta1/{+name}:setLegacyAbac",
 	//   "request": {
 	//     "$ref": "SetLegacyAbacRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "container.projects.locations.clusters.setLogging":
+
+type ProjectsLocationsClustersSetLoggingCall struct {
+	s                        *Service
+	name                     string
+	setloggingservicerequest *SetLoggingServiceRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// SetLogging: Sets the logging service of a specific cluster.
+func (r *ProjectsLocationsClustersService) SetLogging(name string, setloggingservicerequest *SetLoggingServiceRequest) *ProjectsLocationsClustersSetLoggingCall {
+	c := &ProjectsLocationsClustersSetLoggingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.setloggingservicerequest = setloggingservicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsClustersSetLoggingCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersSetLoggingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsClustersSetLoggingCall) Context(ctx context.Context) *ProjectsLocationsClustersSetLoggingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsClustersSetLoggingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsClustersSetLoggingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setloggingservicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:setLogging")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.locations.clusters.setLogging" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsClustersSetLoggingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the logging service of a specific cluster.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLogging",
+	//   "httpMethod": "POST",
+	//   "id": "container.projects.locations.clusters.setLogging",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name (project, location, cluster) of the cluster to set logging.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+name}:setLogging",
+	//   "request": {
+	//     "$ref": "SetLoggingServiceRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -7233,6 +7424,160 @@ func (c *ProjectsZonesClustersListCall) Do(opts ...googleapi.CallOption) (*ListC
 	//   "path": "v1beta1/projects/{projectId}/zones/{zone}/clusters",
 	//   "response": {
 	//     "$ref": "ListClustersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "container.projects.zones.clusters.logging":
+
+type ProjectsZonesClustersLoggingCall struct {
+	s                        *Service
+	projectId                string
+	zone                     string
+	clusterId                string
+	setloggingservicerequest *SetLoggingServiceRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Logging: Sets the logging service of a specific cluster.
+func (r *ProjectsZonesClustersService) Logging(projectId string, zone string, clusterId string, setloggingservicerequest *SetLoggingServiceRequest) *ProjectsZonesClustersLoggingCall {
+	c := &ProjectsZonesClustersLoggingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.zone = zone
+	c.clusterId = clusterId
+	c.setloggingservicerequest = setloggingservicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsZonesClustersLoggingCall) Fields(s ...googleapi.Field) *ProjectsZonesClustersLoggingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsZonesClustersLoggingCall) Context(ctx context.Context) *ProjectsZonesClustersLoggingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsZonesClustersLoggingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsZonesClustersLoggingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setloggingservicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/logging")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"zone":      c.zone,
+		"clusterId": c.clusterId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.zones.clusters.logging" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsZonesClustersLoggingCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the logging service of a specific cluster.",
+	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/logging",
+	//   "httpMethod": "POST",
+	//   "id": "container.projects.zones.clusters.logging",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "zone",
+	//     "clusterId"
+	//   ],
+	//   "parameters": {
+	//     "clusterId": {
+	//       "description": "The name of the cluster to upgrade.\nThis field is deprecated, use name instead.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The Google Developers Console [project ID or project\nnumber](https://support.google.com/cloud/answer/6158840).\nThis field is deprecated, use name instead.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "zone": {
+	//       "description": "The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/logging",
+	//   "request": {
+	//     "$ref": "SetLoggingServiceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

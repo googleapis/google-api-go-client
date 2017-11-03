@@ -486,6 +486,8 @@ func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__Job: Represents a training or prediction job.
+//
+// Next ID: 16
 type GoogleCloudMlV1__Job struct {
 	// CreateTime: Output only. When the job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -714,6 +716,8 @@ func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
 // model ready to receive prediction requests. The model itself is just
 // a
 // container.
+//
+// Next ID: 8
 type GoogleCloudMlV1__Model struct {
 	// DefaultVersion: Output only. The default version of the model. This
 	// version will be used to
@@ -785,6 +789,8 @@ func (s *GoogleCloudMlV1__Model) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudMlV1__OperationMetadata: Represents the metadata of the
 // long-running operation.
+//
+// Next ID: 9
 type GoogleCloudMlV1__OperationMetadata struct {
 	// CreateTime: The time the operation was submitted.
 	CreateTime string `json:"createTime,omitempty"`

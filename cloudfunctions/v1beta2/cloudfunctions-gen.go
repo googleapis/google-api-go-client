@@ -373,7 +373,7 @@ type EventTrigger struct {
 	// will
 	// be used. For example, `storage.googleapis.com` is the default for
 	// all
-	// event types in the 'google.storage` namespace.
+	// event types in the `google.storage` namespace.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventType") to
@@ -815,6 +815,9 @@ type OperationMetadataV1 struct {
 	//   "DELETE_FUNCTION" - Triggered by DeleteFunction call.
 	Type string `json:"type,omitempty"`
 
+	// UpdateTime: The last update timestamp of the operation.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// VersionId: Version id of the function created or updated by an API
 	// call.
 	// This field is only pupulated for Create and Update operations.
@@ -861,6 +864,9 @@ type OperationMetadataV1Beta2 struct {
 	//   "UPDATE_FUNCTION" - Triggered by UpdateFunction call
 	//   "DELETE_FUNCTION" - Triggered by DeleteFunction call.
 	Type string `json:"type,omitempty"`
+
+	// UpdateTime: The last update timestamp of the operation.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// VersionId: Version id of the function created or updated by an API
 	// call.

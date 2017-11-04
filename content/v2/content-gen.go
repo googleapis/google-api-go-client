@@ -2965,10 +2965,6 @@ type OrderLineItem struct {
 	// Cancellations: Cancellations of the line item.
 	Cancellations []*OrderCancellation `json:"cancellations,omitempty"`
 
-	// ChannelType: The channel type of the order: "purchaseOnGoogle" or
-	// "googleExpress".
-	ChannelType string `json:"channelType,omitempty"`
-
 	// Id: The id of the line item.
 	Id string `json:"id,omitempty"`
 
@@ -3543,7 +3539,8 @@ func (s *OrderShipment) MarshalJSON() ([]byte, error) {
 }
 
 type OrderShipmentLineItemShipment struct {
-	// LineItemId: The id of the line item that is shipped.
+	// LineItemId: The id of the line item that is shipped. Either
+	// lineItemId or productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
 
 	// Quantity: The quantity that is shipped.
@@ -3675,7 +3672,8 @@ type OrdersCancelLineItemRequest struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
-	// LineItemId: The ID of the line item to cancel.
+	// LineItemId: The ID of the line item to cancel. Either lineItemId or
+	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
 
 	// OperationId: The ID of the operation. Unique across all operations
@@ -4015,7 +4013,8 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
-	// LineItemId: The ID of the line item to cancel.
+	// LineItemId: The ID of the line item to cancel. Either lineItemId or
+	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
 
 	// Quantity: The quantity to cancel.
@@ -4084,7 +4083,8 @@ func (s *OrdersCustomBatchRequestEntryRefund) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCustomBatchRequestEntryReturnLineItem struct {
-	// LineItemId: The ID of the line item to return.
+	// LineItemId: The ID of the line item to return. Either lineItemId or
+	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
 
 	// Quantity: The quantity to return.
@@ -4497,7 +4497,8 @@ func (s *OrdersRefundResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersReturnLineItemRequest struct {
-	// LineItemId: The ID of the line item to return.
+	// LineItemId: The ID of the line item to return. Either lineItemId or
+	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
 
 	// OperationId: The ID of the operation. Unique across all operations

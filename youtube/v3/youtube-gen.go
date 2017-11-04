@@ -3566,6 +3566,7 @@ type ContentRating struct {
 	//   "oflcR18"
 	//   "oflcRp13"
 	//   "oflcRp16"
+	//   "oflcRp18"
 	//   "oflcUnrated"
 	OflcRating string `json:"oflcRating,omitempty"`
 
@@ -5999,6 +6000,7 @@ type LiveStreamConfigurationIssue struct {
 	//   "videoBitrateMismatch"
 	//   "videoCodec"
 	//   "videoCodecMismatch"
+	//   "videoIngestionFasterThanRealtime"
 	//   "videoIngestionStarved"
 	//   "videoInterlaceMismatch"
 	//   "videoProfileMismatch"

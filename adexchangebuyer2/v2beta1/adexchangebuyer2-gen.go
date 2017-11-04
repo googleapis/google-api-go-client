@@ -792,6 +792,22 @@ type Client struct {
 	//   "AGENCY" - An advertising agency.
 	EntityType string `json:"entityType,omitempty"`
 
+	// PartnerClientId: Optional arbitrary unique identifier of this client
+	// buyer from the
+	// standpoint of its Ad Exchange sponsor buyer.
+	//
+	// This field can be used to associate a client buyer with the
+	// identifier
+	// in the namespace of its sponsor buyer, lookup client buyers by
+	// that
+	// identifier and verify whether an Ad Exchange counterpart of a given
+	// client
+	// buyer already exists.
+	//
+	// If present, must be unique among all the client buyers for its
+	// Ad Exchange sponsor buyer.
+	PartnerClientId string `json:"partnerClientId,omitempty"`
+
 	// Role: The role which is assigned to the client buyer. Each role
 	// implies a set of
 	// permissions granted to the client. Must be one of
@@ -3701,6 +3717,16 @@ func (c *AccountsClientsListCall) PageToken(pageToken string) *AccountsClientsLi
 	return c
 }
 
+// PartnerClientId sets the optional parameter "partnerClientId":
+// Optional unique identifier (from the standpoint of an Ad Exchange
+// sponsor
+// buyer partner) of the client to return.
+// If specified, at most one client will be returned in the response.
+func (c *AccountsClientsListCall) PartnerClientId(partnerClientId string) *AccountsClientsListCall {
+	c.urlParams_.Set("partnerClientId", partnerClientId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3818,6 +3844,11 @@ func (c *AccountsClientsListCall) Do(opts ...googleapi.CallOption) (*ListClients
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerClientId": {
+	//       "description": "Optional unique identifier (from the standpoint of an Ad Exchange sponsor\nbuyer partner) of the client to return.\nIf specified, at most one client will be returned in the response.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

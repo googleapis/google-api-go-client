@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/FSsskEyBuIaLLfRsOTHOlj_NTmE\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/TgNfPYqOhCTXLdaKdCegKtHEoEA\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20171020",
+ "revision": "20171102",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -396,23 +396,11 @@
    "properties": {
     "channelId": {
      "type": "string",
-     "description": "Channel ID.",
-     "annotations": {
-      "required": [
-       "content.accounts.insert",
-       "content.accounts.update"
-      ]
-     }
+     "description": "Channel ID."
     },
     "status": {
      "type": "string",
-     "description": "Status of the link between this Merchant Center account and the YouTube channel. Upon retrieval, it represents the actual status of the link and can be either active if it was approved in YT Creator Studio or pending if it's pending approval. Upon insertion, it represents the intended status of the link. Re-uploading a link with status active when it's still pending or with status pending when it's already active will have no effect: the status will remain unchanged. Re-uploading a link with deprecated status inactive is equivalent to not submitting the link at all and will delete the link if it was active or cancel the link request if it was pending.",
-     "annotations": {
-      "required": [
-       "content.accounts.insert",
-       "content.accounts.update"
-      ]
-     }
+     "description": "Status of the link between this Merchant Center account and the YouTube channel. Upon retrieval, it represents the actual status of the link and can be either active if it was approved in YT Creator Studio or pending if it's pending approval. Upon insertion, it represents the intended status of the link. Re-uploading a link with status active when it's still pending or with status pending when it's already active will have no effect: the status will remain unchanged. Re-uploading a link with deprecated status inactive is equivalent to not submitting the link at all and will delete the link if it was active or cancel the link request if it was pending."
     }
    }
   },
@@ -1861,10 +1849,6 @@
       "$ref": "OrderCancellation"
      }
     },
-    "channelType": {
-     "type": "string",
-     "description": "The channel type of the order: \"purchaseOnGoogle\" or \"googleExpress\"."
-    },
     "id": {
      "type": "string",
      "description": "The id of the line item."
@@ -2310,7 +2294,7 @@
    "properties": {
     "lineItemId": {
      "type": "string",
-     "description": "The id of the line item that is shipped."
+     "description": "The id of the line item that is shipped. Either lineItemId or productId is required."
     },
     "quantity": {
      "type": "integer",
@@ -2365,7 +2349,7 @@
     },
     "lineItemId": {
      "type": "string",
-     "description": "The ID of the line item to cancel."
+     "description": "The ID of the line item to cancel. Either lineItemId or productId is required."
     },
     "operationId": {
      "type": "string",
@@ -2556,7 +2540,7 @@
     },
     "lineItemId": {
      "type": "string",
-     "description": "The ID of the line item to cancel."
+     "description": "The ID of the line item to cancel. Either lineItemId or productId is required."
     },
     "quantity": {
      "type": "integer",
@@ -2597,7 +2581,7 @@
    "properties": {
     "lineItemId": {
      "type": "string",
-     "description": "The ID of the line item to return."
+     "description": "The ID of the line item to return. Either lineItemId or productId is required."
     },
     "quantity": {
      "type": "integer",
@@ -2831,7 +2815,7 @@
    "properties": {
     "lineItemId": {
      "type": "string",
-     "description": "The ID of the line item to return."
+     "description": "The ID of the line item to return. Either lineItemId or productId is required."
     },
     "operationId": {
      "type": "string",

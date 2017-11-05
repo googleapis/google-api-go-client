@@ -1,4 +1,11 @@
 {
+  "description": "Manages OS login configuration for Directory API users.",
+  "kind": "discovery#restDescription",
+  "servicePath": "",
+  "basePath": "",
+  "id": "oslogin:v1alpha",
+  "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
+  "revision": "20171101",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
@@ -67,11 +74,11 @@
           "type": "boolean"
         },
         "sshPublicKeys": {
-          "description": "A map from SSH public key fingerprint to the associated key object.",
-          "type": "object",
           "additionalProperties": {
             "$ref": "SshPublicKey"
-          }
+          },
+          "description": "A map from SSH public key fingerprint to the associated key object.",
+          "type": "object"
         }
       },
       "id": "LoginProfile"
@@ -115,8 +122,8 @@
     }
   },
   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+    "x32": "http://www.google.com/images/icons/product/search-32.gif",
+    "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
   "protocol": "rest",
   "canonicalName": "Cloud OS Login",
@@ -149,6 +156,9 @@
     "users": {
       "methods": {
         "importSshPublicKey": {
+          "flatPath": "v1alpha/users/{usersId}:importSshPublicKey",
+          "id": "oslogin.users.importSshPublicKey",
+          "path": "v1alpha/{+parent}:importSshPublicKey",
           "request": {
             "$ref": "SshPublicKey"
           },
@@ -177,55 +187,49 @@
               "pattern": "^users/[^/]+$",
               "location": "path"
             }
-          },
-          "flatPath": "v1alpha/users/{usersId}:importSshPublicKey",
-          "id": "oslogin.users.importSshPublicKey",
-          "path": "v1alpha/{+parent}:importSshPublicKey"
+          }
         },
         "getLoginProfile": {
-          "flatPath": "v1alpha/users/{usersId}/loginProfile",
-          "id": "oslogin.users.getLoginProfile",
-          "path": "v1alpha/{+name}/loginProfile",
           "description": "Retrieves the profile information used for logging in to a virtual machine\non Google Compute Engine.",
-          "response": {
-            "$ref": "LoginProfile"
-          },
+          "httpMethod": "GET",
           "parameterOrder": [
             "name"
           ],
-          "httpMethod": "GET",
+          "response": {
+            "$ref": "LoginProfile"
+          },
+          "parameters": {
+            "name": {
+              "location": "path",
+              "description": "The unique ID for the user in format `users/{user}`.",
+              "type": "string",
+              "required": true,
+              "pattern": "^users/[^/]+$"
+            }
+          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/cloud-platform.read-only",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
           ],
-          "parameters": {
-            "name": {
-              "description": "The unique ID for the user in format `users/{user}`.",
-              "type": "string",
-              "required": true,
-              "pattern": "^users/[^/]+$",
-              "location": "path"
-            }
-          }
+          "flatPath": "v1alpha/users/{usersId}/loginProfile",
+          "path": "v1alpha/{+name}/loginProfile",
+          "id": "oslogin.users.getLoginProfile"
         }
       },
       "resources": {
         "projects": {
           "methods": {
             "delete": {
-              "httpMethod": "DELETE",
-              "parameterOrder": [
-                "name"
-              ],
+              "description": "Deletes a POSIX account.",
               "response": {
                 "$ref": "Empty"
               },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
+              "parameterOrder": [
+                "name"
               ],
+              "httpMethod": "DELETE",
               "parameters": {
                 "name": {
                   "location": "path",
@@ -235,20 +239,19 @@
                   "pattern": "^users/[^/]+/projects/[^/]+$"
                 }
               },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/compute"
+              ],
               "flatPath": "v1alpha/users/{usersId}/projects/{projectsId}",
-              "path": "v1alpha/{+name}",
               "id": "oslogin.users.projects.delete",
-              "description": "Deletes a POSIX account."
+              "path": "v1alpha/{+name}"
             }
           }
         },
         "sshPublicKeys": {
           "methods": {
             "patch": {
-              "request": {
-                "$ref": "SshPublicKey"
-              },
-              "description": "Updates an SSH public key and returns the profile information. This method\nsupports patch semantics.",
               "response": {
                 "$ref": "SshPublicKey"
               },
@@ -262,63 +265,11 @@
               ],
               "parameters": {
                 "updateMask": {
+                  "location": "query",
                   "format": "google-fieldmask",
                   "description": "Mask to control which fields get updated. Updates all if not present.",
-                  "type": "string",
-                  "location": "query"
+                  "type": "string"
                 },
-                "name": {
-                  "location": "path",
-                  "description": "The fingerprint of the public key to update. Public keys are identified by\ntheir SHA-256 fingerprint. The fingerprint of the public key is in format\n`users/{user}/sshPublicKeys/{fingerprint}`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$"
-                }
-              },
-              "flatPath": "v1alpha/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
-              "id": "oslogin.users.sshPublicKeys.patch",
-              "path": "v1alpha/{+name}"
-            },
-            "get": {
-              "description": "Retrieves an SSH public key.",
-              "response": {
-                "$ref": "SshPublicKey"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "GET",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
-              ],
-              "parameters": {
-                "name": {
-                  "location": "path",
-                  "description": "The fingerprint of the public key to retrieve. Public keys are identified\nby their SHA-256 fingerprint. The fingerprint of the public key is in\nformat `users/{user}/sshPublicKeys/{fingerprint}`.",
-                  "type": "string",
-                  "required": true,
-                  "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$"
-                }
-              },
-              "flatPath": "v1alpha/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
-              "id": "oslogin.users.sshPublicKeys.get",
-              "path": "v1alpha/{+name}"
-            },
-            "delete": {
-              "description": "Deletes an SSH public key.",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "httpMethod": "DELETE",
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/compute"
-              ],
-              "parameters": {
                 "name": {
                   "description": "The fingerprint of the public key to update. Public keys are identified by\ntheir SHA-256 fingerprint. The fingerprint of the public key is in format\n`users/{user}/sshPublicKeys/{fingerprint}`.",
                   "type": "string",
@@ -328,8 +279,64 @@
                 }
               },
               "flatPath": "v1alpha/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
+              "id": "oslogin.users.sshPublicKeys.patch",
+              "path": "v1alpha/{+name}",
+              "request": {
+                "$ref": "SshPublicKey"
+              },
+              "description": "Updates an SSH public key and returns the profile information. This method\nsupports patch semantics."
+            },
+            "get": {
+              "flatPath": "v1alpha/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
+              "path": "v1alpha/{+name}",
+              "id": "oslogin.users.sshPublicKeys.get",
+              "description": "Retrieves an SSH public key.",
+              "httpMethod": "GET",
+              "parameterOrder": [
+                "name"
+              ],
+              "response": {
+                "$ref": "SshPublicKey"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/compute"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The fingerprint of the public key to retrieve. Public keys are identified\nby their SHA-256 fingerprint. The fingerprint of the public key is in\nformat `users/{user}/sshPublicKeys/{fingerprint}`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$",
+                  "location": "path"
+                }
+              }
+            },
+            "delete": {
+              "flatPath": "v1alpha/users/{usersId}/sshPublicKeys/{sshPublicKeysId}",
               "id": "oslogin.users.sshPublicKeys.delete",
-              "path": "v1alpha/{+name}"
+              "path": "v1alpha/{+name}",
+              "description": "Deletes an SSH public key.",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "DELETE",
+              "parameters": {
+                "name": {
+                  "description": "The fingerprint of the public key to update. Public keys are identified by\ntheir SHA-256 fingerprint. The fingerprint of the public key is in format\n`users/{user}/sshPublicKeys/{fingerprint}`.",
+                  "type": "string",
+                  "required": true,
+                  "pattern": "^users/[^/]+/sshPublicKeys/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/compute"
+              ]
             }
           }
         }
@@ -337,20 +344,41 @@
     }
   },
   "parameters": {
-    "bearer_token": {
-      "description": "OAuth bearer token.",
+    "access_token": {
+      "description": "OAuth access token.",
       "type": "string",
       "location": "query"
     },
-    "oauth_token": {
+    "key": {
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string",
+      "location": "query"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string",
+      "location": "query"
+    },
+    "pp": {
+      "description": "Pretty-print response.",
+      "default": "true",
+      "type": "boolean",
+      "location": "query"
+    },
+    "bearer_token": {
       "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
+      "description": "OAuth bearer token.",
       "type": "string"
     },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
       "type": "string",
       "location": "query"
+    },
+    "upload_protocol": {
+      "location": "query",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
     },
     "prettyPrint": {
       "location": "query",
@@ -364,9 +392,9 @@
       "type": "string"
     },
     "fields": {
-      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "$.xgafv": {
       "enumDescriptions": [
@@ -401,36 +429,8 @@
         "proto"
       ],
       "type": "string"
-    },
-    "access_token": {
-      "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string",
-      "location": "query"
-    },
-    "pp": {
-      "description": "Pretty-print response.",
-      "default": "true",
-      "type": "boolean",
-      "location": "query"
     }
   },
   "version": "v1alpha",
-  "baseUrl": "https://oslogin.googleapis.com/",
-  "servicePath": "",
-  "kind": "discovery#restDescription",
-  "description": "Manages OS login configuration for Directory API users.",
-  "basePath": "",
-  "id": "oslogin:v1alpha",
-  "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
-  "revision": "20171101"
+  "baseUrl": "https://oslogin.googleapis.com/"
 }

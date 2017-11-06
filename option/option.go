@@ -40,6 +40,16 @@ func (w withTokenSource) Apply(o *internal.DialSettings) {
 	o.TokenSource = w.ts
 }
 
+type withCred []byte
+
+func (w withCred) Apply(o *internal.DialSettings) {
+	o.CredentialsString = w
+}
+
+func WithCredentialsString(b []byte) ClientOption {
+	return withCred(b)
+}
+
 type withCredFile string
 
 func (w withCredFile) Apply(o *internal.DialSettings) {

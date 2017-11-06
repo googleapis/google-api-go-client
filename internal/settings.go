@@ -26,21 +26,25 @@ import (
 // DialSettings holds information needed to establish a connection with a
 // Google API service.
 type DialSettings struct {
-	Endpoint        string
-	Scopes          []string
-	TokenSource     oauth2.TokenSource
-	CredentialsFile string // if set, Token Source is ignored.
-	UserAgent       string
-	APIKey          string
-	HTTPClient      *http.Client
-	GRPCDialOpts    []grpc.DialOption
-	GRPCConn        *grpc.ClientConn
-	NoAuth          bool
+	Endpoint          string
+	Scopes            []string
+	TokenSource       oauth2.TokenSource
+	CredentialsFile   string // if set, Token Source is ignored.
+	CredentialsString []byte
+	UserAgent         string
+	APIKey            string
+	HTTPClient        *http.Client
+	GRPCDialOpts      []grpc.DialOption
+	GRPCConn          *grpc.ClientConn
+	NoAuth            bool
 }
 
 // Validate reports an error if ds is invalid.
 func (ds *DialSettings) Validate() error {
-	hasCreds := ds.APIKey != "" || ds.TokenSource != nil || ds.CredentialsFile != ""
+	hasCreds := ds.APIKey != "" || ds.TokenSource != nil || ds.CredentialsFile != "" || len(ds.CredentialsString) > 0
+	if ds.CredentialsFile != "" && len(ds.CredentialsString) > 0 {
+		return errors.New("CredentialsFile is incompatible with CredentialsString")
+	}
 	if ds.NoAuth && hasCreds {
 		return errors.New("options.WithoutAuthentication is incompatible with any option that provides credentials")
 	}

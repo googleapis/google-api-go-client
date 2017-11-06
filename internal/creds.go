@@ -29,35 +29,39 @@ import (
 // it returns default credential information.
 func Creds(ctx context.Context, ds *DialSettings) (*google.DefaultCredentials, error) {
 	if ds.CredentialsFile != "" {
-		return credFileTokenSource(ctx, ds.CredentialsFile, ds.Scopes...)
+		data, err := ioutil.ReadFile(ds.CredentialsFile)
+		if err != nil {
+			return nil, fmt.Errorf("cannot read credentials file: %v", err)
+		}
+		return credStringTokenSource(ctx, data, ds.Scopes...)
+	}
+	if len(ds.CredentialsString) > 0 {
+		return credStringTokenSource(ctx, ds.CredentialsString, ds.Scopes...)
 	}
 	if ds.TokenSource != nil {
 		return &google.DefaultCredentials{TokenSource: ds.TokenSource}, nil
 	}
+
 	return google.FindDefaultCredentials(ctx, ds.Scopes...)
 }
 
 // credFileTokenSource reads a refresh token file or a service account and returns
 // a TokenSource constructed from the config.
-func credFileTokenSource(ctx context.Context, filename string, scope ...string) (*google.DefaultCredentials, error) {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, fmt.Errorf("cannot read credentials file: %v", err)
-	}
+func credStringTokenSource(ctx context.Context, contents []byte, scope ...string) (*google.DefaultCredentials, error) {
 	// See if it is a refresh token credentials file first.
-	ts, ok, err := refreshTokenTokenSource(ctx, data, scope...)
+	ts, ok, err := refreshTokenTokenSource(ctx, contents, scope...)
 	if err != nil {
 		return nil, err
 	}
 	if ok {
 		return &google.DefaultCredentials{
 			TokenSource: ts,
-			JSON:        data,
+			JSON:        contents,
 		}, nil
 	}
 
 	// If not, it should be a service account.
-	cfg, err := google.JWTConfigFromJSON(data, scope...)
+	cfg, err := google.JWTConfigFromJSON(contents, scope...)
 	if err != nil {
 		return nil, fmt.Errorf("google.JWTConfigFromJSON: %v", err)
 	}
@@ -65,13 +69,13 @@ func credFileTokenSource(ctx context.Context, filename string, scope ...string) 
 	var pid struct {
 		ProjectID string `json:"project_id"`
 	}
-	if err := json.Unmarshal(data, &pid); err != nil {
+	if err := json.Unmarshal(contents, &pid); err != nil {
 		return nil, err
 	}
 	return &google.DefaultCredentials{
 		ProjectID:   pid.ProjectID,
 		TokenSource: cfg.TokenSource(ctx),
-		JSON:        data,
+		JSON:        contents,
 	}, nil
 }
 

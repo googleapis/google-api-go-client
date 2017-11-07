@@ -788,6 +788,7 @@ type DocumentTransform struct {
 	// FieldTransforms: The list of transformations to apply to the fields
 	// of the document, in
 	// order.
+	// This must not be empty.
 	FieldTransforms []*FieldTransform `json:"fieldTransforms,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Document") to

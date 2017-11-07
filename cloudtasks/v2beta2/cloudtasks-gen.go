@@ -4156,6 +4156,11 @@ type ProjectsLocationsQueuesSetIamPolicyCall struct {
 // any existing
 // policy.
 //
+// Note: The Cloud Console does not check queue-level IAM permissions
+// yet.
+// Project-level permissions are required to use the Cloud
+// Console.
+//
 // Authorization requires the following [Google IAM](/iam) permission on
 // the
 // specified resource parent:
@@ -4255,7 +4260,7 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy for a Queue. Replaces any existing\npolicy.\n\nAuthorization requires the following [Google IAM](/iam) permission on the\nspecified resource parent:\n\n* `cloudtasks.queues.setIamPolicy`\n",
+	//   "description": "Sets the access control policy for a Queue. Replaces any existing\npolicy.\n\nNote: The Cloud Console does not check queue-level IAM permissions yet.\nProject-level permissions are required to use the Cloud Console.\n\nAuthorization requires the following [Google IAM](/iam) permission on the\nspecified resource parent:\n\n* `cloudtasks.queues.setIamPolicy`\n",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.setIamPolicy",

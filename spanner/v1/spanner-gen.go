@@ -912,26 +912,10 @@ type Instance struct {
 	// in API responses for instances that are not yet in state
 	// `READY`.
 	//
-	// Each Spanner node can provide up to 10,000 QPS of reads or 2000 QPS
-	// of
-	// writes (writing single rows at 1KB data per row), and 2 TiB
-	// storage.
-	//
-	// For optimal performance, we recommend provisioning enough nodes to
-	// keep
-	// overall CPU utilization under 75%.
-	//
-	// A minimum of 3 nodes is recommended for production environments.
-	// This
-	// minimum is required for SLAs to apply to your instance.
-	//
-	// Note that Cloud Spanner performance is highly dependent on workload,
-	// schema
-	// design, and dataset characteristics. The performance numbers above
-	// are
-	// estimates, and assume [best
-	// practices](https://cloud.google.com/spanner/docs/bulk-loading)
-	// are followed.
+	// See [the
+	// documentation](https://cloud.google.com/spanner/docs/instances#node_co
+	// unt)
+	// for more information about nodes.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
 	// State: Output only. The current instance state. For
@@ -1943,6 +1927,10 @@ type ReadOnly struct {
 	// previously committed transaction whose timestamp is known.
 	//
 	// Note that this option can only be used in single-use transactions.
+	//
+	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
+	// nanoseconds.
+	// Example: "2014-10-02T15:01:23.045123456Z".
 	MinReadTimestamp string `json:"minReadTimestamp,omitempty"`
 
 	// ReadTimestamp: Executes all reads at the given timestamp. Unlike
@@ -1956,6 +1944,10 @@ type ReadOnly struct {
 	// for coordinating many reads against a consistent snapshot of
 	// the
 	// data.
+	//
+	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
+	// nanoseconds.
+	// Example: "2014-10-02T15:01:23.045123456Z".
 	ReadTimestamp string `json:"readTimestamp,omitempty"`
 
 	// ReturnReadTimestamp: If true, the Cloud Spanner-selected read
@@ -2022,7 +2014,6 @@ type ReadRequest struct {
 	// Limit: If greater than zero, only the first `limit` rows are yielded.
 	// If `limit`
 	// is zero, the default is no limit.
-	// A limit cannot be specified if partition_token is set.
 	Limit int64 `json:"limit,omitempty,string"`
 
 	// ResumeToken: If this request is resuming a previously interrupted
@@ -2251,10 +2242,16 @@ type Session struct {
 	//  * Label values must be between 0 and 63 characters long and must
 	// conform
 	//    to the regular expression `([a-z]([-a-z0-9]*[a-z0-9])?)?`.
-	//  * No more than 20 labels can be associated with a given session.
+	//  * No more than 64 labels can be associated with a given
+	// session.
+	//
+	// See https://goo.gl/xmQnxf for more information on and examples of
+	// labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The name of the session.
+	// Name: The name of the session. This is always system-assigned; values
+	// provided
+	// when creating a session are ignored.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2601,6 +2598,10 @@ type Transaction struct {
 	// for the transaction. Not returned by default:
 	// see
 	// TransactionOptions.ReadOnly.return_read_timestamp.
+	//
+	// A timestamp in RFC3339 UTC \"Zulu\" format, accurate to
+	// nanoseconds.
+	// Example: "2014-10-02T15:01:23.045123456Z".
 	ReadTimestamp string `json:"readTimestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4272,22 +4273,22 @@ func (r *ProjectsInstancesService) List(parent string) *ProjectsInstancesListCal
 // filtering the results of the request. Filter rules are
 // case insensitive. The fields eligible for filtering are:
 //
-//   * name
-//   * display_name
-//   * labels.key where key is the name of a label
+//   * `name`
+//   * `display_name`
+//   * `labels.key` where key is the name of a label
 //
 // Some examples of using filters are:
 //
-//   * name:* --> The instance has a name.
-//   * name:Howl --> The instance's name contains the string "howl".
-//   * name:HOWL --> Equivalent to above.
-//   * NAME:howl --> Equivalent to above.
-//   * labels.env:* --> The instance has the label "env".
-//   * labels.env:dev --> The instance has the label "env" and the value
-// of
+//   * `name:*` --> The instance has a name.
+//   * `name:Howl` --> The instance's name contains the string "howl".
+//   * `name:HOWL` --> Equivalent to above.
+//   * `NAME:howl` --> Equivalent to above.
+//   * `labels.env:*` --> The instance has the label "env".
+//   * `labels.env:dev` --> The instance has the label "env" and the
+// value of
 //                        the label contains the string "dev".
-//   * name:howl labels.env:dev --> The instance's name contains "howl"
-// and
+//   * `name:howl labels.env:dev` --> The instance's name contains
+// "howl" and
 //                                  it has the label "env" with its
 // value
 //                                  containing "dev".
@@ -4416,7 +4417,7 @@ func (c *ProjectsInstancesListCall) Do(opts ...googleapi.CallOption) (*ListInsta
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * name\n  * display_name\n  * labels.key where key is the name of a label\n\nSome examples of using filters are:\n\n  * name:* --\u003e The instance has a name.\n  * name:Howl --\u003e The instance's name contains the string \"howl\".\n  * name:HOWL --\u003e Equivalent to above.\n  * NAME:howl --\u003e Equivalent to above.\n  * labels.env:* --\u003e The instance has the label \"env\".\n  * labels.env:dev --\u003e The instance has the label \"env\" and the value of\n                       the label contains the string \"dev\".\n  * name:howl labels.env:dev --\u003e The instance's name contains \"howl\" and\n                                 it has the label \"env\" with its value\n                                 containing \"dev\".",
+	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * `name`\n  * `display_name`\n  * `labels.key` where key is the name of a label\n\nSome examples of using filters are:\n\n  * `name:*` --\u003e The instance has a name.\n  * `name:Howl` --\u003e The instance's name contains the string \"howl\".\n  * `name:HOWL` --\u003e Equivalent to above.\n  * `NAME:howl` --\u003e Equivalent to above.\n  * `labels.env:*` --\u003e The instance has the label \"env\".\n  * `labels.env:dev` --\u003e The instance has the label \"env\" and the value of\n                       the label contains the string \"dev\".\n  * `name:howl labels.env:dev` --\u003e The instance's name contains \"howl\" and\n                                 it has the label \"env\" with its value\n                                 containing \"dev\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7930,13 +7931,13 @@ func (r *ProjectsInstancesDatabasesSessionsService) List(database string) *Proje
 // filtering the results of the request. Filter rules are
 // case insensitive. The fields eligible for filtering are:
 //
-//   * labels.key where key is the name of a label
+//   * `labels.key` where key is the name of a label
 //
 // Some examples of using filters are:
 //
-//   * labels.env:* --> The session has the label "env".
-//   * labels.env:dev --> The session has the label "env" and the value
-// of
+//   * `labels.env:*` --> The session has the label "env".
+//   * `labels.env:dev` --> The session has the label "env" and the
+// value of
 //                        the label contains the string "dev".
 func (c *ProjectsInstancesDatabasesSessionsListCall) Filter(filter string) *ProjectsInstancesDatabasesSessionsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -8070,7 +8071,7 @@ func (c *ProjectsInstancesDatabasesSessionsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * labels.key where key is the name of a label\n\nSome examples of using filters are:\n\n  * labels.env:* --\u003e The session has the label \"env\".\n  * labels.env:dev --\u003e The session has the label \"env\" and the value of\n                       the label contains the string \"dev\".",
+	//       "description": "An expression for filtering the results of the request. Filter rules are\ncase insensitive. The fields eligible for filtering are:\n\n  * `labels.key` where key is the name of a label\n\nSome examples of using filters are:\n\n  * `labels.env:*` --\u003e The session has the label \"env\".\n  * `labels.env:dev` --\u003e The session has the label \"env\" and the value of\n                       the label contains the string \"dev\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

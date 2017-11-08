@@ -87,6 +87,205 @@ type ImagesService struct {
 	s *Service
 }
 
+// Color: Represents a color in the RGBA color space. This
+// representation is designed
+// for simplicity of conversion to/from color representations in
+// various
+// languages over compactness; for example, the fields of this
+// representation
+// can be trivially provided to the constructor of "java.awt.Color" in
+// Java; it
+// can also be trivially provided to UIColor's
+// "+colorWithRed:green:blue:alpha"
+// method in iOS; and, with just a little work, it can be easily
+// formatted into
+// a CSS "rgba()" string in JavaScript, as well. Here are some
+// examples:
+//
+// Example (Java):
+//
+//      import com.google.type.Color;
+//
+//      // ...
+//      public static java.awt.Color fromProto(Color protocolor) {
+//        float alpha = protocolor.hasAlpha()
+//            ? protocolor.getAlpha().getValue()
+//            : 1.0;
+//
+//        return new java.awt.Color(
+//            protocolor.getRed(),
+//            protocolor.getGreen(),
+//            protocolor.getBlue(),
+//            alpha);
+//      }
+//
+//      public static Color toProto(java.awt.Color color) {
+//        float red = (float) color.getRed();
+//        float green = (float) color.getGreen();
+//        float blue = (float) color.getBlue();
+//        float denominator = 255.0;
+//        Color.Builder resultBuilder =
+//            Color
+//                .newBuilder()
+//                .setRed(red / denominator)
+//                .setGreen(green / denominator)
+//                .setBlue(blue / denominator);
+//        int alpha = color.getAlpha();
+//        if (alpha != 255) {
+//          result.setAlpha(
+//              FloatValue
+//                  .newBuilder()
+//                  .setValue(((float) alpha) / denominator)
+//                  .build());
+//        }
+//        return resultBuilder.build();
+//      }
+//      // ...
+//
+// Example (iOS / Obj-C):
+//
+//      // ...
+//      static UIColor* fromProto(Color* protocolor) {
+//         float red = [protocolor red];
+//         float green = [protocolor green];
+//         float blue = [protocolor blue];
+//         FloatValue* alpha_wrapper = [protocolor alpha];
+//         float alpha = 1.0;
+//         if (alpha_wrapper != nil) {
+//           alpha = [alpha_wrapper value];
+//         }
+//         return [UIColor colorWithRed:red green:green blue:blue
+// alpha:alpha];
+//      }
+//
+//      static Color* toProto(UIColor* color) {
+//          CGFloat red, green, blue, alpha;
+//          if (![color getRed:&red green:&green blue:&blue
+// alpha:&alpha]) {
+//            return nil;
+//          }
+//          Color* result = [Color alloc] init];
+//          [result setRed:red];
+//          [result setGreen:green];
+//          [result setBlue:blue];
+//          if (alpha <= 0.9999) {
+//            [result setAlpha:floatWrapperWithValue(alpha)];
+//          }
+//          [result autorelease];
+//          return result;
+//     }
+//     // ...
+//
+//  Example (JavaScript):
+//
+//     // ...
+//
+//     var protoToCssColor = function(rgb_color) {
+//        var redFrac = rgb_color.red || 0.0;
+//        var greenFrac = rgb_color.green || 0.0;
+//        var blueFrac = rgb_color.blue || 0.0;
+//        var red = Math.floor(redFrac * 255);
+//        var green = Math.floor(greenFrac * 255);
+//        var blue = Math.floor(blueFrac * 255);
+//
+//        if (!('alpha' in rgb_color)) {
+//           return rgbToCssColor_(red, green, blue);
+//        }
+//
+//        var alphaFrac = rgb_color.alpha.value || 0.0;
+//        var rgbParams = [red, green, blue].join(',');
+//        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
+//     };
+//
+//     var rgbToCssColor_ = function(red, green, blue) {
+//       var rgbNumber = new Number((red << 16) | (green << 8) | blue);
+//       var hexString = rgbNumber.toString(16);
+//       var missingZeros = 6 - hexString.length;
+//       var resultBuilder = ['#'];
+//       for (var i = 0; i < missingZeros; i++) {
+//          resultBuilder.push('0');
+//       }
+//       resultBuilder.push(hexString);
+//       return resultBuilder.join('');
+//     };
+//
+//     // ...
+type Color struct {
+	// Alpha: The fraction of this color that should be applied to the
+	// pixel. That is,
+	// the final pixel color is defined by the equation:
+	//
+	//   pixel color = alpha * (this color) + (1.0 - alpha) * (background
+	// color)
+	//
+	// This means that a value of 1.0 corresponds to a solid color,
+	// whereas
+	// a value of 0.0 corresponds to a completely transparent color.
+	// This
+	// uses a wrapper message rather than a simple float scalar so that it
+	// is
+	// possible to distinguish between a default value and the value being
+	// unset.
+	// If omitted, this color object is to be rendered as a solid color
+	// (as if the alpha value had been explicitly given with a value of
+	// 1.0).
+	Alpha float64 `json:"alpha,omitempty"`
+
+	// Blue: The amount of blue in the color as a value in the interval [0,
+	// 1].
+	Blue float64 `json:"blue,omitempty"`
+
+	// Green: The amount of green in the color as a value in the interval
+	// [0, 1].
+	Green float64 `json:"green,omitempty"`
+
+	// Red: The amount of red in the color as a value in the interval [0,
+	// 1].
+	Red float64 `json:"red,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alpha") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alpha") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Color) MarshalJSON() ([]byte, error) {
+	type noMethod Color
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Color) UnmarshalJSON(data []byte) error {
+	type noMethod Color
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		Blue  gensupport.JSONFloat64 `json:"blue"`
+		Green gensupport.JSONFloat64 `json:"green"`
+		Red   gensupport.JSONFloat64 `json:"red"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	s.Blue = float64(s1.Blue)
+	s.Green = float64(s1.Green)
+	s.Red = float64(s1.Red)
+	return nil
+}
+
 // GoogleCloudVisionV1p1beta1AnnotateImageRequest: Request for
 // performing Google Cloud Vision API tasks over a user-provided
 // image, with user-requested features.
@@ -133,7 +332,7 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	// Error: If set, represents the error message for the operation.
 	// Note that filled-in image annotations are guaranteed to be
 	// correct, even when `error` is set.
-	Error *GoogleRpcStatus `json:"error,omitempty"`
+	Error *Status `json:"error,omitempty"`
 
 	// FaceAnnotations: If present, face detection has completed
 	// successfully.
@@ -376,7 +575,7 @@ func (s *GoogleCloudVisionV1p1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
 // the image that the color occupies in the image.
 type GoogleCloudVisionV1p1beta1ColorInfo struct {
 	// Color: RGB components of the color.
-	Color *GoogleTypeColor `json:"color,omitempty"`
+	Color *Color `json:"color,omitempty"`
 
 	// PixelFraction: The fraction of pixels the color occupies in the
 	// image.
@@ -1205,10 +1404,10 @@ func (s *GoogleCloudVisionV1p1beta1ImageSource) MarshalJSON() ([]byte, error) {
 // and max `LatLng` pairs.
 type GoogleCloudVisionV1p1beta1LatLongRect struct {
 	// MaxLatLng: Max lat/long pair.
-	MaxLatLng *GoogleTypeLatLng `json:"maxLatLng,omitempty"`
+	MaxLatLng *LatLng `json:"maxLatLng,omitempty"`
 
 	// MinLatLng: Min lat/long pair.
-	MinLatLng *GoogleTypeLatLng `json:"minLatLng,omitempty"`
+	MinLatLng *LatLng `json:"minLatLng,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxLatLng") to
 	// unconditionally include in API requests. By default, fields with
@@ -1237,7 +1436,7 @@ func (s *GoogleCloudVisionV1p1beta1LatLongRect) MarshalJSON() ([]byte, error) {
 // information.
 type GoogleCloudVisionV1p1beta1LocationInfo struct {
 	// LatLng: lat/long location coordinates.
-	LatLng *GoogleTypeLatLng `json:"latLng,omitempty"`
+	LatLng *LatLng `json:"latLng,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LatLng") to
 	// unconditionally include in API requests. By default, fields with
@@ -2216,8 +2415,65 @@ func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleRpcStatus: The `Status` type defines a logical error model that
-// is suitable for different
+// LatLng: An object representing a latitude/longitude pair. This is
+// expressed as a pair
+// of doubles representing degrees latitude and degrees longitude.
+// Unless
+// specified otherwise, this must conform to the
+// <a
+// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
+// st
+// andard</a>. Values must be within normalized ranges.
+type LatLng struct {
+	// Latitude: The latitude in degrees. It must be in the range [-90.0,
+	// +90.0].
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: The longitude in degrees. It must be in the range [-180.0,
+	// +180.0].
+	Longitude float64 `json:"longitude,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Latitude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Latitude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatLng) MarshalJSON() ([]byte, error) {
+	type noMethod LatLng
+	raw := noMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LatLng) UnmarshalJSON(data []byte) error {
+	type noMethod LatLng
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*noMethod
+	}
+	s1.noMethod = (*noMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
+// Status: The `Status` type defines a logical error model that is
+// suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
 // used by
 // [gRPC](https://github.com/grpc). The error model is designed to
@@ -2295,7 +2551,7 @@ func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
 // `Status` could
 //     be used directly after any stripping needed for security/privacy
 // reasons.
-type GoogleRpcStatus struct {
+type Status struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
@@ -2329,266 +2585,10 @@ type GoogleRpcStatus struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleRpcStatus
+func (s *Status) MarshalJSON() ([]byte, error) {
+	type noMethod Status
 	raw := noMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleTypeColor: Represents a color in the RGBA color space. This
-// representation is designed
-// for simplicity of conversion to/from color representations in
-// various
-// languages over compactness; for example, the fields of this
-// representation
-// can be trivially provided to the constructor of "java.awt.Color" in
-// Java; it
-// can also be trivially provided to UIColor's
-// "+colorWithRed:green:blue:alpha"
-// method in iOS; and, with just a little work, it can be easily
-// formatted into
-// a CSS "rgba()" string in JavaScript, as well. Here are some
-// examples:
-//
-// Example (Java):
-//
-//      import com.google.type.Color;
-//
-//      // ...
-//      public static java.awt.Color fromProto(Color protocolor) {
-//        float alpha = protocolor.hasAlpha()
-//            ? protocolor.getAlpha().getValue()
-//            : 1.0;
-//
-//        return new java.awt.Color(
-//            protocolor.getRed(),
-//            protocolor.getGreen(),
-//            protocolor.getBlue(),
-//            alpha);
-//      }
-//
-//      public static Color toProto(java.awt.Color color) {
-//        float red = (float) color.getRed();
-//        float green = (float) color.getGreen();
-//        float blue = (float) color.getBlue();
-//        float denominator = 255.0;
-//        Color.Builder resultBuilder =
-//            Color
-//                .newBuilder()
-//                .setRed(red / denominator)
-//                .setGreen(green / denominator)
-//                .setBlue(blue / denominator);
-//        int alpha = color.getAlpha();
-//        if (alpha != 255) {
-//          result.setAlpha(
-//              FloatValue
-//                  .newBuilder()
-//                  .setValue(((float) alpha) / denominator)
-//                  .build());
-//        }
-//        return resultBuilder.build();
-//      }
-//      // ...
-//
-// Example (iOS / Obj-C):
-//
-//      // ...
-//      static UIColor* fromProto(Color* protocolor) {
-//         float red = [protocolor red];
-//         float green = [protocolor green];
-//         float blue = [protocolor blue];
-//         FloatValue* alpha_wrapper = [protocolor alpha];
-//         float alpha = 1.0;
-//         if (alpha_wrapper != nil) {
-//           alpha = [alpha_wrapper value];
-//         }
-//         return [UIColor colorWithRed:red green:green blue:blue
-// alpha:alpha];
-//      }
-//
-//      static Color* toProto(UIColor* color) {
-//          CGFloat red, green, blue, alpha;
-//          if (![color getRed:&red green:&green blue:&blue
-// alpha:&alpha]) {
-//            return nil;
-//          }
-//          Color* result = [Color alloc] init];
-//          [result setRed:red];
-//          [result setGreen:green];
-//          [result setBlue:blue];
-//          if (alpha <= 0.9999) {
-//            [result setAlpha:floatWrapperWithValue(alpha)];
-//          }
-//          [result autorelease];
-//          return result;
-//     }
-//     // ...
-//
-//  Example (JavaScript):
-//
-//     // ...
-//
-//     var protoToCssColor = function(rgb_color) {
-//        var redFrac = rgb_color.red || 0.0;
-//        var greenFrac = rgb_color.green || 0.0;
-//        var blueFrac = rgb_color.blue || 0.0;
-//        var red = Math.floor(redFrac * 255);
-//        var green = Math.floor(greenFrac * 255);
-//        var blue = Math.floor(blueFrac * 255);
-//
-//        if (!('alpha' in rgb_color)) {
-//           return rgbToCssColor_(red, green, blue);
-//        }
-//
-//        var alphaFrac = rgb_color.alpha.value || 0.0;
-//        var rgbParams = [red, green, blue].join(',');
-//        return ['rgba(', rgbParams, ',', alphaFrac, ')'].join('');
-//     };
-//
-//     var rgbToCssColor_ = function(red, green, blue) {
-//       var rgbNumber = new Number((red << 16) | (green << 8) | blue);
-//       var hexString = rgbNumber.toString(16);
-//       var missingZeros = 6 - hexString.length;
-//       var resultBuilder = ['#'];
-//       for (var i = 0; i < missingZeros; i++) {
-//          resultBuilder.push('0');
-//       }
-//       resultBuilder.push(hexString);
-//       return resultBuilder.join('');
-//     };
-//
-//     // ...
-type GoogleTypeColor struct {
-	// Alpha: The fraction of this color that should be applied to the
-	// pixel. That is,
-	// the final pixel color is defined by the equation:
-	//
-	//   pixel color = alpha * (this color) + (1.0 - alpha) * (background
-	// color)
-	//
-	// This means that a value of 1.0 corresponds to a solid color,
-	// whereas
-	// a value of 0.0 corresponds to a completely transparent color.
-	// This
-	// uses a wrapper message rather than a simple float scalar so that it
-	// is
-	// possible to distinguish between a default value and the value being
-	// unset.
-	// If omitted, this color object is to be rendered as a solid color
-	// (as if the alpha value had been explicitly given with a value of
-	// 1.0).
-	Alpha float64 `json:"alpha,omitempty"`
-
-	// Blue: The amount of blue in the color as a value in the interval [0,
-	// 1].
-	Blue float64 `json:"blue,omitempty"`
-
-	// Green: The amount of green in the color as a value in the interval
-	// [0, 1].
-	Green float64 `json:"green,omitempty"`
-
-	// Red: The amount of red in the color as a value in the interval [0,
-	// 1].
-	Red float64 `json:"red,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Alpha") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Alpha") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleTypeColor) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleTypeColor
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleTypeColor) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleTypeColor
-	var s1 struct {
-		Alpha gensupport.JSONFloat64 `json:"alpha"`
-		Blue  gensupport.JSONFloat64 `json:"blue"`
-		Green gensupport.JSONFloat64 `json:"green"`
-		Red   gensupport.JSONFloat64 `json:"red"`
-		*noMethod
-	}
-	s1.noMethod = (*noMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Alpha = float64(s1.Alpha)
-	s.Blue = float64(s1.Blue)
-	s.Green = float64(s1.Green)
-	s.Red = float64(s1.Red)
-	return nil
-}
-
-// GoogleTypeLatLng: An object representing a latitude/longitude pair.
-// This is expressed as a pair
-// of doubles representing degrees latitude and degrees longitude.
-// Unless
-// specified otherwise, this must conform to the
-// <a
-// href="http://www.unoosa.org/pdf/icg/2012/template/WGS_84.pdf">WGS84
-// st
-// andard</a>. Values must be within normalized ranges.
-type GoogleTypeLatLng struct {
-	// Latitude: The latitude in degrees. It must be in the range [-90.0,
-	// +90.0].
-	Latitude float64 `json:"latitude,omitempty"`
-
-	// Longitude: The longitude in degrees. It must be in the range [-180.0,
-	// +180.0].
-	Longitude float64 `json:"longitude,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Latitude") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Latitude") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleTypeLatLng) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleTypeLatLng
-	raw := noMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleTypeLatLng
-	var s1 struct {
-		Latitude  gensupport.JSONFloat64 `json:"latitude"`
-		Longitude gensupport.JSONFloat64 `json:"longitude"`
-		*noMethod
-	}
-	s1.noMethod = (*noMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Latitude = float64(s1.Latitude)
-	s.Longitude = float64(s1.Longitude)
-	return nil
 }
 
 // method id "vision.images.annotate":

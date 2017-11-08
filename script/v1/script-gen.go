@@ -288,10 +288,9 @@ func (s *ExecutionResponse) MarshalJSON() ([]byte, error) {
 // not arrive until the function finishes executing. The maximum
 // execution runtime is listed in the [Apps Script quotas
 // guide](/apps-script/guides/services/quotas#current_limitations).
-// <p>Af
-// ter the execution is started, it can have one of four
-// outcomes:</p>
-// <ul> <li> If the script function returns successfully, the
+// <p>After the execution is started, it can have one of four
+// outcomes:</p> <ul> <li> If the script function returns successfully,
+// the
 //   response field contains an
 //   ExecutionResponse object
 //   with the function's return value in the object's `result`
@@ -399,9 +398,9 @@ func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
 // function (or Apps Script itself) throws an exception, the response
 // body's error field contains this `Status` object.
 type Status struct {
-	// Code: The status code. For this API, this value either:
-	// <ul> <li> 3, indicating an `INVALID_ARGUMENT` error, or</li> <li> 1,
-	// indicating a `CANCELLED` asynchronous execution.</li> </ul>
+	// Code: The status code. For this API, this value either: <ul> <li> 3,
+	// indicating an `INVALID_ARGUMENT` error, or</li> <li> 1, indicating a
+	// `CANCELLED` asynchronous execution.</li> </ul>
 	Code int64 `json:"code,omitempty"`
 
 	// Details: An array that contains a single ExecutionError object that

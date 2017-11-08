@@ -1963,6 +1963,7 @@
           "description": "The required password quality.",
           "enum": [
             "PASSWORD_QUALITY_UNSPECIFIED",
+            "BIOMETRIC_WEAK",
             "SOMETHING",
             "NUMERIC",
             "NUMERIC_COMPLEX",
@@ -1972,6 +1973,7 @@
           ],
           "enumDescriptions": [
             "There are no requirements for the password.",
+            "There must be at least low-security biometric recognition technology to secure the device. This includes technologies that can recognize the identity of an individual to about a 3 digit PIN (false detection is less than 1 in 1,000).",
             "There must be a password, but there are no restrictions on its characters.",
             "The password must contain numeric characters.",
             "The password must contain numeric characters with no repeating (4444) or ordered (1234, 4321, 2468) sequences.",
@@ -2252,7 +2254,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20171009",
+  "revision": "20171030",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

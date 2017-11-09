@@ -5662,14 +5662,6 @@ func (r *ProjectsUptimeCheckConfigsService) Patch(name string, uptimecheckconfig
 	return c
 }
 
-// Name1 sets the optional parameter "name1": The uptime check
-// configuration to update. The format
-// isprojects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].
-func (c *ProjectsUptimeCheckConfigsPatchCall) Name1(name1 string) *ProjectsUptimeCheckConfigsPatchCall {
-	c.urlParams_.Set("name1", name1)
-	return c
-}
-
 // UpdateMask sets the optional parameter "updateMask": If present, only
 // the listed fields in the current uptime check configuration are
 // updated with values from the new configuration. If this field is
@@ -5779,11 +5771,6 @@ func (c *ProjectsUptimeCheckConfigsPatchCall) Do(opts ...googleapi.CallOption) (
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "name1": {
-	//       "description": "The uptime check configuration to update. The format isprojects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
-	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {

@@ -309,6 +309,9 @@ func slurpURL(urlStr string) []byte {
 	if err != nil {
 		log.Fatalf("Error fetching URL %s: %v", urlStr, err)
 	}
+	if res.StatusCode >= 300 {
+		log.Fatalf("Error from URL %s: status code %d", urlStr, res.StatusCode)
+	}
 	bs, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		log.Fatalf("Error reading body of URL %s: %v", urlStr, err)

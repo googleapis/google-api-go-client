@@ -109,8 +109,8 @@ type TimeseriesDescriptor struct {
 }
 
 func (s *TimeseriesDescriptor) MarshalJSON() ([]byte, error) {
-	type noMethod TimeseriesDescriptor
-	raw := noMethod(*s)
+	type NoMethod TimeseriesDescriptor
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 

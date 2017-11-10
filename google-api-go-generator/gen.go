@@ -1241,9 +1241,9 @@ func (s *Schema) writeSchemaStruct(api *API) {
 // by listing them in the field identified by nullFieldsName.
 func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
-	s.api.pn("\ttype noMethod %s", s.GoName())
+	s.api.pn("\ttype NoMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
-	s.api.pn("\traw := noMethod(*s)")
+	s.api.pn("\traw := NoMethod(*s)")
 	s.api.pn("\treturn gensupport.MarshalJSON(raw, s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
@@ -1260,7 +1260,7 @@ func (s *Schema) writeSchemaUnmarshal() {
 	}
 	pn := s.api.pn
 	pn("\nfunc (s *%s) UnmarshalJSON(data []byte) error {", s.GoName())
-	pn("  type noMethod %s", s.GoName()) // avoid infinite recursion
+	pn("  type NoMethod %s", s.GoName()) // avoid infinite recursion
 	pn("  var s1 struct {")
 	// Hide the float64 fields of the schema with fields that correctly
 	// unmarshal special values.
@@ -1271,10 +1271,10 @@ func (s *Schema) writeSchemaUnmarshal() {
 		}
 		pn("%s %s `json:\"%s\"`", p.assignedGoName, typ, p.p.Name)
 	}
-	pn("    *noMethod") // embed the schema
+	pn("    *NoMethod") // embed the schema
 	pn("  }")
 	// Set the schema value into the wrapper so its other fields are unmarshaled.
-	pn("  s1.noMethod = (*noMethod)(s)")
+	pn("  s1.NoMethod = (*NoMethod)(s)")
 	pn("  if err := json.Unmarshal(data, &s1); err != nil {")
 	pn("    return err")
 	pn("  }")

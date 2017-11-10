@@ -2227,6 +2227,9 @@ func (c *AppsGetCall) Do(opts ...googleapi.CallOption) (*Application, error) {
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -2360,6 +2363,9 @@ func (c *AppsRepairCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -2503,6 +2509,9 @@ func (c *AppsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, erro
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -2669,6 +2678,9 @@ func (c *AppsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocations
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -2849,6 +2861,9 @@ func (c *AppsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, er
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -3018,6 +3033,9 @@ func (c *AppsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperatio
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -3181,6 +3199,9 @@ func (c *AppsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, e
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -3327,6 +3348,9 @@ func (c *AppsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error)
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -3485,6 +3509,9 @@ func (c *AppsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRe
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -3678,6 +3705,9 @@ func (c *AppsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -3831,6 +3861,9 @@ func (c *AppsServicesVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Oper
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -3969,6 +4002,9 @@ func (c *AppsServicesVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -4139,6 +4175,9 @@ func (c *AppsServicesVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -4327,6 +4366,9 @@ func (c *AppsServicesVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVe
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -4537,6 +4579,9 @@ func (c *AppsServicesVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Opera
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -4704,6 +4749,9 @@ func (c *AppsServicesVersionsInstancesDebugCall) Do(opts ...googleapi.CallOption
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
+	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
 		return nil, err
@@ -4859,6 +4907,9 @@ func (c *AppsServicesVersionsInstancesDeleteCall) Do(opts ...googleapi.CallOptio
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -5026,6 +5077,9 @@ func (c *AppsServicesVersionsInstancesGetCall) Do(opts ...googleapi.CallOption) 
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
@@ -5204,6 +5258,9 @@ func (c *AppsServicesVersionsInstancesListCall) Do(opts ...googleapi.CallOption)
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
 		},
+	}
+	if res.StatusCode == http.StatusNoContent {
+		return ret, nil
 	}
 	target := &ret
 	if err := json.NewDecoder(res.Body).Decode(target); err != nil {

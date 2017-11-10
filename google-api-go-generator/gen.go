@@ -1918,6 +1918,9 @@ func (meth *Method) generateCode() {
 			pn(" },")
 			pn("}")
 		}
+		pn("if res.StatusCode == http.StatusNoContent {")
+		pn("  return ret, nil")
+		pn("}")
 		if a.needsDataWrapper() {
 			pn("target := &struct {")
 			pn("  Data %s `json:\"data\"`", responseType(a, meth.m))

@@ -193,11 +193,8 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if res.StatusCode == http.StatusNoContent {
-		return ret, nil
-	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -342,11 +339,8 @@ func (c *ReportsQueryCall) Do(opts ...googleapi.CallOption) (*ResultTable, error
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	if res.StatusCode == http.StatusNoContent {
-		return ret, nil
-	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil

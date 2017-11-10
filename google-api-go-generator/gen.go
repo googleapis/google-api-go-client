@@ -1921,9 +1921,6 @@ func (meth *Method) generateCode() {
 			pn(" },")
 			pn("}")
 		}
-		pn("if res.StatusCode == http.StatusNoContent {")
-		pn("  return ret, nil")
-		pn("}")
 		if a.needsDataWrapper() {
 			pn("target := &struct {")
 			pn("  Data %s `json:\"data\"`", responseType(a, meth.m))
@@ -1931,8 +1928,7 @@ func (meth *Method) generateCode() {
 		} else {
 			pn("target := &ret")
 		}
-
-		pn("if err := json.NewDecoder(res.Body).Decode(target); err != nil { return nil, err }")
+		pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
 		pn("return ret, nil")
 	}
 

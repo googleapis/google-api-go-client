@@ -7,6 +7,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"go/format"
@@ -132,11 +133,11 @@ func main() {
 		matches = append(matches, api)
 		log.Printf("Generating API %s", api.ID)
 		err := api.WriteGeneratedCode()
-		if err != nil {
+		if err != nil && err != errNoDoc {
 			errors = append(errors, &generateError{api, err})
 			continue
 		}
-		if *build {
+		if *build && err == nil {
 			var args []string
 			if *install {
 				args = append(args, "install")
@@ -310,7 +311,8 @@ func slurpURL(urlStr string) []byte {
 		log.Fatalf("Error fetching URL %s: %v", urlStr, err)
 	}
 	if res.StatusCode >= 300 {
-		log.Fatalf("Error from URL %s: status code %d", urlStr, res.StatusCode)
+		log.Printf("WARNING: URL %s served status code %d", urlStr, res.StatusCode)
+		return nil
 	}
 	bs, err := ioutil.ReadAll(res.Body)
 	if err != nil {
@@ -438,27 +440,40 @@ func (a *API) needsDataWrapper() bool {
 }
 
 func (a *API) jsonBytes() []byte {
-	if v := a.forceJSON; v != nil {
-		return v
-	}
-	if *useCache {
-		slurp, err := ioutil.ReadFile(a.JSONFile())
-		if err != nil {
-			log.Fatal(err)
+	if a.forceJSON == nil {
+		var slurp []byte
+		var err error
+		if *useCache {
+			slurp, err = ioutil.ReadFile(a.JSONFile())
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			slurp = slurpURL(a.DiscoveryURL())
 		}
-		return slurp
+		a.forceJSON = slurp
 	}
-	return slurpURL(a.DiscoveryURL())
+	return a.forceJSON
 }
 
 func (a *API) JSONFile() string {
 	return filepath.Join(a.SourceDir(), a.Package()+"-api.json")
 }
 
+var errNoDoc = errors.New("could not read discovery doc")
+
+// WriteGeneratedCode generates code for a.
+// It returns errNoDoc if we couldn't read the discovery doc.
 func (a *API) WriteGeneratedCode() error {
 	genfilename := *output
+	jsonBytes := a.jsonBytes()
+	// Skip generation if we don't have the discovery doc.
+	if jsonBytes == nil {
+		// No message here, because slurpURL printed one.
+		return errNoDoc
+	}
 	if genfilename == "" {
-		if err := writeFile(a.JSONFile(), a.jsonBytes()); err != nil {
+		if err := writeFile(a.JSONFile(), jsonBytes); err != nil {
 			return err
 		}
 		outdir := a.SourceDir()
@@ -475,7 +490,10 @@ func (a *API) WriteGeneratedCode() error {
 	if err == nil {
 		err = errw
 	}
-	return err
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 var docsLink string

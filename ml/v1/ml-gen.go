@@ -213,8 +213,8 @@ type GoogleApi__HttpBody struct {
 }
 
 func (s *GoogleApi__HttpBody) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleApi__HttpBody
-	raw := noMethod(*s)
+	type NoMethod GoogleApi__HttpBody
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -246,18 +246,18 @@ type GoogleCloudMlV1HyperparameterOutputHyperparameterMetric struct {
 }
 
 func (s *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1HyperparameterOutputHyperparameterMetric
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1HyperparameterOutputHyperparameterMetric
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleCloudMlV1HyperparameterOutputHyperparameterMetric
+	type NoMethod GoogleCloudMlV1HyperparameterOutputHyperparameterMetric
 	var s1 struct {
 		ObjectiveValue gensupport.JSONFloat64 `json:"objectiveValue"`
-		*noMethod
+		*NoMethod
 	}
-	s1.noMethod = (*noMethod)(s)
+	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
@@ -317,8 +317,8 @@ type GoogleCloudMlV1__AutoScaling struct {
 }
 
 func (s *GoogleCloudMlV1__AutoScaling) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__AutoScaling
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__AutoScaling
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -360,8 +360,8 @@ type GoogleCloudMlV1__GetConfigResponse struct {
 }
 
 func (s *GoogleCloudMlV1__GetConfigResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__GetConfigResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__GetConfigResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -405,8 +405,8 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 }
 
 func (s *GoogleCloudMlV1__HyperparameterOutput) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__HyperparameterOutput
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__HyperparameterOutput
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -480,8 +480,8 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 }
 
 func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__HyperparameterSpec
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__HyperparameterSpec
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -578,8 +578,8 @@ type GoogleCloudMlV1__Job struct {
 }
 
 func (s *GoogleCloudMlV1__Job) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__Job
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__Job
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -616,8 +616,8 @@ type GoogleCloudMlV1__ListJobsResponse struct {
 }
 
 func (s *GoogleCloudMlV1__ListJobsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__ListJobsResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__ListJobsResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -654,8 +654,8 @@ type GoogleCloudMlV1__ListModelsResponse struct {
 }
 
 func (s *GoogleCloudMlV1__ListModelsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__ListModelsResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__ListModelsResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -692,8 +692,8 @@ type GoogleCloudMlV1__ListVersionsResponse struct {
 }
 
 func (s *GoogleCloudMlV1__ListVersionsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__ListVersionsResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__ListVersionsResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -726,8 +726,8 @@ type GoogleCloudMlV1__ManualScaling struct {
 }
 
 func (s *GoogleCloudMlV1__ManualScaling) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__ManualScaling
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__ManualScaling
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -826,8 +826,8 @@ type GoogleCloudMlV1__Model struct {
 }
 
 func (s *GoogleCloudMlV1__Model) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__Model
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__Model
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -888,8 +888,8 @@ type GoogleCloudMlV1__OperationMetadata struct {
 }
 
 func (s *GoogleCloudMlV1__OperationMetadata) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__OperationMetadata
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__OperationMetadata
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -985,19 +985,19 @@ type GoogleCloudMlV1__ParameterSpec struct {
 }
 
 func (s *GoogleCloudMlV1__ParameterSpec) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__ParameterSpec
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__ParameterSpec
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudMlV1__ParameterSpec) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleCloudMlV1__ParameterSpec
+	type NoMethod GoogleCloudMlV1__ParameterSpec
 	var s1 struct {
 		MaxValue gensupport.JSONFloat64 `json:"maxValue"`
 		MinValue gensupport.JSONFloat64 `json:"minValue"`
-		*noMethod
+		*NoMethod
 	}
-	s1.noMethod = (*noMethod)(s)
+	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
@@ -1241,8 +1241,8 @@ type GoogleCloudMlV1__PredictRequest struct {
 }
 
 func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__PredictRequest
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__PredictRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1341,8 +1341,8 @@ type GoogleCloudMlV1__PredictionInput struct {
 }
 
 func (s *GoogleCloudMlV1__PredictionInput) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__PredictionInput
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__PredictionInput
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1380,18 +1380,18 @@ type GoogleCloudMlV1__PredictionOutput struct {
 }
 
 func (s *GoogleCloudMlV1__PredictionOutput) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__PredictionOutput
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__PredictionOutput
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudMlV1__PredictionOutput) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleCloudMlV1__PredictionOutput
+	type NoMethod GoogleCloudMlV1__PredictionOutput
 	var s1 struct {
 		NodeHours gensupport.JSONFloat64 `json:"nodeHours"`
-		*noMethod
+		*NoMethod
 	}
-	s1.noMethod = (*noMethod)(s)
+	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
@@ -1641,8 +1641,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 }
 
 func (s *GoogleCloudMlV1__TrainingInput) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__TrainingInput
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__TrainingInput
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1684,18 +1684,18 @@ type GoogleCloudMlV1__TrainingOutput struct {
 }
 
 func (s *GoogleCloudMlV1__TrainingOutput) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__TrainingOutput
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__TrainingOutput
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
-	type noMethod GoogleCloudMlV1__TrainingOutput
+	type NoMethod GoogleCloudMlV1__TrainingOutput
 	var s1 struct {
 		ConsumedMLUnits gensupport.JSONFloat64 `json:"consumedMLUnits"`
-		*noMethod
+		*NoMethod
 	}
-	s1.noMethod = (*noMethod)(s)
+	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
@@ -1851,8 +1851,8 @@ type GoogleCloudMlV1__Version struct {
 }
 
 func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleCloudMlV1__Version
-	raw := noMethod(*s)
+	type NoMethod GoogleCloudMlV1__Version
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1948,8 +1948,8 @@ type GoogleIamV1__AuditConfig struct {
 }
 
 func (s *GoogleIamV1__AuditConfig) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__AuditConfig
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__AuditConfig
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2009,8 +2009,8 @@ type GoogleIamV1__AuditLogConfig struct {
 }
 
 func (s *GoogleIamV1__AuditLogConfig) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__AuditLogConfig
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__AuditLogConfig
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2084,8 +2084,8 @@ type GoogleIamV1__Binding struct {
 }
 
 func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__Binding
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__Binding
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2181,8 +2181,8 @@ type GoogleIamV1__Policy struct {
 }
 
 func (s *GoogleIamV1__Policy) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__Policy
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__Policy
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2224,8 +2224,8 @@ type GoogleIamV1__SetIamPolicyRequest struct {
 }
 
 func (s *GoogleIamV1__SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__SetIamPolicyRequest
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__SetIamPolicyRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2259,8 +2259,8 @@ type GoogleIamV1__TestIamPermissionsRequest struct {
 }
 
 func (s *GoogleIamV1__TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__TestIamPermissionsRequest
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__TestIamPermissionsRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2294,8 +2294,8 @@ type GoogleIamV1__TestIamPermissionsResponse struct {
 }
 
 func (s *GoogleIamV1__TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleIamV1__TestIamPermissionsResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleIamV1__TestIamPermissionsResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2331,8 +2331,8 @@ type GoogleLongrunning__ListOperationsResponse struct {
 }
 
 func (s *GoogleLongrunning__ListOperationsResponse) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleLongrunning__ListOperationsResponse
-	raw := noMethod(*s)
+	type NoMethod GoogleLongrunning__ListOperationsResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2406,8 +2406,8 @@ type GoogleLongrunning__Operation struct {
 }
 
 func (s *GoogleLongrunning__Operation) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleLongrunning__Operation
-	raw := noMethod(*s)
+	type NoMethod GoogleLongrunning__Operation
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2543,8 +2543,8 @@ type GoogleRpc__Status struct {
 }
 
 func (s *GoogleRpc__Status) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleRpc__Status
-	raw := noMethod(*s)
+	type NoMethod GoogleRpc__Status
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2597,8 +2597,8 @@ type GoogleType__Expr struct {
 }
 
 func (s *GoogleType__Expr) MarshalJSON() ([]byte, error) {
-	type noMethod GoogleType__Expr
-	raw := noMethod(*s)
+	type NoMethod GoogleType__Expr
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -2716,7 +2716,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2850,7 +2850,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2985,7 +2985,7 @@ func (c *ProjectsJobsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtob
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3120,7 +3120,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3262,7 +3262,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV1
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3404,7 +3404,7 @@ func (c *ProjectsJobsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3574,7 +3574,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3774,7 +3774,7 @@ func (c *ProjectsJobsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -3917,7 +3917,7 @@ func (c *ProjectsJobsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4063,7 +4063,7 @@ func (c *ProjectsJobsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4206,7 +4206,7 @@ func (c *ProjectsModelsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4341,7 +4341,7 @@ func (c *ProjectsModelsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4484,7 +4484,7 @@ func (c *ProjectsModelsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4626,7 +4626,7 @@ func (c *ProjectsModelsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -4800,7 +4800,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5004,7 +5004,7 @@ func (c *ProjectsModelsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5147,7 +5147,7 @@ func (c *ProjectsModelsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5293,7 +5293,7 @@ func (c *ProjectsModelsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5442,7 +5442,7 @@ func (c *ProjectsModelsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5578,7 +5578,7 @@ func (c *ProjectsModelsVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Go
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5725,7 +5725,7 @@ func (c *ProjectsModelsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Googl
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -5901,7 +5901,7 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6099,7 +6099,7 @@ func (c *ProjectsModelsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6251,7 +6251,7 @@ func (c *ProjectsModelsVersionsSetDefaultCall) Do(opts ...googleapi.CallOption) 
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6396,7 +6396,7 @@ func (c *ProjectsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6527,7 +6527,7 @@ func (c *ProjectsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Google
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6670,7 +6670,7 @@ func (c *ProjectsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -6848,7 +6848,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLo
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/Jh8zTmykcmyP74LXSyyp14SatQA\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/r1PlUTTtcpzcfJNRzaYpfAOtP-Y\"",
  "discoveryVersion": "v1",
  "id": "androidenterprise:v1",
  "name": "androidenterprise",
  "canonicalName": "Android Enterprise",
  "version": "v1",
- "revision": "20171025",
+ "revision": "20171108",
  "title": "Google Play EMM API",
  "description": "Manages the deployment of apps to Android for Work users.",
  "ownerDomain": "google.com",
@@ -312,6 +312,29 @@
     "token": {
      "type": "string",
      "description": "The authentication token to be passed to the device policy client on the device where it can be used to provision the account for which this token was generated."
+    }
+   }
+  },
+  "ConfigurationVariables": {
+   "id": "ConfigurationVariables",
+   "type": "object",
+   "description": "A configuration variables resource contains the managed configuration settings ID to be applied to a single user, as well as the variable set that is attributed to the user. The variable set will be used to replace placeholders in the managed configuration settings.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#configurationVariables\".",
+     "default": "androidenterprise#configurationVariables"
+    },
+    "mcmId": {
+     "type": "string",
+     "description": "The ID of the managed configurations settings."
+    },
+    "variableSet": {
+     "type": "array",
+     "description": "The variable set that is attributed to the user.",
+     "items": {
+      "$ref": "VariableSet"
+     }
     }
    }
   },
@@ -659,8 +682,12 @@
   "ManagedConfiguration": {
    "id": "ManagedConfiguration",
    "type": "object",
-   "description": "A managed configuration resource contains the set of managed properties that have been configured for an Android app. The app's developer would have defined configurable properties in the managed configurations schema.",
+   "description": "A managed configuration resource contains the set of managed properties defined by the app developer in the app's managed configurations schema, as well as any configuration variables defined for the user.",
    "properties": {
+    "configurationVariables": {
+     "$ref": "ConfigurationVariables",
+     "description": "Contains the ID of the managed configuration profile and the set of configuration variables (if any) defined for the user."
+    },
     "kind": {
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#managedConfiguration\".",
@@ -713,6 +740,52 @@
      "description": "A managed configuration for an app for a specific user.",
      "items": {
       "$ref": "ManagedConfiguration"
+     }
+    }
+   }
+  },
+  "ManagedConfigurationsSettings": {
+   "id": "ManagedConfigurationsSettings",
+   "type": "object",
+   "description": "A managed configurations settings resource contains the set of managed properties that have been configured for an Android app to be applied to a set of users. The app's developer would have defined configurable properties in the managed configurations schema.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#managedConfigurationsSettings\".",
+     "default": "androidenterprise#managedConfigurationsSettings"
+    },
+    "managedProperty": {
+     "type": "array",
+     "description": "The set of managed properties for this configuration.",
+     "items": {
+      "$ref": "ManagedProperty"
+     }
+    },
+    "mcmId": {
+     "type": "string",
+     "description": "The ID of the managed configurations settings."
+    },
+    "name": {
+     "type": "string",
+     "description": "The name of the managed configurations settings."
+    }
+   }
+  },
+  "ManagedConfigurationsSettingsListResponse": {
+   "id": "ManagedConfigurationsSettingsListResponse",
+   "type": "object",
+   "description": "The managed configurations settings for a product.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#managedConfigurationsSettingsListResponse\".",
+     "default": "androidenterprise#managedConfigurationsSettingsListResponse"
+    },
+    "managedConfigurationsSettings": {
+     "type": "array",
+     "description": "A managed configurations settings for an app that may be assigned to a group of users in an enterprise.",
+     "items": {
+      "$ref": "ManagedConfigurationsSettings"
      }
     }
    }
@@ -1483,6 +1556,26 @@
      "items": {
       "$ref": "User"
      }
+    }
+   }
+  },
+  "VariableSet": {
+   "id": "VariableSet",
+   "type": "object",
+   "description": "A variable set is a key-value pair of EMM-provided placeholders and its corresponding value, which is attributed to a user. For example, $FIRSTNAME could be a placeholder, and its value could be Alice. Placeholders should start with a '$' sign and should be alphanumeric only.",
+   "properties": {
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#variableSet\".",
+     "default": "androidenterprise#variableSet"
+    },
+    "placeholder": {
+     "type": "string",
+     "description": "The placeholder string; defined by EMM."
+    },
+    "userValue": {
+     "type": "string",
+     "description": "The value of the placeholder, specific to the user."
     }
    }
   }
@@ -2906,7 +2999,7 @@
      "id": "androidenterprise.managedconfigurationsforuser.patch",
      "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
      "httpMethod": "PATCH",
-     "description": "Adds or updates a per-user managed configuration for an app for the specified user. This method supports patch semantics.",
+     "description": "Adds or updates the managed configuration settings for an app for the specified user. If you support the Managed configurations iframe, you can apply managed configurations to a user by specifying an mcmId and its associated configuration variables (if any) in the request. Alternatively, all EMMs can apply managed configurations by passing a list of managed properties. This method supports patch semantics.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -2946,7 +3039,7 @@
      "id": "androidenterprise.managedconfigurationsforuser.update",
      "path": "enterprises/{enterpriseId}/users/{userId}/managedConfigurationsForUser/{managedConfigurationForUserId}",
      "httpMethod": "PUT",
-     "description": "Adds or updates a per-user managed configuration for an app for the specified user.",
+     "description": "Adds or updates the managed configuration settings for an app for the specified user. If you support the Managed configurations iframe, you can apply managed configurations to a user by specifying an mcmId and its associated configuration variables (if any) in the request. Alternatively, all EMMs can apply managed configurations by passing a list of managed properties.",
      "parameters": {
       "enterpriseId": {
        "type": "string",
@@ -2977,6 +3070,40 @@
      },
      "response": {
       "$ref": "ManagedConfiguration"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/androidenterprise"
+     ]
+    }
+   }
+  },
+  "managedconfigurationssettings": {
+   "methods": {
+    "list": {
+     "id": "androidenterprise.managedconfigurationssettings.list",
+     "path": "enterprises/{enterpriseId}/products/{productId}/managedConfigurationsSettings",
+     "httpMethod": "GET",
+     "description": "Lists all the managed configurations settings for the specified app. Only the ID and the name is set.",
+     "parameters": {
+      "enterpriseId": {
+       "type": "string",
+       "description": "The ID of the enterprise.",
+       "required": true,
+       "location": "path"
+      },
+      "productId": {
+       "type": "string",
+       "description": "The ID of the product for which the managed configurations settings applies to.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "enterpriseId",
+      "productId"
+     ],
+     "response": {
+      "$ref": "ManagedConfigurationsSettingsListResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/androidenterprise"

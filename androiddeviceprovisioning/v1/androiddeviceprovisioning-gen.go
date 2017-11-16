@@ -148,8 +148,8 @@ type ClaimDeviceRequest struct {
 }
 
 func (s *ClaimDeviceRequest) MarshalJSON() ([]byte, error) {
-	type noMethod ClaimDeviceRequest
-	raw := noMethod(*s)
+	type NoMethod ClaimDeviceRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -186,8 +186,8 @@ type ClaimDeviceResponse struct {
 }
 
 func (s *ClaimDeviceResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ClaimDeviceResponse
-	raw := noMethod(*s)
+	type NoMethod ClaimDeviceResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -215,8 +215,8 @@ type ClaimDevicesRequest struct {
 }
 
 func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
-	type noMethod ClaimDevicesRequest
-	raw := noMethod(*s)
+	type NoMethod ClaimDevicesRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -275,8 +275,8 @@ type Company struct {
 }
 
 func (s *Company) MarshalJSON() ([]byte, error) {
-	type noMethod Company
-	raw := noMethod(*s)
+	type NoMethod Company
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -308,8 +308,8 @@ type CreateCustomerRequest struct {
 }
 
 func (s *CreateCustomerRequest) MarshalJSON() ([]byte, error) {
-	type noMethod CreateCustomerRequest
-	raw := noMethod(*s)
+	type NoMethod CreateCustomerRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -356,8 +356,8 @@ type Device struct {
 }
 
 func (s *Device) MarshalJSON() ([]byte, error) {
-	type noMethod Device
-	raw := noMethod(*s)
+	type NoMethod Device
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -392,8 +392,8 @@ type DeviceClaim struct {
 }
 
 func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
-	type noMethod DeviceClaim
-	raw := noMethod(*s)
+	type NoMethod DeviceClaim
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -432,8 +432,8 @@ type DeviceIdentifier struct {
 }
 
 func (s *DeviceIdentifier) MarshalJSON() ([]byte, error) {
-	type noMethod DeviceIdentifier
-	raw := noMethod(*s)
+	type NoMethod DeviceIdentifier
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -464,8 +464,8 @@ type DeviceMetadata struct {
 }
 
 func (s *DeviceMetadata) MarshalJSON() ([]byte, error) {
-	type noMethod DeviceMetadata
-	raw := noMethod(*s)
+	type NoMethod DeviceMetadata
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -508,8 +508,8 @@ type DevicesLongRunningOperationMetadata struct {
 }
 
 func (s *DevicesLongRunningOperationMetadata) MarshalJSON() ([]byte, error) {
-	type noMethod DevicesLongRunningOperationMetadata
-	raw := noMethod(*s)
+	type NoMethod DevicesLongRunningOperationMetadata
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -542,8 +542,8 @@ type DevicesLongRunningOperationResponse struct {
 }
 
 func (s *DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
-	type noMethod DevicesLongRunningOperationResponse
-	raw := noMethod(*s)
+	type NoMethod DevicesLongRunningOperationResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -595,8 +595,8 @@ type FindDevicesByDeviceIdentifierRequest struct {
 }
 
 func (s *FindDevicesByDeviceIdentifierRequest) MarshalJSON() ([]byte, error) {
-	type noMethod FindDevicesByDeviceIdentifierRequest
-	raw := noMethod(*s)
+	type NoMethod FindDevicesByDeviceIdentifierRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -631,8 +631,8 @@ type FindDevicesByDeviceIdentifierResponse struct {
 }
 
 func (s *FindDevicesByDeviceIdentifierResponse) MarshalJSON() ([]byte, error) {
-	type noMethod FindDevicesByDeviceIdentifierResponse
-	raw := noMethod(*s)
+	type NoMethod FindDevicesByDeviceIdentifierResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -672,8 +672,8 @@ type FindDevicesByOwnerRequest struct {
 }
 
 func (s *FindDevicesByOwnerRequest) MarshalJSON() ([]byte, error) {
-	type noMethod FindDevicesByOwnerRequest
-	raw := noMethod(*s)
+	type NoMethod FindDevicesByOwnerRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -707,8 +707,8 @@ type FindDevicesByOwnerResponse struct {
 }
 
 func (s *FindDevicesByOwnerResponse) MarshalJSON() ([]byte, error) {
-	type noMethod FindDevicesByOwnerResponse
-	raw := noMethod(*s)
+	type NoMethod FindDevicesByOwnerResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -740,8 +740,8 @@ type ListCustomersResponse struct {
 }
 
 func (s *ListCustomersResponse) MarshalJSON() ([]byte, error) {
-	type noMethod ListCustomersResponse
-	raw := noMethod(*s)
+	type NoMethod ListCustomersResponse
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -801,8 +801,8 @@ type Operation struct {
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
-	type noMethod Operation
-	raw := noMethod(*s)
+	type NoMethod Operation
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -838,8 +838,8 @@ type OperationPerDevice struct {
 }
 
 func (s *OperationPerDevice) MarshalJSON() ([]byte, error) {
-	type noMethod OperationPerDevice
-	raw := noMethod(*s)
+	type NoMethod OperationPerDevice
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -879,8 +879,8 @@ type PartnerClaim struct {
 }
 
 func (s *PartnerClaim) MarshalJSON() ([]byte, error) {
-	type noMethod PartnerClaim
-	raw := noMethod(*s)
+	type NoMethod PartnerClaim
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -917,8 +917,8 @@ type PartnerUnclaim struct {
 }
 
 func (s *PartnerUnclaim) MarshalJSON() ([]byte, error) {
-	type noMethod PartnerUnclaim
-	raw := noMethod(*s)
+	type NoMethod PartnerUnclaim
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -971,8 +971,8 @@ type PerDeviceStatusInBatch struct {
 }
 
 func (s *PerDeviceStatusInBatch) MarshalJSON() ([]byte, error) {
-	type noMethod PerDeviceStatusInBatch
-	raw := noMethod(*s)
+	type NoMethod PerDeviceStatusInBatch
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1090,8 +1090,8 @@ type Status struct {
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
-	type noMethod Status
-	raw := noMethod(*s)
+	type NoMethod Status
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1129,8 +1129,8 @@ type UnclaimDeviceRequest struct {
 }
 
 func (s *UnclaimDeviceRequest) MarshalJSON() ([]byte, error) {
-	type noMethod UnclaimDeviceRequest
-	raw := noMethod(*s)
+	type NoMethod UnclaimDeviceRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1158,8 +1158,8 @@ type UnclaimDevicesRequest struct {
 }
 
 func (s *UnclaimDevicesRequest) MarshalJSON() ([]byte, error) {
-	type noMethod UnclaimDevicesRequest
-	raw := noMethod(*s)
+	type NoMethod UnclaimDevicesRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1187,8 +1187,8 @@ type UpdateDeviceMetadataInBatchRequest struct {
 }
 
 func (s *UpdateDeviceMetadataInBatchRequest) MarshalJSON() ([]byte, error) {
-	type noMethod UpdateDeviceMetadataInBatchRequest
-	raw := noMethod(*s)
+	type NoMethod UpdateDeviceMetadataInBatchRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1216,8 +1216,8 @@ type UpdateDeviceMetadataRequest struct {
 }
 
 func (s *UpdateDeviceMetadataRequest) MarshalJSON() ([]byte, error) {
-	type noMethod UpdateDeviceMetadataRequest
-	raw := noMethod(*s)
+	type NoMethod UpdateDeviceMetadataRequest
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1250,8 +1250,8 @@ type UpdateMetadataArguments struct {
 }
 
 func (s *UpdateMetadataArguments) MarshalJSON() ([]byte, error) {
-	type noMethod UpdateMetadataArguments
-	raw := noMethod(*s)
+	type NoMethod UpdateMetadataArguments
+	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
@@ -1366,7 +1366,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1501,7 +1501,7 @@ func (c *PartnersCustomersCreateCall) Do(opts ...googleapi.CallOption) (*Company
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1644,7 +1644,7 @@ func (c *PartnersCustomersListCall) Do(opts ...googleapi.CallOption) (*ListCusto
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1774,7 +1774,7 @@ func (c *PartnersDevicesClaimCall) Do(opts ...googleapi.CallOption) (*ClaimDevic
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -1907,7 +1907,7 @@ func (c *PartnersDevicesClaimAsyncCall) Do(opts ...googleapi.CallOption) (*Opera
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2041,7 +2041,7 @@ func (c *PartnersDevicesFindByIdentifierCall) Do(opts ...googleapi.CallOption) (
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2195,7 +2195,7 @@ func (c *PartnersDevicesFindByOwnerCall) Do(opts ...googleapi.CallOption) (*Find
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2356,7 +2356,7 @@ func (c *PartnersDevicesGetCall) Do(opts ...googleapi.CallOption) (*Device, erro
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2488,7 +2488,7 @@ func (c *PartnersDevicesMetadataCall) Do(opts ...googleapi.CallOption) (*DeviceM
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2631,7 +2631,7 @@ func (c *PartnersDevicesUnclaimCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2764,7 +2764,7 @@ func (c *PartnersDevicesUnclaimAsyncCall) Do(opts ...googleapi.CallOption) (*Ope
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil
@@ -2897,7 +2897,7 @@ func (c *PartnersDevicesUpdateMetadataAsyncCall) Do(opts ...googleapi.CallOption
 		},
 	}
 	target := &ret
-	if err := json.NewDecoder(res.Body).Decode(target); err != nil {
+	if err := gensupport.DecodeResponse(target, res); err != nil {
 		return nil, err
 	}
 	return ret, nil

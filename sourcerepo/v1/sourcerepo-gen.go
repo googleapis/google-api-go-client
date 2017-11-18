@@ -594,6 +594,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 type Repo struct {
 	// MirrorConfig: How this repository mirrors a repository managed by
 	// another service.
+	// Read-only field.
 	MirrorConfig *MirrorConfig `json:"mirrorConfig,omitempty"`
 
 	// Name: Resource name of the repository, of the
@@ -603,12 +604,14 @@ type Repo struct {
 	// eg, `projects/myproject/repos/name/with/slash`
 	Name string `json:"name,omitempty"`
 
-	// Size: The disk usage of the repo, in bytes.
-	// Only returned by GetRepo.
+	// Size: The disk usage of the repo, in bytes. Read-only field. Size is
+	// only
+	// returned by GetRepo.
 	Size int64 `json:"size,omitempty,string"`
 
 	// Url: URL to clone the repository from Google Cloud Source
 	// Repositories.
+	// Read-only field.
 	Url string `json:"url,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

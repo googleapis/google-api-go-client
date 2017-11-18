@@ -94,6 +94,7 @@ func New(client *http.Client) (*Service, error) {
 	s.InterconnectAttachments = NewInterconnectAttachmentsService(s)
 	s.InterconnectLocations = NewInterconnectLocationsService(s)
 	s.Interconnects = NewInterconnectsService(s)
+	s.LicenseCodes = NewLicenseCodesService(s)
 	s.Licenses = NewLicensesService(s)
 	s.MachineTypes = NewMachineTypesService(s)
 	s.Networks = NewNetworksService(s)
@@ -175,6 +176,8 @@ type Service struct {
 	InterconnectLocations *InterconnectLocationsService
 
 	Interconnects *InterconnectsService
+
+	LicenseCodes *LicenseCodesService
 
 	Licenses *LicensesService
 
@@ -444,6 +447,15 @@ func NewInterconnectsService(s *Service) *InterconnectsService {
 }
 
 type InterconnectsService struct {
+	s *Service
+}
+
+func NewLicenseCodesService(s *Service) *LicenseCodesService {
+	rs := &LicenseCodesService{s: s}
+	return rs
+}
+
+type LicenseCodesService struct {
 	s *Service
 }
 
@@ -1309,8 +1321,8 @@ type Address struct {
 	// Address: The static IP address represented by this resource.
 	Address string `json:"address,omitempty"`
 
-	// AddressType: The type of address to reserve. If unspecified, defaults
-	// to EXTERNAL.
+	// AddressType: The type of address to reserve, either INTERNAL or
+	// EXTERNAL. If unspecified, defaults to EXTERNAL.
 	//
 	// Possible values:
 	//   "EXTERNAL"
@@ -2095,17 +2107,17 @@ type AttachedDiskInitializeParams struct {
 	//
 	// projects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD
 	//
-	// To create a disk with a private image that you created, specify the
+	// To create a disk with a custom image that you created, specify the
 	// image name in the following format:
 	//
-	// global/images/my-private-image
+	// global/images/my-custom-image
 	//
-	// You can also specify a private image by its image family, which
+	// You can also specify a custom image by its image family, which
 	// returns the latest version of the image in that family. Replace the
 	// image name with
 	// family/family-name:
 	//
-	// global/images/family/my-private-family
+	// global/images/family/my-image-family
 	//
 	// If the source image is deleted later, this field will not be set.
 	SourceImage string `json:"sourceImage,omitempty"`
@@ -5219,6 +5231,10 @@ type Disk struct {
 	// text format.
 	LastDetachTimestamp string `json:"lastDetachTimestamp,omitempty"`
 
+	// LicenseCodes: Integer license codes indicating which licenses are
+	// attached to this disk.
+	LicenseCodes googleapi.Int64s `json:"licenseCodes,omitempty"`
+
 	// Licenses: Any applicable publicly visible licenses.
 	Licenses []string `json:"licenses,omitempty"`
 
@@ -5264,17 +5280,17 @@ type Disk struct {
 	//
 	// projects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD
 	//
-	// To create a disk with a private image that you created, specify the
+	// To create a disk with a custom image that you created, specify the
 	// image name in the following format:
 	//
-	// global/images/my-private-image
+	// global/images/my-custom-image
 	//
-	// You can also specify a private image by its image family, which
+	// You can also specify a custom image by its image family, which
 	// returns the latest version of the image in that family. Replace the
 	// image name with
 	// family/family-name:
 	//
-	// global/images/family/my-private-family
+	// global/images/family/my-image-family
 	SourceImage string `json:"sourceImage,omitempty"`
 
 	// SourceImageEncryptionKey: The customer-supplied encryption key of the
@@ -8738,6 +8754,10 @@ type Image struct {
 	// Labels: Labels to apply to this image. These can be later modified by
 	// the setLabels method.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// LicenseCodes: Integer license codes indicating which licenses are
+	// attached to this image.
+	LicenseCodes googleapi.Int64s `json:"licenseCodes,omitempty"`
 
 	// Licenses: Any applicable license URI.
 	Licenses []string `json:"licenses,omitempty"`
@@ -12382,15 +12402,16 @@ func (s *InstancesStartWithEncryptionKeyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Interconnect: Protocol definitions for Mixer API to support
-// Interconnect. Next available tag: 25
+// Interconnect: Represents an Interconnects resource. The Interconnects
+// resource is a dedicated connection between Google's network and your
+// on-premises network. For more information, see the  Dedicated
+// overview page.
 type Interconnect struct {
 	// AdminEnabled: Administrative status of the interconnect. When this is
-	// set to ?true?, the Interconnect is functional and may carry traffic
-	// (assuming there are functional InterconnectAttachments and other
-	// requirements are satisfied). When set to ?false?, no packets will be
-	// carried over this Interconnect and no BGP routes will be exchanged
-	// over it. By default, it is set to ?true?.
+	// set to true, the Interconnect is functional and can carry traffic.
+	// When set to false, no packets can be carried over the interconnect
+	// and no BGP routes are exchanged over it. By default, the status is
+	// set to true.
 	AdminEnabled bool `json:"adminEnabled,omitempty"`
 
 	// CircuitInfos: [Output Only] List of CircuitInfo objects, that
@@ -12430,6 +12451,9 @@ type Interconnect struct {
 	// InterconnectAttachments configured to use this Interconnect.
 	InterconnectAttachments []string `json:"interconnectAttachments,omitempty"`
 
+	// InterconnectType: Type of interconnect. Note that "IT_PRIVATE" has
+	// been deprecated in favor of "DEDICATED"
+	//
 	// Possible values:
 	//   "DEDICATED"
 	//   "IT_PRIVATE"
@@ -12439,6 +12463,10 @@ type Interconnect struct {
 	// for interconnects.
 	Kind string `json:"kind,omitempty"`
 
+	// LinkType: Type of link requested. This field indicates speed of each
+	// of the links in the bundle, not the entire bundle. Only 10G per link
+	// is allowed for a dedicated interconnect. Options: Ethernet_10G_LR
+	//
 	// Possible values:
 	//   "LINK_TYPE_ETHERNET_10G_LR"
 	LinkType string `json:"linkType,omitempty"`
@@ -12467,10 +12495,8 @@ type Interconnect struct {
 	// this Interconnect is functional.
 	//
 	// Possible values:
-	//   "ACTIVE"
 	//   "OS_ACTIVE"
 	//   "OS_UNPROVISIONED"
-	//   "UNPROVISIONED"
 	OperationalStatus string `json:"operationalStatus,omitempty"`
 
 	// PeerIpAddress: [Output Only] IP address configured on the customer
@@ -12517,8 +12543,9 @@ func (s *Interconnect) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InterconnectAttachment: Protocol definitions for Mixer API to support
-// InterconnectAttachment. Next available tag: 23
+// InterconnectAttachment: Represents an InterconnectAttachment (VLAN
+// attachment) resource. For more information, see  Creating VLAN
+// Attachments.
 type InterconnectAttachment struct {
 	// CloudRouterIpAddress: [Output Only] IPv4 address + prefix length to
 	// be configured on Cloud Router Interface for this interconnect
@@ -12534,8 +12561,7 @@ type InterconnectAttachment struct {
 	// interconnect attachment.
 	CustomerRouterIpAddress string `json:"customerRouterIpAddress,omitempty"`
 
-	// Description: An optional description of this resource. Provide this
-	// property when you create the resource.
+	// Description: An optional description of this resource.
 	Description string `json:"description,omitempty"`
 
 	// GoogleReferenceId: [Output Only] Google reference ID, to be used when
@@ -12568,15 +12594,13 @@ type InterconnectAttachment struct {
 	// this interconnect attachment is functional.
 	//
 	// Possible values:
-	//   "ACTIVE"
 	//   "OS_ACTIVE"
 	//   "OS_UNPROVISIONED"
-	//   "UNPROVISIONED"
 	OperationalStatus string `json:"operationalStatus,omitempty"`
 
-	// PrivateInterconnectInfo: [Output Only] Information specific to a
-	// Private InterconnectAttachment. Only populated if the interconnect
-	// that this is attached is of type IT_PRIVATE.
+	// PrivateInterconnectInfo: [Output Only] Information specific to an
+	// InterconnectAttachment. This property is populated if the
+	// interconnect that this is attached to is of type DEDICATED.
 	PrivateInterconnectInfo *InterconnectAttachmentPrivateInfo `json:"privateInterconnectInfo,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional
@@ -12935,9 +12959,8 @@ func (s *InterconnectAttachmentListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InterconnectAttachmentPrivateInfo: Private information for an
-// interconnect attachment when this belongs to an interconnect of type
-// IT_PRIVATE.
+// InterconnectAttachmentPrivateInfo: Information for an interconnect
+// attachment when this belongs to an interconnect of type DEDICATED.
 type InterconnectAttachmentPrivateInfo struct {
 	// Tag8021q: [Output Only] 802.1q encapsulation tag to be used for
 	// traffic between Google and the customer, going to and from this
@@ -13107,9 +13130,7 @@ func (s *InterconnectAttachmentsScopedListWarningData) MarshalJSON() ([]byte, er
 // the Customer and Google. CircuitInfo objects are created by Google,
 // so all fields are output only. Next id: 4
 type InterconnectCircuitInfo struct {
-	// CustomerDemarcId: Customer-side demarc ID for this circuit. This will
-	// only be set if it was provided by the Customer to Google during
-	// circuit turn-up.
+	// CustomerDemarcId: Customer-side demarc ID for this circuit.
 	CustomerDemarcId string `json:"customerDemarcId,omitempty"`
 
 	// GoogleCircuitId: Google-assigned unique ID for this circuit. Assigned
@@ -13300,25 +13321,27 @@ func (s *InterconnectListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InterconnectLocation: Protocol definitions for Mixer API to support
-// InterconnectLocation.
+// InterconnectLocation: Represents an InterconnectLocations resource.
+// The InterconnectLocations resource describes the locations where you
+// can connect to Google's networks. For more information, see
+// Colocation Facilities.
 type InterconnectLocation struct {
 	// Address: [Output Only] The postal address of the Point of Presence,
 	// each line in the address is separated by a newline character.
 	Address string `json:"address,omitempty"`
 
-	// AvailabilityZone: Availability zone for this location. Within a city,
-	// maintenance will not be simultaneously scheduled in more than one
-	// availability zone. Example: "zone1" or "zone2".
+	// AvailabilityZone: [Output Only] Availability zone for this location.
+	// Within a metropolitan area (metro), maintenance will not be
+	// simultaneously scheduled in more than one availability zone. Example:
+	// "zone1" or "zone2".
 	AvailabilityZone string `json:"availabilityZone,omitempty"`
 
-	// City: City designator used by the Interconnect UI to locate this
-	// InterconnectLocation within the Continent. For example: "Chicago,
-	// IL", "Amsterdam, Netherlands".
+	// City: [Output Only] Metropolitan area designator that indicates which
+	// city an interconnect is located. For example: "Chicago, IL",
+	// "Amsterdam, Netherlands".
 	City string `json:"city,omitempty"`
 
-	// Continent: Continent for this location. Used by the location picker
-	// in the Interconnect UI.
+	// Continent: [Output Only] Continent for this location.
 	//
 	// Possible values:
 	//   "AFRICA"
@@ -13605,12 +13628,17 @@ type InterconnectOutageNotification struct {
 	// Google-side circuit IDs that will be affected.
 	AffectedCircuits []string `json:"affectedCircuits,omitempty"`
 
-	// Description: Short user-visible description of the purpose of the
-	// outage.
+	// Description: A description about the purpose of the outage.
 	Description string `json:"description,omitempty"`
 
+	// EndTime: Scheduled end time for the outage (milliseconds since Unix
+	// epoch).
 	EndTime int64 `json:"endTime,omitempty,string"`
 
+	// IssueType: Form this outage is expected to take. Note that the "IT_"
+	// versions of this enum have been deprecated in favor of the unprefixed
+	// values.
+	//
 	// Possible values:
 	//   "IT_OUTAGE"
 	//   "IT_PARTIAL_OUTAGE"
@@ -13621,15 +13649,21 @@ type InterconnectOutageNotification struct {
 	// Name: Unique identifier for this outage notification.
 	Name string `json:"name,omitempty"`
 
+	// Source: The party that generated this notification. Note that
+	// "NSRC_GOOGLE" has been deprecated in favor of "GOOGLE"
+	//
 	// Possible values:
 	//   "GOOGLE"
 	//   "NSRC_GOOGLE"
 	Source string `json:"source,omitempty"`
 
-	// StartTime: Scheduled start and end times for the outage (milliseconds
-	// since Unix epoch).
+	// StartTime: Scheduled start time for the outage (milliseconds since
+	// Unix epoch).
 	StartTime int64 `json:"startTime,omitempty,string"`
 
+	// State: State of this notification. Note that the "NS_" versions of
+	// this enum have been deprecated in favor of the unprefixed values.
+	//
 	// Possible values:
 	//   "ACTIVE"
 	//   "CANCELLED"
@@ -13667,16 +13701,39 @@ type License struct {
 	// reflects whether a license charges a usage fee.
 	ChargesUseFee bool `json:"chargesUseFee,omitempty"`
 
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: An optional textual description of the resource;
+	// provided by the client when the resource is created.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
 	// Kind: [Output Only] Type of resource. Always compute#license for
 	// licenses.
 	Kind string `json:"kind,omitempty"`
+
+	// LicenseCode: [Output Only] The unique code used to attach this
+	// license to images, snapshots, and disks.
+	LicenseCode uint64 `json:"licenseCode,omitempty,string"`
 
 	// Name: [Output Only] Name of the resource. The name is 1-63 characters
 	// long and complies with RFC1035.
 	Name string `json:"name,omitempty"`
 
+	ResourceRequirements *LicenseResourceRequirements `json:"resourceRequirements,omitempty"`
+
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+
+	// Transferable: If false, licenses will not be copied from the source
+	// resource when creating an image from a disk, disk from snapshot, or
+	// snapshot from disk.
+	Transferable bool `json:"transferable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -13701,6 +13758,291 @@ type License struct {
 
 func (s *License) MarshalJSON() ([]byte, error) {
 	type NoMethod License
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicenseCode struct {
+	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
+	// format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// Description: [Output Only] Description of this License Code.
+	Description string `json:"description,omitempty"`
+
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+
+	// Kind: [Output Only] Type of resource. Always compute#licenseCode for
+	// licenses.
+	Kind string `json:"kind,omitempty"`
+
+	// LicenseAlias: [Output Only] URL and description aliases of Licenses
+	// with the same License Code.
+	LicenseAlias []*LicenseCodeLicenseAlias `json:"licenseAlias,omitempty"`
+
+	// Name: [Output Only] Name of the resource. The name is 1-20 characters
+	// long and must be a valid 64 bit integer.
+	Name string `json:"name,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// State: [Output Only] Current state of this License Code.
+	//
+	// Possible values:
+	//   "DISABLED"
+	//   "ENABLED"
+	//   "RESTRICTED"
+	//   "STATE_UNSPECIFIED"
+	//   "TERMINATED"
+	State string `json:"state,omitempty"`
+
+	// Transferable: [Output Only] If true, the license will remain attached
+	// when creating images or snapshots from disks. Otherwise, the license
+	// is not transferred.
+	Transferable bool `json:"transferable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTimestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTimestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicenseCode) MarshalJSON() ([]byte, error) {
+	type NoMethod LicenseCode
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicenseCodeLicenseAlias struct {
+	// Description: [Output Only] Description of this License Code.
+	Description string `json:"description,omitempty"`
+
+	// SelfLink: [Output Only] URL of license corresponding to this License
+	// Code.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicenseCodeLicenseAlias) MarshalJSON() ([]byte, error) {
+	type NoMethod LicenseCodeLicenseAlias
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicenseResourceRequirements struct {
+	// MinGuestCpuCount: Minimum number of guest cpus required to use the
+	// Instance. Enforced at Instance creation and Instance start.
+	MinGuestCpuCount int64 `json:"minGuestCpuCount,omitempty"`
+
+	// MinMemoryMb: Minimum memory required to use the Instance. Enforced at
+	// Instance creation and Instance start.
+	MinMemoryMb int64 `json:"minMemoryMb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MinGuestCpuCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MinGuestCpuCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicenseResourceRequirements) MarshalJSON() ([]byte, error) {
+	type NoMethod LicenseResourceRequirements
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicensesListResponse struct {
+	// Id: [Output Only] Unique identifier for the resource; defined by the
+	// server.
+	Id string `json:"id,omitempty"`
+
+	// Items: A list of License resources.
+	Items []*License `json:"items,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Warning: [Output Only] Informational warning message.
+	Warning *LicensesListResponseWarning `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicensesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LicensesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LicensesListResponseWarning: [Output Only] Informational warning
+// message.
+type LicensesListResponseWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
+	//   "EXTERNAL_API_WARNING"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "MISSING_TYPE_DEPENDENCY"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SCHEMA_VALIDATION_IGNORED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNDECLARED_PROPERTIES"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*LicensesListResponseWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicensesListResponseWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod LicensesListResponseWarning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type LicensesListResponseWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LicensesListResponseWarningData) MarshalJSON() ([]byte, error) {
+	type NoMethod LicensesListResponseWarningData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16361,6 +16703,8 @@ type Quota struct {
 	//   "NVIDIA_P100_GPUS"
 	//   "PREEMPTIBLE_CPUS"
 	//   "PREEMPTIBLE_LOCAL_SSD_GB"
+	//   "PREEMPTIBLE_NVIDIA_K80_GPUS"
+	//   "PREEMPTIBLE_NVIDIA_P100_GPUS"
 	//   "REGIONAL_AUTOSCALERS"
 	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
 	//   "ROUTERS"
@@ -19512,6 +19856,10 @@ type Snapshot struct {
 	// Labels: Labels to apply to this snapshot. These can be later modified
 	// by the setLabels method. Label values may be empty.
 	Labels map[string]string `json:"labels,omitempty"`
+
+	// LicenseCodes: Integer license codes indicating which licenses are
+	// attached to this snapshot.
+	LicenseCodes googleapi.Int64s `json:"licenseCodes,omitempty"`
 
 	// Licenses: [Output Only] A list of public visible licenses that apply
 	// to this snapshot. This can be because the original image had licenses
@@ -44348,8 +44696,8 @@ type ImagesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves the list of private images available to the specified
-// project. Private images are images you create that belong to your
+// List: Retrieves the list of custom images available to the specified
+// project. Custom images are images you create that belong to your
 // project. This method does not get any images that belong to other
 // projects, including publicly-available images, like Debian 8. If you
 // want to get a list of publicly-available images, use this method to
@@ -44523,7 +44871,7 @@ func (c *ImagesListCall) Do(opts ...googleapi.CallOption) (*ImageList, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of private images available to the specified project. Private images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 8. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
+	//   "description": "Retrieves the list of custom images available to the specified project. Custom images are images you create that belong to your project. This method does not get any images that belong to other projects, including publicly-available images, like Debian 8. If you want to get a list of publicly-available images, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.images.list",
 	//   "parameterOrder": [
@@ -59012,6 +59360,318 @@ func (c *InterconnectsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "compute.licenseCodes.get":
+
+type LicenseCodesGetCall struct {
+	s            *Service
+	project      string
+	licenseCode  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Return a specified license code. License codes are mirrored
+// across all projects that have permissions to read the License Code.
+func (r *LicenseCodesService) Get(project string, licenseCode string) *LicenseCodesGetCall {
+	c := &LicenseCodesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.licenseCode = licenseCode
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LicenseCodesGetCall) Fields(s ...googleapi.Field) *LicenseCodesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LicenseCodesGetCall) IfNoneMatch(entityTag string) *LicenseCodesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LicenseCodesGetCall) Context(ctx context.Context) *LicenseCodesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LicenseCodesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicenseCodesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/licenseCodes/{licenseCode}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":     c.project,
+		"licenseCode": c.licenseCode,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenseCodes.get" call.
+// Exactly one of *LicenseCode or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LicenseCode.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LicenseCodesGetCall) Do(opts ...googleapi.CallOption) (*LicenseCode, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LicenseCode{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Return a specified license code. License codes are mirrored across all projects that have permissions to read the License Code.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.licenseCodes.get",
+	//   "parameterOrder": [
+	//     "project",
+	//     "licenseCode"
+	//   ],
+	//   "parameters": {
+	//     "licenseCode": {
+	//       "description": "Number corresponding to the License code resource to return.",
+	//       "location": "path",
+	//       "pattern": "[0-9]{0,61}?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/licenseCodes/{licenseCode}",
+	//   "response": {
+	//     "$ref": "LicenseCode"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "compute.licenses.delete":
+
+type LicensesDeleteCall struct {
+	s          *Service
+	project    string
+	license    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified license.
+func (r *LicensesService) Delete(project string, license string) *LicensesDeleteCall {
+	c := &LicensesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.license = license
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments.
+//
+// The request ID must be a valid UUID with the exception that zero UUID
+// is not supported (00000000-0000-0000-0000-000000000000).
+func (c *LicensesDeleteCall) RequestId(requestId string) *LicensesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LicensesDeleteCall) Fields(s ...googleapi.Field) *LicensesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LicensesDeleteCall) Context(ctx context.Context) *LicensesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LicensesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicensesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/licenses/{license}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"license": c.license,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenses.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LicensesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified license.",
+	//   "httpMethod": "DELETE",
+	//   "id": "compute.licenses.delete",
+	//   "parameterOrder": [
+	//     "project",
+	//     "license"
+	//   ],
+	//   "parameters": {
+	//     "license": {
+	//       "description": "Name of the license resource to delete.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/licenses/{license}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
 // method id "compute.licenses.get":
 
 type LicensesGetCall struct {
@@ -59162,6 +59822,424 @@ func (c *LicensesGetCall) Do(opts ...googleapi.CallOption) (*License, error) {
 	//   ]
 	// }
 
+}
+
+// method id "compute.licenses.insert":
+
+type LicensesInsertCall struct {
+	s          *Service
+	project    string
+	license    *License
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Insert: Create a License resource in the specified project.
+func (r *LicensesService) Insert(project string, license *License) *LicensesInsertCall {
+	c := &LicensesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.license = license
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments.
+//
+// The request ID must be a valid UUID with the exception that zero UUID
+// is not supported (00000000-0000-0000-0000-000000000000).
+func (c *LicensesInsertCall) RequestId(requestId string) *LicensesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LicensesInsertCall) Fields(s ...googleapi.Field) *LicensesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LicensesInsertCall) Context(ctx context.Context) *LicensesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LicensesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicensesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.license)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/licenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenses.insert" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *LicensesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a License resource in the specified project.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.licenses.insert",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/licenses",
+	//   "request": {
+	//     "$ref": "License"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/devstorage.full_control",
+	//     "https://www.googleapis.com/auth/devstorage.read_only",
+	//     "https://www.googleapis.com/auth/devstorage.read_write"
+	//   ]
+	// }
+
+}
+
+// method id "compute.licenses.list":
+
+type LicensesListCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves the list of licenses available in the specified
+// project. This method does not get any licenses that belong to other
+// projects, including licenses attached to publicly-available images,
+// like Debian 8. If you want to get a list of publicly-available
+// licenses, use this method to make a request to the respective image
+// project, such as debian-cloud or windows-cloud.
+func (r *LicensesService) List(project string) *LicensesListCall {
+	c := &LicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": Sets a filter
+// {expression} for filtering listed resources. Your {expression} must
+// be in the format: field_name comparison_string literal_string.
+//
+// The field_name is the name of the field you want to compare. Only
+// atomic field types are supported (string, number, boolean). The
+// comparison_string must be either eq (equals) or ne (not equals). The
+// literal_string is the string value to filter to. The literal value
+// must be valid for the type of field you are filtering by (string,
+// number, boolean). For string fields, the literal value is interpreted
+// as a regular expression using RE2 syntax. The literal value must
+// match the entire field.
+//
+// For example, to filter for instances that do not have a name of
+// example-instance, you would use name ne example-instance.
+//
+// You can filter on nested fields. For example, you could filter on
+// instances that have set the scheduling.automaticRestart field to
+// true. Use filtering on nested fields to take advantage of labels to
+// organize and search for results based on label values.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart eq
+// true) (zone eq us-central1-f). Multiple expressions are treated as
+// AND expressions, meaning that resources must match all expressions to
+// pass the filters.
+func (c *LicensesListCall) Filter(filter string) *LicensesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *LicensesListCall) MaxResults(maxResults int64) *LicensesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *LicensesListCall) OrderBy(orderBy string) *LicensesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *LicensesListCall) PageToken(pageToken string) *LicensesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *LicensesListCall) Fields(s ...googleapi.Field) *LicensesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *LicensesListCall) IfNoneMatch(entityTag string) *LicensesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *LicensesListCall) Context(ctx context.Context) *LicensesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *LicensesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LicensesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/licenses")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.licenses.list" call.
+// Exactly one of *LicensesListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LicensesListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *LicensesListCall) Do(opts ...googleapi.CallOption) (*LicensesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LicensesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 8. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.licenses.list",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Sets a filter {expression} for filtering listed resources. Your {expression} must be in the format: field_name comparison_string literal_string.\n\nThe field_name is the name of the field you want to compare. Only atomic field types are supported (string, number, boolean). The comparison_string must be either eq (equals) or ne (not equals). The literal_string is the string value to filter to. The literal value must be valid for the type of field you are filtering by (string, number, boolean). For string fields, the literal value is interpreted as a regular expression using RE2 syntax. The literal value must match the entire field.\n\nFor example, to filter for instances that do not have a name of example-instance, you would use name ne example-instance.\n\nYou can filter on nested fields. For example, you could filter on instances that have set the scheduling.automaticRestart field to true. Use filtering on nested fields to take advantage of labels to organize and search for results based on label values.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart eq true) (zone eq us-central1-f). Multiple expressions are treated as AND expressions, meaning that resources must match all expressions to pass the filters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/licenses",
+	//   "response": {
+	//     "$ref": "LicensesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *LicensesListCall) Pages(ctx context.Context, f func(*LicensesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.machineTypes.aggregatedList":

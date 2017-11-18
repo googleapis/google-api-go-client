@@ -1733,14 +1733,14 @@ func (s *RateLimits) UnmarshalJSON(data []byte) error {
 // RenewLeaseRequest: Request message for renewing a lease using
 // CloudTasks.RenewLease.
 type RenewLeaseRequest struct {
-	// NewLeaseDuration: Required.
+	// LeaseDuration: Required.
 	//
 	// The desired new lease duration, starting from now.
 	//
 	//
 	// The maximum lease duration is 1 week.
-	// `new_lease_duration` will be truncated to the nearest second.
-	NewLeaseDuration string `json:"newLeaseDuration,omitempty"`
+	// `lease_duration` will be truncated to the nearest second.
+	LeaseDuration string `json:"leaseDuration,omitempty"`
 
 	// ResponseView: The response_view specifies which subset of the Task
 	// will be
@@ -1786,7 +1786,7 @@ type RenewLeaseRequest struct {
 	// the caller is renewing the correct task.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewLeaseDuration") to
+	// ForceSendFields is a list of field names (e.g. "LeaseDuration") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1794,13 +1794,12 @@ type RenewLeaseRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewLeaseDuration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "LeaseDuration") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1844,15 +1843,26 @@ type RetryConfig struct {
 	// meters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
-	// MaxDoublings: The time between retries increases exponentially
-	// `max_doublings` times.
-	// `max_doublings` is maximum number of times that the interval between
-	// failed
-	// task retries will be doubled before the interval increases
-	// linearly.
-	// After max_doublings intervals, the retry interval will
-	// be
-	// 2^(max_doublings - 1) * RetryConfig.min_backoff.
+	// MaxDoublings: The time between retries will double `max_doublings`
+	// times.
+	//
+	// A task's retry interval starts at RetryConfig.min_backoff,
+	// then doubles `max_doublings` times, then increases linearly,
+	// and
+	// finally retries retries at intervals of
+	// RetryConfig.max_backoff up to max_attempts times.
+	//
+	// For example, if RetryConfig.min_backoff is
+	// 10s,
+	// RetryConfig.max_backoff is 300s, and `max_doublings` is 3,
+	// then the a task will first be retried in 10s. The retry interval
+	// will double three times, and then increase linearly by 2^3 *
+	// 10s.
+	// Finally, the task will retry at intervals of
+	// RetryConfig.max_backoff until the task has been
+	// attempted
+	// `max_attempts` times. Thus, the requests will retry at 10s, 20s,
+	// 40s, 80s, 160s, 240s, 300s, 300s, ....
 	//
 	// * For [App Engine
 	// queues](google.cloud.tasks.v2beta2.AppEngineHttpTarget),
@@ -2747,12 +2757,14 @@ type ProjectsLocationsQueuesCreateCall struct {
 
 // Create: Creates a queue.
 //
-// WARNING: This method is only available to whitelisted
-// users. Using this method carries some risk. Read
+// WARNING: Using this method may have unintended side effects if you
+// are
+// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+// queues.
+// Read
 // [Overview of Queue Management and
 // queue.yaml](/cloud-tasks/docs/queue-yaml)
-// carefully and then sign up for
-// [whitelist access to this method](https://goo.gl/Fe5mUy).
+// carefully before using this method.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2846,7 +2858,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Q
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a queue.\n\nWARNING: This method is only available to whitelisted\nusers. Using this method carries some risk. Read\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully and then sign up for\n[whitelist access to this method](https://goo.gl/Fe5mUy).",
+	//   "description": "Creates a queue.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.create",
@@ -2894,12 +2906,14 @@ type ProjectsLocationsQueuesDeleteCall struct {
 // created
 // for 7 days.
 //
-// WARNING: This method is only available to whitelisted
-// users. Using this method carries some risk. Read
+// WARNING: Using this method may have unintended side effects if you
+// are
+// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+// queues.
+// Read
 // [Overview of Queue Management and
 // queue.yaml](/cloud-tasks/docs/queue-yaml)
-// carefully and then sign up for
-// [whitelist access to this method](https://goo.gl/Fe5mUy).
+// carefully before using this method.
 func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQueuesDeleteCall {
 	c := &ProjectsLocationsQueuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2987,7 +3001,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: This method is only available to whitelisted\nusers. Using this method carries some risk. Read\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully and then sign up for\n[whitelist access to this method](https://goo.gl/Fe5mUy).",
+	//   "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudtasks.projects.locations.queues.delete",
@@ -3539,12 +3553,14 @@ type ProjectsLocationsQueuesPatchCall struct {
 // This method creates the queue if it does not exist and updates
 // the queue if it does exist.
 //
-// WARNING: This method is only available to whitelisted
-// users. Using this method carries some risk. Read
+// WARNING: Using this method may have unintended side effects if you
+// are
+// using an App Engine `queue.yaml` or `queue.xml` file to manage your
+// queues.
+// Read
 // [Overview of Queue Management and
 // queue.yaml](/cloud-tasks/docs/queue-yaml)
-// carefully and then sign up for
-// [whitelist access to this method](https://goo.gl/Fe5mUy).
+// carefully before using this method.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3647,7 +3663,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nWARNING: This method is only available to whitelisted\nusers. Using this method carries some risk. Read\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully and then sign up for\n[whitelist access to this method](https://goo.gl/Fe5mUy).",
+	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtasks.projects.locations.queues.patch",

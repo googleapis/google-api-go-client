@@ -316,12 +316,12 @@ func (s *HeldDriveQuery) MarshalJSON() ([]byte, error) {
 
 // HeldGroupsQuery: Query options for group holds.
 type HeldGroupsQuery struct {
-	// EndTime: The end date range for the search query. These timestamps
+	// EndTime: The end time range for the search query. These timestamps
 	// are in GMT and
 	// rounded down to the start of the given date.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The start date range for the search query. These
+	// StartTime: The start time range for the search query. These
 	// timestamps are in GMT and
 	// rounded down to the start of the given date.
 	StartTime string `json:"startTime,omitempty"`
@@ -354,12 +354,12 @@ func (s *HeldGroupsQuery) MarshalJSON() ([]byte, error) {
 
 // HeldMailQuery: Query options for mail holds.
 type HeldMailQuery struct {
-	// EndTime: The end date range for the search query. These timestamps
+	// EndTime: The end time range for the search query. These timestamps
 	// are in GMT and
 	// rounded down to the start of the given date.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: The start date range for the search query. These
+	// StartTime: The start time range for the search query. These
 	// timestamps are in GMT and
 	// rounded down to the start of the given date.
 	StartTime string `json:"startTime,omitempty"`

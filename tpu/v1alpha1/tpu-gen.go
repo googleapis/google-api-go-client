@@ -579,6 +579,39 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReimageNodeRequest: Request for ReimageNode.
+type ReimageNodeRequest struct {
+	// TensorflowVersion: The version for reimage to create.
+	TensorflowVersion string `json:"tensorflowVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TensorflowVersion")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TensorflowVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReimageNodeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReimageNodeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResetNodeRequest: Request for ResetNode.
+type ResetNodeRequest struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
@@ -1634,24 +1667,19 @@ func (c *ProjectsLocationsNodesListCall) Pages(ctx context.Context, f func(*List
 // method id "tpu.projects.locations.nodes.reimage":
 
 type ProjectsLocationsNodesReimageCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                  *Service
+	name               string
+	reimagenoderequest *ReimageNodeRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
 }
 
 // Reimage: Reimage a node's OS.
-func (r *ProjectsLocationsNodesService) Reimage(name string) *ProjectsLocationsNodesReimageCall {
+func (r *ProjectsLocationsNodesService) Reimage(name string, reimagenoderequest *ReimageNodeRequest) *ProjectsLocationsNodesReimageCall {
 	c := &ProjectsLocationsNodesReimageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	return c
-}
-
-// TensorflowVersion sets the optional parameter "tensorflowVersion":
-// The version for reimage to create.
-func (c *ProjectsLocationsNodesReimageCall) TensorflowVersion(tensorflowVersion string) *ProjectsLocationsNodesReimageCall {
-	c.urlParams_.Set("tensorflowVersion", tensorflowVersion)
+	c.reimagenoderequest = reimagenoderequest
 	return c
 }
 
@@ -1687,6 +1715,11 @@ func (c *ProjectsLocationsNodesReimageCall) doRequest(alt string) (*http.Respons
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.reimagenoderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:reimage")
 	urls += "?" + c.urlParams_.Encode()
@@ -1750,14 +1783,12 @@ func (c *ProjectsLocationsNodesReimageCall) Do(opts ...googleapi.CallOption) (*O
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/nodes/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
-	//     },
-	//     "tensorflowVersion": {
-	//       "description": "The version for reimage to create.",
-	//       "location": "query",
-	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1alpha1/{+name}:reimage",
+	//   "request": {
+	//     "$ref": "ReimageNodeRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },
@@ -1771,17 +1802,19 @@ func (c *ProjectsLocationsNodesReimageCall) Do(opts ...googleapi.CallOption) (*O
 // method id "tpu.projects.locations.nodes.reset":
 
 type ProjectsLocationsNodesResetCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                *Service
+	name             string
+	resetnoderequest *ResetNodeRequest
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
 }
 
 // Reset: Resets a node, which stops and starts the VM.
-func (r *ProjectsLocationsNodesService) Reset(name string) *ProjectsLocationsNodesResetCall {
+func (r *ProjectsLocationsNodesService) Reset(name string, resetnoderequest *ResetNodeRequest) *ProjectsLocationsNodesResetCall {
 	c := &ProjectsLocationsNodesResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	c.resetnoderequest = resetnoderequest
 	return c
 }
 
@@ -1817,6 +1850,11 @@ func (c *ProjectsLocationsNodesResetCall) doRequest(alt string) (*http.Response,
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resetnoderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:reset")
 	urls += "?" + c.urlParams_.Encode()
@@ -1883,6 +1921,9 @@ func (c *ProjectsLocationsNodesResetCall) Do(opts ...googleapi.CallOption) (*Ope
 	//     }
 	//   },
 	//   "path": "v1alpha1/{+name}:reset",
+	//   "request": {
+	//     "$ref": "ResetNodeRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

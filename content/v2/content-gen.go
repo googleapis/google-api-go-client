@@ -205,6 +205,10 @@ type Account struct {
 	// remove it from the list.
 	AdwordsLinks []*AccountAdwordsLink `json:"adwordsLinks,omitempty"`
 
+	// GoogleMyBusinessLink: The GMB account which is linked or in the
+	// process of being linked with the Merchant Center accounnt.
+	GoogleMyBusinessLink *AccountGoogleMyBusinessLink `json:"googleMyBusinessLink,omitempty"`
+
 	// Id: Merchant Center account ID.
 	Id uint64 `json:"id,omitempty,string"`
 
@@ -300,6 +304,37 @@ type AccountAdwordsLink struct {
 
 func (s *AccountAdwordsLink) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountAdwordsLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AccountGoogleMyBusinessLink struct {
+	// GmbEmail: The GMB email address.
+	GmbEmail string `json:"gmbEmail,omitempty"`
+
+	// Status: Status of the link between this Merchant Center account and
+	// the GMB account.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GmbEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GmbEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountGoogleMyBusinessLink) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountGoogleMyBusinessLink
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3473,26 +3508,20 @@ type OrderShipment struct {
 	// Acceptable values are:
 	// - "gsx"
 	// - "ups"
-	// - "united parcel service"
 	// - "usps"
-	// - "united states postal service"
 	// - "fedex"
 	// - "dhl"
 	// - "ecourier"
 	// - "cxt"
 	// - "google"
-	// - "on trac"
 	// - "ontrac"
-	// - "on-trac"
-	// - "on_trac"
-	// - "delvic"
+	// - "emsy"
+	// - "ont"
+	// - "deliv"
 	// - "dynamex"
 	// - "lasership"
-	// - "smartpost"
-	// - "fedex smartpost"
 	// - "mpx"
 	// - "uds"
-	// - "united delivery service"
 	Carrier string `json:"carrier,omitempty"`
 
 	// CreationDate: Date on which the shipment has been created, in ISO
@@ -3542,6 +3571,10 @@ type OrderShipmentLineItemShipment struct {
 	// LineItemId: The id of the line item that is shipped. Either
 	// lineItemId or productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to ship. This is the REST ID used in
+	// the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity that is shipped.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -3672,6 +3705,16 @@ type OrdersCancelLineItemRequest struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: Amount to refund for the cancelation. Optional. If not
+	// set, Google will calculate the default based on the price and tax of
+	// the items involved. The amount must not be larger than the net amount
+	// left on the order.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to cancellation amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
@@ -3679,6 +3722,10 @@ type OrdersCancelLineItemRequest struct {
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
+
+	// ProductId: The ID of the product to cancel. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to cancel.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -4013,9 +4060,23 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: Amount to refund for the cancelation. Optional. If not
+	// set, Google will calculate the default based on the price and tax of
+	// the items involved. The amount must not be larger than the net amount
+	// left on the order.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to cancellation amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to cancel. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to cancel.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -4053,6 +4114,14 @@ type OrdersCustomBatchRequestEntryRefund struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: The amount that is refunded. Either amount or
+	// amountPretax and amountTax should be filled.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to refund amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// Reason: The reason for the refund.
 	Reason string `json:"reason,omitempty"`
 
@@ -4086,6 +4155,10 @@ type OrdersCustomBatchRequestEntryReturnLineItem struct {
 	// LineItemId: The ID of the line item to return. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to return. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to return.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -4427,6 +4500,14 @@ type OrdersRefundRequest struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: The amount that is refunded. Either amount or
+	// amountPretax and amountTax should be filled.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to refund amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
@@ -4504,6 +4585,10 @@ type OrdersReturnLineItemRequest struct {
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
+
+	// ProductId: The ID of the product to return. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to return.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -6590,6 +6675,10 @@ type TestOrder struct {
 	// be provided.
 	LineItems []*TestOrderLineItem `json:"lineItems,omitempty"`
 
+	// NotificationMode: Determines if test order must be pulled by merchant
+	// or pushed to merchant via push integration.
+	NotificationMode string `json:"notificationMode,omitempty"`
+
 	// PaymentMethod: The details of the payment method.
 	PaymentMethod *TestOrderPaymentMethod `json:"paymentMethod,omitempty"`
 
@@ -7144,7 +7233,7 @@ func (c *AccountsClaimwebsiteCall) Do(opts ...googleapi.CallOption) (*AccountsCl
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -7416,7 +7505,7 @@ func (c *AccountsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. This must be a multi-client account.",
+	//       "description": "The ID of the managing account. This must be a multi-client account, and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -7562,7 +7651,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -8047,7 +8136,7 @@ func (c *AccountsPatchCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -8204,7 +8293,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -8473,7 +8562,7 @@ func (c *AccountstatusesGetCall) Do(opts ...googleapi.CallOption) (*AccountStatu
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -8940,7 +9029,7 @@ func (c *AccounttaxGetCall) Do(opts ...googleapi.CallOption) (*AccountTax, error
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -9280,7 +9369,7 @@ func (c *AccounttaxPatchCall) Do(opts ...googleapi.CallOption) (*AccountTax, err
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -9437,7 +9526,7 @@ func (c *AccounttaxUpdateCall) Do(opts ...googleapi.CallOption) (*AccountTax, er
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -15118,7 +15207,7 @@ func (c *ShippingsettingsGetCall) Do(opts ...googleapi.CallOption) (*ShippingSet
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -15600,7 +15689,7 @@ func (c *ShippingsettingsPatchCall) Do(opts ...googleapi.CallOption) (*ShippingS
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,
@@ -15757,7 +15846,7 @@ func (c *ShippingsettingsUpdateCall) Do(opts ...googleapi.CallOption) (*Shipping
 	//       "type": "boolean"
 	//     },
 	//     "merchantId": {
-	//       "description": "The ID of the managing account. If this account is not a multi-client account, then this parameter must be the same as accountId.",
+	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
 	//       "location": "path",
 	//       "required": true,

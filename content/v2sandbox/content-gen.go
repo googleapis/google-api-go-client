@@ -921,26 +921,20 @@ type OrderShipment struct {
 	// Acceptable values are:
 	// - "gsx"
 	// - "ups"
-	// - "united parcel service"
 	// - "usps"
-	// - "united states postal service"
 	// - "fedex"
 	// - "dhl"
 	// - "ecourier"
 	// - "cxt"
 	// - "google"
-	// - "on trac"
 	// - "ontrac"
-	// - "on-trac"
-	// - "on_trac"
-	// - "delvic"
+	// - "emsy"
+	// - "ont"
+	// - "deliv"
 	// - "dynamex"
 	// - "lasership"
-	// - "smartpost"
-	// - "fedex smartpost"
 	// - "mpx"
 	// - "uds"
-	// - "united delivery service"
 	Carrier string `json:"carrier,omitempty"`
 
 	// CreationDate: Date on which the shipment has been created, in ISO
@@ -990,6 +984,10 @@ type OrderShipmentLineItemShipment struct {
 	// LineItemId: The id of the line item that is shipped. Either
 	// lineItemId or productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to ship. This is the REST ID used in
+	// the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity that is shipped.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -1120,6 +1118,16 @@ type OrdersCancelLineItemRequest struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: Amount to refund for the cancelation. Optional. If not
+	// set, Google will calculate the default based on the price and tax of
+	// the items involved. The amount must not be larger than the net amount
+	// left on the order.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to cancellation amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
@@ -1127,6 +1135,10 @@ type OrdersCancelLineItemRequest struct {
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
+
+	// ProductId: The ID of the product to cancel. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to cancel.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -1461,9 +1473,23 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// left on the order.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: Amount to refund for the cancelation. Optional. If not
+	// set, Google will calculate the default based on the price and tax of
+	// the items involved. The amount must not be larger than the net amount
+	// left on the order.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to cancellation amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to cancel. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to cancel.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -1501,6 +1527,14 @@ type OrdersCustomBatchRequestEntryRefund struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: The amount that is refunded. Either amount or
+	// amountPretax and amountTax should be filled.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to refund amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// Reason: The reason for the refund.
 	Reason string `json:"reason,omitempty"`
 
@@ -1534,6 +1568,10 @@ type OrdersCustomBatchRequestEntryReturnLineItem struct {
 	// LineItemId: The ID of the line item to return. Either lineItemId or
 	// productId is required.
 	LineItemId string `json:"lineItemId,omitempty"`
+
+	// ProductId: The ID of the product to return. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to return.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -1875,6 +1913,14 @@ type OrdersRefundRequest struct {
 	// Amount: The amount that is refunded.
 	Amount *Price `json:"amount,omitempty"`
 
+	// AmountPretax: The amount that is refunded. Either amount or
+	// amountPretax and amountTax should be filled.
+	AmountPretax *Price `json:"amountPretax,omitempty"`
+
+	// AmountTax: Tax amount that correspond to refund amount in
+	// amountPretax.
+	AmountTax *Price `json:"amountTax,omitempty"`
+
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
@@ -1952,6 +1998,10 @@ type OrdersReturnLineItemRequest struct {
 	// OperationId: The ID of the operation. Unique across all operations
 	// for a given order.
 	OperationId string `json:"operationId,omitempty"`
+
+	// ProductId: The ID of the product to return. This is the REST ID used
+	// in the products service. Either lineItemId or productId is required.
+	ProductId string `json:"productId,omitempty"`
 
 	// Quantity: The quantity to return.
 	Quantity int64 `json:"quantity,omitempty"`
@@ -2294,6 +2344,10 @@ type TestOrder struct {
 	// LineItems: Line items that are ordered. At least one line item must
 	// be provided.
 	LineItems []*TestOrderLineItem `json:"lineItems,omitempty"`
+
+	// NotificationMode: Determines if test order must be pulled by merchant
+	// or pushed to merchant via push integration.
+	NotificationMode string `json:"notificationMode,omitempty"`
 
 	// PaymentMethod: The details of the payment method.
 	PaymentMethod *TestOrderPaymentMethod `json:"paymentMethod,omitempty"`

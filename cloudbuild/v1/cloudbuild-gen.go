@@ -349,8 +349,8 @@ type BuildOptions struct {
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Standard machine type.
-	//   "N1_HIGHCPU_8" - Medium size.
-	//   "N1_HIGHCPU_32" - Large size.
+	//   "N1_HIGHCPU_8" - Highcpu machine with 8 CPUs.
+	//   "N1_HIGHCPU_32" - Highcpu machine with 32 CPUs.
 	MachineType string `json:"machineType,omitempty"`
 
 	// RequestedVerifyOption: Requested verifiability options.

@@ -377,7 +377,7 @@ type CryptoKey struct {
 
 	// Labels: Labels with user-defined metadata. For more information,
 	// see
-	// [Labeling CryptoKeys](/kms/docs/labeling-keys).
+	// [Labeling Keys](/kms/docs/labeling-keys).
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. The resource name for this CryptoKey in the

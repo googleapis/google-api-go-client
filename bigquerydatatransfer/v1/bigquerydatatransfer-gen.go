@@ -1057,7 +1057,10 @@ type TransferConfig struct {
 	// is done.
 	// Applicable only to data sources that do not support service
 	// accounts.
-	// When set to 0, the data source service account credentials are used.
+	// When set to 0, the data source service account credentials are
+	// used.
+	// May be negative. Note, that this identifier is not stable.
+	// It may change over time even for the same user.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1131,7 +1134,7 @@ func (s *TransferMessage) MarshalJSON() ([]byte, error) {
 }
 
 // TransferRun: Represents a data transfer run.
-// Next id: 23
+// Next id: 24
 type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`
@@ -1202,7 +1205,8 @@ type TransferRun struct {
 	// accounts.
 	// When set to 0, the data source service account credentials are
 	// used.
-	// May be negative.
+	// May be negative. Note, that this identifier is not stable.
+	// It may change over time even for the same user.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2685,7 +2689,7 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format /projects/{project_id}/locations/{location_id}\nor\n/projects/{project_id}/locations/-\nIn case when '-' is specified as location_id, location is infered from\nthe destination dataset region.",
+	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format /projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4381,7 +4385,7 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format /projects/{project_id}/locations/{location_id}\nor\n/projects/{project_id}/locations/-\nIn case when '-' is specified as location_id, location is infered from\nthe destination dataset region.",
+	//       "description": "The BigQuery project id where the transfer configuration should be created.\nMust be in the format /projects/{project_id}/locations/{location_id}\nIf specified location and location of the destination bigquery dataset\ndo not match - the request will fail.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

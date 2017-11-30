@@ -2007,6 +2007,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "poly:v1",
+   "name": "poly",
+   "version": "v1",
+   "title": "Poly API",
+   "description": "The Poly API provides read-only access to assets hosted on poly.google.com.",
+   "discoveryRestUrl": "https://poly.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/poly/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "prediction:v1.2",
    "name": "prediction",
    "version": "v1.2",

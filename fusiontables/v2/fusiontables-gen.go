@@ -4668,6 +4668,131 @@ func (c *TablePatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 
 }
 
+// method id "fusiontables.table.refetchSheet":
+
+type TableRefetchSheetCall struct {
+	s          *Service
+	tableId    string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// RefetchSheet: Replaces rows of the table with the rows of the
+// spreadsheet that is first imported from. Current rows remain visible
+// until all replacement rows are ready.
+func (r *TableService) RefetchSheet(tableId string) *TableRefetchSheetCall {
+	c := &TableRefetchSheetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tableId = tableId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *TableRefetchSheetCall) Fields(s ...googleapi.Field) *TableRefetchSheetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *TableRefetchSheetCall) Context(ctx context.Context) *TableRefetchSheetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *TableRefetchSheetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *TableRefetchSheetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "tables/{tableId}/refetch")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tableId": c.tableId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fusiontables.table.refetchSheet" call.
+// Exactly one of *Task or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Task.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *TableRefetchSheetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Task{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Replaces rows of the table with the rows of the spreadsheet that is first imported from. Current rows remain visible until all replacement rows are ready.",
+	//   "httpMethod": "POST",
+	//   "id": "fusiontables.table.refetchSheet",
+	//   "parameterOrder": [
+	//     "tableId"
+	//   ],
+	//   "parameters": {
+	//     "tableId": {
+	//       "description": "Table whose rows will be replaced from the spreadsheet.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "tables/{tableId}/refetch",
+	//   "response": {
+	//     "$ref": "Task"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/fusiontables"
+	//   ]
+	// }
+
+}
+
 // method id "fusiontables.table.replaceRows":
 
 type TableReplaceRowsCall struct {

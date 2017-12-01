@@ -1080,6 +1080,26 @@ func (s *HttpLoadBalancing) MarshalJSON() ([]byte, error) {
 // IPAllocationPolicy: Configuration for controlling how IPs are
 // allocated in the cluster.
 type IPAllocationPolicy struct {
+	// AllowRouteOverlap: If true, allow allocation of cluster CIDR ranges
+	// that overlap with certain
+	// kinds of network routes. By default we do not allow cluster CIDR
+	// ranges to
+	// intersect with any user declared routes. With allow_route_overlap ==
+	// true,
+	// we allow overlapping with CIDR ranges that are larger than the
+	// cluster CIDR
+	// range.
+	//
+	// If this field is set to true, then cluster and services CIDRs must
+	// be
+	// fully-specified (e.g. `10.96.0.0/14`, but not `/14`), which means:
+	// 1) When `use_ip_aliases` is true, `cluster_ipv4_cidr_block` and
+	//    `services_ipv4_cidr_block` must be fully-specified.
+	// 2) When `use_ip_aliases` is false, `cluster.cluster_ipv4_cidr` muse
+	// be
+	//    fully-specified.
+	AllowRouteOverlap bool `json:"allowRouteOverlap,omitempty"`
+
 	// ClusterIpv4Cidr: This field is deprecated, use
 	// cluster_ipv4_cidr_block.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
@@ -1198,15 +1218,15 @@ type IPAllocationPolicy struct {
 	// cluster.
 	UseIpAliases bool `json:"useIpAliases,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClusterIpv4Cidr") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllowRouteOverlap")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClusterIpv4Cidr") to
+	// NullFields is a list of field names (e.g. "AllowRouteOverlap") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

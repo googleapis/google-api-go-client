@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/4-8iVRS7XjXc8_q8wbRC_IRggBY\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/QsthGWG9JYScjn9llsqMMChWCIQ\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20171101",
+ "revision": "20171129",
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -727,9 +727,11 @@
      "description": "The frame rate of the inbound video data.",
      "enum": [
       "30fps",
-      "60fps"
+      "60fps",
+      "variable"
      ],
      "enumDescriptions": [
+      "",
       "",
       ""
      ]
@@ -766,9 +768,11 @@
       "240p",
       "360p",
       "480p",
-      "720p"
+      "720p",
+      "variable"
      ],
      "enumDescriptions": [
+      "",
       "",
       "",
       "",
@@ -3941,6 +3945,10 @@
       ""
      ]
     },
+    "enableAutoStart": {
+     "type": "boolean",
+     "description": "This setting indicates whether auto start is enabled for this broadcast."
+    },
     "enableClosedCaptions": {
      "type": "boolean",
      "description": "This setting indicates whether HTTP POST closed captioning is enabled for this broadcast. The ingestion URL of the closed captions is returned through the liveStreams API. This is mutually exclusive with using the closed_captions_type property, and is equivalent to setting closed_captions_type to CLOSED_CAPTIONS_HTTP_POST."
@@ -6183,6 +6191,19 @@
    "type": "object",
    "description": "A video resource represents a YouTube video.",
    "properties": {
+    "accessToken": {
+     "type": "string",
+     "description": "The access token to uniquely identify a revocable unlisted video.",
+     "annotations": {
+      "required": [
+       "youtube.videos.getRating",
+       "youtube.videos.list",
+       "youtube.videos.rate",
+       "youtube.videos.reportAbuse",
+       "youtube.videos.update"
+      ]
+     }
+    },
     "ageGating": {
      "$ref": "VideoAgeGating",
      "description": "Age restriction details related to a video. This data can only be retrieved by the video owner."

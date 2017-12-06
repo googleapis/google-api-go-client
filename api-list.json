@@ -4,6 +4,21 @@
  "items": [
   {
    "kind": "discovery#directoryItem",
+   "id": "abusiveexperiencereport:v1",
+   "name": "abusiveexperiencereport",
+   "version": "v1",
+   "title": "Google Abusive Experience Report API",
+   "description": "View Abusive Experience Report data, and get a list of sites that have a significant number of abusive experiences.",
+   "discoveryRestUrl": "https://abusiveexperiencereport.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/abusive-experience-report/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "acceleratedmobilepageurl:v1",
    "name": "acceleratedmobilepageurl",
    "version": "v1",
@@ -2324,7 +2339,7 @@
    "id": "script:v1",
    "name": "script",
    "version": "v1",
-   "title": "Google Apps Script Execution API",
+   "title": "Google Apps Script API",
    "description": "An API for managing and executing Google Apps Script projects.",
    "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
    "icons": {

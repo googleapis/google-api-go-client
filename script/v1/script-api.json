@@ -1,6 +1,6 @@
 {
   "batchPath": "batch",
-  "revision": "20171130",
+  "revision": "20171202",
   "documentationLink": "https://developers.google.com/apps-script/execution/rest/v1/scripts/run",
   "id": "script:v1",
   "fullyEncodeReservedExpansion": true,
@@ -11,21 +11,13 @@
     "scripts": {
       "methods": {
         "run": {
-          "httpMethod": "POST",
-          "parameterOrder": [
-            "scriptId"
-          ],
           "response": {
             "$ref": "Operation"
           },
-          "parameters": {
-            "scriptId": {
-              "location": "path",
-              "description": "The script ID of the script to be executed. To find the script ID, open\nthe project in the script editor and select **File \u003e Project properties**.",
-              "required": true,
-              "type": "string"
-            }
-          },
+          "parameterOrder": [
+            "scriptId"
+          ],
+          "httpMethod": "POST",
           "scopes": [
             "https://mail.google.com/",
             "https://www.google.com/calendar/feeds",
@@ -39,36 +31,48 @@
             "https://www.googleapis.com/auth/spreadsheets",
             "https://www.googleapis.com/auth/userinfo.email"
           ],
+          "parameters": {
+            "scriptId": {
+              "description": "The script ID of the script to be executed. To find the script ID, open\nthe project in the script editor and select **File \u003e Project properties**.",
+              "required": true,
+              "type": "string",
+              "location": "path"
+            }
+          },
           "flatPath": "v1/scripts/{scriptId}:run",
-          "id": "script.scripts.run",
           "path": "v1/scripts/{scriptId}:run",
+          "id": "script.scripts.run",
+          "description": "Runs a function in an Apps Script project. The project must be deployed\nfor use with the Apps Script API.\n\nThis method requires authorization with an OAuth 2.0 token that includes at\nleast one of the scopes listed in the [Authorization](#authorization)\nsection; script projects that do not require authorization cannot be\nexecuted through this API. To find the correct scopes to include in the\nauthentication token, open the project in the script editor, then select\n**File \u003e Project properties** and click the **Scopes** tab.",
           "request": {
             "$ref": "ExecutionRequest"
-          },
-          "description": "Runs a function in an Apps Script project. The project must be deployed\nfor use with the Apps Script API.\n\nThis method requires authorization with an OAuth 2.0 token that includes at\nleast one of the scopes listed in the [Authorization](#authorization)\nsection; script projects that do not require authorization cannot be\nexecuted through this API. To find the correct scopes to include in the\nauthentication token, open the project in the script editor, then select\n**File \u003e Project properties** and click the **Scopes** tab."
+          }
         }
       }
     }
   },
   "parameters": {
-    "fields": {
+    "upload_protocol": {
       "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
       "type": "string"
+    },
+    "prettyPrint": {
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true",
+      "location": "query"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
     },
     "uploadType": {
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
     "$.xgafv": {
-      "description": "V1 error format.",
-      "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
@@ -77,11 +81,16 @@
       "enum": [
         "1",
         "2"
-      ]
+      ],
+      "description": "V1 error format.",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
     },
     "alt": {
-      "description": "Data format for response.",
-      "default": "json",
       "enum": [
         "json",
         "media",
@@ -93,17 +102,19 @@
         "Media download with context-dependent Content-Type",
         "Responses with Content-Type of application/x-protobuf"
       ],
-      "location": "query"
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "key": {
-      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "quotaUser": {
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
@@ -111,31 +122,20 @@
       "location": "query"
     },
     "pp": {
-      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true"
-    },
-    "bearer_token": {
-      "location": "query",
-      "description": "OAuth bearer token.",
-      "type": "string"
+      "default": "true",
+      "location": "query"
     },
     "oauth_token": {
       "location": "query",
       "description": "OAuth 2.0 token for the current user.",
       "type": "string"
     },
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+    "bearer_token": {
       "type": "string",
-      "location": "query"
-    },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "type": "boolean",
-      "default": "true",
-      "location": "query"
+      "location": "query",
+      "description": "OAuth bearer token."
     }
   },
   "schemas": {
@@ -163,12 +163,12 @@
           "type": "boolean"
         },
         "response": {
-          "description": "If the script function returns successfully, this field contains an ExecutionResponse object with the function's return value.",
-          "type": "object",
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
-          }
+          },
+          "description": "If the script function returns successfully, this field contains an ExecutionResponse object with the function's return value.",
+          "type": "object"
         }
       },
       "id": "Operation"
@@ -177,14 +177,14 @@
       "description": "A stack trace through the script that shows where the execution failed.",
       "type": "object",
       "properties": {
+        "function": {
+          "description": "The name of the function that failed.",
+          "type": "string"
+        },
         "lineNumber": {
           "description": "The line number where the script failed.",
           "format": "int32",
           "type": "integer"
-        },
-        "function": {
-          "description": "The name of the function that failed.",
-          "type": "string"
         }
       },
       "id": "ScriptStackTraceElement"
@@ -193,6 +193,13 @@
       "description": "An object that provides information about the nature of an error resulting\nfrom an attempted execution of a script function using the Apps Script API.\nIf a run call\nsucceeds but the script function (or Apps Script itself) throws an exception,\nthe response body's error field\ncontains a\nStatus object. The `Status` object's `details` field\ncontains an array with a single one of these `ExecutionError` objects.",
       "type": "object",
       "properties": {
+        "scriptStackTraceElements": {
+          "description": "An array of objects that provide a stack trace through the script to show\nwhere the execution failed, with the deepest call first.",
+          "type": "array",
+          "items": {
+            "$ref": "ScriptStackTraceElement"
+          }
+        },
         "errorType": {
           "description": "The error type, for example `TypeError` or `ReferenceError`. If the error\ntype is unavailable, this field is not included.",
           "type": "string"
@@ -200,18 +207,12 @@
         "errorMessage": {
           "description": "The error message thrown by Apps Script, usually localized into the user's\nlanguage.",
           "type": "string"
-        },
-        "scriptStackTraceElements": {
-          "description": "An array of objects that provide a stack trace through the script to show\nwhere the execution failed, with the deepest call first.",
-          "type": "array",
-          "items": {
-            "$ref": "ScriptStackTraceElement"
-          }
         }
       },
       "id": "ExecutionError"
     },
     "Status": {
+      "id": "Status",
       "description": "If a `run` call succeeds but the script function (or Apps Script itself) throws an exception, the response body's error field contains this `Status` object.",
       "type": "object",
       "properties": {
@@ -219,11 +220,11 @@
           "description": "An array that contains a single ExecutionError object that provides information about the nature of the error.",
           "type": "array",
           "items": {
-            "type": "object",
             "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            }
+              "type": "any",
+              "description": "Properties of the object. Contains field @type with type URL."
+            },
+            "type": "object"
           }
         },
         "code": {
@@ -235,20 +236,19 @@
           "description": "A developer-facing error message, which is in English. Any user-facing error message is localized and sent in the [google.rpc.Status.details](google.rpc.Status.details) field, or localized by the client.",
           "type": "string"
         }
-      },
-      "id": "Status"
+      }
     },
     "ExecutionRequest": {
       "description": "A request to run the function in a script. The script is identified by the\nspecified `script_id`. Executing a function on a script returns results\nbased on the implementation of the script.",
       "type": "object",
       "properties": {
         "function": {
-          "description": "The name of the function to execute in the given script. The name does not\ninclude parentheses or parameters.",
-          "type": "string"
+          "type": "string",
+          "description": "The name of the function to execute in the given script. The name does not\ninclude parentheses or parameters."
         },
         "devMode": {
-          "description": "If `true` and the user is an owner of the script, the script runs at the\nmost recently saved version rather than the version deployed for use with\nthe Apps Script API. Optional; default is `false`.",
-          "type": "boolean"
+          "type": "boolean",
+          "description": "If `true` and the user is an owner of the script, the script runs at the\nmost recently saved version rather than the version deployed for use with\nthe Apps Script API. Optional; default is `false`."
         },
         "parameters": {
           "description": "The parameters to be passed to the function being executed. The object type\nfor each parameter should match the expected type in Apps Script.\nParameters cannot be Apps Script-specific object types (such as a\n`Document` or a `Calendar`); they can only be primitive types such as\n`string`, `number`, `array`, `object`, or `boolean`. Optional.",
@@ -265,16 +265,28 @@
       "id": "ExecutionRequest"
     }
   },
-  "protocol": "rest",
   "icons": {
-    "x16": "http://www.google.com/images/icons/product/search-16.gif",
-    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+    "x32": "http://www.google.com/images/icons/product/search-32.gif",
+    "x16": "http://www.google.com/images/icons/product/search-16.gif"
   },
+  "protocol": "rest",
   "version": "v1",
   "baseUrl": "https://script.googleapis.com/",
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/forms": {
+          "description": "View and manage your forms in Google Drive"
+        },
+        "https://www.google.com/m8/feeds": {
+          "description": "Manage your contacts"
+        },
+        "https://www.googleapis.com/auth/userinfo.email": {
+          "description": "View your email address"
+        },
+        "https://www.google.com/calendar/feeds": {
+          "description": "Manage your calendars"
+        },
         "https://www.googleapis.com/auth/groups": {
           "description": "View and manage your Google Groups"
         },
@@ -290,30 +302,18 @@
         "https://www.googleapis.com/auth/admin.directory.group": {
           "description": "View and manage the provisioning of groups on your domain"
         },
-        "https://www.googleapis.com/auth/spreadsheets": {
-          "description": "View and manage your spreadsheets in Google Drive"
-        },
         "https://mail.google.com/": {
           "description": "Read, send, delete, and manage your email"
         },
-        "https://www.googleapis.com/auth/forms": {
-          "description": "View and manage your forms in Google Drive"
-        },
-        "https://www.google.com/m8/feeds": {
-          "description": "Manage your contacts"
-        },
-        "https://www.googleapis.com/auth/userinfo.email": {
-          "description": "View your email address"
-        },
-        "https://www.google.com/calendar/feeds": {
-          "description": "Manage your calendars"
+        "https://www.googleapis.com/auth/spreadsheets": {
+          "description": "View and manage your spreadsheets in Google Drive"
         }
       }
     }
   },
-  "kind": "discovery#restDescription",
   "description": "An API for managing and executing Google Apps Script projects.",
   "servicePath": "",
+  "kind": "discovery#restDescription",
   "rootUrl": "https://script.googleapis.com/",
   "basePath": "",
   "ownerDomain": "google.com",

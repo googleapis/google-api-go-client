@@ -1318,7 +1318,7 @@
       "type": "object",
       "properties": {
         "outgoingCallsDisabled": {
-          "description": "Whether outgoing calls are disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether outgoing calls are disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "screenCaptureDisabled": {
@@ -1326,11 +1326,11 @@
           "type": "boolean"
         },
         "bluetoothDisabled": {
-          "description": "Whether bluetooth is disabled. Prefer this setting over bluetooth_config_disabled because bluetooth_config_disabled can be bypassed by the user. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether bluetooth is disabled. Prefer this setting over bluetooth_config_disabled because bluetooth_config_disabled can be bypassed by the user. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "installAppsDisabled": {
-          "description": "Whether user installation of apps is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether user installation of apps is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "factoryResetDisabled": {
@@ -1365,11 +1365,11 @@
           }
         },
         "networkResetDisabled": {
-          "description": "Whether resetting network settings is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether resetting network settings is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "shortSupportMessage": {
-          "description": "A message displayed to the user in the settings screen wherever functionality has been disabled by the admin. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "A message displayed to the user in the settings screen wherever functionality has been disabled by the admin. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "$ref": "UserFacingMessage"
         },
         "wifiConfigDisabled": {
@@ -1381,7 +1381,7 @@
           "type": "boolean"
         },
         "keyguardDisabledFeatures": {
-          "description": "Disabled keyguard customizations, such as widgets. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Disabled keyguard customizations, such as widgets. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "enumDescriptions": [
             "This value is ignored.",
             "Disable the camera on secure keyguard screens (e.g. PIN).",
@@ -1433,11 +1433,11 @@
           "type": "boolean"
         },
         "setUserIconDisabled": {
-          "description": "Whether changing the user icon is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether changing the user icon is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "recommendedGlobalProxy": {
-          "description": "The network-independent global HTTP proxy. Typically proxies should be configured per-network in open_network_configuration. However for unusual configurations like general internal filtering a global HTTP proxy may be useful. If the proxy is not accessible, network access may break. The global proxy is only a recommendation and some apps may ignore it. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "The network-independent global HTTP proxy. Typically proxies should be configured per-network in open_network_configuration. However for unusual configurations like general internal filtering a global HTTP proxy may be useful. If the proxy is not accessible, network access may break. The global proxy is only a recommendation and some apps may ignore it. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "$ref": "ProxyInfo"
         },
         "applications": {
@@ -1448,11 +1448,11 @@
           }
         },
         "outgoingBeamDisabled": {
-          "description": "Whether using NFC to beam out data from apps is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether using NFC to beam out data from apps is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "credentialsConfigDisabled": {
-          "description": "Whether configuring user credentials is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring user credentials is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "autoTimeRequired": {
@@ -1460,11 +1460,11 @@
           "type": "boolean"
         },
         "smsDisabled": {
-          "description": "Whether sending or receiving SMS messages is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether sending or receiving SMS messages is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "permittedInputMethods": {
-          "description": "If present, only input methods provided by packages in this list are permitted. If this field is present, but the list is empty, then only system input methods are permitted. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "If present, only input methods provided by packages in this list are permitted. If this field is present, but the list is empty, then only system input methods are permitted. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "$ref": "PackageNameList"
         },
         "adjustVolumeDisabled": {
@@ -1472,14 +1472,14 @@
           "type": "boolean"
         },
         "accountTypesWithManagementDisabled": {
-          "description": "Account types that cannot be managed by the user. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Account types that cannot be managed by the user. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "array",
           "items": {
             "type": "string"
           }
         },
         "vpnConfigDisabled": {
-          "description": "Whether configuring VPN is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring VPN is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "frpAdminEmails": {
@@ -1490,11 +1490,11 @@
           }
         },
         "alwaysOnVpnPackage": {
-          "description": "Configuration for an always-on VPN connection. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Configuration for an always-on VPN connection. Use with vpn_config_disabled to prevent modification of this setting. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "$ref": "AlwaysOnVpnPackage"
         },
         "tetheringConfigDisabled": {
-          "description": "Whether configuring tethering and portable hotspots is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring tethering and portable hotspots is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "name": {
@@ -1502,7 +1502,7 @@
           "type": "string"
         },
         "uninstallAppsDisabled": {
-          "description": "Whether user uninstallation of applications is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether user uninstallation of applications is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "funDisabled": {
@@ -1530,19 +1530,19 @@
           "type": "boolean"
         },
         "mountPhysicalMediaDisabled": {
-          "description": "Whether the user mounting physical external media is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether the user mounting physical external media is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "ensureVerifyAppsEnabled": {
-          "description": "Whether application verification is forced to be enabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether application verification is forced to be enabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "mobileNetworksConfigDisabled": {
-          "description": "Whether configuring mobile networks is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring mobile networks is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "dataRoamingDisabled": {
-          "description": "Whether roaming data services are disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether roaming data services are disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "statusBarDisabled": {
@@ -1550,7 +1550,7 @@
           "type": "boolean"
         },
         "longSupportMessage": {
-          "description": "A message displayed to the user in the device administators settings screen. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "A message displayed to the user in the device administators settings screen. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "$ref": "UserFacingMessage"
         },
         "cameraDisabled": {
@@ -1562,7 +1562,7 @@
           "$ref": "PasswordRequirements"
         },
         "setWallpaperDisabled": {
-          "description": "Whether changing the wallpaper is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether changing the wallpaper is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "version": {
@@ -1586,19 +1586,19 @@
           "type": "boolean"
         },
         "bluetoothContactSharingDisabled": {
-          "description": "Whether bluetooth contact sharing is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether bluetooth contact sharing is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "bluetoothConfigDisabled": {
-          "description": "Whether configuring bluetooth is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring bluetooth is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "cellBroadcastsConfigDisabled": {
-          "description": "Whether configuring cell broadcast is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether configuring cell broadcast is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "usbFileTransferDisabled": {
-          "description": "Whether transferring files over USB is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether transferring files over USB is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "removeUserDisabled": {
@@ -1610,7 +1610,7 @@
           "type": "boolean"
         },
         "createWindowsDisabled": {
-          "description": "Whether creating windows besides app windows is disabled. \u003ci\u003eRequires the beta version of Android Cloud Policy.\u003c/i\u003e",
+          "description": "Whether creating windows besides app windows is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
         "persistentPreferredActivities": {

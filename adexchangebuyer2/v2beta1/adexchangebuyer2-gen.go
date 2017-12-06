@@ -1647,17 +1647,19 @@ type FilterSet struct {
 
 	// CreativeId: The ID of the creative on which to filter; optional. This
 	// field may be set
-	// only for a filter set that accesses buyer-level troubleshooting data,
-	// i.e.
-	// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+	// only for a filter set that accesses account-level troubleshooting
+	// data,
+	// i.e. one whose name matches the
+	// `bidders/*/accounts/*/filterSets/*`
 	// pattern.
 	CreativeId string `json:"creativeId,omitempty"`
 
 	// DealId: The ID of the deal on which to filter; optional. This field
 	// may be set
-	// only for a filter set that accesses buyer-level troubleshooting data,
-	// i.e.
-	// one whose name matches the `bidders/*/accounts/*/filterSets/*`
+	// only for a filter set that accesses account-level troubleshooting
+	// data,
+	// i.e. one whose name matches the
+	// `bidders/*/accounts/*/filterSets/*`
 	// pattern.
 	DealId int64 `json:"dealId,omitempty,string"`
 
@@ -1689,7 +1691,7 @@ type FilterSet struct {
 	// troubleshooting
 	// data)
 	// - `bidders/*/accounts/*/filterSets/*` (for accessing
-	// buyer-level
+	// account-level
 	// troubleshooting data)
 	//
 	// This field is required in create operations.

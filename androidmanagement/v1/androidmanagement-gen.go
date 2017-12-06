@@ -1833,8 +1833,8 @@ func (s *PersistentPreferredActivity) MarshalJSON() ([]byte, error) {
 // Policy: A policy, which governs behavior for a device.
 type Policy struct {
 	// AccountTypesWithManagementDisabled: Account types that cannot be
-	// managed by the user. <i>Requires the beta version of Android Cloud
-	// Policy.</i>
+	// managed by the user. <i>Requires the beta version of the Android
+	// Device Policy app.</i>
 	AccountTypesWithManagementDisabled []string `json:"accountTypesWithManagementDisabled,omitempty"`
 
 	// AddUserDisabled: Whether adding new users and profiles is disabled.
@@ -1845,7 +1845,8 @@ type Policy struct {
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// Use with vpn_config_disabled to prevent modification of this setting.
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	AlwaysOnVpnPackage *AlwaysOnVpnPackage `json:"alwaysOnVpnPackage,omitempty"`
 
 	// Applications: Policy applied to apps.
@@ -1862,24 +1863,26 @@ type Policy struct {
 	BlockApplicationsEnabled bool `json:"blockApplicationsEnabled,omitempty"`
 
 	// BluetoothConfigDisabled: Whether configuring bluetooth is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	BluetoothConfigDisabled bool `json:"bluetoothConfigDisabled,omitempty"`
 
 	// BluetoothContactSharingDisabled: Whether bluetooth contact sharing is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	BluetoothContactSharingDisabled bool `json:"bluetoothContactSharingDisabled,omitempty"`
 
 	// BluetoothDisabled: Whether bluetooth is disabled. Prefer this setting
 	// over bluetooth_config_disabled because bluetooth_config_disabled can
-	// be bypassed by the user. <i>Requires the beta version of Android
-	// Cloud Policy.</i>
+	// be bypassed by the user. <i>Requires the beta version of the Android
+	// Device Policy app.</i>
 	BluetoothDisabled bool `json:"bluetoothDisabled,omitempty"`
 
 	// CameraDisabled: Whether all cameras on the device are disabled.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
 
 	// CellBroadcastsConfigDisabled: Whether configuring cell broadcast is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
 	// ComplianceRules: Rules declaring which mitigating actions to take
@@ -1889,16 +1892,17 @@ type Policy struct {
 	ComplianceRules []*ComplianceRule `json:"complianceRules,omitempty"`
 
 	// CreateWindowsDisabled: Whether creating windows besides app windows
-	// is disabled. <i>Requires the beta version of Android Cloud
-	// Policy.</i>
+	// is disabled. <i>Requires the beta version of the Android Device
+	// Policy app.</i>
 	CreateWindowsDisabled bool `json:"createWindowsDisabled,omitempty"`
 
 	// CredentialsConfigDisabled: Whether configuring user credentials is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
 
 	// DataRoamingDisabled: Whether roaming data services are disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	DataRoamingDisabled bool `json:"dataRoamingDisabled,omitempty"`
 
 	// DebuggingFeaturesAllowed: Whether the user is allowed to enable
@@ -1918,8 +1922,8 @@ type Policy struct {
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
 	// EnsureVerifyAppsEnabled: Whether application verification is forced
-	// to be enabled. <i>Requires the beta version of Android Cloud
-	// Policy.</i>
+	// to be enabled. <i>Requires the beta version of the Android Device
+	// Policy app.</i>
 	EnsureVerifyAppsEnabled bool `json:"ensureVerifyAppsEnabled,omitempty"`
 
 	// FactoryResetDisabled: Whether factory resetting from settings is
@@ -1938,7 +1942,7 @@ type Policy struct {
 	FunDisabled bool `json:"funDisabled,omitempty"`
 
 	// InstallAppsDisabled: Whether user installation of apps is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	InstallAppsDisabled bool `json:"installAppsDisabled,omitempty"`
 
 	// InstallUnknownSourcesAllowed: Whether the user is allowed to enable
@@ -1950,7 +1954,8 @@ type Policy struct {
 	KeyguardDisabled bool `json:"keyguardDisabled,omitempty"`
 
 	// KeyguardDisabledFeatures: Disabled keyguard customizations, such as
-	// widgets. <i>Requires the beta version of Android Cloud Policy.</i>
+	// widgets. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	//
 	// Possible values:
 	//   "KEYGUARD_DISABLED_FEATURE_UNSPECIFIED" - This value is ignored.
@@ -1971,8 +1976,8 @@ type Policy struct {
 	KeyguardDisabledFeatures []string `json:"keyguardDisabledFeatures,omitempty"`
 
 	// LongSupportMessage: A message displayed to the user in the device
-	// administators settings screen. <i>Requires the beta version of
-	// Android Cloud Policy.</i>
+	// administators settings screen. <i>Requires the beta version of the
+	// Android Device Policy app.</i>
 	LongSupportMessage *UserFacingMessage `json:"longSupportMessage,omitempty"`
 
 	// MaximumTimeToLock: Maximum time in milliseconds for user activity
@@ -1981,7 +1986,8 @@ type Policy struct {
 	MaximumTimeToLock int64 `json:"maximumTimeToLock,omitempty,string"`
 
 	// MobileNetworksConfigDisabled: Whether configuring mobile networks is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	MobileNetworksConfigDisabled bool `json:"mobileNetworksConfigDisabled,omitempty"`
 
 	// ModifyAccountsDisabled: Whether adding or removing accounts is
@@ -1989,8 +1995,8 @@ type Policy struct {
 	ModifyAccountsDisabled bool `json:"modifyAccountsDisabled,omitempty"`
 
 	// MountPhysicalMediaDisabled: Whether the user mounting physical
-	// external media is disabled. <i>Requires the beta version of Android
-	// Cloud Policy.</i>
+	// external media is disabled. <i>Requires the beta version of the
+	// Android Device Policy app.</i>
 	MountPhysicalMediaDisabled bool `json:"mountPhysicalMediaDisabled,omitempty"`
 
 	// Name: The name of the policy in the form
@@ -2009,7 +2015,7 @@ type Policy struct {
 	NetworkEscapeHatchEnabled bool `json:"networkEscapeHatchEnabled,omitempty"`
 
 	// NetworkResetDisabled: Whether resetting network settings is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	NetworkResetDisabled bool `json:"networkResetDisabled,omitempty"`
 
 	// OpenNetworkConfiguration: Network configuration for the device. See
@@ -2017,11 +2023,12 @@ type Policy struct {
 	OpenNetworkConfiguration googleapi.RawMessage `json:"openNetworkConfiguration,omitempty"`
 
 	// OutgoingBeamDisabled: Whether using NFC to beam out data from apps is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	OutgoingBeamDisabled bool `json:"outgoingBeamDisabled,omitempty"`
 
 	// OutgoingCallsDisabled: Whether outgoing calls are disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	OutgoingCallsDisabled bool `json:"outgoingCallsDisabled,omitempty"`
 
 	// PasswordRequirements: Password requirements.
@@ -2030,7 +2037,7 @@ type Policy struct {
 	// PermittedInputMethods: If present, only input methods provided by
 	// packages in this list are permitted. If this field is present, but
 	// the list is empty, then only system input methods are permitted.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	PermittedInputMethods *PackageNameList `json:"permittedInputMethods,omitempty"`
 
 	// PersistentPreferredActivities: Default intent handler activities.
@@ -2042,7 +2049,7 @@ type Policy struct {
 	// general internal filtering a global HTTP proxy may be useful. If the
 	// proxy is not accessible, network access may break. The global proxy
 	// is only a recommendation and some apps may ignore it. <i>Requires the
-	// beta version of Android Cloud Policy.</i>
+	// beta version of the Android Device Policy app.</i>
 	RecommendedGlobalProxy *ProxyInfo `json:"recommendedGlobalProxy,omitempty"`
 
 	// RemoveUserDisabled: Whether removing other users is disabled.
@@ -2056,20 +2063,20 @@ type Policy struct {
 	ScreenCaptureDisabled bool `json:"screenCaptureDisabled,omitempty"`
 
 	// SetUserIconDisabled: Whether changing the user icon is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	SetUserIconDisabled bool `json:"setUserIconDisabled,omitempty"`
 
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
 
 	// ShortSupportMessage: A message displayed to the user in the settings
 	// screen wherever functionality has been disabled by the admin.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	ShortSupportMessage *UserFacingMessage `json:"shortSupportMessage,omitempty"`
 
 	// SmsDisabled: Whether sending or receiving SMS messages is disabled.
-	// <i>Requires the beta version of Android Cloud Policy.</i>
+	// <i>Requires the beta version of the Android Device Policy app.</i>
 	SmsDisabled bool `json:"smsDisabled,omitempty"`
 
 	// StatusBarDisabled: Whether the status bar is disabled. This disables
@@ -2098,12 +2105,13 @@ type Policy struct {
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 
 	// TetheringConfigDisabled: Whether configuring tethering and portable
-	// hotspots is disabled. <i>Requires the beta version of Android Cloud
-	// Policy.</i>
+	// hotspots is disabled. <i>Requires the beta version of the Android
+	// Device Policy app.</i>
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
 
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	UninstallAppsDisabled bool `json:"uninstallAppsDisabled,omitempty"`
 
 	// UnmuteMicrophoneDisabled: Whether the microphone is muted and
@@ -2111,7 +2119,8 @@ type Policy struct {
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
 
 	// UsbFileTransferDisabled: Whether transferring files over USB is
-	// disabled. <i>Requires the beta version of Android Cloud Policy.</i>
+	// disabled. <i>Requires the beta version of the Android Device Policy
+	// app.</i>
 	UsbFileTransferDisabled bool `json:"usbFileTransferDisabled,omitempty"`
 
 	// Version: The version of the policy. This is a read-only field. The
@@ -2119,7 +2128,7 @@ type Policy struct {
 	Version int64 `json:"version,omitempty,string"`
 
 	// VpnConfigDisabled: Whether configuring VPN is disabled. <i>Requires
-	// the beta version of Android Cloud Policy.</i>
+	// the beta version of the Android Device Policy app.</i>
 	VpnConfigDisabled bool `json:"vpnConfigDisabled,omitempty"`
 
 	// WifiConfigDisabled: Whether configuring WiFi access points is

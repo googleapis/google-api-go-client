@@ -1249,6 +1249,49 @@ type GooglePrivacyDlpV2beta1CryptoReplaceFfxFpeConfig struct {
 	// [2, 62].
 	Radix int64 `json:"radix,omitempty"`
 
+	// SurrogateInfoType: The custom info type to annotate the surrogate
+	// with.
+	// This annotation will be applied to the surrogate by prefixing it
+	// with
+	// the name of the custom info type followed by the number of
+	// characters comprising the surrogate. The following scheme defines
+	// the
+	// format: info_type_name(surrogate_character_count):surrogate
+	//
+	// For example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE'
+	// and
+	// the surrogate is 'abc', the full replacement value
+	// will be: 'MY_TOKEN_INFO_TYPE(3):abc'
+	//
+	// This annotation identifies the surrogate when inspecting content
+	// using the
+	// custom info
+	// type
+	// [`SurrogateType`](/dlp/docs/reference/rest/v2beta1/InspectConfig#
+	// surrogatetype).
+	// This facilitates reversal of the surrogate when it occurs in free
+	// text.
+	//
+	// In order for inspection to work properly, the name of this info type
+	// must
+	// not occur naturally anywhere in your data; otherwise, inspection
+	// may
+	// find a surrogate that does not correspond to an actual
+	// identifier.
+	// Therefore, choose your custom info type name carefully after
+	// considering
+	// what your data looks like. One way to select a name that has a high
+	// chance
+	// of yielding reliable detection is to include one or more unicode
+	// characters
+	// that are highly improbable to exist in your data.
+	// For example, assuming your data is entered from a regular ASCII
+	// keyboard,
+	// the symbol with the hex code point 29DD might be used like
+	// so:
+	// ⧝MY_TOKEN_TYPE
+	SurrogateInfoType *GooglePrivacyDlpV2beta1InfoType `json:"surrogateInfoType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CommonAlphabet") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1285,6 +1328,9 @@ type GooglePrivacyDlpV2beta1CustomInfoType struct {
 	// that do not conflict with built-in info types or other custom info
 	// types.
 	InfoType *GooglePrivacyDlpV2beta1InfoType `json:"infoType,omitempty"`
+
+	// SurrogateType: Surrogate info type.
+	SurrogateType *GooglePrivacyDlpV2beta1SurrogateType `json:"surrogateType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dictionary") to
 	// unconditionally include in API requests. By default, fields with
@@ -4160,6 +4206,21 @@ func (s *GooglePrivacyDlpV2beta1SummaryResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2beta1SummaryResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2beta1SurrogateType: Message for detecting output
+// from deidentification transformations
+// such
+// as
+// [`CryptoReplaceFfxFpeConfig`](/dlp/docs/reference/rest/v2beta1/cont
+// ent/deidentify#CryptoReplaceFfxFpeConfig).
+// These types of transformations are
+// those that perform pseudonymization, thereby producing a "surrogate"
+// as
+// output. This should be used in conjunction with a field on
+// the
+// transformation such as `surrogate_info_type`.
+type GooglePrivacyDlpV2beta1SurrogateType struct {
 }
 
 // GooglePrivacyDlpV2beta1Table: Structured content to inspect. Up to

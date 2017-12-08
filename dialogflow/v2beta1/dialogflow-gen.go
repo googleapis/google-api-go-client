@@ -1057,7 +1057,7 @@ type ExportAgentResponse struct {
 
 	// AgentUri: The URI to a file containing the exported agent. This field
 	// is populated
-	// only if `agent_uri`
+	// only if `agent_uri` is specified in `ExportAgentRequest`.
 	AgentUri string `json:"agentUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AgentContent") to
@@ -2628,13 +2628,13 @@ func (s *OriginalDetectIntentRequest) MarshalJSON() ([]byte, error) {
 
 // QueryInput: Represents the query input. It can contain either:
 //
-// 1.  an audio config which
+// 1.  An audio config which
 //     instructs the speech recognizer how to process the speech
-// audio,
+// audio.
 //
-// 2.  a conversational query in the form of text, or
+// 2.  A conversational query in the form of text,.
 //
-// 3.  an event that specifies which intent to trigger.
+// 3.  An event that specifies which intent to trigger.
 type QueryInput struct {
 	// AudioConfig: Instructs the speech recognizer how to process the
 	// speech audio.

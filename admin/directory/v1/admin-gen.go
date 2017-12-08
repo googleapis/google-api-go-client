@@ -678,41 +678,70 @@ func (s *Asps) MarshalJSON() ([]byte, error) {
 // CalendarResource: JSON template for Calendar Resource object in
 // Directory API.
 type CalendarResource struct {
+	// BuildingId: Unique ID for the building a resource is located in.
+	BuildingId string `json:"buildingId,omitempty"`
+
+	// Capacity: Capacity of a resource, number of seats in a room.
+	Capacity int64 `json:"capacity,omitempty"`
+
 	// Etags: ETag of the resource.
 	Etags string `json:"etags,omitempty"`
 
-	// GeneratedResourceName: The auto-generated name of the calendar
-	// resource which includes metadata about the resource such as building
-	// name, floor, capacity, etc. For example, NYC-2-Training Room 1A (16)
+	FeatureInstances interface{} `json:"featureInstances,omitempty"`
+
+	// FloorName: Name of the floor a resource is located on.
+	FloorName string `json:"floorName,omitempty"`
+
+	// FloorSection: Name of the section within a floor a resource is
+	// located in.
+	FloorSection string `json:"floorSection,omitempty"`
+
+	// GeneratedResourceName: The read-only auto-generated name of the
+	// calendar resource which includes metadata about the resource such as
+	// building name, floor, capacity, etc. For example, "NYC-2-Training
+	// Room 1A (16)".
 	GeneratedResourceName string `json:"generatedResourceName,omitempty"`
 
 	// Kind: The type of the resource. For calendar resources, the value is
 	// admin#directory#resources#calendars#CalendarResource.
 	Kind string `json:"kind,omitempty"`
 
-	// ResourceDescription: The brief description of the calendar resource.
+	// ResourceCategory: The category of the calendar resource. Either
+	// CONFERENCE_ROOM or OTHER. Legacy data is set to CATEGORY_UNKNOWN.
+	ResourceCategory string `json:"resourceCategory,omitempty"`
+
+	// ResourceDescription: Description of the resource, visible only to
+	// admins. The brief description of the calendar resource.
 	ResourceDescription string `json:"resourceDescription,omitempty"`
 
 	// ResourceEmail: The read-only email ID for the calendar resource.
-	// Generated as part of creating a new calendar resource.
+	// Generated as part of creating a new calendar resource. The read-only
+	// email for the calendar resource. Generated as part of creating a new
+	// calendar resource.
 	ResourceEmail string `json:"resourceEmail,omitempty"`
 
 	// ResourceId: The unique ID for the calendar resource.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// ResourceName: The name of the calendar resource. For example,
+	// "Training Room 1A". The name of the calendar resource. For example,
 	// Training Room 1A
 	ResourceName string `json:"resourceName,omitempty"`
 
-	// ResourceType: The type of the calendar resource. Used for grouping
-	// resources in the calendar user interface.
+	// ResourceType: The type of the calendar resource, intended for
+	// non-room resources. The type of the calendar resource. Used for
+	// grouping resources in the calendar user interface.
 	ResourceType string `json:"resourceType,omitempty"`
+
+	// UserVisibleDescription: Description of the resource, visible to users
+	// and admins.
+	UserVisibleDescription string `json:"userVisibleDescription,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Etags") to
+	// ForceSendFields is a list of field names (e.g. "BuildingId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -720,8 +749,8 @@ type CalendarResource struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etags") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "BuildingId") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -866,6 +895,9 @@ type ChromeOsDevice struct {
 	// BootMode: Chromebook boot mode (Read-only)
 	BootMode string `json:"bootMode,omitempty"`
 
+	// DeviceFiles: List of device files to download (Read-only)
+	DeviceFiles []*ChromeOsDeviceDeviceFiles `json:"deviceFiles,omitempty"`
+
 	// DeviceId: Unique identifier of Chrome OS Device (Read-only)
 	DeviceId string `json:"deviceId,omitempty"`
 
@@ -988,6 +1020,42 @@ type ChromeOsDeviceActiveTimeRanges struct {
 
 func (s *ChromeOsDeviceActiveTimeRanges) MarshalJSON() ([]byte, error) {
 	type NoMethod ChromeOsDeviceActiveTimeRanges
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ChromeOsDeviceDeviceFiles struct {
+	// CreateTime: Date and time the file was created
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DownloadUrl: File downlod URL
+	DownloadUrl string `json:"downloadUrl,omitempty"`
+
+	// Name: File name
+	Name string `json:"name,omitempty"`
+
+	// Type: File type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceDeviceFiles) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceDeviceFiles
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1420,6 +1488,67 @@ type Domains2 struct {
 
 func (s *Domains2) MarshalJSON() ([]byte, error) {
 	type NoMethod Domains2
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Feature: JSON template for Feature object in Directory API.
+type Feature struct {
+	// Etags: ETag of the resource.
+	Etags string `json:"etags,omitempty"`
+
+	// Kind: Kind of resource this is.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: The name of the feature.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Etags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Etags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Feature) MarshalJSON() ([]byte, error) {
+	type NoMethod Feature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FeatureInstance: JSON template for a "feature instance".
+type FeatureInstance struct {
+	Feature *Feature `json:"feature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Feature") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Feature") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FeatureInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod FeatureInstance
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

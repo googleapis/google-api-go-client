@@ -391,37 +391,6 @@ func (s *AppEngineHttpTarget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppEngineQueueConfig: Deprecated. Use AppEngineHttpTarget.
-type AppEngineQueueConfig struct {
-	// AppEngineRoutingOverride: Deprecated. Use
-	// AppEngineHttpTarget.app_engine_routing_override.
-	AppEngineRoutingOverride *AppEngineRouting `json:"appEngineRoutingOverride,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AppEngineRoutingOverride") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineRoutingOverride")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppEngineQueueConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AppEngineQueueConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AppEngineRouting: App Engine Routing.
 //
 // For more information about services, versions, and instances see
@@ -588,56 +557,6 @@ type AppEngineRouting struct {
 
 func (s *AppEngineRouting) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineRouting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AppEngineTaskTarget: Deprecated. Use AppEngineHttpRequest.
-type AppEngineTaskTarget struct {
-	// AppEngineRouting: Deprecated. Use
-	// AppEngineHttpRequest.app_engine_routing.
-	AppEngineRouting *AppEngineRouting `json:"appEngineRouting,omitempty"`
-
-	// Headers: Deprecated. Use AppEngineHttpRequest.headers.
-	Headers map[string]string `json:"headers,omitempty"`
-
-	// HttpMethod: Deprecated. Use AppEngineHttpRequest.http_method.
-	//
-	// Possible values:
-	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
-	//   "POST" - HTTP Post
-	//   "GET" - HTTP Get
-	//   "HEAD" - HTTP Head
-	//   "PUT" - HTTP Put
-	//   "DELETE" - HTTP Delete
-	HttpMethod string `json:"httpMethod,omitempty"`
-
-	// Payload: Deprecated. Use AppEngineHttpRequest.payload.
-	Payload string `json:"payload,omitempty"`
-
-	// RelativeUrl: Deprecated. Use AppEngineHttpRequest.relative_url.
-	RelativeUrl string `json:"relativeUrl,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AppEngineRouting") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineRouting") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AppEngineTaskTarget) MarshalJSON() ([]byte, error) {
-	type NoMethod AppEngineTaskTarget
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1273,43 +1192,8 @@ func (s *PullMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PullQueueConfig: Deprecated. Use PullTarget.
-type PullQueueConfig struct {
-}
-
 // PullTarget: Pull target.
 type PullTarget struct {
-}
-
-// PullTaskTarget: Deprecated. Use PullMessage.
-type PullTaskTarget struct {
-	// Payload: Deprecated. Use PullMessage.payload.
-	Payload string `json:"payload,omitempty"`
-
-	// Tag: Deprecated. Use PullMessage.tag.
-	Tag string `json:"tag,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Payload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Payload") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PullTaskTarget) MarshalJSON() ([]byte, error) {
-	type NoMethod PullTaskTarget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // PullTasksRequest: Request message for pulling tasks using
@@ -1479,9 +1363,6 @@ type Queue struct {
 	// An App Engine queue is a queue that has an AppEngineHttpTarget.
 	AppEngineHttpTarget *AppEngineHttpTarget `json:"appEngineHttpTarget,omitempty"`
 
-	// AppEngineQueueConfig: Deprecated. Use Queue.app_engine_http_target.
-	AppEngineQueueConfig *AppEngineQueueConfig `json:"appEngineQueueConfig,omitempty"`
-
 	// Name: The queue name.
 	//
 	// The queue name must have the following
@@ -1507,9 +1388,6 @@ type Queue struct {
 	// Caller-specified and required in CreateQueueRequest, after which
 	// it becomes output only.
 	Name string `json:"name,omitempty"`
-
-	// PullQueueConfig: Deprecated. Use Queue.pull_target.
-	PullQueueConfig *PullQueueConfig `json:"pullQueueConfig,omitempty"`
 
 	// PullTarget: Pull target.
 	//
@@ -2183,9 +2061,6 @@ type Task struct {
 	// An App Engine task is a task that has AppEngineHttpRequest set.
 	AppEngineHttpRequest *AppEngineHttpRequest `json:"appEngineHttpRequest,omitempty"`
 
-	// AppEngineTaskTarget: Deprecated. Use Task.app_engine_http_request.
-	AppEngineTaskTarget *AppEngineTaskTarget `json:"appEngineTaskTarget,omitempty"`
-
 	// CreateTime: Output only. The time that the task was
 	// created.
 	//
@@ -2227,9 +2102,6 @@ type Task struct {
 	//
 	// A pull task is a task that has PullMessage set.
 	PullMessage *PullMessage `json:"pullMessage,omitempty"`
-
-	// PullTaskTarget: Deprecated. Use Task.pull_message.
-	PullTaskTarget *PullTaskTarget `json:"pullTaskTarget,omitempty"`
 
 	// ScheduleTime: The time when the task is scheduled to be
 	// attempted.

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/dTaDGpxiMHj3lFlb8pUnNUoP8XA\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/YBhevoUFAfVyqSyxTJkhAWUX4fg\"",
  "discoveryVersion": "v1",
  "id": "deploymentmanager:alpha",
  "name": "deploymentmanager",
  "canonicalName": "Deployment Manager Alpha",
  "version": "alpha",
- "revision": "20171102",
+ "revision": "20171201",
  "title": "Google Cloud Deployment Manager Alpha API",
  "description": "The Deployment Manager API allows users to declaratively configure, deploy and run complex solutions on the Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -742,7 +742,7 @@
   "Operation": {
    "id": "Operation",
    "type": "object",
-   "description": "An Operation resource, used to manage asynchronous API requests.",
+   "description": "An Operation resource, used to manage asynchronous API requests. (== resource_for v1.globalOperations ==) (== resource_for beta.globalOperations ==) (== resource_for v1.regionOperations ==) (== resource_for beta.regionOperations ==) (== resource_for v1.zoneOperations ==) (== resource_for beta.zoneOperations ==)",
    "properties": {
     "clientOperationId": {
      "type": "string",
@@ -1053,6 +1053,13 @@
      "type": "string",
      "description": "Output only. The current properties of the resource before any references have been filled in. Returned as serialized YAML."
     },
+    "runtimePolicies": {
+     "type": "array",
+     "description": "Output only. In case this is an action, it will show the runtimePolicies on which this action will run in the deployment",
+     "items": {
+      "type": "string"
+     }
+    },
     "type": {
      "type": "string",
      "description": "Output only. The type of the resource, for example compute.v1.instance, or cloudfunctions.v1beta1.function."
@@ -1171,6 +1178,13 @@
     "properties": {
      "type": "string",
      "description": "Output only. The set of updated properties for this resource, before references are expanded. Returned as serialized YAML."
+    },
+    "runtimePolicies": {
+     "type": "array",
+     "description": "Output only. In case this is an action, it will show the runtimePolicies that this action will have after updating the deployment.",
+     "items": {
+      "type": "string"
+     }
     },
     "state": {
      "type": "string",

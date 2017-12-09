@@ -1469,7 +1469,10 @@ func (s *ManifestsListResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Operation: An Operation resource, used to manage asynchronous API
-// requests.
+// requests. (== resource_for v1.globalOperations ==) (== resource_for
+// beta.globalOperations ==) (== resource_for v1.regionOperations ==)
+// (== resource_for beta.regionOperations ==) (== resource_for
+// v1.zoneOperations ==) (== resource_for beta.zoneOperations ==)
 type Operation struct {
 	// ClientOperationId: [Output Only] Reserved for future use.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
@@ -1973,6 +1976,10 @@ type Resource struct {
 	// YAML.
 	Properties string `json:"properties,omitempty"`
 
+	// RuntimePolicies: Output only. In case this is an action, it will show
+	// the runtimePolicies on which this action will run in the deployment
+	RuntimePolicies []string `json:"runtimePolicies,omitempty"`
+
 	// Type: Output only. The type of the resource, for example
 	// compute.v1.instance, or cloudfunctions.v1beta1.function.
 	Type string `json:"type,omitempty"`
@@ -2152,6 +2159,11 @@ type ResourceUpdate struct {
 	// resource, before references are expanded. Returned as serialized
 	// YAML.
 	Properties string `json:"properties,omitempty"`
+
+	// RuntimePolicies: Output only. In case this is an action, it will show
+	// the runtimePolicies that this action will have after updating the
+	// deployment.
+	RuntimePolicies []string `json:"runtimePolicies,omitempty"`
 
 	// State: Output only. The state of the resource.
 	State string `json:"state,omitempty"`

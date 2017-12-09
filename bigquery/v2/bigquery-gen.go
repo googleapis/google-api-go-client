@@ -728,6 +728,9 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 }
 
 type ExplainQueryStage struct {
+	// CompletedParallelInputs: Number of parallel input segments completed.
+	CompletedParallelInputs int64 `json:"completedParallelInputs,omitempty,string"`
+
 	// ComputeMsAvg: Milliseconds the average shard spent on CPU-bound
 	// tasks.
 	ComputeMsAvg int64 `json:"computeMsAvg,omitempty,string"`
@@ -749,6 +752,9 @@ type ExplainQueryStage struct {
 
 	// Name: Human-readable name for stage.
 	Name string `json:"name,omitempty"`
+
+	// ParallelInputs: Number of parallel input segments to be processed.
+	ParallelInputs int64 `json:"parallelInputs,omitempty,string"`
 
 	// ReadMsAvg: Milliseconds the average shard spent reading input.
 	ReadMsAvg int64 `json:"readMsAvg,omitempty,string"`
@@ -814,20 +820,22 @@ type ExplainQueryStage struct {
 	// writing output.
 	WriteRatioMax float64 `json:"writeRatioMax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ComputeMsAvg") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "CompletedParallelInputs") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ComputeMsAvg") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompletedParallelInputs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1940,6 +1948,10 @@ type JobStatistics2 struct {
 	// Present only for CREATE/DROP TABLE/VIEW queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
+	// EstimatedBytesProcessed: [Output-only] The original estimate of bytes
+	// processed for the job.
+	EstimatedBytesProcessed int64 `json:"estimatedBytesProcessed,omitempty,string"`
+
 	// NumDmlAffectedRows: [Output-only] The number of rows affected by a
 	// DML statement. Present only for DML statements INSERT, UPDATE or
 	// DELETE.
@@ -1958,7 +1970,10 @@ type JobStatistics2 struct {
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// StatementType: [Output-only, Experimental] The type of query
-	// statement, if valid.
+	// statement, if valid. Possible values (new values might be added in
+	// the future): "SELECT": SELECT query. "INSERT": INSERT query; see
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... "DROP_VIEW": DROP VIEW
+	// query.
 	StatementType string `json:"statementType,omitempty"`
 
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.

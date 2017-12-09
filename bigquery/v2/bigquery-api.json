@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/QzxyIc9KtbV_mZ3-sB7-1guK-GQ\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/RHgdSKr7KDuh1e1sszGVdMKFPWE\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20171027",
+ "revision": "20171202",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -413,6 +413,11 @@
    "id": "ExplainQueryStage",
    "type": "object",
    "properties": {
+    "completedParallelInputs": {
+     "type": "string",
+     "description": "Number of parallel input segments completed.",
+     "format": "int64"
+    },
     "computeMsAvg": {
      "type": "string",
      "description": "Milliseconds the average shard spent on CPU-bound tasks.",
@@ -441,6 +446,11 @@
     "name": {
      "type": "string",
      "description": "Human-readable name for stage."
+    },
+    "parallelInputs": {
+     "type": "string",
+     "description": "Number of parallel input segments to be processed.",
+     "format": "int64"
     },
     "readMsAvg": {
      "type": "string",
@@ -1213,6 +1223,11 @@
      "$ref": "TableReference",
      "description": "[Output-only, Experimental] The DDL target table. Present only for CREATE/DROP TABLE/VIEW queries."
     },
+    "estimatedBytesProcessed": {
+     "type": "string",
+     "description": "[Output-only] The original estimate of bytes processed for the job.",
+     "format": "int64"
+    },
     "numDmlAffectedRows": {
      "type": "string",
      "description": "[Output-only] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.",
@@ -1238,7 +1253,7 @@
     },
     "statementType": {
      "type": "string",
-     "description": "[Output-only, Experimental] The type of query statement, if valid."
+     "description": "[Output-only, Experimental] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query."
     },
     "totalBytesBilled": {
      "type": "string",

@@ -1,6 +1,4 @@
 {
-  "batchPath": "batch",
-  "fullyEncodeReservedExpansion": true,
   "title": "Firebase Remote Config API",
   "ownerName": "Google",
   "resources": {
@@ -43,11 +41,11 @@
               "location": "query"
             },
             "project": {
+              "pattern": "^projects/[^/]+$",
+              "location": "path",
               "description": "The GMP project identifier. Required.\nSee note at the beginning of this file regarding project ids.",
               "required": true,
-              "type": "string",
-              "pattern": "^projects/[^/]+$",
-              "location": "path"
+              "type": "string"
             }
           },
           "flatPath": "v1/projects/{projectsId}/remoteConfig",
@@ -62,11 +60,16 @@
     }
   },
   "parameters": {
+    "quotaUser": {
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
+    },
     "pp": {
+      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true",
-      "location": "query"
+      "default": "true"
     },
     "bearer_token": {
       "description": "OAuth bearer token.",
@@ -84,46 +87,40 @@
       "location": "query"
     },
     "prettyPrint": {
+      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "type": "boolean",
-      "default": "true",
-      "location": "query"
+      "default": "true"
     },
     "uploadType": {
-      "location": "query",
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "fields": {
-      "type": "string",
       "location": "query",
-      "description": "Selector specifying which fields to include in a partial response."
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
+      "description": "Selector specifying which fields to include in a partial response.",
       "type": "string"
     },
+    "callback": {
+      "type": "string",
+      "location": "query",
+      "description": "JSONP"
+    },
     "$.xgafv": {
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
       "location": "query",
       "enum": [
         "1",
         "2"
       ],
       "description": "V1 error format.",
-      "type": "string"
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ]
     },
     "alt": {
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
         "Media download with context-dependent Content-Type",
@@ -131,22 +128,23 @@
       ],
       "location": "query",
       "description": "Data format for response.",
-      "default": "json"
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
+      "type": "string"
     },
     "key": {
+      "type": "string",
       "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
     },
     "access_token": {
       "description": "OAuth access token.",
       "type": "string",
       "location": "query"
-    },
-    "quotaUser": {
-      "type": "string",
-      "location": "query",
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters."
     }
   },
   "version": "v1",
@@ -161,17 +159,31 @@
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
+    "RemoteConfig": {
+      "type": "object",
+      "properties": {
+        "parameters": {
+          "additionalProperties": {
+            "$ref": "RemoteConfigParameter"
+          },
+          "description": "Map of parameter keys to their optional default values and optional submap\nof (condition name : value). Order doesn't affect semantics, and so is\nsorted by the server. The 'key' values of the params must be unique.",
+          "type": "object"
+        },
+        "conditions": {
+          "description": "The list of named conditions. The order *does* affect the semantics.\nThe condition_name values of these entries must be unique.\n\nThe resolved value of a config parameter P is determined as follow:\n* Let Y be the set of values from the submap of P that refer to conditions\n  that evaluate to \u003ccode\u003etrue\u003c/code\u003e.\n* If Y is non empty, the value is taken from the specific submap in Y whose\n  condition_name is the earliest in this condition list.\n* Else, if P has a default value option (condition_name is empty) then\n  the value is taken from that option.\n* Else, parameter P has no value and is omitted from the config result.\n\nExample: parameter key \"p1\", default value \"v1\", submap specified as\n{\"c1\": v2, \"c2\": v3} where \"c1\" and \"c2\" are names of conditions in the\ncondition list (where \"c1\" in this example appears before \"c2\").  The\nvalue of p1 would be v2 as long as c1 is true.  Otherwise, if c2 is true,\np1 would evaluate to v3, and if c1 and c2 are both false, p1 would evaluate\nto v1.  If no default value was specified, and c1 and c2 were both false,\nno value for p1 would be generated.",
+          "type": "array",
+          "items": {
+            "$ref": "RemoteConfigCondition"
+          }
+        }
+      },
+      "id": "RemoteConfig",
+      "description": "*\nThe RemoteConfig consists of a list of conditions (which can be\nthought of as named \"if\" statements) and a map of parameters (parameter key\nto a structure containing an optional default value, as well as a optional\nsubmap of (condition name to value when that condition is true)."
+    },
     "RemoteConfigParameter": {
       "description": "While default_value and conditional_values are each optional, at least one of\nthe two is required - otherwise, the parameter is meaningless (and an\nexception will be thrown by the validation logic).",
       "type": "object",
       "properties": {
-        "conditionalValues": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "RemoteConfigParameterValue"
-          },
-          "description": "Optional - a map of (condition_name, value). The condition_name of the\nhighest priority (the one listed first in the conditions array) determines\nthe value of this parameter."
-        },
         "defaultValue": {
           "$ref": "RemoteConfigParameterValue",
           "description": "Optional - value to set the parameter to, when none of the named conditions\nevaluate to \u003ccode\u003etrue\u003c/code\u003e."
@@ -179,6 +191,13 @@
         "description": {
           "description": "Optional.\nA description for this Parameter. Length must be less than or equal to\n100 characters (or more precisely, unicode code points, which is defined in\njava/com/google/wireless/android/config/ConstsExporter.java).\nA description may contain any Unicode characters",
           "type": "string"
+        },
+        "conditionalValues": {
+          "additionalProperties": {
+            "$ref": "RemoteConfigParameterValue"
+          },
+          "description": "Optional - a map of (condition_name, value). The condition_name of the\nhighest priority (the one listed first in the conditions array) determines\nthe value of this parameter.",
+          "type": "object"
         }
       },
       "id": "RemoteConfigParameter"
@@ -188,8 +207,8 @@
       "type": "object",
       "properties": {
         "name": {
-          "description": "Required.\nA non empty and unique name of this condition.",
-          "type": "string"
+          "type": "string",
+          "description": "Required.\nA non empty and unique name of this condition."
         },
         "description": {
           "description": "Optional.\nA description for this Condition. Length must be less than or equal to\n100 characters (or more precisely, unicode code points, which is defined in\njava/com/google/wireless/android/config/ConstsExporter.java).\nA description may contain any Unicode characters",
@@ -200,6 +219,7 @@
           "type": "string"
         },
         "tagColor": {
+          "type": "string",
           "enumDescriptions": [
             "",
             "Blue",
@@ -228,47 +248,25 @@
             "PURPLE",
             "TEAL"
           ],
-          "description": "Optional.\nThe display (tag) color of this condition. This serves as part of a tag\n(in the future, we may add tag text as well as tag color, but that is not\nyet implemented in the UI).\nThis value has no affect on the semantics of the delivered config and it\nis ignored by the backend, except for passing it through write/read\nrequests.\nNot having this value or having the \"CONDITION_DISPLAY_COLOR_UNSPECIFIED\"\nvalue (0) have the same meaning:  Let the UI choose any valid color when\ndisplaying the condition.",
-          "type": "string"
+          "description": "Optional.\nThe display (tag) color of this condition. This serves as part of a tag\n(in the future, we may add tag text as well as tag color, but that is not\nyet implemented in the UI).\nThis value has no affect on the semantics of the delivered config and it\nis ignored by the backend, except for passing it through write/read\nrequests.\nNot having this value or having the \"CONDITION_DISPLAY_COLOR_UNSPECIFIED\"\nvalue (0) have the same meaning:  Let the UI choose any valid color when\ndisplaying the condition."
         }
       },
       "id": "RemoteConfigCondition"
     },
     "RemoteConfigParameterValue": {
+      "id": "RemoteConfigParameterValue",
       "description": "A RemoteConfigParameter's \"value\" (either the default value, or the value\nassociated with a condition name) is either a string, or the\n\"use_in_app_default\" indicator (which means to leave out the parameter from\nthe returned \u003ckey, value\u003e map that is the output of the parameter fetch).\nWe represent the \"use_in_app_default\" as a bool, but (when using the boolean\ninstead of the string) it should always be \u003ccode\u003etrue\u003c/code\u003e.",
       "type": "object",
       "properties": {
         "value": {
-          "description": "the string to set the parameter to",
-          "type": "string"
+          "type": "string",
+          "description": "the string to set the parameter to"
         },
         "useInAppDefault": {
-          "description": "if true, omit the parameter from the map of fetched parameter values",
-          "type": "boolean"
+          "type": "boolean",
+          "description": "if true, omit the parameter from the map of fetched parameter values"
         }
-      },
-      "id": "RemoteConfigParameterValue"
-    },
-    "RemoteConfig": {
-      "description": "*\nThe RemoteConfig consists of a list of conditions (which can be\nthought of as named \"if\" statements) and a map of parameters (parameter key\nto a structure containing an optional default value, as well as a optional\nsubmap of (condition name to value when that condition is true).",
-      "type": "object",
-      "properties": {
-        "parameters": {
-          "additionalProperties": {
-            "$ref": "RemoteConfigParameter"
-          },
-          "description": "Map of parameter keys to their optional default values and optional submap\nof (condition name : value). Order doesn't affect semantics, and so is\nsorted by the server. The 'key' values of the params must be unique.",
-          "type": "object"
-        },
-        "conditions": {
-          "description": "The list of named conditions. The order *does* affect the semantics.\nThe condition_name values of these entries must be unique.\n\nThe resolved value of a config parameter P is determined as follow:\n* Let Y be the set of values from the submap of P that refer to conditions\n  that evaluate to \u003ccode\u003etrue\u003c/code\u003e.\n* If Y is non empty, the value is taken from the specific submap in Y whose\n  condition_name is the earliest in this condition list.\n* Else, if P has a default value option (condition_name is empty) then\n  the value is taken from that option.\n* Else, parameter P has no value and is omitted from the config result.\n\nExample: parameter key \"p1\", default value \"v1\", submap specified as\n{\"c1\": v2, \"c2\": v3} where \"c1\" and \"c2\" are names of conditions in the\ncondition list (where \"c1\" in this example appears before \"c2\").  The\nvalue of p1 would be v2 as long as c1 is true.  Otherwise, if c2 is true,\np1 would evaluate to v3, and if c1 and c2 are both false, p1 would evaluate\nto v1.  If no default value was specified, and c1 and c2 were both false,\nno value for p1 would be generated.",
-          "type": "array",
-          "items": {
-            "$ref": "RemoteConfigCondition"
-          }
-        }
-      },
-      "id": "RemoteConfig"
+      }
     }
   },
   "icons": {
@@ -279,5 +277,7 @@
   "canonicalName": "Firebase Remote Config",
   "rootUrl": "https://firebaseremoteconfig.googleapis.com/",
   "ownerDomain": "google.com",
-  "name": "firebaseremoteconfig"
+  "name": "firebaseremoteconfig",
+  "batchPath": "batch",
+  "fullyEncodeReservedExpansion": true
 }

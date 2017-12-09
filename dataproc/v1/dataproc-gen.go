@@ -1058,9 +1058,7 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobScheduling: Job scheduling options.Beta Feature: These options are
-// available for testing purposes only. They may be changed before final
-// release.
+// JobScheduling: Job scheduling options.
 type JobScheduling struct {
 	// MaxFailuresPerHour: Optional. Maximum number of times per hour a
 	// driver may be restarted as a result of driver terminating with
@@ -2776,6 +2774,19 @@ func (r *ProjectsRegionsClustersService) Patch(projectId string, region string, 
 	return c
 }
 
+// GracefulDecommissionTimeout sets the optional parameter
+// "gracefulDecommissionTimeout": Timeout for graceful YARN
+// decomissioning. Graceful decommissioning allows removing nodes from
+// the cluster without interrupting jobs in progress. Timeout specifies
+// how long to wait for jobs in progress to finish before forcefully
+// removing nodes (and potentially interrupting jobs). Default timeout
+// is 0 (for forceful decommission), and the maximum allowed timeout is
+// 1 day.Only supported on Dataproc image versions 1.2 and higher.
+func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulDecommissionTimeout string) *ProjectsRegionsClustersPatchCall {
+	c.urlParams_.Set("gracefulDecommissionTimeout", gracefulDecommissionTimeout)
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": Required.
 // Specifies the path, relative to Cluster, of the field to update. For
 // example, to change the number of workers in a cluster to 5, the
@@ -2917,6 +2928,12 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "gracefulDecommissionTimeout": {
+	//       "description": "Optional. Timeout for graceful YARN decomissioning. Graceful decommissioning allows removing nodes from the cluster without interrupting jobs in progress. Timeout specifies how long to wait for jobs in progress to finish before forcefully removing nodes (and potentially interrupting jobs). Default timeout is 0 (for forceful decommission), and the maximum allowed timeout is 1 day.Only supported on Dataproc image versions 1.2 and higher.",
+	//       "format": "google-duration",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {

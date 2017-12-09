@@ -696,6 +696,10 @@ type DiskConfig struct {
 	// 500GB).
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
+	// BootDiskType: Optional. Type of the boot disk (default is
+	// 'pd-standard'). Valid values: 'pd-ssd', 'pd-standard'
+	BootDiskType string `json:"bootDiskType,omitempty"`
+
 	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 4 (default
 	// is 0). If SSDs are not attached, the boot disk is used to store
 	// runtime logs and HDFS
@@ -1024,6 +1028,11 @@ type InstanceGroupConfig struct {
 	// preemptible instance groups.
 	ManagedGroupConfig *ManagedGroupConfig `json:"managedGroupConfig,omitempty"`
 
+	// MinCpuPlatform: Optional. Specifies the minimum cpu platform for the
+	// Instance Group. Examples: *
+	// https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform
+	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
+
 	// NumInstances: Optional. The number of VM instances in the instance
 	// group. For master instance groups, must be set to 1.
 	NumInstances int64 `json:"numInstances,omitempty"`
@@ -1256,9 +1265,7 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// JobScheduling: Job scheduling options.Beta Feature: These options are
-// available for testing purposes only. They may be changed before final
-// release.
+// JobScheduling: Job scheduling options.
 type JobScheduling struct {
 	// MaxFailuresPerHour: Optional. Maximum number of times per hour a
 	// driver may be restarted as a result of driver terminating with

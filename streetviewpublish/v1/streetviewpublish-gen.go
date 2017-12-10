@@ -548,9 +548,6 @@ type Photo struct {
 	// Connections: Connections to other photos. A connection represents the
 	// link from this
 	// photo to another photo.
-	// The maximum number of connections that can be set through
-	// an
-	// google.streetview.publish.v1.UpdatePhotoRequest is 10.
 	Connections []*Connection `json:"connections,omitempty"`
 
 	// DownloadUrl: Output only. The download URL for the photo bytes. This

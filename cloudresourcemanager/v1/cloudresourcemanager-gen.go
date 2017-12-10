@@ -537,10 +537,6 @@ func (s *ClearOrgPolicyRequest) MarshalJSON() ([]byte, error) {
 // of a
 // `Policy` being defined or inherited for the resource in question.
 type Constraint struct {
-	// BooleanConstraint: Defines this constraint as being a
-	// BooleanConstraint.
-	BooleanConstraint *BooleanConstraint `json:"booleanConstraint,omitempty"`
-
 	// ConstraintDefault: The evaluation behavior of this constraint in the
 	// absense of 'Policy'.
 	//
@@ -579,7 +575,7 @@ type Constraint struct {
 	// Version: Version of the `Constraint`. Default version is 0;
 	Version int64 `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BooleanConstraint")
+	// ForceSendFields is a list of field names (e.g. "ConstraintDefault")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -587,7 +583,7 @@ type Constraint struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BooleanConstraint") to
+	// NullFields is a list of field names (e.g. "ConstraintDefault") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1488,11 +1484,6 @@ type OrgPolicy struct {
 
 	// ListPolicy: List of values either allowed or disallowed.
 	ListPolicy *ListPolicy `json:"listPolicy,omitempty"`
-
-	// RestoreDefault: Restores the default behavior of the constraint;
-	// independent of
-	// `Constraint` type.
-	RestoreDefault *RestoreDefault `json:"restoreDefault,omitempty"`
 
 	// UpdateTime: The time stamp the `Policy` was previously updated. This
 	// is set by the

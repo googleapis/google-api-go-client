@@ -317,27 +317,21 @@ func (s *CloudFunction) MarshalJSON() ([]byte, error) {
 type EventTrigger struct {
 	// EventType: Required. The type of event to observe. For
 	// example:
-	// `google.storage.object.finalized`
+	// `providers/cloud.storage/eventTypes/object.change`
 	// and
-	// `google.firebase.analytics.event.log`.
+	// `providers/cloud.pubsub/eventTypes/topic.publish`.
 	//
-	// Event type consists of three parts:
-	//  1. namespace: The domain name of the organization in reverse-domain
-	//     notation (e.g. `acme.net` appears as `net.acme`) and any
-	// orginization
-	//     specific subdivisions. If the organization's top-level domain is
-	// `com`,
-	//     the top-level domain is ommited (e.g. `google.com` appears as
-	//     `google`). For example, `google.storage` and
+	// Event types match pattern `providers/*/eventTypes/*.*`.
+	// The pattern contains:
+	//  1. namespace: For example, `cloud.storage` and
 	//     `google.firebase.analytics`.
-	//  2. resource type: The type of resource on which event ocurs. For
+	//  2. resource type: The type of resource on which event occurs. For
 	//     example, the Google Cloud Storage API includes the type
 	// `object`.
-	//  3. action: The action that generates the event. For example, actions
+	//  3. action: The action that generates the event. For example, action
 	// for
-	//     a Google Cloud Storage Object include 'finalize' and
-	// 'delete'.
-	// These parts are lower case and joined by '.'.
+	//     a Google Cloud Storage Object is 'change'.
+	// These parts are lower case.
 	EventType string `json:"eventType,omitempty"`
 
 	// FailurePolicy: Specifies policy for failed executions.

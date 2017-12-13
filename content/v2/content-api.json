@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/oXnvbTGBTx6tn_o_vg2UhQHX08E\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/5V_sKJ6Io6zpf4p_quA8NfrV8hw\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20171124",
+ "revision": "20171207",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -1860,6 +1860,13 @@
    "id": "OrderLineItem",
    "type": "object",
    "properties": {
+    "annotations": {
+     "type": "array",
+     "description": "Annotations that are attached to the line item.",
+     "items": {
+      "$ref": "OrderMerchantProvidedAnnotation"
+     }
+    },
     "cancellations": {
      "type": "array",
      "description": "Cancellations of the line item.",
@@ -2116,6 +2123,20 @@
        "content.orders.createtestorder"
       ]
      }
+    }
+   }
+  },
+  "OrderMerchantProvidedAnnotation": {
+   "id": "OrderMerchantProvidedAnnotation",
+   "type": "object",
+   "properties": {
+    "key": {
+     "type": "string",
+     "description": "Key for additional merchant provided (as key-value pairs) annotation about the line item."
+    },
+    "value": {
+     "type": "string",
+     "description": "Value for additional merchant provided (as key-value pairs) annotation about the line item."
     }
    }
   },
@@ -2540,9 +2561,17 @@
      "$ref": "OrdersCustomBatchRequestEntryReturnLineItem",
      "description": "Required for returnLineItem method."
     },
+    "setLineItemMetadata": {
+     "$ref": "OrdersCustomBatchRequestEntrySetLineItemMetadata",
+     "description": "Required for setLineItemMetadata method."
+    },
     "shipLineItems": {
      "$ref": "OrdersCustomBatchRequestEntryShipLineItems",
      "description": "Required for shipLineItems method."
+    },
+    "updateLineItemShippingDetails": {
+     "$ref": "OrdersCustomBatchRequestEntryUpdateLineItemShippingDetails",
+     "description": "Required for updateLineItemShippingDate method."
     },
     "updateShipment": {
      "$ref": "OrdersCustomBatchRequestEntryUpdateShipment",
@@ -2656,6 +2685,26 @@
     }
    }
   },
+  "OrdersCustomBatchRequestEntrySetLineItemMetadata": {
+   "id": "OrdersCustomBatchRequestEntrySetLineItemMetadata",
+   "type": "object",
+   "properties": {
+    "annotations": {
+     "type": "array",
+     "items": {
+      "$ref": "OrderMerchantProvidedAnnotation"
+     }
+    },
+    "lineItemId": {
+     "type": "string",
+     "description": "The ID of the line item to set metadata. Either lineItemId or productId is required."
+    },
+    "productId": {
+     "type": "string",
+     "description": "The ID of the product to set metadata. This is the REST ID used in the products service. Either lineItemId or productId is required."
+    }
+   }
+  },
   "OrdersCustomBatchRequestEntryShipLineItems": {
    "id": "OrdersCustomBatchRequestEntryShipLineItems",
    "type": "object",
@@ -2708,6 +2757,28 @@
     "trackingId": {
      "type": "string",
      "description": "The tracking id for the shipment."
+    }
+   }
+  },
+  "OrdersCustomBatchRequestEntryUpdateLineItemShippingDetails": {
+   "id": "OrdersCustomBatchRequestEntryUpdateLineItemShippingDetails",
+   "type": "object",
+   "properties": {
+    "deliverByDate": {
+     "type": "string",
+     "description": "Updated delivery by date, in ISO 8601 format. If not specified only ship by date is updated."
+    },
+    "lineItemId": {
+     "type": "string",
+     "description": "The ID of the line item to set metadata. Either lineItemId or productId is required."
+    },
+    "productId": {
+     "type": "string",
+     "description": "The ID of the product to set metadata. This is the REST ID used in the products service. Either lineItemId or productId is required."
+    },
+    "shipByDate": {
+     "type": "string",
+     "description": "Updated ship by date, in ISO 8601 format. If not specified only deliver by date is updated."
     }
    }
   },
@@ -2921,6 +2992,45 @@
     }
    }
   },
+  "OrdersSetLineItemMetadataRequest": {
+   "id": "OrdersSetLineItemMetadataRequest",
+   "type": "object",
+   "properties": {
+    "annotations": {
+     "type": "array",
+     "items": {
+      "$ref": "OrderMerchantProvidedAnnotation"
+     }
+    },
+    "lineItemId": {
+     "type": "string",
+     "description": "The ID of the line item to set metadata. Either lineItemId or productId is required."
+    },
+    "operationId": {
+     "type": "string",
+     "description": "The ID of the operation. Unique across all operations for a given order."
+    },
+    "productId": {
+     "type": "string",
+     "description": "The ID of the product to set metadata. This is the REST ID used in the products service. Either lineItemId or productId is required."
+    }
+   }
+  },
+  "OrdersSetLineItemMetadataResponse": {
+   "id": "OrdersSetLineItemMetadataResponse",
+   "type": "object",
+   "properties": {
+    "executionStatus": {
+     "type": "string",
+     "description": "The status of the execution."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersSetLineItemMetadataResponse\".",
+     "default": "content#ordersSetLineItemMetadataResponse"
+    }
+   }
+  },
   "OrdersShipLineItemsRequest": {
    "id": "OrdersShipLineItemsRequest",
    "type": "object",
@@ -2969,6 +3079,47 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersShipLineItemsResponse\".",
      "default": "content#ordersShipLineItemsResponse"
+    }
+   }
+  },
+  "OrdersUpdateLineItemShippingDetailsRequest": {
+   "id": "OrdersUpdateLineItemShippingDetailsRequest",
+   "type": "object",
+   "properties": {
+    "deliverByDate": {
+     "type": "string",
+     "description": "Updated delivery by date, in ISO 8601 format. If not specified only ship by date is updated."
+    },
+    "lineItemId": {
+     "type": "string",
+     "description": "The ID of the line item to set metadata. Either lineItemId or productId is required."
+    },
+    "operationId": {
+     "type": "string",
+     "description": "The ID of the operation. Unique across all operations for a given order."
+    },
+    "productId": {
+     "type": "string",
+     "description": "The ID of the product to set metadata. This is the REST ID used in the products service. Either lineItemId or productId is required."
+    },
+    "shipByDate": {
+     "type": "string",
+     "description": "Updated ship by date, in ISO 8601 format. If not specified only deliver by date is updated."
+    }
+   }
+  },
+  "OrdersUpdateLineItemShippingDetailsResponse": {
+   "id": "OrdersUpdateLineItemShippingDetailsResponse",
+   "type": "object",
+   "properties": {
+    "executionStatus": {
+     "type": "string",
+     "description": "The status of the execution."
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersUpdateLineItemShippingDetailsResponse\".",
+     "default": "content#ordersUpdateLineItemShippingDetailsResponse"
     }
    }
   },
@@ -5971,6 +6122,40 @@
       "https://www.googleapis.com/auth/content"
      ]
     },
+    "setlineitemmetadata": {
+     "id": "content.orders.setlineitemmetadata",
+     "path": "{merchantId}/orders/{orderId}/setLineItemMetadata",
+     "httpMethod": "POST",
+     "description": "Sets (overrides) merchant provided annotations on the line item.",
+     "parameters": {
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "orderId": {
+       "type": "string",
+       "description": "The ID of the order.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "orderId"
+     ],
+     "request": {
+      "$ref": "OrdersSetLineItemMetadataRequest"
+     },
+     "response": {
+      "$ref": "OrdersSetLineItemMetadataResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
     "shiplineitems": {
      "id": "content.orders.shiplineitems",
      "path": "{merchantId}/orders/{orderId}/shipLineItems",
@@ -6000,6 +6185,40 @@
      },
      "response": {
       "$ref": "OrdersShipLineItemsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "updatelineitemshippingdetails": {
+     "id": "content.orders.updatelineitemshippingdetails",
+     "path": "{merchantId}/orders/{orderId}/updateLineItemShippingDetails",
+     "httpMethod": "POST",
+     "description": "Updates ship by and delivery by dates for a line item.",
+     "parameters": {
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      },
+      "orderId": {
+       "type": "string",
+       "description": "The ID of the order.",
+       "required": true,
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId",
+      "orderId"
+     ],
+     "request": {
+      "$ref": "OrdersUpdateLineItemShippingDetailsRequest"
+     },
+     "response": {
+      "$ref": "OrdersUpdateLineItemShippingDetailsResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/content"

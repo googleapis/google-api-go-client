@@ -2528,7 +2528,9 @@ type TestIssue struct {
 	//   "anr"
 	//   "compatibleWithOrchestrator"
 	//   "fatalException"
+	//   "launcherActivityNotFound"
 	//   "nativeCrash"
+	//   "startActivityNotFound"
 	//   "unspecifiedType"
 	//   "unusedRoboDirective"
 	Type string `json:"type,omitempty"`

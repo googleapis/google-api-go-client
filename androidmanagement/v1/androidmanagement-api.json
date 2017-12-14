@@ -1736,6 +1736,10 @@
           "description": "Whether hardware status reporting is enabled.",
           "type": "boolean"
         },
+        "deviceSettingsEnabled": {
+          "description": "Whether device settings reporting is enabled.",
+          "type": "boolean"
+        },
         "softwareInfoEnabled": {
           "description": "Whether software info reporting is enabled.",
           "type": "boolean"
@@ -2448,7 +2452,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20171127",
+  "revision": "20171204",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

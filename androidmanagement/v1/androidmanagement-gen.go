@@ -2430,6 +2430,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StatusReportingSettings: Settings controlling the behavior of status
 // reports.
 type StatusReportingSettings struct {
+	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
+	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`
+
 	// DisplayInfoEnabled: Whether displays reporting is enabled.
 	DisplayInfoEnabled bool `json:"displayInfoEnabled,omitempty"`
 
@@ -2449,15 +2452,16 @@ type StatusReportingSettings struct {
 	// SoftwareInfoEnabled: Whether software info reporting is enabled.
 	SoftwareInfoEnabled bool `json:"softwareInfoEnabled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayInfoEnabled")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DeviceSettingsEnabled") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayInfoEnabled") to
+	// NullFields is a list of field names (e.g. "DeviceSettingsEnabled") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

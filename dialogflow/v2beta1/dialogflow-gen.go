@@ -1021,6 +1021,7 @@ type ExportAgentRequest struct {
 	// AgentUri: Warning: Exporting agents to a URI is not implemented
 	// yet.
 	// This feature is coming soon.
+	//
 	// Optional. The Google Cloud Storage URI to export the agent to.
 	// Note: The URI must start with
 	// "gs://". If left unspecified, the serialized agent is returned
@@ -1086,11 +1087,23 @@ func (s *ExportAgentResponse) MarshalJSON() ([]byte, error) {
 // ImportAgentRequest: The request message for Agents.ImportAgent.
 type ImportAgentRequest struct {
 	// AgentContent: The agent to import.
+	//
+	// Example for how to import an agent via the command line:
+	//
+	// curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
+	//      -H "Content-Type: application/json; charset=utf-8" \
+	//      --data "{
+	//   'agentContent': '$(cat <agent zip file> | base64 -w 0)'
+	// }"
+	// \
+	// "https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/a
+	// gent:import"
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: Warning: Importing agents from a URI is not implemented
 	// yet.
 	// This feature is coming soon.
+	//
 	// The URI to a Google Cloud Storage file containing the agent to
 	// import.
 	// Note: The URI must start with "gs://".
@@ -2862,11 +2875,23 @@ func (s *QueryResult) UnmarshalJSON(data []byte) error {
 // RestoreAgentRequest: The request message for Agents.RestoreAgent.
 type RestoreAgentRequest struct {
 	// AgentContent: The agent to restore.
+	//
+	// Example for how to restore an agent via the command line:
+	//
+	// curl -H "Authorization: Bearer "$(gcloud auth print-access-token) \
+	//      -H "Content-Type: application/json; charset=utf-8" \
+	//      --data "{
+	//   'agentContent': '$(cat <agent zip file> | base64 -w 0)'
+	// }"
+	// \
+	// "https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/a
+	// gent:restore"
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: Warning: Restoring agents from a URI is not implemented
 	// yet.
 	// This feature is coming soon.
+	//
 	// The URI to a Google Cloud Storage file containing the agent to
 	// restore.
 	// Note: The URI must start with "gs://".

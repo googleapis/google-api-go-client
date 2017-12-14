@@ -5758,8 +5758,8 @@ func (r *PermissionsService) Create(fileId string, permission *Permission) *Perm
 	return c
 }
 
-// EmailMessage sets the optional parameter "emailMessage": A custom
-// message to include in the notification email.
+// EmailMessage sets the optional parameter "emailMessage": A plain text
+// custom message to include in the notification email.
 func (c *PermissionsCreateCall) EmailMessage(emailMessage string) *PermissionsCreateCall {
 	c.urlParams_.Set("emailMessage", emailMessage)
 	return c
@@ -5895,7 +5895,7 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//   ],
 	//   "parameters": {
 	//     "emailMessage": {
-	//       "description": "A custom message to include in the notification email.",
+	//       "description": "A plain text custom message to include in the notification email.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

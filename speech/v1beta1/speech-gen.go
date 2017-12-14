@@ -49,9 +49,6 @@ const basePath = "https://speech.googleapis.com/"
 const (
 	// View and manage your data across Google Cloud Platform services
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-
-	// Convert speech to text using Google speech recognition technology
-	CloudSpeechScope = "https://www.googleapis.com/auth/cloud-speech"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -867,8 +864,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -999,8 +995,7 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1143,8 +1138,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1334,8 +1328,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//     "$ref": "ListOperationsResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1484,8 +1477,7 @@ func (c *SpeechAsyncrecognizeCall) Do(opts ...googleapi.CallOption) (*Operation,
 	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1607,8 +1599,7 @@ func (c *SpeechSyncrecognizeCall) Do(opts ...googleapi.CallOption) (*SyncRecogni
 	//     "$ref": "SyncRecognizeResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/cloud-speech"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 

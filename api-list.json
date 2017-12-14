@@ -1295,6 +1295,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/dlp/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "dlp:v2beta2",
+   "name": "dlp",
+   "version": "v2beta2",
+   "title": "DLP API",
+   "description": "The Google Data Loss Prevention API provides methods for detection of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
+   "discoveryRestUrl": "https://dlp.googleapis.com/$discovery/rest?version=v2beta2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/dlp/docs/",
    "preferred": true
   },
   {

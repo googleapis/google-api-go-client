@@ -129,8 +129,9 @@ type AcknowledgeTaskRequest struct {
 	// The task's current schedule time, available in the
 	// Task.schedule_time
 	// returned in PullTasksResponse.tasks or
-	// CloudTasks.RenewLease. This restriction is to check that
-	// the caller is acknowledging the correct task.
+	// CloudTasks.RenewLease. This restriction is to ensure that your
+	// task
+	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ScheduleTime") to
@@ -722,8 +723,9 @@ type CancelLeaseRequest struct {
 	// The task's current schedule time, available in the
 	// Task.schedule_time
 	// returned in PullTasksResponse.tasks or
-	// CloudTasks.RenewLease. This restriction is to check that
-	// the caller is canceling the correct task.
+	// CloudTasks.RenewLease. This restriction is to ensure that your
+	// task
+	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResponseView") to
@@ -1238,14 +1240,14 @@ type PullTasksRequest struct {
 	// the
 	// Task.schedule_time.
 	//
-	// After the lease holder has successfully finished the work
-	// associated with the task, the lease holder must
+	// After the pull worker has successfully finished the work
+	// associated with the task, the pull worker must
 	// call
 	// CloudTasks.AcknowledgeTask. If the task is not acknowledged
 	// via CloudTasks.AcknowledgeTask before the
 	// Task.schedule_time then it will be returned in a
 	// later
-	// PullTasksResponse so that another lease holder can process
+	// PullTasksResponse so that another pull worker can process
 	// it.
 	//
 	// The maximum lease duration is 1 week.
@@ -1673,8 +1675,9 @@ type RenewLeaseRequest struct {
 	// The task's current schedule time, available in the
 	// Task.schedule_time
 	// returned in PullTasksResponse.tasks or
-	// CloudTasks.RenewLease. This restriction is to check that
-	// the caller is renewing the correct task.
+	// CloudTasks.RenewLease. This restriction is to ensure that your
+	// task
+	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LeaseDuration") to
@@ -2106,19 +2109,19 @@ type Task struct {
 	// ScheduleTime: The time when the task is scheduled to be
 	// attempted.
 	//
+	// For App Engine queues, this is when the task will be attempted or
+	// retried.
+	//
 	// For pull queues, this is the time when the task is available to
 	// be leased; if a task is currently leased, this is the time when
 	// the current lease expires, that is, the time that the task was
 	// leased plus the PullTasksRequest.lease_duration.
 	//
-	// For App Engine queues, this is when the task will be attempted or
-	// retried.
-	//
 	// `schedule_time` will be truncated to the nearest microsecond.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
-	// TaskStatus: Output only. The task status.
-	TaskStatus *TaskStatus `json:"taskStatus,omitempty"`
+	// Status: Output only. The task status.
+	Status *TaskStatus `json:"status,omitempty"`
 
 	// View: Output only. The view specifies which subset of the Task
 	// has
@@ -4331,11 +4334,11 @@ type ProjectsLocationsQueuesTasksAcknowledgeCall struct {
 
 // Acknowledge: Acknowledges a pull task.
 //
-// The lease holder, that is, the entity that received this task in
+// The pull worker, that is, the entity that received this task in
 // a PullTasksResponse, must call this method to indicate that
 // the work associated with the task has finished.
 //
-// The lease holder must acknowledge a task within
+// The pull worker must acknowledge a task within
 // the
 // PullTasksRequest.lease_duration or the lease will expire and
 // the task will become ready to be returned in a
@@ -4443,7 +4446,7 @@ func (c *ProjectsLocationsQueuesTasksAcknowledgeCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges a pull task.\n\nThe lease holder, that is, the entity that received this task in\na PullTasksResponse, must call this method to indicate that\nthe work associated with the task has finished.\n\nThe lease holder must acknowledge a task within the\nPullTasksRequest.lease_duration or the lease will expire and\nthe task will become ready to be returned in a different\nPullTasksResponse. After the task is acknowledged, it will\nnot be returned by a later CloudTasks.PullTasks,\nCloudTasks.GetTask, or CloudTasks.ListTasks.\n\nTo acknowledge multiple tasks at the same time, use\n[HTTP batching](/storage/docs/json_api/v1/how-tos/batch)\nor the batching documentation for your client library, for example\nhttps://developers.google.com/api-client-library/python/guide/batch.",
+	//   "description": "Acknowledges a pull task.\n\nThe pull worker, that is, the entity that received this task in\na PullTasksResponse, must call this method to indicate that\nthe work associated with the task has finished.\n\nThe pull worker must acknowledge a task within the\nPullTasksRequest.lease_duration or the lease will expire and\nthe task will become ready to be returned in a different\nPullTasksResponse. After the task is acknowledged, it will\nnot be returned by a later CloudTasks.PullTasks,\nCloudTasks.GetTask, or CloudTasks.ListTasks.\n\nTo acknowledge multiple tasks at the same time, use\n[HTTP batching](/storage/docs/json_api/v1/how-tos/batch)\nor the batching documentation for your client library, for example\nhttps://developers.google.com/api-client-library/python/guide/batch.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:acknowledge",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.acknowledge",
@@ -4486,7 +4489,7 @@ type ProjectsLocationsQueuesTasksCancelLeaseCall struct {
 
 // CancelLease: Cancel a pull task's lease.
 //
-// The lease holder can use this method to cancel a task's lease
+// The pull worker can use this method to cancel a task's lease
 // by setting Task.schedule_time to now. This will make the
 // task
 // available to be leased to the next caller of CloudTasks.PullTasks.
@@ -4583,7 +4586,7 @@ func (c *ProjectsLocationsQueuesTasksCancelLeaseCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancel a pull task's lease.\n\nThe lease holder can use this method to cancel a task's lease\nby setting Task.schedule_time to now. This will make the task\navailable to be leased to the next caller of CloudTasks.PullTasks.",
+	//   "description": "Cancel a pull task's lease.\n\nThe pull worker can use this method to cancel a task's lease\nby setting Task.schedule_time to now. This will make the task\navailable to be leased to the next caller of CloudTasks.PullTasks.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:cancelLease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.cancelLease",
@@ -5341,18 +5344,19 @@ type ProjectsLocationsQueuesTasksPullCall struct {
 	header_          http.Header
 }
 
-// Pull: Pulls tasks from a pull queue and acquires a lease on them for
+// Pull:
+// Pulls tasks from a pull queue and acquires a lease on them for
 // a
 // specified PullTasksRequest.lease_duration.
 //
-// This method is invoked by the lease holder to obtain the
-// lease. The lease holder must acknowledge the task
+// This method is invoked by the pull worker to obtain the
+// lease. The pull worker must acknowledge the task
 // via
 // CloudTasks.AcknowledgeTask after they have performed the
 // work
 // associated with the task.
 //
-// The payload is intended to store data that the lease holder needs
+// The payload is intended to store data that the pull worker needs
 // to perform the work associated with the task. To return the
 // payloads in the PullTasksResponse, set
 // PullTasksRequest.response_view to Task.View.FULL.
@@ -5457,7 +5461,7 @@ func (c *ProjectsLocationsQueuesTasksPullCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls tasks from a pull queue and acquires a lease on them for a\nspecified PullTasksRequest.lease_duration.\n\nThis method is invoked by the lease holder to obtain the\nlease. The lease holder must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the lease holder needs\nto perform the work associated with the task. To return the\npayloads in the PullTasksResponse, set\nPullTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.PullTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
+	//   "description": "\nPulls tasks from a pull queue and acquires a lease on them for a\nspecified PullTasksRequest.lease_duration.\n\nThis method is invoked by the pull worker to obtain the\nlease. The pull worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the pull worker needs\nto perform the work associated with the task. To return the\npayloads in the PullTasksResponse, set\nPullTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.PullTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:pull",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.pull",
@@ -5500,7 +5504,7 @@ type ProjectsLocationsQueuesTasksRenewLeaseCall struct {
 
 // RenewLease: Renew the current lease of a pull task.
 //
-// The lease holder can use this method to extend the lease by a
+// The pull worker can use this method to extend the lease by a
 // new
 // duration, starting from now. The new task lease will be
 // returned in Task.schedule_time.
@@ -5597,7 +5601,7 @@ func (c *ProjectsLocationsQueuesTasksRenewLeaseCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Renew the current lease of a pull task.\n\nThe lease holder can use this method to extend the lease by a new\nduration, starting from now. The new task lease will be\nreturned in Task.schedule_time.",
+	//   "description": "Renew the current lease of a pull task.\n\nThe pull worker can use this method to extend the lease by a new\nduration, starting from now. The new task lease will be\nreturned in Task.schedule_time.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:renewLease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.renewLease",
@@ -5652,7 +5656,7 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 //
 // The dispatched task is returned. That is, the task that is
 // returned
-// contains the Task.task_status after the task is dispatched but
+// contains the Task.status after the task is dispatched but
 // before the task is received by its target.
 //
 // If Cloud Tasks receives a successful response from the
@@ -5765,7 +5769,7 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Forces a task to run now.\n\nThis command is meant to be used for manual debugging. For\nexample, CloudTasks.RunTask can be used to retry a failed\ntask after a fix has been made or to manually force a task to be\ndispatched now.\n\nWhen this method is called, Cloud Tasks will dispatch the task to its\ntarget, even if the queue is Queue.State.PAUSED.\n\nThe dispatched task is returned. That is, the task that is returned\ncontains the Task.task_status after the task is dispatched but\nbefore the task is received by its target.\n\nIf Cloud Tasks receives a successful response from the task's\nhandler, then the task will be deleted; otherwise the task's\nTask.schedule_time will be reset to the time that\nCloudTasks.RunTask was called plus the retry delay specified\nin the queue and task's RetryConfig.\n\nCloudTasks.RunTask returns google.rpc.Code.NOT_FOUND when\nit is called on a task that has already succeeded or permanently\nfailed. google.rpc.Code.FAILED_PRECONDITION is returned when\nCloudTasks.RunTask is called on task that is dispatched or\nalready running.\n\nCloudTasks.RunTask cannot be called on pull tasks.",
+	//   "description": "Forces a task to run now.\n\nThis command is meant to be used for manual debugging. For\nexample, CloudTasks.RunTask can be used to retry a failed\ntask after a fix has been made or to manually force a task to be\ndispatched now.\n\nWhen this method is called, Cloud Tasks will dispatch the task to its\ntarget, even if the queue is Queue.State.PAUSED.\n\nThe dispatched task is returned. That is, the task that is returned\ncontains the Task.status after the task is dispatched but\nbefore the task is received by its target.\n\nIf Cloud Tasks receives a successful response from the task's\nhandler, then the task will be deleted; otherwise the task's\nTask.schedule_time will be reset to the time that\nCloudTasks.RunTask was called plus the retry delay specified\nin the queue and task's RetryConfig.\n\nCloudTasks.RunTask returns google.rpc.Code.NOT_FOUND when\nit is called on a task that has already succeeded or permanently\nfailed. google.rpc.Code.FAILED_PRECONDITION is returned when\nCloudTasks.RunTask is called on task that is dispatched or\nalready running.\n\nCloudTasks.RunTask cannot be called on pull tasks.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.run",

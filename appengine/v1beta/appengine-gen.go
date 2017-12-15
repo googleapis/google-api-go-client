@@ -539,8 +539,8 @@ func (s *AuthorizedDomain) MarshalJSON() ([]byte, error) {
 type AutomaticScaling struct {
 	// CoolDownPeriod: Amount of time that the Autoscaler
 	// (https://cloud.google.com/compute/docs/autoscaler/) should wait
-	// between changes to the number of virtual machines. Only applicable
-	// for VM runtimes.
+	// between changes to the number of virtual machines. Only applicable in
+	// the App Engine flexible environment.
 	CoolDownPeriod string `json:"coolDownPeriod,omitempty"`
 
 	// CpuUtilization: Target scaling by CPU usage.
@@ -939,8 +939,8 @@ func (s *Deployment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DiskUtilization: Target scaling by disk usage. Only applicable for VM
-// runtimes.
+// DiskUtilization: Target scaling by disk usage. Only applicable in the
+// App Engine flexible environment.
 type DiskUtilization struct {
 	// TargetReadBytesPerSecond: Target bytes read per second.
 	TargetReadBytesPerSecond int64 `json:"targetReadBytesPerSecond,omitempty"`
@@ -2073,16 +2073,16 @@ func (s *ManualScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Network: Extra network settings. Only applicable for App Engine
-// flexible environment versions
+// Network: Extra network settings. Only applicable in the App Engine
+// flexible environment.
 type Network struct {
 	// ForwardedPorts: List of ports, or port pairs, to forward from the
-	// virtual machine to the application container. Only applicable for App
-	// Engine flexible environment versions.
+	// virtual machine to the application container. Only applicable in the
+	// App Engine flexible environment.
 	ForwardedPorts []string `json:"forwardedPorts,omitempty"`
 
-	// InstanceTag: Tag to apply to the VM instance during creation. Only
-	// applicable for for App Engine flexible environment versions.
+	// InstanceTag: Tag to apply to the VM instance during creation. for
+	// Only applicable in the App Engine flexible environment.
 	InstanceTag string `json:"instanceTag,omitempty"`
 
 	// Name: Google Compute Engine network where the virtual machines are
@@ -2132,7 +2132,7 @@ func (s *Network) MarshalJSON() ([]byte, error) {
 }
 
 // NetworkUtilization: Target scaling by network usage. Only applicable
-// for VM runtimes.
+// in the App Engine flexible environment.
 type NetworkUtilization struct {
 	// TargetReceivedBytesPerSecond: Target bytes received per second.
 	TargetReceivedBytesPerSecond int64 `json:"targetReceivedBytesPerSecond,omitempty"`
@@ -2534,7 +2534,7 @@ type RepairApplicationRequest struct {
 }
 
 // RequestUtilization: Target scaling by request utilization. Only
-// applicable for VM runtimes.
+// applicable in the App Engine flexible environment.
 type RequestUtilization struct {
 	// TargetConcurrentRequests: Target number of concurrent requests.
 	TargetConcurrentRequests int64 `json:"targetConcurrentRequests,omitempty"`
@@ -3237,7 +3237,7 @@ type Version struct {
 	Deployment *Deployment `json:"deployment,omitempty"`
 
 	// DiskUsageBytes: Total size in bytes of all the files that are
-	// included in this version and curerntly hosted on the App Engine
+	// included in this version and currently hosted on the App Engine
 	// disk.@OutputOnly
 	DiskUsageBytes int64 `json:"diskUsageBytes,omitempty,string"`
 
@@ -3266,8 +3266,8 @@ type Version struct {
 
 	// HealthCheck: Configures health checking for VM instances. Unhealthy
 	// instances are stopped and replaced with new instances. Only
-	// applicable for VM runtimes.Only returned in GET requests if view=FULL
-	// is set.
+	// applicable in the App Engine flexible environment.Only returned in
+	// GET requests if view=FULL is set.
 	HealthCheck *HealthCheck `json:"healthCheck,omitempty"`
 
 	// Id: Relative name of the version within the service. Example: v1.
@@ -3323,8 +3323,8 @@ type Version struct {
 	// apps/myapp/services/default/versions/v1.@OutputOnly
 	Name string `json:"name,omitempty"`
 
-	// Network: Extra network settings. Only applicable for App Engine
-	// flexible environment versions.
+	// Network: Extra network settings. Only applicable in the App Engine
+	// flexible environment.
 	Network *Network `json:"network,omitempty"`
 
 	// NobuildFilesRegex: Files that match this pattern will not be built
@@ -3402,8 +3402,8 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Volume: Volumes mounted within the app container. Only applicable for
-// VM runtimes.
+// Volume: Volumes mounted within the app container. Only applicable in
+// the App Engine flexible environment.
 type Volume struct {
 	// Name: Unique name for the volume.
 	Name string `json:"name,omitempty"`

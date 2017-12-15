@@ -1,55 +1,15 @@
 {
+  "kind": "discovery#restDescription",
+  "description": "Sends application trace data to Stackdriver Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API.\n",
+  "servicePath": "",
+  "basePath": "",
+  "id": "cloudtrace:v1",
+  "documentationLink": "https://cloud.google.com/trace",
+  "revision": "20171214",
+  "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "ListTracesResponse": {
-      "description": "The response message for the `ListTraces` method.",
-      "type": "object",
-      "properties": {
-        "traces": {
-          "description": "List of trace records returned.",
-          "type": "array",
-          "items": {
-            "$ref": "Trace"
-          }
-        },
-        "nextPageToken": {
-          "description": "If defined, indicates that there are more traces that match the request\nand that this value should be passed to the next request to continue\nretrieving additional traces.",
-          "type": "string"
-        }
-      },
-      "id": "ListTracesResponse"
-    },
-    "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object",
-      "properties": {},
-      "id": "Empty"
-    },
-    "Trace": {
-      "description": "A trace describes how long it takes for an application to perform an\noperation. It consists of a set of spans, each of which represent a single\ntimed event within the operation.",
-      "type": "object",
-      "properties": {
-        "projectId": {
-          "description": "Project ID of the Cloud project where the trace data is stored.",
-          "type": "string"
-        },
-        "spans": {
-          "description": "Collection of spans in the trace.",
-          "type": "array",
-          "items": {
-            "$ref": "TraceSpan"
-          }
-        },
-        "traceId": {
-          "description": "Globally unique identifier for the trace. This identifier is a 128-bit\nnumeric value formatted as a 32-byte hex string.",
-          "type": "string"
-        }
-      },
-      "id": "Trace"
-    },
     "Traces": {
-      "description": "List of new or updated traces.",
-      "type": "object",
       "properties": {
         "traces": {
           "description": "List of traces.",
@@ -59,26 +19,14 @@
           }
         }
       },
-      "id": "Traces"
+      "id": "Traces",
+      "description": "List of new or updated traces.",
+      "type": "object"
     },
     "TraceSpan": {
       "description": "A span represents a single timed event within a trace. Spans can be nested\nand form a trace tree. Often, a trace contains a root span that describes the\nend-to-end latency of an operation and, optionally, one or more subspans for\nits suboperations. Spans do not need to be contiguous. There may be gaps\nbetween spans in a trace.",
       "type": "object",
       "properties": {
-        "kind": {
-          "enumDescriptions": [
-            "Unspecified.",
-            "Indicates that the span covers server-side handling of an RPC or other\nremote network request.",
-            "Indicates that the span covers the client-side wrapper around an RPC or\nother remote request."
-          ],
-          "enum": [
-            "SPAN_KIND_UNSPECIFIED",
-            "RPC_SERVER",
-            "RPC_CLIENT"
-          ],
-          "description": "Distinguishes between spans generated in a particular context. For example,\ntwo spans with the same name may be distinguished using `RPC_CLIENT`\nand `RPC_SERVER` to identify queueing latency associated with the span.",
-          "type": "string"
-        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -109,16 +57,76 @@
           "description": "Start time of the span in nanoseconds from the UNIX epoch.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "kind": {
+          "enumDescriptions": [
+            "Unspecified.",
+            "Indicates that the span covers server-side handling of an RPC or other\nremote network request.",
+            "Indicates that the span covers the client-side wrapper around an RPC or\nother remote request."
+          ],
+          "enum": [
+            "SPAN_KIND_UNSPECIFIED",
+            "RPC_SERVER",
+            "RPC_CLIENT"
+          ],
+          "description": "Distinguishes between spans generated in a particular context. For example,\ntwo spans with the same name may be distinguished using `RPC_CLIENT`\nand `RPC_SERVER` to identify queueing latency associated with the span.",
+          "type": "string"
         }
       },
       "id": "TraceSpan"
+    },
+    "ListTracesResponse": {
+      "description": "The response message for the `ListTraces` method.",
+      "type": "object",
+      "properties": {
+        "traces": {
+          "description": "List of trace records returned.",
+          "type": "array",
+          "items": {
+            "$ref": "Trace"
+          }
+        },
+        "nextPageToken": {
+          "description": "If defined, indicates that there are more traces that match the request\nand that this value should be passed to the next request to continue\nretrieving additional traces.",
+          "type": "string"
+        }
+      },
+      "id": "ListTracesResponse"
+    },
+    "Empty": {
+      "properties": {},
+      "id": "Empty",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object"
+    },
+    "Trace": {
+      "properties": {
+        "traceId": {
+          "description": "Globally unique identifier for the trace. This identifier is a 128-bit\nnumeric value formatted as a 32-byte hex string.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Project ID of the Cloud project where the trace data is stored.",
+          "type": "string"
+        },
+        "spans": {
+          "description": "Collection of spans in the trace.",
+          "type": "array",
+          "items": {
+            "$ref": "TraceSpan"
+          }
+        }
+      },
+      "id": "Trace",
+      "description": "A trace describes how long it takes for an application to perform an\noperation. It consists of a set of spans, each of which represent a single\ntimed event within the operation.",
+      "type": "object"
     }
   },
-  "icons": {
-    "x32": "http://www.google.com/images/icons/product/search-32.gif",
-    "x16": "http://www.google.com/images/icons/product/search-16.gif"
-  },
   "protocol": "rest",
+  "icons": {
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
+  },
   "canonicalName": "Cloud Trace",
   "auth": {
     "oauth2": {
@@ -146,21 +154,19 @@
     "projects": {
       "methods": {
         "patchTraces": {
-          "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.",
+          "id": "cloudtrace.projects.patchTraces",
+          "path": "v1/projects/{projectId}/traces",
           "request": {
             "$ref": "Traces"
           },
-          "response": {
-            "$ref": "Empty"
-          },
+          "description": "Sends new traces to Stackdriver Trace or updates existing traces. If the ID\nof a trace that you send matches that of an existing trace, any fields\nin the existing trace and its spans are overwritten by the provided values,\nand any new fields provided are merged with the existing trace data. If the\nID does not match, a new trace is created.",
+          "httpMethod": "PATCH",
           "parameterOrder": [
             "projectId"
           ],
-          "httpMethod": "PATCH",
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/trace.append"
-          ],
+          "response": {
+            "$ref": "Empty"
+          },
           "parameters": {
             "projectId": {
               "location": "path",
@@ -169,9 +175,11 @@
               "type": "string"
             }
           },
-          "flatPath": "v1/projects/{projectId}/traces",
-          "path": "v1/projects/{projectId}/traces",
-          "id": "cloudtrace.projects.patchTraces"
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/trace.append"
+          ],
+          "flatPath": "v1/projects/{projectId}/traces"
         }
       },
       "resources": {
@@ -203,20 +211,20 @@
                   "location": "path"
                 },
                 "filter": {
-                  "location": "query",
                   "description": "An optional filter against labels for the request.\n\nBy default, searches use prefix matching. To specify exact match, prepend\na plus symbol (`+`) to the search term.\nMultiple terms are ANDed. Syntax:\n\n*   `root:NAME_PREFIX` or `NAME_PREFIX`: Return traces where any root\n    span starts with `NAME_PREFIX`.\n*   `+root:NAME` or `+NAME`: Return traces where any root span's name is\n    exactly `NAME`.\n*   `span:NAME_PREFIX`: Return traces where any span starts with\n    `NAME_PREFIX`.\n*   `+span:NAME`: Return traces where any span's name is exactly\n    `NAME`.\n*   `latency:DURATION`: Return traces whose overall latency is\n    greater or equal to than `DURATION`. Accepted units are nanoseconds\n    (`ns`), milliseconds (`ms`), and seconds (`s`). Default is `ms`. For\n    example, `latency:24ms` returns traces whose overall latency\n    is greater than or equal to 24 milliseconds.\n*   `label:LABEL_KEY`: Return all traces containing the specified\n    label key (exact match, case-sensitive) regardless of the key:value\n    pair's value (including empty values).\n*   `LABEL_KEY:VALUE_PREFIX`: Return all traces containing the specified\n    label key (exact match, case-sensitive) whose value starts with\n    `VALUE_PREFIX`. Both a key and a value must be specified.\n*   `+LABEL_KEY:VALUE`: Return all traces containing a key:value pair\n    exactly matching the specified text. Both a key and a value must be\n    specified.\n*   `method:VALUE`: Equivalent to `/http/method:VALUE`.\n*   `url:VALUE`: Equivalent to `/http/url:VALUE`.",
-                  "type": "string"
+                  "type": "string",
+                  "location": "query"
                 },
                 "endTime": {
-                  "location": "query",
                   "description": "End of the time interval (inclusive) during which the trace data was\ncollected from the application.",
                   "format": "google-datetime",
-                  "type": "string"
+                  "type": "string",
+                  "location": "query"
                 },
                 "pageToken": {
-                  "location": "query",
                   "description": "Token identifying the page of results to return. If provided, use the\nvalue of the `next_page_token` field from a previous request. Optional.",
-                  "type": "string"
+                  "type": "string",
+                  "location": "query"
                 },
                 "startTime": {
                   "description": "Start of the time interval (inclusive) during which the trace data was\ncollected from the application.",
@@ -231,15 +239,15 @@
                   "location": "query"
                 },
                 "view": {
+                  "description": "Type of data returned for traces in the list. Optional. Default is\n`MINIMAL`.",
+                  "type": "string",
                   "location": "query",
                   "enum": [
                     "VIEW_TYPE_UNSPECIFIED",
                     "MINIMAL",
                     "ROOTSPAN",
                     "COMPLETE"
-                  ],
-                  "description": "Type of data returned for traces in the list. Optional. Default is\n`MINIMAL`.",
-                  "type": "string"
+                  ]
                 }
               },
               "flatPath": "v1/projects/{projectId}/traces",
@@ -247,9 +255,6 @@
               "id": "cloudtrace.projects.traces.list"
             },
             "get": {
-              "flatPath": "v1/projects/{projectId}/traces/{traceId}",
-              "path": "v1/projects/{projectId}/traces/{traceId}",
-              "id": "cloudtrace.projects.traces.get",
               "description": "Gets a single trace by its ID.",
               "response": {
                 "$ref": "Trace"
@@ -276,7 +281,10 @@
                   "required": true,
                   "type": "string"
                 }
-              }
+              },
+              "flatPath": "v1/projects/{projectId}/traces/{traceId}",
+              "path": "v1/projects/{projectId}/traces/{traceId}",
+              "id": "cloudtrace.projects.traces.get"
             }
           }
         }
@@ -285,9 +293,9 @@
   },
   "parameters": {
     "access_token": {
+      "location": "query",
       "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "key": {
       "location": "query",
@@ -316,9 +324,9 @@
       "location": "query"
     },
     "upload_protocol": {
-      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "prettyPrint": {
       "location": "query",
@@ -326,17 +334,19 @@
       "type": "boolean",
       "default": "true"
     },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
     "uploadType": {
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string",
       "location": "query"
     },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
     "$.xgafv": {
+      "description": "V1 error format.",
+      "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
@@ -345,14 +355,12 @@
       "enum": [
         "1",
         "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string"
+      ]
     },
     "callback": {
+      "location": "query",
       "description": "JSONP",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "alt": {
       "description": "Data format for response.",
@@ -372,13 +380,5 @@
     }
   },
   "version": "v1",
-  "baseUrl": "https://cloudtrace.googleapis.com/",
-  "servicePath": "",
-  "description": "Sends application trace data to Stackdriver Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API.\n",
-  "kind": "discovery#restDescription",
-  "basePath": "",
-  "id": "cloudtrace:v1",
-  "documentationLink": "https://cloud.google.com/trace",
-  "revision": "20171202",
-  "discoveryVersion": "v1"
+  "baseUrl": "https://cloudtrace.googleapis.com/"
 }

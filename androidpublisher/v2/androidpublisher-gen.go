@@ -1488,6 +1488,12 @@ type ProductPurchase struct {
 	// milliseconds since the epoch (Jan 1, 1970).
 	PurchaseTimeMillis int64 `json:"purchaseTimeMillis,omitempty,string"`
 
+	// PurchaseType: The type of purchase of the inapp product. This field
+	// is only set if this purchase was not made using the standard in-app
+	// billing flow. Possible values are:
+	// - Test (i.e. purchased from a license testing account)
+	PurchaseType int64 `json:"purchaseType,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1797,6 +1803,7 @@ type SubscriptionPurchase struct {
 	// - Subscription was cancelled by the system, for example because of a
 	// billing problem
 	// - Subscription was replaced with a new subscription
+	// - Subscription was cancelled by the developer
 	CancelReason *int64 `json:"cancelReason,omitempty"`
 
 	// CountryCode: ISO 3166-1 alpha-2 billing country/region code of the
@@ -1814,6 +1821,19 @@ type SubscriptionPurchase struct {
 	// Kind: This kind represents a subscriptionPurchase object in the
 	// androidpublisher service.
 	Kind string `json:"kind,omitempty"`
+
+	// LinkedPurchaseToken: The purchase token of the originating purchase
+	// if this subscription is one of the following:
+	// - Re-signup of a cancelled but non-lapsed subscription
+	// - Upgrade/downgrade from a previous subscription  For example,
+	// suppose a user originally signs up and you receive purchase token X,
+	// then the user cancels and goes through the resignup flow and you
+	// receive purchase token Y. If you call this API with purchase token Y,
+	// this field will be set to X. If you call this API with purchase token
+	// X, this field will not be set. If user upgrade his subscription after
+	// the first resignup. You receive purchase token Z. If you call this
+	// API with purchase token Z, this field will be set to Y.
+	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
 
 	// OrderId: The order id of the latest recurring order associated with
 	// the purchase of the subscription.
@@ -1836,6 +1856,12 @@ type SubscriptionPurchase struct {
 	// For example, if the price is specified in British pounds sterling,
 	// price_currency_code is "GBP".
 	PriceCurrencyCode string `json:"priceCurrencyCode,omitempty"`
+
+	// PurchaseType: The type of purchase of the subscription. This field is
+	// only set if this purchase was not made using the standard in-app
+	// billing flow. Possible values are:
+	// - Test (i.e. purchased from a license testing account)
+	PurchaseType int64 `json:"purchaseType,omitempty"`
 
 	// StartTimeMillis: Time at which the subscription was granted, in
 	// milliseconds since the Epoch.

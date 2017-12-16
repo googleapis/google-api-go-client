@@ -1666,6 +1666,52 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MonitoredResourceMetadata: Auxiliary metadata for a MonitoredResource
+// object. MonitoredResource objects contain the minimum set of
+// information to uniquely identify a monitored resource instance. There
+// is some other useful auxiliary metadata. Google Stackdriver
+// Monitoring & Logging uses an ingestion pipeline to extract metadata
+// for cloud resources of all types , and stores the metadata in this
+// message.
+type MonitoredResourceMetadata struct {
+	// SystemLabels: Output only. Values for predefined system metadata
+	// labels. System labels are a kind of metadata extracted by Google
+	// Stackdriver. Stackdriver determines what system labels are useful and
+	// how to obtain their values. Some examples: "machine_image", "vpc",
+	// "subnet_id", "security_group", "name", etc. System label values can
+	// be only strings, Boolean values, or a list of strings. For example:
+	// { "name": "my-test-instance",
+	//   "security_group": ["a", "b", "c"],
+	//   "spot_instance": false }
+	//
+	SystemLabels googleapi.RawMessage `json:"systemLabels,omitempty"`
+
+	// UserLabels: Output only. A map of user-defined metadata labels.
+	UserLabels map[string]string `json:"userLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SystemLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SystemLabels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MonitoredResourceMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod MonitoredResourceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Option: A protocol buffer option, which can be attached to a message,
 // field, enumeration, etc.
 type Option struct {
@@ -1803,7 +1849,8 @@ type ResourceGroup struct {
 	//
 	// Possible values:
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Default value (not valid).
-	//   "INSTANCE" - A group of instances (could be either GCE or AWS_EC2).
+	//   "INSTANCE" - A group of instances from Google Cloud Platform (GCP)
+	// or Amazon Web Services (AWS).
 	//   "AWS_ELB_LOAD_BALANCER" - A group of AWS load balancers.
 	ResourceType string `json:"resourceType,omitempty"`
 
@@ -2008,6 +2055,12 @@ func (s *TimeInterval) MarshalJSON() ([]byte, error) {
 // fully-specified metric. This type is used for both listing and
 // creating time series.
 type TimeSeries struct {
+	// Metadata: Output only. The associated monitored resource metadata.
+	// When reading a a timeseries, this field will include metadata labels
+	// that are explicitly named in the reduction. When creating a
+	// timeseries, this field is ignored.
+	Metadata *MonitoredResourceMetadata `json:"metadata,omitempty"`
+
 	// Metric: The associated metric. A fully-specified metric used to
 	// identify the time series.
 	Metric *Metric `json:"metric,omitempty"`
@@ -2063,7 +2116,7 @@ type TimeSeries struct {
 	//   "MONEY" - The value is money.
 	ValueType string `json:"valueType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Metric") to
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2071,8 +2124,8 @@ type TimeSeries struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Metric") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2219,7 +2272,7 @@ type UptimeCheckConfig struct {
 	// this CheckConfig.
 	InternalCheckers []*InternalChecker `json:"internalCheckers,omitempty"`
 
-	// IsInternal: Denotes whether this check is a check that egresses from
+	// IsInternal: Denotes whether this is a check that egresses from
 	// InternalCheckers.
 	IsInternal bool `json:"isInternal,omitempty"`
 

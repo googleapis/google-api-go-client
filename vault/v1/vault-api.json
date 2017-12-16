@@ -1,22 +1,16 @@
 {
-  "rootUrl": "https://vault.googleapis.com/",
-  "ownerDomain": "google.com",
-  "name": "vault",
-  "batchPath": "batch",
-  "fullyEncodeReservedExpansion": true,
-  "title": "Google Vault API",
   "ownerName": "Google",
   "resources": {
     "matters": {
       "methods": {
-        "update": {
+        "addPermissions": {
           "response": {
-            "$ref": "Matter"
+            "$ref": "MatterPermission"
           },
           "parameterOrder": [
             "matterId"
           ],
-          "httpMethod": "PUT",
+          "httpMethod": "POST",
           "scopes": [
             "https://www.googleapis.com/auth/ediscovery"
           ],
@@ -28,44 +22,15 @@
               "type": "string"
             }
           },
-          "flatPath": "v1/matters/{matterId}",
-          "path": "v1/matters/{matterId}",
-          "id": "vault.matters.update",
-          "description": "Updates the specified matter.\nThis updates only the name and description of the matter, identified by\nmatter id. Changes to any other fields are ignored.\nReturns the default view of the matter.",
+          "flatPath": "v1/matters/{matterId}:addPermissions",
+          "path": "v1/matters/{matterId}:addPermissions",
+          "id": "vault.matters.addPermissions",
+          "description": "Adds an account as a matter collaborator.",
           "request": {
-            "$ref": "Matter"
+            "$ref": "AddMatterPermissionsRequest"
           }
         },
-        "delete": {
-          "description": "Deletes the specified matter. Returns matter with updated state.",
-          "response": {
-            "$ref": "Matter"
-          },
-          "parameterOrder": [
-            "matterId"
-          ],
-          "httpMethod": "DELETE",
-          "parameters": {
-            "matterId": {
-              "location": "path",
-              "description": "The matter ID",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/ediscovery"
-          ],
-          "flatPath": "v1/matters/{matterId}",
-          "path": "v1/matters/{matterId}",
-          "id": "vault.matters.delete"
-        },
         "list": {
-          "response": {
-            "$ref": "ListMattersResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
           "parameters": {
             "state": {
               "location": "query",
@@ -84,20 +49,20 @@
               "type": "string"
             },
             "pageSize": {
+              "location": "query",
               "description": "The number of matters to return in the response.\nDefault and maximum are 100.",
               "format": "int32",
-              "type": "integer",
-              "location": "query"
+              "type": "integer"
             },
             "view": {
+              "location": "query",
               "enum": [
                 "VIEW_UNSPECIFIED",
                 "BASIC",
                 "FULL"
               ],
               "description": "Specifies which parts of the matter to return in response.",
-              "type": "string",
-              "location": "query"
+              "type": "string"
             }
           },
           "scopes": [
@@ -107,94 +72,43 @@
           "flatPath": "v1/matters",
           "path": "v1/matters",
           "id": "vault.matters.list",
-          "description": "Lists matters the user has access to."
-        },
-        "addPermissions": {
-          "request": {
-            "$ref": "AddMatterPermissionsRequest"
-          },
-          "description": "Adds an account as a matter collaborator.",
+          "description": "Lists matters the user has access to.",
           "response": {
-            "$ref": "MatterPermission"
+            "$ref": "ListMattersResponse"
           },
-          "parameterOrder": [
-            "matterId"
-          ],
-          "httpMethod": "POST",
-          "parameters": {
-            "matterId": {
-              "location": "path",
-              "description": "The matter ID.",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/ediscovery"
-          ],
-          "flatPath": "v1/matters/{matterId}:addPermissions",
-          "path": "v1/matters/{matterId}:addPermissions",
-          "id": "vault.matters.addPermissions"
+          "parameterOrder": [],
+          "httpMethod": "GET"
         },
         "create": {
-          "httpMethod": "POST",
+          "response": {
+            "$ref": "Matter"
+          },
           "parameterOrder": [],
-          "response": {
-            "$ref": "Matter"
-          },
-          "parameters": {},
-          "scopes": [
-            "https://www.googleapis.com/auth/ediscovery"
-          ],
-          "flatPath": "v1/matters",
-          "id": "vault.matters.create",
-          "path": "v1/matters",
-          "request": {
-            "$ref": "Matter"
-          },
-          "description": "Creates a new matter with the given name and description. The initial state\nis open, and the owner is the method caller. Returns the created matter\nwith default view."
-        },
-        "removePermissions": {
-          "request": {
-            "$ref": "RemoveMatterPermissionsRequest"
-          },
-          "description": "Removes an account as a matter collaborator.",
-          "response": {
-            "$ref": "Empty"
-          },
-          "parameterOrder": [
-            "matterId"
-          ],
           "httpMethod": "POST",
-          "parameters": {
-            "matterId": {
-              "location": "path",
-              "description": "The matter ID.",
-              "required": true,
-              "type": "string"
-            }
-          },
           "scopes": [
             "https://www.googleapis.com/auth/ediscovery"
           ],
-          "flatPath": "v1/matters/{matterId}:removePermissions",
-          "path": "v1/matters/{matterId}:removePermissions",
-          "id": "vault.matters.removePermissions"
+          "parameters": {},
+          "flatPath": "v1/matters",
+          "path": "v1/matters",
+          "id": "vault.matters.create",
+          "description": "Creates a new matter with the given name and description. The initial state\nis open, and the owner is the method caller. Returns the created matter\nwith default view.",
+          "request": {
+            "$ref": "Matter"
+          }
         },
         "reopen": {
-          "id": "vault.matters.reopen",
-          "path": "v1/matters/{matterId}:reopen",
           "request": {
             "$ref": "ReopenMatterRequest"
           },
           "description": "Reopens the specified matter. Returns matter with updated state.",
-          "httpMethod": "POST",
-          "parameterOrder": [
-            "matterId"
-          ],
           "response": {
             "$ref": "ReopenMatterResponse"
           },
+          "parameterOrder": [
+            "matterId"
+          ],
+          "httpMethod": "POST",
           "parameters": {
             "matterId": {
               "description": "The matter ID.",
@@ -206,7 +120,36 @@
           "scopes": [
             "https://www.googleapis.com/auth/ediscovery"
           ],
-          "flatPath": "v1/matters/{matterId}:reopen"
+          "flatPath": "v1/matters/{matterId}:reopen",
+          "path": "v1/matters/{matterId}:reopen",
+          "id": "vault.matters.reopen"
+        },
+        "removePermissions": {
+          "description": "Removes an account as a matter collaborator.",
+          "request": {
+            "$ref": "RemoveMatterPermissionsRequest"
+          },
+          "response": {
+            "$ref": "Empty"
+          },
+          "parameterOrder": [
+            "matterId"
+          ],
+          "httpMethod": "POST",
+          "scopes": [
+            "https://www.googleapis.com/auth/ediscovery"
+          ],
+          "parameters": {
+            "matterId": {
+              "description": "The matter ID.",
+              "required": true,
+              "type": "string",
+              "location": "path"
+            }
+          },
+          "flatPath": "v1/matters/{matterId}:removePermissions",
+          "path": "v1/matters/{matterId}:removePermissions",
+          "id": "vault.matters.removePermissions"
         },
         "close": {
           "path": "v1/matters/{matterId}:close",
@@ -235,48 +178,7 @@
           },
           "flatPath": "v1/matters/{matterId}:close"
         },
-        "get": {
-          "description": "Gets the specified matter.",
-          "response": {
-            "$ref": "Matter"
-          },
-          "parameterOrder": [
-            "matterId"
-          ],
-          "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/ediscovery",
-            "https://www.googleapis.com/auth/ediscovery.readonly"
-          ],
-          "parameters": {
-            "view": {
-              "location": "query",
-              "enum": [
-                "VIEW_UNSPECIFIED",
-                "BASIC",
-                "FULL"
-              ],
-              "description": "Specifies which parts of the Matter to return in the response.",
-              "type": "string"
-            },
-            "matterId": {
-              "location": "path",
-              "description": "The matter ID.",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "flatPath": "v1/matters/{matterId}",
-          "path": "v1/matters/{matterId}",
-          "id": "vault.matters.get"
-        },
         "undelete": {
-          "path": "v1/matters/{matterId}:undelete",
-          "id": "vault.matters.undelete",
-          "description": "Undeletes the specified matter. Returns matter with updated state.",
-          "request": {
-            "$ref": "UndeleteMatterRequest"
-          },
           "response": {
             "$ref": "Matter"
           },
@@ -284,9 +186,6 @@
             "matterId"
           ],
           "httpMethod": "POST",
-          "scopes": [
-            "https://www.googleapis.com/auth/ediscovery"
-          ],
           "parameters": {
             "matterId": {
               "location": "path",
@@ -295,74 +194,109 @@
               "type": "string"
             }
           },
-          "flatPath": "v1/matters/{matterId}:undelete"
+          "scopes": [
+            "https://www.googleapis.com/auth/ediscovery"
+          ],
+          "flatPath": "v1/matters/{matterId}:undelete",
+          "path": "v1/matters/{matterId}:undelete",
+          "id": "vault.matters.undelete",
+          "request": {
+            "$ref": "UndeleteMatterRequest"
+          },
+          "description": "Undeletes the specified matter. Returns matter with updated state."
+        },
+        "get": {
+          "description": "Gets the specified matter.",
+          "httpMethod": "GET",
+          "parameterOrder": [
+            "matterId"
+          ],
+          "response": {
+            "$ref": "Matter"
+          },
+          "parameters": {
+            "matterId": {
+              "location": "path",
+              "description": "The matter ID.",
+              "required": true,
+              "type": "string"
+            },
+            "view": {
+              "description": "Specifies which parts of the Matter to return in the response.",
+              "type": "string",
+              "location": "query",
+              "enum": [
+                "VIEW_UNSPECIFIED",
+                "BASIC",
+                "FULL"
+              ]
+            }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/ediscovery",
+            "https://www.googleapis.com/auth/ediscovery.readonly"
+          ],
+          "flatPath": "v1/matters/{matterId}",
+          "id": "vault.matters.get",
+          "path": "v1/matters/{matterId}"
+        },
+        "update": {
+          "response": {
+            "$ref": "Matter"
+          },
+          "parameterOrder": [
+            "matterId"
+          ],
+          "httpMethod": "PUT",
+          "parameters": {
+            "matterId": {
+              "description": "The matter ID.",
+              "required": true,
+              "type": "string",
+              "location": "path"
+            }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/ediscovery"
+          ],
+          "flatPath": "v1/matters/{matterId}",
+          "path": "v1/matters/{matterId}",
+          "id": "vault.matters.update",
+          "request": {
+            "$ref": "Matter"
+          },
+          "description": "Updates the specified matter.\nThis updates only the name and description of the matter, identified by\nmatter id. Changes to any other fields are ignored.\nReturns the default view of the matter."
+        },
+        "delete": {
+          "response": {
+            "$ref": "Matter"
+          },
+          "parameterOrder": [
+            "matterId"
+          ],
+          "httpMethod": "DELETE",
+          "scopes": [
+            "https://www.googleapis.com/auth/ediscovery"
+          ],
+          "parameters": {
+            "matterId": {
+              "location": "path",
+              "description": "The matter ID",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "flatPath": "v1/matters/{matterId}",
+          "path": "v1/matters/{matterId}",
+          "id": "vault.matters.delete",
+          "description": "Deletes the specified matter. Returns matter with updated state."
         }
       },
       "resources": {
         "holds": {
           "methods": {
-            "update": {
-              "description": "Updates the OU and/or query parameters of a hold. You cannot add accounts\nto a hold that covers an OU, nor can you add OUs to a hold that covers\nindividual accounts. Accounts listed in the hold will be ignored.",
-              "request": {
-                "$ref": "Hold"
-              },
-              "response": {
-                "$ref": "Hold"
-              },
-              "parameterOrder": [
-                "matterId",
-                "holdId"
-              ],
-              "httpMethod": "PUT",
-              "scopes": [
-                "https://www.googleapis.com/auth/ediscovery"
-              ],
-              "parameters": {
-                "matterId": {
-                  "description": "The matter ID.",
-                  "required": true,
-                  "type": "string",
-                  "location": "path"
-                },
-                "holdId": {
-                  "description": "The ID of the hold.",
-                  "required": true,
-                  "type": "string",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/matters/{matterId}/holds/{holdId}",
-              "path": "v1/matters/{matterId}/holds/{holdId}",
-              "id": "vault.matters.holds.update"
-            },
-            "create": {
-              "response": {
-                "$ref": "Hold"
-              },
-              "parameterOrder": [
-                "matterId"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "matterId": {
-                  "location": "path",
-                  "description": "The matter ID.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/ediscovery"
-              ],
-              "flatPath": "v1/matters/{matterId}/holds",
-              "path": "v1/matters/{matterId}/holds",
-              "id": "vault.matters.holds.create",
-              "request": {
-                "$ref": "Hold"
-              },
-              "description": "Creates a hold in the given matter."
-            },
             "delete": {
+              "description": "Removes a hold by ID. This will release any HeldAccounts on this Hold.",
               "response": {
                 "$ref": "Empty"
               },
@@ -371,29 +305,32 @@
                 "holdId"
               ],
               "httpMethod": "DELETE",
-              "scopes": [
-                "https://www.googleapis.com/auth/ediscovery"
-              ],
               "parameters": {
-                "holdId": {
-                  "description": "The hold ID.",
-                  "required": true,
-                  "type": "string",
-                  "location": "path"
-                },
                 "matterId": {
                   "description": "The matter ID.",
                   "required": true,
                   "type": "string",
                   "location": "path"
+                },
+                "holdId": {
+                  "location": "path",
+                  "description": "The hold ID.",
+                  "required": true,
+                  "type": "string"
                 }
               },
+              "scopes": [
+                "https://www.googleapis.com/auth/ediscovery"
+              ],
               "flatPath": "v1/matters/{matterId}/holds/{holdId}",
               "path": "v1/matters/{matterId}/holds/{holdId}",
-              "id": "vault.matters.holds.delete",
-              "description": "Removes a hold by ID. This will release any HeldAccounts on this Hold."
+              "id": "vault.matters.holds.delete"
             },
             "get": {
+              "flatPath": "v1/matters/{matterId}/holds/{holdId}",
+              "path": "v1/matters/{matterId}/holds/{holdId}",
+              "id": "vault.matters.holds.get",
+              "description": "Gets a hold by ID.",
               "response": {
                 "$ref": "Hold"
               },
@@ -414,18 +351,15 @@
                   "location": "path"
                 },
                 "matterId": {
+                  "location": "path",
                   "description": "The matter ID.",
                   "required": true,
-                  "type": "string",
-                  "location": "path"
+                  "type": "string"
                 }
-              },
-              "flatPath": "v1/matters/{matterId}/holds/{holdId}",
-              "path": "v1/matters/{matterId}/holds/{holdId}",
-              "id": "vault.matters.holds.get",
-              "description": "Gets a hold by ID."
+              }
             },
             "list": {
+              "description": "Lists holds within a matter. An empty page token in ListHoldsResponse\ndenotes no more holds to list.",
               "response": {
                 "$ref": "ListHoldsResponse"
               },
@@ -433,6 +367,42 @@
                 "matterId"
               ],
               "httpMethod": "GET",
+              "scopes": [
+                "https://www.googleapis.com/auth/ediscovery",
+                "https://www.googleapis.com/auth/ediscovery.readonly"
+              ],
+              "parameters": {
+                "pageSize": {
+                  "location": "query",
+                  "description": "The number of holds to return in the response, between 0 and 100 inclusive.\nLeaving this empty, or as 0, is the same as page_size = 100.",
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "matterId": {
+                  "location": "path",
+                  "description": "The matter ID.",
+                  "required": true,
+                  "type": "string"
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "The pagination token as returned in the response.\nAn empty token means start from the beginning.",
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/matters/{matterId}/holds",
+              "path": "v1/matters/{matterId}/holds",
+              "id": "vault.matters.holds.list"
+            },
+            "update": {
+              "response": {
+                "$ref": "Hold"
+              },
+              "parameterOrder": [
+                "matterId",
+                "holdId"
+              ],
+              "httpMethod": "PUT",
               "parameters": {
                 "matterId": {
                   "description": "The matter ID.",
@@ -440,33 +410,56 @@
                   "type": "string",
                   "location": "path"
                 },
-                "pageToken": {
-                  "description": "The pagination token as returned in the response.\nAn empty token means start from the beginning.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "pageSize": {
-                  "location": "query",
-                  "description": "The number of holds to return in the response, between 0 and 100 inclusive.\nLeaving this empty, or as 0, is the same as page_size = 100.",
-                  "format": "int32",
-                  "type": "integer"
+                "holdId": {
+                  "location": "path",
+                  "description": "The ID of the hold.",
+                  "required": true,
+                  "type": "string"
                 }
               },
               "scopes": [
-                "https://www.googleapis.com/auth/ediscovery",
-                "https://www.googleapis.com/auth/ediscovery.readonly"
+                "https://www.googleapis.com/auth/ediscovery"
+              ],
+              "flatPath": "v1/matters/{matterId}/holds/{holdId}",
+              "path": "v1/matters/{matterId}/holds/{holdId}",
+              "id": "vault.matters.holds.update",
+              "request": {
+                "$ref": "Hold"
+              },
+              "description": "Updates the OU and/or query parameters of a hold. You cannot add accounts\nto a hold that covers an OU, nor can you add OUs to a hold that covers\nindividual accounts. Accounts listed in the hold will be ignored."
+            },
+            "create": {
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "matterId"
+              ],
+              "response": {
+                "$ref": "Hold"
+              },
+              "parameters": {
+                "matterId": {
+                  "required": true,
+                  "type": "string",
+                  "location": "path",
+                  "description": "The matter ID."
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/ediscovery"
               ],
               "flatPath": "v1/matters/{matterId}/holds",
+              "id": "vault.matters.holds.create",
               "path": "v1/matters/{matterId}/holds",
-              "id": "vault.matters.holds.list",
-              "description": "Lists holds within a matter. An empty page token in ListHoldsResponse\ndenotes no more holds to list."
+              "request": {
+                "$ref": "Hold"
+              },
+              "description": "Creates a hold in the given matter."
             }
           },
           "resources": {
             "accounts": {
               "methods": {
                 "delete": {
-                  "description": "Removes a HeldAccount from a hold. If this request leaves the hold with\nno held accounts, the hold will not apply to any accounts.",
                   "response": {
                     "$ref": "Empty"
                   },
@@ -476,34 +469,37 @@
                     "accountId"
                   ],
                   "httpMethod": "DELETE",
-                  "scopes": [
-                    "https://www.googleapis.com/auth/ediscovery"
-                  ],
                   "parameters": {
-                    "holdId": {
+                    "matterId": {
                       "location": "path",
-                      "description": "The hold ID.",
+                      "description": "The matter ID.",
                       "required": true,
                       "type": "string"
                     },
-                    "accountId": {
-                      "description": "The ID of the account to remove from the hold.",
+                    "holdId": {
+                      "description": "The hold ID.",
                       "required": true,
                       "type": "string",
                       "location": "path"
                     },
-                    "matterId": {
-                      "description": "The matter ID.",
+                    "accountId": {
+                      "location": "path",
+                      "description": "The ID of the account to remove from the hold.",
                       "required": true,
-                      "type": "string",
-                      "location": "path"
+                      "type": "string"
                     }
                   },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/ediscovery"
+                  ],
                   "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}",
                   "path": "v1/matters/{matterId}/holds/{holdId}/accounts/{accountId}",
-                  "id": "vault.matters.holds.accounts.delete"
+                  "id": "vault.matters.holds.accounts.delete",
+                  "description": "Removes a HeldAccount from a hold. If this request leaves the hold with\nno held accounts, the hold will not apply to any accounts."
                 },
                 "list": {
+                  "path": "v1/matters/{matterId}/holds/{holdId}/accounts",
+                  "id": "vault.matters.holds.accounts.list",
                   "description": "Lists HeldAccounts for a hold. This will only list individually specified\nheld accounts. If the hold is on an OU, then use\n\u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e\nto enumerate its members.",
                   "response": {
                     "$ref": "ListHeldAccountsResponse"
@@ -518,36 +514,36 @@
                     "https://www.googleapis.com/auth/ediscovery.readonly"
                   ],
                   "parameters": {
+                    "matterId": {
+                      "required": true,
+                      "type": "string",
+                      "location": "path",
+                      "description": "The matter ID."
+                    },
                     "holdId": {
+                      "location": "path",
                       "description": "The hold ID.",
                       "required": true,
-                      "type": "string",
-                      "location": "path"
-                    },
-                    "matterId": {
-                      "description": "The matter ID.",
-                      "required": true,
-                      "type": "string",
-                      "location": "path"
+                      "type": "string"
                     }
                   },
-                  "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts",
-                  "path": "v1/matters/{matterId}/holds/{holdId}/accounts",
-                  "id": "vault.matters.holds.accounts.list"
+                  "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts"
                 },
                 "create": {
+                  "path": "v1/matters/{matterId}/holds/{holdId}/accounts",
+                  "id": "vault.matters.holds.accounts.create",
                   "request": {
                     "$ref": "HeldAccount"
                   },
                   "description": "Adds a HeldAccount to a hold. Accounts can only be added to a hold that\nhas no held_org_unit set. Attempting to add an account to an OU-based\nhold will result in an error.",
-                  "httpMethod": "POST",
+                  "response": {
+                    "$ref": "HeldAccount"
+                  },
                   "parameterOrder": [
                     "matterId",
                     "holdId"
                   ],
-                  "response": {
-                    "$ref": "HeldAccount"
-                  },
+                  "httpMethod": "POST",
                   "parameters": {
                     "holdId": {
                       "description": "The hold ID.",
@@ -556,18 +552,16 @@
                       "location": "path"
                     },
                     "matterId": {
+                      "location": "path",
                       "description": "The matter ID.",
                       "required": true,
-                      "type": "string",
-                      "location": "path"
+                      "type": "string"
                     }
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/ediscovery"
                   ],
-                  "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts",
-                  "id": "vault.matters.holds.accounts.create",
-                  "path": "v1/matters/{matterId}/holds/{holdId}/accounts"
+                  "flatPath": "v1/matters/{matterId}/holds/{holdId}/accounts"
                 }
               }
             }
@@ -577,28 +571,18 @@
     }
   },
   "parameters": {
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
     "$.xgafv": {
-      "enum": [
-        "1",
-        "2"
-      ],
       "description": "V1 error format.",
       "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
       ],
-      "location": "query"
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ]
     },
     "callback": {
       "location": "query",
@@ -627,9 +611,9 @@
       "location": "query"
     },
     "key": {
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
       "type": "string",
-      "location": "query"
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token."
     },
     "quotaUser": {
       "location": "query",
@@ -637,15 +621,15 @@
       "type": "string"
     },
     "pp": {
-      "description": "Pretty-print response.",
       "type": "boolean",
       "default": "true",
-      "location": "query"
+      "location": "query",
+      "description": "Pretty-print response."
     },
     "oauth_token": {
-      "description": "OAuth 2.0 token for the current user.",
       "type": "string",
-      "location": "query"
+      "location": "query",
+      "description": "OAuth 2.0 token for the current user."
     },
     "bearer_token": {
       "location": "query",
@@ -653,15 +637,25 @@
       "type": "string"
     },
     "upload_protocol": {
+      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
       "type": "string",
       "location": "query"
     },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "type": "boolean",
-      "default": "true",
-      "location": "query"
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
     }
   },
   "version": "v1",
@@ -670,171 +664,13 @@
   "description": "Archiving and eDiscovery for G Suite.",
   "kind": "discovery#restDescription",
   "basePath": "",
-  "documentationLink": "https://developers.google.com/vault",
   "id": "vault:v1",
+  "documentationLink": "https://developers.google.com/vault",
   "revision": "20171026",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "UndeleteMatterRequest": {
-      "properties": {},
-      "id": "UndeleteMatterRequest",
-      "description": "Undelete a matter by ID.",
-      "type": "object"
-    },
-    "ListHeldAccountsResponse": {
-      "description": "Returns a list of held accounts for a hold.",
-      "type": "object",
-      "properties": {
-        "accounts": {
-          "description": "The held accounts on a hold.",
-          "type": "array",
-          "items": {
-            "$ref": "HeldAccount"
-          }
-        }
-      },
-      "id": "ListHeldAccountsResponse"
-    },
-    "Empty": {
-      "properties": {},
-      "id": "Empty",
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object"
-    },
-    "CloseMatterRequest": {
-      "properties": {},
-      "id": "CloseMatterRequest",
-      "description": "Close a matter by ID.",
-      "type": "object"
-    },
-    "ReopenMatterRequest": {
-      "description": "Reopen a matter by ID.",
-      "type": "object",
-      "properties": {},
-      "id": "ReopenMatterRequest"
-    },
-    "RemoveMatterPermissionsRequest": {
-      "properties": {
-        "accountId": {
-          "description": "The account ID.",
-          "type": "string"
-        }
-      },
-      "id": "RemoveMatterPermissionsRequest",
-      "description": "Remove an account as a matter collaborator.",
-      "type": "object"
-    },
-    "MatterPermission": {
-      "description": "Currently each matter only has one owner, and all others are collaborators.\nWhen an account is purged, its corresponding MatterPermission resources\ncease to exist.",
-      "type": "object",
-      "properties": {
-        "accountId": {
-          "description": "The account id, as provided by \u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
-          "type": "string"
-        },
-        "role": {
-          "enumDescriptions": [
-            "No role assigned.",
-            "A collaborator to the matter.",
-            "The owner of the matter."
-          ],
-          "enum": [
-            "ROLE_UNSPECIFIED",
-            "COLLABORATOR",
-            "OWNER"
-          ],
-          "description": "The user's role in this matter.",
-          "type": "string"
-        }
-      },
-      "id": "MatterPermission"
-    },
-    "ListMattersResponse": {
-      "properties": {
-        "nextPageToken": {
-          "description": "Page token to retrieve the next page of results in the list.",
-          "type": "string"
-        },
-        "matters": {
-          "description": "List of matters.",
-          "type": "array",
-          "items": {
-            "$ref": "Matter"
-          }
-        }
-      },
-      "id": "ListMattersResponse",
-      "description": "Provides the list of matters.",
-      "type": "object"
-    },
-    "HeldMailQuery": {
-      "properties": {
-        "endTime": {
-          "description": "The end time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "startTime": {
-          "description": "The start time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "terms": {
-          "description": "The search terms for the hold.",
-          "type": "string"
-        }
-      },
-      "id": "HeldMailQuery",
-      "description": "Query options for mail holds.",
-      "type": "object"
-    },
-    "CloseMatterResponse": {
-      "properties": {
-        "matter": {
-          "description": "The updated matter, with state CLOSED.",
-          "$ref": "Matter"
-        }
-      },
-      "id": "CloseMatterResponse",
-      "description": "Response to a CloseMatterRequest.",
-      "type": "object"
-    },
-    "HeldGroupsQuery": {
-      "description": "Query options for group holds.",
-      "type": "object",
-      "properties": {
-        "endTime": {
-          "description": "The end time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "startTime": {
-          "description": "The start time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "terms": {
-          "description": "The search terms for the hold.",
-          "type": "string"
-        }
-      },
-      "id": "HeldGroupsQuery"
-    },
-    "HeldDriveQuery": {
-      "description": "Query options for drive holds.",
-      "type": "object",
-      "properties": {
-        "includeTeamDriveFiles": {
-          "description": "If true, include files in Team Drives in the hold.",
-          "type": "boolean"
-        }
-      },
-      "id": "HeldDriveQuery"
-    },
     "HeldOrgUnit": {
-      "description": "A organizational unit being held in a particular hold.\nThis structure is immutable.",
-      "type": "object",
       "properties": {
         "holdTime": {
           "description": "When the org unit was put on hold. This property is immutable.",
@@ -846,10 +682,11 @@
           "type": "string"
         }
       },
-      "id": "HeldOrgUnit"
+      "id": "HeldOrgUnit",
+      "description": "A organizational unit being held in a particular hold.\nThis structure is immutable.",
+      "type": "object"
     },
     "AddMatterPermissionsRequest": {
-      "description": "Add an account with the permission specified. The role cannot be owner.\nIf an account already has a role in the matter, it will be\noverwritten.",
       "type": "object",
       "properties": {
         "sendEmails": {
@@ -865,13 +702,18 @@
           "type": "boolean"
         }
       },
-      "id": "AddMatterPermissionsRequest"
+      "id": "AddMatterPermissionsRequest",
+      "description": "Add an account with the permission specified. The role cannot be owner.\nIf an account already has a role in the matter, it will be\noverwritten."
     },
     "Matter": {
-      "description": "Represents a matter.",
-      "type": "object",
       "properties": {
         "state": {
+          "enumDescriptions": [
+            "The matter has no specified state.",
+            "This matter is open.",
+            "This matter is closed.",
+            "This matter is deleted."
+          ],
           "enum": [
             "STATE_UNSPECIFIED",
             "OPEN",
@@ -879,17 +721,11 @@
             "DELETED"
           ],
           "description": "The state of the matter.",
-          "type": "string",
-          "enumDescriptions": [
-            "The matter has no specified state.",
-            "This matter is open.",
-            "This matter is closed.",
-            "This matter is deleted."
-          ]
+          "type": "string"
         },
         "name": {
-          "description": "The name of the matter.",
-          "type": "string"
+          "type": "string",
+          "description": "The name of the matter."
         },
         "matterPermissions": {
           "description": "List of users and access to the matter. Currently there is no programmer\ndefined limit on the number of permissions a matter can have.",
@@ -907,19 +743,21 @@
           "type": "string"
         }
       },
-      "id": "Matter"
+      "id": "Matter",
+      "description": "Represents a matter.",
+      "type": "object"
     },
     "HeldAccount": {
       "description": "An account being held in a particular hold. This structure is immutable.\nThis can be either a single user or a google group, depending on the corpus.",
       "type": "object",
       "properties": {
+        "accountId": {
+          "type": "string",
+          "description": "The account's ID as provided by the\n\u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e."
+        },
         "holdTime": {
           "description": "When the account was put on hold.",
           "format": "google-datetime",
-          "type": "string"
-        },
-        "accountId": {
-          "description": "The account's ID as provided by the\n\u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
           "type": "string"
         }
       },
@@ -928,8 +766,8 @@
     "ReopenMatterResponse": {
       "properties": {
         "matter": {
-          "$ref": "Matter",
-          "description": "The updated matter, with state OPEN."
+          "description": "The updated matter, with state OPEN.",
+          "$ref": "Matter"
         }
       },
       "id": "ReopenMatterResponse",
@@ -945,8 +783,8 @@
           "description": "Details pertaining to mail holds. If set, corpus must be mail."
         },
         "groupsQuery": {
-          "description": "Details pertaining to Groups holds. If set, corpus must be Groups.",
-          "$ref": "HeldGroupsQuery"
+          "$ref": "HeldGroupsQuery",
+          "description": "Details pertaining to Groups holds. If set, corpus must be Groups."
         },
         "driveQuery": {
           "$ref": "HeldDriveQuery",
@@ -965,8 +803,8 @@
           }
         },
         "orgUnit": {
-          "description": "If set, the hold applies to all members of the organizational unit and\naccounts must be empty. This property is mutable. For groups holds,\nset the accounts field.",
-          "$ref": "HeldOrgUnit"
+          "$ref": "HeldOrgUnit",
+          "description": "If set, the hold applies to all members of the organizational unit and\naccounts must be empty. This property is mutable. For groups holds,\nset the accounts field."
         },
         "query": {
           "$ref": "CorpusQuery",
@@ -998,8 +836,8 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the hold.",
-          "type": "string"
+          "type": "string",
+          "description": "The name of the hold."
         }
       },
       "id": "Hold",
@@ -1007,22 +845,178 @@
       "type": "object"
     },
     "ListHoldsResponse": {
+      "id": "ListHoldsResponse",
+      "description": "The holds for a matter.",
+      "type": "object",
       "properties": {
-        "nextPageToken": {
-          "description": "Page token to retrieve the next page of results in the list.\nIf this is empty, then there are no more holds to list.",
-          "type": "string"
-        },
         "holds": {
           "description": "The list of holds.",
           "type": "array",
           "items": {
             "$ref": "Hold"
           }
+        },
+        "nextPageToken": {
+          "description": "Page token to retrieve the next page of results in the list.\nIf this is empty, then there are no more holds to list.",
+          "type": "string"
+        }
+      }
+    },
+    "ListHeldAccountsResponse": {
+      "id": "ListHeldAccountsResponse",
+      "description": "Returns a list of held accounts for a hold.",
+      "type": "object",
+      "properties": {
+        "accounts": {
+          "description": "The held accounts on a hold.",
+          "type": "array",
+          "items": {
+            "$ref": "HeldAccount"
+          }
+        }
+      }
+    },
+    "UndeleteMatterRequest": {
+      "properties": {},
+      "id": "UndeleteMatterRequest",
+      "description": "Undelete a matter by ID.",
+      "type": "object"
+    },
+    "Empty": {
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object",
+      "properties": {},
+      "id": "Empty"
+    },
+    "CloseMatterRequest": {
+      "description": "Close a matter by ID.",
+      "type": "object",
+      "properties": {},
+      "id": "CloseMatterRequest"
+    },
+    "ReopenMatterRequest": {
+      "description": "Reopen a matter by ID.",
+      "type": "object",
+      "properties": {},
+      "id": "ReopenMatterRequest"
+    },
+    "RemoveMatterPermissionsRequest": {
+      "description": "Remove an account as a matter collaborator.",
+      "type": "object",
+      "properties": {
+        "accountId": {
+          "description": "The account ID.",
+          "type": "string"
         }
       },
-      "id": "ListHoldsResponse",
-      "description": "The holds for a matter.",
+      "id": "RemoveMatterPermissionsRequest"
+    },
+    "MatterPermission": {
+      "properties": {
+        "accountId": {
+          "description": "The account id, as provided by \u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
+          "type": "string"
+        },
+        "role": {
+          "description": "The user's role in this matter.",
+          "type": "string",
+          "enumDescriptions": [
+            "No role assigned.",
+            "A collaborator to the matter.",
+            "The owner of the matter."
+          ],
+          "enum": [
+            "ROLE_UNSPECIFIED",
+            "COLLABORATOR",
+            "OWNER"
+          ]
+        }
+      },
+      "id": "MatterPermission",
+      "description": "Currently each matter only has one owner, and all others are collaborators.\nWhen an account is purged, its corresponding MatterPermission resources\ncease to exist.",
       "type": "object"
+    },
+    "ListMattersResponse": {
+      "description": "Provides the list of matters.",
+      "type": "object",
+      "properties": {
+        "matters": {
+          "description": "List of matters.",
+          "type": "array",
+          "items": {
+            "$ref": "Matter"
+          }
+        },
+        "nextPageToken": {
+          "description": "Page token to retrieve the next page of results in the list.",
+          "type": "string"
+        }
+      },
+      "id": "ListMattersResponse"
+    },
+    "HeldMailQuery": {
+      "id": "HeldMailQuery",
+      "description": "Query options for mail holds.",
+      "type": "object",
+      "properties": {
+        "startTime": {
+          "description": "The start time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "terms": {
+          "description": "The search terms for the hold.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "The end time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      }
+    },
+    "CloseMatterResponse": {
+      "type": "object",
+      "properties": {
+        "matter": {
+          "$ref": "Matter",
+          "description": "The updated matter, with state CLOSED."
+        }
+      },
+      "id": "CloseMatterResponse",
+      "description": "Response to a CloseMatterRequest."
+    },
+    "HeldDriveQuery": {
+      "description": "Query options for drive holds.",
+      "type": "object",
+      "properties": {
+        "includeTeamDriveFiles": {
+          "type": "boolean",
+          "description": "If true, include files in Team Drives in the hold."
+        }
+      },
+      "id": "HeldDriveQuery"
+    },
+    "HeldGroupsQuery": {
+      "description": "Query options for group holds.",
+      "type": "object",
+      "properties": {
+        "terms": {
+          "description": "The search terms for the hold.",
+          "type": "string"
+        },
+        "endTime": {
+          "description": "The end time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "The start time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "id": "HeldGroupsQuery"
     }
   },
   "protocol": "rest",
@@ -1034,13 +1028,19 @@
   "auth": {
     "oauth2": {
       "scopes": {
-        "https://www.googleapis.com/auth/ediscovery": {
-          "description": "Manage your eDiscovery data"
-        },
         "https://www.googleapis.com/auth/ediscovery.readonly": {
           "description": "View your eDiscovery data"
+        },
+        "https://www.googleapis.com/auth/ediscovery": {
+          "description": "Manage your eDiscovery data"
         }
       }
     }
-  }
+  },
+  "rootUrl": "https://vault.googleapis.com/",
+  "ownerDomain": "google.com",
+  "name": "vault",
+  "batchPath": "batch",
+  "fullyEncodeReservedExpansion": true,
+  "title": "Google Vault API"
 }

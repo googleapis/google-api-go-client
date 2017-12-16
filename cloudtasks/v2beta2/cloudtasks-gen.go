@@ -810,11 +810,13 @@ type CreateTaskRequest struct {
 	// Explicitly specifying a task ID enables task de-duplication.  If
 	// a task's ID is identical to that of an existing task or a task
 	// that was deleted or completed recently then the call will fail
-	// with google.rpc.Code.ALREADY_EXISTS. If the task's queue was
-	// created using Cloud Tasks, then another task with the same name
-	// can't be created for ~1hour after the original task was deleted
-	// or completed. If the task's queue was created using queue.yaml
-	// or
+	// with google.rpc.Code.ALREADY_EXISTS.
+	// If the task's queue was created using Cloud Tasks, then another task
+	// with
+	// the same name can't be created for ~1hour after the original task
+	// was
+	// deleted or completed. If the task's queue was created using
+	// queue.yaml or
 	// queue.xml, then another task with the same name can't be created
 	// for ~9days after the original task was deleted or completed.
 	//
@@ -875,6 +877,158 @@ type Empty struct {
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
+}
+
+// LeaseTasksRequest: Request message for pulling tasks using
+// CloudTasks.LeaseTasks.
+type LeaseTasksRequest struct {
+	// Filter: `filter` can be used to specify a subset of tasks to
+	// lease.
+	//
+	// When `filter` is set to `tag=<my-tag>` then the
+	// LeaseTasksResponse will contain only tasks whose
+	// LeaseMessage.tag is equal to `<my-tag>`. `<my-tag>` must be less
+	// than
+	// 500 bytes.
+	//
+	// When `filter` is set to `tag_function=oldest_tag()`, only tasks which
+	// have
+	// the same tag as the task with the oldest schedule_time will be
+	// returned.
+	//
+	// Grammar Syntax:
+	//
+	// * `filter = "tag=" tag | "tag_function=" function`
+	//
+	// * `tag = string | bytes`
+	//
+	// * `function = "oldest_tag()"
+	//
+	// The `oldest_tag()` function returns tasks which have the same tag as
+	// the
+	// oldest task (ordered by schedule time).
+	Filter string `json:"filter,omitempty"`
+
+	// LeaseDuration: The duration of the lease.
+	//
+	// Each task returned in the LeaseTasksResponse will have
+	// its
+	// Task.schedule_time set to the current time plus the
+	// `lease_duration`. A task that has been returned in
+	// a
+	// LeaseTasksResponse is leased -- that task will not be
+	// returned in a different LeaseTasksResponse before
+	// the
+	// Task.schedule_time.
+	//
+	// After the pull worker has successfully finished the work
+	// associated with the task, the pull worker must
+	// call
+	// CloudTasks.AcknowledgeTask. If the task is not acknowledged
+	// via CloudTasks.AcknowledgeTask before the
+	// Task.schedule_time then it will be returned in a
+	// later
+	// LeaseTasksResponse so that another pull worker can process
+	// it.
+	//
+	// The maximum lease duration is 1 week.
+	// `lease_duration` will be truncated to the nearest second.
+	LeaseDuration string `json:"leaseDuration,omitempty"`
+
+	// MaxTasks: The maximum number of tasks to lease. The maximum that can
+	// be
+	// requested is 1000.
+	MaxTasks int64 `json:"maxTasks,omitempty"`
+
+	// ResponseView: The response_view specifies which subset of the Task
+	// will be
+	// returned.
+	//
+	// By default response_view is Task.View.BASIC; not all
+	// information is retrieved by default because some data, such
+	// as
+	// payloads, might be desirable to return only when needed because
+	// of its large size or because of the sensitivity of data that
+	// it
+	// contains.
+	//
+	// Authorization for Task.View.FULL requires
+	// `cloudtasks.tasks.fullView`
+	// [Google IAM](/iam/) permission on the
+	// Task.name resource.
+	//
+	// Possible values:
+	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
+	//   "BASIC" - The basic view omits fields which can be large or can
+	// contain
+	// sensitive data.
+	//
+	// This view does not include (AppEngineHttpRequest.payload
+	// and PullMessage.payload). These payloads are desirable to
+	// return only when needed, because they can be large and because
+	// of the sensitivity of the data that you choose to store in it.
+	//   "FULL" - All information is returned.
+	//
+	// Authorization for Task.View.FULL requires
+	// `cloudtasks.tasks.fullView` [Google
+	// IAM](https://cloud.google.com/iam/)
+	// permission on the Queue.name resource.
+	ResponseView string `json:"responseView,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LeaseTasksRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod LeaseTasksRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LeaseTasksResponse: Response message for leasing tasks using
+// CloudTasks.LeaseTasks.
+type LeaseTasksResponse struct {
+	// Tasks: The leased tasks.
+	Tasks []*Task `json:"tasks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Tasks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tasks") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LeaseTasksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LeaseTasksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ListLocationsResponse: The response message for
@@ -1458,6 +1612,16 @@ type Queue struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "RUNNING" - The queue is running. Tasks can be dispatched.
+	//
+	// If the queue was created using Cloud Tasks and the queue has had
+	// no
+	// activity (method calls or task dispatches) for 30 days, the queue
+	// may
+	// take a few minutes to re-activate. Some method calls may
+	// return
+	// google.rpc.Code.NOT_FOUND and tasks may not be dispatched for a
+	// few
+	// minutes until the queue has been re-activated.
 	//   "PAUSED" - Tasks are paused by the user. If the queue is paused
 	// then Cloud
 	// Tasks will stop delivering tasks from it, but more tasks can
@@ -2654,6 +2818,12 @@ type ProjectsLocationsQueuesCreateCall struct {
 
 // Create: Creates a queue.
 //
+// Queues created with this method allow tasks to live for a maximum of
+// 31
+// days. After a task is 31 days old, the task will be deleted
+// regardless of whether
+// it was dispatched or not.
+//
 // WARNING: Using this method may have unintended side effects if you
 // are
 // using an App Engine `queue.yaml` or `queue.xml` file to manage your
@@ -2755,7 +2925,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Q
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a queue.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
+	//   "description": "Creates a queue.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.create",
@@ -3450,6 +3620,12 @@ type ProjectsLocationsQueuesPatchCall struct {
 // This method creates the queue if it does not exist and updates
 // the queue if it does exist.
 //
+// Queues created with this method allow tasks to live for a maximum of
+// 31
+// days. After a task is 31 days old, the task will be deleted
+// regardless of whether
+// it was dispatched or not.
+//
 // WARNING: Using this method may have unintended side effects if you
 // are
 // using an App Engine `queue.yaml` or `queue.xml` file to manage your
@@ -3560,7 +3736,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
+	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](/cloud-tasks/docs/queue-yaml)\ncarefully before using this method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtasks.projects.locations.queues.patch",
@@ -5065,6 +5241,164 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v2beta2/{+name}",
 	//   "response": {
 	//     "$ref": "Task"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudtasks.projects.locations.queues.tasks.lease":
+
+type ProjectsLocationsQueuesTasksLeaseCall struct {
+	s                 *Service
+	parent            string
+	leasetasksrequest *LeaseTasksRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Lease:
+// Leases tasks from a pull queue for
+// LeaseTasksRequest.lease_duration.
+//
+// This method is invoked by the pull worker to obtain a
+// lease. The pull worker must acknowledge the task
+// via
+// CloudTasks.AcknowledgeTask after they have performed the
+// work
+// associated with the task.
+//
+// The payload is intended to store data that the pull worker needs
+// to perform the work associated with the task. To return the
+// payloads in the LeaseTasksResponse,
+// set
+// LeaseTasksRequest.response_view to Task.View.FULL.
+//
+// A maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed
+// per
+// queue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this
+// limit
+// is exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned
+// when
+// RateLimits.max_tasks_dispatched_per_second is exceeded.
+func (r *ProjectsLocationsQueuesTasksService) Lease(parent string, leasetasksrequest *LeaseTasksRequest) *ProjectsLocationsQueuesTasksLeaseCall {
+	c := &ProjectsLocationsQueuesTasksLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.leasetasksrequest = leasetasksrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsQueuesTasksLeaseCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksLeaseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsQueuesTasksLeaseCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksLeaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsQueuesTasksLeaseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuesTasksLeaseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.leasetasksrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+parent}/tasks:lease")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudtasks.projects.locations.queues.tasks.lease" call.
+// Exactly one of *LeaseTasksResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *LeaseTasksResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuesTasksLeaseCall) Do(opts ...googleapi.CallOption) (*LeaseTasksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LeaseTasksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "\nLeases tasks from a pull queue for LeaseTasksRequest.lease_duration.\n\nThis method is invoked by the pull worker to obtain a\nlease. The pull worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the pull worker needs\nto perform the work associated with the task. To return the\npayloads in the LeaseTasksResponse, set\nLeaseTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
+	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:lease",
+	//   "httpMethod": "POST",
+	//   "id": "cloudtasks.projects.locations.queues.tasks.lease",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required.\n\nThe queue name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta2/{+parent}/tasks:lease",
+	//   "request": {
+	//     "$ref": "LeaseTasksRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "LeaseTasksResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

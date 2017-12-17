@@ -317,8 +317,8 @@ type DataSource struct {
 	// for the data source.
 	ManualRunsDisabled bool `json:"manualRunsDisabled,omitempty"`
 
-	// MinimumScheduleInterval: The minimum interval between two consecutive
-	// scheduled runs.
+	// MinimumScheduleInterval: The minimum interval for scheduler to
+	// schedule runs.
 	MinimumScheduleInterval string `json:"minimumScheduleInterval,omitempty"`
 
 	// Name: Data source resource name.
@@ -1134,7 +1134,7 @@ func (s *TransferMessage) MarshalJSON() ([]byte, error) {
 }
 
 // TransferRun: Represents a data transfer run.
-// Next id: 25
+// Next id: 27
 type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`

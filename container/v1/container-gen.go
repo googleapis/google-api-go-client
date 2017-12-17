@@ -329,7 +329,7 @@ func (s *ClientCertificateConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Cluster: A Google Kubernetes Engine cluster.
+// Cluster: A Google Container Engine cluster.
 type Cluster struct {
 	// AddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
@@ -1914,7 +1914,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type RollbackNodePoolUpgradeRequest struct {
 }
 
-// ServerConfig: Kubernetes Engine service configuration.
+// ServerConfig: Container Engine service configuration.
 type ServerConfig struct {
 	// DefaultClusterVersion: Version of Kubernetes the service deploys by
 	// default.
@@ -2002,7 +2002,7 @@ type SetLabelsRequest struct {
 	// this resource,
 	// used to detect conflicts. The fingerprint is initially generated
 	// by
-	// Kubernetes Engine and changes after every request to modify or
+	// Container Engine and changes after every request to modify or
 	// update
 	// labels. You must always provide an up-to-date fingerprint hash
 	// when
@@ -2409,9 +2409,11 @@ func (s *UpdateClusterRequest) MarshalJSON() ([]byte, error) {
 // UpdateMasterRequest: UpdateMasterRequest updates the master of the
 // cluster.
 type UpdateMasterRequest struct {
-	// MasterVersion: The Kubernetes version to change the master to. Use
-	// "-" to have the server
-	// automatically select the default version.
+	// MasterVersion: The Kubernetes version to change the master to. The
+	// only valid value is the
+	// latest supported version. Use "-" to have the server automatically
+	// select
+	// the latest version.
 	MasterVersion string `json:"masterVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MasterVersion") to
@@ -2484,7 +2486,7 @@ type ProjectsZonesGetServerconfigCall struct {
 	header_      http.Header
 }
 
-// GetServerconfig: Returns configuration info about the Kubernetes
+// GetServerconfig: Returns configuration info about the Container
 // Engine service.
 func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *ProjectsZonesGetServerconfigCall {
 	c := &ProjectsZonesGetServerconfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2588,7 +2590,7 @@ func (c *ProjectsZonesGetServerconfigCall) Do(opts ...googleapi.CallOption) (*Se
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns configuration info about the Kubernetes Engine service.",
+	//   "description": "Returns configuration info about the Container Engine service.",
 	//   "flatPath": "v1/projects/{projectId}/zones/{zone}/serverconfig",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.zones.getServerconfig",

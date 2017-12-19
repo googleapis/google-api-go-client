@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/XXqAjksNONUHnYzhM-bTbt44y8E\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/68KYRX0CayA0UeBneK3LuSbbGVs\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20171210",
+ "revision": "20171212",
  "title": "Calendar API",
  "description": "Manipulates events and other calendar data.",
  "ownerDomain": "google.com",
@@ -539,7 +539,7 @@
    "properties": {
     "type": {
      "type": "string",
-     "description": "The conference solution type.\nIf a client encounters an unfamiliar or empty type, it should still be able to display the entry points. However, it should disallow modifications.\nThe possible values are:  \n- \"eventHangout\" \n- \"eventNamedHangout\" \n- \"hangoutsMeet\""
+     "description": "The conference solution type.\nIf a client encounters an unfamiliar or empty type, it should still be able to display the entry points. However, it should disallow modifications.\nThe possible values are:  \n- \"eventHangout\" for Hangouts for consumers (http://hangouts.google.com)\n- \"eventNamedHangout\" for Classic Hangouts for GSuite users (http://hangouts.google.com)\n- \"hangoutsMeet\" for Hangouts Meet (http://meet.google.com)"
     }
    }
   },
@@ -647,7 +647,7 @@
     },
     "conferenceData": {
      "$ref": "ConferenceData",
-     "description": "The conference-related information, such as details of a Hangouts Meet conference. To create new conference details use the createRequest field."
+     "description": "The conference-related information, such as details of a Hangouts Meet conference. To create new conference details use the createRequest field. To persist your changes, remember to set the conferenceDataVersion request parameter to 1 for all event modification requests."
     },
     "created": {
      "type": "string",
@@ -2117,7 +2117,7 @@
       },
       "conferenceDataVersion": {
        "type": "integer",
-       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
        "format": "int32",
        "minimum": "0",
        "maximum": "1",
@@ -2156,7 +2156,7 @@
       },
       "conferenceDataVersion": {
        "type": "integer",
-       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
        "format": "int32",
        "minimum": "0",
        "maximum": "1",
@@ -2465,7 +2465,7 @@
       },
       "conferenceDataVersion": {
        "type": "integer",
-       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
        "format": "int32",
        "minimum": "0",
        "maximum": "1",
@@ -2563,7 +2563,7 @@
       },
       "conferenceDataVersion": {
        "type": "integer",
-       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
        "format": "int32",
        "minimum": "0",
        "maximum": "1",

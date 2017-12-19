@@ -531,6 +531,10 @@ type Device struct {
 	// devices will be in this state until they have applied policy.
 	AppliedState string `json:"appliedState,omitempty"`
 
+	// DeviceSettings: Device settings information. This information is only
+	// available when deviceSettingsEnabled is true in the device's policy.
+	DeviceSettings *DeviceSettings `json:"deviceSettings,omitempty"`
+
 	// DisabledReason: If the device state is DISABLED, an optional message
 	// that is displayed on the device indicating the reason the device is
 	// disabled. This field may be modified by an update request.
@@ -664,6 +668,68 @@ type Device struct {
 
 func (s *Device) MarshalJSON() ([]byte, error) {
 	type NoMethod Device
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceSettings: Information about security related device settings on
+// device.
+type DeviceSettings struct {
+	// AdbEnabled: If the ADB is enabled Settings.Global.ADB_ENABLED.
+	AdbEnabled bool `json:"adbEnabled,omitempty"`
+
+	// DevelopmentSettingsEnabled: If the developer mode is enabled
+	// Settings.Global.DEVELOPMENT_SETTINGS_ENABLED.
+	DevelopmentSettingsEnabled bool `json:"developmentSettingsEnabled,omitempty"`
+
+	// EncryptionStatus: Encryption status from DevicePolicyManager.
+	//
+	// Possible values:
+	//   "ENCRYPTION_STATUS_UNSPECIFIED" - Unspecified. No device should
+	// have this type.
+	//   "UNSUPPORTED" - Encryption is not supported by the device.
+	//   "INACTIVE" - Encryption is supported by the device, but not
+	// currently active.
+	//   "ACTIVATING" - Encryption is not currently active, but is currently
+	// being activated.
+	//   "ACTIVE" - Encryption is active
+	//   "ACTIVE_DEFAULT_KEY" - Encryption is active, but an encryption key
+	// is not set by the user
+	//   "ACTIVE_PER_USER" - Encrpyiton is active, and the encryption key is
+	// tied to the user profile.
+	EncryptionStatus string `json:"encryptionStatus,omitempty"`
+
+	// IsDeviceSecure: Device secured with PIN/password.
+	IsDeviceSecure bool `json:"isDeviceSecure,omitempty"`
+
+	// IsEncrypted: Whether the storage encryption is enabled
+	// DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE or
+	// DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER in N+ devices.
+	IsEncrypted bool `json:"isEncrypted,omitempty"`
+
+	// UnknownSourcesEnabled: If installing apps from unknown sources is
+	// enabled. Settings.Secure.INSTALL_NON_MARKET_APPS.
+	UnknownSourcesEnabled bool `json:"unknownSourcesEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdbEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdbEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2314,6 +2380,14 @@ type SoftwareInfo struct {
 
 	// AndroidBuildTime: Build time.
 	AndroidBuildTime string `json:"androidBuildTime,omitempty"`
+
+	// AndroidDevicePolicyVersionCode: The Android Device Policy app version
+	// code.
+	AndroidDevicePolicyVersionCode int64 `json:"androidDevicePolicyVersionCode,omitempty"`
+
+	// AndroidDevicePolicyVersionName: The Android Device Policy app version
+	// as displayed to the user.
+	AndroidDevicePolicyVersionName string `json:"androidDevicePolicyVersionName,omitempty"`
 
 	// AndroidVersion: The user visible Android version string, e.g. 6.0.1.
 	AndroidVersion string `json:"androidVersion,omitempty"`

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/h08zVfEZXBLh6kuPAmaFBvfKpSQ\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/8LXjCsGzTRkw9pxlAZsYlHn9Eew\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20171122",
+ "revision": "20171207",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1070,6 +1070,18 @@
       ""
      ]
     },
+    "savedState": {
+     "type": "string",
+     "description": "For LocalSSD disks on VM Instances in STOPPED or SUSPENDED state, this field is set to PRESERVED iff the LocalSSD data has been saved to a persistent location by customer request. (see the discard_local_ssd option on Stop/Suspend). Read-only in the api.",
+     "enum": [
+      "DISK_SAVED_STATE_UNSPECIFIED",
+      "PRESERVED"
+     ],
+     "enumDescriptions": [
+      "",
+      ""
+     ]
+    },
     "source": {
      "type": "string",
      "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk."
@@ -1244,6 +1256,11 @@
        "compute.instanceGroups.insert"
       ]
      }
+    },
+    "recommendedSize": {
+     "type": "integer",
+     "description": "[Output Only] Target recommended MIG size computed by autoscaler. Autoscaler calculates recommended MIG size even when autoscaling policy mode is different from ON. This field is empty when autoscaler is not connected to the existing managed instance group or autoscaler did not generate its first prediction.",
+     "format": "int32"
     },
     "region": {
      "type": "string",
@@ -9460,6 +9477,23 @@
      "items": {
       "type": "string"
      }
+    }
+   }
+  },
+  "InstancesResumeRequest": {
+   "id": "InstancesResumeRequest",
+   "type": "object",
+   "properties": {
+    "disks": {
+     "type": "array",
+     "description": "Array of disks associated with this instance that are protected with a customer-supplied encryption key.\n\nIn order to resume the instance, the disk url and its corresponding key must be provided.\n\nIf the disk is not protected with a customer-supplied encryption key it should not be specified.",
+     "items": {
+      "$ref": "CustomerEncryptionKeyProtectedDisk"
+     }
+    },
+    "instanceEncryptionKey": {
+     "$ref": "CustomerEncryptionKey",
+     "description": "Decrypts data associated with an instance that is protected with a customer-supplied encryption key.\n\nIf the instance you are starting is protected with a customer-supplied encryption key, the correct key must be provided otherwise the instance resume will not succeed."
     }
    }
   },
@@ -29505,6 +29539,55 @@
       "zone",
       "instance"
      ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "resume": {
+     "id": "compute.instances.resume",
+     "path": "{project}/zones/{zone}/instances/{instance}/resume",
+     "httpMethod": "POST",
+     "description": "Resumes an instance that was suspended using the instances().suspend method.",
+     "parameters": {
+      "instance": {
+       "type": "string",
+       "description": "Name of the instance resource to resume.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      },
+      "zone": {
+       "type": "string",
+       "description": "The name of the zone for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "zone",
+      "instance"
+     ],
+     "request": {
+      "$ref": "InstancesResumeRequest"
+     },
      "response": {
       "$ref": "Operation"
      },

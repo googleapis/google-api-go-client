@@ -777,6 +777,10 @@
           "type": "string",
           "format": "google-datetime"
         },
+        "deviceSettings": {
+          "description": "Device settings information. This information is only available when deviceSettingsEnabled is true in the device's policy.",
+          "$ref": "DeviceSettings"
+        },
         "name": {
           "description": "The name of the device in the form enterprises/{enterpriseId}/devices/{deviceId}",
           "type": "string"
@@ -1877,6 +1881,10 @@
           "description": "Android build Id string meant for displaying to the user, e.g. shamu-userdebug 6.0.1 MOB30I 2756745 dev-keys.",
           "type": "string"
         },
+        "androidDevicePolicyVersionName": {
+          "description": "The Android Device Policy app version as displayed to the user.",
+          "type": "string"
+        },
         "androidBuildTime": {
           "description": "Build time.",
           "type": "string",
@@ -1893,6 +1901,11 @@
         "deviceKernelVersion": {
           "description": "Kernel version, e.g. 2.6.32.9-g103d848.",
           "type": "string"
+        },
+        "androidDevicePolicyVersionCode": {
+          "description": "The Android Device Policy app version code.",
+          "type": "integer",
+          "format": "int32"
         }
       },
       "id": "SoftwareInfo"
@@ -2358,6 +2371,55 @@
       },
       "id": "ApiLevelCondition"
     },
+    "DeviceSettings": {
+      "description": "Information about security related device settings on device.",
+      "type": "object",
+      "properties": {
+        "developmentSettingsEnabled": {
+          "description": "If the developer mode is enabled Settings.Global.DEVELOPMENT_SETTINGS_ENABLED.",
+          "type": "boolean"
+        },
+        "adbEnabled": {
+          "description": "If the ADB is enabled Settings.Global.ADB_ENABLED.",
+          "type": "boolean"
+        },
+        "isDeviceSecure": {
+          "description": "Device secured with PIN/password.",
+          "type": "boolean"
+        },
+        "isEncrypted": {
+          "description": "Whether the storage encryption is enabled DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE or DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER in N+ devices.",
+          "type": "boolean"
+        },
+        "unknownSourcesEnabled": {
+          "description": "If installing apps from unknown sources is enabled. Settings.Secure.INSTALL_NON_MARKET_APPS.",
+          "type": "boolean"
+        },
+        "encryptionStatus": {
+          "description": "Encryption status from DevicePolicyManager.",
+          "enum": [
+            "ENCRYPTION_STATUS_UNSPECIFIED",
+            "UNSUPPORTED",
+            "INACTIVE",
+            "ACTIVATING",
+            "ACTIVE",
+            "ACTIVE_DEFAULT_KEY",
+            "ACTIVE_PER_USER"
+          ],
+          "enumDescriptions": [
+            "Unspecified. No device should have this type.",
+            "Encryption is not supported by the device.",
+            "Encryption is supported by the device, but not currently active.",
+            "Encryption is not currently active, but is currently being activated.",
+            "Encryption is active",
+            "Encryption is active, but an encryption key is not set by the user",
+            "Encrpyiton is active, and the encryption key is tied to the user profile."
+          ],
+          "type": "string"
+        }
+      },
+      "id": "DeviceSettings"
+    },
     "SystemUpdate": {
       "description": "Configuration for managing system updates",
       "type": "object",
@@ -2452,7 +2514,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20171204",
+  "revision": "20171211",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

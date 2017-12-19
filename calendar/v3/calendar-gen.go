@@ -923,9 +923,11 @@ type ConferenceSolutionKey struct {
 	// be able to display the entry points. However, it should disallow
 	// modifications.
 	// The possible values are:
-	// - "eventHangout"
-	// - "eventNamedHangout"
-	// - "hangoutsMeet"
+	// - "eventHangout" for Hangouts for consumers
+	// (http://hangouts.google.com)
+	// - "eventNamedHangout" for Classic Hangouts for GSuite users
+	// (http://hangouts.google.com)
+	// - "hangoutsMeet" for Hangouts Meet (http://meet.google.com)
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1165,7 +1167,9 @@ type Event struct {
 
 	// ConferenceData: The conference-related information, such as details
 	// of a Hangouts Meet conference. To create new conference details use
-	// the createRequest field.
+	// the createRequest field. To persist your changes, remember to set the
+	// conferenceDataVersion request parameter to 1 for all event
+	// modification requests.
 	ConferenceData *ConferenceData `json:"conferenceData,omitempty"`
 
 	// Created: Creation time of the event (as a RFC3339 timestamp).
@@ -5727,7 +5731,8 @@ func (r *EventsService) Import(calendarId string, event *Event) *EventsImportCal
 // by the API client. Version 0 assumes no conference data support and
 // ignores conference data in the event's body. Version 1 enables
 // support for copying of ConferenceData as well as for creating new
-// conferences using the CreateConferenceRequest. The default is 0.
+// conferences using the createRequest field of conferenceData. The
+// default is 0.
 func (c *EventsImportCall) ConferenceDataVersion(conferenceDataVersion int64) *EventsImportCall {
 	c.urlParams_.Set("conferenceDataVersion", fmt.Sprint(conferenceDataVersion))
 	return c
@@ -5841,7 +5846,7 @@ func (c *EventsImportCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "conferenceDataVersion": {
-	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "1",
@@ -5892,7 +5897,8 @@ func (r *EventsService) Insert(calendarId string, event *Event) *EventsInsertCal
 // by the API client. Version 0 assumes no conference data support and
 // ignores conference data in the event's body. Version 1 enables
 // support for copying of ConferenceData as well as for creating new
-// conferences using the CreateConferenceRequest. The default is 0.
+// conferences using the createRequest field of conferenceData. The
+// default is 0.
 func (c *EventsInsertCall) ConferenceDataVersion(conferenceDataVersion int64) *EventsInsertCall {
 	c.urlParams_.Set("conferenceDataVersion", fmt.Sprint(conferenceDataVersion))
 	return c
@@ -6023,7 +6029,7 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "conferenceDataVersion": {
-	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "1",
@@ -7000,7 +7006,8 @@ func (c *EventsPatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsPat
 // by the API client. Version 0 assumes no conference data support and
 // ignores conference data in the event's body. Version 1 enables
 // support for copying of ConferenceData as well as for creating new
-// conferences using the CreateConferenceRequest. The default is 0.
+// conferences using the createRequest field of conferenceData. The
+// default is 0.
 func (c *EventsPatchCall) ConferenceDataVersion(conferenceDataVersion int64) *EventsPatchCall {
 	c.urlParams_.Set("conferenceDataVersion", fmt.Sprint(conferenceDataVersion))
 	return c
@@ -7138,7 +7145,7 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "conferenceDataVersion": {
-	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "1",
@@ -7365,7 +7372,8 @@ func (c *EventsUpdateCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsUp
 // by the API client. Version 0 assumes no conference data support and
 // ignores conference data in the event's body. Version 1 enables
 // support for copying of ConferenceData as well as for creating new
-// conferences using the CreateConferenceRequest. The default is 0.
+// conferences using the createRequest field of conferenceData. The
+// default is 0.
 func (c *EventsUpdateCall) ConferenceDataVersion(conferenceDataVersion int64) *EventsUpdateCall {
 	c.urlParams_.Set("conferenceDataVersion", fmt.Sprint(conferenceDataVersion))
 	return c
@@ -7503,7 +7511,7 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "conferenceDataVersion": {
-	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the CreateConferenceRequest. The default is 0.",
+	//       "description": "Version number of conference data supported by the API client. Version 0 assumes no conference data support and ignores conference data in the event's body. Version 1 enables support for copying of ConferenceData as well as for creating new conferences using the createRequest field of conferenceData. The default is 0.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "maximum": "1",

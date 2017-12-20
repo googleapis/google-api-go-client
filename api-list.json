@@ -990,21 +990,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "consumersurveys:v2",
-   "name": "consumersurveys",
-   "version": "v2",
-   "title": "Consumer Surveys API",
-   "description": "Creates and conducts surveys, lists the surveys that an authenticated user owns, and retrieves survey results and information about specified surveys.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/consumersurveys/v2/rest",
-   "discoveryLink": "./apis/consumersurveys/v2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "container:v1",
    "name": "container",
    "version": "v1",

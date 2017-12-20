@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/j5zvxTgngRBLrvV_ukeemeNJYB4\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/HIjKZ2H1Lvje9CpaMVbiW03yMTM\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20171122",
+ "revision": "20171207",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -1770,6 +1770,10 @@
      "type": "string",
      "description": "Cloud Storage bucket name."
     },
+    "cdnPolicy": {
+     "$ref": "BackendBucketCdnPolicy",
+     "description": "Cloud CDN Coniguration for this BackendBucket."
+    },
     "creationTimestamp": {
      "type": "string",
      "description": "[Output Only] Creation timestamp in RFC3339 text format."
@@ -1800,6 +1804,25 @@
     "selfLink": {
      "type": "string",
      "description": "[Output Only] Server-defined URL for the resource."
+    }
+   }
+  },
+  "BackendBucketCdnPolicy": {
+   "id": "BackendBucketCdnPolicy",
+   "type": "object",
+   "description": "Message containing Cloud CDN configuration for a backend bucket.",
+   "properties": {
+    "signedUrlCacheMaxAgeSec": {
+     "type": "string",
+     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this bucket had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
+     "format": "int64"
+    },
+    "signedUrlKeyNames": {
+     "type": "array",
+     "description": "[Output Only] Names of the keys currently configured for Cloud CDN Signed URL on this backend bucket.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -2180,6 +2203,18 @@
     "cacheKeyPolicy": {
      "$ref": "CacheKeyPolicy",
      "description": "The CacheKeyPolicy for this CdnPolicy."
+    },
+    "signedUrlCacheMaxAgeSec": {
+     "type": "string",
+     "description": "Number of seconds up to which the response to a signed URL request will be cached in the CDN. After this time period, the Signed URL will be revalidated before being served. Defaults to 1hr (3600s). If this field is set, Cloud CDN will internally act as though all responses from this backend had a ?Cache-Control: public, max-age=[TTL]? header, regardless of any existing Cache-Control header. The actual headers served in responses will not be altered.",
+     "format": "int64"
+    },
+    "signedUrlKeyNames": {
+     "type": "array",
+     "description": "[Output Only] Names of the keys currently configured for Cloud CDN Signed URL on this backend service.",
+     "items": {
+      "type": "string"
+     }
     }
    }
   },
@@ -13292,6 +13327,22 @@
     }
    }
   },
+  "SignedUrlKey": {
+   "id": "SignedUrlKey",
+   "type": "object",
+   "description": "Represents a customer-supplied Signing Key used by Cloud CDN Signed URLs",
+   "properties": {
+    "keyName": {
+     "type": "string",
+     "description": "Name of the key. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression [a-z]([-a-z0-9]*[a-z0-9])? which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+     "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?"
+    },
+    "keyValue": {
+     "type": "string",
+     "description": "128-bit key value used for signing the URL. The key value must be a valid RFC 4648 Section 5 base64url encoded string."
+    }
+   }
+  },
   "Snapshot": {
    "id": "Snapshot",
    "type": "object",
@@ -18466,6 +18517,46 @@
   },
   "backendBuckets": {
    "methods": {
+    "addSignedUrlKey": {
+     "id": "compute.backendBuckets.addSignedUrlKey",
+     "path": "{project}/global/backendBuckets/{backendBucket}/addSignedUrlKey",
+     "httpMethod": "POST",
+     "description": "Adds the given Signed URL Key to the backend bucket.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to which the Signed URL Key should be added. The name should conform to RFC1035.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket"
+     ],
+     "request": {
+      "$ref": "SignedUrlKey"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "delete": {
      "id": "compute.backendBuckets.delete",
      "path": "{project}/global/backendBuckets/{backendBucket}",
@@ -18495,6 +18586,50 @@
      "parameterOrder": [
       "project",
       "backendBucket"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "deleteSignedUrlKey": {
+     "id": "compute.backendBuckets.deleteSignedUrlKey",
+     "path": "{project}/global/backendBuckets/{backendBucket}/deleteSignedUrlKey",
+     "httpMethod": "POST",
+     "description": "Deletes the given Signed URL Key from the backend bucket.",
+     "parameters": {
+      "backendBucket": {
+       "type": "string",
+       "description": "Name of the BackendBucket resource to which the Signed URL Key should be added. The name should conform to RFC1035.",
+       "required": true,
+       "location": "path"
+      },
+      "keyName": {
+       "type": "string",
+       "description": "The name of the Signed URL Key to delete.",
+       "required": true,
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendBucket",
+      "keyName"
      ],
      "response": {
       "$ref": "Operation"
@@ -18706,6 +18841,46 @@
   },
   "backendServices": {
    "methods": {
+    "addSignedUrlKey": {
+     "id": "compute.backendServices.addSignedUrlKey",
+     "path": "{project}/global/backendServices/{backendService}/addSignedUrlKey",
+     "httpMethod": "POST",
+     "description": "Adds the given Signed URL Key to the specified backend service.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to which the Signed URL Key should be added. The name should conform to RFC1035.",
+       "required": true,
+       "location": "path"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService"
+     ],
+     "request": {
+      "$ref": "SignedUrlKey"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "aggregatedList": {
      "id": "compute.backendServices.aggregatedList",
      "path": "{project}/aggregated/backendServices",
@@ -18784,6 +18959,50 @@
      "parameterOrder": [
       "project",
       "backendService"
+     ],
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "deleteSignedUrlKey": {
+     "id": "compute.backendServices.deleteSignedUrlKey",
+     "path": "{project}/global/backendServices/{backendService}/deleteSignedUrlKey",
+     "httpMethod": "POST",
+     "description": "Deletes the given Signed URL Key from the specified backend service.",
+     "parameters": {
+      "backendService": {
+       "type": "string",
+       "description": "Name of the BackendService resource to which the Signed URL Key should be added. The name should conform to RFC1035.",
+       "required": true,
+       "location": "path"
+      },
+      "keyName": {
+       "type": "string",
+       "description": "The name of the Signed URL Key to delete.",
+       "required": true,
+       "location": "query"
+      },
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "backendService",
+      "keyName"
      ],
      "response": {
       "$ref": "Operation"

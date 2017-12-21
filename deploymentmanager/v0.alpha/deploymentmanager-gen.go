@@ -432,6 +432,10 @@ type CollectionOverride struct {
 	// service.
 	Collection string `json:"collection,omitempty"`
 
+	// MethodMap: Custom verb method mappings to support unordered list API
+	// mappings.
+	MethodMap *MethodMap `json:"methodMap,omitempty"`
+
 	// Options: The options to apply to this resource-level override
 	Options *Options `json:"options,omitempty"`
 
@@ -1464,6 +1468,52 @@ type ManifestsListResponse struct {
 
 func (s *ManifestsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ManifestsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MethodMap: Deployment Manager will call these methods during the
+// events of creation/deletion/update/get/setIamPolicy
+type MethodMap struct {
+	// Create: The action identifier for the create method to be used for
+	// this collection
+	Create string `json:"create,omitempty"`
+
+	// Delete: The action identifier for the delete method to be used for
+	// this collection
+	Delete string `json:"delete,omitempty"`
+
+	// Get: The action identifier for the get method to be used for this
+	// collection
+	Get string `json:"get,omitempty"`
+
+	// SetIamPolicy: The action identifier for the setIamPolicy method to be
+	// used for this collection
+	SetIamPolicy string `json:"setIamPolicy,omitempty"`
+
+	// Update: The action identifier for the update method to be used for
+	// this collection
+	Update string `json:"update,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Create") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Create") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MethodMap) MarshalJSON() ([]byte, error) {
+	type NoMethod MethodMap
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

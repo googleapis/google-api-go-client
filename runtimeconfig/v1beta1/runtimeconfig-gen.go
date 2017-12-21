@@ -622,9 +622,9 @@ type RuntimeConfig struct {
 	//
 	// The `[PROJECT_ID]` must be a valid project ID, and `[CONFIG_NAME]` is
 	// an
-	// arbitrary name that
-	// matches
-	// [0-9A-Za-z](?:[_.A-Za-z0-9-]{0,62}[_.A-Za-z0-9])? regular
+	// arbitrary name that matches
+	// the
+	// `[0-9A-Za-z](?:[_.A-Za-z0-9-]{0,62}[_.A-Za-z0-9])?` regular
 	// expression.
 	// The length of `[CONFIG_NAME]` must be less than 64 characters.
 	//

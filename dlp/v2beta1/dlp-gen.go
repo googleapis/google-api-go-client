@@ -4219,7 +4219,9 @@ func (s *GooglePrivacyDlpV2beta1SummaryResult) MarshalJSON() ([]byte, error) {
 // as
 // output. This should be used in conjunction with a field on
 // the
-// transformation such as `surrogate_info_type`.
+// transformation such as `surrogate_info_type`. This custom info type
+// does
+// not support the use of `detection_rules`.
 type GooglePrivacyDlpV2beta1SurrogateType struct {
 }
 
@@ -4370,13 +4372,17 @@ func (s *GooglePrivacyDlpV2beta1TimePartConfig) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2beta1TransformationSummary: Summary of a single
 // tranformation.
+// Only one of 'transformation', 'field_transformation', or
+// 'record_suppress'
+// will be set.
 type GooglePrivacyDlpV2beta1TransformationSummary struct {
 	// Field: Set if the transformation was limited to a specific FieldId.
 	Field *GooglePrivacyDlpV2beta1FieldId `json:"field,omitempty"`
 
-	// FieldTransformations: The field transformation that was applied. This
-	// list will contain
-	// multiple only in the case of errors.
+	// FieldTransformations: The field transformation that was applied.
+	// If multiple field transformations are requested for a single
+	// field,
+	// this list will contain all of them; otherwise, only one is supplied.
 	FieldTransformations []*GooglePrivacyDlpV2beta1FieldTransformation `json:"fieldTransformations,omitempty"`
 
 	// InfoType: Set if the transformation was limited to a specific
@@ -4390,6 +4396,10 @@ type GooglePrivacyDlpV2beta1TransformationSummary struct {
 
 	// Transformation: The specific transformation these stats apply to.
 	Transformation *GooglePrivacyDlpV2beta1PrimitiveTransformation `json:"transformation,omitempty"`
+
+	// TransformedBytes: Total size in bytes that were transformed in some
+	// way.
+	TransformedBytes int64 `json:"transformedBytes,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
@@ -4484,6 +4494,15 @@ func (s *GooglePrivacyDlpV2beta1UnwrappedCryptoKey) MarshalJSON() ([]byte, error
 
 // GooglePrivacyDlpV2beta1Value: Set of primitive values supported by
 // the system.
+// Note that for the purposes of inspection or transformation, the
+// number
+// of bytes considered to comprise a 'Value' is based on its
+// representation
+// as a UTF-8 encoded string. For example, if 'integer_value' is set
+// to
+// 123456789, the number of bytes would be counted as 9, even though
+// an
+// int64 only holds up to 8 bytes of data.
 type GooglePrivacyDlpV2beta1Value struct {
 	BooleanValue bool `json:"booleanValue,omitempty"`
 

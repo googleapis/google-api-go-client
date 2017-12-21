@@ -1958,7 +1958,9 @@ func (s *GooglePrivacyDlpV2beta1StorageConfig) MarshalJSON() ([]byte, error) {
 // as
 // output. This should be used in conjunction with a field on
 // the
-// transformation such as `surrogate_info_type`.
+// transformation such as `surrogate_info_type`. This custom info type
+// does
+// not support the use of `detection_rules`.
 type GooglePrivacyDlpV2beta1SurrogateType struct {
 }
 
@@ -2012,6 +2014,15 @@ func (s *GooglePrivacyDlpV2beta1TaggedField) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2beta1Value: Set of primitive values supported by
 // the system.
+// Note that for the purposes of inspection or transformation, the
+// number
+// of bytes considered to comprise a 'Value' is based on its
+// representation
+// as a UTF-8 encoded string. For example, if 'integer_value' is set
+// to
+// 123456789, the number of bytes would be counted as 9, even though
+// an
+// int64 only holds up to 8 bytes of data.
 type GooglePrivacyDlpV2beta1Value struct {
 	BooleanValue bool `json:"booleanValue,omitempty"`
 
@@ -2176,6 +2187,7 @@ func (s *GooglePrivacyDlpV2beta2AnalyzeDataSourceRiskDetails) MarshalJSON() ([]b
 // GooglePrivacyDlpV2beta2AnalyzeDataSourceRiskRequest: Request for
 // creating a risk analysis DlpJob.
 type GooglePrivacyDlpV2beta2AnalyzeDataSourceRiskRequest struct {
+	// JobConfig: Configuration for this risk analysis job.
 	JobConfig *GooglePrivacyDlpV2beta2RiskAnalysisJobConfig `json:"jobConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobConfig") to
@@ -2330,9 +2342,8 @@ func (s *GooglePrivacyDlpV2beta2BigQueryTable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta2Bucket: Buckets represented as ranges, along
-// with replacement values. Ranges must
-// be non-overlapping.
+// GooglePrivacyDlpV2beta2Bucket: Bucket is represented as a range,
+// along with replacement values.
 type GooglePrivacyDlpV2beta2Bucket struct {
 	// Max: Upper bound of the range, exclusive; type must match min.
 	Max *GooglePrivacyDlpV2beta2Value `json:"max,omitempty"`
@@ -2383,6 +2394,7 @@ func (s *GooglePrivacyDlpV2beta2Bucket) MarshalJSON() ([]byte, error) {
 // to match
 // the type of the bound before comparing.
 type GooglePrivacyDlpV2beta2BucketingConfig struct {
+	// Buckets: Set of buckets. Ranges must be non-overlapping.
 	Buckets []*GooglePrivacyDlpV2beta2Bucket `json:"buckets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Buckets") to
@@ -2774,7 +2786,7 @@ type GooglePrivacyDlpV2beta2Condition struct {
 	// [required]
 	Field *GooglePrivacyDlpV2beta2FieldId `json:"field,omitempty"`
 
-	// Operator: Operator used to compare the field or info type to the
+	// Operator: Operator used to compare the field or infoType to the
 	// value. [required]
 	//
 	// Possible values:
@@ -2815,6 +2827,7 @@ func (s *GooglePrivacyDlpV2beta2Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2beta2Conditions: A collection of conditions.
 type GooglePrivacyDlpV2beta2Conditions struct {
 	Conditions []*GooglePrivacyDlpV2beta2Condition `json:"conditions,omitempty"`
 
@@ -3099,36 +3112,36 @@ type GooglePrivacyDlpV2beta2CryptoReplaceFfxFpeConfig struct {
 	// [2, 62].
 	Radix int64 `json:"radix,omitempty"`
 
-	// SurrogateInfoType: The custom info type to annotate the surrogate
+	// SurrogateInfoType: The custom infoType to annotate the surrogate
 	// with.
 	// This annotation will be applied to the surrogate by prefixing it
 	// with
-	// the name of the custom info type followed by the number of
+	// the name of the custom infoType followed by the number of
 	// characters comprising the surrogate. The following scheme defines
 	// the
 	// format: info_type_name(surrogate_character_count):surrogate
 	//
-	// For example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE'
+	// For example, if the name of custom infoType is 'MY_TOKEN_INFO_TYPE'
 	// and
 	// the surrogate is 'abc', the full replacement value
 	// will be: 'MY_TOKEN_INFO_TYPE(3):abc'
 	//
 	// This annotation identifies the surrogate when inspecting content
 	// using the
-	// custom info
-	// type
-	// [`SurrogateType`](/dlp/docs/reference/rest/v2beta1/InspectConfig#
-	// surrogatetype).
+	// custom
+	// infoType
+	// [`SurrogateType`](/dlp/docs/reference/rest/v2beta2/InspectCon
+	// fig#surrogatetype).
 	// This facilitates reversal of the surrogate when it occurs in free
 	// text.
 	//
-	// In order for inspection to work properly, the name of this info type
+	// In order for inspection to work properly, the name of this infoType
 	// must
 	// not occur naturally anywhere in your data; otherwise, inspection
 	// may
 	// find a surrogate that does not correspond to an actual
 	// identifier.
-	// Therefore, choose your custom info type name carefully after
+	// Therefore, choose your custom infoType name carefully after
 	// considering
 	// what your data looks like. One way to select a name that has a high
 	// chance
@@ -3549,6 +3562,8 @@ type GooglePrivacyDlpV2beta2DlpJob struct {
 	// StartTime: Time when the job started.
 	StartTime string `json:"startTime,omitempty"`
 
+	// State: State of a job.
+	//
 	// Possible values:
 	//   "JOB_STATE_UNSPECIFIED"
 	//   "PENDING" - The job has not yet started.
@@ -3630,7 +3645,8 @@ func (s *GooglePrivacyDlpV2beta2EntityId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta2Expressions: A collection of expressions
+// GooglePrivacyDlpV2beta2Expressions: An expression, consisting or an
+// operator and conditions.
 type GooglePrivacyDlpV2beta2Expressions struct {
 	Conditions *GooglePrivacyDlpV2beta2Conditions `json:"conditions,omitempty"`
 
@@ -3830,7 +3846,7 @@ func (s *GooglePrivacyDlpV2beta2Finding) MarshalJSON() ([]byte, error) {
 
 type GooglePrivacyDlpV2beta2FindingLimits struct {
 	// MaxFindingsPerInfoType: Configuration of findings limit given for
-	// specified info types.
+	// specified infoTypes.
 	MaxFindingsPerInfoType []*GooglePrivacyDlpV2beta2InfoTypeLimit `json:"maxFindingsPerInfoType,omitempty"`
 
 	// MaxFindingsPerItem: Max number of findings that will be returned for
@@ -4063,13 +4079,21 @@ func (s *GooglePrivacyDlpV2beta2InfoType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta2InfoTypeDescription: Info type description.
+// GooglePrivacyDlpV2beta2InfoTypeDescription: InfoType description.
 type GooglePrivacyDlpV2beta2InfoTypeDescription struct {
-	// DisplayName: Human readable form of the info type name.
+	// DisplayName: Human readable form of the infoType name.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Internal name of the info type.
+	// Name: Internal name of the infoType.
 	Name string `json:"name,omitempty"`
+
+	// SupportedBy: Which parts of the API supports this InfoType.
+	//
+	// Possible values:
+	//   "ENUM_TYPE_UNSPECIFIED"
+	//   "INSPECT" - Supported by the inspect operations.
+	//   "RISK_ANALYSIS" - Supported by the risk analysis operations.
+	SupportedBy []string `json:"supportedBy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -4095,7 +4119,7 @@ func (s *GooglePrivacyDlpV2beta2InfoTypeDescription) MarshalJSON() ([]byte, erro
 }
 
 // GooglePrivacyDlpV2beta2InfoTypeLimit: Max findings configuration per
-// info type, per content item or long
+// infoType, per content item or long
 // running DlpJob.
 type GooglePrivacyDlpV2beta2InfoTypeLimit struct {
 	// InfoType: Type of information the findings limit applies to. Only one
@@ -4136,7 +4160,7 @@ func (s *GooglePrivacyDlpV2beta2InfoTypeLimit) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2beta2InfoTypeStatistics: Statistics regarding a
 // specific InfoType.
 type GooglePrivacyDlpV2beta2InfoTypeStatistics struct {
-	// Count: Number of findings for this info type.
+	// Count: Number of findings for this infoType.
 	Count int64 `json:"count,omitempty,string"`
 
 	// InfoType: The type of finding this stat is for.
@@ -4169,13 +4193,13 @@ func (s *GooglePrivacyDlpV2beta2InfoTypeStatistics) MarshalJSON() ([]byte, error
 // apply to text that is identified as a specific
 // info_type.
 type GooglePrivacyDlpV2beta2InfoTypeTransformation struct {
-	// InfoTypes: Info types to apply the transformation to. Empty list will
+	// InfoTypes: InfoTypes to apply the transformation to. Empty list will
 	// match all
-	// available info types for this transformation.
+	// available infoTypes for this transformation.
 	InfoTypes []*GooglePrivacyDlpV2beta2InfoType `json:"infoTypes,omitempty"`
 
 	// PrimitiveTransformation: Primitive transformation to apply to the
-	// info type. [required]
+	// infoType. [required]
 	PrimitiveTransformation *GooglePrivacyDlpV2beta2PrimitiveTransformation `json:"primitiveTransformation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
@@ -4209,9 +4233,9 @@ func (s *GooglePrivacyDlpV2beta2InfoTypeTransformation) MarshalJSON() ([]byte, e
 // specific
 // info_type.
 type GooglePrivacyDlpV2beta2InfoTypeTransformations struct {
-	// Transformations: Transformation for each info type. Cannot specify
+	// Transformations: Transformation for each infoType. Cannot specify
 	// more than one
-	// for a given info type. [required]
+	// for a given infoType. [required]
 	Transformations []*GooglePrivacyDlpV2beta2InfoTypeTransformation `json:"transformations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Transformations") to
@@ -4244,7 +4268,7 @@ func (s *GooglePrivacyDlpV2beta2InfoTypeTransformations) MarshalJSON() ([]byte, 
 // currently
 // used.
 type GooglePrivacyDlpV2beta2InspectConfig struct {
-	// CustomInfoTypes: Custom info types provided by the user.
+	// CustomInfoTypes: Custom infoTypes provided by the user.
 	CustomInfoTypes []*GooglePrivacyDlpV2beta2CustomInfoType `json:"customInfoTypes,omitempty"`
 
 	// ExcludeInfoTypes: When true, excludes type information of the
@@ -4419,6 +4443,7 @@ func (s *GooglePrivacyDlpV2beta2InspectDataSourceDetails) MarshalJSON() ([]byte,
 // data
 // repository.
 type GooglePrivacyDlpV2beta2InspectDataSourceRequest struct {
+	// JobConfig: A configuration for the job.
 	JobConfig *GooglePrivacyDlpV2beta2InspectJobConfig `json:"jobConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobConfig") to
@@ -4542,8 +4567,8 @@ type GooglePrivacyDlpV2beta2InspectTemplate struct {
 	// DisplayName: Display name (max 256 chars).
 	DisplayName string `json:"displayName,omitempty"`
 
-	// InspectConfig: ///////////// // The core content of the template  //
-	// ///////////////
+	// InspectConfig: The core content of the template. Configuration of the
+	// scanning process.
 	InspectConfig *GooglePrivacyDlpV2beta2InspectConfig `json:"inspectConfig,omitempty"`
 
 	// Name: The template name. Output only.
@@ -5212,7 +5237,7 @@ func (s *GooglePrivacyDlpV2beta2LDiversityResult) MarshalJSON() ([]byte, error) 
 // GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse: Response
 // message for ListDeidentifyTemplates.
 type GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse struct {
-	// DeidentifyTemplates: List of deidentifyTemplates, up to page_size
+	// DeidentifyTemplates: List of deidentify templates, up to page_size
 	// in
 	// ListDeidentifyTemplatesRequest.
 	DeidentifyTemplates []*GooglePrivacyDlpV2beta2DeidentifyTemplate `json:"deidentifyTemplates,omitempty"`
@@ -5290,7 +5315,7 @@ func (s *GooglePrivacyDlpV2beta2ListDlpJobsResponse) MarshalJSON() ([]byte, erro
 // GooglePrivacyDlpV2beta2ListInfoTypesResponse: Response to the
 // ListInfoTypes request.
 type GooglePrivacyDlpV2beta2ListInfoTypesResponse struct {
-	// InfoTypes: Set of sensitive info types.
+	// InfoTypes: Set of sensitive infoTypes.
 	InfoTypes []*GooglePrivacyDlpV2beta2InfoTypeDescription `json:"infoTypes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5739,6 +5764,7 @@ func (s *GooglePrivacyDlpV2beta2Range) MarshalJSON() ([]byte, error) {
 // whether a transformation should be applied to
 // a field.
 type GooglePrivacyDlpV2beta2RecordCondition struct {
+	// Expressions: An expression.
 	Expressions *GooglePrivacyDlpV2beta2Expressions `json:"expressions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Expressions") to
@@ -5799,6 +5825,9 @@ func (s *GooglePrivacyDlpV2beta2RecordKey) MarshalJSON() ([]byte, error) {
 // records whose suppression conditions evaluate to
 // true.
 type GooglePrivacyDlpV2beta2RecordSuppression struct {
+	// Condition: A condition that when it evaluates to true will result in
+	// the record being
+	// evaluated to be suppressed from the transformed content.
 	Condition *GooglePrivacyDlpV2beta2RecordCondition `json:"condition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -6127,6 +6156,9 @@ func (s *GooglePrivacyDlpV2beta2RequestedOptions) MarshalJSON() ([]byte, error) 
 }
 
 type GooglePrivacyDlpV2beta2Result struct {
+	// InfoTypeStats: Statistics of how many instances of each info type
+	// were found during
+	// inspect job.
 	InfoTypeStats []*GooglePrivacyDlpV2beta2InfoTypeStatistics `json:"infoTypeStats,omitempty"`
 
 	// ProcessedBytes: Total size in bytes that were processed.
@@ -6303,7 +6335,9 @@ func (s *GooglePrivacyDlpV2beta2SummaryResult) MarshalJSON() ([]byte, error) {
 // as
 // output. This should be used in conjunction with a field on
 // the
-// transformation such as `surrogate_info_type`.
+// transformation such as `surrogate_info_type`. This custom info type
+// does
+// not support the use of `detection_rules`.
 type GooglePrivacyDlpV2beta2SurrogateType struct {
 }
 
@@ -6421,12 +6455,12 @@ func (s *GooglePrivacyDlpV2beta2TaggedField) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2beta2TimePartConfig struct {
 	// Possible values:
 	//   "TIME_PART_UNSPECIFIED"
-	//   "YEAR" - [000-9999]
+	//   "YEAR" - [0-9999]
 	//   "MONTH" - [1-12]
 	//   "DAY_OF_MONTH" - [1-31]
 	//   "DAY_OF_WEEK" - [1-7]
 	//   "WEEK_OF_YEAR" - [1-52]
-	//   "HOUR_OF_DAY" - [0-24]
+	//   "HOUR_OF_DAY" - [0-23]
 	PartToExtract string `json:"partToExtract,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PartToExtract") to
@@ -6489,13 +6523,17 @@ func (s *GooglePrivacyDlpV2beta2TransformationOverview) MarshalJSON() ([]byte, e
 
 // GooglePrivacyDlpV2beta2TransformationSummary: Summary of a single
 // tranformation.
+// Only one of 'transformation', 'field_transformation', or
+// 'record_suppress'
+// will be set.
 type GooglePrivacyDlpV2beta2TransformationSummary struct {
 	// Field: Set if the transformation was limited to a specific FieldId.
 	Field *GooglePrivacyDlpV2beta2FieldId `json:"field,omitempty"`
 
-	// FieldTransformations: The field transformation that was applied. This
-	// list will contain
-	// multiple entries only in the case of errors.
+	// FieldTransformations: The field transformation that was applied.
+	// If multiple field transformations are requested for a single
+	// field,
+	// this list will contain all of them; otherwise, only one is supplied.
 	FieldTransformations []*GooglePrivacyDlpV2beta2FieldTransformation `json:"fieldTransformations,omitempty"`
 
 	// InfoType: Set if the transformation was limited to a specific
@@ -6509,6 +6547,10 @@ type GooglePrivacyDlpV2beta2TransformationSummary struct {
 
 	// Transformation: The specific transformation these stats apply to.
 	Transformation *GooglePrivacyDlpV2beta2PrimitiveTransformation `json:"transformation,omitempty"`
+
+	// TransformedBytes: Total size in bytes that were transformed in some
+	// way.
+	TransformedBytes int64 `json:"transformedBytes,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
 	// unconditionally include in API requests. By default, fields with
@@ -6669,6 +6711,15 @@ func (s *GooglePrivacyDlpV2beta2UpdateInspectTemplateRequest) MarshalJSON() ([]b
 
 // GooglePrivacyDlpV2beta2Value: Set of primitive values supported by
 // the system.
+// Note that for the purposes of inspection or transformation, the
+// number
+// of bytes considered to comprise a 'Value' is based on its
+// representation
+// as a UTF-8 encoded string. For example, if 'integer_value' is set
+// to
+// 123456789, the number of bytes would be counted as 9, even though
+// an
+// int64 only holds up to 8 bytes of data.
 type GooglePrivacyDlpV2beta2Value struct {
 	BooleanValue bool `json:"booleanValue,omitempty"`
 
@@ -7036,8 +7087,16 @@ func (r *InfoTypesService) List() *InfoTypesListCall {
 	return c
 }
 
+// Filter sets the optional parameter "filter": Optional filter to only
+// return infoTypes supported by certain parts of the
+// API. Defaults to supported_by=INSPECT.
+func (c *InfoTypesListCall) Filter(filter string) *InfoTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // LanguageCode sets the optional parameter "languageCode": Optional
-// BCP-47 language code for localized info type friendly
+// BCP-47 language code for localized infoType friendly
 // names. If omitted, or if localized strings are not available,
 // en-US strings will be returned.
 func (c *InfoTypesListCall) LanguageCode(languageCode string) *InfoTypesListCall {
@@ -7144,8 +7203,13 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	//   "id": "dlp.infoTypes.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional filter to only return infoTypes supported by certain parts of the\nAPI. Defaults to supported_by=INSPECT.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "languageCode": {
-	//       "description": "Optional BCP-47 language code for localized info type friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
+	//       "description": "Optional BCP-47 language code for localized infoType friendly\nnames. If omitted, or if localized strings are not available,\nen-US strings will be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7407,7 +7471,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the organization and inspectTemplate to be deleted, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of the organization and deidentify template to be deleted,\nfor example `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -7548,7 +7612,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the organization and inspectTemplate to be read, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of the organization and deidentify template to be read, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -7872,7 +7936,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of organization and inspectTemplate to be updated, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of organization and deidentify template to be updated, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -9561,7 +9625,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the organization and inspectTemplate to be deleted, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of the organization and deidentify template to be deleted,\nfor example `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -9702,7 +9766,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of the organization and inspectTemplate to be read, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of the organization and deidentify template to be read, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,
@@ -10026,7 +10090,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name of organization and inspectTemplate to be updated, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
+	//       "description": "Resource name of organization and deidentify template to be updated, for\nexample `organizations/433245324/deidentifyTemplates/432452342`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/deidentifyTemplates/[^/]+$",
 	//       "required": true,

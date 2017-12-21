@@ -916,6 +916,9 @@ type GoogleCloudMlV1__Model struct {
 	// deployed.
 	// Currently only one region per model is supported.
 	// Defaults to 'us-central1' if nothing is set.
+	// See the <a href="/ml-engine/docs/regions">available regions</a>
+	// for
+	// ML Engine services.
 	// Note:
 	// *   No matter where a model is deployed, it can always be accessed
 	// by
@@ -1213,6 +1216,9 @@ type GoogleCloudMlV1__PredictionInput struct {
 
 	// Region: Required. The Google Compute Engine region to run the
 	// prediction job in.
+	// See the <a href="/ml-engine/docs/regions">available regions</a>
+	// for
+	// ML Engine services.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
@@ -1339,7 +1345,14 @@ type GoogleCloudMlV1__SetDefaultVersionRequest struct {
 }
 
 // GoogleCloudMlV1__TrainingInput: Represents input parameters for a
-// training job.
+// training job. When using the
+// gcloud command to submit your training job, you can specify
+// the input parameters as command-line arguments and/or in a YAML
+// configuration
+// file referenced from the --config command-line argument. For
+// details, see the guide to
+// <a href="/ml-engine/docs/training-jobs">submitting a training
+// job</a>.
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command line arguments to pass to the program.
 	Args []string `json:"args,omitempty"`
@@ -1425,7 +1438,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// suppresswarning="true">standard</code> that
 	//   also includes a single NVIDIA Tesla P100 GPU. The availability of
 	// these
-	//   GPUs is in the Alpha launch stage.
+	//   GPUs is in the Beta launch stage.
 	//   </dd>
 	//   <dt>complex_model_m_p100</dt>
 	//   <dd>
@@ -1433,7 +1446,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   <code suppresswarning="true">complex_model_m</code> that also
 	// includes
 	//   four NVIDIA Tesla P100 GPUs. The availability of these GPUs is in
-	//   the Alpha launch stage.
+	//   the Beta launch stage.
 	//   </dd>
 	// </dl>
 	//
@@ -1476,11 +1489,17 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// PythonVersion: Optional. The version of Python used in training. If
 	// not set, the default
-	// version is '2.7'.
+	// version is '2.7'. Python '3.5' is available when `runtime_version` is
+	// set
+	// to '1.4' and above. Python '2.7' works with all supported runtime
+	// versions.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// Region: Required. The Google Compute Engine region to run the
 	// training job in.
+	// See the <a href="/ml-engine/docs/regions">available regions</a>
+	// for
+	// ML Engine services.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
@@ -2701,8 +2720,10 @@ type ProjectsPredictCall struct {
 // Predict: Performs prediction on the data in the request.
 // Cloud ML Engine implements a custom `predict` verb on top of an HTTP
 // POST
-// method. For details of the format, see the **guide to the
-// [predict request format](/ml-engine/docs/v1/predict-request)**.
+// method. <p>For details of the request and response format, see the
+// **guide
+// to the [predict request
+// format](/ml-engine/docs/v1/predict-request)**.
 func (r *ProjectsService) Predict(name string, googlecloudmlv1__predictrequest *GoogleCloudMlV1__PredictRequest) *ProjectsPredictCall {
 	c := &ProjectsPredictCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2796,7 +2817,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. For details of the format, see the **guide to the\n[predict request format](/ml-engine/docs/v1/predict-request)**.",
+	//   "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
 	//   "flatPath": "v1/projects/{projectsId}:predict",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.predict",
@@ -3389,6 +3410,10 @@ type ProjectsJobsListCall struct {
 }
 
 // List: Lists the jobs in the project.
+//
+// If there are no jobs that match the request parameters, the
+// list
+// request returns an empty response body: {}.
 func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 	c := &ProjectsJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3397,6 +3422,18 @@ func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 
 // Filter sets the optional parameter "filter": Specifies the subset of
 // jobs to retrieve.
+// You can filter on the value of one or more attributes of the job
+// object.
+// For example, retrieve jobs with a job identifier that starts with
+// 'census':
+// <p><code>gcloud ml-engine jobs list
+// --filter='jobId:census*'</code>
+// <p>List all failed jobs with names that start with
+// 'rnn':
+// <p><code>gcloud ml-engine jobs list --filter='jobId:rnn*
+// AND state:FAILED'</code>
+// <p>For more examples, see the guide to
+// <a href="/ml-engine/docs/monitor-training">monitoring jobs</a>.
 func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3520,7 +3557,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the jobs in the project.",
+	//   "description": "Lists the jobs in the project.\n\nIf there are no jobs that match the request parameters, the list\nrequest returns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.jobs.list",
@@ -3529,7 +3566,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the subset of jobs to retrieve.",
+	//       "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4952,6 +4989,10 @@ type ProjectsModelsListCall struct {
 // Each project can contain multiple models, and each model can have
 // multiple
 // versions.
+//
+// If there are no models that match the request parameters, the list
+// request
+// returns an empty response body: {}.
 func (r *ProjectsModelsService) List(parent string) *ProjectsModelsListCall {
 	c := &ProjectsModelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5083,7 +5124,7 @@ func (c *ProjectsModelsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudM
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the models in a project.\n\nEach project can contain multiple models, and each model can have multiple\nversions.",
+	//   "description": "Lists the models in a project.\n\nEach project can contain multiple models, and each model can have multiple\nversions.\n\nIf there are no models that match the request parameters, the list request\nreturns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/models",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.list",
@@ -6048,11 +6089,15 @@ type ProjectsModelsVersionsListCall struct {
 
 // List: Gets basic information about all the versions of a model.
 //
-// If you expect that a model has a lot of versions, or if you need to
+// If you expect that a model has many versions, or if you need to
 // handle
 // only a limited number of results at a time, you can request that the
 // list
-// be retrieved in batches (called pages):
+// be retrieved in batches (called pages).
+//
+// If there are no versions that match the request parameters, the
+// list
+// request returns an empty response body: {}.
 func (r *ProjectsModelsVersionsService) List(parent string) *ProjectsModelsVersionsListCall {
 	c := &ProjectsModelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6184,7 +6229,7 @@ func (c *ProjectsModelsVersionsListCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets basic information about all the versions of a model.\n\nIf you expect that a model has a lot of versions, or if you need to handle\nonly a limited number of results at a time, you can request that the list\nbe retrieved in batches (called pages):",
+	//   "description": "Gets basic information about all the versions of a model.\n\nIf you expect that a model has many versions, or if you need to handle\nonly a limited number of results at a time, you can request that the list\nbe retrieved in batches (called pages).\n\nIf there are no versions that match the request parameters, the list\nrequest returns an empty response body: {}.",
 	//   "flatPath": "v1/projects/{projectsId}/models/{modelsId}/versions",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.models.versions.list",
@@ -6290,7 +6335,7 @@ func (r *ProjectsModelsVersionsService) Patch(name string, googlecloudmlv1__vers
 //
 // Currently the only supported update masks are `description`,
 // `labels`, and
-// `etag`.
+// `etag`, and `expire_time`.
 func (c *ProjectsModelsVersionsPatchCall) UpdateMask(updateMask string) *ProjectsModelsVersionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6398,7 +6443,7 @@ func (c *ProjectsModelsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to `Version`, of the field to\nupdate. Must be present and non-empty.\n\nFor example, to change the description of a version to \"foo\", the\n`update_mask` parameter would be specified as `description`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"description\": \"foo\"\n    }\nIn this example, the version is blindly overwritten since no etag is given.\n\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your version resource.\n\nCurrently the only supported update masks are `description`, `labels`, and\n`etag`.",
+	//       "description": "Required. Specifies the path, relative to `Version`, of the field to\nupdate. Must be present and non-empty.\n\nFor example, to change the description of a version to \"foo\", the\n`update_mask` parameter would be specified as `description`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"description\": \"foo\"\n    }\nIn this example, the version is blindly overwritten since no etag is given.\n\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your version resource.\n\nCurrently the only supported update masks are `description`, `labels`, and\n`etag`, and `expire_time`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

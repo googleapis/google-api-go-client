@@ -489,6 +489,14 @@ type CheckError struct {
 	// error.
 	Detail string `json:"detail,omitempty"`
 
+	// Subject: Subject to whom this error applies. See the specific code
+	// enum for more
+	// details on this field. For example:
+	//     - “project:<project-id or project-number>”
+	//     - “folder:<folder-id>”
+	//     - “organization:<organization-id>”
+	Subject string `json:"subject,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Code") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

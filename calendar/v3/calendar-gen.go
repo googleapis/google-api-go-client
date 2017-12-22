@@ -782,6 +782,11 @@ type ConferenceData struct {
 	// createRequest is required.
 	EntryPoints []*EntryPoint `json:"entryPoints,omitempty"`
 
+	// Notes: Additional notes (such as instructions from the domain
+	// administrator, legal notices) to display to the user. Can contain
+	// HTML. The maximum length is 2048 characters. Optional.
+	Notes string `json:"notes,omitempty"`
+
 	// Signature: The signature of the conference data.
 	// Genereated on server side. Must be preserved while copying the
 	// conference data between events, otherwise the conference data will

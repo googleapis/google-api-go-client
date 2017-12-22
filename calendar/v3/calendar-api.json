@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/68KYRX0CayA0UeBneK3LuSbbGVs\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/sJ40bAEXpU3TFbXccqoyZ4jTl_8\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20171212",
+ "revision": "20171217",
  "title": "Calendar API",
  "description": "Manipulates events and other calendar data.",
  "ownerDomain": "google.com",
@@ -485,6 +485,10 @@
      "items": {
       "$ref": "EntryPoint"
      }
+    },
+    "notes": {
+     "type": "string",
+     "description": "Additional notes (such as instructions from the domain administrator, legal notices) to display to the user. Can contain HTML. The maximum length is 2048 characters. Optional."
     },
     "signature": {
      "type": "string",

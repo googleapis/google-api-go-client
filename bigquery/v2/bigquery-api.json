@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/RHgdSKr7KDuh1e1sszGVdMKFPWE\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/L6-FxxEQzO8uF-Xq26Dxd9GTjOM\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20171202",
+ "revision": "20171217",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1255,6 +1255,13 @@
      "type": "string",
      "description": "[Output-only, Experimental] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query."
     },
+    "timeline": {
+     "type": "array",
+     "description": "[Output-only] Describes a timeline of job execution.",
+     "items": {
+      "$ref": "QueryTimelineSample"
+     }
+    },
     "totalBytesBilled": {
      "type": "string",
      "description": "[Output-only] Total bytes billed for the job.",
@@ -1619,6 +1626,42 @@
      "type": "string",
      "description": "The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results.",
      "format": "uint64"
+    }
+   }
+  },
+  "QueryTimelineSample": {
+   "id": "QueryTimelineSample",
+   "type": "object",
+   "properties": {
+    "activeInputs": {
+     "type": "integer",
+     "description": "Total number of active workers. This does not correspond directly to slot usage. This is the largest value observed since the last sample.",
+     "format": "int32"
+    },
+    "completedInputs": {
+     "type": "integer",
+     "description": "Total parallel units of work completed by this query.",
+     "format": "int32"
+    },
+    "completedInputsForActiveStages": {
+     "type": "integer",
+     "description": "Total parallel units of work completed by the currently active stages.",
+     "format": "int32"
+    },
+    "elapsedMs": {
+     "type": "string",
+     "description": "Milliseconds elapsed since the start of query execution.",
+     "format": "int64"
+    },
+    "pendingInputs": {
+     "type": "string",
+     "description": "Total parallel units of work remaining for the active stages.",
+     "format": "int64"
+    },
+    "totalSlotMs": {
+     "type": "string",
+     "description": "Cumulative slot-ms consumed by the query.",
+     "format": "int64"
     }
    }
   },

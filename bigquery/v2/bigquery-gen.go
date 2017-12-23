@@ -1976,6 +1976,9 @@ type JobStatistics2 struct {
 	// query.
 	StatementType string `json:"statementType,omitempty"`
 
+	// Timeline: [Output-only] Describes a timeline of job execution.
+	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
+
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
@@ -2543,6 +2546,53 @@ type QueryResponse struct {
 
 func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type QueryTimelineSample struct {
+	// ActiveInputs: Total number of active workers. This does not
+	// correspond directly to slot usage. This is the largest value observed
+	// since the last sample.
+	ActiveInputs int64 `json:"activeInputs,omitempty"`
+
+	// CompletedInputs: Total parallel units of work completed by this
+	// query.
+	CompletedInputs int64 `json:"completedInputs,omitempty"`
+
+	// CompletedInputsForActiveStages: Total parallel units of work
+	// completed by the currently active stages.
+	CompletedInputsForActiveStages int64 `json:"completedInputsForActiveStages,omitempty"`
+
+	// ElapsedMs: Milliseconds elapsed since the start of query execution.
+	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
+
+	// PendingInputs: Total parallel units of work remaining for the active
+	// stages.
+	PendingInputs int64 `json:"pendingInputs,omitempty,string"`
+
+	// TotalSlotMs: Cumulative slot-ms consumed by the query.
+	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveInputs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveInputs") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryTimelineSample
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

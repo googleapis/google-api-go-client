@@ -332,7 +332,8 @@ type RecognitionConfig struct {
 	// `RecognitionAudio` messages.
 	//
 	// Possible values:
-	//   "ENCODING_UNSPECIFIED" - Not specified.
+	//   "ENCODING_UNSPECIFIED" - Not specified. Will return result
+	// google.rpc.Code.INVALID_ARGUMENT.
 	//   "LINEAR16" - Uncompressed 16-bit signed little-endian samples
 	// (Linear PCM).
 	//   "FLAC" - [`FLAC`](https://xiph.org/flac/documentation.html) (Free

@@ -2653,7 +2653,9 @@ type Table struct {
 	// ExpirationTime: [Optional] The time when this table expires, in
 	// milliseconds since the epoch. If not present, the table will persist
 	// indefinitely. Expired tables will be deleted and their storage
-	// reclaimed.
+	// reclaimed. The defaultTableExpirationMs property of the encapsulating
+	// dataset can be used to set a default expirationTime on newly created
+	// tables.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
 	// ExternalDataConfiguration: [Optional] Describes the data format,

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/L6-FxxEQzO8uF-Xq26Dxd9GTjOM\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/DYaH85wbJKBjNUNmmnGUvwbViMk\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20171217",
+ "revision": "20171224",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1709,7 +1709,7 @@
     },
     "expirationTime": {
      "type": "string",
-     "description": "[Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed.",
+     "description": "[Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. The defaultTableExpirationMs property of the encapsulating dataset can be used to set a default expirationTime on newly created tables.",
      "format": "int64"
     },
     "externalDataConfiguration": {

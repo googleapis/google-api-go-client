@@ -128,9 +128,8 @@ type AcknowledgeTaskRequest struct {
 	//
 	// The task's current schedule time, available in the
 	// Task.schedule_time
-	// returned in PullTasksResponse.tasks or
+	// returned in LeaseTasksResponse.tasks or
 	// CloudTasks.RenewLease. This restriction is to ensure that your
-	// task
 	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
@@ -728,9 +727,8 @@ type CancelLeaseRequest struct {
 	//
 	// The task's current schedule time, available in the
 	// Task.schedule_time
-	// returned in PullTasksResponse.tasks or
+	// returned in LeaseTasksResponse.tasks or
 	// CloudTasks.RenewLease. This restriction is to ensure that your
-	// task
 	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
@@ -927,14 +925,14 @@ type LeaseTasksRequest struct {
 	// the
 	// Task.schedule_time.
 	//
-	// After the pull worker has successfully finished the work
-	// associated with the task, the pull worker must
+	// After the worker has successfully finished the work
+	// associated with the task, the worker must
 	// call
 	// CloudTasks.AcknowledgeTask. If the task is not acknowledged
 	// via CloudTasks.AcknowledgeTask before the
 	// Task.schedule_time then it will be returned in a
 	// later
-	// LeaseTasksResponse so that another pull worker can process
+	// LeaseTasksResponse so that another worker can process
 	// it.
 	//
 	// The maximum lease duration is 1 week.
@@ -1248,7 +1246,7 @@ type PauseQueueRequest struct {
 //     }
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam).
+// [IAM developer's guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`.
 	// `bindings` with no members will result in an error.
@@ -1274,7 +1272,7 @@ type Policy struct {
 	// policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1306,22 +1304,21 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 
 // PullMessage: The pull message contains data that can be used by the
 // caller of
-// CloudTasks.PullTasks to process the task.
+// CloudTasks.LeaseTasks to process the task.
 //
 // This proto can only be used for tasks in a queue which
 // has
 // Queue.pull_target set.
 type PullMessage struct {
-	// Payload: A data payload consumed by the task worker to execute the
-	// task.
+	// Payload: A data payload consumed by the worker to execute the task.
 	Payload string `json:"payload,omitempty"`
 
 	// Tag: The task's tag.
 	//
 	// Tags allow similar tasks to be processed in a batch. If you
 	// label
-	// tasks with a tag, your task worker can pull tasks
-	// with the same tag using PullTasksRequest.filter. For example,
+	// tasks with a tag, your worker can lease tasks
+	// with the same tag using LeaseTasksRequest.filter. For example,
 	// if you want to aggregate the events associated with a specific
 	// user once a day, you could tag tasks with the user ID.
 	//
@@ -1356,158 +1353,6 @@ func (s *PullMessage) MarshalJSON() ([]byte, error) {
 
 // PullTarget: Pull target.
 type PullTarget struct {
-}
-
-// PullTasksRequest: Request message for pulling tasks using
-// CloudTasks.PullTasks.
-type PullTasksRequest struct {
-	// Filter: `filter` can be used to specify a subset of tasks to
-	// lease.
-	//
-	// When `filter` is set to `tag=<my-tag>` then the
-	// PullTasksResponse will contain only tasks whose
-	// PullMessage.tag is equal to `<my-tag>`. `<my-tag>` must be less
-	// than
-	// 500 bytes.
-	//
-	// When `filter` is set to `tag_function=oldest_tag()`, only tasks which
-	// have
-	// the same tag as the task with the oldest schedule_time will be
-	// returned.
-	//
-	// Grammar Syntax:
-	//
-	// * `filter = "tag=" tag | "tag_function=" function`
-	//
-	// * `tag = string | bytes`
-	//
-	// * `function = "oldest_tag()"
-	//
-	// The `oldest_tag()` function returns tasks which have the same tag as
-	// the
-	// oldest task (ordered by schedule time).
-	Filter string `json:"filter,omitempty"`
-
-	// LeaseDuration: The duration of the lease.
-	//
-	// Each task returned in the PullTasksResponse will have
-	// its
-	// Task.schedule_time set to the current time plus the
-	// `lease_duration`. A task that has been returned in
-	// a
-	// PullTasksResponse is leased -- that task will not be
-	// returned in a different PullTasksResponse before
-	// the
-	// Task.schedule_time.
-	//
-	// After the pull worker has successfully finished the work
-	// associated with the task, the pull worker must
-	// call
-	// CloudTasks.AcknowledgeTask. If the task is not acknowledged
-	// via CloudTasks.AcknowledgeTask before the
-	// Task.schedule_time then it will be returned in a
-	// later
-	// PullTasksResponse so that another pull worker can process
-	// it.
-	//
-	// The maximum lease duration is 1 week.
-	// `lease_duration` will be truncated to the nearest second.
-	LeaseDuration string `json:"leaseDuration,omitempty"`
-
-	// MaxTasks: The maximum number of tasks to lease. The maximum that can
-	// be
-	// requested is 1000.
-	MaxTasks int64 `json:"maxTasks,omitempty"`
-
-	// ResponseView: The response_view specifies which subset of the Task
-	// will be
-	// returned.
-	//
-	// By default response_view is Task.View.BASIC; not all
-	// information is retrieved by default because some data, such
-	// as
-	// payloads, might be desirable to return only when needed because
-	// of its large size or because of the sensitivity of data that
-	// it
-	// contains.
-	//
-	// Authorization for Task.View.FULL requires
-	// `cloudtasks.tasks.fullView`
-	// [Google IAM](/iam/) permission on the
-	// Task.name resource.
-	//
-	// Possible values:
-	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-	//   "BASIC" - The basic view omits fields which can be large or can
-	// contain
-	// sensitive data.
-	//
-	// This view does not include (AppEngineHttpRequest.payload
-	// and PullMessage.payload). These payloads are desirable to
-	// return only when needed, because they can be large and because
-	// of the sensitivity of the data that you choose to store in it.
-	//   "FULL" - All information is returned.
-	//
-	// Authorization for Task.View.FULL requires
-	// `cloudtasks.tasks.fullView` [Google
-	// IAM](https://cloud.google.com/iam/)
-	// permission on the Queue.name resource.
-	ResponseView string `json:"responseView,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PullTasksRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod PullTasksRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PullTasksResponse: Response message for pulling tasks using
-// CloudTasks.PullTasks.
-type PullTasksResponse struct {
-	// Tasks: The leased tasks.
-	Tasks []*Task `json:"tasks,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Tasks") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Tasks") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PullTasksResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod PullTasksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // PurgeQueueRequest: Request message for CloudTasks.PurgeQueue.
@@ -1632,7 +1477,7 @@ type Queue struct {
 	// then Cloud
 	// Tasks will stop delivering tasks from it, but more tasks can
 	// still be added to it by the user. When a pull queue is paused,
-	// all CloudTasks.PullTasks calls will return a
+	// all CloudTasks.LeaseTasks calls will return a
 	// `FAILED_PRECONDITION` error.
 	//   "DISABLED" - The queue is disabled.
 	//
@@ -1646,7 +1491,7 @@ type Queue struct {
 	// queue.
 	//
 	// When a queue is disabled, tasks can still be added to a queue
-	// but the tasks are not dispatched and CloudTasks.PullTasks
+	// but the tasks are not dispatched and CloudTasks.LeaseTasks
 	// calls
 	// return a `FAILED_PRECONDITION` error.
 	//
@@ -1748,7 +1593,7 @@ type RateLimits struct {
 	// * For pull queues, this field is output only and always 10,000.
 	//   In addition to the `max_tasks_dispatched_per_second` limit, a
 	// maximum of
-	//   10 QPS of CloudTasks.PullTasks requests are allowed per
+	//   10 QPS of CloudTasks.LeaseTasks requests are allowed per
 	// queue.
 	//
 	// This field has the same meaning as
@@ -1844,9 +1689,8 @@ type RenewLeaseRequest struct {
 	//
 	// The task's current schedule time, available in the
 	// Task.schedule_time
-	// returned in PullTasksResponse.tasks or
+	// returned in LeaseTasksResponse.tasks or
 	// CloudTasks.RenewLease. This restriction is to ensure that your
-	// task
 	// worker currently holds the lease.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
 
@@ -2269,7 +2113,7 @@ type Task struct {
 
 	// PullMessage: Pull message contains data that should be used by the
 	// caller of
-	// CloudTasks.PullTasks to process the task. Can be set only
+	// CloudTasks.LeaseTasks to process the task. Can be set only
 	// if
 	// Queue.pull_target is set.
 	//
@@ -2285,7 +2129,7 @@ type Task struct {
 	// For pull queues, this is the time when the task is available to
 	// be leased; if a task is currently leased, this is the time when
 	// the current lease expires, that is, the time that the task was
-	// leased plus the PullTasksRequest.lease_duration.
+	// leased plus the LeaseTasksRequest.lease_duration.
 	//
 	// `schedule_time` will be truncated to the nearest microsecond.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
@@ -4516,17 +4360,17 @@ type ProjectsLocationsQueuesTasksAcknowledgeCall struct {
 
 // Acknowledge: Acknowledges a pull task.
 //
-// The pull worker, that is, the entity that received this task in
-// a PullTasksResponse, must call this method to indicate that
+// The worker, that is, the entity that received this task in
+// a LeaseTasksResponse, must call this method to indicate that
 // the work associated with the task has finished.
 //
-// The pull worker must acknowledge a task within
+// The worker must acknowledge a task within
 // the
-// PullTasksRequest.lease_duration or the lease will expire and
+// LeaseTasksRequest.lease_duration or the lease will expire and
 // the task will become ready to be returned in a
 // different
-// PullTasksResponse. After the task is acknowledged, it will
-// not be returned by a later CloudTasks.PullTasks,
+// LeaseTasksResponse. After the task is acknowledged, it will
+// not be returned by a later CloudTasks.LeaseTasks,
 // CloudTasks.GetTask, or CloudTasks.ListTasks.
 //
 // To acknowledge multiple tasks at the same time, use
@@ -4628,7 +4472,7 @@ func (c *ProjectsLocationsQueuesTasksAcknowledgeCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Acknowledges a pull task.\n\nThe pull worker, that is, the entity that received this task in\na PullTasksResponse, must call this method to indicate that\nthe work associated with the task has finished.\n\nThe pull worker must acknowledge a task within the\nPullTasksRequest.lease_duration or the lease will expire and\nthe task will become ready to be returned in a different\nPullTasksResponse. After the task is acknowledged, it will\nnot be returned by a later CloudTasks.PullTasks,\nCloudTasks.GetTask, or CloudTasks.ListTasks.\n\nTo acknowledge multiple tasks at the same time, use\n[HTTP batching](/storage/docs/json_api/v1/how-tos/batch)\nor the batching documentation for your client library, for example\nhttps://developers.google.com/api-client-library/python/guide/batch.",
+	//   "description": "Acknowledges a pull task.\n\nThe worker, that is, the entity that received this task in\na LeaseTasksResponse, must call this method to indicate that\nthe work associated with the task has finished.\n\nThe worker must acknowledge a task within the\nLeaseTasksRequest.lease_duration or the lease will expire and\nthe task will become ready to be returned in a different\nLeaseTasksResponse. After the task is acknowledged, it will\nnot be returned by a later CloudTasks.LeaseTasks,\nCloudTasks.GetTask, or CloudTasks.ListTasks.\n\nTo acknowledge multiple tasks at the same time, use\n[HTTP batching](/storage/docs/json_api/v1/how-tos/batch)\nor the batching documentation for your client library, for example\nhttps://developers.google.com/api-client-library/python/guide/batch.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:acknowledge",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.acknowledge",
@@ -4671,10 +4515,10 @@ type ProjectsLocationsQueuesTasksCancelLeaseCall struct {
 
 // CancelLease: Cancel a pull task's lease.
 //
-// The pull worker can use this method to cancel a task's lease
+// The worker can use this method to cancel a task's lease
 // by setting Task.schedule_time to now. This will make the
 // task
-// available to be leased to the next caller of CloudTasks.PullTasks.
+// available to be leased to the next caller of CloudTasks.LeaseTasks.
 func (r *ProjectsLocationsQueuesTasksService) CancelLease(name string, cancelleaserequest *CancelLeaseRequest) *ProjectsLocationsQueuesTasksCancelLeaseCall {
 	c := &ProjectsLocationsQueuesTasksCancelLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4768,7 +4612,7 @@ func (c *ProjectsLocationsQueuesTasksCancelLeaseCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Cancel a pull task's lease.\n\nThe pull worker can use this method to cancel a task's lease\nby setting Task.schedule_time to now. This will make the task\navailable to be leased to the next caller of CloudTasks.PullTasks.",
+	//   "description": "Cancel a pull task's lease.\n\nThe worker can use this method to cancel a task's lease\nby setting Task.schedule_time to now. This will make the task\navailable to be leased to the next caller of CloudTasks.LeaseTasks.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:cancelLease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.cancelLease",
@@ -5270,14 +5114,14 @@ type ProjectsLocationsQueuesTasksLeaseCall struct {
 // Leases tasks from a pull queue for
 // LeaseTasksRequest.lease_duration.
 //
-// This method is invoked by the pull worker to obtain a
-// lease. The pull worker must acknowledge the task
+// This method is invoked by the worker to obtain a
+// lease. The worker must acknowledge the task
 // via
 // CloudTasks.AcknowledgeTask after they have performed the
 // work
 // associated with the task.
 //
-// The payload is intended to store data that the pull worker needs
+// The payload is intended to store data that the worker needs
 // to perform the work associated with the task. To return the
 // payloads in the LeaseTasksResponse,
 // set
@@ -5383,7 +5227,7 @@ func (c *ProjectsLocationsQueuesTasksLeaseCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "\nLeases tasks from a pull queue for LeaseTasksRequest.lease_duration.\n\nThis method is invoked by the pull worker to obtain a\nlease. The pull worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the pull worker needs\nto perform the work associated with the task. To return the\npayloads in the LeaseTasksResponse, set\nLeaseTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
+	//   "description": "\nLeases tasks from a pull queue for LeaseTasksRequest.lease_duration.\n\nThis method is invoked by the worker to obtain a\nlease. The worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the worker needs\nto perform the work associated with the task. To return the\npayloads in the LeaseTasksResponse, set\nLeaseTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:lease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.lease",
@@ -5673,164 +5517,6 @@ func (c *ProjectsLocationsQueuesTasksListCall) Pages(ctx context.Context, f func
 	}
 }
 
-// method id "cloudtasks.projects.locations.queues.tasks.pull":
-
-type ProjectsLocationsQueuesTasksPullCall struct {
-	s                *Service
-	name             string
-	pulltasksrequest *PullTasksRequest
-	urlParams_       gensupport.URLParams
-	ctx_             context.Context
-	header_          http.Header
-}
-
-// Pull:
-// Pulls tasks from a pull queue and acquires a lease on them for
-// a
-// specified PullTasksRequest.lease_duration.
-//
-// This method is invoked by the pull worker to obtain the
-// lease. The pull worker must acknowledge the task
-// via
-// CloudTasks.AcknowledgeTask after they have performed the
-// work
-// associated with the task.
-//
-// The payload is intended to store data that the pull worker needs
-// to perform the work associated with the task. To return the
-// payloads in the PullTasksResponse, set
-// PullTasksRequest.response_view to Task.View.FULL.
-//
-// A maximum of 10 qps of CloudTasks.PullTasks requests are allowed
-// per
-// queue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this
-// limit
-// is exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned
-// when
-// RateLimits.max_tasks_dispatched_per_second is exceeded.
-func (r *ProjectsLocationsQueuesTasksService) Pull(name string, pulltasksrequest *PullTasksRequest) *ProjectsLocationsQueuesTasksPullCall {
-	c := &ProjectsLocationsQueuesTasksPullCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.pulltasksrequest = pulltasksrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsQueuesTasksPullCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksPullCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsQueuesTasksPullCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksPullCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsQueuesTasksPullCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsQueuesTasksPullCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pulltasksrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta2/{+name}/tasks:pull")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "cloudtasks.projects.locations.queues.tasks.pull" call.
-// Exactly one of *PullTasksResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PullTasksResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsQueuesTasksPullCall) Do(opts ...googleapi.CallOption) (*PullTasksResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &PullTasksResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "\nPulls tasks from a pull queue and acquires a lease on them for a\nspecified PullTasksRequest.lease_duration.\n\nThis method is invoked by the pull worker to obtain the\nlease. The pull worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the pull worker needs\nto perform the work associated with the task. To return the\npayloads in the PullTasksResponse, set\nPullTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.PullTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
-	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:pull",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.pull",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required.\n\nThe queue name. For example:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta2/{+name}/tasks:pull",
-	//   "request": {
-	//     "$ref": "PullTasksRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "PullTasksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
 // method id "cloudtasks.projects.locations.queues.tasks.renewLease":
 
 type ProjectsLocationsQueuesTasksRenewLeaseCall struct {
@@ -5844,8 +5530,7 @@ type ProjectsLocationsQueuesTasksRenewLeaseCall struct {
 
 // RenewLease: Renew the current lease of a pull task.
 //
-// The pull worker can use this method to extend the lease by a
-// new
+// The worker can use this method to extend the lease by a new
 // duration, starting from now. The new task lease will be
 // returned in Task.schedule_time.
 func (r *ProjectsLocationsQueuesTasksService) RenewLease(name string, renewleaserequest *RenewLeaseRequest) *ProjectsLocationsQueuesTasksRenewLeaseCall {
@@ -5941,7 +5626,7 @@ func (c *ProjectsLocationsQueuesTasksRenewLeaseCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Renew the current lease of a pull task.\n\nThe pull worker can use this method to extend the lease by a new\nduration, starting from now. The new task lease will be\nreturned in Task.schedule_time.",
+	//   "description": "Renew the current lease of a pull task.\n\nThe worker can use this method to extend the lease by a new\nduration, starting from now. The new task lease will be\nreturned in Task.schedule_time.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:renewLease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.renewLease",

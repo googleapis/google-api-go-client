@@ -9658,7 +9658,13 @@ func (c *CoursesTopicsGetCall) Do(opts ...googleapi.CallOption) (*Topic, error) 
 	//   "path": "v1/courses/{courseId}/topics/{id}",
 	//   "response": {
 	//     "$ref": "Topic"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
+	//   ]
 	// }
 
 }
@@ -9837,7 +9843,13 @@ func (c *CoursesTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicResp
 	//   "path": "v1/courses/{courseId}/topics",
 	//   "response": {
 	//     "$ref": "ListTopicResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/classroom.coursework.me",
+	//     "https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students",
+	//     "https://www.googleapis.com/auth/classroom.coursework.students.readonly"
+	//   ]
 	// }
 
 }

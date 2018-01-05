@@ -1541,6 +1541,10 @@
           "description": "Whether application verification is forced to be enabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
         },
+        "kioskCustomLauncherEnabled": {
+          "description": "Flag to specify if kiosk custom launcher is enabled. If it is enabled the value for receiver_activity in PersistentPreferredActivity related to home intent will be ignored. When custom launcher is enabled, the kiosk will start in launcher mode and not locked to a specific application.",
+          "type": "boolean"
+        },
         "mobileNetworksConfigDisabled": {
           "description": "Whether configuring mobile networks is disabled. \u003ci\u003eRequires the beta version of the Android Device Policy app.\u003c/i\u003e",
           "type": "boolean"
@@ -2514,7 +2518,7 @@
       "id": "HardwareStatus"
     }
   },
-  "revision": "20171211",
+  "revision": "20180104",
   "basePath": "",
   "icons": {
     "x32": "http://www.google.com/images/icons/product/search-32.gif",

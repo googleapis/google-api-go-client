@@ -891,7 +891,7 @@ type LeaseTasksRequest struct {
 	//
 	// When `filter` is set to `tag=<my-tag>` then the
 	// LeaseTasksResponse will contain only tasks whose
-	// PullMessage.tag is equal to `<my-tag>`. `<my-tag>` must be less
+	// LeaseMessage.tag is equal to `<my-tag>`. `<my-tag>` must be less
 	// than
 	// 500 bytes.
 	//
@@ -5110,8 +5110,7 @@ type ProjectsLocationsQueuesTasksLeaseCall struct {
 	header_           http.Header
 }
 
-// Lease:
-// Leases tasks from a pull queue for
+// Lease: Leases tasks from a pull queue for
 // LeaseTasksRequest.lease_duration.
 //
 // This method is invoked by the worker to obtain a
@@ -5227,7 +5226,7 @@ func (c *ProjectsLocationsQueuesTasksLeaseCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "\nLeases tasks from a pull queue for LeaseTasksRequest.lease_duration.\n\nThis method is invoked by the worker to obtain a\nlease. The worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the worker needs\nto perform the work associated with the task. To return the\npayloads in the LeaseTasksResponse, set\nLeaseTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
+	//   "description": "Leases tasks from a pull queue for LeaseTasksRequest.lease_duration.\n\nThis method is invoked by the worker to obtain a\nlease. The worker must acknowledge the task via\nCloudTasks.AcknowledgeTask after they have performed the work\nassociated with the task.\n\nThe payload is intended to store data that the worker needs\nto perform the work associated with the task. To return the\npayloads in the LeaseTasksResponse, set\nLeaseTasksRequest.response_view to Task.View.FULL.\n\nA maximum of 10 qps of CloudTasks.LeaseTasks requests are allowed per\nqueue. google.rpc.Code.RESOURCE_EXHAUSTED is returned when this limit\nis exceeded. google.rpc.Code.RESOURCE_EXHAUSTED is also returned when\nRateLimits.max_tasks_dispatched_per_second is exceeded.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks:lease",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.lease",

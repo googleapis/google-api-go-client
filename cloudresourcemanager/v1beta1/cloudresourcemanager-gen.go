@@ -763,7 +763,7 @@ func (s *OrganizationOwner) MarshalJSON() ([]byte, error) {
 //     }
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam).
+// [IAM developer's guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -793,7 +793,7 @@ type Policy struct {
 	// policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2647,7 +2647,12 @@ type ProjectsGetIamPolicyCall struct {
 
 // GetIamPolicy: Returns the IAM access control policy for the specified
 // Project.
-// Permission is denied if the policy or the resource does not exist.
+// Permission is denied if the policy or the resource does not
+// exist.
+//
+// For additional information about resource structure and
+// identification,
+// see [Resource Names](/apis/design/resource_names).
 func (r *ProjectsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsGetIamPolicyCall {
 	c := &ProjectsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2741,7 +2746,7 @@ func (c *ProjectsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the IAM access control policy for the specified Project.\nPermission is denied if the policy or the resource does not exist.",
+	//   "description": "Returns the IAM access control policy for the specified Project.\nPermission is denied if the policy or the resource does not exist.\n\nFor additional information about resource structure and identification,\nsee [Resource Names](/apis/design/resource_names).",
 	//   "flatPath": "v1beta1/projects/{resource}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.getIamPolicy",

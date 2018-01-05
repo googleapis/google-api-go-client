@@ -259,11 +259,13 @@ type Build struct {
 	// Default time is ten minutes.
 	Timeout string `json:"timeout,omitempty"`
 
-	// Timing: Stores timing information for phases of the build.
-	// Valid keys are:
-	// - BUILD: time to execute all build steps
-	// - PUSH: time to push all specified images.
-	// - FETCHSOURCE: time to fetch source.
+	// Timing: Stores timing information for phases of the build. Valid keys
+	// are:
+	//
+	// * BUILD: time to execute all build steps
+	// * PUSH: time to push all specified images.
+	// * FETCHSOURCE: time to fetch source.
+	//
 	// If the build does not specify source, or does not specify
 	// images,
 	// these keys will not be included.
@@ -355,7 +357,7 @@ type BuildOptions struct {
 	// written when the build is completed.
 	LogStreamingOption string `json:"logStreamingOption,omitempty"`
 
-	// MachineType: GCE VM size to run the build on.
+	// MachineType: Compute Engine machine type on which to run the build.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Standard machine type.

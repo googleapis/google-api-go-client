@@ -3793,16 +3793,17 @@ func (s *GooglePrivacyDlpV2beta2FileSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta2Finding: Container structure describing a
-// single finding within a string or image.
+// GooglePrivacyDlpV2beta2Finding: Represents a piece of potentially
+// sensitive content.
 type GooglePrivacyDlpV2beta2Finding struct {
 	// CreateTime: Timestamp when finding was detected.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// InfoType: The specific type of info the string might be.
+	// InfoType: The type of content that might have been found.
+	// Provided if requested by the `InspectConfig`.
 	InfoType *GooglePrivacyDlpV2beta2InfoType `json:"infoType,omitempty"`
 
-	// Likelihood: Estimate of how likely it is that the info_type is
+	// Likelihood: Estimate of how likely it is that the `info_type` is
 	// correct.
 	//
 	// Possible values:
@@ -3815,10 +3816,13 @@ type GooglePrivacyDlpV2beta2Finding struct {
 	//   "VERY_LIKELY" - Many matching elements.
 	Likelihood string `json:"likelihood,omitempty"`
 
-	// Location: Location of the info found.
+	// Location: Where the content was found.
 	Location *GooglePrivacyDlpV2beta2Location `json:"location,omitempty"`
 
-	// Quote: The specific string that may be potentially sensitive info.
+	// Quote: The content that was found. Even if the content is not
+	// textual, it
+	// may be converted to a textual representation here.
+	// Provided if requested by the `InspectConfig`.
 	Quote string `json:"quote,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -5385,27 +5389,44 @@ func (s *GooglePrivacyDlpV2beta2ListInspectTemplatesResponse) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2beta2Location: Specifies the location of a finding
-// within its source item.
+// GooglePrivacyDlpV2beta2Location: Specifies the location of the
+// finding.
 type GooglePrivacyDlpV2beta2Location struct {
-	// ByteRange: Zero-based byte offsets within a content item.
+	// ByteRange: Zero-based byte offsets delimiting the finding.
+	// These are relative to the finding's containing element.
+	// Note that when the content is not textual, this references
+	// the UTF-8 encoded textual representation of the content.
+	// Omitted if content is an image.
 	ByteRange *GooglePrivacyDlpV2beta2Range `json:"byteRange,omitempty"`
 
-	// CodepointRange: Character offsets within a content item, included
-	// when content type
-	// is a text. Default charset assumed to be UTF-8.
+	// CodepointRange: Unicode character offsets delimiting the
+	// finding.
+	// These are relative to the finding's containing element.
+	// Provided when the content is text.
 	CodepointRange *GooglePrivacyDlpV2beta2Range `json:"codepointRange,omitempty"`
 
-	// FieldId: Field id of the field containing the finding.
+	// FieldId: The pointer to the property or cell that contained the
+	// finding.
+	// Provided when the finding's containing element is a cell in a
+	// table
+	// or a property of storage object.
 	FieldId *GooglePrivacyDlpV2beta2FieldId `json:"fieldId,omitempty"`
 
-	// ImageBoxes: Location within an image's pixels.
+	// ImageBoxes: The area within the image that contained the
+	// finding.
+	// Provided when the content is an image.
 	ImageBoxes []*GooglePrivacyDlpV2beta2ImageLocation `json:"imageBoxes,omitempty"`
 
-	// RecordKey: Key of the finding.
+	// RecordKey: The pointer to the record in storage that contained the
+	// field the
+	// finding was found in.
+	// Provided when the finding's containing element is a property
+	// of a storage object.
 	RecordKey *GooglePrivacyDlpV2beta2RecordKey `json:"recordKey,omitempty"`
 
-	// TableLocation: Location within a `ContentItem.Table`.
+	// TableLocation: The pointer to the row of the table that contained the
+	// finding.
+	// Provided when the finding's containing element is a cell of a table.
 	TableLocation *GooglePrivacyDlpV2beta2TableLocation `json:"tableLocation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ByteRange") to
@@ -6372,7 +6393,7 @@ func (s *GooglePrivacyDlpV2beta2Table) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2beta2TableLocation: Location of a finding within a
-// `ContentItem.Table`.
+// table.
 type GooglePrivacyDlpV2beta2TableLocation struct {
 	// RowIndex: The zero-based index of the row where the finding is
 	// located.

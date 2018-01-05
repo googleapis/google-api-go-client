@@ -2041,6 +2041,13 @@ type Policy struct {
 	// customizations.
 	KeyguardDisabledFeatures []string `json:"keyguardDisabledFeatures,omitempty"`
 
+	// KioskCustomLauncherEnabled: Flag to specify if kiosk custom launcher
+	// is enabled. If it is enabled the value for receiver_activity in
+	// PersistentPreferredActivity related to home intent will be ignored.
+	// When custom launcher is enabled, the kiosk will start in launcher
+	// mode and not locked to a specific application.
+	KioskCustomLauncherEnabled bool `json:"kioskCustomLauncherEnabled,omitempty"`
+
 	// LongSupportMessage: A message displayed to the user in the device
 	// administators settings screen. <i>Requires the beta version of the
 	// Android Device Policy app.</i>

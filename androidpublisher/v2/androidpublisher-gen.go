@@ -1824,15 +1824,16 @@ type SubscriptionPurchase struct {
 
 	// LinkedPurchaseToken: The purchase token of the originating purchase
 	// if this subscription is one of the following:
-	// - Re-signup of a cancelled but non-lapsed subscription
+	// - Re-signup of a canceled but non-lapsed subscription
 	// - Upgrade/downgrade from a previous subscription  For example,
 	// suppose a user originally signs up and you receive purchase token X,
-	// then the user cancels and goes through the resignup flow and you
-	// receive purchase token Y. If you call this API with purchase token Y,
-	// this field will be set to X. If you call this API with purchase token
-	// X, this field will not be set. If user upgrade his subscription after
-	// the first resignup. You receive purchase token Z. If you call this
-	// API with purchase token Z, this field will be set to Y.
+	// then the user cancels and goes through the resignup flow (before
+	// their subscription lapses) and you receive purchase token Y, and
+	// finally the user upgrades their subscription and you receive purchase
+	// token Z. If you call this API with purchase token Z, this field will
+	// be set to Y. If you call this API with purchase token Y, this field
+	// will be set to X. If you call this API with purchase token X, this
+	// field will not be set.
 	LinkedPurchaseToken string `json:"linkedPurchaseToken,omitempty"`
 
 	// OrderId: The order id of the latest recurring order associated with

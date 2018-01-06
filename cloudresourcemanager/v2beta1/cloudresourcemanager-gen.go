@@ -665,7 +665,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 //     }
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam).
+// [IAM developer's guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -695,7 +695,7 @@ type Policy struct {
 	// policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1758,7 +1758,7 @@ func (c *FoldersListCall) Parent(parent string) *FoldersListCall {
 // ShowDeleted sets the optional parameter "showDeleted": Controls
 // whether Folders in the
 // DELETE_REQUESTED
-// state should be returned.
+// state should be returned. Defaults to false. This field is optional.
 func (c *FoldersListCall) ShowDeleted(showDeleted bool) *FoldersListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
@@ -1878,7 +1878,7 @@ func (c *FoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse
 	//       "type": "string"
 	//     },
 	//     "showDeleted": {
-	//       "description": "Controls whether Folders in the\nDELETE_REQUESTED\nstate should be returned.",
+	//       "description": "Controls whether Folders in the\nDELETE_REQUESTED\nstate should be returned. Defaults to false. This field is optional.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

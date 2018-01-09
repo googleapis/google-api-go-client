@@ -1191,9 +1191,11 @@ type BillingAccountsProjectsListCall struct {
 
 // List: Lists the projects associated with a billing account. The
 // current
-// authenticated user must be an [owner of the
-// billing
-// account](https://support.google.com/cloud/answer/4430947).
+// authenticated user must have the "billing.resourceAssociations.list"
+// IAM
+// permission, which is often given to billing
+// account
+// [viewers](https://support.google.com/cloud/answer/4430947).
 func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProjectsListCall {
 	c := &BillingAccountsProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1313,7 +1315,7 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the projects associated with a billing account. The current\nauthenticated user must be an [owner of the billing\naccount](https://support.google.com/cloud/answer/4430947).",
+	//   "description": "Lists the projects associated with a billing account. The current\nauthenticated user must have the \"billing.resourceAssociations.list\" IAM\npermission, which is often given to billing account\n[viewers](https://support.google.com/cloud/answer/4430947).",
 	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/projects",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.projects.list",
@@ -1909,11 +1911,13 @@ func (c *ServicesSkusListCall) CurrencyCode(currencyCode string) *ServicesSkusLi
 // time of the time range for which the pricing
 // versions will be returned. Timestamps in the future are not
 // allowed.
-// Maximum allowable time range is 1 month (31 days). Time range as a
-// whole
-// is optional. If not specified, the latest pricing will be returned
-// (up to
-// 12 hours old at most).
+// The time range has to be within a single calendar month
+// in
+// America/Los_Angeles timezone. Time range as a whole is optional. If
+// not
+// specified, the latest pricing will be returned (up to 12 hours old
+// at
+// most).
 func (c *ServicesSkusListCall) EndTime(endTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -1940,11 +1944,13 @@ func (c *ServicesSkusListCall) PageToken(pageToken string) *ServicesSkusListCall
 // start time of the time range for which the pricing
 // versions will be returned. Timestamps in the future are not
 // allowed.
-// Maximum allowable time range is 1 month (31 days). Time range as a
-// whole
-// is optional. If not specified, the latest pricing will be returned
-// (up to
-// 12 hours old at most).
+// The time range has to be within a single calendar month
+// in
+// America/Los_Angeles timezone. Time range as a whole is optional. If
+// not
+// specified, the latest pricing will be returned (up to 12 hours old
+// at
+// most).
 func (c *ServicesSkusListCall) StartTime(startTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
@@ -2058,7 +2064,7 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//       "type": "string"
 	//     },
 	//     "endTime": {
-	//       "description": "Optional exclusive end time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nMaximum allowable time range is 1 month (31 days). Time range as a whole\nis optional. If not specified, the latest pricing will be returned (up to\n12 hours old at most).",
+	//       "description": "Optional exclusive end time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -2082,7 +2088,7 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 	//       "type": "string"
 	//     },
 	//     "startTime": {
-	//       "description": "Optional inclusive start time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nMaximum allowable time range is 1 month (31 days). Time range as a whole\nis optional. If not specified, the latest pricing will be returned (up to\n12 hours old at most).",
+	//       "description": "Optional inclusive start time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"

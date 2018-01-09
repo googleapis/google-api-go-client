@@ -2116,7 +2116,7 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GdataMedia, error
 	//   ],
 	//   "parameters": {
 	//     "resourceName": {
-	//       "description": "Name of the media that is being downloaded.  See\nReadRequest.resource_name.",
+	//       "description": "Name of the media that is being downloaded.",
 	//       "location": "path",
 	//       "pattern": "^.+$",
 	//       "required": true,

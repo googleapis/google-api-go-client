@@ -23,7 +23,7 @@
  "basePath": "/storage/v1beta1/",
  "rootUrl": "https://www.googleapis.com/",
  "servicePath": "storage/v1beta1/",
- "batchPath": "batch",
+ "batchPath": "batch/storage/v1beta1",
  "parameters": {
   "alt": {
    "type": "string",

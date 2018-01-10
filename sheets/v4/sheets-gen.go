@@ -8446,6 +8446,58 @@ func (s *WaterfallChartColumnStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WaterfallChartCustomSubtotal: A custom subtotal column for a
+// waterfall chart series.
+type WaterfallChartCustomSubtotal struct {
+	// DataIsSubtotal: True if the data point at subtotal_index is the
+	// subtotal. If false,
+	// the subtotal will be computed and appear after the data point.
+	DataIsSubtotal bool `json:"dataIsSubtotal,omitempty"`
+
+	// Label: A label for the subtotal column.
+	Label string `json:"label,omitempty"`
+
+	// SubtotalIndex: The 0-based index of a data point within the series.
+	// If
+	// data_is_subtotal is true, the data point at this index is
+	// the
+	// subtotal. Otherwise, the subtotal appears after the data point
+	// with
+	// this index. A series can have multiple subtotals at arbitrary
+	// indices,
+	// but subtotals do not affect the indices of the data points.
+	// For
+	// example, if a series has 3 data points, their indices will always be
+	// 0,
+	// 1, and 2, regardless of how many subtotals exist on the series or
+	// what
+	// data points they are associated with.
+	SubtotalIndex int64 `json:"subtotalIndex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataIsSubtotal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataIsSubtotal") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WaterfallChartCustomSubtotal) MarshalJSON() ([]byte, error) {
+	type NoMethod WaterfallChartCustomSubtotal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WaterfallChartDomain: The domain of a waterfall chart.
 type WaterfallChartDomain struct {
 	// Data: The data of the WaterfallChartDomain.
@@ -8480,6 +8532,13 @@ func (s *WaterfallChartDomain) MarshalJSON() ([]byte, error) {
 
 // WaterfallChartSeries: A single series of data for a waterfall chart.
 type WaterfallChartSeries struct {
+	// CustomSubtotals: Custom subtotal columns appearing in this series.
+	// The order in which
+	// subtotals are defined is not significant. Only one subtotal may
+	// be
+	// defined for each data point.
+	CustomSubtotals []*WaterfallChartCustomSubtotal `json:"customSubtotals,omitempty"`
+
 	// Data: The data being visualized in this series.
 	Data *ChartData `json:"data,omitempty"`
 
@@ -8501,7 +8560,7 @@ type WaterfallChartSeries struct {
 	// SubtotalColumnsStyle: Styles for all subtotal columns in this series.
 	SubtotalColumnsStyle *WaterfallChartColumnStyle `json:"subtotalColumnsStyle,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Data") to
+	// ForceSendFields is a list of field names (e.g. "CustomSubtotals") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -8509,12 +8568,13 @@ type WaterfallChartSeries struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Data") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomSubtotals") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

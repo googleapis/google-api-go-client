@@ -359,9 +359,11 @@ type CreateServiceAccountKeyRequest struct {
 	//   "KEY_ALG_RSA_2048" - 2k RSA Key.
 	KeyAlgorithm string `json:"keyAlgorithm,omitempty"`
 
-	// PrivateKeyType: The output format of the private key.
-	// `GOOGLE_CREDENTIALS_FILE` is the
-	// default output format.
+	// PrivateKeyType: The output format of the private key. The default
+	// value is
+	// `TYPE_GOOGLE_CREDENTIALS_FILE`, which is the Google Credentials
+	// File
+	// format.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified. Equivalent to

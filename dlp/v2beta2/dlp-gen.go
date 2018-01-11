@@ -5524,7 +5524,13 @@ func (s *GooglePrivacyDlpV2beta2NumericalStatsResult) MarshalJSON() ([]byte, err
 // GooglePrivacyDlpV2beta2OutputStorageConfig: Cloud repository for
 // storing output.
 type GooglePrivacyDlpV2beta2OutputStorageConfig struct {
-	// Table: Store findings in a new table in an existing dataset.
+	// Table: Store findings in a new table in an existing dataset. If
+	// table_id is not
+	// set a new one will be generated for you with the following
+	// format:
+	// dlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific timezone will be used
+	// for
+	// generating the date details.
 	Table *GooglePrivacyDlpV2beta2BigQueryTable `json:"table,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Table") to

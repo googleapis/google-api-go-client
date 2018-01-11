@@ -548,7 +548,9 @@ type GdataMedia struct {
 	Inline string `json:"inline,omitempty"`
 
 	// IsPotentialRetry: gdata
-	IsPotentialRetry bool `json:"isPotentialRetry,omitempty"`
+	//
+	// Default: true
+	IsPotentialRetry *bool `json:"isPotentialRetry,omitempty"`
 
 	// Length: gdata
 	Length int64 `json:"length,omitempty,string"`

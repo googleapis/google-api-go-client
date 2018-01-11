@@ -755,7 +755,7 @@ type ConferenceData struct {
 	// Can be used by developers to keep track of conferences, should not be
 	// displayed to users.
 	// Values for solution types:
-	// - "eventHangout": unset
+	// - "eventHangout": unset.
 	// - "eventNamedHangout": the name of the Hangout.
 	// - "hangoutsMeet": the 10-letter meeting code, for example
 	// "aaa-bbbb-ccc".  Optional.
@@ -763,7 +763,7 @@ type ConferenceData struct {
 
 	// ConferenceSolution: The conference solution, such as Hangouts or
 	// Hangouts Meet.
-	// Unset for a conference with failed create request.
+	// Unset for a conference with a failed create request.
 	// Either conferenceSolution and at least one entryPoint, or
 	// createRequest is required.
 	ConferenceSolution *ConferenceSolution `json:"conferenceSolution,omitempty"`
@@ -791,7 +791,7 @@ type ConferenceData struct {
 	// Genereated on server side. Must be preserved while copying the
 	// conference data between events, otherwise the conference data will
 	// not be copied.
-	// Unset for a conference with failed create request.
+	// Unset for a conference with a failed create request.
 	// Optional for a conference with a pending create request.
 	Signature string `json:"signature,omitempty"`
 
@@ -888,7 +888,7 @@ func (s *ConferenceRequestStatus) MarshalJSON() ([]byte, error) {
 }
 
 type ConferenceSolution struct {
-	// IconUri: The user-visible icon for this solution. Read-only.
+	// IconUri: The user-visible icon for this solution.
 	IconUri string `json:"iconUri,omitempty"`
 
 	// Key: The key which can uniquely identify the conference solution for
@@ -896,7 +896,6 @@ type ConferenceSolution struct {
 	Key *ConferenceSolutionKey `json:"key,omitempty"`
 
 	// Name: The user-visible name of this solution. Not localized.
-	// Read-only.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IconUri") to
@@ -930,7 +929,7 @@ type ConferenceSolutionKey struct {
 	// The possible values are:
 	// - "eventHangout" for Hangouts for consumers
 	// (http://hangouts.google.com)
-	// - "eventNamedHangout" for Classic Hangouts for GSuite users
+	// - "eventNamedHangout" for classic Hangouts for G Suite users
 	// (http://hangouts.google.com)
 	// - "hangoutsMeet" for Hangouts Meet (http://meet.google.com)
 	Type string `json:"type,omitempty"`
@@ -998,7 +997,7 @@ func (s *CreateConferenceRequest) MarshalJSON() ([]byte, error) {
 }
 
 type EntryPoint struct {
-	// AccessCode: The Access Code to access the conference. The maximum
+	// AccessCode: The access code to access the conference. The maximum
 	// length is 128 characters.
 	// When creating new conference data, populate only the subset of
 	// {meetingCode, accessCode, passcode, password, pin} fields that match
@@ -1021,17 +1020,17 @@ type EntryPoint struct {
 	// conference.
 	EntryPointType string `json:"entryPointType,omitempty"`
 
-	// Label: The label for the URI.Visible to end users. Not localized. The
-	// maximum length is 512 characters.
+	// Label: The label for the URI. Visible to end users. Not localized.
+	// The maximum length is 512 characters.
 	// Examples:
 	// - for video: meet.google.com/aaa-bbbb-ccc
 	// - for phone: +1 123 268 2601
-	// - for sip: sip:12345678@myprovider.com
+	// - for sip: 12345678@altostrat.com
 	// - for more: should not be filled
 	// Optional.
 	Label string `json:"label,omitempty"`
 
-	// MeetingCode: The Meeting Code to access the conference. The maximum
+	// MeetingCode: The meeting code to access the conference. The maximum
 	// length is 128 characters.
 	// When creating new conference data, populate only the subset of
 	// {meetingCode, accessCode, passcode, password, pin} fields that match
@@ -1040,7 +1039,7 @@ type EntryPoint struct {
 	// Optional.
 	MeetingCode string `json:"meetingCode,omitempty"`
 
-	// Passcode: The Passcode to access the conference. The maximum length
+	// Passcode: The passcode to access the conference. The maximum length
 	// is 128 characters.
 	// When creating new conference data, populate only the subset of
 	// {meetingCode, accessCode, passcode, password, pin} fields that match
@@ -1048,7 +1047,7 @@ type EntryPoint struct {
 	// fields should be displayed.
 	Passcode string `json:"passcode,omitempty"`
 
-	// Password: The Password to access the conference. The maximum length
+	// Password: The password to access the conference. The maximum length
 	// is 128 characters.
 	// When creating new conference data, populate only the subset of
 	// {meetingCode, accessCode, passcode, password, pin} fields that match
@@ -1066,7 +1065,7 @@ type EntryPoint struct {
 	// Optional.
 	Pin string `json:"pin,omitempty"`
 
-	// Uri: The "URI" of the entry point. The maximum length is 1300
+	// Uri: The URI of the entry point. The maximum length is 1300
 	// characters.
 	// Format:
 	// - for video, http: or https: schema is required.

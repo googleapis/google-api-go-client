@@ -791,8 +791,10 @@ type File struct {
 
 	// Parents: The IDs of the parent folders which contain the file.
 	// If not specified as part of a create request, the file will be placed
-	// directly in the My Drive folder. Update requests must use the
-	// addParents and removeParents parameters to modify the values.
+	// directly in the user's My Drive folder. If not specified as part of a
+	// copy request, the file will inherit any discoverable parents of the
+	// source file. Update requests must use the addParents and
+	// removeParents parameters to modify the parents list.
 	Parents []string `json:"parents,omitempty"`
 
 	// PermissionIds: List of permission IDs for users with access to this

@@ -4734,6 +4734,7 @@ func (c *ProjectsTimeSeriesListCall) AggregationAlignmentPeriod(aggregationAlign
 //   "REDUCE_STDDEV"
 //   "REDUCE_COUNT"
 //   "REDUCE_COUNT_TRUE"
+//   "REDUCE_COUNT_FALSE"
 //   "REDUCE_FRACTION_TRUE"
 //   "REDUCE_PERCENTILE_99"
 //   "REDUCE_PERCENTILE_95"
@@ -4787,11 +4788,13 @@ func (c *ProjectsTimeSeriesListCall) AggregationGroupByFields(aggregationGroupBy
 //   "ALIGN_SUM"
 //   "ALIGN_STDDEV"
 //   "ALIGN_COUNT_TRUE"
+//   "ALIGN_COUNT_FALSE"
 //   "ALIGN_FRACTION_TRUE"
 //   "ALIGN_PERCENTILE_99"
 //   "ALIGN_PERCENTILE_95"
 //   "ALIGN_PERCENTILE_50"
 //   "ALIGN_PERCENTILE_05"
+//   "ALIGN_PERCENT_CHANGE"
 func (c *ProjectsTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerSeriesAligner string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("aggregation.perSeriesAligner", aggregationPerSeriesAligner)
 	return c
@@ -4981,6 +4984,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//         "REDUCE_STDDEV",
 	//         "REDUCE_COUNT",
 	//         "REDUCE_COUNT_TRUE",
+	//         "REDUCE_COUNT_FALSE",
 	//         "REDUCE_FRACTION_TRUE",
 	//         "REDUCE_PERCENTILE_99",
 	//         "REDUCE_PERCENTILE_95",
@@ -5011,11 +5015,13 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//         "ALIGN_SUM",
 	//         "ALIGN_STDDEV",
 	//         "ALIGN_COUNT_TRUE",
+	//         "ALIGN_COUNT_FALSE",
 	//         "ALIGN_FRACTION_TRUE",
 	//         "ALIGN_PERCENTILE_99",
 	//         "ALIGN_PERCENTILE_95",
 	//         "ALIGN_PERCENTILE_50",
-	//         "ALIGN_PERCENTILE_05"
+	//         "ALIGN_PERCENTILE_05",
+	//         "ALIGN_PERCENT_CHANGE"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

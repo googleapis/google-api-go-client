@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/vCtSJJlm7S7awJpqcQLLvfr2zXA\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/minc5niM2cggYvQjv8BHfkvoMV8\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20171208",
+ "revision": "20180105",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -1327,7 +1327,7 @@
     },
     "parents": {
      "type": "array",
-     "description": "Collection of parent folders which contain this file.\nSetting this field will put the file in all of the provided folders. On insert, if no folders are provided, the file will be placed in the default root folder.",
+     "description": "Collection of parent folders which contain this file.\nIf not specified as part of an insert request, the file will be placed directly in the user's My Drive folder. If not specified as part of a copy request, the file will inherit any discoverable parents of the source file. Update requests can also use the addParents and removeParents parameters to modify the parents list.",
      "items": {
       "$ref": "ParentReference"
      }

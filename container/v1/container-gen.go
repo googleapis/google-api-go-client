@@ -1,4 +1,4 @@
-// Package container provides access to the Google Container Engine API.
+// Package container provides access to the Google Kubernetes Engine API.
 //
 // See https://cloud.google.com/container-engine/
 //

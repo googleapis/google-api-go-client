@@ -883,7 +883,7 @@ type Empty struct {
 type GetIamPolicyRequest struct {
 }
 
-// LeaseTasksRequest: Request message for pulling tasks using
+// LeaseTasksRequest: Request message for leasing tasks using
 // CloudTasks.LeaseTasks.
 type LeaseTasksRequest struct {
 	// Filter: `filter` can be used to specify a subset of tasks to
@@ -1412,7 +1412,7 @@ type Queue struct {
 	// -and-queues#purging_all_tasks_from_a_queue).
 	//
 	// Purge time will be truncated to the nearest microsecond. Purge
-	// time will be zero if the queue has never been purged.
+	// time will be unset if the queue has never been purged.
 	PurgeTime string `json:"purgeTime,omitempty"`
 
 	// RateLimits: Rate limits for task dispatches.
@@ -1456,9 +1456,9 @@ type Queue struct {
 	// `state` can only be changed by called
 	// CloudTasks.PauseQueue, CloudTasks.ResumeQueue, or
 	// uploading
-	// [queue.yaml](/appengine/docs/python/config/queueref).
-	// CloudT
-	// asks.UpdateQueue cannot be used to change `state`.
+	// [queue.yaml/xml](/appengine/docs/python/config/queueref).
+	// Cl
+	// oudTasks.UpdateQueue cannot be used to change `state`.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
@@ -1537,30 +1537,33 @@ func (s *Queue) MarshalJSON() ([]byte, error) {
 type RateLimits struct {
 	// MaxBurstSize: Output only. The max burst size.
 	//
-	// Max burst size limits how fast the queue is processed when many
-	// tasks are in the queue and the rate is high. This field allows
-	// the queue to have a high rate so processing starts shortly after
-	// a task is enqueued, but still limits resource usage when many
-	// tasks are enqueued in a short period of time.
+	// Max burst size limits how fast tasks in queue are processed when
+	// many tasks are in the queue and the rate is high. This field
+	// allows the queue to have a high rate so processing starts
+	// shortly
+	// after a task is enqueued, but still limits resource usage when
+	// many tasks are enqueued in a short period of time.
 	//
-	// * For App Engine queues, if
-	//   RateLimits.max_tasks_dispatched_per_second is 1, this
-	//   field is 10; otherwise this field is
-	//   RateLimits.max_tasks_dispatched_per_second / 5.
-	// * For pull queues, this field is output only and always
-	// 10,000.
+	// The [token bucket](https://wikipedia.org/wiki/Token_Bucket)
+	// algorithm is used to control the rate of task dispatches. Each
+	// queue has a token bucket that holds tokens, up to the
+	// maximum
+	// specified by `max_burst_size`. Each time a task is dispatched,
+	// a
+	// token is removed from the bucket. Tasks will be dispatched until
+	// the queue's bucket runs out of tokens. The bucket will
+	// be
+	// continuously refilled with new tokens based
+	// on
+	// RateLimits.max_tasks_dispatched_per_second.
 	//
-	// Note: For App Engine queues that were created
-	// through
-	// `queue.yaml/xml`, `max_burst_size` might not have the same
-	// settings as specified above; CloudTasks.UpdateQueue can be
-	// used to set `max_burst_size` only to the values specified
-	// above.
+	// Cloud Tasks will pick the value of `max_burst_size` when the
+	// queue is created. For App Engine queues that were created or
+	// updated using `queue.yaml/xml`, `max_burst_size` is equal
+	// to
+	// [bucket_size](/appengine/docs/standard/python/config/queueref#bucke
+	// t_size).
 	//
-	// This field has the same meaning as
-	// [bucket_size in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#bucket_siz
-	// e).
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 
 	// MaxConcurrentTasks: The maximum number of concurrent tasks that Cloud
@@ -1573,32 +1576,40 @@ type RateLimits struct {
 	//
 	// The maximum allowed value is 5,000.
 	//
-	// * For App Engine queues, this field is 10 by default.
-	// * For pull queues, this field is output only and always -1, which
-	//   indicates no limit.
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// This field is output only for
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	//
 	//
 	// This field has the same meaning as
 	// [max_concurrent_requests in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#max_concur
-	// rent_requests).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#max_co
+	// ncurrent_requests).
 	MaxConcurrentTasks int64 `json:"maxConcurrentTasks,omitempty"`
 
 	// MaxTasksDispatchedPerSecond: The maximum rate at which tasks are
-	// dispatched from this
-	// queue.
+	// dispatched from this queue.
 	//
 	// The maximum allowed value is 500.
 	//
-	// * For App Engine queues, this field is 1 by default.
-	// * For pull queues, this field is output only and always 10,000.
-	//   In addition to the `max_tasks_dispatched_per_second` limit, a
-	// maximum of
-	//   10 QPS of CloudTasks.LeaseTasks requests are allowed per
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// This field is output only for
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	// In addition to the `max_tasks_dispatched_per_second` limit, a maximum
+	// of
+	// 10 QPS of CloudTasks.LeaseTasks requests are allowed per pull
 	// queue.
+	//
 	//
 	// This field has the same meaning as
 	// [rate in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#rate).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#rate).
 	MaxTasksDispatchedPerSecond float64 `json:"maxTasksDispatchedPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxBurstSize") to
@@ -1732,23 +1743,26 @@ type RetryConfig struct {
 	// `max_attempts - 1` retries).  Must be > 0.
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
-	// MaxBackoff: The maximum amount of time to wait before retrying a task
-	// after
-	// it fails. The default is 1 hour.
+	// MaxBackoff: A task will be scheduled for retry between
+	// RetryConfig.min_backoff and
+	// RetryConfig.max_backoff duration after it fails, if the
+	// queue's
+	// RetryConfig specifies that the task should be retried.
 	//
-	// * For [App Engine
-	// queues](google.cloud.tasks.v2beta2.AppEngineHttpTarget),
-	//   this field is 1 hour by default.
-	// * For [pull queues](google.cloud.tasks.v2beta2.PullTarget), this
-	// field
-	//   is output only and always 0.
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// This field is output only for
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	//
 	//
 	// `max_backoff` will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
 	// [max_backoff_seconds in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#retry_para
-	// meters).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#retry_
+	// parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
 	// MaxDoublings: The time between retries will double `max_doublings`
@@ -1772,17 +1786,18 @@ type RetryConfig struct {
 	// `max_attempts` times. Thus, the requests will retry at 10s, 20s,
 	// 40s, 80s, 160s, 240s, 300s, 300s, ....
 	//
-	// * For [App Engine
-	// queues](google.cloud.tasks.v2beta2.AppEngineHttpTarget),
-	//   this field is 16 by default.
-	// * For [pull queues](google.cloud.tasks.v2beta2.PullTarget), this
-	// field
-	//   is output only and always 0.
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// This field is output only for
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	//
 	//
 	// This field has the same meaning as
 	// [max_doublings in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#retry_para
-	// meters).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#retry_
+	// parameters).
 	MaxDoublings int64 `json:"maxDoublings,omitempty"`
 
 	// MaxRetryDuration: If positive, `max_retry_duration` specifies the
@@ -1797,36 +1812,44 @@ type RetryConfig struct {
 	//
 	// If zero, then the task age is unlimited.
 	//
-	// * For [App Engine
-	// queues](google.cloud.tasks.v2beta2.AppEngineHttpTarget),
-	//   this field is 0 seconds by default.
-	// * For [pull queues](google.cloud.tasks.v2beta2.PullTarget), this
-	//   field is output only and always 0.
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
 	//
-	// `max_retry_duration` will be truncated to the nearest second.
+	// This field is output only for
+	// [pull
+	// queues](google.cloud.tasks.v2beta2.PullTarget).
+	//
+	//
+	// `max_retry_duration`
+	//  will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
 	// [task_age_limit in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#retry_para
-	// meters).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#retry_
+	// parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
-	// MinBackoff: The minimum amount of time to wait before retrying a task
-	// after
-	// it fails.
+	// MinBackoff: A task will be scheduled for retry between
+	// RetryConfig.min_backoff and
+	// RetryConfig.max_backoff duration after it fails, if the
+	// queue's
+	// RetryConfig specifies that the task should be retried.
 	//
-	// * For [App Engine
-	// queues](google.cloud.tasks.v2beta2.AppEngineHttpTarget),
-	//   this field is 0.1 seconds by default.
-	// * For [pull queues](google.cloud.tasks.v2beta2.PullTarget), this
-	//   field is output only and always 0.
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// This field is output only for
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	//
 	//
 	// `min_backoff` will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
 	// [min_backoff_seconds in
-	// queue.yaml](/appengine/docs/standard/python/config/queueref#retry_para
-	// meters).
+	// queue.yaml/xml](/appengine/docs/standard/python/config/queueref#retry_
+	// parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
 
 	// UnlimitedAttempts: If true, then the number of attempts is unlimited.

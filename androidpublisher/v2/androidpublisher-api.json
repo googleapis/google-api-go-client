@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/T6DXDGe0AQmW6Ml6vF7V2KSY63M\"",
+ "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/eg3_eCWxB9N1rGAK3E85za1viGs\"",
  "discoveryVersion": "v1",
  "id": "androidpublisher:v2",
  "name": "androidpublisher",
  "canonicalName": "Android Publisher",
  "version": "v2",
- "revision": "20171214",
+ "revision": "20180114",
  "title": "Google Play Developer API",
  "description": "Lets Android application developers access their Google Play accounts.",
  "ownerDomain": "google.com",
@@ -1020,7 +1020,8 @@
    "type": "object",
    "properties": {
     "track": {
-     "type": "string"
+     "type": "string",
+     "description": "Identifier for this track. One of \"alpha\", \"beta\", \"production\" or \"rollout\"."
     },
     "userFraction": {
      "type": "number",
@@ -2601,19 +2602,9 @@
         },
         "track": {
          "type": "string",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },
@@ -2648,19 +2639,9 @@
         },
         "track": {
          "type": "string",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },
@@ -2698,19 +2679,9 @@
         },
         "track": {
          "type": "string",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },
@@ -2753,20 +2724,9 @@
         },
         "track": {
          "type": "string",
-         "description": "The track type to read or modify.",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },
@@ -2832,20 +2792,9 @@
         },
         "track": {
          "type": "string",
-         "description": "The track type to read or modify.",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },
@@ -2884,20 +2833,9 @@
         },
         "track": {
          "type": "string",
-         "description": "The track type to read or modify.",
+         "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
          "required": true,
-         "enum": [
-          "alpha",
-          "beta",
-          "production",
-          "rollout"
-         ],
-         "enumDescriptions": [
-          "",
-          "",
-          "",
-          ""
-         ],
+         "pattern": "(alpha|beta|production|rollout)",
          "location": "path"
         }
        },

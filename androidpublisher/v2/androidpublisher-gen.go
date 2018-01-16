@@ -2050,6 +2050,8 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 }
 
 type Track struct {
+	// Track: Identifier for this track. One of "alpha", "beta",
+	// "production" or "rollout".
 	Track string `json:"track,omitempty"`
 
 	UserFraction float64 `json:"userFraction,omitempty"`
@@ -7549,19 +7551,9 @@ func (c *EditsTestersGetCall) Do(opts ...googleapi.CallOption) (*Testers, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7709,19 +7701,9 @@ func (c *EditsTestersPatchCall) Do(opts ...googleapi.CallOption) (*Testers, erro
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -7872,19 +7854,9 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8044,20 +8016,9 @@ func (c *EditsTracksGetCall) Do(opts ...googleapi.CallOption) (*Track, error) {
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track type to read or modify.",
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8356,20 +8317,9 @@ func (c *EditsTracksPatchCall) Do(opts ...googleapi.CallOption) (*Track, error) 
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track type to read or modify.",
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8523,20 +8473,9 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track type to read or modify.",
-	//       "enum": [
-	//         "alpha",
-	//         "beta",
-	//         "production",
-	//         "rollout"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "",
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\" or \"rollout\".",
 	//       "location": "path",
+	//       "pattern": "(alpha|beta|production|rollout)",
 	//       "required": true,
 	//       "type": "string"
 	//     }

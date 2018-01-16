@@ -2916,8 +2916,8 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of devices to show in a page of results. The default
-// value returns all the devices in a single page.
+// of devices to show in a page of results.
+// Must be between 1 and 100 inclusive.
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3033,7 +3033,7 @@ func (c *CustomersDevicesListCall) Do(opts ...googleapi.CallOption) (*CustomerLi
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to show in a page of results. The default\nvalue returns all the devices in a single page.",
+	//       "description": "The maximum number of devices to show in a page of results.\nMust be between 1 and 100 inclusive.",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

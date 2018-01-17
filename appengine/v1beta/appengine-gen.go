@@ -1002,7 +1002,9 @@ func (s *DebugInstanceRequest) MarshalJSON() ([]byte, error) {
 // Deployment: Code and application artifacts used to deploy a version
 // to App Engine.
 type Deployment struct {
-	// Build: Google Cloud Container Builder build information.
+	// Build: Google Cloud Container Builder build information. Only
+	// applicable for instances running in the App Engine flexible
+	// environment.
 	Build *BuildInfo `json:"build,omitempty"`
 
 	// CloudBuildOptions: Options for any Google Cloud Container Builder

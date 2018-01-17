@@ -589,14 +589,27 @@ type PricingInfo struct {
 	// doesn't require aggregation.
 	AggregationInfo *AggregationInfo `json:"aggregationInfo,omitempty"`
 
-	// CurrencyConversionRate: Conversion rate for currency conversion, from
-	// USD to the currency specified
-	// in the request. If the currency is not specified this defaults to
-	// 1.0.
+	// CurrencyConversionRate: Conversion rate used for currency conversion,
+	// from USD to the currency
+	// specified in the request. This includes any surcharge collected for
+	// billing
+	// in non USD currency. If a currency is not specified in the request
+	// this
+	// defaults to 1.0.
 	// Example: USD * currency_conversion_rate = JPY
 	CurrencyConversionRate float64 `json:"currencyConversionRate,omitempty"`
 
-	// EffectiveTime: The timestamp from which this pricing was effective.
+	// EffectiveTime: The timestamp from which this pricing was effective
+	// within the requested
+	// time range. This is guaranteed to be greater than or equal to
+	// the
+	// start_time field in the request and less than the end_time field in
+	// the
+	// request. If a time range was not specified in the request this field
+	// will
+	// be equivalent to a time within the last 12 hours, indicating the
+	// latest
+	// pricing info.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
 
 	// PricingExpression: Expresses the pricing formula. See

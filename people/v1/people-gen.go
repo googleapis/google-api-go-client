@@ -4478,7 +4478,11 @@ func (c *PeopleConnectionsListCall) RequestMaskIncludeField(requestMaskIncludeFi
 // RequestSyncToken sets the optional parameter "requestSyncToken":
 // Whether the response should include a sync token, which can be used
 // to get
-// all changes since the last request.
+// all changes since the last request. For subsequent sync requests use
+// the
+// `sync_token` param instead. Initial sync requests that
+// specify
+// `request_sync_token` have an additional rate limit.
 func (c *PeopleConnectionsListCall) RequestSyncToken(requestSyncToken bool) *PeopleConnectionsListCall {
 	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
 	return c
@@ -4498,10 +4502,12 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 	return c
 }
 
-// SyncToken sets the optional parameter "syncToken": A sync token,
+// SyncToken sets the optional parameter "syncToken": A sync token
 // returned by a previous call to `people.connections.list`.
 // Only resources changed since the sync token was created will be
 // returned.
+// Sync requests that specify `sync_token` have an additional rate
+// limit.
 func (c *PeopleConnectionsListCall) SyncToken(syncToken string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
@@ -4633,7 +4639,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "requestSyncToken": {
-	//       "description": "Whether the response should include a sync token, which can be used to get\nall changes since the last request.",
+	//       "description": "Whether the response should include a sync token, which can be used to get\nall changes since the last request. For subsequent sync requests use the\n`sync_token` param instead. Initial sync requests that specify\n`request_sync_token` have an additional rate limit.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4655,7 +4661,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "type": "string"
 	//     },
 	//     "syncToken": {
-	//       "description": "A sync token, returned by a previous call to `people.connections.list`.\nOnly resources changed since the sync token was created will be returned.",
+	//       "description": "A sync token returned by a previous call to `people.connections.list`.\nOnly resources changed since the sync token was created will be returned.\nSync requests that specify `sync_token` have an additional rate limit.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

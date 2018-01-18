@@ -580,7 +580,7 @@ type AttemptStatus struct {
 	//
 	// If the task has not been attempted or the task is currently
 	// running
-	// then the response status is google.rpc.Code.UNKNOWN.
+	// then the response status is unset.
 	ResponseStatus *Status `json:"responseStatus,omitempty"`
 
 	// ResponseTime: Output only. The time that this attempt response was
@@ -891,9 +891,8 @@ type LeaseTasksRequest struct {
 	//
 	// When `filter` is set to `tag=<my-tag>` then the
 	// LeaseTasksResponse will contain only tasks whose
-	// LeaseMessage.tag is equal to `<my-tag>`. `<my-tag>` must be less
-	// than
-	// 500 bytes.
+	// PullMessage.tag is equal to `<my-tag>`. `<my-tag>` must be
+	// less than 500 characters.
 	//
 	// When `filter` is set to `tag_function=oldest_tag()`, only tasks which
 	// have
@@ -904,13 +903,23 @@ type LeaseTasksRequest struct {
 	//
 	// * `filter = "tag=" tag | "tag_function=" function`
 	//
-	// * `tag = string | bytes`
+	// * `tag = string`
 	//
 	// * `function = "oldest_tag()"
 	//
 	// The `oldest_tag()` function returns tasks which have the same tag as
 	// the
 	// oldest task (ordered by schedule time).
+	//
+	// SDK compatibility: Although the SDK allows tags to be either
+	// string or
+	// [bytes](/appengine/docs/standard/java/javadoc/com/google/appengine/api
+	// /taskqueue/TaskOptions.html#tag-byte:A-),
+	// only UTF-8 encoded tags can be used in Cloud Tasks. Tag which aren't
+	// UTF-8
+	// encoded can't be used in LeaseTasksRequest.filter and won't display
+	// in
+	// PullMessage.tag.
 	Filter string `json:"filter,omitempty"`
 
 	// LeaseDuration: The duration of the lease.
@@ -958,8 +967,7 @@ type LeaseTasksRequest struct {
 	//
 	// Authorization for Task.View.FULL requires
 	// `cloudtasks.tasks.fullView`
-	// [Google IAM](/iam/) permission on the
-	// Task.name resource.
+	// [Google IAM](/iam/) permission on the Task.name resource.
 	//
 	// Possible values:
 	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
@@ -1325,7 +1333,16 @@ type PullMessage struct {
 	// The task's tag can only be set when the
 	// task is created.
 	//
-	// The tag must be less than 500 bytes.
+	// The tag must be less than 500 characters.
+	//
+	// SDK compatibility: Although the SDK allows tags to be either
+	// string or
+	// [bytes](/appengine/docs/standard/java/javadoc/com/google/appengine/api
+	// /taskqueue/TaskOptions.html#tag-byte:A-),
+	// only UTF-8 encoded tags can be used in Cloud Tasks. If a tag isn't
+	// UTF-8
+	// encoded, the tag will be empty when the task is returned by Cloud
+	// Tasks.
 	Tag string `json:"tag,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Payload") to

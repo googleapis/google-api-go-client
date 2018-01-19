@@ -10,9 +10,6 @@
     "sites": {
       "methods": {
         "get": {
-          "flatPath": "v1/sites/{sitesId}",
-          "path": "v1/{+name}",
-          "id": "abusiveexperiencereport.sites.get",
           "description": "Gets a summary of the abusive experience rating of a site.",
           "response": {
             "$ref": "SiteSummaryResponse"
@@ -23,22 +20,28 @@
           "httpMethod": "GET",
           "parameters": {
             "name": {
-              "location": "path",
               "description": "The required site name. This is the site property whose abusive\nexperiences have been reviewed, and it must be URL-encoded. For example,\nsites/https%3A%2F%2Fwww.google.com. The server will return an error of\nBAD_REQUEST if this field is not filled in. Note that if the site property\nis not yet verified in Search Console, the reportUrl field\nreturned by the API will lead to the verification page, prompting the user\nto go through that process before they can gain access to the Abusive\nExperience Report.",
               "required": true,
               "type": "string",
-              "pattern": "^sites/[^/]+$"
+              "pattern": "^sites/[^/]+$",
+              "location": "path"
             }
           },
           "scopes": [
             "https://www.googleapis.com/auth/xapi.zoo"
-          ]
+          ],
+          "flatPath": "v1/sites/{sitesId}",
+          "path": "v1/{+name}",
+          "id": "abusiveexperiencereport.sites.get"
         }
       }
     },
     "violatingSites": {
       "methods": {
         "list": {
+          "flatPath": "v1/violatingSites",
+          "path": "v1/violatingSites",
+          "id": "abusiveexperiencereport.violatingSites.list",
           "description": "Lists sites with Abusive Experience Report statuses of \"Failing\".",
           "response": {
             "$ref": "ViolatingSitesResponse"
@@ -48,35 +51,21 @@
           "scopes": [
             "https://www.googleapis.com/auth/xapi.zoo"
           ],
-          "parameters": {},
-          "flatPath": "v1/violatingSites",
-          "path": "v1/violatingSites",
-          "id": "abusiveexperiencereport.violatingSites.list"
+          "parameters": {}
         }
       }
     }
   },
   "parameters": {
-    "upload_protocol": {
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
       "type": "string",
       "location": "query"
     },
-    "prettyPrint": {
-      "description": "Returns response with indentations and line breaks.",
-      "type": "boolean",
-      "default": "true",
-      "location": "query"
-    },
-    "fields": {
-      "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
     "uploadType": {
-      "location": "query",
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "$.xgafv": {
       "description": "V1 error format.",
@@ -97,7 +86,6 @@
       "location": "query"
     },
     "alt": {
-      "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
         "Media download with context-dependent Content-Type",
@@ -110,17 +98,18 @@
         "json",
         "media",
         "proto"
-      ]
+      ],
+      "type": "string"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "key": {
-      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "quotaUser": {
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
@@ -128,10 +117,10 @@
       "location": "query"
     },
     "pp": {
-      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true"
+      "default": "true",
+      "location": "query"
     },
     "oauth_token": {
       "description": "OAuth 2.0 token for the current user.",
@@ -139,9 +128,20 @@
       "location": "query"
     },
     "bearer_token": {
-      "location": "query",
       "description": "OAuth bearer token.",
-      "type": "string"
+      "type": "string",
+      "location": "query"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "location": "query",
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true"
     }
   },
   "version": "v1",
@@ -174,14 +174,6 @@
       "description": "Response message for GetSiteSummary.",
       "type": "object",
       "properties": {
-        "underReview": {
-          "description": "Whether the site is currently under review.",
-          "type": "boolean"
-        },
-        "reportUrl": {
-          "description": "A link that leads to a full abusive experience report.",
-          "type": "string"
-        },
         "reviewedSite": {
           "description": "The name of the site reviewed.",
           "type": "string"
@@ -192,6 +184,8 @@
           "type": "string"
         },
         "abusiveStatus": {
+          "description": "The status of the site reviewed for the abusive experiences.",
+          "type": "string",
           "enumDescriptions": [
             "Not reviewed.",
             "Passing.",
@@ -201,9 +195,7 @@
             "UNKNOWN",
             "PASSING",
             "FAILING"
-          ],
-          "description": "The status of the site reviewed for the abusive experiences.",
-          "type": "string"
+          ]
         },
         "enforcementTime": {
           "description": "The date on which enforcement begins.",
@@ -226,6 +218,14 @@
             "PENDING"
           ],
           "description": "The abusive experience enforcement status of the site.",
+          "type": "string"
+        },
+        "underReview": {
+          "description": "Whether the site is currently under review.",
+          "type": "boolean"
+        },
+        "reportUrl": {
+          "description": "A link that leads to a full abusive experience report.",
           "type": "string"
         }
       },

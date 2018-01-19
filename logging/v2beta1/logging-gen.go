@@ -1810,6 +1810,12 @@ func (s *SourceReference) MarshalJSON() ([]byte, error) {
 
 // WriteLogEntriesRequest: The parameters to WriteLogEntries.
 type WriteLogEntriesRequest struct {
+	// DryRun: Optional. If true, the request should expect normal response,
+	// but the entries won't be persisted nor exported. Useful for checking
+	// whether the logging API endpoints are working properly before sending
+	// valuable data.
+	DryRun bool `json:"dryRun,omitempty"`
+
 	// Entries: Required. The log entries to send to Stackdriver Logging.
 	// The order of log entries in this list does not matter. Values
 	// supplied in this method's log_name, resource, and labels fields are
@@ -1869,7 +1875,7 @@ type WriteLogEntriesRequest struct {
 	// See LogEntry.
 	Resource *MonitoredResource `json:"resource,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// ForceSendFields is a list of field names (e.g. "DryRun") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1877,8 +1883,8 @@ type WriteLogEntriesRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Entries") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DryRun") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

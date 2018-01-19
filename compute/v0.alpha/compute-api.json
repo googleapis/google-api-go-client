@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/8LXjCsGzTRkw9pxlAZsYlHn9Eew\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/GG1iBQimAqJMnQlOmz2fV9XMtWc\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20171207",
+ "revision": "20171228",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -103,7 +103,7 @@
     },
     "acceleratorType": {
      "type": "string",
-     "description": "Full or partial URL of the accelerator type resource to expose to this instance."
+     "description": "Full or partial URL of the accelerator type resource to attach to this instance. If you are creating an instance template, specify only the accelerator name."
     }
    }
   },
@@ -1129,6 +1129,13 @@
     "diskType": {
      "type": "string",
      "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
+    },
+    "labels": {
+     "type": "object",
+     "description": "Labels to apply to this disk. These can be later modified by the disks.setLabels method. This field is only applicable for persistent disks.",
+     "additionalProperties": {
+      "type": "string"
+     }
     },
     "sourceImage": {
      "type": "string",
@@ -3637,6 +3644,10 @@
      "type": "boolean",
      "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance)."
     },
+    "customImage": {
+     "type": "string",
+     "description": "The custom source image to be used to restore this disk when instantiating this instance template."
+    },
     "deviceName": {
      "type": "string",
      "description": "Specifies the device name of the disk to which the configurations apply to."
@@ -3647,9 +3658,9 @@
      "enum": [
       "ATTACH_READ_ONLY",
       "BLANK",
+      "CUSTOM_IMAGE",
       "DEFAULT",
       "DO_NOT_INCLUDE",
-      "IMAGE_URL",
       "SOURCE_IMAGE",
       "SOURCE_IMAGE_FAMILY"
      ],
@@ -3662,10 +3673,6 @@
       "",
       ""
      ]
-    },
-    "sourceImage": {
-     "type": "string",
-     "description": "The custom source image to be used to restore this disk when instantiating this instance template."
     }
    }
   },
@@ -7183,6 +7190,11 @@
      "items": {
       "$ref": "NetworkInterface"
      }
+    },
+    "preservedStateSizeGb": {
+     "type": "string",
+     "description": "Total amount of preserved state for SUSPENDED instances. Read-only in the api.",
+     "format": "int64"
     },
     "scheduling": {
      "$ref": "Scheduling",
@@ -12178,9 +12190,39 @@
    "properties": {
     "disks": {
      "type": "array",
-     "description": "Disk overrides defined for this instance",
+     "description": "Disk overrides defined for this instance. According to documentation the maximum number of disks attached to an instance is 128: https://cloud.google.com/compute/docs/disks/ However, compute API defines the limit at 140, so this is what we check.",
      "items": {
       "$ref": "ManagedInstanceOverrideDiskOverride"
+     }
+    },
+    "metadata": {
+     "type": "array",
+     "description": "Metadata overrides defined for this instance. TODO(b/69785416) validate the total length is \u003c9 KB",
+     "items": {
+      "type": "object",
+      "properties": {
+       "key": {
+        "type": "string",
+        "description": "Key for the metadata entry. Keys must conform to the following regexp: [a-zA-Z0-9-_]+, and be less than 128 bytes in length. This is reflected as part of a URL in the metadata server. Additionally, to avoid ambiguity, keys must not conflict with any other metadata keys for the project.",
+        "pattern": "[a-zA-Z0-9-_]{1,128}",
+        "annotations": {
+         "required": [
+          "compute.instances.insert",
+          "compute.projects.setCommonInstanceMetadata"
+         ]
+        }
+       },
+       "value": {
+        "type": "string",
+        "description": "Value for the metadata entry. These are free-form strings, and only have meaning as interpreted by the image running in the instance. The only restriction placed on values is that their size must be less than or equal to 262144 bytes (256 KiB).",
+        "annotations": {
+         "required": [
+          "compute.instances.insert",
+          "compute.projects.setCommonInstanceMetadata"
+         ]
+        }
+       }
+      }
      }
     },
     "origin": {
@@ -13869,7 +13911,7 @@
   "Project": {
    "id": "Project",
    "type": "object",
-   "description": "A Project resource. Projects can only be created in the Google Cloud Platform Console. Unless marked otherwise, values can only be modified in the console. (== resource_for v1.projects ==) (== resource_for beta.projects ==)",
+   "description": "A Project resource. For an overview of projects, see  Cloud Platform Resource Hierarchy. (== resource_for v1.projects ==) (== resource_for beta.projects ==)",
    "properties": {
     "commonInstanceMetadata": {
      "$ref": "Metadata",
@@ -17143,6 +17185,10 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource."
     },
+    "expiryTime": {
+     "type": "string",
+     "description": "[Output Only] Expiry time of the certificate. RFC3339"
+    },
     "id": {
      "type": "string",
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -17152,6 +17198,10 @@
      "type": "string",
      "description": "[Output Only] Type of the resource. Always compute#sslCertificate for SSL certificates.",
      "default": "compute#sslCertificate"
+    },
+    "managed": {
+     "$ref": "SslCertificateManagedSslCertificate",
+     "description": "Configuration and status of a managed SSL certificate."
     },
     "name": {
      "type": "string",
@@ -17165,6 +17215,31 @@
     "selfLink": {
      "type": "string",
      "description": "[Output only] Server-defined URL for the resource."
+    },
+    "selfManaged": {
+     "$ref": "SslCertificateSelfManagedSslCertificate",
+     "description": "Configuration and status of a self-managed SSL certificate."
+    },
+    "subjectAlternativeNames": {
+     "type": "array",
+     "description": "[Output Only] Domains associated with the certificate via Subject Alternative Name.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "type": {
+     "type": "string",
+     "description": "(Optional) Specifies the type of SSL certificate, either \"SELF_MANAGED\" or \"MANAGED\". If not specified, the certificate is self-managed and the fields certificate and private_key are used.",
+     "enum": [
+      "MANAGED",
+      "SELF_MANAGED",
+      "TYPE_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      ""
+     ]
     }
    }
   },
@@ -17277,6 +17352,78 @@
        "description": "[Output Only] A human-readable description of the warning code."
       }
      }
+    }
+   }
+  },
+  "SslCertificateManagedSslCertificate": {
+   "id": "SslCertificateManagedSslCertificate",
+   "type": "object",
+   "description": "Configuration and status of a managed SSL certificate.",
+   "properties": {
+    "domainStatus": {
+     "type": "object",
+     "description": "[Output only] Detailed statuses of the domains specified for managed certificate resource.",
+     "additionalProperties": {
+      "type": "string",
+      "enum": [
+       "ACTIVE",
+       "DOMAIN_STATUS_UNKNOWN",
+       "FAILED_CAA_FORBIDDEN",
+       "FAILED_NOT_VISIBLE",
+       "FAILED_RATE_LIMITED",
+       "PROVISIONING"
+      ],
+      "enumDescriptions": [
+       "",
+       "",
+       "",
+       "",
+       "",
+       ""
+      ]
+     }
+    },
+    "domains": {
+     "type": "array",
+     "description": "The domains for which a managed SSL certificate will be generated. Currently only single-domain certs are supported.",
+     "items": {
+      "type": "string"
+     }
+    },
+    "status": {
+     "type": "string",
+     "description": "[Output only] Status of the managed certificate resource.",
+     "enum": [
+      "ACTIVE",
+      "PROVISIONING",
+      "PROVISIONING_FAILED",
+      "PROVISIONING_FAILED_PERMANENTLY",
+      "RENEWAL_FAILED",
+      "STATUS_UNKNOWN"
+     ],
+     "enumDescriptions": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+     ]
+    }
+   }
+  },
+  "SslCertificateSelfManagedSslCertificate": {
+   "id": "SslCertificateSelfManagedSslCertificate",
+   "type": "object",
+   "description": "Configuration and status of a self-managed SSL certificate..",
+   "properties": {
+    "certificate": {
+     "type": "string",
+     "description": "A local certificate file. The certificate must be in PEM format. The certificate chain must be no greater than 5 certs long. The chain must include at least one intermediate cert."
+    },
+    "privateKey": {
+     "type": "string",
+     "description": "A write-only private key in PEM format. Only insert requests will include this field."
     }
    }
   },
@@ -28538,7 +28685,7 @@
      "id": "compute.instanceTemplates.delete",
      "path": "{project}/global/instanceTemplates/{instanceTemplate}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance template. If you delete an instance template that is being referenced from another instance group, the instance group will not be able to create or recreate virtual machine instances. Deleting an instance template is permanent and cannot be undone.",
+     "description": "Deletes the specified instance template. Deleting an instance template is permanent and cannot be undone. It's not possible to delete templates which are in use by an instance group.",
      "parameters": {
       "instanceTemplate": {
        "type": "string",

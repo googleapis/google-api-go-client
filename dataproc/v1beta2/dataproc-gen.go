@@ -698,8 +698,7 @@ type DiskConfig struct {
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
 	// BootDiskType: Optional. Type of the boot disk (default is
-	// "pd-standard"). Valid values: "pd-ssd" (Persistent Disk Solid State
-	// Drive) or "pd-standard" (Persistent Disk Hard Disk Drive).
+	// 'pd-standard'). Valid values: 'pd-ssd', 'pd-standard'
 	BootDiskType string `json:"bootDiskType,omitempty"`
 
 	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 4 (default

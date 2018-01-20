@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/HIjKZ2H1Lvje9CpaMVbiW03yMTM\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/fHbW7QXwL-_RS9fcFDlHxb0u8fc\"",
  "discoveryVersion": "v1",
  "id": "compute:beta",
  "name": "compute",
  "version": "beta",
- "revision": "20171207",
+ "revision": "20171228",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -103,7 +103,7 @@
     },
     "acceleratorType": {
      "type": "string",
-     "description": "Full or partial URL of the accelerator type resource to expose to this instance."
+     "description": "Full or partial URL of the accelerator type resource to attach to this instance. If you are creating an instance template, specify only the accelerator name."
     }
    }
   },
@@ -975,6 +975,13 @@
      "$ref": "CustomerEncryptionKey",
      "description": "Encrypts or decrypts a disk using a customer-supplied encryption key.\n\nIf you are creating a new disk, this field encrypts the new disk using an encryption key that you provide. If you are attaching an existing disk that is already encrypted, this field decrypts the disk using the customer-supplied encryption key.\n\nIf you encrypt a disk using a customer-supplied key, you must provide the same key again when you attempt to use this resource at a later time. For example, you must provide the key when you create a snapshot or an image from the disk or when you attach the disk to a virtual machine instance.\n\nIf you do not provide an encryption key, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot use your own keys to encrypt disks in a managed instance group."
     },
+    "guestOsFeatures": {
+     "type": "array",
+     "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.",
+     "items": {
+      "$ref": "GuestOsFeature"
+     }
+    },
     "index": {
      "type": "integer",
      "description": "[Output Only] A zero-based index to this disk, where 0 is reserved for the boot disk. If you have many disks attached to an instance, each disk would have a unique index number.",
@@ -1067,6 +1074,13 @@
     "diskType": {
      "type": "string",
      "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
+    },
+    "labels": {
+     "type": "object",
+     "description": "Labels to apply to this disk. These can be later modified by the disks.setLabels method. This field is only applicable for persistent disks.",
+     "additionalProperties": {
+      "type": "string"
+     }
     },
     "sourceImage": {
      "type": "string",
@@ -3113,6 +3127,13 @@
      "$ref": "CustomerEncryptionKey",
      "description": "Encrypts the disk using a customer-supplied encryption key.\n\nAfter you encrypt a disk with a customer-supplied key, you must provide the same key if you use the disk later (e.g. to create a disk snapshot or an image, or to attach the disk to a virtual machine).\n\nCustomer-supplied encryption keys do not protect access to metadata of the disk.\n\nIf you do not provide an encryption key when creating the disk, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later."
     },
+    "guestOsFeatures": {
+     "type": "array",
+     "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.",
+     "items": {
+      "$ref": "GuestOsFeature"
+     }
+    },
     "id": {
      "type": "string",
      "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -3371,6 +3392,10 @@
      "type": "boolean",
      "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance)."
     },
+    "customImage": {
+     "type": "string",
+     "description": "The custom source image to be used to restore this disk when instantiating this instance template."
+    },
     "deviceName": {
      "type": "string",
      "description": "Specifies the device name of the disk to which the configurations apply to."
@@ -3381,9 +3406,9 @@
      "enum": [
       "ATTACH_READ_ONLY",
       "BLANK",
+      "CUSTOM_IMAGE",
       "DEFAULT",
       "DO_NOT_INCLUDE",
-      "IMAGE_URL",
       "SOURCE_IMAGE",
       "SOURCE_IMAGE_FAMILY"
      ],
@@ -3396,10 +3421,6 @@
       "",
       ""
      ]
-    },
-    "sourceImage": {
-     "type": "string",
-     "description": "The custom source image to be used to restore this disk when instantiating this instance template."
     }
    }
   },
@@ -5678,6 +5699,18 @@
     "sourceImageId": {
      "type": "string",
      "description": "[Output Only] The ID value of the image used to create this image. This value may be used to determine whether the image was taken from the current or a previous instance of a given image name."
+    },
+    "sourceSnapshot": {
+     "type": "string",
+     "description": "URL of the source snapshot used to create this image. This can be a full or valid partial URL. You must provide exactly one of:  \n- this property, or  \n- the sourceImage property, or  \n- the rawDisk.source property, or  \n- the sourceDisk property   in order to create an image."
+    },
+    "sourceSnapshotEncryptionKey": {
+     "$ref": "CustomerEncryptionKey",
+     "description": "The customer-supplied encryption key of the source snapshot. Required if the source snapshot is protected by a customer-supplied encryption key."
+    },
+    "sourceSnapshotId": {
+     "type": "string",
+     "description": "[Output Only] The ID value of the snapshot used to create this image. This value may be used to determine whether the snapshot was taken from the current or a previous instance of a given snapshot name."
     },
     "sourceType": {
      "type": "string",
@@ -8140,6 +8173,18 @@
      "description": "[Output Only] Type of the resource. Always compute#interconnect for interconnects.",
      "default": "compute#interconnect"
     },
+    "labelFingerprint": {
+     "type": "string",
+     "description": "A fingerprint for the labels being applied to this Interconnect, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels.\n\nTo see the latest fingerprint, make a get() request to retrieve an Interconnect.",
+     "format": "byte"
+    },
+    "labels": {
+     "type": "object",
+     "description": "Labels to apply to this Interconnect resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+     "additionalProperties": {
+      "type": "string"
+     }
+    },
     "linkType": {
      "type": "string",
      "description": "Type of link requested. This field indicates speed of each of the links in the bundle, not the entire bundle. Only 10G per link is allowed for a dedicated interconnect. Options: Ethernet_10G_LR",
@@ -8238,6 +8283,18 @@
      "type": "string",
      "description": "[Output Only] Type of the resource. Always compute#interconnectAttachment for interconnect attachments.",
      "default": "compute#interconnectAttachment"
+    },
+    "labelFingerprint": {
+     "type": "string",
+     "description": "A fingerprint for the labels being applied to this InterconnectAttachment, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels.\n\nTo see the latest fingerprint, make a get() request to retrieve an InterconnectAttachment.",
+     "format": "byte"
+    },
+    "labels": {
+     "type": "object",
+     "description": "Labels to apply to this InterconnectAttachment resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+     "additionalProperties": {
+      "type": "string"
+     }
     },
     "name": {
      "type": "string",
@@ -10891,7 +10948,7 @@
   "Project": {
    "id": "Project",
    "type": "object",
-   "description": "A Project resource. Projects can only be created in the Google Cloud Platform Console. Unless marked otherwise, values can only be modified in the console. (== resource_for v1.projects ==) (== resource_for beta.projects ==)",
+   "description": "A Project resource. For an overview of projects, see  Cloud Platform Resource Hierarchy. (== resource_for v1.projects ==) (== resource_for beta.projects ==)",
    "properties": {
     "commonInstanceMetadata": {
      "$ref": "Metadata",
@@ -23692,7 +23749,7 @@
      "id": "compute.instanceTemplates.delete",
      "path": "{project}/global/instanceTemplates/{instanceTemplate}",
      "httpMethod": "DELETE",
-     "description": "Deletes the specified instance template. If you delete an instance template that is being referenced from another instance group, the instance group will not be able to create or recreate virtual machine instances. Deleting an instance template is permanent and cannot be undone.",
+     "description": "Deletes the specified instance template. Deleting an instance template is permanent and cannot be undone. It's not possible to delete templates which are in use by an instance group.",
      "parameters": {
       "instanceTemplate": {
        "type": "string",
@@ -25551,6 +25608,55 @@
       "https://www.googleapis.com/auth/compute.readonly"
      ]
     },
+    "setLabels": {
+     "id": "compute.interconnectAttachments.setLabels",
+     "path": "{project}/regions/{region}/interconnectAttachments/{resource}/setLabels",
+     "httpMethod": "POST",
+     "description": "Sets the labels on an InterconnectAttachment. To learn more about labels, read the Labeling Resources documentation.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "requestId": {
+       "type": "string",
+       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+       "location": "query"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "RegionSetLabelsRequest"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
     "testIamPermissions": {
      "id": "compute.interconnectAttachments.testIamPermissions",
      "path": "{project}/regions/{region}/interconnectAttachments/{resource}/testIamPermissions",
@@ -25873,6 +25979,42 @@
      ],
      "request": {
       "$ref": "Interconnect"
+     },
+     "response": {
+      "$ref": "Operation"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "setLabels": {
+     "id": "compute.interconnects.setLabels",
+     "path": "{project}/global/interconnects/{resource}/setLabels",
+     "httpMethod": "POST",
+     "description": "Sets the labels on an Interconnect. To learn more about labels, read the Labeling Resources documentation.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "resource"
+     ],
+     "request": {
+      "$ref": "GlobalSetLabelsRequest"
      },
      "response": {
       "$ref": "Operation"

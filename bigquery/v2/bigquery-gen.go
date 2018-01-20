@@ -1256,11 +1256,11 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
-	// Labels: [Experimental] The labels associated with this job. You can
-	// use these to organize and group your jobs. Label keys and values can
-	// be no longer than 63 characters, can only contain lowercase letters,
-	// numeric characters, underscores and dashes. International characters
-	// are allowed. Label values are optional. Label keys must start with a
+	// Labels: The labels associated with this job. You can use these to
+	// organize and group your jobs. Label keys and values can be no longer
+	// than 63 characters, can only contain lowercase letters, numeric
+	// characters, underscores and dashes. International characters are
+	// allowed. Label values are optional. Label keys must start with a
 	// letter and each label in the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -2673,13 +2673,12 @@ type Table struct {
 	// Kind: [Output-only] The type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: [Experimental] The labels associated with this table. You can
-	// use these to organize and group your tables. Label keys and values
-	// can be no longer than 63 characters, can only contain lowercase
-	// letters, numeric characters, underscores and dashes. International
-	// characters are allowed. Label values are optional. Label keys must
-	// start with a letter and each label in the list must have a different
-	// key.
+	// Labels: The labels associated with this table. You can use these to
+	// organize and group your tables. Label keys and values can be no
+	// longer than 63 characters, can only contain lowercase letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. Label values are optional. Label keys must start with a
+	// letter and each label in the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: [Output-only] The time when this table was last
@@ -3090,8 +3089,8 @@ type TableListTables struct {
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: [Experimental] The labels associated with this table. You can
-	// use these to organize and group your tables.
+	// Labels: The labels associated with this table. You can use these to
+	// organize and group your tables.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// TableReference: A reference uniquely identifying the table.

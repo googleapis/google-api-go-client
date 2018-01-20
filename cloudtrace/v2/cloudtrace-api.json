@@ -1,82 +1,197 @@
 {
+  "ownerName": "Google",
+  "resources": {
+    "projects": {
+      "resources": {
+        "traces": {
+          "methods": {
+            "batchWrite": {
+              "request": {
+                "$ref": "BatchWriteSpansRequest"
+              },
+              "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "name": {
+                  "pattern": "^projects/[^/]+$",
+                  "location": "path",
+                  "description": "Required. The name of the project where the spans belong. The format is\n`projects/[PROJECT_ID]`.",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/trace.append"
+              ],
+              "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
+              "path": "v2/{+name}/traces:batchWrite",
+              "id": "cloudtrace.projects.traces.batchWrite"
+            }
+          },
+          "resources": {
+            "spans": {
+              "methods": {
+                "createSpan": {
+                  "request": {
+                    "$ref": "Span"
+                  },
+                  "description": "Creates a new span.",
+                  "httpMethod": "POST",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "response": {
+                    "$ref": "Span"
+                  },
+                  "parameters": {
+                    "name": {
+                      "location": "path",
+                      "description": "The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array.",
+                      "required": true,
+                      "type": "string",
+                      "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$"
+                    }
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/trace.append"
+                  ],
+                  "flatPath": "v2/projects/{projectsId}/traces/{tracesId}/spans/{spansId}",
+                  "id": "cloudtrace.projects.traces.spans.createSpan",
+                  "path": "v2/{+name}"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "parameters": {
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "prettyPrint": {
+      "description": "Returns response with indentations and line breaks.",
+      "type": "boolean",
+      "default": "true",
+      "location": "query"
+    },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "uploadType": {
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string",
+      "location": "query"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
+    "$.xgafv": {
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
+    },
+    "alt": {
+      "type": "string",
+      "enumDescriptions": [
+        "Responses with Content-Type of application/json",
+        "Media download with context-dependent Content-Type",
+        "Responses with Content-Type of application/x-protobuf"
+      ],
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ]
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
+    },
+    "access_token": {
+      "location": "query",
+      "description": "OAuth access token.",
+      "type": "string"
+    },
+    "quotaUser": {
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
+    },
+    "pp": {
+      "location": "query",
+      "description": "Pretty-print response.",
+      "type": "boolean",
+      "default": "true"
+    },
+    "bearer_token": {
+      "description": "OAuth bearer token.",
+      "type": "string",
+      "location": "query"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
+      "type": "string",
+      "location": "query"
+    }
+  },
+  "version": "v2",
+  "baseUrl": "https://cloudtrace.googleapis.com/",
+  "kind": "discovery#restDescription",
+  "description": "Sends application trace data to Stackdriver Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API.\n",
+  "servicePath": "",
+  "basePath": "",
+  "revision": "20180109",
+  "id": "cloudtrace:v2",
+  "documentationLink": "https://cloud.google.com/trace",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "AttributeValue": {
-      "description": "The allowed types for [VALUE] in a `[KEY]:[VALUE]` attribute.",
-      "type": "object",
-      "properties": {
-        "intValue": {
-          "type": "string",
-          "description": "A 64-bit signed integer.",
-          "format": "int64"
-        },
-        "stringValue": {
-          "$ref": "TruncatableString",
-          "description": "A string up to 256 bytes long."
-        },
-        "boolValue": {
-          "type": "boolean",
-          "description": "A Boolean value represented by `true` or `false`."
-        }
-      },
-      "id": "AttributeValue"
-    },
-    "Attributes": {
-      "type": "object",
-      "properties": {
-        "droppedAttributesCount": {
-          "type": "integer",
-          "description": "The number of attributes that were discarded. Attributes can be discarded\nbecause their keys are too long or because there are too many attributes.\nIf this value is 0 then all attributes are valid.",
-          "format": "int32"
-        },
-        "attributeMap": {
-          "type": "object",
-          "additionalProperties": {
-            "$ref": "AttributeValue"
-          },
-          "description": "The set of attributes. Each attribute's key can be up to 128 bytes\nlong. The value can be a string up to 256 bytes, an integer, or the\nBoolean values `true` and `false`. For example:\n\n    \"/instance_id\": \"my-instance\"\n    \"/http/user_agent\": \"\"\n    \"/http/request_bytes\": 300\n    \"abc.com/myattribute\": true"
-        }
-      },
-      "id": "Attributes",
-      "description": "A set of attributes, each in the format `[KEY]:[VALUE]`."
-    },
-    "Links": {
-      "description": "A collection of links, which are references from this span to a span\nin the same or different trace.",
-      "type": "object",
-      "properties": {
-        "droppedLinksCount": {
-          "type": "integer",
-          "description": "The number of dropped links after the maximum size was enforced. If\nthis value is 0, then no links were dropped.",
-          "format": "int32"
-        },
-        "link": {
-          "type": "array",
-          "items": {
-            "$ref": "Link"
-          },
-          "description": "A collection of links."
-        }
-      },
-      "id": "Links"
-    },
     "StackTrace": {
       "description": "A call stack appearing in a trace.",
       "type": "object",
       "properties": {
+        "stackFrames": {
+          "$ref": "StackFrames",
+          "description": "Stack frames in this stack trace. A maximum of 128 frames are allowed."
+        },
         "stackTraceHashId": {
           "description": "The hash ID is used to conserve network bandwidth for duplicate\nstack traces within a single trace.\n\nOften multiple spans will have identical stack traces.\nThe first occurrence of a stack trace should contain both the\n`stackFrame` content and a value in `stackTraceHashId`.\n\nSubsequent spans within the same request can refer\nto that stack trace by only setting `stackTraceHashId`.",
           "format": "int64",
           "type": "string"
-        },
-        "stackFrames": {
-          "$ref": "StackFrames",
-          "description": "Stack frames in this stack trace. A maximum of 128 frames are allowed."
         }
       },
       "id": "StackTrace"
     },
     "TruncatableString": {
+      "description": "Represents a string that might be shortened to a specified length.",
       "type": "object",
       "properties": {
         "truncatedByteCount": {
@@ -85,14 +200,14 @@
           "type": "integer"
         },
         "value": {
-          "type": "string",
-          "description": "The shortened string. For example, if the original string is 500\nbytes long and the limit of the string is 128 bytes, then\n`value` contains the first 128 bytes of the 500-byte string.\n\nTruncation always happens on a UTF8 character boundary. If there\nare multi-byte characters in the string, then the length of the\nshortened string might be less than the size limit."
+          "description": "The shortened string. For example, if the original string is 500\nbytes long and the limit of the string is 128 bytes, then\n`value` contains the first 128 bytes of the 500-byte string.\n\nTruncation always happens on a UTF8 character boundary. If there\nare multi-byte characters in the string, then the length of the\nshortened string might be less than the size limit.",
+          "type": "string"
         }
       },
-      "id": "TruncatableString",
-      "description": "Represents a string that might be shortened to a specified length."
+      "id": "TruncatableString"
     },
     "TimeEvent": {
+      "description": "A time-stamped annotation or message event in the Span.",
       "type": "object",
       "properties": {
         "annotation": {
@@ -100,8 +215,8 @@
           "description": "Text annotation with a set of attributes."
         },
         "messageEvent": {
-          "$ref": "MessageEvent",
-          "description": "An event describing a message sent/received between Spans."
+          "description": "An event describing a message sent/received between Spans.",
+          "$ref": "MessageEvent"
         },
         "time": {
           "description": "The timestamp indicating the time the event occurred.",
@@ -109,15 +224,13 @@
           "type": "string"
         }
       },
-      "id": "TimeEvent",
-      "description": "A time-stamped annotation or message event in the Span."
+      "id": "TimeEvent"
     },
     "MessageEvent": {
       "description": "An event describing a message sent/received between Spans.",
       "type": "object",
       "properties": {
         "type": {
-          "type": "string",
           "enumDescriptions": [
             "Unknown event type.",
             "Indicates a sent message.",
@@ -128,7 +241,8 @@
             "SENT",
             "RECEIVED"
           ],
-          "description": "Type of MessageEvent. Indicates whether the message was sent or\nreceived."
+          "description": "Type of MessageEvent. Indicates whether the message was sent or\nreceived.",
+          "type": "string"
         },
         "id": {
           "description": "An identifier for the MessageEvent's message that can be used to match\nSENT and RECEIVED MessageEvents. It is recommended to be unique within\na Span.",
@@ -141,9 +255,9 @@
           "type": "string"
         },
         "uncompressedSizeBytes": {
-          "type": "string",
           "description": "The number of uncompressed bytes sent or received.",
-          "format": "int64"
+          "format": "int64",
+          "type": "string"
         }
       },
       "id": "MessageEvent"
@@ -153,17 +267,17 @@
       "type": "object",
       "properties": {
         "functionName": {
-          "$ref": "TruncatableString",
-          "description": "The fully-qualified name that uniquely identifies the function or\nmethod that is active in this frame (up to 1024 bytes)."
+          "description": "The fully-qualified name that uniquely identifies the function or\nmethod that is active in this frame (up to 1024 bytes).",
+          "$ref": "TruncatableString"
         },
         "lineNumber": {
-          "type": "string",
           "description": "The line number in `file_name` where the function call appears.",
-          "format": "int64"
+          "format": "int64",
+          "type": "string"
         },
         "loadModule": {
-          "$ref": "Module",
-          "description": "The binary module from where the code was loaded."
+          "description": "The binary module from where the code was loaded.",
+          "$ref": "Module"
         },
         "columnNumber": {
           "description": "The column number where the function call appears, if available.\nThis is important in JavaScript because of its anonymous functions.",
@@ -179,17 +293,16 @@
           "description": "The version of the deployed source code (up to 128 bytes)."
         },
         "originalFunctionName": {
-          "$ref": "TruncatableString",
-          "description": "An un-mangled function name, if `function_name` is\n[mangled](http://www.avabodh.com/cxxin/namemangling.html). The name can\nbe fully-qualified (up to 1024 bytes)."
+          "description": "An un-mangled function name, if `function_name` is\n[mangled](http://www.avabodh.com/cxxin/namemangling.html). The name can\nbe fully-qualified (up to 1024 bytes).",
+          "$ref": "TruncatableString"
         }
       },
       "id": "StackFrame"
     },
     "Link": {
-      "description": "A pointer from the current span to another span in the same trace or in a\ndifferent trace. For example, this can be used in batching operations,\nwhere a single batch handler processes multiple requests from different\ntraces or when the handler receives a request from a different project.",
-      "type": "object",
       "properties": {
         "type": {
+          "description": "The relationship of the current span relative to the linked span.",
           "type": "string",
           "enumDescriptions": [
             "The relationship of the two spans is unknown.",
@@ -200,59 +313,61 @@
             "TYPE_UNSPECIFIED",
             "CHILD_LINKED_SPAN",
             "PARENT_LINKED_SPAN"
-          ],
-          "description": "The relationship of the current span relative to the linked span."
+          ]
         },
         "traceId": {
-          "type": "string",
-          "description": "The [TRACE_ID] for a trace within a project."
+          "description": "The [TRACE_ID] for a trace within a project.",
+          "type": "string"
         },
         "attributes": {
-          "$ref": "Attributes",
-          "description": "A set of attributes on the link. You have have up to  32 attributes per\nlink."
+          "description": "A set of attributes on the link. You have have up to  32 attributes per\nlink.",
+          "$ref": "Attributes"
         },
         "spanId": {
-          "type": "string",
-          "description": "The [SPAN_ID] for a span within a trace."
+          "description": "The [SPAN_ID] for a span within a trace.",
+          "type": "string"
         }
       },
-      "id": "Link"
+      "id": "Link",
+      "description": "A pointer from the current span to another span in the same trace or in a\ndifferent trace. For example, this can be used in batching operations,\nwhere a single batch handler processes multiple requests from different\ntraces or when the handler receives a request from a different project.",
+      "type": "object"
     },
     "Annotation": {
+      "description": "Text annotation with a set of attributes.",
       "type": "object",
       "properties": {
-        "attributes": {
-          "$ref": "Attributes",
-          "description": "A set of attributes on the annotation. You can have up to 4 attributes\nper Annotation."
-        },
         "description": {
           "$ref": "TruncatableString",
           "description": "A user-supplied message describing the event. The maximum length for\nthe description is 256 bytes."
+        },
+        "attributes": {
+          "description": "A set of attributes on the annotation. You can have up to 4 attributes\nper Annotation.",
+          "$ref": "Attributes"
         }
       },
-      "id": "Annotation",
-      "description": "Text annotation with a set of attributes."
+      "id": "Annotation"
     },
     "StackFrames": {
+      "description": "A collection of stack frames, which can be truncated.",
       "type": "object",
       "properties": {
+        "frame": {
+          "description": "Stack frames in this call stack.",
+          "type": "array",
+          "items": {
+            "$ref": "StackFrame"
+          }
+        },
         "droppedFramesCount": {
           "description": "The number of stack frames that were dropped because there\nwere too many stack frames.\nIf this value is 0, then no stack frames were dropped.",
           "format": "int32",
           "type": "integer"
-        },
-        "frame": {
-          "type": "array",
-          "items": {
-            "$ref": "StackFrame"
-          },
-          "description": "Stack frames in this call stack."
         }
       },
-      "id": "StackFrames",
-      "description": "A collection of stack frames, which can be truncated."
+      "id": "StackFrames"
     },
     "TimeEvents": {
+      "description": "A collection of `TimeEvent`s. A `TimeEvent` is a time-stamped annotation\non the span, consisting of either user-supplied key:value pairs, or\ndetails of a message sent/received between Spans.",
       "type": "object",
       "properties": {
         "droppedAnnotationsCount": {
@@ -266,27 +381,26 @@
           "type": "integer"
         },
         "timeEvent": {
+          "description": "A collection of `TimeEvent`s.",
           "type": "array",
           "items": {
             "$ref": "TimeEvent"
-          },
-          "description": "A collection of `TimeEvent`s."
+          }
         }
       },
-      "id": "TimeEvents",
-      "description": "A collection of `TimeEvent`s. A `TimeEvent` is a time-stamped annotation\non the span, consisting of either user-supplied key:value pairs, or\ndetails of a message sent/received between Spans."
+      "id": "TimeEvents"
     },
     "Module": {
       "description": "Binary module.",
       "type": "object",
       "properties": {
-        "buildId": {
-          "$ref": "TruncatableString",
-          "description": "A unique identifier for the module, usually a hash of its\ncontents (up to 128 bytes)."
-        },
         "module": {
-          "$ref": "TruncatableString",
-          "description": "For example: main binary, kernel modules, and dynamic libraries\nsuch as libc.so, sharedlib.so (up to 256 bytes)."
+          "description": "For example: main binary, kernel modules, and dynamic libraries\nsuch as libc.so, sharedlib.so (up to 256 bytes).",
+          "$ref": "TruncatableString"
+        },
+        "buildId": {
+          "description": "A unique identifier for the module, usually a hash of its\ncontents (up to 128 bytes).",
+          "$ref": "TruncatableString"
         }
       },
       "id": "Module"
@@ -300,16 +414,16 @@
           "type": "array",
           "items": {
             "additionalProperties": {
-              "type": "any",
-              "description": "Properties of the object. Contains field @type with type URL."
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
             },
             "type": "object"
           }
         },
         "code": {
-          "type": "integer",
           "description": "The status code, which should be an enum value of google.rpc.Code.",
-          "format": "int32"
+          "format": "int32",
+          "type": "integer"
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
@@ -319,42 +433,26 @@
       "id": "Status"
     },
     "BatchWriteSpansRequest": {
+      "description": "The request message for the `BatchWriteSpans` method.",
       "type": "object",
       "properties": {
         "spans": {
+          "description": "A list of new spans. The span names must not match existing\nspans, or the results are undefined.",
           "type": "array",
           "items": {
             "$ref": "Span"
-          },
-          "description": "A list of new spans. The span names must not match existing\nspans, or the results are undefined."
+          }
         }
       },
-      "id": "BatchWriteSpansRequest",
-      "description": "The request message for the `BatchWriteSpans` method."
+      "id": "BatchWriteSpansRequest"
     },
     "Span": {
+      "description": "A span represents a single operation within a trace. Spans can be\nnested to form a trace tree. Often, a trace contains a root span\nthat describes the end-to-end latency, and one or more subspans for\nits sub-operations. A trace can also contain multiple root spans,\nor none at all. Spans do not need to be contiguous&mdash;there may be\ngaps or overlaps between spans in a trace.",
       "type": "object",
       "properties": {
-        "links": {
-          "$ref": "Links",
-          "description": "Links associated with the span. You can have up to 128 links per Span."
-        },
-        "attributes": {
-          "$ref": "Attributes",
-          "description": "A set of attributes on the span. You can have up to 32 attributes per\nspan."
-        },
-        "spanId": {
-          "description": "The [SPAN_ID] portion of the span's resource name.",
-          "type": "string"
-        },
-        "childSpanCount": {
-          "type": "integer",
-          "description": "An optional number of child spans that were generated while this span\nwas active. If set, allows implementation to detect missing child spans.",
-          "format": "int32"
-        },
         "sameProcessAsParentSpan": {
-          "type": "boolean",
-          "description": "(Optional) Set this parameter to indicate whether this span is in\nthe same process as its parent. If you do not set this parameter,\nStackdriver Trace is unable to take advantage of this helpful\ninformation."
+          "description": "(Optional) Set this parameter to indicate whether this span is in\nthe same process as its parent. If you do not set this parameter,\nStackdriver Trace is unable to take advantage of this helpful\ninformation.",
+          "type": "boolean"
         },
         "status": {
           "$ref": "Status",
@@ -389,32 +487,106 @@
         "timeEvents": {
           "$ref": "TimeEvents",
           "description": "A set of time events. You can have up to 32 annotations and 128 message\nevents per span."
+        },
+        "links": {
+          "description": "Links associated with the span. You can have up to 128 links per Span.",
+          "$ref": "Links"
+        },
+        "attributes": {
+          "description": "A set of attributes on the span. You can have up to 32 attributes per\nspan.",
+          "$ref": "Attributes"
+        },
+        "spanId": {
+          "description": "The [SPAN_ID] portion of the span's resource name.",
+          "type": "string"
+        },
+        "childSpanCount": {
+          "description": "An optional number of child spans that were generated while this span\nwas active. If set, allows implementation to detect missing child spans.",
+          "format": "int32",
+          "type": "integer"
         }
       },
-      "id": "Span",
-      "description": "A span represents a single operation within a trace. Spans can be\nnested to form a trace tree. Often, a trace contains a root span\nthat describes the end-to-end latency, and one or more subspans for\nits sub-operations. A trace can also contain multiple root spans,\nor none at all. Spans do not need to be contiguous&mdash;there may be\ngaps or overlaps between spans in a trace."
+      "id": "Span"
     },
     "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "type": "object",
       "properties": {},
-      "id": "Empty"
+      "id": "Empty",
+      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
+      "type": "object"
+    },
+    "AttributeValue": {
+      "description": "The allowed types for [VALUE] in a `[KEY]:[VALUE]` attribute.",
+      "type": "object",
+      "properties": {
+        "stringValue": {
+          "$ref": "TruncatableString",
+          "description": "A string up to 256 bytes long."
+        },
+        "boolValue": {
+          "description": "A Boolean value represented by `true` or `false`.",
+          "type": "boolean"
+        },
+        "intValue": {
+          "description": "A 64-bit signed integer.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "id": "AttributeValue"
+    },
+    "Attributes": {
+      "description": "A set of attributes, each in the format `[KEY]:[VALUE]`.",
+      "type": "object",
+      "properties": {
+        "droppedAttributesCount": {
+          "description": "The number of attributes that were discarded. Attributes can be discarded\nbecause their keys are too long or because there are too many attributes.\nIf this value is 0 then all attributes are valid.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "attributeMap": {
+          "additionalProperties": {
+            "$ref": "AttributeValue"
+          },
+          "description": "The set of attributes. Each attribute's key can be up to 128 bytes\nlong. The value can be a string up to 256 bytes, an integer, or the\nBoolean values `true` and `false`. For example:\n\n    \"/instance_id\": \"my-instance\"\n    \"/http/user_agent\": \"\"\n    \"/http/request_bytes\": 300\n    \"abc.com/myattribute\": true",
+          "type": "object"
+        }
+      },
+      "id": "Attributes"
+    },
+    "Links": {
+      "description": "A collection of links, which are references from this span to a span\nin the same or different trace.",
+      "type": "object",
+      "properties": {
+        "droppedLinksCount": {
+          "description": "The number of dropped links after the maximum size was enforced. If\nthis value is 0, then no links were dropped.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "link": {
+          "description": "A collection of links.",
+          "type": "array",
+          "items": {
+            "$ref": "Link"
+          }
+        }
+      },
+      "id": "Links"
     }
   },
+  "protocol": "rest",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
-  "protocol": "rest",
   "canonicalName": "Cloud Trace",
   "auth": {
     "oauth2": {
       "scopes": {
-        "https://www.googleapis.com/auth/trace.append": {
-          "description": "Write Trace data for a project or application"
-        },
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
+        },
+        "https://www.googleapis.com/auth/trace.append": {
+          "description": "Write Trace data for a project or application"
         }
       }
     }
@@ -424,177 +596,5 @@
   "name": "cloudtrace",
   "batchPath": "batch",
   "fullyEncodeReservedExpansion": true,
-  "title": "Stackdriver Trace API",
-  "ownerName": "Google",
-  "resources": {
-    "projects": {
-      "resources": {
-        "traces": {
-          "methods": {
-            "batchWrite": {
-              "flatPath": "v2/projects/{projectsId}/traces:batchWrite",
-              "id": "cloudtrace.projects.traces.batchWrite",
-              "path": "v2/{+name}/traces:batchWrite",
-              "request": {
-                "$ref": "BatchWriteSpansRequest"
-              },
-              "description": "Sends new spans to new or existing traces. You cannot update\nexisting spans.",
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "name"
-              ],
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameters": {
-                "name": {
-                  "location": "path",
-                  "description": "Required. The name of the project where the spans belong. The format is\n`projects/[PROJECT_ID]`.",
-                  "required": true,
-                  "type": "string",
-                  "pattern": "^projects/[^/]+$"
-                }
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/trace.append"
-              ]
-            }
-          },
-          "resources": {
-            "spans": {
-              "methods": {
-                "createSpan": {
-                  "httpMethod": "POST",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "response": {
-                    "$ref": "Span"
-                  },
-                  "parameters": {
-                    "name": {
-                      "required": true,
-                      "type": "string",
-                      "pattern": "^projects/[^/]+/traces/[^/]+/spans/[^/]+$",
-                      "location": "path",
-                      "description": "The resource name of the span in the following format:\n\n    projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/SPAN_ID is a unique identifier for a trace within a project;\nit is a 32-character hexadecimal encoding of a 16-byte array.\n\n[SPAN_ID] is a unique identifier for a span within a trace; it\nis a 16-character hexadecimal encoding of an 8-byte array."
-                    }
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform",
-                    "https://www.googleapis.com/auth/trace.append"
-                  ],
-                  "flatPath": "v2/projects/{projectsId}/traces/{tracesId}/spans/{spansId}",
-                  "id": "cloudtrace.projects.traces.spans.createSpan",
-                  "path": "v2/{+name}",
-                  "request": {
-                    "$ref": "Span"
-                  },
-                  "description": "Creates a new span."
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "parameters": {
-    "upload_protocol": {
-      "location": "query",
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
-    },
-    "prettyPrint": {
-      "type": "boolean",
-      "default": "true",
-      "location": "query",
-      "description": "Returns response with indentations and line breaks."
-    },
-    "uploadType": {
-      "location": "query",
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string"
-    },
-    "fields": {
-      "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
-    "callback": {
-      "location": "query",
-      "description": "JSONP",
-      "type": "string"
-    },
-    "$.xgafv": {
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ]
-    },
-    "alt": {
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
-      "type": "string",
-      "enumDescriptions": [
-        "Responses with Content-Type of application/json",
-        "Media download with context-dependent Content-Type",
-        "Responses with Content-Type of application/x-protobuf"
-      ],
-      "location": "query",
-      "description": "Data format for response."
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
-    "access_token": {
-      "location": "query",
-      "description": "OAuth access token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "location": "query",
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
-    },
-    "pp": {
-      "type": "boolean",
-      "default": "true",
-      "location": "query",
-      "description": "Pretty-print response."
-    },
-    "bearer_token": {
-      "type": "string",
-      "location": "query",
-      "description": "OAuth bearer token."
-    },
-    "oauth_token": {
-      "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
-    }
-  },
-  "version": "v2",
-  "baseUrl": "https://cloudtrace.googleapis.com/",
-  "servicePath": "",
-  "kind": "discovery#restDescription",
-  "description": "Sends application trace data to Stackdriver Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API.\n",
-  "basePath": "",
-  "id": "cloudtrace:v2",
-  "documentationLink": "https://cloud.google.com/trace",
-  "revision": "20180109"
+  "title": "Stackdriver Trace API"
 }

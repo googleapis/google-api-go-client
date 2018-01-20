@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/DYaH85wbJKBjNUNmmnGUvwbViMk\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/c0qLh4qGPc7aXt4DhEPUAWdS164\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20171224",
+ "revision": "20180112",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -778,7 +778,7 @@
     },
     "labels": {
      "type": "object",
-     "description": "[Experimental] The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
+     "description": "The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
      "additionalProperties": {
       "type": "string"
      }
@@ -1731,7 +1731,7 @@
     },
     "labels": {
      "type": "object",
-     "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
+     "description": "The labels associated with this table. You can use these to organize and group your tables. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
      "additionalProperties": {
       "type": "string"
      }
@@ -1979,7 +1979,7 @@
        },
        "labels": {
         "type": "object",
-        "description": "[Experimental] The labels associated with this table. You can use these to organize and group your tables.",
+        "description": "The labels associated with this table. You can use these to organize and group your tables.",
         "additionalProperties": {
          "type": "string"
         }

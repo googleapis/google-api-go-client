@@ -71,8 +71,8 @@ create an oauth2.Config,
 
 ```go
     var config = &oauth2.Config{
-        ClientID:     "", // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
-        ClientSecret: "", // from https://console.developers.google.com/project/<your-project-id>/apiui/credential
+        ClientID:     "", // from https://console.developers.google.com/apis/credentials?project=<your-project-id>
+        ClientSecret: "", // from https://console.developers.google.com/apis/credentials?project=<your-project-id>
         Endpoint:     google.Endpoint,
         Scopes:       []string{urlshortener.UrlshortenerScope},
     }

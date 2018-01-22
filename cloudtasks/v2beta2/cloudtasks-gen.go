@@ -1574,12 +1574,25 @@ type RateLimits struct {
 	// on
 	// RateLimits.max_tasks_dispatched_per_second.
 	//
-	// Cloud Tasks will pick the value of `max_burst_size` when the
-	// queue is created. For App Engine queues that were created or
-	// updated using `queue.yaml/xml`, `max_burst_size` is equal
+	// Cloud Tasks will pick the value of `max_burst_size` based on the
+	// value of
+	// RateLimits.max_tasks_dispatched_per_second.
+	//
+	// For App Engine queues that were created or updated
+	// using
+	// `queue.yaml/xml`, `max_burst_size` is equal
 	// to
 	// [bucket_size](/appengine/docs/standard/python/config/queueref#bucke
 	// t_size).
+	// Since `max_burst_size` is output only, if CloudTasks.UpdateQueue
+	// is
+	// called on a queue created by `queue.yaml/xml`, `max_burst_size` will
+	// be
+	// reset based on the value of
+	// RateLimits.max_tasks_dispatched_per_second,
+	// regardless of whether RateLimits.max_tasks_dispatched_per_second
+	// is
+	// updated.
 	//
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
 
@@ -1591,11 +1604,12 @@ type RateLimits struct {
 	// of
 	// concurrent requests decreases.
 	//
-	// The maximum allowed value is 5,000.
-	//
 	// If unspecified when the queue is created, Cloud Tasks will pick
 	// the
 	// default.
+	//
+	//
+	// The maximum allowed value is 5,000. -1 indicates no limit.
 	//
 	// This field is output only for
 	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
@@ -1610,17 +1624,16 @@ type RateLimits struct {
 	// MaxTasksDispatchedPerSecond: The maximum rate at which tasks are
 	// dispatched from this queue.
 	//
-	// The maximum allowed value is 500.
-	//
 	// If unspecified when the queue is created, Cloud Tasks will pick
 	// the
 	// default.
 	//
-	// This field is output only for
-	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
-	// In addition to the `max_tasks_dispatched_per_second` limit, a maximum
-	// of
-	// 10 QPS of CloudTasks.LeaseTasks requests are allowed per pull
+	// * For App Engine queues, the maximum allowed value is 500.
+	// * This field is output only   for [pull
+	// queues](google.cloud.tasks.v2beta2.PullTarget).
+	//   In addition to the `max_tasks_dispatched_per_second` limit, a
+	// maximum of
+	//   10 QPS of CloudTasks.LeaseTasks requests are allowed per pull
 	// queue.
 	//
 	//
@@ -1760,11 +1773,12 @@ type RetryConfig struct {
 	// `max_attempts - 1` retries).  Must be > 0.
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
-	// MaxBackoff: A task will be scheduled for retry between
-	// RetryConfig.min_backoff and
-	// RetryConfig.max_backoff duration after it fails, if the
-	// queue's
-	// RetryConfig specifies that the task should be retried.
+	// MaxBackoff: A task will be [scheduled](Task.schedule_time) for retry
+	// between
+	// RetryConfig.min_backoff and RetryConfig.max_backoff duration after
+	// it fails, if the queue's RetryConfig specifies that the task should
+	// be
+	// retried.
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick
 	// the
@@ -1847,11 +1861,12 @@ type RetryConfig struct {
 	// parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
-	// MinBackoff: A task will be scheduled for retry between
-	// RetryConfig.min_backoff and
-	// RetryConfig.max_backoff duration after it fails, if the
-	// queue's
-	// RetryConfig specifies that the task should be retried.
+	// MinBackoff: A task will be [scheduled](Task.schedule_time) for retry
+	// between
+	// RetryConfig.min_backoff and RetryConfig.max_backoff duration after
+	// it fails, if the queue's RetryConfig specifies that the task should
+	// be
+	// retried.
 	//
 	// If unspecified when the queue is created, Cloud Tasks will pick
 	// the

@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/k0gDxJnXl613K7uCKFw26GQpzXs\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/WRBt7xb1XuIBXdKCPdttIufspds\"",
  "discoveryVersion": "v1",
  "id": "content:v2",
  "name": "content",
  "canonicalName": "Shopping Content",
  "version": "v2",
- "revision": "20180111",
+ "revision": "20180122",
  "title": "Content API for Shopping",
  "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
  "ownerDomain": "google.com",
@@ -1311,6 +1311,13 @@
    "id": "DeliveryTime",
    "type": "object",
    "properties": {
+    "holidayCutoffs": {
+     "type": "array",
+     "description": "Holiday cutoff definitions. If configured, they specify order cutoff times for holiday-specific shipping.",
+     "items": {
+      "$ref": "HolidayCutoff"
+     }
+    },
     "maxTransitTimeInDays": {
      "type": "integer",
      "description": "Maximum number of business days that is spent in transit. 0 means same day delivery, 1 means next day delivery. Must be greater than or equal to minTransitTimeInDays. Required.",
@@ -1404,6 +1411,64 @@
      "items": {
       "$ref": "Weight"
      }
+    }
+   }
+  },
+  "HolidayCutoff": {
+   "id": "HolidayCutoff",
+   "type": "object",
+   "properties": {
+    "deadlineDate": {
+     "type": "string",
+     "description": "Date of the order deadline, in ISO 8601 format. E.g. \"2016-11-29\" for 29th November 2016. Required."
+    },
+    "deadlineHour": {
+     "type": "integer",
+     "description": "Hour of the day on the deadline date until which the order has to be placed to qualify for the delivery guarantee. Possible values are: 0 (midnight), 1, ..., 12 (noon), 13, ..., 23. Required.",
+     "format": "uint32"
+    },
+    "deadlineTimezone": {
+     "type": "string",
+     "description": "Timezone identifier for the deadline hour. A list of identifiers can be found in  the AdWords API documentation. E.g. \"Europe/Zurich\". Required."
+    },
+    "holidayId": {
+     "type": "string",
+     "description": "Unique identifier for the holiday. Required."
+    },
+    "visibleFromDate": {
+     "type": "string",
+     "description": "Date on which the deadline will become visible to consumers in ISO 8601 format. E.g. \"2016-10-31\" for 31st October 2016. Required."
+    }
+   }
+  },
+  "HolidaysHoliday": {
+   "id": "HolidaysHoliday",
+   "type": "object",
+   "properties": {
+    "countryCode": {
+     "type": "string",
+     "description": "The CLDR territory code of the country in which the holiday is available. E.g. \"US\", \"DE\", \"GB\". A holiday cutoff can only be configured in a shipping settings service with matching delivery country. Always present."
+    },
+    "date": {
+     "type": "string",
+     "description": "Date of the holiday, in ISO 8601 format. E.g. \"2016-12-25\" for Christmas 2016. Always present."
+    },
+    "deliveryGuaranteeDate": {
+     "type": "string",
+     "description": "Date on which the order has to arrive at the customer's, in ISO 8601 format. E.g. \"2016-12-24\" for 24th December 2016. Always present."
+    },
+    "deliveryGuaranteeHour": {
+     "type": "string",
+     "description": "Hour of the day in the delivery location's timezone on the guaranteed delivery date by which the order has to arrive at the customer's. Possible values are: 0 (midnight), 1, ..., 12 (noon), 13, ..., 23. Always present.",
+     "format": "uint64"
+    },
+    "id": {
+     "type": "string",
+     "description": "Unique identifier for the holiday to be used when configuring holiday cutoffs. Always present."
+    },
+    "type": {
+     "type": "string",
+     "description": "The holiday type. Always present."
     }
    }
   },
@@ -4039,6 +4104,13 @@
      "type": "string",
      "description": "Date on which the item expires in Google Shopping, in ISO 8601 format."
     },
+    "itemLevelIssues": {
+     "type": "array",
+     "description": "A list of all issues associated with the product.",
+     "items": {
+      "$ref": "ProductStatusItemLevelIssue"
+     }
+    },
     "kind": {
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#productStatus\".",
@@ -4108,6 +4180,10 @@
    "id": "ProductStatusDestinationStatus",
    "type": "object",
    "properties": {
+    "approvalPending": {
+     "type": "boolean",
+     "description": "Whether the approval status might change due to further processing."
+    },
     "approvalStatus": {
      "type": "string",
      "description": "The destination's approval status."
@@ -4118,7 +4194,33 @@
     },
     "intention": {
      "type": "string",
-     "description": "Whether the destination is required, excluded, selected by default or should be validated."
+     "description": "Provided for backward compatibility only. Always set to \"required\"."
+    }
+   }
+  },
+  "ProductStatusItemLevelIssue": {
+   "id": "ProductStatusItemLevelIssue",
+   "type": "object",
+   "properties": {
+    "attributeName": {
+     "type": "string",
+     "description": "The attribute's name, if the issue is caused by a single attribute."
+    },
+    "code": {
+     "type": "string",
+     "description": "The error code of the issue."
+    },
+    "destination": {
+     "type": "string",
+     "description": "The destination the issue applies to."
+    },
+    "resolution": {
+     "type": "string",
+     "description": "Whether the issue can be resolved by the merchant."
+    },
+    "servability": {
+     "type": "string",
+     "description": "How this issue affects serving of the offer."
     }
    }
   },
@@ -4604,6 +4706,24 @@
      "type": "string",
      "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedCarriersResponse\".",
      "default": "content#shippingsettingsGetSupportedCarriersResponse"
+    }
+   }
+  },
+  "ShippingsettingsGetSupportedHolidaysResponse": {
+   "id": "ShippingsettingsGetSupportedHolidaysResponse",
+   "type": "object",
+   "properties": {
+    "holidays": {
+     "type": "array",
+     "description": "A list of holidays applicable for delivery guarantees. May be empty.",
+     "items": {
+      "$ref": "HolidaysHoliday"
+     }
+    },
+    "kind": {
+     "type": "string",
+     "description": "Identifies what kind of resource this is. Value: the fixed string \"content#shippingsettingsGetSupportedHolidaysResponse\".",
+     "default": "content#shippingsettingsGetSupportedHolidaysResponse"
     }
    }
   },
@@ -7003,6 +7123,30 @@
      ],
      "response": {
       "$ref": "ShippingsettingsGetSupportedCarriersResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/content"
+     ]
+    },
+    "getsupportedholidays": {
+     "id": "content.shippingsettings.getsupportedholidays",
+     "path": "{merchantId}/supportedHolidays",
+     "httpMethod": "GET",
+     "description": "Retrieves supported holidays for an account.",
+     "parameters": {
+      "merchantId": {
+       "type": "string",
+       "description": "The ID of the account for which to retrieve the supported holidays.",
+       "required": true,
+       "format": "uint64",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "merchantId"
+     ],
+     "response": {
+      "$ref": "ShippingsettingsGetSupportedHolidaysResponse"
      },
      "scopes": [
       "https://www.googleapis.com/auth/content"

@@ -2131,6 +2131,10 @@ func (s *DatafeedstatusesListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type DeliveryTime struct {
+	// HolidayCutoffs: Holiday cutoff definitions. If configured, they
+	// specify order cutoff times for holiday-specific shipping.
+	HolidayCutoffs []*HolidayCutoff `json:"holidayCutoffs,omitempty"`
+
 	// MaxTransitTimeInDays: Maximum number of business days that is spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
 	// Must be greater than or equal to minTransitTimeInDays. Required.
@@ -2141,16 +2145,15 @@ type DeliveryTime struct {
 	// Required.
 	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "MaxTransitTimeInDays") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "HolidayCutoffs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MaxTransitTimeInDays") to
+	// NullFields is a list of field names (e.g. "HolidayCutoffs") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2290,6 +2293,105 @@ type Headers struct {
 
 func (s *Headers) MarshalJSON() ([]byte, error) {
 	type NoMethod Headers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HolidayCutoff struct {
+	// DeadlineDate: Date of the order deadline, in ISO 8601 format. E.g.
+	// "2016-11-29" for 29th November 2016. Required.
+	DeadlineDate string `json:"deadlineDate,omitempty"`
+
+	// DeadlineHour: Hour of the day on the deadline date until which the
+	// order has to be placed to qualify for the delivery guarantee.
+	// Possible values are: 0 (midnight), 1, ..., 12 (noon), 13, ..., 23.
+	// Required.
+	DeadlineHour int64 `json:"deadlineHour,omitempty"`
+
+	// DeadlineTimezone: Timezone identifier for the deadline hour. A list
+	// of identifiers can be found in  the AdWords API documentation. E.g.
+	// "Europe/Zurich". Required.
+	DeadlineTimezone string `json:"deadlineTimezone,omitempty"`
+
+	// HolidayId: Unique identifier for the holiday. Required.
+	HolidayId string `json:"holidayId,omitempty"`
+
+	// VisibleFromDate: Date on which the deadline will become visible to
+	// consumers in ISO 8601 format. E.g. "2016-10-31" for 31st October
+	// 2016. Required.
+	VisibleFromDate string `json:"visibleFromDate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeadlineDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeadlineDate") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HolidayCutoff) MarshalJSON() ([]byte, error) {
+	type NoMethod HolidayCutoff
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type HolidaysHoliday struct {
+	// CountryCode: The CLDR territory code of the country in which the
+	// holiday is available. E.g. "US", "DE", "GB". A holiday cutoff can
+	// only be configured in a shipping settings service with matching
+	// delivery country. Always present.
+	CountryCode string `json:"countryCode,omitempty"`
+
+	// Date: Date of the holiday, in ISO 8601 format. E.g. "2016-12-25" for
+	// Christmas 2016. Always present.
+	Date string `json:"date,omitempty"`
+
+	// DeliveryGuaranteeDate: Date on which the order has to arrive at the
+	// customer's, in ISO 8601 format. E.g. "2016-12-24" for 24th December
+	// 2016. Always present.
+	DeliveryGuaranteeDate string `json:"deliveryGuaranteeDate,omitempty"`
+
+	// DeliveryGuaranteeHour: Hour of the day in the delivery location's
+	// timezone on the guaranteed delivery date by which the order has to
+	// arrive at the customer's. Possible values are: 0 (midnight), 1, ...,
+	// 12 (noon), 13, ..., 23. Always present.
+	DeliveryGuaranteeHour uint64 `json:"deliveryGuaranteeHour,omitempty,string"`
+
+	// Id: Unique identifier for the holiday to be used when configuring
+	// holiday cutoffs. Always present.
+	Id string `json:"id,omitempty"`
+
+	// Type: The holiday type. Always present.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CountryCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountryCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HolidaysHoliday) MarshalJSON() ([]byte, error) {
+	type NoMethod HolidaysHoliday
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6287,6 +6389,9 @@ type ProductStatus struct {
 	// Shopping, in ISO 8601 format.
 	GoogleExpirationDate string `json:"googleExpirationDate,omitempty"`
 
+	// ItemLevelIssues: A list of all issues associated with the product.
+	ItemLevelIssues []*ProductStatusItemLevelIssue `json:"itemLevelIssues,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#productStatus".
 	Kind string `json:"kind,omitempty"`
@@ -6384,17 +6489,21 @@ func (s *ProductStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
 }
 
 type ProductStatusDestinationStatus struct {
+	// ApprovalPending: Whether the approval status might change due to
+	// further processing.
+	ApprovalPending bool `json:"approvalPending,omitempty"`
+
 	// ApprovalStatus: The destination's approval status.
 	ApprovalStatus string `json:"approvalStatus,omitempty"`
 
 	// Destination: The name of the destination
 	Destination string `json:"destination,omitempty"`
 
-	// Intention: Whether the destination is required, excluded, selected by
-	// default or should be validated.
+	// Intention: Provided for backward compatibility only. Always set to
+	// "required".
 	Intention string `json:"intention,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ApprovalStatus") to
+	// ForceSendFields is a list of field names (e.g. "ApprovalPending") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6402,7 +6511,7 @@ type ProductStatusDestinationStatus struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApprovalStatus") to
+	// NullFields is a list of field names (e.g. "ApprovalPending") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -6414,6 +6523,46 @@ type ProductStatusDestinationStatus struct {
 
 func (s *ProductStatusDestinationStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusDestinationStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProductStatusItemLevelIssue struct {
+	// AttributeName: The attribute's name, if the issue is caused by a
+	// single attribute.
+	AttributeName string `json:"attributeName,omitempty"`
+
+	// Code: The error code of the issue.
+	Code string `json:"code,omitempty"`
+
+	// Destination: The destination the issue applies to.
+	Destination string `json:"destination,omitempty"`
+
+	// Resolution: Whether the issue can be resolved by the merchant.
+	Resolution string `json:"resolution,omitempty"`
+
+	// Servability: How this issue affects serving of the offer.
+	Servability string `json:"servability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductStatusItemLevelIssue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7261,6 +7410,42 @@ type ShippingsettingsGetSupportedCarriersResponse struct {
 
 func (s *ShippingsettingsGetSupportedCarriersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ShippingsettingsGetSupportedCarriersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ShippingsettingsGetSupportedHolidaysResponse struct {
+	// Holidays: A list of holidays applicable for delivery guarantees. May
+	// be empty.
+	Holidays []*HolidaysHoliday `json:"holidays,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#shippingsettingsGetSupportedHolidaysResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Holidays") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Holidays") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ShippingsettingsGetSupportedHolidaysResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ShippingsettingsGetSupportedHolidaysResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -16768,6 +16953,146 @@ func (c *ShippingsettingsGetsupportedcarriersCall) Do(opts ...googleapi.CallOpti
 	//   "path": "{merchantId}/supportedCarriers",
 	//   "response": {
 	//     "$ref": "ShippingsettingsGetSupportedCarriersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.shippingsettings.getsupportedholidays":
+
+type ShippingsettingsGetsupportedholidaysCall struct {
+	s            *APIService
+	merchantId   uint64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Getsupportedholidays: Retrieves supported holidays for an account.
+func (r *ShippingsettingsService) Getsupportedholidays(merchantId uint64) *ShippingsettingsGetsupportedholidaysCall {
+	c := &ShippingsettingsGetsupportedholidaysCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ShippingsettingsGetsupportedholidaysCall) Fields(s ...googleapi.Field) *ShippingsettingsGetsupportedholidaysCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ShippingsettingsGetsupportedholidaysCall) IfNoneMatch(entityTag string) *ShippingsettingsGetsupportedholidaysCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ShippingsettingsGetsupportedholidaysCall) Context(ctx context.Context) *ShippingsettingsGetsupportedholidaysCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ShippingsettingsGetsupportedholidaysCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ShippingsettingsGetsupportedholidaysCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/supportedHolidays")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.shippingsettings.getsupportedholidays" call.
+// Exactly one of *ShippingsettingsGetSupportedHolidaysResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ShippingsettingsGetSupportedHolidaysResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ShippingsettingsGetsupportedholidaysCall) Do(opts ...googleapi.CallOption) (*ShippingsettingsGetSupportedHolidaysResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ShippingsettingsGetSupportedHolidaysResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves supported holidays for an account.",
+	//   "httpMethod": "GET",
+	//   "id": "content.shippingsettings.getsupportedholidays",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "The ID of the account for which to retrieve the supported holidays.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/supportedHolidays",
+	//   "response": {
+	//     "$ref": "ShippingsettingsGetSupportedHolidaysResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

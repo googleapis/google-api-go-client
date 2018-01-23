@@ -30,7 +30,7 @@ import (
 
 const (
 	googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
-	generatorVersion   = "20170210"
+	generatorVersion   = "2018018"
 )
 
 var (
@@ -1841,12 +1841,15 @@ func (meth *Method) generateCode() {
 		pn(" body = new(bytes.Buffer)")
 		pn(` reqHeaders.Set("Content-Type", "application/json")`)
 		pn("}")
-		pn("body, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)")
+		pn("body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)")
 		pn("defer cleanup()")
 	}
 	pn("urls += \"?\" + c.urlParams_.Encode()")
 	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
 	pn("req.Header = reqHeaders")
+	if meth.supportsMediaUpload() {
+		pn("gensupport.SetGetBody(req, getBody)")
+	}
 
 	// Replace param values after NewRequest to avoid reencoding them.
 	// E.g. Cloud Storage API requires '%2F' in entity param to be kept, but url.Parse replaces it with '/'.

@@ -299,6 +299,9 @@ type Block struct {
 	//   and the vertice order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
+	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// Paragraphs: List of paragraphs in this block (if this blocks is of
 	// type text).
 	Paragraphs []*Paragraph `json:"paragraphs,omitempty"`
@@ -327,6 +330,20 @@ func (s *Block) MarshalJSON() ([]byte, error) {
 	type NoMethod Block
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Block) UnmarshalJSON(data []byte) error {
+	type NoMethod Block
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // BoundingPoly: A bounding polygon for the detected image annotation.
@@ -1178,6 +1195,12 @@ type Feature struct {
 	// `TEXT_DETECTION`, `DOCUMENT_TEXT_DETECTION`, or `CROP_HINTS`.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
+	// Model: Model to use for the feature.
+	// Supported values: "builtin/stable" (the default if unset)
+	// and
+	// "builtin/latest".
+	Model string `json:"model,omitempty"`
+
 	// Type: The feature type.
 	//
 	// Possible values:
@@ -1290,6 +1313,9 @@ type ImageContext struct {
 	// LatLongRect: lat/long rectangle that specifies the location of the
 	// image.
 	LatLongRect *LatLongRect `json:"latLongRect,omitempty"`
+
+	// WebDetectionParams: Parameters for web detection.
+	WebDetectionParams *WebDetectionParams `json:"webDetectionParams,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CropHintsParams") to
 	// unconditionally include in API requests. By default, fields with
@@ -1598,6 +1624,9 @@ type Page struct {
 	// Blocks: List of blocks of text, images etc on this page.
 	Blocks []*Block `json:"blocks,omitempty"`
 
+	// Confidence: Confidence of the OCR results on the page. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// Height: Page height in pixels.
 	Height int64 `json:"height,omitempty"`
 
@@ -1630,6 +1659,20 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *Page) UnmarshalJSON(data []byte) error {
+	type NoMethod Page
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // Paragraph: Structural unit of text representing a number of words in
 // certain order.
 type Paragraph struct {
@@ -1653,6 +1696,10 @@ type Paragraph struct {
 	//      1----0
 	//   and the vertice order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
+
+	// Confidence: Confidence of the OCR results for the paragraph. Range
+	// [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
 
 	// Property: Additional information detected for the paragraph.
 	Property *TextProperty `json:"property,omitempty"`
@@ -1681,6 +1728,20 @@ func (s *Paragraph) MarshalJSON() ([]byte, error) {
 	type NoMethod Paragraph
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Paragraph) UnmarshalJSON(data []byte) error {
+	type NoMethod Paragraph
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // Position: A 3D position in the image, used primarily for Face
@@ -1813,6 +1874,28 @@ type SafeSearchAnnotation struct {
 	//   "VERY_LIKELY" - It is very likely that the image belongs to the
 	// specified vertical.
 	Medical string `json:"medical,omitempty"`
+
+	// Racy: Likelihood that the request image contains racy content. Racy
+	// content may
+	// include (but is not limited to) skimpy or sheer clothing,
+	// strategically
+	// covered nudity, lewd or provocative poses, or close-ups of
+	// sensitive
+	// body areas.
+	//
+	// Possible values:
+	//   "UNKNOWN" - Unknown likelihood.
+	//   "VERY_UNLIKELY" - It is very unlikely that the image belongs to the
+	// specified vertical.
+	//   "UNLIKELY" - It is unlikely that the image belongs to the specified
+	// vertical.
+	//   "POSSIBLE" - It is possible that the image belongs to the specified
+	// vertical.
+	//   "LIKELY" - It is likely that the image belongs to the specified
+	// vertical.
+	//   "VERY_LIKELY" - It is very likely that the image belongs to the
+	// specified vertical.
+	Racy string `json:"racy,omitempty"`
 
 	// Spoof: Spoof likelihood. The likelihood that an modification
 	// was made to the image's canonical version to make it appear
@@ -2013,6 +2096,10 @@ type Symbol struct {
 	//   and the vertice order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
+	// Confidence: Confidence of the OCR results for the symbol. Range [0,
+	// 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// Property: Additional information detected for the symbol.
 	Property *TextProperty `json:"property,omitempty"`
 
@@ -2040,6 +2127,20 @@ func (s *Symbol) MarshalJSON() ([]byte, error) {
 	type NoMethod Symbol
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Symbol) UnmarshalJSON(data []byte) error {
+	type NoMethod Symbol
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // TextAnnotation: TextAnnotation contains a structured representation
@@ -2152,6 +2253,9 @@ func (s *Vertex) MarshalJSON() ([]byte, error) {
 
 // WebDetection: Relevant information for the image from the Internet.
 type WebDetection struct {
+	// BestGuessLabels: Best guess text labels for the request image.
+	BestGuessLabels []*WebLabel `json:"bestGuessLabels,omitempty"`
+
 	// FullMatchingImages: Fully matching images from the Internet.
 	// Can include resized copies of the query image.
 	FullMatchingImages []*WebImage `json:"fullMatchingImages,omitempty"`
@@ -2174,15 +2278,15 @@ type WebDetection struct {
 	// WebEntities: Deduced entities from similar images on the Internet.
 	WebEntities []*WebEntity `json:"webEntities,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FullMatchingImages") to
+	// NullFields is a list of field names (e.g. "BestGuessLabels") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2194,6 +2298,36 @@ type WebDetection struct {
 
 func (s *WebDetection) MarshalJSON() ([]byte, error) {
 	type NoMethod WebDetection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebDetectionParams: Parameters for web detection request.
+type WebDetectionParams struct {
+	// IncludeGeoResults: Whether to include results derived from the geo
+	// information in the image.
+	IncludeGeoResults bool `json:"includeGeoResults,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeGeoResults")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeGeoResults") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebDetectionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod WebDetectionParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2292,15 +2426,19 @@ func (s *WebImage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// WebPage: Metadata for web pages.
-type WebPage struct {
-	// Score: (Deprecated) Overall relevancy score for the web page.
-	Score float64 `json:"score,omitempty"`
+// WebLabel: Label to provide extra metadata for the web detection.
+type WebLabel struct {
+	// Label: Label for extra metadata.
+	Label string `json:"label,omitempty"`
 
-	// Url: The result web page URL.
-	Url string `json:"url,omitempty"`
+	// LanguageCode: The BCP-47 language code for `label`, such as "en-US"
+	// or "sr-Latn".
+	// For more information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Score") to
+	// ForceSendFields is a list of field names (e.g. "Label") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2308,12 +2446,59 @@ type WebPage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Score") to include in API
+	// NullFields is a list of field names (e.g. "Label") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod WebLabel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebPage: Metadata for web pages.
+type WebPage struct {
+	// FullMatchingImages: Fully matching images on the page.
+	// Can include resized copies of the query image.
+	FullMatchingImages []*WebImage `json:"fullMatchingImages,omitempty"`
+
+	// PageTitle: Title for the web page, may contain HTML markups.
+	PageTitle string `json:"pageTitle,omitempty"`
+
+	// PartialMatchingImages: Partial matching images on the page.
+	// Those images are similar enough to share some key-point features.
+	// For
+	// example an original image will likely have partial matching for
+	// its
+	// crops.
+	PartialMatchingImages []*WebImage `json:"partialMatchingImages,omitempty"`
+
+	// Score: (Deprecated) Overall relevancy score for the web page.
+	Score float64 `json:"score,omitempty"`
+
+	// Url: The result web page URL.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullMatchingImages")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullMatchingImages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2360,6 +2545,9 @@ type Word struct {
 	//   and the vertice order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
+	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
 	// Property: Additional information detected for the word.
 	Property *TextProperty `json:"property,omitempty"`
 
@@ -2388,6 +2576,20 @@ func (s *Word) MarshalJSON() ([]byte, error) {
 	type NoMethod Word
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Word) UnmarshalJSON(data []byte) error {
+	type NoMethod Word
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // method id "vision.images.annotate":

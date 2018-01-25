@@ -438,6 +438,9 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 	// Hyperparameters: The hyperparameters given to this trial.
 	Hyperparameters map[string]string `json:"hyperparameters,omitempty"`
 
+	// IsTrialStoppedEarly: True if the trial is stopped early.
+	IsTrialStoppedEarly bool `json:"isTrialStoppedEarly,omitempty"`
+
 	// TrialId: The trial id for these results.
 	TrialId string `json:"trialId,omitempty"`
 
@@ -1780,11 +1783,18 @@ type GoogleCloudMlV1__Version struct {
 	// Possible values:
 	//   "UNKNOWN" - The version state is unspecified.
 	//   "READY" - The version is ready for prediction.
-	//   "CREATING" - The version is in the process of creation.
+	//   "CREATING" - The version is being created. New UpdateVersion and
+	// DeleteVersion
+	// requests will fail if a version is in the CREATING state.
 	//   "FAILED" - The version failed to be created, possibly
 	// cancelled.
 	// `error_message` should contain the details of the failure.
-	//   "DELETING" - The version is in the process of deletion.
+	//   "DELETING" - The version is being deleted. New UpdateVersion and
+	// DeleteVersion
+	// requests will fail if a version is in the DELETING state.
+	//   "UPDATING" - The version is being updated. New UpdateVersion and
+	// DeleteVersion
+	// requests will fail if a version is in the UPDATING state.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

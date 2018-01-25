@@ -1,173 +1,31 @@
 {
-  "title": "Android Device Provisioning Partner API",
-  "ownerName": "Google",
-  "discoveryVersion": "v1",
-  "version_module": true,
   "resources": {
     "customers": {
-      "methods": {
-        "list": {
-          "response": {
-            "$ref": "CustomerListCustomersResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
-          "parameters": {
-            "pageToken": {
-              "location": "query",
-              "description": "The next_page_token value returned from a previous List request, if any.",
-              "type": "string"
-            },
-            "pageSize": {
-              "description": "The maximum number of items to return.",
-              "format": "int32",
-              "type": "integer",
-              "location": "query"
-            }
-          },
-          "flatPath": "v1/customers",
-          "path": "v1/customers",
-          "id": "androiddeviceprovisioning.customers.list",
-          "description": "List the user's customer accounts."
-        }
-      },
       "resources": {
-        "devices": {
+        "configurations": {
           "methods": {
-            "list": {
-              "description": "Lists a customer's devices.",
+            "delete": {
+              "path": "v1/{+name}",
+              "id": "androiddeviceprovisioning.customers.configurations.delete",
+              "description": "Deletes an unused configuration. The API call fails if the customer has\ndevices with the configuration applied.",
               "response": {
-                "$ref": "CustomerListDevicesResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "httpMethod": "GET",
-              "parameters": {
-                "pageToken": {
-                  "description": "A token specifying which result page to return.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "pageSize": {
-                  "description": "The maximum number of devices to show in a page of results.\nMust be between 1 and 100 inclusive.",
-                  "format": "int64",
-                  "type": "string",
-                  "location": "query"
-                },
-                "parent": {
-                  "pattern": "^customers/[^/]+$",
-                  "location": "path",
-                  "description": "Required. The customer managing the devices. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/devices",
-              "path": "v1/{+parent}/devices",
-              "id": "androiddeviceprovisioning.customers.devices.list"
-            },
-            "get": {
-              "description": "Gets the details of a device.",
-              "httpMethod": "GET",
-              "response": {
-                "$ref": "Device"
+                "$ref": "Empty"
               },
               "parameterOrder": [
                 "name"
               ],
+              "httpMethod": "DELETE",
               "parameters": {
                 "name": {
-                  "pattern": "^customers/[^/]+/devices/[^/]+$",
-                  "location": "path",
-                  "description": "Required. The device to get. An API resource name in the format\n`customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/devices/{devicesId}",
-              "id": "androiddeviceprovisioning.customers.devices.get",
-              "path": "v1/{+name}"
-            },
-            "unclaim": {
-              "request": {
-                "$ref": "CustomerUnclaimDeviceRequest"
-              },
-              "description": "Unclaims a device from a customer and removes it from zero-touch\nenrollment.\n\nAfter removing a device, a customer must contact their reseller to register\nthe device into zero-touch enrollment again.",
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameters": {
-                "parent": {
-                  "location": "path",
-                  "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+                  "description": "Required. The configuration to delete. An API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. If the\nconfiguration is applied to any devices, the API call fails.",
                   "required": true,
                   "type": "string",
-                  "pattern": "^customers/[^/]+$"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/devices:unclaim",
-              "id": "androiddeviceprovisioning.customers.devices.unclaim",
-              "path": "v1/{+parent}/devices:unclaim"
-            },
-            "removeConfiguration": {
-              "flatPath": "v1/customers/{customersId}/devices:removeConfiguration",
-              "id": "androiddeviceprovisioning.customers.devices.removeConfiguration",
-              "path": "v1/{+parent}/devices:removeConfiguration",
-              "request": {
-                "$ref": "CustomerRemoveConfigurationRequest"
-              },
-              "description": "Removes a configuration from device.",
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameters": {
-                "parent": {
-                  "description": "Required. The customer managing the device in the format\n`customers/[CUSTOMER_ID]`.",
-                  "required": true,
-                  "type": "string",
-                  "pattern": "^customers/[^/]+$",
+                  "pattern": "^customers/[^/]+/configurations/[^/]+$",
                   "location": "path"
                 }
-              }
+              },
+              "flatPath": "v1/customers/{customersId}/configurations/{configurationsId}"
             },
-            "applyConfiguration": {
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameters": {
-                "parent": {
-                  "location": "path",
-                  "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
-                  "required": true,
-                  "type": "string",
-                  "pattern": "^customers/[^/]+$"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/devices:applyConfiguration",
-              "id": "androiddeviceprovisioning.customers.devices.applyConfiguration",
-              "path": "v1/{+parent}/devices:applyConfiguration",
-              "request": {
-                "$ref": "CustomerApplyConfigurationRequest"
-              },
-              "description": "Applies a Configuration to the device to register the device for zero-touch\nenrollment. After applying a configuration to a device, the device\nautomatically provisions itself on first boot, or next factory reset."
-            }
-          }
-        },
-        "configurations": {
-          "methods": {
             "get": {
               "response": {
                 "$ref": "Configuration"
@@ -178,11 +36,11 @@
               "httpMethod": "GET",
               "parameters": {
                 "name": {
+                  "location": "path",
                   "description": "Required. The configuration to get. An API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.",
                   "required": true,
                   "type": "string",
-                  "pattern": "^customers/[^/]+/configurations/[^/]+$",
-                  "location": "path"
+                  "pattern": "^customers/[^/]+/configurations/[^/]+$"
                 }
               },
               "flatPath": "v1/customers/{customersId}/configurations/{configurationsId}",
@@ -191,10 +49,6 @@
               "description": "Gets the details of a configuration."
             },
             "patch": {
-              "request": {
-                "$ref": "Configuration"
-              },
-              "description": "Updates a configuration's field values.",
               "httpMethod": "PATCH",
               "parameterOrder": [
                 "name"
@@ -219,35 +73,35 @@
               },
               "flatPath": "v1/customers/{customersId}/configurations/{configurationsId}",
               "id": "androiddeviceprovisioning.customers.configurations.patch",
-              "path": "v1/{+name}"
-            },
-            "list": {
-              "description": "Lists a customer's configurations.",
-              "response": {
-                "$ref": "CustomerListConfigurationsResponse"
-              },
-              "parameterOrder": [
-                "parent"
-              ],
-              "httpMethod": "GET",
-              "parameters": {
-                "parent": {
-                  "description": "Required. The customer that manages the listed configurations. An API\nresource name in the format `customers/[CUSTOMER_ID]`.",
-                  "required": true,
-                  "type": "string",
-                  "pattern": "^customers/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/configurations",
-              "path": "v1/{+parent}/configurations",
-              "id": "androiddeviceprovisioning.customers.configurations.list"
-            },
-            "create": {
-              "description": "Creates a new configuration. Once created, a customer can apply the\nconfiguration to devices.",
+              "path": "v1/{+name}",
               "request": {
                 "$ref": "Configuration"
               },
+              "description": "Updates a configuration's field values."
+            },
+            "list": {
+              "description": "Lists a customer's configurations.",
+              "httpMethod": "GET",
+              "parameterOrder": [
+                "parent"
+              ],
+              "response": {
+                "$ref": "CustomerListConfigurationsResponse"
+              },
+              "parameters": {
+                "parent": {
+                  "location": "path",
+                  "description": "Required. The customer that manages the listed configurations. An API\nresource name in the format `customers/[CUSTOMER_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$"
+                }
+              },
+              "flatPath": "v1/customers/{customersId}/configurations",
+              "id": "androiddeviceprovisioning.customers.configurations.list",
+              "path": "v1/{+parent}/configurations"
+            },
+            "create": {
               "response": {
                 "$ref": "Configuration"
               },
@@ -257,44 +111,27 @@
               "httpMethod": "POST",
               "parameters": {
                 "parent": {
-                  "pattern": "^customers/[^/]+$",
-                  "location": "path",
                   "description": "Required. The customer that manages the configuration. An API resource name\nin the format `customers/[CUSTOMER_ID]`.",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$",
+                  "location": "path"
                 }
               },
               "flatPath": "v1/customers/{customersId}/configurations",
               "path": "v1/{+parent}/configurations",
-              "id": "androiddeviceprovisioning.customers.configurations.create"
-            },
-            "delete": {
-              "httpMethod": "DELETE",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "pattern": "^customers/[^/]+/configurations/[^/]+$",
-                  "location": "path",
-                  "description": "Required. The configuration to delete. An API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. If the\nconfiguration is applied to any devices, the API call fails.",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "flatPath": "v1/customers/{customersId}/configurations/{configurationsId}",
-              "id": "androiddeviceprovisioning.customers.configurations.delete",
-              "path": "v1/{+name}",
-              "description": "Deletes an unused configuration. The API call fails if the customer has\ndevices with the configuration applied."
+              "id": "androiddeviceprovisioning.customers.configurations.create",
+              "description": "Creates a new configuration. Once created, a customer can apply the\nconfiguration to devices.",
+              "request": {
+                "$ref": "Configuration"
+              }
             }
           }
         },
         "dpcs": {
           "methods": {
             "list": {
+              "description": "Lists the DPCs (device policy controllers) that support zero-touch\nenrollment.",
               "response": {
                 "$ref": "CustomerListDpcsResponse"
               },
@@ -313,10 +150,169 @@
               },
               "flatPath": "v1/customers/{customersId}/dpcs",
               "path": "v1/{+parent}/dpcs",
-              "id": "androiddeviceprovisioning.customers.dpcs.list",
-              "description": "Lists the DPCs (device policy controllers) that support zero-touch\nenrollment."
+              "id": "androiddeviceprovisioning.customers.dpcs.list"
             }
           }
+        },
+        "devices": {
+          "methods": {
+            "unclaim": {
+              "request": {
+                "$ref": "CustomerUnclaimDeviceRequest"
+              },
+              "description": "Unclaims a device from a customer and removes it from zero-touch\nenrollment.\n\nAfter removing a device, a customer must contact their reseller to register\nthe device into zero-touch enrollment again.",
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "parent": {
+                  "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1/customers/{customersId}/devices:unclaim",
+              "path": "v1/{+parent}/devices:unclaim",
+              "id": "androiddeviceprovisioning.customers.devices.unclaim"
+            },
+            "removeConfiguration": {
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "parent": {
+                  "description": "Required. The customer managing the device in the format\n`customers/[CUSTOMER_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1/customers/{customersId}/devices:removeConfiguration",
+              "path": "v1/{+parent}/devices:removeConfiguration",
+              "id": "androiddeviceprovisioning.customers.devices.removeConfiguration",
+              "request": {
+                "$ref": "CustomerRemoveConfigurationRequest"
+              },
+              "description": "Removes a configuration from device."
+            },
+            "applyConfiguration": {
+              "request": {
+                "$ref": "CustomerApplyConfigurationRequest"
+              },
+              "description": "Applies a Configuration to the device to register the device for zero-touch\nenrollment. After applying a configuration to a device, the device\nautomatically provisions itself on first boot, or next factory reset.",
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "parent"
+              ],
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameters": {
+                "parent": {
+                  "description": "Required. The customer managing the device. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$",
+                  "location": "path"
+                }
+              },
+              "flatPath": "v1/customers/{customersId}/devices:applyConfiguration",
+              "id": "androiddeviceprovisioning.customers.devices.applyConfiguration",
+              "path": "v1/{+parent}/devices:applyConfiguration"
+            },
+            "list": {
+              "response": {
+                "$ref": "CustomerListDevicesResponse"
+              },
+              "parameterOrder": [
+                "parent"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "pageSize": {
+                  "description": "The maximum number of devices to show in a page of results.\nMust be between 1 and 100 inclusive.",
+                  "format": "int64",
+                  "type": "string",
+                  "location": "query"
+                },
+                "parent": {
+                  "location": "path",
+                  "description": "Required. The customer managing the devices. An API resource name in the\nformat `customers/[CUSTOMER_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+$"
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "A token specifying which result page to return.",
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/customers/{customersId}/devices",
+              "path": "v1/{+parent}/devices",
+              "id": "androiddeviceprovisioning.customers.devices.list",
+              "description": "Lists a customer's devices."
+            },
+            "get": {
+              "flatPath": "v1/customers/{customersId}/devices/{devicesId}",
+              "path": "v1/{+name}",
+              "id": "androiddeviceprovisioning.customers.devices.get",
+              "description": "Gets the details of a device.",
+              "response": {
+                "$ref": "Device"
+              },
+              "parameterOrder": [
+                "name"
+              ],
+              "httpMethod": "GET",
+              "parameters": {
+                "name": {
+                  "description": "Required. The device to get. An API resource name in the format\n`customers/[CUSTOMER_ID]/devices/[DEVICE_ID]`.",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^customers/[^/]+/devices/[^/]+$",
+                  "location": "path"
+                }
+              }
+            }
+          }
+        }
+      },
+      "methods": {
+        "list": {
+          "httpMethod": "GET",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "CustomerListCustomersResponse"
+          },
+          "parameters": {
+            "pageSize": {
+              "location": "query",
+              "description": "The maximum number of customers to show in a page of results.\nA number between 1 and 1000 (inclusive).",
+              "format": "int32",
+              "type": "integer"
+            },
+            "pageToken": {
+              "location": "query",
+              "description": "A token specifying which result page to return.",
+              "type": "string"
+            }
+          },
+          "flatPath": "v1/customers",
+          "id": "androiddeviceprovisioning.customers.list",
+          "path": "v1/customers",
+          "description": "Lists the user's customer accounts."
         }
       }
     },
@@ -325,40 +321,36 @@
         "customers": {
           "methods": {
             "list": {
+              "id": "androiddeviceprovisioning.partners.customers.list",
+              "path": "v1/partners/{+partnerId}/customers",
+              "description": "Lists the customers that are enrolled to the reseller identified by the\n`partnerId` argument. This list includes customers that the reseller\ncreated and customers that enrolled themselves using the portal.",
+              "httpMethod": "GET",
               "response": {
                 "$ref": "ListCustomersResponse"
               },
               "parameterOrder": [
                 "partnerId"
               ],
-              "httpMethod": "GET",
               "parameters": {
                 "partnerId": {
-                  "location": "path",
-                  "description": "The ID of the partner.",
-                  "pattern": "^[^/]+$",
                   "format": "int64",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "location": "path",
+                  "description": "The ID of the partner.",
+                  "pattern": "^[^/]+$"
                 }
               },
-              "flatPath": "v1/partners/{partnersId}/customers",
-              "path": "v1/partners/{+partnerId}/customers",
-              "id": "androiddeviceprovisioning.partners.customers.list",
-              "description": "Lists the customers that are enrolled to the reseller identified by the\n`partnerId` argument. This list includes customers that the reseller\ncreated and customers that enrolled themselves using the portal."
+              "flatPath": "v1/partners/{partnersId}/customers"
             },
             "create": {
-              "description": "Creates a customer for zero-touch enrollment. After the method returns\nsuccessfully, admin and owner roles can manage devices and EMM configs\nby calling API methods or using their zero-touch enrollment portal. The API\ndoesn't notify the customer that they have access.",
-              "request": {
-                "$ref": "CreateCustomerRequest"
-              },
-              "response": {
-                "$ref": "Company"
-              },
+              "httpMethod": "POST",
               "parameterOrder": [
                 "parent"
               ],
-              "httpMethod": "POST",
+              "response": {
+                "$ref": "Company"
+              },
               "parameters": {
                 "parent": {
                   "pattern": "^partners/[^/]+$",
@@ -369,91 +361,17 @@
                 }
               },
               "flatPath": "v1/partners/{partnersId}/customers",
+              "id": "androiddeviceprovisioning.partners.customers.create",
               "path": "v1/{+parent}/customers",
-              "id": "androiddeviceprovisioning.partners.customers.create"
+              "request": {
+                "$ref": "CreateCustomerRequest"
+              },
+              "description": "Creates a customer for zero-touch enrollment. After the method returns\nsuccessfully, admin and owner roles can manage devices and EMM configs\nby calling API methods or using their zero-touch enrollment portal. The API\ndoesn't notify the customer that they have access."
             }
           }
         },
         "devices": {
           "methods": {
-            "unclaim": {
-              "request": {
-                "$ref": "UnclaimDeviceRequest"
-              },
-              "description": "Unclaim the device identified by the `device_id` or the `deviceIdentifier`.",
-              "response": {
-                "$ref": "Empty"
-              },
-              "parameterOrder": [
-                "partnerId"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "partnerId": {
-                  "location": "path",
-                  "description": "ID of the partner.",
-                  "pattern": "^[^/]+$",
-                  "format": "int64",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "flatPath": "v1/partners/{partnersId}/devices:unclaim",
-              "path": "v1/partners/{+partnerId}/devices:unclaim",
-              "id": "androiddeviceprovisioning.partners.devices.unclaim"
-            },
-            "findByOwner": {
-              "description": "Find devices by ownership.",
-              "request": {
-                "$ref": "FindDevicesByOwnerRequest"
-              },
-              "response": {
-                "$ref": "FindDevicesByOwnerResponse"
-              },
-              "parameterOrder": [
-                "partnerId"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "partnerId": {
-                  "format": "int64",
-                  "required": true,
-                  "type": "string",
-                  "location": "path",
-                  "description": "ID of the partner.",
-                  "pattern": "^[^/]+$"
-                }
-              },
-              "flatPath": "v1/partners/{partnersId}/devices:findByOwner",
-              "path": "v1/partners/{+partnerId}/devices:findByOwner",
-              "id": "androiddeviceprovisioning.partners.devices.findByOwner"
-            },
-            "claim": {
-              "flatPath": "v1/partners/{partnersId}/devices:claim",
-              "path": "v1/partners/{+partnerId}/devices:claim",
-              "id": "androiddeviceprovisioning.partners.devices.claim",
-              "description": "Claim the device identified by device identifier.",
-              "request": {
-                "$ref": "ClaimDeviceRequest"
-              },
-              "response": {
-                "$ref": "ClaimDeviceResponse"
-              },
-              "parameterOrder": [
-                "partnerId"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "partnerId": {
-                  "format": "int64",
-                  "required": true,
-                  "type": "string",
-                  "location": "path",
-                  "description": "ID of the partner.",
-                  "pattern": "^[^/]+$"
-                }
-              }
-            },
             "claimAsync": {
               "request": {
                 "$ref": "ClaimDevicesRequest"
@@ -468,54 +386,6 @@
               },
               "parameters": {
                 "partnerId": {
-                  "format": "int64",
-                  "required": true,
-                  "type": "string",
-                  "location": "path",
-                  "description": "Partner ID.",
-                  "pattern": "^[^/]+$"
-                }
-              },
-              "flatPath": "v1/partners/{partnersId}/devices:claimAsync",
-              "id": "androiddeviceprovisioning.partners.devices.claimAsync",
-              "path": "v1/partners/{+partnerId}/devices:claimAsync"
-            },
-            "findByIdentifier": {
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "partnerId"
-              ],
-              "response": {
-                "$ref": "FindDevicesByDeviceIdentifierResponse"
-              },
-              "parameters": {
-                "partnerId": {
-                  "format": "int64",
-                  "required": true,
-                  "type": "string",
-                  "location": "path",
-                  "description": "ID of the partner.",
-                  "pattern": "^[^/]+$"
-                }
-              },
-              "flatPath": "v1/partners/{partnersId}/devices:findByIdentifier",
-              "id": "androiddeviceprovisioning.partners.devices.findByIdentifier",
-              "path": "v1/partners/{+partnerId}/devices:findByIdentifier",
-              "request": {
-                "$ref": "FindDevicesByDeviceIdentifierRequest"
-              },
-              "description": "Find devices by device identifier."
-            },
-            "unclaimAsync": {
-              "response": {
-                "$ref": "Operation"
-              },
-              "parameterOrder": [
-                "partnerId"
-              ],
-              "httpMethod": "POST",
-              "parameters": {
-                "partnerId": {
                   "pattern": "^[^/]+$",
                   "format": "int64",
                   "required": true,
@@ -524,54 +394,41 @@
                   "description": "Partner ID."
                 }
               },
-              "flatPath": "v1/partners/{partnersId}/devices:unclaimAsync",
-              "path": "v1/partners/{+partnerId}/devices:unclaimAsync",
-              "id": "androiddeviceprovisioning.partners.devices.unclaimAsync",
-              "description": "Unclaim devices asynchronously.",
-              "request": {
-                "$ref": "UnclaimDevicesRequest"
-              }
+              "flatPath": "v1/partners/{partnersId}/devices:claimAsync",
+              "id": "androiddeviceprovisioning.partners.devices.claimAsync",
+              "path": "v1/partners/{+partnerId}/devices:claimAsync"
             },
-            "metadata": {
-              "httpMethod": "POST",
-              "parameterOrder": [
-                "metadataOwnerId",
-                "deviceId"
-              ],
-              "response": {
-                "$ref": "DeviceMetadata"
+            "findByIdentifier": {
+              "path": "v1/partners/{+partnerId}/devices:findByIdentifier",
+              "id": "androiddeviceprovisioning.partners.devices.findByIdentifier",
+              "description": "Find devices by device identifier.",
+              "request": {
+                "$ref": "FindDevicesByDeviceIdentifierRequest"
               },
+              "response": {
+                "$ref": "FindDevicesByDeviceIdentifierResponse"
+              },
+              "parameterOrder": [
+                "partnerId"
+              ],
+              "httpMethod": "POST",
               "parameters": {
-                "deviceId": {
+                "partnerId": {
+                  "location": "path",
                   "description": "ID of the partner.",
                   "pattern": "^[^/]+$",
                   "format": "int64",
                   "required": true,
-                  "type": "string",
-                  "location": "path"
-                },
-                "metadataOwnerId": {
-                  "pattern": "^[^/]+$",
-                  "format": "int64",
-                  "type": "string",
-                  "required": true,
-                  "location": "path",
-                  "description": "The owner of the newly set metadata. Set this to the partner ID."
+                  "type": "string"
                 }
               },
-              "flatPath": "v1/partners/{partnersId}/devices/{devicesId}/metadata",
-              "id": "androiddeviceprovisioning.partners.devices.metadata",
-              "path": "v1/partners/{+metadataOwnerId}/devices/{+deviceId}/metadata",
-              "request": {
-                "$ref": "UpdateDeviceMetadataRequest"
-              },
-              "description": "Update the metadata."
+              "flatPath": "v1/partners/{partnersId}/devices:findByIdentifier"
             },
-            "updateMetadataAsync": {
-              "description": "Set metadata in batch asynchronously.",
+            "unclaimAsync": {
               "request": {
-                "$ref": "UpdateDeviceMetadataInBatchRequest"
+                "$ref": "UnclaimDevicesRequest"
               },
+              "description": "Unclaim devices asynchronously.",
               "response": {
                 "$ref": "Operation"
               },
@@ -581,12 +438,73 @@
               "httpMethod": "POST",
               "parameters": {
                 "partnerId": {
+                  "location": "path",
                   "description": "Partner ID.",
                   "pattern": "^[^/]+$",
                   "format": "int64",
                   "required": true,
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/partners/{partnersId}/devices:unclaimAsync",
+              "path": "v1/partners/{+partnerId}/devices:unclaimAsync",
+              "id": "androiddeviceprovisioning.partners.devices.unclaimAsync"
+            },
+            "metadata": {
+              "request": {
+                "$ref": "UpdateDeviceMetadataRequest"
+              },
+              "description": "Update the metadata.",
+              "response": {
+                "$ref": "DeviceMetadata"
+              },
+              "parameterOrder": [
+                "metadataOwnerId",
+                "deviceId"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "metadataOwnerId": {
+                  "format": "int64",
                   "type": "string",
-                  "location": "path"
+                  "required": true,
+                  "location": "path",
+                  "description": "The owner of the newly set metadata. Set this to the partner ID.",
+                  "pattern": "^[^/]+$"
+                },
+                "deviceId": {
+                  "pattern": "^[^/]+$",
+                  "format": "int64",
+                  "required": true,
+                  "type": "string",
+                  "location": "path",
+                  "description": "ID of the partner."
+                }
+              },
+              "flatPath": "v1/partners/{partnersId}/devices/{devicesId}/metadata",
+              "path": "v1/partners/{+metadataOwnerId}/devices/{+deviceId}/metadata",
+              "id": "androiddeviceprovisioning.partners.devices.metadata"
+            },
+            "updateMetadataAsync": {
+              "request": {
+                "$ref": "UpdateDeviceMetadataInBatchRequest"
+              },
+              "description": "Set metadata in batch asynchronously.",
+              "response": {
+                "$ref": "Operation"
+              },
+              "parameterOrder": [
+                "partnerId"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "partnerId": {
+                  "format": "int64",
+                  "required": true,
+                  "type": "string",
+                  "location": "path",
+                  "description": "Partner ID.",
+                  "pattern": "^[^/]+$"
                 }
               },
               "flatPath": "v1/partners/{partnersId}/devices:updateMetadataAsync",
@@ -594,16 +512,16 @@
               "id": "androiddeviceprovisioning.partners.devices.updateMetadataAsync"
             },
             "get": {
-              "id": "androiddeviceprovisioning.partners.devices.get",
               "path": "v1/{+name}",
+              "id": "androiddeviceprovisioning.partners.devices.get",
               "description": "Get a device.",
-              "httpMethod": "GET",
               "response": {
                 "$ref": "Device"
               },
               "parameterOrder": [
                 "name"
               ],
+              "httpMethod": "GET",
               "parameters": {
                 "name": {
                   "pattern": "^partners/[^/]+/devices/[^/]+$",
@@ -614,6 +532,84 @@
                 }
               },
               "flatPath": "v1/partners/{partnersId}/devices/{devicesId}"
+            },
+            "unclaim": {
+              "httpMethod": "POST",
+              "parameterOrder": [
+                "partnerId"
+              ],
+              "response": {
+                "$ref": "Empty"
+              },
+              "parameters": {
+                "partnerId": {
+                  "location": "path",
+                  "description": "ID of the partner.",
+                  "pattern": "^[^/]+$",
+                  "format": "int64",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/partners/{partnersId}/devices:unclaim",
+              "id": "androiddeviceprovisioning.partners.devices.unclaim",
+              "path": "v1/partners/{+partnerId}/devices:unclaim",
+              "request": {
+                "$ref": "UnclaimDeviceRequest"
+              },
+              "description": "Unclaim the device identified by the `device_id` or the `deviceIdentifier`."
+            },
+            "findByOwner": {
+              "response": {
+                "$ref": "FindDevicesByOwnerResponse"
+              },
+              "parameterOrder": [
+                "partnerId"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "partnerId": {
+                  "location": "path",
+                  "description": "ID of the partner.",
+                  "pattern": "^[^/]+$",
+                  "format": "int64",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/partners/{partnersId}/devices:findByOwner",
+              "path": "v1/partners/{+partnerId}/devices:findByOwner",
+              "id": "androiddeviceprovisioning.partners.devices.findByOwner",
+              "description": "Find devices by ownership.",
+              "request": {
+                "$ref": "FindDevicesByOwnerRequest"
+              }
+            },
+            "claim": {
+              "request": {
+                "$ref": "ClaimDeviceRequest"
+              },
+              "description": "Claim the device identified by device identifier.",
+              "response": {
+                "$ref": "ClaimDeviceResponse"
+              },
+              "parameterOrder": [
+                "partnerId"
+              ],
+              "httpMethod": "POST",
+              "parameters": {
+                "partnerId": {
+                  "location": "path",
+                  "description": "ID of the partner.",
+                  "pattern": "^[^/]+$",
+                  "format": "int64",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "flatPath": "v1/partners/{partnersId}/devices:claim",
+              "path": "v1/partners/{+partnerId}/devices:claim",
+              "id": "androiddeviceprovisioning.partners.devices.claim"
             }
           }
         }
@@ -622,6 +618,10 @@
     "operations": {
       "methods": {
         "get": {
+          "flatPath": "v1/operations/{operationsId}",
+          "path": "v1/{+name}",
+          "id": "androiddeviceprovisioning.operations.get",
+          "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
           "response": {
             "$ref": "Operation"
           },
@@ -637,36 +637,32 @@
               "pattern": "^operations/.+$",
               "location": "path"
             }
-          },
-          "flatPath": "v1/operations/{operationsId}",
-          "path": "v1/{+name}",
-          "id": "androiddeviceprovisioning.operations.get",
-          "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice."
+          }
         }
       }
     }
   },
   "parameters": {
     "upload_protocol": {
+      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "prettyPrint": {
+      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "type": "boolean",
-      "default": "true",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
+      "default": "true"
     },
     "uploadType": {
+      "location": "query",
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
+      "type": "string"
+    },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
     },
     "$.xgafv": {
       "description": "V1 error format.",
@@ -703,9 +699,9 @@
       "type": "string"
     },
     "access_token": {
+      "location": "query",
       "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "key": {
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
@@ -735,210 +731,33 @@
     }
   },
   "schemas": {
-    "ListCustomersResponse": {
-      "description": "Response message of all customers related to this partner.",
+    "PartnerUnclaim": {
+      "description": "Identifies one unclaim request.",
       "type": "object",
       "properties": {
-        "customers": {
-          "description": "List of customers related to this partner.",
-          "type": "array",
-          "items": {
-            "$ref": "Company"
-          }
-        }
-      },
-      "id": "ListCustomersResponse"
-    },
-    "ClaimDeviceResponse": {
-      "description": "Response message containing device id of the claim.",
-      "type": "object",
-      "properties": {
-        "deviceId": {
-          "description": "The device ID of the claimed device.",
-          "format": "int64",
+        "deviceIdentifier": {
+          "description": "Device identifier of the device.",
+          "$ref": "DeviceIdentifier"
+        },
+        "sectionType": {
+          "enumDescriptions": [
+            "Unspecified section type.",
+            "Zero-touch enrollment section type."
+          ],
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "SECTION_TYPE_ZERO_TOUCH"
+          ],
+          "description": "Section type to unclaim.",
           "type": "string"
         },
-        "deviceName": {
-          "description": "The resource name of the device in the format\n`partners/[PARTNER_ID]/devices/[DEVICE_ID]`.",
-          "type": "string"
-        }
-      },
-      "id": "ClaimDeviceResponse"
-    },
-    "UpdateMetadataArguments": {
-      "properties": {
         "deviceId": {
           "description": "Device ID of the device.",
           "format": "int64",
           "type": "string"
-        },
-        "deviceIdentifier": {
-          "description": "Device identifier.",
-          "$ref": "DeviceIdentifier"
-        },
-        "deviceMetadata": {
-          "description": "The metadata to update.",
-          "$ref": "DeviceMetadata"
         }
       },
-      "id": "UpdateMetadataArguments",
-      "description": "Identifies metdata updates to one device.",
-      "type": "object"
-    },
-    "DeviceReference": {
-      "description": "A `DeviceReference` is an API abstraction that lets you supply a _device_\nargument to a method using one of the following identifier types:\n\n* A numeric API resource ID.\n* Real-world hardware IDs, such as IMEI number, belonging to the manufactured\n  device.\n\nMethods that operate on devices take a `DeviceReference` as a parameter type\nbecause it's more flexible for the caller. To learn more about device\nidentifiers, read [Identifiers](/zero-touch/guides/identifiers).",
-      "type": "object",
-      "properties": {
-        "deviceId": {
-          "description": "The ID of the device.",
-          "format": "int64",
-          "type": "string"
-        },
-        "deviceIdentifier": {
-          "$ref": "DeviceIdentifier",
-          "description": "The hardware IDs of the device."
-        }
-      },
-      "id": "DeviceReference"
-    },
-    "Device": {
-      "description": "An Android device registered for zero-touch enrollment.",
-      "type": "object",
-      "properties": {
-        "configuration": {
-          "description": "Not available to resellers.",
-          "type": "string"
-        },
-        "claims": {
-          "description": "Output only. The provisioning claims for a device. Devices claimed for\nzero-touch enrollment have a claim with the type `SECTION_TYPE_ZERO_TOUCH`.\nCall\n`partners.devices.unclaim`\nor\n`partners.devices.unclaimAsync`\nto remove the device from zero-touch enrollment.",
-          "type": "array",
-          "items": {
-            "$ref": "DeviceClaim"
-          }
-        },
-        "deviceIdentifier": {
-          "description": "The hardware IDs that identify a manufactured device. To learn more, read\n[Identifiers](/zero-touch/guides/identifiers).",
-          "$ref": "DeviceIdentifier"
-        },
-        "deviceMetadata": {
-          "$ref": "DeviceMetadata",
-          "description": "The metadata attached to the device. Structured as key-value pairs. To\nlearn more, read [Device metadata](/zero-touch/guides/metadata)."
-        },
-        "name": {
-          "description": "Output only. The API resource name in the format\n`partners/[PARTNER_ID]/devices/[DEVICE_ID]`. Assigned by the server.",
-          "type": "string"
-        },
-        "deviceId": {
-          "description": "Output only. The ID of the device. Assigned by the server.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "id": "Device"
-    },
-    "CreateCustomerRequest": {
-      "description": "Request message to create a customer.",
-      "type": "object",
-      "properties": {
-        "customer": {
-          "description": "Required. The company data to populate the new customer. Must contain a\nvalue for `companyName` and at least one `owner_email` that's associated\nwith a Google Account. The values for `companyId` and `name` must be empty.",
-          "$ref": "Company"
-        }
-      },
-      "id": "CreateCustomerRequest"
-    },
-    "Company": {
-      "description": "A customer resource in the zero-touch enrollment API.",
-      "type": "object",
-      "properties": {
-        "name": {
-          "description": "Output only. The API resource name of the company in the format\n`partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`. Assigned by the server.",
-          "type": "string"
-        },
-        "companyName": {
-          "description": "Required. The name of the company. For example _XYZ Corp_. Characters\nallowed are: Latin letters, numerals, hyphens, and spaces. Displayed to the\ncustomer's employees in the zero-touch enrollment portal.",
-          "type": "string"
-        },
-        "adminEmails": {
-          "description": "Input only. Optional. Email address of customer's users in the admin role.\nEach email address must be associated with a Google Account.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "ownerEmails": {
-          "description": "Input only. Email address of customer's users in the owner role. At least\none `owner_email` is required. Each email address must be associated with a\nGoogle Account. Owners share the same access as admins but can also add,\ndelete, and edit your organization's portal users.",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "companyId": {
-          "description": "Output only. The ID of the company. Assigned by the server.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "id": "Company"
-    },
-    "Configuration": {
-      "description": "A configuration collects the provisioning options for Android devices. Each\nconfiguration combines the following:\n\n* The EMM device policy controller (DPC) installed on the devices.\n* EMM policies enforced on the devices.\n* Metadata displayed on the device to help users during setup.\n\nCustomers can add as many configurations as they need. However, zero-touch\nenrollment works best when a customer sets a default configuration that's\napplied to any new devices the organization purchases.",
-      "type": "object",
-      "properties": {
-        "isDefault": {
-          "description": "Required. Whether this is the default configuration that zero-touch\nenrollment applies to any new devices the organization purchases in the\nfuture. Only one customer configuration can be the default. Setting this\nvalue to `true`, changes the previous default configuration's `isDefault`\nvalue to `false`.",
-          "type": "boolean"
-        },
-        "dpcExtras": {
-          "description": "The JSON-formatted EMM provisioning extras that are passed to the DPC.",
-          "type": "string"
-        },
-        "customMessage": {
-          "description": "A message, containing one or two sentences, to help device users get help\nor give them more details about what’s happening to their device.\nZero-touch enrollment shows this message before the device is provisioned.",
-          "type": "string"
-        },
-        "contactEmail": {
-          "description": "Required. The email address that device users can contact to get help.\nZero-touch enrollment shows this email address to device users before\ndevice provisioning. The value is validated on input.",
-          "type": "string"
-        },
-        "name": {
-          "description": "Output only. The API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. Assigned by\nthe server.",
-          "type": "string"
-        },
-        "configurationName": {
-          "description": "Required. A short name that describes the configuration's purpose. For\nexample, _Sales team_ or _Temporary employees_. The zero-touch enrollment\nportal displays this name to IT admins.",
-          "type": "string"
-        },
-        "contactPhone": {
-          "description": "Required. The telephone number that device users can call, using another\ndevice, to get help. Zero-touch enrollment shows this number to device\nusers before device provisioning. Accepts numerals, spaces, the plus sign,\nhyphens, and parentheses.",
-          "type": "string"
-        },
-        "companyName": {
-          "description": "Required. The name of the organization. Zero-touch enrollment shows this\norganization name to device users during device provisioning.",
-          "type": "string"
-        },
-        "configurationId": {
-          "description": "Output only. The ID of the configuration. Assigned by the server.",
-          "format": "int64",
-          "type": "string"
-        },
-        "dpcResourcePath": {
-          "description": "Required. The resource name of the selected DPC (device policy controller)\nin the format `customers/[CUSTOMER_ID]/dpcs/*`. To list the supported DPCs,\ncall\n`customers.dpcs.list`.",
-          "type": "string"
-        }
-      },
-      "id": "Configuration"
-    },
-    "UpdateDeviceMetadataRequest": {
-      "description": "Request to set metadata for a device.",
-      "type": "object",
-      "properties": {
-        "deviceMetadata": {
-          "$ref": "DeviceMetadata",
-          "description": "The metdata to set."
-        }
-      },
-      "id": "UpdateDeviceMetadataRequest"
+      "id": "PartnerUnclaim"
     },
     "CustomerListDpcsResponse": {
       "description": "Response message of customer's listing DPCs.",
@@ -954,34 +773,6 @@
       },
       "id": "CustomerListDpcsResponse"
     },
-    "PartnerUnclaim": {
-      "description": "Identifies one unclaim request.",
-      "type": "object",
-      "properties": {
-        "deviceId": {
-          "description": "Device ID of the device.",
-          "format": "int64",
-          "type": "string"
-        },
-        "deviceIdentifier": {
-          "description": "Device identifier of the device.",
-          "$ref": "DeviceIdentifier"
-        },
-        "sectionType": {
-          "enum": [
-            "SECTION_TYPE_UNSPECIFIED",
-            "SECTION_TYPE_ZERO_TOUCH"
-          ],
-          "description": "Section type to unclaim.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unspecified section type.",
-            "Zero-touch enrollment section type."
-          ]
-        }
-      },
-      "id": "PartnerUnclaim"
-    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "type": "object",
@@ -989,8 +780,6 @@
       "id": "Empty"
     },
     "FindDevicesByDeviceIdentifierResponse": {
-      "description": "Response containing found devices.",
-      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "Page token of the next page.",
@@ -1004,24 +793,21 @@
           }
         }
       },
-      "id": "FindDevicesByDeviceIdentifierResponse"
+      "id": "FindDevicesByDeviceIdentifierResponse",
+      "description": "Response containing found devices.",
+      "type": "object"
     },
     "PartnerClaim": {
       "description": "Identifies one claim request.",
       "type": "object",
       "properties": {
-        "customerId": {
-          "description": "Customer ID to claim for.",
-          "format": "int64",
-          "type": "string"
-        },
         "deviceIdentifier": {
-          "$ref": "DeviceIdentifier",
-          "description": "Device identifier of the device."
+          "description": "Device identifier of the device.",
+          "$ref": "DeviceIdentifier"
         },
         "deviceMetadata": {
-          "description": "Metadata to set at claim.",
-          "$ref": "DeviceMetadata"
+          "$ref": "DeviceMetadata",
+          "description": "Metadata to set at claim."
         },
         "sectionType": {
           "enumDescriptions": [
@@ -1034,6 +820,11 @@
           ],
           "description": "Section type to claim.",
           "type": "string"
+        },
+        "customerId": {
+          "description": "Customer ID to claim for.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "id": "PartnerClaim"
@@ -1042,6 +833,11 @@
       "description": "Request message to unclaim a device.",
       "type": "object",
       "properties": {
+        "deviceId": {
+          "description": "The device ID returned by `ClaimDevice`.",
+          "format": "int64",
+          "type": "string"
+        },
         "deviceIdentifier": {
           "$ref": "DeviceIdentifier",
           "description": "The device identifier you used when you claimed this device."
@@ -1057,43 +853,38 @@
             "Unspecified section type.",
             "Zero-touch enrollment section type."
           ]
-        },
-        "deviceId": {
-          "description": "The device ID returned by `ClaimDevice`.",
-          "format": "int64",
-          "type": "string"
         }
       },
       "id": "UnclaimDeviceRequest"
     },
     "DeviceMetadata": {
-      "description": "Metadata entries that can be attached to a `Device`. To learn more, read\n[Device metadata](/zero-touch/guides/metadata).",
-      "type": "object",
       "properties": {
         "entries": {
+          "description": "Metadata entries recorded as key-value pairs.",
+          "type": "object",
           "additionalProperties": {
             "type": "string"
-          },
-          "description": "Metadata entries recorded as key-value pairs.",
-          "type": "object"
+          }
         }
       },
-      "id": "DeviceMetadata"
+      "id": "DeviceMetadata",
+      "description": "Metadata entries that can be attached to a `Device`. To learn more, read\n[Device metadata](/zero-touch/guides/metadata).",
+      "type": "object"
     },
     "CustomerListCustomersResponse": {
       "description": "Response message for listing my customers.",
       "type": "object",
       "properties": {
+        "nextPageToken": {
+          "description": "A token used to access the next page of results. Omitted if no further\nresults are available.",
+          "type": "string"
+        },
         "customers": {
-          "description": "Customers the current user can act as.",
+          "description": "The customer accounts the calling user is a member of.",
           "type": "array",
           "items": {
             "$ref": "Company"
           }
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
         }
       },
       "id": "CustomerListCustomersResponse"
@@ -1116,30 +907,6 @@
       },
       "id": "CustomerListDevicesResponse"
     },
-    "DeviceClaim": {
-      "description": "A record of a device claimed by a reseller for a customer. Devices claimed\nfor zero-touch enrollment have a claim with the type\n`SECTION_TYPE_ZERO_TOUCH`. To learn more, read\n[Claim devices for customers](/zero-touch/guides/how-it-works#claim).",
-      "type": "object",
-      "properties": {
-        "ownerCompanyId": {
-          "description": "The ID of the Customer that purchased the device.",
-          "format": "int64",
-          "type": "string"
-        },
-        "sectionType": {
-          "enumDescriptions": [
-            "Unspecified section type.",
-            "Zero-touch enrollment section type."
-          ],
-          "enum": [
-            "SECTION_TYPE_UNSPECIFIED",
-            "SECTION_TYPE_ZERO_TOUCH"
-          ],
-          "description": "Output only. The type of claim made on the device.",
-          "type": "string"
-        }
-      },
-      "id": "DeviceClaim"
-    },
     "DevicesLongRunningOperationResponse": {
       "description": "Long running operation response.",
       "type": "object",
@@ -1159,21 +926,34 @@
       },
       "id": "DevicesLongRunningOperationResponse"
     },
-    "PerDeviceStatusInBatch": {
+    "DeviceClaim": {
+      "description": "A record of a device claimed by a reseller for a customer. Devices claimed\nfor zero-touch enrollment have a claim with the type\n`SECTION_TYPE_ZERO_TOUCH`. To learn more, read\n[Claim devices for customers](/zero-touch/guides/how-it-works#claim).",
+      "type": "object",
       "properties": {
-        "errorIdentifier": {
-          "description": "Error identifier.",
-          "type": "string"
-        },
-        "errorMessage": {
-          "description": "Error message.",
-          "type": "string"
-        },
-        "deviceId": {
-          "description": "Device ID of the device if process succeeds.",
+        "ownerCompanyId": {
+          "description": "The ID of the Customer that purchased the device.",
           "format": "int64",
           "type": "string"
         },
+        "sectionType": {
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "SECTION_TYPE_ZERO_TOUCH"
+          ],
+          "description": "Output only. The type of claim made on the device.",
+          "type": "string",
+          "enumDescriptions": [
+            "Unspecified section type.",
+            "Zero-touch enrollment section type."
+          ]
+        }
+      },
+      "id": "DeviceClaim"
+    },
+    "PerDeviceStatusInBatch": {
+      "description": "Stores the processing result for each device.",
+      "type": "object",
+      "properties": {
         "status": {
           "enumDescriptions": [
             "Invalid code. Shouldn't be used.",
@@ -1197,13 +977,62 @@
           ],
           "description": "Process result.",
           "type": "string"
+        },
+        "errorIdentifier": {
+          "description": "Error identifier.",
+          "type": "string"
+        },
+        "errorMessage": {
+          "description": "Error message.",
+          "type": "string"
+        },
+        "deviceId": {
+          "description": "Device ID of the device if process succeeds.",
+          "format": "int64",
+          "type": "string"
         }
       },
-      "id": "PerDeviceStatusInBatch",
-      "description": "Stores the processing result for each device.",
-      "type": "object"
+      "id": "PerDeviceStatusInBatch"
+    },
+    "FindDevicesByOwnerRequest": {
+      "description": "Request to find devices by customers.",
+      "type": "object",
+      "properties": {
+        "limit": {
+          "description": "The number of devices to show in the result.",
+          "format": "int64",
+          "type": "string"
+        },
+        "pageToken": {
+          "description": "Page token.",
+          "type": "string"
+        },
+        "sectionType": {
+          "enumDescriptions": [
+            "Unspecified section type.",
+            "Zero-touch enrollment section type."
+          ],
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "SECTION_TYPE_ZERO_TOUCH"
+          ],
+          "description": "The section type.",
+          "type": "string"
+        },
+        "customerId": {
+          "description": "List of customer IDs to search for.",
+          "type": "array",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          }
+        }
+      },
+      "id": "FindDevicesByOwnerRequest"
     },
     "ClaimDevicesRequest": {
+      "description": "Request to claim devices asynchronously in batch.",
+      "type": "object",
       "properties": {
         "claims": {
           "description": "List of claims.",
@@ -1213,69 +1042,15 @@
           }
         }
       },
-      "id": "ClaimDevicesRequest",
-      "description": "Request to claim devices asynchronously in batch.",
-      "type": "object"
-    },
-    "FindDevicesByOwnerRequest": {
-      "description": "Request to find devices by customers.",
-      "type": "object",
-      "properties": {
-        "pageToken": {
-          "description": "Page token.",
-          "type": "string"
-        },
-        "sectionType": {
-          "enum": [
-            "SECTION_TYPE_UNSPECIFIED",
-            "SECTION_TYPE_ZERO_TOUCH"
-          ],
-          "description": "The section type.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unspecified section type.",
-            "Zero-touch enrollment section type."
-          ]
-        },
-        "customerId": {
-          "description": "List of customer IDs to search for.",
-          "type": "array",
-          "items": {
-            "format": "int64",
-            "type": "string"
-          }
-        },
-        "limit": {
-          "description": "The number of devices to show in the result.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "id": "FindDevicesByOwnerRequest"
+      "id": "ClaimDevicesRequest"
     },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object",
       "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
-        "response": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "This field will contain a `DevicesLongRunningOperationResponse` object if the operation is created by `claimAsync`, `unclaimAsync`, or `updateMetadataAsync`.",
-          "type": "object"
-        },
-        "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
-          "type": "string"
-        },
         "error": {
-          "description": "This field will always be not set if the operation is created by `claimAsync`, `unclaimAsync`, or `updateMetadataAsync`. In this case, error information for each device is set in `response.perDeviceStatus.result.status`.",
-          "$ref": "Status"
+          "$ref": "Status",
+          "description": "This field will always be not set if the operation is created by `claimAsync`, `unclaimAsync`, or `updateMetadataAsync`. In this case, error information for each device is set in `response.perDeviceStatus.result.status`."
         },
         "metadata": {
           "additionalProperties": {
@@ -1284,6 +1059,22 @@
           },
           "description": "This field will contain a `DevicesLongRunningOperationMetadata` object if the operation is created by `claimAsync`, `unclaimAsync`, or `updateMetadataAsync`.",
           "type": "object"
+        },
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "response": {
+          "description": "This field will contain a `DevicesLongRunningOperationResponse` object if the operation is created by `claimAsync`, `unclaimAsync`, or `updateMetadataAsync`.",
+          "type": "object",
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          }
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "type": "string"
         }
       },
       "id": "Operation"
@@ -1292,10 +1083,6 @@
       "description": "Encapsulates hardware and product IDs to identify a manufactured device. To\nlearn more, read [Identifiers](/zero-touch/guides/identifiers).",
       "type": "object",
       "properties": {
-        "imei": {
-          "description": "The device’s IMEI number. Validated on input.",
-          "type": "string"
-        },
         "meid": {
           "description": "The device’s MEID number.",
           "type": "string"
@@ -1306,6 +1093,10 @@
         },
         "serialNumber": {
           "description": "The manufacturer's serial number for the device. This value might not be\nunique.",
+          "type": "string"
+        },
+        "imei": {
+          "description": "The device’s IMEI number. Validated on input.",
           "type": "string"
         }
       },
@@ -1331,6 +1122,8 @@
       "type": "object"
     },
     "UnclaimDevicesRequest": {
+      "description": "Request to unclaim devices asynchronously in batch.",
+      "type": "object",
       "properties": {
         "unclaims": {
           "description": "List of devices to unclaim.",
@@ -1340,21 +1133,19 @@
           }
         }
       },
-      "id": "UnclaimDevicesRequest",
-      "description": "Request to unclaim devices asynchronously in batch.",
-      "type": "object"
+      "id": "UnclaimDevicesRequest"
     },
     "CustomerApplyConfigurationRequest": {
       "description": "Request message for customer to assign a configuration to device.",
       "type": "object",
       "properties": {
-        "configuration": {
-          "description": "Required. The configuration applied to the device in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.",
-          "type": "string"
-        },
         "device": {
           "description": "Required. The device the configuration is applied to.",
           "$ref": "DeviceReference"
+        },
+        "configuration": {
+          "description": "Required. The configuration applied to the device in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`.",
+          "type": "string"
         }
       },
       "id": "CustomerApplyConfigurationRequest"
@@ -1364,8 +1155,8 @@
       "type": "object",
       "properties": {
         "device": {
-          "$ref": "DeviceReference",
-          "description": "Required. The device to unclaim."
+          "description": "Required. The device to unclaim.",
+          "$ref": "DeviceReference"
         }
       },
       "id": "CustomerUnclaimDeviceRequest"
@@ -1374,17 +1165,6 @@
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "type": "object",
       "properties": {
-        "details": {
-          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
-          "type": "array",
-          "items": {
-            "type": "object",
-            "additionalProperties": {
-              "description": "Properties of the object. Contains field @type with type URL.",
-              "type": "any"
-            }
-          }
-        },
         "code": {
           "description": "The status code, which should be an enum value of google.rpc.Code.",
           "format": "int32",
@@ -1393,6 +1173,17 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
+          "type": "array",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          }
         }
       },
       "id": "Status"
@@ -1418,6 +1209,8 @@
       "id": "FindDevicesByDeviceIdentifierRequest"
     },
     "CustomerListConfigurationsResponse": {
+      "description": "Response message of customer's listing configuration.",
+      "type": "object",
       "properties": {
         "configurations": {
           "description": "The configurations.",
@@ -1427,29 +1220,27 @@
           }
         }
       },
-      "id": "CustomerListConfigurationsResponse",
-      "description": "Response message of customer's listing configuration.",
-      "type": "object"
+      "id": "CustomerListConfigurationsResponse"
     },
     "OperationPerDevice": {
       "description": "Operation the server received for every device.",
       "type": "object",
       "properties": {
-        "updateMetadata": {
-          "$ref": "UpdateMetadataArguments",
-          "description": "Request to set metadata for a device."
-        },
         "unclaim": {
-          "$ref": "PartnerUnclaim",
-          "description": "Request to unclaim a device."
+          "description": "Request to unclaim a device.",
+          "$ref": "PartnerUnclaim"
         },
         "result": {
           "description": "Processing result for every device.",
           "$ref": "PerDeviceStatusInBatch"
         },
         "claim": {
-          "$ref": "PartnerClaim",
-          "description": "Request to claim a device."
+          "description": "Request to claim a device.",
+          "$ref": "PartnerClaim"
+        },
+        "updateMetadata": {
+          "$ref": "UpdateMetadataArguments",
+          "description": "Request to set metadata for a device."
         }
       },
       "id": "OperationPerDevice"
@@ -1458,16 +1249,16 @@
       "description": "Response containing found devices.",
       "type": "object",
       "properties": {
+        "nextPageToken": {
+          "description": "Page token of the next page.",
+          "type": "string"
+        },
         "devices": {
           "description": "Devices found.",
           "type": "array",
           "items": {
             "$ref": "Device"
           }
-        },
-        "nextPageToken": {
-          "description": "Page token of the next page.",
-          "type": "string"
         }
       },
       "id": "FindDevicesByOwnerResponse"
@@ -1483,20 +1274,38 @@
       },
       "id": "CustomerRemoveConfigurationRequest"
     },
+    "ClaimDeviceRequest": {
+      "description": "Request message to claim a device on behalf of a customer.",
+      "type": "object",
+      "properties": {
+        "deviceIdentifier": {
+          "$ref": "DeviceIdentifier",
+          "description": "The device identifier of the device to claim."
+        },
+        "sectionType": {
+          "enumDescriptions": [
+            "Unspecified section type.",
+            "Zero-touch enrollment section type."
+          ],
+          "enum": [
+            "SECTION_TYPE_UNSPECIFIED",
+            "SECTION_TYPE_ZERO_TOUCH"
+          ],
+          "description": "The section to claim.",
+          "type": "string"
+        },
+        "customerId": {
+          "description": "The customer to claim for.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "id": "ClaimDeviceRequest"
+    },
     "DevicesLongRunningOperationMetadata": {
       "description": "Long running operation metadata.",
       "type": "object",
       "properties": {
-        "progress": {
-          "description": "Processing progress from 0 to 100.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "devicesCount": {
-          "description": "Number of devices parsed in your requests.",
-          "format": "int32",
-          "type": "integer"
-        },
         "processingStatus": {
           "enumDescriptions": [
             "Invalid code. Shouldn't be used.",
@@ -1512,39 +1321,23 @@
           ],
           "description": "The overall processing status.",
           "type": "string"
+        },
+        "progress": {
+          "description": "Processing progress from 0 to 100.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "devicesCount": {
+          "description": "Number of devices parsed in your requests.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "id": "DevicesLongRunningOperationMetadata"
     },
-    "ClaimDeviceRequest": {
-      "description": "Request message to claim a device on behalf of a customer.",
-      "type": "object",
-      "properties": {
-        "deviceIdentifier": {
-          "$ref": "DeviceIdentifier",
-          "description": "The device identifier of the device to claim."
-        },
-        "sectionType": {
-          "description": "The section to claim.",
-          "type": "string",
-          "enumDescriptions": [
-            "Unspecified section type.",
-            "Zero-touch enrollment section type."
-          ],
-          "enum": [
-            "SECTION_TYPE_UNSPECIFIED",
-            "SECTION_TYPE_ZERO_TOUCH"
-          ]
-        },
-        "customerId": {
-          "description": "The customer to claim for.",
-          "format": "int64",
-          "type": "string"
-        }
-      },
-      "id": "ClaimDeviceRequest"
-    },
     "UpdateDeviceMetadataInBatchRequest": {
+      "description": "Request to update device metadata in batch.",
+      "type": "object",
       "properties": {
         "updates": {
           "description": "List of metadata updates.",
@@ -1554,15 +1347,218 @@
           }
         }
       },
-      "id": "UpdateDeviceMetadataInBatchRequest",
-      "description": "Request to update device metadata in batch.",
+      "id": "UpdateDeviceMetadataInBatchRequest"
+    },
+    "UpdateMetadataArguments": {
+      "properties": {
+        "deviceId": {
+          "description": "Device ID of the device.",
+          "format": "int64",
+          "type": "string"
+        },
+        "deviceIdentifier": {
+          "$ref": "DeviceIdentifier",
+          "description": "Device identifier."
+        },
+        "deviceMetadata": {
+          "$ref": "DeviceMetadata",
+          "description": "The metadata to update."
+        }
+      },
+      "id": "UpdateMetadataArguments",
+      "description": "Identifies metdata updates to one device.",
       "type": "object"
+    },
+    "ClaimDeviceResponse": {
+      "properties": {
+        "deviceName": {
+          "description": "The resource name of the device in the format\n`partners/[PARTNER_ID]/devices/[DEVICE_ID]`.",
+          "type": "string"
+        },
+        "deviceId": {
+          "description": "The device ID of the claimed device.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "id": "ClaimDeviceResponse",
+      "description": "Response message containing device id of the claim.",
+      "type": "object"
+    },
+    "ListCustomersResponse": {
+      "description": "Response message of all customers related to this partner.",
+      "type": "object",
+      "properties": {
+        "customers": {
+          "description": "List of customers related to this partner.",
+          "type": "array",
+          "items": {
+            "$ref": "Company"
+          }
+        }
+      },
+      "id": "ListCustomersResponse"
+    },
+    "DeviceReference": {
+      "properties": {
+        "deviceIdentifier": {
+          "$ref": "DeviceIdentifier",
+          "description": "The hardware IDs of the device."
+        },
+        "deviceId": {
+          "description": "The ID of the device.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "id": "DeviceReference",
+      "description": "A `DeviceReference` is an API abstraction that lets you supply a _device_\nargument to a method using one of the following identifier types:\n\n* A numeric API resource ID.\n* Real-world hardware IDs, such as IMEI number, belonging to the manufactured\n  device.\n\nMethods that operate on devices take a `DeviceReference` as a parameter type\nbecause it's more flexible for the caller. To learn more about device\nidentifiers, read [Identifiers](/zero-touch/guides/identifiers).",
+      "type": "object"
+    },
+    "Device": {
+      "description": "An Android device registered for zero-touch enrollment.",
+      "type": "object",
+      "properties": {
+        "deviceIdentifier": {
+          "$ref": "DeviceIdentifier",
+          "description": "The hardware IDs that identify a manufactured device. To learn more, read\n[Identifiers](/zero-touch/guides/identifiers)."
+        },
+        "deviceMetadata": {
+          "$ref": "DeviceMetadata",
+          "description": "The metadata attached to the device. Structured as key-value pairs. To\nlearn more, read [Device metadata](/zero-touch/guides/metadata)."
+        },
+        "name": {
+          "description": "Output only. The API resource name in the format\n`partners/[PARTNER_ID]/devices/[DEVICE_ID]`. Assigned by the server.",
+          "type": "string"
+        },
+        "deviceId": {
+          "description": "Output only. The ID of the device. Assigned by the server.",
+          "format": "int64",
+          "type": "string"
+        },
+        "configuration": {
+          "description": "Not available to resellers.",
+          "type": "string"
+        },
+        "claims": {
+          "description": "Output only. The provisioning claims for a device. Devices claimed for\nzero-touch enrollment have a claim with the type `SECTION_TYPE_ZERO_TOUCH`.\nCall\n`partners.devices.unclaim`\nor\n`partners.devices.unclaimAsync`\nto remove the device from zero-touch enrollment.",
+          "type": "array",
+          "items": {
+            "$ref": "DeviceClaim"
+          }
+        }
+      },
+      "id": "Device"
+    },
+    "CreateCustomerRequest": {
+      "properties": {
+        "customer": {
+          "$ref": "Company",
+          "description": "Required. The company data to populate the new customer. Must contain a\nvalue for `companyName` and at least one `owner_email` that's associated\nwith a Google Account. The values for `companyId` and `name` must be empty."
+        }
+      },
+      "id": "CreateCustomerRequest",
+      "description": "Request message to create a customer.",
+      "type": "object"
+    },
+    "Company": {
+      "description": "A customer resource in the zero-touch enrollment API.",
+      "type": "object",
+      "properties": {
+        "ownerEmails": {
+          "description": "Input only. Email address of customer's users in the owner role. At least\none `owner_email` is required. Each email address must be associated with a\nGoogle Account. Owners share the same access as admins but can also add,\ndelete, and edit your organization's portal users.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "companyId": {
+          "description": "Output only. The ID of the company. Assigned by the server.",
+          "format": "int64",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The API resource name of the company in the format\n`partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`. Assigned by the server.",
+          "type": "string"
+        },
+        "companyName": {
+          "description": "Required. The name of the company. For example _XYZ Corp_. Characters\nallowed are: Latin letters, numerals, hyphens, and spaces. Displayed to the\ncustomer's employees in the zero-touch enrollment portal.",
+          "type": "string"
+        },
+        "adminEmails": {
+          "description": "Input only. Optional. Email address of customer's users in the admin role.\nEach email address must be associated with a Google Account.",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "id": "Company"
+    },
+    "UpdateDeviceMetadataRequest": {
+      "description": "Request to set metadata for a device.",
+      "type": "object",
+      "properties": {
+        "deviceMetadata": {
+          "$ref": "DeviceMetadata",
+          "description": "The metdata to set."
+        }
+      },
+      "id": "UpdateDeviceMetadataRequest"
+    },
+    "Configuration": {
+      "description": "A configuration collects the provisioning options for Android devices. Each\nconfiguration combines the following:\n\n* The EMM device policy controller (DPC) installed on the devices.\n* EMM policies enforced on the devices.\n* Metadata displayed on the device to help users during setup.\n\nCustomers can add as many configurations as they need. However, zero-touch\nenrollment works best when a customer sets a default configuration that's\napplied to any new devices the organization purchases.",
+      "type": "object",
+      "properties": {
+        "contactPhone": {
+          "description": "Required. The telephone number that device users can call, using another\ndevice, to get help. Zero-touch enrollment shows this number to device\nusers before device provisioning. Accepts numerals, spaces, the plus sign,\nhyphens, and parentheses.",
+          "type": "string"
+        },
+        "configurationName": {
+          "description": "Required. A short name that describes the configuration's purpose. For\nexample, _Sales team_ or _Temporary employees_. The zero-touch enrollment\nportal displays this name to IT admins.",
+          "type": "string"
+        },
+        "companyName": {
+          "description": "Required. The name of the organization. Zero-touch enrollment shows this\norganization name to device users during device provisioning.",
+          "type": "string"
+        },
+        "configurationId": {
+          "description": "Output only. The ID of the configuration. Assigned by the server.",
+          "format": "int64",
+          "type": "string"
+        },
+        "dpcResourcePath": {
+          "description": "Required. The resource name of the selected DPC (device policy controller)\nin the format `customers/[CUSTOMER_ID]/dpcs/*`. To list the supported DPCs,\ncall\n`customers.dpcs.list`.",
+          "type": "string"
+        },
+        "isDefault": {
+          "description": "Required. Whether this is the default configuration that zero-touch\nenrollment applies to any new devices the organization purchases in the\nfuture. Only one customer configuration can be the default. Setting this\nvalue to `true`, changes the previous default configuration's `isDefault`\nvalue to `false`.",
+          "type": "boolean"
+        },
+        "dpcExtras": {
+          "description": "The JSON-formatted EMM provisioning extras that are passed to the DPC.",
+          "type": "string"
+        },
+        "customMessage": {
+          "description": "A message, containing one or two sentences, to help device users get help\nor give them more details about what’s happening to their device.\nZero-touch enrollment shows this message before the device is provisioned.",
+          "type": "string"
+        },
+        "contactEmail": {
+          "description": "Required. The email address that device users can contact to get help.\nZero-touch enrollment shows this email address to device users before\ndevice provisioning. The value is validated on input.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Output only. The API resource name in the format\n`customers/[CUSTOMER_ID]/configurations/[CONFIGURATION_ID]`. Assigned by\nthe server.",
+          "type": "string"
+        }
+      },
+      "id": "Configuration"
     }
   },
   "protocol": "rest",
   "icons": {
-    "x32": "http://www.google.com/images/icons/product/search-32.gif",
-    "x16": "http://www.google.com/images/icons/product/search-16.gif"
+    "x16": "http://www.google.com/images/icons/product/search-16.gif",
+    "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
   "version": "v1",
   "baseUrl": "https://androiddeviceprovisioning.googleapis.com/",
@@ -1575,7 +1571,11 @@
   "ownerDomain": "google.com",
   "name": "androiddeviceprovisioning",
   "batchPath": "batch",
-  "revision": "20180114",
+  "revision": "20180120",
   "documentationLink": "https://developers.google.com/zero-touch/",
-  "id": "androiddeviceprovisioning:v1"
+  "id": "androiddeviceprovisioning:v1",
+  "title": "Android Device Provisioning Partner API",
+  "ownerName": "Google",
+  "discoveryVersion": "v1",
+  "version_module": true
 }

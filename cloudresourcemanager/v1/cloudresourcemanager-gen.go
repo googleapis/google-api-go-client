@@ -175,7 +175,7 @@ func (s *Ancestor) MarshalJSON() ([]byte, error) {
 // log_types
 // specified in each AuditConfig are enabled, and the exempted_members
 // in each
-// AuditLogConfig are exempted.
+// AuditConfig are exempted.
 //
 // Example Policy with multiple AuditConfigs:
 //

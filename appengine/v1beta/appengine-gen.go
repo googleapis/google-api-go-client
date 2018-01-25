@@ -546,6 +546,9 @@ type AutomaticScaling struct {
 	// CpuUtilization: Target scaling by CPU usage.
 	CpuUtilization *CpuUtilization `json:"cpuUtilization,omitempty"`
 
+	// CustomMetrics: Target scaling by user-provided metrics.
+	CustomMetrics []*CustomMetric `json:"customMetrics,omitempty"`
+
 	// DiskUtilization: Target scaling by disk usage.
 	DiskUtilization *DiskUtilization `json:"diskUtilization,omitempty"`
 
@@ -962,6 +965,67 @@ func (s *CreateVersionMetadataV1Beta) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateVersionMetadataV1Beta
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomMetric: Allows autoscaling based on Stackdriver metrics.
+type CustomMetric struct {
+	// Filter: Allows filtering on the metric's fields.
+	Filter string `json:"filter,omitempty"`
+
+	// MetricName: The name of the metric.
+	MetricName string `json:"metricName,omitempty"`
+
+	// SingleInstanceAssignment: May be used instead of target_utilization
+	// when an instance can handle a specific amount of work/resources and
+	// the metric value is equal to the current amount of work remaining.
+	// The autoscaler will try to keep the number of instances equal to the
+	// metric value divided by single_instance_assignment.
+	SingleInstanceAssignment float64 `json:"singleInstanceAssignment,omitempty"`
+
+	// TargetType: The type of the metric. Must be a string representing a
+	// Stackdriver metric type e.g. GAGUE, DELTA_PER_SECOND, etc.
+	TargetType string `json:"targetType,omitempty"`
+
+	// TargetUtilization: The target value for the metric.
+	TargetUtilization float64 `json:"targetUtilization,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomMetric) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMetric
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CustomMetric) UnmarshalJSON(data []byte) error {
+	type NoMethod CustomMetric
+	var s1 struct {
+		SingleInstanceAssignment gensupport.JSONFloat64 `json:"singleInstanceAssignment"`
+		TargetUtilization        gensupport.JSONFloat64 `json:"targetUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SingleInstanceAssignment = float64(s1.SingleInstanceAssignment)
+	s.TargetUtilization = float64(s1.TargetUtilization)
+	return nil
 }
 
 // DebugInstanceRequest: Request message for Instances.DebugInstance.

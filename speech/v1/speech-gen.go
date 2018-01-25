@@ -259,6 +259,13 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // specifies how to process the
 // request.
 type RecognitionConfig struct {
+	// EnableWordConfidence: *Optional* If `true`, the top result includes a
+	// list of words and the
+	// confidence for those words. If `false`, no word-level
+	// confidence
+	// information is returned. The default is `false`.
+	EnableWordConfidence bool `json:"enableWordConfidence,omitempty"`
+
 	// EnableWordTimeOffsets: *Optional* If `true`, the top result includes
 	// a list of words and
 	// the start and end time offsets (timestamps) for those words.
@@ -364,7 +371,7 @@ type RecognitionConfig struct {
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "EnableWordTimeOffsets") to unconditionally include in API requests.
+	// "EnableWordConfidence") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.
 	// However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -372,7 +379,7 @@ type RecognitionConfig struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnableWordTimeOffsets") to
+	// NullFields is a list of field names (e.g. "EnableWordConfidence") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -507,13 +514,12 @@ type SpeechRecognitionAlternative struct {
 	// 1.0. A higher number
 	// indicates an estimated greater likelihood that the recognized words
 	// are
-	// correct. This field is typically provided only for the top
-	// hypothesis, and
-	// only for `is_final=true` results. Clients should not rely on
-	// the
-	// `confidence` field as it is not guaranteed to be accurate, or even
-	// set, in
-	// any of the results.
+	// correct. This field is set only for the top alternative of a
+	// non-streaming
+	// result or, of a streaming result where `is_final=true`.
+	// This field is not guaranteed to be accurate and users should not rely
+	// on it
+	// to be always provided.
 	// The default of 0.0 is a sentinel value indicating `confidence` was
 	// not set.
 	Confidence float64 `json:"confidence,omitempty"`
@@ -716,11 +722,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WordInfo: Word-specific information for recognized words. Word
-// information is only
-// included in the response when certain request parameters are set,
-// such
-// as `enable_word_time_offsets`.
+// WordInfo: Word-specific information for recognized words.
 type WordInfo struct {
 	// EndTime: *Output-only* Time offset relative to the beginning of the
 	// audio,

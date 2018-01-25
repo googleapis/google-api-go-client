@@ -698,7 +698,8 @@ type DiskConfig struct {
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
 
 	// BootDiskType: Optional. Type of the boot disk (default is
-	// 'pd-standard'). Valid values: 'pd-ssd', 'pd-standard'
+	// "pd-standard"). Valid values: "pd-ssd" (Persistent Disk Solid State
+	// Drive) or "pd-standard" (Persistent Disk Hard Disk Drive).
 	BootDiskType string `json:"bootDiskType,omitempty"`
 
 	// NumLocalSsds: Optional. Number of attached SSDs, from 0 to 4 (default
@@ -3169,14 +3170,12 @@ type ProjectsLocationsWorkflowTemplatesInstantiateCall struct {
 
 // Instantiate: Instantiates a template and begins execution.The
 // returned Operation can be used to track execution of workflow by
-// polling google.cloud.dataproc.v1beta2.OperationService.GetOperation.
-// The Operation will complete when entire workflow is finished.The
-// running workflow can be aborted via
-// google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The
-// google.cloud.dataproc.v1beta2.Operation.metadata will always be
-// google.cloud.dataproc.v1beta2.WorkflowMetadata.The
-// google.cloud.dataproc.v1beta2.Operation.result will always be
-// google.protobuf.Empty.
+// polling operations.get. The Operation will complete when entire
+// workflow is finished.The running workflow can be aborted via
+// operations.cancel. This will cause any inflight jobs to be cancelled
+// and workflow-owned clusters to be deleted.The Operation.metadata will
+// be WorkflowMetadata.On successful completion, Operation.response will
+// be Empty.
 func (r *ProjectsLocationsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsLocationsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3270,7 +3269,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Instantiates a template and begins execution.The returned Operation can be used to track execution of workflow by polling google.cloud.dataproc.v1beta2.OperationService.GetOperation. The Operation will complete when entire workflow is finished.The running workflow can be aborted via google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The google.cloud.dataproc.v1beta2.Operation.metadata will always be google.cloud.dataproc.v1beta2.WorkflowMetadata.The google.cloud.dataproc.v1beta2.Operation.result will always be google.protobuf.Empty.",
+	//   "description": "Instantiates a template and begins execution.The returned Operation can be used to track execution of workflow by polling operations.get. The Operation will complete when entire workflow is finished.The running workflow can be aborted via operations.cancel. This will cause any inflight jobs to be cancelled and workflow-owned clusters to be deleted.The Operation.metadata will be WorkflowMetadata.On successful completion, Operation.response will be Empty.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/workflowTemplates/{workflowTemplatesId}:instantiate",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.locations.workflowTemplates.instantiate",
@@ -3315,15 +3314,12 @@ type ProjectsLocationsWorkflowTemplatesInstantiateInlineCall struct {
 // method is equivalent to executing the sequence
 // CreateWorkflowTemplate, InstantiateWorkflowTemplate,
 // DeleteWorkflowTemplate.The returned Operation can be used to track
-// execution of workflow by polling
-// google.cloud.dataproc.v1beta2.OperationService.GetOperation. The
-// Operation will complete when entire workflow is finished.The running
-// workflow can be aborted via
-// google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The
-// google.cloud.dataproc.v1beta2.Operation.metadata will always be
-// google.cloud.dataproc.v1beta2.WorkflowMetadata.The
-// google.cloud.dataproc.v1beta2.Operation.result will always be
-// google.protobuf.Empty.
+// execution of workflow by polling operations.get. The Operation will
+// complete when entire workflow is finished.The running workflow can be
+// aborted via operations.cancel. This will cause any inflight jobs to
+// be cancelled and workflow-owned clusters to be deleted.The
+// Operation.metadata will be WorkflowMetadata.On successful completion,
+// Operation.response will be Empty.
 func (r *ProjectsLocationsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsLocationsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3429,7 +3425,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Instantiates a template and begins execution.This method is equivalent to executing the sequence CreateWorkflowTemplate, InstantiateWorkflowTemplate, DeleteWorkflowTemplate.The returned Operation can be used to track execution of workflow by polling google.cloud.dataproc.v1beta2.OperationService.GetOperation. The Operation will complete when entire workflow is finished.The running workflow can be aborted via google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The google.cloud.dataproc.v1beta2.Operation.metadata will always be google.cloud.dataproc.v1beta2.WorkflowMetadata.The google.cloud.dataproc.v1beta2.Operation.result will always be google.protobuf.Empty.",
+	//   "description": "Instantiates a template and begins execution.This method is equivalent to executing the sequence CreateWorkflowTemplate, InstantiateWorkflowTemplate, DeleteWorkflowTemplate.The returned Operation can be used to track execution of workflow by polling operations.get. The Operation will complete when entire workflow is finished.The running workflow can be aborted via operations.cancel. This will cause any inflight jobs to be cancelled and workflow-owned clusters to be deleted.The Operation.metadata will be WorkflowMetadata.On successful completion, Operation.response will be Empty.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/workflowTemplates:instantiateInline",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.locations.workflowTemplates.instantiateInline",
@@ -7321,14 +7317,12 @@ type ProjectsRegionsWorkflowTemplatesInstantiateCall struct {
 
 // Instantiate: Instantiates a template and begins execution.The
 // returned Operation can be used to track execution of workflow by
-// polling google.cloud.dataproc.v1beta2.OperationService.GetOperation.
-// The Operation will complete when entire workflow is finished.The
-// running workflow can be aborted via
-// google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The
-// google.cloud.dataproc.v1beta2.Operation.metadata will always be
-// google.cloud.dataproc.v1beta2.WorkflowMetadata.The
-// google.cloud.dataproc.v1beta2.Operation.result will always be
-// google.protobuf.Empty.
+// polling operations.get. The Operation will complete when entire
+// workflow is finished.The running workflow can be aborted via
+// operations.cancel. This will cause any inflight jobs to be cancelled
+// and workflow-owned clusters to be deleted.The Operation.metadata will
+// be WorkflowMetadata.On successful completion, Operation.response will
+// be Empty.
 func (r *ProjectsRegionsWorkflowTemplatesService) Instantiate(name string, instantiateworkflowtemplaterequest *InstantiateWorkflowTemplateRequest) *ProjectsRegionsWorkflowTemplatesInstantiateCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7422,7 +7416,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Instantiates a template and begins execution.The returned Operation can be used to track execution of workflow by polling google.cloud.dataproc.v1beta2.OperationService.GetOperation. The Operation will complete when entire workflow is finished.The running workflow can be aborted via google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The google.cloud.dataproc.v1beta2.Operation.metadata will always be google.cloud.dataproc.v1beta2.WorkflowMetadata.The google.cloud.dataproc.v1beta2.Operation.result will always be google.protobuf.Empty.",
+	//   "description": "Instantiates a template and begins execution.The returned Operation can be used to track execution of workflow by polling operations.get. The Operation will complete when entire workflow is finished.The running workflow can be aborted via operations.cancel. This will cause any inflight jobs to be cancelled and workflow-owned clusters to be deleted.The Operation.metadata will be WorkflowMetadata.On successful completion, Operation.response will be Empty.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/workflowTemplates/{workflowTemplatesId}:instantiate",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.regions.workflowTemplates.instantiate",
@@ -7467,15 +7461,12 @@ type ProjectsRegionsWorkflowTemplatesInstantiateInlineCall struct {
 // method is equivalent to executing the sequence
 // CreateWorkflowTemplate, InstantiateWorkflowTemplate,
 // DeleteWorkflowTemplate.The returned Operation can be used to track
-// execution of workflow by polling
-// google.cloud.dataproc.v1beta2.OperationService.GetOperation. The
-// Operation will complete when entire workflow is finished.The running
-// workflow can be aborted via
-// google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The
-// google.cloud.dataproc.v1beta2.Operation.metadata will always be
-// google.cloud.dataproc.v1beta2.WorkflowMetadata.The
-// google.cloud.dataproc.v1beta2.Operation.result will always be
-// google.protobuf.Empty.
+// execution of workflow by polling operations.get. The Operation will
+// complete when entire workflow is finished.The running workflow can be
+// aborted via operations.cancel. This will cause any inflight jobs to
+// be cancelled and workflow-owned clusters to be deleted.The
+// Operation.metadata will be WorkflowMetadata.On successful completion,
+// Operation.response will be Empty.
 func (r *ProjectsRegionsWorkflowTemplatesService) InstantiateInline(parent string, workflowtemplate *WorkflowTemplate) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
 	c := &ProjectsRegionsWorkflowTemplatesInstantiateInlineCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7581,7 +7572,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) Do(opts ...googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Instantiates a template and begins execution.This method is equivalent to executing the sequence CreateWorkflowTemplate, InstantiateWorkflowTemplate, DeleteWorkflowTemplate.The returned Operation can be used to track execution of workflow by polling google.cloud.dataproc.v1beta2.OperationService.GetOperation. The Operation will complete when entire workflow is finished.The running workflow can be aborted via google.cloud.dataproc.v1beta2.OperationService.CancelOperation.The google.cloud.dataproc.v1beta2.Operation.metadata will always be google.cloud.dataproc.v1beta2.WorkflowMetadata.The google.cloud.dataproc.v1beta2.Operation.result will always be google.protobuf.Empty.",
+	//   "description": "Instantiates a template and begins execution.This method is equivalent to executing the sequence CreateWorkflowTemplate, InstantiateWorkflowTemplate, DeleteWorkflowTemplate.The returned Operation can be used to track execution of workflow by polling operations.get. The Operation will complete when entire workflow is finished.The running workflow can be aborted via operations.cancel. This will cause any inflight jobs to be cancelled and workflow-owned clusters to be deleted.The Operation.metadata will be WorkflowMetadata.On successful completion, Operation.response will be Empty.",
 	//   "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/workflowTemplates:instantiateInline",
 	//   "httpMethod": "POST",
 	//   "id": "dataproc.projects.regions.workflowTemplates.instantiateInline",

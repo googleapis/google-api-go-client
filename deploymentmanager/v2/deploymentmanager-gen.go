@@ -151,7 +151,7 @@ type TypesService struct {
 // If there are AuditConfigs for both `allServices` and a specific
 // service, the union of the two AuditConfigs is used for that service:
 // the log_types specified in each AuditConfig are enabled, and the
-// exempted_members in each AuditConfig are exempted.
+// exempted_members in each AuditLogConfig are exempted.
 //
 // Example Policy with multiple AuditConfigs:
 //
@@ -279,7 +279,8 @@ type Binding struct {
 	// Condition: The condition that is associated with this binding. NOTE:
 	// an unsatisfied condition will not allow user access via current
 	// binding. Different bindings, including their conditions, are examined
-	// independently. This field is GOOGLE_INTERNAL.
+	// independently. This field is only visible as GOOGLE_INTERNAL or
+	// CONDITION_TRUSTED_TESTER.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1092,7 +1093,9 @@ type Operation struct {
 	Progress int64 `json:"progress,omitempty"`
 
 	// Region: [Output Only] The URL of the region where the operation
-	// resides. Only available when performing regional operations.
+	// resides. Only available when performing regional operations. You must
+	// specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -1128,7 +1131,9 @@ type Operation struct {
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
 	// Zone: [Output Only] The URL of the zone where the operation resides.
-	// Only available when performing per-zone operations.
+	// Only available when performing per-zone operations. You must specify
+	// this field as part of the HTTP request URL. It is not settable as a
+	// field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1357,7 +1362,7 @@ func (s *OperationsListResponse) MarshalJSON() ([]byte, error) {
 // }
 //
 // For a description of IAM and its features, see the [IAM developer's
-// guide](https://cloud.google.com/iam).
+// guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
 	// policy.
@@ -1392,7 +1397,7 @@ type Policy struct {
 	// denied.
 	Rules []*Rule `json:"rules,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

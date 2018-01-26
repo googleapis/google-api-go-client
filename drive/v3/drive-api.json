@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/JMDtpjXV6K9GRXGmSFN5aHZlstg\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/EnieVEhN4C1r9qFKYTtJan0xKmo\"",
  "discoveryVersion": "v1",
  "id": "drive:v3",
  "name": "drive",
  "version": "v3",
- "revision": "20180105",
+ "revision": "20180112",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -105,6 +105,10 @@
     "appInstalled": {
      "type": "boolean",
      "description": "Whether the user has installed the requesting app."
+    },
+    "canCreateTeamDrives": {
+     "type": "boolean",
+     "description": "Whether the user can create Team Drives."
     },
     "exportFormats": {
      "type": "object",

@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/pDZ7o52oB1KPiP4jc8rmQ24ThMo\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/T0jTNua-fg6HrhadlmYQg_7juNk\"",
  "discoveryVersion": "v1",
  "id": "appsactivity:v1",
  "name": "appsactivity",
  "version": "v1",
- "revision": "20170619",
+ "revision": "20180123",
  "title": "G Suite Activity API",
  "description": "Provides a historical view of activity.",
  "ownerDomain": "google.com",
@@ -71,18 +71,6 @@
    "scopes": {
     "https://www.googleapis.com/auth/activity": {
      "description": "View the activity history of your Google apps"
-    },
-    "https://www.googleapis.com/auth/drive": {
-     "description": "View and manage the files in your Google Drive"
-    },
-    "https://www.googleapis.com/auth/drive.metadata": {
-     "description": "View and manage metadata of files in your Google Drive"
-    },
-    "https://www.googleapis.com/auth/drive.metadata.readonly": {
-     "description": "View metadata for files in your Google Drive"
-    },
-    "https://www.googleapis.com/auth/drive.readonly": {
-     "description": "View the files in your Google Drive"
     }
    }
   }
@@ -476,11 +464,7 @@
       "$ref": "ListActivitiesResponse"
      },
      "scopes": [
-      "https://www.googleapis.com/auth/activity",
-      "https://www.googleapis.com/auth/drive",
-      "https://www.googleapis.com/auth/drive.metadata",
-      "https://www.googleapis.com/auth/drive.metadata.readonly",
-      "https://www.googleapis.com/auth/drive.readonly"
+      "https://www.googleapis.com/auth/activity"
      ]
     }
    }

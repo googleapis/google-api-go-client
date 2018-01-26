@@ -147,163 +147,6 @@ type ProjectsLocationsRegistriesDevicesStatesService struct {
 	s *Service
 }
 
-// AuditConfig: Specifies the audit configuration for a service.
-// The configuration determines which permission types are logged, and
-// what
-// identities, if any, are exempted from logging.
-// An AuditConfig must have one or more AuditLogConfigs.
-//
-// If there are AuditConfigs for both `allServices` and a specific
-// service,
-// the union of the two AuditConfigs is used for that service: the
-// log_types
-// specified in each AuditConfig are enabled, and the exempted_members
-// in each
-// AuditConfig are exempted.
-//
-// Example Policy with multiple AuditConfigs:
-//
-//     {
-//       "audit_configs": [
-//         {
-//           "service": "allServices"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//               "exempted_members": [
-//                 "user:foo@gmail.com"
-//               ]
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//             },
-//             {
-//               "log_type": "ADMIN_READ",
-//             }
-//           ]
-//         },
-//         {
-//           "service": "fooservice.googleapis.com"
-//           "audit_log_configs": [
-//             {
-//               "log_type": "DATA_READ",
-//             },
-//             {
-//               "log_type": "DATA_WRITE",
-//               "exempted_members": [
-//                 "user:bar@gmail.com"
-//               ]
-//             }
-//           ]
-//         }
-//       ]
-//     }
-//
-// For fooservice, this policy enables DATA_READ, DATA_WRITE and
-// ADMIN_READ
-// logging. It also exempts foo@gmail.com from DATA_READ logging,
-// and
-// bar@gmail.com from DATA_WRITE logging.
-type AuditConfig struct {
-	// AuditLogConfigs: The configuration for logging of each type of
-	// permission.
-	// Next ID: 4
-	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
-
-	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-
-	// Service: Specifies a service that will be enabled for audit
-	// logging.
-	// For example, `storage.googleapis.com`,
-	// `cloudsql.googleapis.com`.
-	// `allServices` is a special value that covers all services.
-	Service string `json:"service,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AuditConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AuditConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AuditLogConfig: Provides the configuration for logging a type of
-// permissions.
-// Example:
-//
-//     {
-//       "audit_log_configs": [
-//         {
-//           "log_type": "DATA_READ",
-//           "exempted_members": [
-//             "user:foo@gmail.com"
-//           ]
-//         },
-//         {
-//           "log_type": "DATA_WRITE",
-//         }
-//       ]
-//     }
-//
-// This enables 'DATA_READ' and 'DATA_WRITE' logging, while
-// exempting
-// foo@gmail.com from DATA_READ logging.
-type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of
-	// permission.
-	// Follows the same format of Binding.members.
-	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-
-	// LogType: The log type that this config enables.
-	//
-	// Possible values:
-	//   "LOG_TYPE_UNSPECIFIED" - Default case. Should never be this.
-	//   "ADMIN_READ" - Admin reads. Example: CloudIAM getIamPolicy
-	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
-	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
-	LogType string `json:"logType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExemptedMembers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AuditLogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
@@ -312,7 +155,8 @@ type Binding struct {
 	// binding. Different bindings, including their conditions, are
 	// examined
 	// independently.
-	// This field is GOOGLE_INTERNAL.
+	// This field is only visible as GOOGLE_INTERNAL or
+	// CONDITION_TRUSTED_TESTER.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -1197,10 +1041,6 @@ func (s *MqttConfig) MarshalJSON() ([]byte, error) {
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
 type Policy struct {
-	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy.
-	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
-
 	// Bindings: Associates a list of `members` to a `role`.
 	// `bindings` with no members will result in an error.
 	Bindings []*Binding `json:"bindings,omitempty"`
@@ -1225,8 +1065,6 @@ type Policy struct {
 	// policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	IamOwned bool `json:"iamOwned,omitempty"`
-
 	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
@@ -1234,7 +1072,7 @@ type Policy struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
+	// ForceSendFields is a list of field names (e.g. "Bindings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1242,10 +1080,10 @@ type Policy struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AuditConfigs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Bindings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

@@ -208,6 +208,9 @@ type About struct {
 	// AppInstalled: Whether the user has installed the requesting app.
 	AppInstalled bool `json:"appInstalled,omitempty"`
 
+	// CanCreateTeamDrives: Whether the user can create Team Drives.
+	CanCreateTeamDrives bool `json:"canCreateTeamDrives,omitempty"`
+
 	// ExportFormats: A map of source MIME type to possible targets for all
 	// supported exports.
 	ExportFormats map[string][]string `json:"exportFormats,omitempty"`

@@ -271,6 +271,9 @@ type About struct {
 	// file type. The most specific type takes precedence.
 	AdditionalRoleInfo []*AboutAdditionalRoleInfo `json:"additionalRoleInfo,omitempty"`
 
+	// CanCreateTeamDrives: Whether the user can create Team Drives.
+	CanCreateTeamDrives bool `json:"canCreateTeamDrives,omitempty"`
+
 	// DomainSharingPolicy: The domain sharing policy for the current user.
 	// Possible values are:
 	// - allowed

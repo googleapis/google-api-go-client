@@ -331,6 +331,7 @@ type Permission struct {
 	// Possible values:
 	//   "commenter"
 	//   "owner"
+	//   "publishedReader"
 	//   "reader"
 	//   "writer"
 	Role string `json:"role,omitempty"`

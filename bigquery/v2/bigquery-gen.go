@@ -1960,13 +1960,13 @@ type JobStatistics2 struct {
 	// QueryPlan: [Output-only] Describes execution plan for the query.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
 
-	// ReferencedTables: [Output-only, Experimental] Referenced tables for
-	// the job. Queries that reference more than 50 tables will not have a
-	// complete list.
+	// ReferencedTables: [Output-only] Referenced tables for the job.
+	// Queries that reference more than 50 tables will not have a complete
+	// list.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 
-	// Schema: [Output-only, Experimental] The schema of the results.
-	// Present only for successful dry run of non-legacy SQL queries.
+	// Schema: [Output-only] The schema of the results. Present only for
+	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// StatementType: [Output-only, Experimental] The type of query

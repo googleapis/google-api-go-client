@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/c0qLh4qGPc7aXt4DhEPUAWdS164\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/Mwae5p5zLH2_6imBWYbzfwPCRb0\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20180112",
+ "revision": "20180117",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -1242,14 +1242,14 @@
     },
     "referencedTables": {
      "type": "array",
-     "description": "[Output-only, Experimental] Referenced tables for the job. Queries that reference more than 50 tables will not have a complete list.",
+     "description": "[Output-only] Referenced tables for the job. Queries that reference more than 50 tables will not have a complete list.",
      "items": {
       "$ref": "TableReference"
      }
     },
     "schema": {
      "$ref": "TableSchema",
-     "description": "[Output-only, Experimental] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
+     "description": "[Output-only] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
     },
     "statementType": {
      "type": "string",

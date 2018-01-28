@@ -1,12 +1,12 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/IPcVNse7nmUQLqz58rbBGkdlX1c\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/2Tjh3liYXkmR8GH8r-QlP8dkxp4\"",
  "discoveryVersion": "v1",
  "id": "youtube:v3",
  "name": "youtube",
  "canonicalName": "YouTube",
  "version": "v3",
- "revision": "20171215",
+ "revision": "20180125",
  "title": "YouTube Data API",
  "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
  "ownerDomain": "google.com",
@@ -1370,7 +1370,7 @@
   "ChannelSnippet": {
    "id": "ChannelSnippet",
    "type": "object",
-   "description": "Basic details about a channel, including title, description and thumbnails. Next available id: 15.",
+   "description": "Basic details about a channel, including title, description and thumbnails.",
    "properties": {
     "country": {
      "type": "string",
@@ -6243,7 +6243,7 @@
     },
     "processingDetails": {
      "$ref": "VideoProcessingDetails",
-     "description": "The processingProgress object encapsulates information about YouTube's progress in processing the uploaded video file. The properties in the object identify the current processing status and an estimate of the time remaining until YouTube finishes processing the video. This part also indicates whether different types of data or content, such as file details or thumbnail images, are available for the video.\n\nThe processingProgress object is designed to be polled so that the video uploaded can track the progress that YouTube has made in processing the uploaded video file. This data can only be retrieved by the video owner."
+     "description": "The processingDetails object encapsulates information about YouTube's progress in processing the uploaded video file. The properties in the object identify the current processing status and an estimate of the time remaining until YouTube finishes processing the video. This part also indicates whether different types of data or content, such as file details or thumbnail images, are available for the video.\n\nThe processingProgress object is designed to be polled so that the video uploaded can track the progress that YouTube has made in processing the uploaded video file. This data can only be retrieved by the video owner."
     },
     "projectDetails": {
      "$ref": "VideoProjectDetails",

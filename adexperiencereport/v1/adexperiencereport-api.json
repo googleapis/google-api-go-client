@@ -9,44 +9,15 @@
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
-    "ViolatingSitesResponse": {
-      "description": "Response message for ListViolatingSites.",
-      "type": "object",
-      "properties": {
-        "violatingSites": {
-          "description": "A list of summaries of violating sites.",
-          "type": "array",
-          "items": {
-            "$ref": "SiteSummaryResponse"
-          }
-        }
-      },
-      "id": "ViolatingSitesResponse"
-    },
-    "SiteSummaryResponse": {
-      "description": "Response message for GetSiteSummary.",
-      "type": "object",
-      "properties": {
-        "mobileSummary": {
-          "description": "Summary for the mobile review of the site.",
-          "$ref": "PlatformSummary"
-        },
-        "reviewedSite": {
-          "description": "The name of the site reviewed.",
-          "type": "string"
-        },
-        "desktopSummary": {
-          "description": "Summary for the desktop review of the site.",
-          "$ref": "PlatformSummary"
-        }
-      },
-      "id": "SiteSummaryResponse"
-    },
     "PlatformSummary": {
-      "description": "Summary of the ad experience rating of a site for a specific platform.",
-      "type": "object",
       "properties": {
         "betterAdsStatus": {
+          "enum": [
+            "UNKNOWN",
+            "PASSING",
+            "WARNING",
+            "FAILING"
+          ],
           "description": "The status of the site reviewed for the Better Ads Standards.",
           "type": "string",
           "enumDescriptions": [
@@ -54,12 +25,6 @@
             "Passing.",
             "Warning.",
             "Failing."
-          ],
-          "enum": [
-            "UNKNOWN",
-            "PASSING",
-            "WARNING",
-            "FAILING"
           ]
         },
         "enforcementTime": {
@@ -76,12 +41,12 @@
           "description": "The assigned regions for the site and platform.",
           "type": "array",
           "items": {
-            "type": "string",
             "enum": [
               "REGION_UNKNOWN",
               "REGION_A",
               "REGION_B"
-            ]
+            ],
+            "type": "string"
           }
         },
         "filterStatus": {
@@ -116,7 +81,42 @@
           "type": "string"
         }
       },
-      "id": "PlatformSummary"
+      "id": "PlatformSummary",
+      "description": "Summary of the ad experience rating of a site for a specific platform.",
+      "type": "object"
+    },
+    "ViolatingSitesResponse": {
+      "properties": {
+        "violatingSites": {
+          "description": "A list of summaries of violating sites.",
+          "type": "array",
+          "items": {
+            "$ref": "SiteSummaryResponse"
+          }
+        }
+      },
+      "id": "ViolatingSitesResponse",
+      "description": "Response message for ListViolatingSites.",
+      "type": "object"
+    },
+    "SiteSummaryResponse": {
+      "properties": {
+        "desktopSummary": {
+          "$ref": "PlatformSummary",
+          "description": "Summary for the desktop review of the site."
+        },
+        "mobileSummary": {
+          "description": "Summary for the mobile review of the site.",
+          "$ref": "PlatformSummary"
+        },
+        "reviewedSite": {
+          "description": "The name of the site reviewed.",
+          "type": "string"
+        }
+      },
+      "id": "SiteSummaryResponse",
+      "description": "Response message for GetSiteSummary.",
+      "type": "object"
     }
   },
   "icons": {
@@ -141,6 +141,25 @@
   "title": "Google Ad Experience Report API",
   "ownerName": "Google",
   "resources": {
+    "violatingSites": {
+      "methods": {
+        "list": {
+          "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\".",
+          "response": {
+            "$ref": "ViolatingSitesResponse"
+          },
+          "parameterOrder": [],
+          "httpMethod": "GET",
+          "scopes": [
+            "https://www.googleapis.com/auth/xapi.zoo"
+          ],
+          "parameters": {},
+          "flatPath": "v1/violatingSites",
+          "path": "v1/violatingSites",
+          "id": "adexperiencereport.violatingSites.list"
+        }
+      }
+    },
     "sites": {
       "methods": {
         "get": {
@@ -169,59 +188,10 @@
           "description": "Gets a summary of the ad experience rating of a site."
         }
       }
-    },
-    "violatingSites": {
-      "methods": {
-        "list": {
-          "description": "Lists sites with Ad Experience Report statuses of \"Failing\" or \"Warning\".",
-          "response": {
-            "$ref": "ViolatingSitesResponse"
-          },
-          "parameterOrder": [],
-          "httpMethod": "GET",
-          "scopes": [
-            "https://www.googleapis.com/auth/xapi.zoo"
-          ],
-          "parameters": {},
-          "flatPath": "v1/violatingSites",
-          "path": "v1/violatingSites",
-          "id": "adexperiencereport.violatingSites.list"
-        }
-      }
     }
   },
   "parameters": {
-    "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ],
-      "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ]
-    },
-    "callback": {
-      "description": "JSONP",
-      "type": "string",
-      "location": "query"
-    },
     "alt": {
-      "description": "Data format for response.",
-      "default": "json",
       "enum": [
         "json",
         "media",
@@ -233,7 +203,9 @@
         "Media download with context-dependent Content-Type",
         "Responses with Content-Type of application/x-protobuf"
       ],
-      "location": "query"
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
     },
     "key": {
       "location": "query",
@@ -241,20 +213,20 @@
       "type": "string"
     },
     "access_token": {
+      "location": "query",
       "description": "OAuth access token.",
+      "type": "string"
+    },
+    "quotaUser": {
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "type": "string",
       "location": "query"
     },
-    "quotaUser": {
-      "location": "query",
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string"
-    },
     "pp": {
-      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true"
+      "default": "true",
+      "location": "query"
     },
     "oauth_token": {
       "location": "query",
@@ -276,6 +248,34 @@
       "description": "Returns response with indentations and line breaks.",
       "type": "boolean",
       "default": "true"
+    },
+    "uploadType": {
+      "location": "query",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
+    },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "$.xgafv": {
+      "enum": [
+        "1",
+        "2"
+      ],
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
     }
   },
   "version": "v1",

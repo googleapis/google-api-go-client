@@ -2425,12 +2425,10 @@ type Write struct {
 	// UpdateMask: The fields to update in this write.
 	//
 	// This field can be set only when the operation is `update`.
-	// If the mask is not set for an `update` and the document exists,
-	// any
-	// existing data will be overwritten.
-	// If the mask is set and the document on the server has fields not
-	// covered by
-	// the mask, they are left unchanged.
+	// None of the field paths in the mask may contain a reserved name.
+	// If the document exists on the server and has fields not referenced in
+	// the
+	// mask, they are left unchanged.
 	// Fields referenced in the mask, but not present in the input document,
 	// are
 	// deleted from the document on the server.

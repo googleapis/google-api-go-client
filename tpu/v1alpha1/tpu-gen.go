@@ -1785,7 +1785,7 @@ type ProjectsLocationsNodesReimageCall struct {
 	header_            http.Header
 }
 
-// Reimage: Reimage a node's OS.
+// Reimage: Reimages a node's OS.
 func (r *ProjectsLocationsNodesService) Reimage(name string, reimagenoderequest *ReimageNodeRequest) *ProjectsLocationsNodesReimageCall {
 	c := &ProjectsLocationsNodesReimageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1879,7 +1879,7 @@ func (c *ProjectsLocationsNodesReimageCall) Do(opts ...googleapi.CallOption) (*O
 	}
 	return ret, nil
 	// {
-	//   "description": "Reimage a node's OS.",
+	//   "description": "Reimages a node's OS.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/nodes/{nodesId}:reimage",
 	//   "httpMethod": "POST",
 	//   "id": "tpu.projects.locations.nodes.reimage",
@@ -2055,7 +2055,7 @@ type ProjectsLocationsNodesStartCall struct {
 	header_          http.Header
 }
 
-// Start: Start a node.
+// Start: Starts a node.
 func (r *ProjectsLocationsNodesService) Start(name string, startnoderequest *StartNodeRequest) *ProjectsLocationsNodesStartCall {
 	c := &ProjectsLocationsNodesStartCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2149,7 +2149,7 @@ func (c *ProjectsLocationsNodesStartCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Start a node.",
+	//   "description": "Starts a node.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/nodes/{nodesId}:start",
 	//   "httpMethod": "POST",
 	//   "id": "tpu.projects.locations.nodes.start",
@@ -3093,7 +3093,7 @@ type ProjectsLocationsTensorflowVersionsListCall struct {
 	header_      http.Header
 }
 
-// List: List TensorFlow versions.
+// List: Lists TensorFlow versions supported by this API.
 func (r *ProjectsLocationsTensorflowVersionsService) List(parent string) *ProjectsLocationsTensorflowVersionsListCall {
 	c := &ProjectsLocationsTensorflowVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3220,7 +3220,7 @@ func (c *ProjectsLocationsTensorflowVersionsListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "List TensorFlow versions.",
+	//   "description": "Lists TensorFlow versions supported by this API.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/tensorflowVersions",
 	//   "httpMethod": "GET",
 	//   "id": "tpu.projects.locations.tensorflowVersions.list",

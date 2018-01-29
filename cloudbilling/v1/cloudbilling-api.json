@@ -1,7 +1,77 @@
 {
+  "kind": "discovery#restDescription",
+  "description": "Allows developers to manage billing for their Google Cloud Platform projects\n    programmatically.",
+  "servicePath": "",
+  "basePath": "",
+  "id": "cloudbilling:v1",
+  "documentationLink": "https://cloud.google.com/billing/",
+  "revision": "20180122",
+  "discoveryVersion": "v1",
   "schemas": {
-    "Service": {
+    "ListBillingAccountsResponse": {
+      "description": "Response message for `ListBillingAccounts`.",
+      "type": "object",
       "properties": {
+        "billingAccounts": {
+          "description": "A list of billing accounts.",
+          "type": "array",
+          "items": {
+            "$ref": "BillingAccount"
+          }
+        },
+        "nextPageToken": {
+          "description": "A token to retrieve the next page of results. To retrieve the next page,\ncall `ListBillingAccounts` again with the `page_token` field set to this\nvalue. This field is empty if there are no more results to retrieve.",
+          "type": "string"
+        }
+      },
+      "id": "ListBillingAccountsResponse"
+    },
+    "AggregationInfo": {
+      "description": "Represents the aggregation level and interval for pricing of a single SKU.",
+      "type": "object",
+      "properties": {
+        "aggregationLevel": {
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "enum": [
+            "AGGREGATION_LEVEL_UNSPECIFIED",
+            "ACCOUNT",
+            "PROJECT"
+          ],
+          "type": "string"
+        },
+        "aggregationInterval": {
+          "type": "string",
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "enum": [
+            "AGGREGATION_INTERVAL_UNSPECIFIED",
+            "DAILY",
+            "MONTHLY"
+          ]
+        },
+        "aggregationCount": {
+          "description": "The number of intervals to aggregate over.\nExample: If aggregation_level is \"DAILY\" and aggregation_count is 14,\naggregation will be over 14 days.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "id": "AggregationInfo"
+    },
+    "Service": {
+      "description": "Encapsulates a single service in Google Cloud Platform.",
+      "type": "object",
+      "properties": {
+        "serviceId": {
+          "description": "The identifier for the service.\nExample: \"DA34-426B-A397\"",
+          "type": "string"
+        },
         "name": {
           "description": "The resource name for the service.\nExample: \"services/DA34-426B-A397\"",
           "type": "string"
@@ -9,17 +79,13 @@
         "displayName": {
           "description": "A human readable display name for this service.",
           "type": "string"
-        },
-        "serviceId": {
-          "description": "The identifier for the service.\nExample: \"DA34-426B-A397\"",
-          "type": "string"
         }
       },
-      "id": "Service",
-      "description": "Encapsulates a single service in Google Cloud Platform.",
-      "type": "object"
+      "id": "Service"
     },
     "Money": {
+      "description": "Represents an amount of money with its currency type.",
+      "type": "object",
       "properties": {
         "currencyCode": {
           "description": "The 3-letter currency code defined in ISO 4217.",
@@ -36,11 +102,11 @@
           "type": "string"
         }
       },
-      "id": "Money",
-      "description": "Represents an amount of money with its currency type.",
-      "type": "object"
+      "id": "Money"
     },
     "ProjectBillingInfo": {
+      "description": "Encapsulation of billing information for a Cloud Console project. A project\nhas at most one associated billing account at a time (but a billing account\ncan be assigned to multiple projects).",
+      "type": "object",
       "properties": {
         "name": {
           "description": "The resource name for the `ProjectBillingInfo`; has the form\n`projects/{project_id}/billingInfo`. For example, the resource name for the\nbilling information for project `tokyo-rain-123` would be\n`projects/tokyo-rain-123/billingInfo`. This field is read-only.",
@@ -59,9 +125,7 @@
           "type": "string"
         }
       },
-      "id": "ProjectBillingInfo",
-      "description": "Encapsulation of billing information for a Cloud Console project. A project\nhas at most one associated billing account at a time (but a billing account\ncan be assigned to multiple projects).",
-      "type": "object"
+      "id": "ProjectBillingInfo"
     },
     "BillingAccount": {
       "description": "A billing account in [Google Cloud\nConsole](https://console.cloud.google.com/). You can assign a billing account\nto one or more projects.",
@@ -86,6 +150,21 @@
       "description": "Encapsulates a single SKU in Google Cloud Platform",
       "type": "object",
       "properties": {
+        "name": {
+          "description": "The resource name for the SKU.\nExample: \"services/DA34-426B-A397/skus/AA95-CD31-42FE\"",
+          "type": "string"
+        },
+        "pricingInfo": {
+          "description": "A timeline of pricing info for this SKU in chronological order.",
+          "type": "array",
+          "items": {
+            "$ref": "PricingInfo"
+          }
+        },
+        "category": {
+          "$ref": "Category",
+          "description": "The category hierarchy of this SKU, purely for organizational purpose."
+        },
         "skuId": {
           "description": "The identifier for the SKU.\nExample: \"AA95-CD31-42FE\"",
           "type": "string"
@@ -104,21 +183,6 @@
           "items": {
             "type": "string"
           }
-        },
-        "name": {
-          "description": "The resource name for the SKU.\nExample: \"services/DA34-426B-A397/skus/AA95-CD31-42FE\"",
-          "type": "string"
-        },
-        "pricingInfo": {
-          "description": "A timeline of pricing info for this SKU in chronological order.",
-          "type": "array",
-          "items": {
-            "$ref": "PricingInfo"
-          }
-        },
-        "category": {
-          "$ref": "Category",
-          "description": "The category hierarchy of this SKU, purely for organizational purpose."
         }
       },
       "id": "Sku"
@@ -127,14 +191,6 @@
       "description": "Represents the category hierarchy of a SKU.",
       "type": "object",
       "properties": {
-        "serviceDisplayName": {
-          "description": "The display name of the service this SKU belongs to.",
-          "type": "string"
-        },
-        "usageType": {
-          "description": "Represents how the SKU is consumed.\nExample: \"OnDemand\", \"Preemptible\", \"Commit1Mo\", \"Commit1Yr\" etc.",
-          "type": "string"
-        },
         "resourceFamily": {
           "description": "The type of product the SKU refers to.\nExample: \"Compute\", \"Storage\", \"Network\", \"ApplicationServices\" etc.",
           "type": "string"
@@ -142,11 +198,21 @@
         "resourceGroup": {
           "description": "A group classification for related SKUs.\nExample: \"RAM\", \"GPU\", \"Prediction\", \"Ops\", \"GoogleEgress\" etc.",
           "type": "string"
+        },
+        "serviceDisplayName": {
+          "description": "The display name of the service this SKU belongs to.",
+          "type": "string"
+        },
+        "usageType": {
+          "description": "Represents how the SKU is consumed.\nExample: \"OnDemand\", \"Preemptible\", \"Commit1Mo\", \"Commit1Yr\" etc.",
+          "type": "string"
         }
       },
       "id": "Category"
     },
     "ListSkusResponse": {
+      "description": "Response message for `ListSkus`.",
+      "type": "object",
       "properties": {
         "skus": {
           "description": "The list of public SKUs of the given service.",
@@ -160,14 +226,20 @@
           "type": "string"
         }
       },
-      "id": "ListSkusResponse",
-      "description": "Response message for `ListSkus`.",
-      "type": "object"
+      "id": "ListSkusResponse"
     },
     "PricingInfo": {
       "description": "Represents the pricing information for a SKU at a single point of time.",
       "type": "object",
       "properties": {
+        "aggregationInfo": {
+          "description": "Aggregation Info. This can be left unspecified if the pricing expression\ndoesn't require aggregation.",
+          "$ref": "AggregationInfo"
+        },
+        "summary": {
+          "description": "An optional human readable summary of the pricing information, has a\nmaximum length of 256 characters.",
+          "type": "string"
+        },
         "effectiveTime": {
           "description": "The timestamp from which this pricing was effective within the requested\ntime range. This is guaranteed to be greater than or equal to the\nstart_time field in the request and less than the end_time field in the\nrequest. If a time range was not specified in the request this field will\nbe equivalent to a time within the last 12 hours, indicating the latest\npricing info.",
           "format": "google-datetime",
@@ -181,19 +253,13 @@
         "pricingExpression": {
           "description": "Expresses the pricing formula. See `PricingExpression` for an example.",
           "$ref": "PricingExpression"
-        },
-        "aggregationInfo": {
-          "$ref": "AggregationInfo",
-          "description": "Aggregation Info. This can be left unspecified if the pricing expression\ndoesn't require aggregation."
-        },
-        "summary": {
-          "description": "An optional human readable summary of the pricing information, has a\nmaximum length of 256 characters.",
-          "type": "string"
         }
       },
       "id": "PricingInfo"
     },
     "ListProjectBillingInfoResponse": {
+      "description": "Request message for `ListProjectBillingInfoResponse`.",
+      "type": "object",
       "properties": {
         "nextPageToken": {
           "description": "A token to retrieve the next page of results. To retrieve the next page,\ncall `ListProjectBillingInfo` again with the `page_token` field set to this\nvalue. This field is empty if there are no more results to retrieve.",
@@ -207,22 +273,12 @@
           }
         }
       },
-      "id": "ListProjectBillingInfoResponse",
-      "description": "Request message for `ListProjectBillingInfoResponse`.",
-      "type": "object"
+      "id": "ListProjectBillingInfoResponse"
     },
     "PricingExpression": {
       "description": "Expresses a mathematical pricing formula. For Example:-\n\n`usage_unit: GBy`\n`tiered_rates:`\n   `[start_usage_amount: 20, unit_price: $10]`\n   `[start_usage_amount: 100, unit_price: $5]`\n\nThe above expresses a pricing formula where the first 20GB is free, the\nnext 80GB is priced at $10 per GB followed by $5 per GB for additional\nusage.",
       "type": "object",
       "properties": {
-        "baseUnit": {
-          "description": "The base unit for the SKU which is the unit used in usage exports.\nExample: \"By\"",
-          "type": "string"
-        },
-        "baseUnitDescription": {
-          "description": "The base unit in human readable form.\nExample: \"byte\".",
-          "type": "string"
-        },
         "tieredRates": {
           "description": "The list of tiered rates for this pricing. The total cost is computed by\napplying each of the tiered rates on usage. This repeated list is sorted\nby ascending order of start_usage_amount.",
           "type": "array",
@@ -247,6 +303,14 @@
           "description": "The recommended quantity of units for displaying pricing info. When\ndisplaying pricing info it is recommended to display:\n(unit_price * display_quantity) per display_quantity usage_unit.\nThis field does not affect the pricing formula and is for display purposes\nonly.\nExample: If the unit_price is \"0.0001 USD\", the usage_unit is \"GB\" and\nthe display_quantity is \"1000\" then the recommended way of displaying the\npricing info is \"0.10 USD per 1000 GB\"",
           "format": "double",
           "type": "number"
+        },
+        "baseUnit": {
+          "description": "The base unit for the SKU which is the unit used in usage exports.\nExample: \"By\"",
+          "type": "string"
+        },
+        "baseUnitDescription": {
+          "description": "The base unit in human readable form.\nExample: \"byte\".",
+          "type": "string"
         }
       },
       "id": "PricingExpression"
@@ -255,14 +319,14 @@
       "description": "The price rate indicating starting usage and its corresponding price.",
       "type": "object",
       "properties": {
+        "unitPrice": {
+          "$ref": "Money",
+          "description": "The price per unit of usage.\nExample: unit_price of amount $10 indicates that each unit will cost $10."
+        },
         "startUsageAmount": {
           "description": "Usage is priced at this rate only after this amount.\nExample: start_usage_amount of 10 indicates that the usage will be priced\nat the unit_price after the first 10 usage_units.",
           "format": "double",
           "type": "number"
-        },
-        "unitPrice": {
-          "description": "The price per unit of usage.\nExample: unit_price of amount $10 indicates that each unit will cost $10.",
-          "$ref": "Money"
         }
       },
       "id": "TierRate"
@@ -284,62 +348,6 @@
         }
       },
       "id": "ListServicesResponse"
-    },
-    "ListBillingAccountsResponse": {
-      "description": "Response message for `ListBillingAccounts`.",
-      "type": "object",
-      "properties": {
-        "billingAccounts": {
-          "description": "A list of billing accounts.",
-          "type": "array",
-          "items": {
-            "$ref": "BillingAccount"
-          }
-        },
-        "nextPageToken": {
-          "description": "A token to retrieve the next page of results. To retrieve the next page,\ncall `ListBillingAccounts` again with the `page_token` field set to this\nvalue. This field is empty if there are no more results to retrieve.",
-          "type": "string"
-        }
-      },
-      "id": "ListBillingAccountsResponse"
-    },
-    "AggregationInfo": {
-      "properties": {
-        "aggregationInterval": {
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "enum": [
-            "AGGREGATION_INTERVAL_UNSPECIFIED",
-            "DAILY",
-            "MONTHLY"
-          ],
-          "type": "string"
-        },
-        "aggregationCount": {
-          "description": "The number of intervals to aggregate over.\nExample: If aggregation_level is \"DAILY\" and aggregation_count is 14,\naggregation will be over 14 days.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "aggregationLevel": {
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "enum": [
-            "AGGREGATION_LEVEL_UNSPECIFIED",
-            "ACCOUNT",
-            "PROJECT"
-          ],
-          "type": "string"
-        }
-      },
-      "id": "AggregationInfo",
-      "description": "Represents the aggregation level and interval for pricing of a single SKU.",
-      "type": "object"
     }
   },
   "icons": {
@@ -365,93 +373,10 @@
   "title": "Google Cloud Billing API",
   "ownerName": "Google",
   "resources": {
-    "services": {
-      "resources": {
-        "skus": {
-          "methods": {
-            "list": {
-              "id": "cloudbilling.services.skus.list",
-              "path": "v1/{+parent}/skus",
-              "description": "Lists all publicly available SKUs for a given cloud service.",
-              "httpMethod": "GET",
-              "parameterOrder": [
-                "parent"
-              ],
-              "response": {
-                "$ref": "ListSkusResponse"
-              },
-              "parameters": {
-                "currencyCode": {
-                  "description": "The ISO 4217 currency code for the pricing info in the response proto.\nWill use the conversion rate as of start_time.\nOptional. If not specified USD will be used.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "endTime": {
-                  "description": "Optional exclusive end time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
-                  "format": "google-datetime",
-                  "type": "string",
-                  "location": "query"
-                },
-                "pageToken": {
-                  "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListSkus`\ncall. If unspecified, the first page of results is returned.",
-                  "type": "string",
-                  "location": "query"
-                },
-                "startTime": {
-                  "location": "query",
-                  "description": "Optional inclusive start time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
-                  "format": "google-datetime",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "location": "query",
-                  "description": "Requested page size. Defaults to 5000.",
-                  "format": "int32",
-                  "type": "integer"
-                },
-                "parent": {
-                  "description": "The name of the service.\nExample: \"services/DA34-426B-A397\"",
-                  "required": true,
-                  "type": "string",
-                  "pattern": "^services/[^/]+$",
-                  "location": "path"
-                }
-              },
-              "flatPath": "v1/services/{servicesId}/skus"
-            }
-          }
-        }
-      },
-      "methods": {
-        "list": {
-          "description": "Lists all public cloud services.",
-          "httpMethod": "GET",
-          "parameterOrder": [],
-          "response": {
-            "$ref": "ListServicesResponse"
-          },
-          "parameters": {
-            "pageToken": {
-              "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListServices`\ncall. If unspecified, the first page of results is returned.",
-              "type": "string",
-              "location": "query"
-            },
-            "pageSize": {
-              "location": "query",
-              "description": "Requested page size. Defaults to 5000.",
-              "format": "int32",
-              "type": "integer"
-            }
-          },
-          "flatPath": "v1/services",
-          "id": "cloudbilling.services.list",
-          "path": "v1/services"
-        }
-      }
-    },
     "projects": {
       "methods": {
         "getBillingInfo": {
+          "description": "Gets the billing information for a project. The current authenticated user\nmust have [permission to view the\nproject](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo\n).",
           "response": {
             "$ref": "ProjectBillingInfo"
           },
@@ -473,12 +398,9 @@
           },
           "flatPath": "v1/projects/{projectsId}/billingInfo",
           "path": "v1/{+name}/billingInfo",
-          "id": "cloudbilling.projects.getBillingInfo",
-          "description": "Gets the billing information for a project. The current authenticated user\nmust have [permission to view the\nproject](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo\n)."
+          "id": "cloudbilling.projects.getBillingInfo"
         },
         "updateBillingInfo": {
-          "path": "v1/{+name}/billingInfo",
-          "id": "cloudbilling.projects.updateBillingInfo",
           "description": "Sets or updates the billing account associated with a project. You specify\nthe new billing account by setting the `billing_account_name` in the\n`ProjectBillingInfo` resource to the resource name of a billing account.\nAssociating a project with an open billing account enables billing on the\nproject and allows charges for resource usage. If the project already had a\nbilling account, this method changes the billing account used for resource\nusage charges.\n\n*Note:* Incurred charges that have not yet been reported in the transaction\nhistory of the Google Cloud Console may be billed to the new billing\naccount, even if the charge occurred before the new billing account was\nassigned to the project.\n\nThe current authenticated user must have ownership privileges for both the\n[project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo\n) and the [billing\naccount](https://support.google.com/cloud/answer/4430947).\n\nYou can disable billing on the project by setting the\n`billing_account_name` field to empty. This action disassociates the\ncurrent billing account from the project. Any billable activity of your\nin-use services will stop, and your application could stop functioning as\nexpected. Any unbilled charges to date will be billed to the previously\nassociated account. The current authenticated user must be either an owner\nof the project or an owner of the billing account for the project.\n\nNote that associating a project with a *closed* billing account will have\nmuch the same effect as disabling billing on the project: any paid\nresources used by the project will be shut down. Thus, unless you wish to\ndisable billing, you should always call this method with the name of an\n*open* billing account.",
           "request": {
             "$ref": "ProjectBillingInfo"
@@ -495,20 +417,26 @@
           ],
           "parameters": {
             "name": {
+              "location": "path",
               "description": "The resource name of the project associated with the billing information\nthat you want to update. For example, `projects/tokyo-rain-123`.",
               "required": true,
               "type": "string",
-              "pattern": "^projects/[^/]+$",
-              "location": "path"
+              "pattern": "^projects/[^/]+$"
             }
           },
-          "flatPath": "v1/projects/{projectsId}/billingInfo"
+          "flatPath": "v1/projects/{projectsId}/billingInfo",
+          "path": "v1/{+name}/billingInfo",
+          "id": "cloudbilling.projects.updateBillingInfo"
         }
       }
     },
     "billingAccounts": {
       "methods": {
         "get": {
+          "flatPath": "v1/billingAccounts/{billingAccountsId}",
+          "path": "v1/{+name}",
+          "id": "cloudbilling.billingAccounts.get",
+          "description": "Gets information about a billing account. The current authenticated user\nmust be an [owner of the billing\naccount](https://support.google.com/cloud/answer/4430947).",
           "response": {
             "$ref": "BillingAccount"
           },
@@ -521,35 +449,32 @@
           ],
           "parameters": {
             "name": {
+              "location": "path",
               "description": "The resource name of the billing account to retrieve. For example,\n`billingAccounts/012345-567890-ABCDEF`.",
               "required": true,
               "type": "string",
-              "pattern": "^billingAccounts/[^/]+$",
-              "location": "path"
+              "pattern": "^billingAccounts/[^/]+$"
             }
-          },
-          "flatPath": "v1/billingAccounts/{billingAccountsId}",
-          "path": "v1/{+name}",
-          "id": "cloudbilling.billingAccounts.get",
-          "description": "Gets information about a billing account. The current authenticated user\nmust be an [owner of the billing\naccount](https://support.google.com/cloud/answer/4430947)."
+          }
         },
         "list": {
+          "description": "Lists the billing accounts that the current authenticated user\n[owns](https://support.google.com/cloud/answer/4430947).",
           "response": {
             "$ref": "ListBillingAccountsResponse"
           },
           "parameterOrder": [],
           "httpMethod": "GET",
           "parameters": {
-            "pageToken": {
-              "location": "query",
-              "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListBillingAccounts`\ncall. If unspecified, the first page of results is returned.",
-              "type": "string"
-            },
             "pageSize": {
               "location": "query",
               "description": "Requested page size. The maximum page size is 100; this is also the\ndefault.",
               "format": "int32",
               "type": "integer"
+            },
+            "pageToken": {
+              "location": "query",
+              "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListBillingAccounts`\ncall. If unspecified, the first page of results is returned.",
+              "type": "string"
             }
           },
           "scopes": [
@@ -557,17 +482,13 @@
           ],
           "flatPath": "v1/billingAccounts",
           "path": "v1/billingAccounts",
-          "id": "cloudbilling.billingAccounts.list",
-          "description": "Lists the billing accounts that the current authenticated user\n[owns](https://support.google.com/cloud/answer/4430947)."
+          "id": "cloudbilling.billingAccounts.list"
         }
       },
       "resources": {
         "projects": {
           "methods": {
             "list": {
-              "path": "v1/{+name}/projects",
-              "id": "cloudbilling.billingAccounts.projects.list",
-              "description": "Lists the projects associated with a billing account. The current\nauthenticated user must have the \"billing.resourceAssociations.list\" IAM\npermission, which is often given to billing account\n[viewers](https://support.google.com/cloud/answer/4430947).",
               "response": {
                 "$ref": "ListProjectBillingInfoResponse"
               },
@@ -580,16 +501,16 @@
               ],
               "parameters": {
                 "name": {
-                  "pattern": "^billingAccounts/[^/]+$",
                   "location": "path",
                   "description": "The resource name of the billing account associated with the projects that\nyou want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
                   "required": true,
-                  "type": "string"
+                  "type": "string",
+                  "pattern": "^billingAccounts/[^/]+$"
                 },
                 "pageToken": {
-                  "location": "query",
                   "description": "A token identifying a page of results to be returned. This should be a\n`next_page_token` value returned from a previous `ListProjectBillingInfo`\ncall. If unspecified, the first page of results is returned.",
-                  "type": "string"
+                  "type": "string",
+                  "location": "query"
                 },
                 "pageSize": {
                   "location": "query",
@@ -598,7 +519,94 @@
                   "type": "integer"
                 }
               },
-              "flatPath": "v1/billingAccounts/{billingAccountsId}/projects"
+              "flatPath": "v1/billingAccounts/{billingAccountsId}/projects",
+              "path": "v1/{+name}/projects",
+              "id": "cloudbilling.billingAccounts.projects.list",
+              "description": "Lists the projects associated with a billing account. The current\nauthenticated user must have the \"billing.resourceAssociations.list\" IAM\npermission, which is often given to billing account\n[viewers](https://support.google.com/cloud/answer/4430947)."
+            }
+          }
+        }
+      }
+    },
+    "services": {
+      "methods": {
+        "list": {
+          "description": "Lists all public cloud services.",
+          "httpMethod": "GET",
+          "parameterOrder": [],
+          "response": {
+            "$ref": "ListServicesResponse"
+          },
+          "parameters": {
+            "pageSize": {
+              "description": "Requested page size. Defaults to 5000.",
+              "format": "int32",
+              "type": "integer",
+              "location": "query"
+            },
+            "pageToken": {
+              "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListServices`\ncall. If unspecified, the first page of results is returned.",
+              "type": "string",
+              "location": "query"
+            }
+          },
+          "flatPath": "v1/services",
+          "id": "cloudbilling.services.list",
+          "path": "v1/services"
+        }
+      },
+      "resources": {
+        "skus": {
+          "methods": {
+            "list": {
+              "flatPath": "v1/services/{servicesId}/skus",
+              "id": "cloudbilling.services.skus.list",
+              "path": "v1/{+parent}/skus",
+              "description": "Lists all publicly available SKUs for a given cloud service.",
+              "httpMethod": "GET",
+              "parameterOrder": [
+                "parent"
+              ],
+              "response": {
+                "$ref": "ListSkusResponse"
+              },
+              "parameters": {
+                "pageSize": {
+                  "description": "Requested page size. Defaults to 5000.",
+                  "format": "int32",
+                  "type": "integer",
+                  "location": "query"
+                },
+                "parent": {
+                  "location": "path",
+                  "description": "The name of the service.\nExample: \"services/DA34-426B-A397\"",
+                  "required": true,
+                  "type": "string",
+                  "pattern": "^services/[^/]+$"
+                },
+                "currencyCode": {
+                  "location": "query",
+                  "description": "The ISO 4217 currency code for the pricing info in the response proto.\nWill use the conversion rate as of start_time.\nOptional. If not specified USD will be used.",
+                  "type": "string"
+                },
+                "endTime": {
+                  "location": "query",
+                  "description": "Optional exclusive end time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
+                  "format": "google-datetime",
+                  "type": "string"
+                },
+                "pageToken": {
+                  "location": "query",
+                  "description": "A token identifying a page of results to return. This should be a\n`next_page_token` value returned from a previous `ListSkus`\ncall. If unspecified, the first page of results is returned.",
+                  "type": "string"
+                },
+                "startTime": {
+                  "location": "query",
+                  "description": "Optional inclusive start time of the time range for which the pricing\nversions will be returned. Timestamps in the future are not allowed.\nThe time range has to be within a single calendar month in\nAmerica/Los_Angeles timezone. Time range as a whole is optional. If not\nspecified, the latest pricing will be returned (up to 12 hours old at\nmost).",
+                  "format": "google-datetime",
+                  "type": "string"
+                }
+              }
             }
           }
         }
@@ -607,39 +615,34 @@
   },
   "parameters": {
     "uploadType": {
-      "location": "query",
       "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string"
-    },
-    "fields": {
-      "location": "query",
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string"
-    },
-    "callback": {
-      "description": "JSONP",
       "type": "string",
       "location": "query"
     },
+    "fields": {
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string",
+      "location": "query"
+    },
+    "callback": {
+      "location": "query",
+      "description": "JSONP",
+      "type": "string"
+    },
     "$.xgafv": {
-      "enum": [
-        "1",
-        "2"
-      ],
       "description": "V1 error format.",
       "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
       ],
-      "location": "query"
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ]
     },
     "alt": {
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ],
       "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
@@ -648,12 +651,17 @@
       ],
       "location": "query",
       "description": "Data format for response.",
-      "default": "json"
+      "default": "json",
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ]
     },
     "key": {
+      "location": "query",
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "access_token": {
       "location": "query",
@@ -666,25 +674,25 @@
       "location": "query"
     },
     "pp": {
+      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true",
-      "location": "query"
+      "default": "true"
     },
     "bearer_token": {
+      "location": "query",
       "description": "OAuth bearer token.",
+      "type": "string"
+    },
+    "oauth_token": {
+      "description": "OAuth 2.0 token for the current user.",
       "type": "string",
       "location": "query"
     },
-    "oauth_token": {
-      "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
-    },
     "upload_protocol": {
-      "location": "query",
       "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
-      "type": "string"
+      "type": "string",
+      "location": "query"
     },
     "prettyPrint": {
       "description": "Returns response with indentations and line breaks.",
@@ -694,13 +702,5 @@
     }
   },
   "version": "v1",
-  "baseUrl": "https://cloudbilling.googleapis.com/",
-  "kind": "discovery#restDescription",
-  "description": "Allows developers to manage billing for their Google Cloud Platform projects\n    programmatically.",
-  "servicePath": "",
-  "basePath": "",
-  "id": "cloudbilling:v1",
-  "documentationLink": "https://cloud.google.com/billing/",
-  "revision": "20180122",
-  "discoveryVersion": "v1"
+  "baseUrl": "https://cloudbilling.googleapis.com/"
 }

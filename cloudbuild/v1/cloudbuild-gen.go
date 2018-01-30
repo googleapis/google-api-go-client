@@ -269,6 +269,7 @@ type Build struct {
 	// If the build does not specify source, or does not specify
 	// images,
 	// these keys will not be included.
+	// @OutputOnly
 	Timing map[string]TimeSpan `json:"timing,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -485,7 +486,9 @@ type BuildStep struct {
 	// crypto key. These values must be specified in the build's secrets.
 	SecretEnv []string `json:"secretEnv,omitempty"`
 
-	// Timing: Stores timing information for executing this build step.
+	// Timing: Stores timing information for executing this build
+	// step.
+	// @OutputOnly
 	Timing *TimeSpan `json:"timing,omitempty"`
 
 	// Volumes: List of volumes to mount into the build step.
@@ -615,6 +618,7 @@ type BuiltImage struct {
 
 	// PushTiming: Stores timing information for pushing the specified
 	// image.
+	// @OutputOnly
 	PushTiming *TimeSpan `json:"pushTiming,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Digest") to

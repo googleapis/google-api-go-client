@@ -1,14 +1,89 @@
 {
-  "kind": "discovery#restDescription",
-  "description": "Converts audio to text by applying powerful neural network models.",
-  "servicePath": "",
   "basePath": "",
-  "revision": "20180123",
   "documentationLink": "https://cloud.google.com/speech/",
+  "revision": "20180123",
   "id": "speech:v1",
   "discoveryVersion": "v1",
   "version_module": true,
   "schemas": {
+    "SpeechRecognitionResult": {
+      "description": "A speech recognition result corresponding to a portion of the audio.",
+      "type": "object",
+      "properties": {
+        "alternatives": {
+          "description": "*Output-only* May contain one or more recognition hypotheses (up to the\nmaximum specified in `max_alternatives`).\nThese alternatives are ordered in terms of accuracy, with the top (first)\nalternative being the most probable, as ranked by the recognizer.",
+          "type": "array",
+          "items": {
+            "$ref": "SpeechRecognitionAlternative"
+          }
+        }
+      },
+      "id": "SpeechRecognitionResult"
+    },
+    "RecognitionConfig": {
+      "properties": {
+        "sampleRateHertz": {
+          "description": "*Required* Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).",
+          "format": "int32",
+          "type": "integer"
+        },
+        "enableWordTimeOffsets": {
+          "description": "*Optional* If `true`, the top result includes a list of words and\nthe start and end time offsets (timestamps) for those words. If\n`false`, no word-level time offset information is returned. The default is\n`false`.",
+          "type": "boolean"
+        },
+        "maxAlternatives": {
+          "description": "*Optional* Maximum number of recognition hypotheses to be returned.\nSpecifically, the maximum number of `SpeechRecognitionAlternative` messages\nwithin each `SpeechRecognitionResult`.\nThe server may return fewer than `max_alternatives`.\nValid values are `0`-`30`. A value of `0` or `1` will return a maximum of\none. If omitted, will return a maximum of one.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "languageCode": {
+          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](https://cloud.google.com/speech/docs/languages)\nfor a list of the currently supported language codes.",
+          "type": "string"
+        },
+        "profanityFilter": {
+          "description": "*Optional* If set to `true`, the server will attempt to filter out\nprofanities, replacing all but the initial character in each filtered word\nwith asterisks, e.g. \"f***\". If set to `false` or omitted, profanities\nwon't be filtered out.",
+          "type": "boolean"
+        },
+        "speechContexts": {
+          "description": "*Optional* A means to provide context to assist the speech recognition.",
+          "type": "array",
+          "items": {
+            "$ref": "SpeechContext"
+          }
+        },
+        "encoding": {
+          "description": "*Required* Encoding of audio data sent in all `RecognitionAudio` messages.",
+          "type": "string",
+          "enumDescriptions": [
+            "Not specified.",
+            "Uncompressed 16-bit signed little-endian samples (Linear PCM).",
+            "[`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless Audio\nCodec) is the recommended encoding because it is\nlossless--therefore recognition is not compromised--and\nrequires only about half the bandwidth of `LINEAR16`. `FLAC` stream\nencoding supports 16-bit and 24-bit samples, however, not all fields in\n`STREAMINFO` are supported.",
+            "8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law.",
+            "Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz` must be 8000.",
+            "Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.",
+            "Opus encoded audio frames in Ogg container\n([OggOpus](https://wiki.xiph.org/OggOpus)).\n`sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or 48000.",
+            "Although the use of lossy encodings is not recommended, if a very low\nbitrate encoding is required, `OGG_OPUS` is highly preferred over\nSpeex encoding. The [Speex](https://speex.org/)  encoding supported by\nCloud Speech API has a header byte in each block, as in MIME type\n`audio/x-speex-with-header-byte`.\nIt is a variant of the RTP Speex encoding defined in\n[RFC 5574](https://tools.ietf.org/html/rfc5574).\nThe stream is a sequence of blocks, one block per RTP packet. Each block\nstarts with a byte containing the length of the block, in bytes, followed\nby one or more frames of Speex data, padded to an integral number of\nbytes (octets) as specified in RFC 5574. In other words, each RTP header\nis replaced with a single byte containing the block length. Only Speex\nwideband is supported. `sample_rate_hertz` must be 16000."
+          ],
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "LINEAR16",
+            "FLAC",
+            "MULAW",
+            "AMR",
+            "AMR_WB",
+            "OGG_OPUS",
+            "SPEEX_WITH_HEADER_BYTE"
+          ]
+        },
+        "enableWordConfidence": {
+          "description": "*Optional* If `true`, the top result includes a list of words and the\nconfidence for those words. If `false`, no word-level confidence\ninformation is returned. The default is `false`.",
+          "type": "boolean"
+        }
+      },
+      "id": "RecognitionConfig",
+      "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
+      "type": "object"
+    },
     "WordInfo": {
       "description": "Word-specific information for recognized words.",
       "type": "object",
@@ -32,13 +107,13 @@
     },
     "RecognitionAudio": {
       "properties": {
+        "uri": {
+          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. Currently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
+          "type": "string"
+        },
         "content": {
           "description": "The audio data bytes encoded as specified in\n`RecognitionConfig`. Note: as with all bytes fields, protobuffers use a\npure binary representation, whereas JSON representations use base64.",
           "format": "byte",
-          "type": "string"
-        },
-        "uri": {
-          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. Currently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
           "type": "string"
         }
       },
@@ -54,11 +129,11 @@
           "description": "A list of messages that carry the error details.  There is a common set of\nmessage types for APIs to use.",
           "type": "array",
           "items": {
+            "type": "object",
             "additionalProperties": {
               "description": "Properties of the object. Contains field @type with type URL.",
               "type": "any"
-            },
-            "type": "object"
+            }
           }
         },
         "code": {
@@ -78,8 +153,8 @@
       "type": "object",
       "properties": {
         "config": {
-          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request.",
-          "$ref": "RecognitionConfig"
+          "$ref": "RecognitionConfig",
+          "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request."
         },
         "audio": {
           "$ref": "RecognitionAudio",
@@ -89,6 +164,8 @@
       "id": "LongRunningRecognizeRequest"
     },
     "RecognizeResponse": {
+      "description": "The only message returned to the client by the `Recognize` method. It\ncontains the result as zero or more sequential `SpeechRecognitionResult`\nmessages.",
+      "type": "object",
       "properties": {
         "results": {
           "description": "*Output-only* Sequential list of transcription results corresponding to\nsequential portions of audio.",
@@ -98,9 +175,7 @@
           }
         }
       },
-      "id": "RecognizeResponse",
-      "description": "The only message returned to the client by the `Recognize` method. It\ncontains the result as zero or more sequential `SpeechRecognitionResult`\nmessages.",
-      "type": "object"
+      "id": "RecognizeResponse"
     },
     "RecognizeRequest": {
       "description": "The top-level message sent by the client for the `Recognize` method.",
@@ -118,8 +193,6 @@
       "id": "RecognizeRequest"
     },
     "SpeechContext": {
-      "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
-      "type": "object",
       "properties": {
         "phrases": {
           "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
@@ -129,11 +202,34 @@
           }
         }
       },
-      "id": "SpeechContext"
+      "id": "SpeechContext",
+      "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
+      "type": "object"
+    },
+    "SpeechRecognitionAlternative": {
+      "description": "Alternative hypotheses (a.k.a. n-best list).",
+      "type": "object",
+      "properties": {
+        "confidence": {
+          "description": "*Output-only* The confidence estimate between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. This field is set only for the top alternative of a non-streaming\nresult or, of a streaming result where `is_final=true`.\nThis field is not guaranteed to be accurate and users should not rely on it\nto be always provided.\nThe default of 0.0 is a sentinel value indicating `confidence` was not set.",
+          "format": "float",
+          "type": "number"
+        },
+        "transcript": {
+          "description": "*Output-only* Transcript text representing the words that the user spoke.",
+          "type": "string"
+        },
+        "words": {
+          "description": "*Output-only* A list of word-specific information for each recognized word.",
+          "type": "array",
+          "items": {
+            "$ref": "WordInfo"
+          }
+        }
+      },
+      "id": "SpeechRecognitionAlternative"
     },
     "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "type": "object",
       "properties": {
         "done": {
           "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
@@ -164,107 +260,8 @@
           "type": "object"
         }
       },
-      "id": "Operation"
-    },
-    "SpeechRecognitionAlternative": {
-      "description": "Alternative hypotheses (a.k.a. n-best list).",
-      "type": "object",
-      "properties": {
-        "confidence": {
-          "description": "*Output-only* The confidence estimate between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. This field is set only for the top alternative of a non-streaming\nresult or, of a streaming result where `is_final=true`.\nThis field is not guaranteed to be accurate and users should not rely on it\nto be always provided.\nThe default of 0.0 is a sentinel value indicating `confidence` was not set.",
-          "format": "float",
-          "type": "number"
-        },
-        "transcript": {
-          "description": "*Output-only* Transcript text representing the words that the user spoke.",
-          "type": "string"
-        },
-        "words": {
-          "description": "*Output-only* A list of word-specific information for each recognized word.",
-          "type": "array",
-          "items": {
-            "$ref": "WordInfo"
-          }
-        }
-      },
-      "id": "SpeechRecognitionAlternative"
-    },
-    "SpeechRecognitionResult": {
-      "description": "A speech recognition result corresponding to a portion of the audio.",
-      "type": "object",
-      "properties": {
-        "alternatives": {
-          "description": "*Output-only* May contain one or more recognition hypotheses (up to the\nmaximum specified in `max_alternatives`).\nThese alternatives are ordered in terms of accuracy, with the top (first)\nalternative being the most probable, as ranked by the recognizer.",
-          "type": "array",
-          "items": {
-            "$ref": "SpeechRecognitionAlternative"
-          }
-        }
-      },
-      "id": "SpeechRecognitionResult"
-    },
-    "RecognitionConfig": {
-      "properties": {
-        "languageCode": {
-          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](https://cloud.google.com/speech/docs/languages)\nfor a list of the currently supported language codes.",
-          "type": "string"
-        },
-        "speechContexts": {
-          "description": "*Optional* A means to provide context to assist the speech recognition.",
-          "type": "array",
-          "items": {
-            "$ref": "SpeechContext"
-          }
-        },
-        "encoding": {
-          "enumDescriptions": [
-            "Not specified.",
-            "Uncompressed 16-bit signed little-endian samples (Linear PCM).",
-            "[`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless Audio\nCodec) is the recommended encoding because it is\nlossless--therefore recognition is not compromised--and\nrequires only about half the bandwidth of `LINEAR16`. `FLAC` stream\nencoding supports 16-bit and 24-bit samples, however, not all fields in\n`STREAMINFO` are supported.",
-            "8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law.",
-            "Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz` must be 8000.",
-            "Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.",
-            "Opus encoded audio frames in Ogg container\n([OggOpus](https://wiki.xiph.org/OggOpus)).\n`sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or 48000.",
-            "Although the use of lossy encodings is not recommended, if a very low\nbitrate encoding is required, `OGG_OPUS` is highly preferred over\nSpeex encoding. The [Speex](https://speex.org/)  encoding supported by\nCloud Speech API has a header byte in each block, as in MIME type\n`audio/x-speex-with-header-byte`.\nIt is a variant of the RTP Speex encoding defined in\n[RFC 5574](https://tools.ietf.org/html/rfc5574).\nThe stream is a sequence of blocks, one block per RTP packet. Each block\nstarts with a byte containing the length of the block, in bytes, followed\nby one or more frames of Speex data, padded to an integral number of\nbytes (octets) as specified in RFC 5574. In other words, each RTP header\nis replaced with a single byte containing the block length. Only Speex\nwideband is supported. `sample_rate_hertz` must be 16000."
-          ],
-          "enum": [
-            "ENCODING_UNSPECIFIED",
-            "LINEAR16",
-            "FLAC",
-            "MULAW",
-            "AMR",
-            "AMR_WB",
-            "OGG_OPUS",
-            "SPEEX_WITH_HEADER_BYTE"
-          ],
-          "description": "*Required* Encoding of audio data sent in all `RecognitionAudio` messages.",
-          "type": "string"
-        },
-        "profanityFilter": {
-          "description": "*Optional* If set to `true`, the server will attempt to filter out\nprofanities, replacing all but the initial character in each filtered word\nwith asterisks, e.g. \"f***\". If set to `false` or omitted, profanities\nwon't be filtered out.",
-          "type": "boolean"
-        },
-        "enableWordConfidence": {
-          "description": "*Optional* If `true`, the top result includes a list of words and the\nconfidence for those words. If `false`, no word-level confidence\ninformation is returned. The default is `false`.",
-          "type": "boolean"
-        },
-        "sampleRateHertz": {
-          "description": "*Required* Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).",
-          "format": "int32",
-          "type": "integer"
-        },
-        "enableWordTimeOffsets": {
-          "description": "*Optional* If `true`, the top result includes a list of words and\nthe start and end time offsets (timestamps) for those words. If\n`false`, no word-level time offset information is returned. The default is\n`false`.",
-          "type": "boolean"
-        },
-        "maxAlternatives": {
-          "description": "*Optional* Maximum number of recognition hypotheses to be returned.\nSpecifically, the maximum number of `SpeechRecognitionAlternative` messages\nwithin each `SpeechRecognitionResult`.\nThe server may return fewer than `max_alternatives`.\nValid values are `0`-`30`. A value of `0` or `1` will return a maximum of\none. If omitted, will return a maximum of one.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "id": "RecognitionConfig",
-      "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
+      "id": "Operation",
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "type": "object"
     }
   },
@@ -293,6 +290,8 @@
     "operations": {
       "methods": {
         "get": {
+          "path": "v1/operations/{+name}",
+          "id": "speech.operations.get",
           "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
           "response": {
             "$ref": "Operation"
@@ -301,21 +300,19 @@
             "name"
           ],
           "httpMethod": "GET",
-          "parameters": {
-            "name": {
-              "location": "path",
-              "description": "The name of the operation resource.",
-              "required": true,
-              "type": "string",
-              "pattern": "^[^/]+$"
-            }
-          },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "flatPath": "v1/operations/{operationsId}",
-          "path": "v1/operations/{+name}",
-          "id": "speech.operations.get"
+          "parameters": {
+            "name": {
+              "description": "The name of the operation resource.",
+              "required": true,
+              "type": "string",
+              "pattern": "^[^/]+$",
+              "location": "path"
+            }
+          },
+          "flatPath": "v1/operations/{operationsId}"
         }
       }
     },
@@ -340,6 +337,8 @@
           "id": "speech.speech.longrunningrecognize"
         },
         "recognize": {
+          "id": "speech.speech.recognize",
+          "path": "v1/speech:recognize",
           "request": {
             "$ref": "RecognizeRequest"
           },
@@ -353,9 +352,7 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ],
-          "flatPath": "v1/speech:recognize",
-          "id": "speech.speech.recognize",
-          "path": "v1/speech:recognize"
+          "flatPath": "v1/speech:recognize"
         }
       }
     }
@@ -367,27 +364,29 @@
       "type": "string"
     },
     "prettyPrint": {
-      "location": "query",
       "description": "Returns response with indentations and line breaks.",
       "type": "boolean",
-      "default": "true"
+      "default": "true",
+      "location": "query"
     },
     "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "fields": {
-      "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
-    },
-    "callback": {
       "location": "query",
-      "description": "JSONP",
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
       "type": "string"
     },
+    "fields": {
+      "location": "query",
+      "description": "Selector specifying which fields to include in a partial response.",
+      "type": "string"
+    },
+    "callback": {
+      "description": "JSONP",
+      "type": "string",
+      "location": "query"
+    },
     "$.xgafv": {
+      "description": "V1 error format.",
+      "type": "string",
       "enumDescriptions": [
         "v1 error format",
         "v2 error format"
@@ -396,13 +395,9 @@
       "enum": [
         "1",
         "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string"
+      ]
     },
     "alt": {
-      "description": "Data format for response.",
-      "default": "json",
       "enum": [
         "json",
         "media",
@@ -414,7 +409,9 @@
         "Media download with context-dependent Content-Type",
         "Responses with Content-Type of application/x-protobuf"
       ],
-      "location": "query"
+      "location": "query",
+      "description": "Data format for response.",
+      "default": "json"
     },
     "key": {
       "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
@@ -422,14 +419,14 @@
       "location": "query"
     },
     "access_token": {
-      "location": "query",
       "description": "OAuth access token.",
-      "type": "string"
-    },
-    "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
       "type": "string",
       "location": "query"
+    },
+    "quotaUser": {
+      "location": "query",
+      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
+      "type": "string"
     },
     "pp": {
       "description": "Pretty-print response.",
@@ -449,5 +446,8 @@
     }
   },
   "version": "v1",
-  "baseUrl": "https://speech.googleapis.com/"
+  "baseUrl": "https://speech.googleapis.com/",
+  "servicePath": "",
+  "description": "Converts audio to text by applying powerful neural network models.",
+  "kind": "discovery#restDescription"
 }

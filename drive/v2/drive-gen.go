@@ -2340,7 +2340,8 @@ type Permission struct {
 	// - They can only be set on user and group permissions
 	// - The date must be in the future
 	// - The date cannot be more than a year in the future
-	// - The date can only be set on drive.permissions.update requests
+	// - The date can only be set on drive.permissions.update or
+	// drive.permissions.patch requests
 	ExpirationDate string `json:"expirationDate,omitempty"`
 
 	// Id: The ID of the user this permission refers to, and identical to

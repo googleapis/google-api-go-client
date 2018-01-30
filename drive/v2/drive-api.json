@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/Cm07ZpuzjQh_9ykIBD-tYn3zAdo\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/U0gnbNPHQ-lL099z_sXhZbUasws\"",
  "discoveryVersion": "v1",
  "id": "drive:v2",
  "name": "drive",
  "version": "v2",
- "revision": "20180112",
+ "revision": "20180122",
  "title": "Drive API",
  "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
  "ownerDomain": "google.com",
@@ -743,6 +743,7 @@
      "annotations": {
       "required": [
        "drive.comments.insert",
+       "drive.comments.patch",
        "drive.comments.update"
       ]
      }
@@ -854,6 +855,7 @@
      "description": "The plain text content used to create this reply. This is not HTML safe and should only be used as a starting point to make edits to a reply's content. This field is required on inserts if no verb is specified (resolve/reopen).",
      "annotations": {
       "required": [
+       "drive.replies.patch",
        "drive.replies.update"
       ]
      }
@@ -1631,7 +1633,7 @@
     },
     "expirationDate": {
      "type": "string",
-     "description": "The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions:  \n- They can only be set on user and group permissions \n- The date must be in the future \n- The date cannot be more than a year in the future \n- The date can only be set on drive.permissions.update requests",
+     "description": "The time at which this permission will expire (RFC 3339 date-time). Expiration dates have the following restrictions:  \n- They can only be set on user and group permissions \n- The date must be in the future \n- The date cannot be more than a year in the future \n- The date can only be set on drive.permissions.update or drive.permissions.patch requests",
      "format": "date-time"
     },
     "id": {

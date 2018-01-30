@@ -3278,6 +3278,10 @@ type Version struct {
 	// https://cloud.google.com/appengine/docs/standard/<language>/config/appref
 	RuntimeApiVersion string `json:"runtimeApiVersion,omitempty"`
 
+	// RuntimeChannel: The channel of the runtime to use. Only available for
+	// some runtimes. Defaults to the default channel.
+	RuntimeChannel string `json:"runtimeChannel,omitempty"`
+
 	// ServingStatus: Current serving status of this version. Only the
 	// versions with a SERVING status create instances and can be
 	// billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to

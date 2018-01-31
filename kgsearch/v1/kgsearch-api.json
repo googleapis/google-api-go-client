@@ -14,39 +14,16 @@
     "entities": {
       "methods": {
         "search": {
+          "httpMethod": "GET",
           "response": {
             "$ref": "SearchResponse"
           },
           "parameterOrder": [],
-          "httpMethod": "GET",
           "parameters": {
-            "indent": {
-              "description": "Enables indenting of json results.",
-              "type": "boolean",
-              "location": "query"
-            },
-            "languages": {
-              "type": "string",
-              "repeated": true,
-              "location": "query",
-              "description": "The list of language codes (defined in ISO 693) to run the query with,\ne.g. 'en'."
-            },
-            "ids": {
-              "description": "The list of entity id to be used for search instead of query string.\nTo specify multiple ids in the HTTP request, repeat the parameter in the\nURL as in ...?ids=A&ids=B",
-              "type": "string",
-              "repeated": true,
-              "location": "query"
-            },
-            "limit": {
-              "location": "query",
-              "description": "Limits the number of entities to be returned.",
-              "format": "int32",
-              "type": "integer"
-            },
             "prefix": {
-              "description": "Enables prefix match against names and aliases of entities",
               "type": "boolean",
-              "location": "query"
+              "location": "query",
+              "description": "Enables prefix match against names and aliases of entities"
             },
             "query": {
               "type": "string",
@@ -54,56 +31,69 @@
               "description": "The literal query string for search."
             },
             "types": {
-              "description": "Restricts returned entities with these types, e.g. Person\n(as defined in http://schema.org/Person). If multiple types are specified,\nreturned entities will contain one or more of these types.",
-              "type": "string",
               "repeated": true,
+              "location": "query",
+              "description": "Restricts returned entities with these types, e.g. Person\n(as defined in http://schema.org/Person). If multiple types are specified,\nreturned entities will contain one or more of these types.",
+              "type": "string"
+            },
+            "indent": {
+              "description": "Enables indenting of json results.",
+              "type": "boolean",
+              "location": "query"
+            },
+            "languages": {
+              "location": "query",
+              "description": "The list of language codes (defined in ISO 693) to run the query with,\ne.g. 'en'.",
+              "type": "string",
+              "repeated": true
+            },
+            "ids": {
+              "repeated": true,
+              "location": "query",
+              "description": "The list of entity id to be used for search instead of query string.\nTo specify multiple ids in the HTTP request, repeat the parameter in the\nURL as in ...?ids=A&ids=B",
+              "type": "string"
+            },
+            "limit": {
+              "description": "Limits the number of entities to be returned.",
+              "format": "int32",
+              "type": "integer",
               "location": "query"
             }
           },
           "flatPath": "v1/entities:search",
-          "path": "v1/entities:search",
           "id": "kgsearch.entities.search",
+          "path": "v1/entities:search",
           "description": "Searches Knowledge Graph for entities that match the constraints.\nA list of matched entities will be returned in response, which will be in\nJSON-LD format and compatible with http://schema.org"
         }
       }
     }
   },
   "parameters": {
-    "access_token": {
-      "description": "OAuth access token.",
-      "type": "string",
-      "location": "query"
-    },
-    "key": {
-      "location": "query",
-      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
-      "type": "string"
-    },
     "quotaUser": {
+      "location": "query",
       "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "pp": {
+      "location": "query",
       "description": "Pretty-print response.",
       "type": "boolean",
-      "default": "true",
-      "location": "query"
-    },
-    "oauth_token": {
-      "location": "query",
-      "description": "OAuth 2.0 token for the current user.",
-      "type": "string"
+      "default": "true"
     },
     "bearer_token": {
       "location": "query",
       "description": "OAuth bearer token.",
       "type": "string"
     },
-    "upload_protocol": {
+    "oauth_token": {
       "location": "query",
-      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "description": "OAuth 2.0 token for the current user.",
       "type": "string"
+    },
+    "upload_protocol": {
+      "description": "Upload protocol for media (e.g. \"raw\", \"multipart\").",
+      "type": "string",
+      "location": "query"
     },
     "prettyPrint": {
       "location": "query",
@@ -112,34 +102,39 @@
       "default": "true"
     },
     "fields": {
+      "location": "query",
       "description": "Selector specifying which fields to include in a partial response.",
-      "type": "string",
-      "location": "query"
+      "type": "string"
     },
     "uploadType": {
-      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
-      "type": "string",
-      "location": "query"
-    },
-    "$.xgafv": {
       "location": "query",
-      "enum": [
-        "1",
-        "2"
-      ],
-      "description": "V1 error format.",
-      "type": "string",
-      "enumDescriptions": [
-        "v1 error format",
-        "v2 error format"
-      ]
+      "description": "Legacy upload protocol for media (e.g. \"media\", \"multipart\").",
+      "type": "string"
     },
     "callback": {
       "location": "query",
       "description": "JSONP",
       "type": "string"
     },
+    "$.xgafv": {
+      "description": "V1 error format.",
+      "type": "string",
+      "enumDescriptions": [
+        "v1 error format",
+        "v2 error format"
+      ],
+      "location": "query",
+      "enum": [
+        "1",
+        "2"
+      ]
+    },
     "alt": {
+      "enum": [
+        "json",
+        "media",
+        "proto"
+      ],
       "type": "string",
       "enumDescriptions": [
         "Responses with Content-Type of application/json",
@@ -148,12 +143,17 @@
       ],
       "location": "query",
       "description": "Data format for response.",
-      "default": "json",
-      "enum": [
-        "json",
-        "media",
-        "proto"
-      ]
+      "default": "json"
+    },
+    "access_token": {
+      "type": "string",
+      "location": "query",
+      "description": "OAuth access token."
+    },
+    "key": {
+      "location": "query",
+      "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+      "type": "string"
     }
   },
   "schemas": {

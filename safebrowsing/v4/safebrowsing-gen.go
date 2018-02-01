@@ -216,6 +216,11 @@ func (s *ClientInfo) MarshalJSON() ([]byte, error) {
 
 // Constraints: The constraints for this update.
 type Constraints struct {
+	// DeviceLocation: A client's physical location, expressed as a ISO
+	// 31166-1 alpha-2
+	// region code.
+	DeviceLocation string `json:"deviceLocation,omitempty"`
+
 	// Language: Requests the lists for a specific language. Expects ISO 639
 	// alpha-2
 	// format.
@@ -250,7 +255,7 @@ type Constraints struct {
 	//   "RICE" - Rice-Golomb encoded data.
 	SupportedCompressions []string `json:"supportedCompressions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Language") to
+	// ForceSendFields is a list of field names (e.g. "DeviceLocation") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -258,12 +263,13 @@ type Constraints struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Language") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeviceLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

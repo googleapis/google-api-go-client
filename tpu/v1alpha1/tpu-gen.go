@@ -480,6 +480,7 @@ type Node struct {
 	//   "REPAIRING" - TPU node is being repaired and may be unusable.
 	// Details can be
 	// found in the `help_description` field.
+	//   "SUSPENDED" - TPU node is stopped.
 	State string `json:"state,omitempty"`
 
 	// TensorflowVersion: The version of Tensorflow running in the

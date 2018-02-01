@@ -3347,6 +3347,10 @@ type VideoContent struct {
 	// VideoUrl: The URL to fetch a video ad.
 	VideoUrl string `json:"videoUrl,omitempty"`
 
+	// VideoVastXml: The contents of a VAST document for a video ad.
+	// This document should conform to the VAST 2.0 or 3.0 standard.
+	VideoVastXml string `json:"videoVastXml,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "VideoUrl") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

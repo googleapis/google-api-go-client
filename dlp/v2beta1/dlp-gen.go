@@ -1845,7 +1845,10 @@ type GooglePrivacyDlpV2beta1Finding struct {
 	// Quote: The content that was found. Even if the content is not
 	// textual, it
 	// may be converted to a textual representation here.
-	// Provided if requested by the `InspectConfig`.
+	// Provided if requested by the `InspectConfig` and the finding is
+	// less than or equal to 4096 bytes long. If the finding exceeds 4096
+	// bytes
+	// in length, the quote may be omitted.
 	Quote string `json:"quote,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to

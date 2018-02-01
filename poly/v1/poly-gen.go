@@ -160,6 +160,15 @@ type Asset struct {
 	// **not** returned by List Assets.
 	License string `json:"license,omitempty"`
 
+	// Metadata: Application-defined opaque metadata for this asset. This
+	// field is only
+	// returned when querying for the signed-in user's own assets, not for
+	// public
+	// assets. This string is limited to 1K chars. It is up to the creator
+	// of
+	// the asset to define the format for this string (for example, JSON).
+	Metadata string `json:"metadata,omitempty"`
+
 	// Name: The unique identifier for the asset in the
 	// form:
 	// `assets/{ASSET_ID}`.

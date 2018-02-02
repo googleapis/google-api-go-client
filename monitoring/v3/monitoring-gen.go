@@ -955,7 +955,8 @@ type HttpCheck struct {
 	// comma-separated list of all the desired values as described at
 	// https://www.w3.org/Protocols/rfc2616/rfc2616.txt (page 31). Entering
 	// two separate headers with the same key in a Create call will cause
-	// the first to be overwritten by the second.
+	// the first to be overwritten by the second. The maximum number of
+	// headers allowed is 100.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// MaskHeaders: Boolean specifiying whether to encrypt the header
@@ -1343,6 +1344,10 @@ type ListUptimeCheckConfigsResponse struct {
 	// value of the next_page_token is passed to the subsequent List method
 	// call (in the request message's page_token field).
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: The total number of uptime check configurations for the
+	// project, irrespective of any pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// UptimeCheckConfigs: The returned uptime check configurations.
 	UptimeCheckConfigs []*UptimeCheckConfig `json:"uptimeCheckConfigs,omitempty"`

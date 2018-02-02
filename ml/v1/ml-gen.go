@@ -470,6 +470,11 @@ func (s *GoogleCloudMlV1__HyperparameterOutput) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__HyperparameterSpec: Represents a set of
 // hyperparameters to optimize.
 type GoogleCloudMlV1__HyperparameterSpec struct {
+	// EnableTrialEarlyStopping: Optional. Indicates if the hyperparameter
+	// tuning job enables auto trial
+	// early stopping.
+	EnableTrialEarlyStopping bool `json:"enableTrialEarlyStopping,omitempty"`
+
 	// Goal: Required. The type of goal to use for tuning. Available types
 	// are
 	// `MAXIMIZE` and `MINIMIZE`.
@@ -519,20 +524,29 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// Params: Required. The set of parameters to tune.
 	Params []*GoogleCloudMlV1__ParameterSpec `json:"params,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Goal") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ResumePreviousJobId: Optional. The prior hyperparameter tuning job id
+	// that users hope to
+	// continue with. The job id will be used to find the corresponding
+	// vizier
+	// study guid and resume the study.
+	ResumePreviousJobId string `json:"resumePreviousJobId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableTrialEarlyStopping") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Goal") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableTrialEarlyStopping")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

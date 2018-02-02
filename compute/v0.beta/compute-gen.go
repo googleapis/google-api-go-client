@@ -794,7 +794,9 @@ type AcceleratorType struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Zone: [Output Only] The name of the zone where the accelerator type
-	// resides, such as us-central1-a.
+	// resides, such as us-central1-a. You must specify this field as part
+	// of the HTTP request URL. It is not settable as a field in the request
+	// body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1398,7 +1400,9 @@ type Address struct {
 	Name string `json:"name,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional address
-	// resides. This field is not applicable to global addresses.
+	// resides. This field is not applicable to global addresses. You must
+	// specify this field as part of the HTTP request URL. You cannot set
+	// this field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -2097,9 +2101,9 @@ type AttachedDiskInitializeParams struct {
 	// not specified, the default is pd-standard, specified using the full
 	// URL. For
 	// example:
+	// https://www.googleapis.com/compute/v1/projects/project/zones/
+	// zone/diskTypes/pd-standard
 	//
-	// https://www.googleapis.com/compute/v1/projects/project/zones
-	// /zone/diskTypes/pd-standard
 	//
 	// Other values include pd-ssd and local-ssd. If you define this field,
 	// you can provide either the full or partial URL. For example, the
@@ -2124,25 +2128,28 @@ type AttachedDiskInitializeParams struct {
 	// specify the image by its family name. For example, specify
 	// family/debian-8 to use the latest Debian 8
 	// image:
-	//
 	// projects/debian-cloud/global/images/family/debian-8
 	//
-	// Alternatively, use a specific version of a public operating system
-	// image:
 	//
+	// Alternati
+	// vely, use a specific version of a public operating system
+	// image:
 	// projects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD
 	//
-	// To create a disk with a custom image that you created, specify the
-	// image name in the following format:
 	//
+	//
+	// To create a disk with a custom image that you created, specify the
+	// image name in the following
+	// format:
 	// global/images/my-custom-image
+	//
 	//
 	// You can also specify a custom image by its image family, which
 	// returns the latest version of the image in that family. Replace the
 	// image name with
 	// family/family-name:
-	//
 	// global/images/family/my-image-family
+	//
 	//
 	// If the source image is deleted later, this field will not be set.
 	SourceImage string `json:"sourceImage,omitempty"`
@@ -2201,7 +2208,8 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 //
 // For fooservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ
-// logging, and bar@gmail.com from DATA_WRITE logging.
+// logging, and bar@gmail.com from DATA_WRITE logging. This message is
+// only visible as GOOGLE_INTERNAL or IAM_AUDIT_CONFIG.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -3701,7 +3709,8 @@ type BackendService struct {
 
 	// Region: [Output Only] URL of the region where the regional backend
 	// service resides. This field is not applicable to global backend
-	// services.
+	// services. You must specify this field as part of the HTTP request
+	// URL. It is not settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SecurityPolicy: [Output Only] The resource URL for the security
@@ -4327,7 +4336,8 @@ type Binding struct {
 	// Condition: The condition that is associated with this binding. NOTE:
 	// an unsatisfied condition will not allow user access via current
 	// binding. Different bindings, including their conditions, are examined
-	// independently. This field is GOOGLE_INTERNAL.
+	// independently. This field is only visible as GOOGLE_INTERNAL or
+	// CONDITION_TRUSTED_TESTER.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -5368,24 +5378,26 @@ type Disk struct {
 	// specify the image by its family name. For example, specify
 	// family/debian-8 to use the latest Debian 8
 	// image:
-	//
 	// projects/debian-cloud/global/images/family/debian-8
 	//
-	// Alternatively, use a specific version of a public operating system
-	// image:
 	//
+	// Alternati
+	// vely, use a specific version of a public operating system
+	// image:
 	// projects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD
 	//
-	// To create a disk with a custom image that you created, specify the
-	// image name in the following format:
 	//
+	//
+	// To create a disk with a custom image that you created, specify the
+	// image name in the following
+	// format:
 	// global/images/my-custom-image
+	//
 	//
 	// You can also specify a custom image by its image family, which
 	// returns the latest version of the image in that family. Replace the
 	// image name with
 	// family/family-name:
-	//
 	// global/images/family/my-image-family
 	SourceImage string `json:"sourceImage,omitempty"`
 
@@ -5448,7 +5460,9 @@ type Disk struct {
 	// instances) in form: project/zones/zone/instances/instance
 	Users []string `json:"users,omitempty"`
 
-	// Zone: [Output Only] URL of the zone where the disk resides.
+	// Zone: [Output Only] URL of the zone where the disk resides. You must
+	// specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5921,7 +5935,9 @@ type DiskType struct {
 	// valid disk size, such as "10GB-10TB".
 	ValidDiskSize string `json:"validDiskSize,omitempty"`
 
-	// Zone: [Output Only] URL of the zone where the disk type resides.
+	// Zone: [Output Only] URL of the zone where the disk type resides. You
+	// must specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6673,7 +6689,7 @@ type Firewall struct {
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
 	// Denied: The list of DENY rules specified by this firewall. Each rule
-	// specifies a protocol and port-range tuple that describes a permitted
+	// specifies a protocol and port-range tuple that describes a denied
 	// connection.
 	Denied []*FirewallDenied `json:"denied,omitempty"`
 
@@ -7248,7 +7264,6 @@ type ForwardingRule struct {
 	// - TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
 	// 995, 1883, 5222
 	// - TargetVpnGateway: 500, 4500
-	// -
 	PortRange string `json:"portRange,omitempty"`
 
 	// Ports: This field is used along with the backend_service field for
@@ -7264,7 +7279,8 @@ type ForwardingRule struct {
 
 	// Region: [Output Only] URL of the region where the regional forwarding
 	// rule resides. This field is not applicable to global forwarding
-	// rules.
+	// rules. You must specify this field as part of the HTTP request URL.
+	// It is not settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -7306,8 +7322,6 @@ type ForwardingRule struct {
 	// same region as the forwarding rule. For global forwarding rules, this
 	// target must be a global load balancing resource. The forwarded
 	// traffic must be of a type appropriate to the target object.
-	//
-	// This field is not used for internal load balancing.
 	Target string `json:"target,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -9284,8 +9298,8 @@ type Instance struct {
 	// when the instance is created. For example, the following is a valid
 	// partial url to a predefined machine
 	// type:
-	//
 	// zones/us-central1-f/machineTypes/n1-standard-1
+	//
 	//
 	// To create a custom machine type, provide a URL to a machine type in
 	// the following format, where CPUS is 1 or an even number up to 32 (2,
@@ -9293,8 +9307,8 @@ type Instance struct {
 	// Memory must be a multiple of 256 MB and must be supplied in MB (e.g.
 	// 5 GB of memory is 5120
 	// MB):
-	//
 	// zones/zone/machineTypes/custom-CPUS-MEMORY
+	//
 	//
 	// For example: zones/us-central1-f/machineTypes/custom-4-5120
 	//
@@ -9373,7 +9387,9 @@ type Instance struct {
 	// comply with RFC1035.
 	Tags *Tags `json:"tags,omitempty"`
 
-	// Zone: [Output Only] URL of the zone where the instance resides.
+	// Zone: [Output Only] URL of the zone where the instance resides. You
+	// must specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -10162,9 +10178,9 @@ type InstanceGroupManagerActionsSummary struct {
 	Restarting int64 `json:"restarting,omitempty"`
 
 	// Verifying: [Output Only] The number of instances in the managed
-	// instance group that are being verified. More details regarding
-	// verification process are covered in the documentation of
-	// ManagedInstance.InstanceAction.VERIFYING enum field.
+	// instance group that are being verified. See the
+	// managedInstances[].currentAction property in the listManagedInstances
+	// method documentation.
 	Verifying int64 `json:"verifying,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Abandoning") to
@@ -12826,7 +12842,9 @@ type InterconnectAttachment struct {
 	PrivateInterconnectInfo *InterconnectAttachmentPrivateInfo `json:"privateInterconnectInfo,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional
-	// interconnect attachment resides.
+	// interconnect attachment resides. You must specify this field as part
+	// of the HTTP request URL. It is not settable as a field in the request
+	// body.
 	Region string `json:"region,omitempty"`
 
 	// Router: URL of the cloud router to be used for dynamic routing. This
@@ -14980,6 +14998,8 @@ type ManagedInstance struct {
 	// changes to the instance without stopping it. For example, the group
 	// can update the target pool list for an instance without stopping that
 	// instance.
+	// - VERIFYING The managed instance group has created the instance and
+	// it is in the process of being verified.
 	//
 	// Possible values:
 	//   "ABANDONING"
@@ -15837,7 +15857,9 @@ type Operation struct {
 	Progress int64 `json:"progress,omitempty"`
 
 	// Region: [Output Only] The URL of the region where the operation
-	// resides. Only available when performing regional operations.
+	// resides. Only available when performing regional operations. You must
+	// specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -15878,7 +15900,9 @@ type Operation struct {
 	Warnings []*OperationWarnings `json:"warnings,omitempty"`
 
 	// Zone: [Output Only] The URL of the zone where the operation resides.
-	// Only available when performing per-zone operations.
+	// Only available when performing per-zone operations. You must specify
+	// this field as part of the HTTP request URL. It is not settable as a
+	// field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -16622,10 +16646,11 @@ func (s *PathRule) MarshalJSON() ([]byte, error) {
 // }
 //
 // For a description of IAM and its features, see the [IAM developer's
-// guide](https://cloud.google.com/iam).
+// guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy.
+	// policy. This field is only visible as GOOGLE_INTERNAL or
+	// IAM_AUDIT_CONFIG.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. `bindings` with
@@ -16657,7 +16682,7 @@ type Policy struct {
 	// denied.
 	Rules []*Rule `json:"rules,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -18703,7 +18728,9 @@ type Router struct {
 	// Network: URI of the network to which this router belongs.
 	Network string `json:"network,omitempty"`
 
-	// Region: [Output Only] URI of the region where the router resides.
+	// Region: [Output Only] URI of the region where the router resides. You
+	// must specify this field as part of the HTTP request URL. It is not
+	// settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -21229,8 +21256,7 @@ type Subnetwork struct {
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// GatewayAddress: [Output Only] The gateway address for default routes
-	// to reach destination addresses outside this subnetwork. This field
-	// can be set only at resource creation time.
+	// to reach destination addresses outside this subnetwork.
 	GatewayAddress string `json:"gatewayAddress,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -22526,7 +22552,8 @@ type TargetInstance struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Zone: [Output Only] URL of the zone where the target instance
-	// resides.
+	// resides. You must specify this field as part of the HTTP request URL.
+	// It is not settable as a field in the request body.
 	Zone string `json:"zone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -24437,7 +24464,8 @@ type TargetVpnGateway struct {
 	Network string `json:"network,omitempty"`
 
 	// Region: [Output Only] URL of the region where the target VPN gateway
-	// resides.
+	// resides. You must specify this field as part of the HTTP request URL.
+	// It is not settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -25113,8 +25141,9 @@ type UrlMap struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Tests: The list of expected URL mappings. Request to update this
-	// UrlMap will succeed only if all of the test cases pass.
+	// Tests: The list of expected URL mapping tests. Request to update this
+	// UrlMap will succeed only if all of the test cases pass. You can
+	// specify a maximum of 100 tests per UrlMap.
 	Tests []*UrlMapTest `json:"tests,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -25565,6 +25594,8 @@ type VpnTunnel struct {
 	PeerIp string `json:"peerIp,omitempty"`
 
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
+	// You must specify this field as part of the HTTP request URL. It is
+	// not settable as a field in the request body.
 	Region string `json:"region,omitempty"`
 
 	// RemoteTrafficSelector: Remote traffic selectors to use when
@@ -25603,8 +25634,9 @@ type VpnTunnel struct {
 	//   "WAITING_FOR_FULL_CONFIG"
 	Status string `json:"status,omitempty"`
 
-	// TargetVpnGateway: URL of the VPN gateway with which this VPN tunnel
-	// is associated. Provided by the client when the VPN tunnel is created.
+	// TargetVpnGateway: URL of the Target VPN gateway with which this VPN
+	// tunnel is associated. Provided by the client when the VPN tunnel is
+	// created.
 	TargetVpnGateway string `json:"targetVpnGateway,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -37156,7 +37188,7 @@ type FirewallsUpdateCall struct {
 }
 
 // Update: Updates the specified firewall rule with the data included in
-// the request. Using PUT method, can only update following fields of
+// the request. The PUT method can only update the following fields of
 // firewall rule: allowed, description, sourceRanges, sourceTags,
 // targetTags.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/firewalls/update
@@ -37274,7 +37306,7 @@ func (c *FirewallsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified firewall rule with the data included in the request. Using PUT method, can only update following fields of firewall rule: allowed, description, sourceRanges, sourceTags, targetTags.",
+	//   "description": "Updates the specified firewall rule with the data included in the request. The PUT method can only update the following fields of firewall rule: allowed, description, sourceRanges, sourceTags, targetTags.",
 	//   "httpMethod": "PUT",
 	//   "id": "compute.firewalls.update",
 	//   "parameterOrder": [
@@ -68128,7 +68160,7 @@ func (c *RegionBackendServicesGetHealthCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "backendService": {
-	//       "description": "Name of the BackendService resource to which the queried instance belongs.",
+	//       "description": "Name of the BackendService resource for which to get health.",
 	//       "location": "path",
 	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
 	//       "required": true,

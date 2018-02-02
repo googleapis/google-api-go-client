@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/GG1iBQimAqJMnQlOmz2fV9XMtWc\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/6t7aNbHIWzbAlKVX55WqVqjfHNU\"",
  "discoveryVersion": "v1",
  "id": "compute:alpha",
  "name": "compute",
  "version": "alpha",
- "revision": "20171228",
+ "revision": "20180112",
  "title": "Compute Engine API",
  "description": "Creates and runs virtual machines on Google Cloud Platform.",
  "ownerDomain": "google.com",
@@ -150,7 +150,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] The name of the zone where the accelerator type resides, such as us-central1-a."
+     "description": "[Output Only] The name of the zone where the accelerator type resides, such as us-central1-a. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -628,7 +628,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the regional address resides. This field is not applicable to global addresses."
+     "description": "[Output Only] URL of the region where the regional address resides. This field is not applicable to global addresses. You must specify this field as part of the HTTP request URL. You cannot set this field in the request body."
     },
     "selfLink": {
      "type": "string",
@@ -1128,7 +1128,7 @@
     },
     "diskType": {
      "type": "string",
-     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\n\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard \n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
+     "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard\n\n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL."
     },
     "labels": {
      "type": "object",
@@ -1139,7 +1139,7 @@
     },
     "sourceImage": {
      "type": "string",
-     "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a custom image that you created, specify the image name in the following format:\n\nglobal/images/my-custom-image \n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-image-family \n\nIf the source image is deleted later, this field will not be set."
+     "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\nprojects/debian-cloud/global/images/family/debian-8\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set."
     },
     "sourceImageEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -1150,7 +1150,7 @@
   "AuditConfig": {
    "id": "AuditConfig",
    "type": "object",
-   "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"fooservice.googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:bar@gmail.com\" ] } ] } ] }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ logging, and bar@gmail.com from DATA_WRITE logging.",
+   "description": "Specifies the audit configuration for a service. The configuration determines which permission types are logged, and what identities, if any, are exempted from logging. An AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service, the union of the two AuditConfigs is used for that service: the log_types specified in each AuditConfig are enabled, and the exempted_members in each AuditConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n{ \"audit_configs\": [ { \"service\": \"allServices\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", \"exempted_members\": [ \"user:foo@gmail.com\" ] }, { \"log_type\": \"DATA_WRITE\", }, { \"log_type\": \"ADMIN_READ\", } ] }, { \"service\": \"fooservice.googleapis.com\" \"audit_log_configs\": [ { \"log_type\": \"DATA_READ\", }, { \"log_type\": \"DATA_WRITE\", \"exempted_members\": [ \"user:bar@gmail.com\" ] } ] } ] }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ logging, and bar@gmail.com from DATA_WRITE logging. This message is only visible as GOOGLE_INTERNAL or IAM_AUDIT_CONFIG.",
    "properties": {
     "auditLogConfigs": {
      "type": "array",
@@ -2211,7 +2211,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the regional backend service resides. This field is not applicable to global backend services."
+     "description": "[Output Only] URL of the region where the regional backend service resides. This field is not applicable to global backend services. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "securityPolicy": {
      "type": "string",
@@ -2694,7 +2694,7 @@
    "properties": {
     "condition": {
      "$ref": "Expr",
-     "description": "The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently. This field is GOOGLE_INTERNAL."
+     "description": "The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently. This field is only visible as GOOGLE_INTERNAL or CONDITION_TRUSTED_TESTER."
     },
     "members": {
      "type": "array",
@@ -3436,7 +3436,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the disk resides. Only applicable for regional resources."
+     "description": "[Output Only] URL of the region where the disk resides. Only applicable for regional resources. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "replicaZones": {
      "type": "array",
@@ -3456,7 +3456,7 @@
     },
     "sourceImage": {
      "type": "string",
-     "description": "The source image used to create this disk. If the source image is deleted, this field will not be set.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\n\nprojects/debian-cloud/global/images/family/debian-8 \n\nAlternatively, use a specific version of a public operating system image:\n\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD \n\nTo create a disk with a custom image that you created, specify the image name in the following format:\n\nglobal/images/my-custom-image \n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\n\nglobal/images/family/my-image-family"
+     "description": "The source image used to create this disk. If the source image is deleted, this field will not be set.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-8 to use the latest Debian 8 image:\nprojects/debian-cloud/global/images/family/debian-8\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-8-jessie-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family"
     },
     "sourceImageEncryptionKey": {
      "$ref": "CustomerEncryptionKey",
@@ -3519,7 +3519,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the disk resides."
+     "description": "[Output Only] URL of the zone where the disk resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -3849,7 +3849,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the disk type resides."
+     "description": "[Output Only] URL of the zone where the disk type resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -4358,7 +4358,7 @@
     },
     "denied": {
      "type": "array",
-     "description": "The list of DENY rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a permitted connection.",
+     "description": "The list of DENY rules specified by this firewall. Each rule specifies a protocol and port-range tuple that describes a denied connection.",
      "items": {
       "type": "object",
       "properties": {
@@ -4733,7 +4733,7 @@
     },
     "portRange": {
      "type": "string",
-     "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetVpnGateway: 500, 4500\n-"
+     "description": "This field is used along with the target field for TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy, TargetVpnGateway, TargetPool, TargetInstance.\n\nApplicable only when IPProtocol is TCP, UDP, or SCTP, only packets addressed to ports in the specified range will be forwarded to target. Forwarding rules with the same [IPAddress, IPProtocol] pair must have disjoint port ranges.\n\nSome types of forwarding target have constraints on the acceptable ports:  \n- TargetHttpProxy: 80, 8080 \n- TargetHttpsProxy: 443 \n- TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993, 995, 1883, 5222 \n- TargetVpnGateway: 500, 4500"
     },
     "ports": {
      "type": "array",
@@ -4744,7 +4744,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the regional forwarding rule resides. This field is not applicable to global forwarding rules."
+     "description": "[Output Only] URL of the region where the regional forwarding rule resides. This field is not applicable to global forwarding rules. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "selfLink": {
      "type": "string",
@@ -4765,7 +4765,7 @@
     },
     "target": {
      "type": "string",
-     "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object.\n\nThis field is not used for internal load balancing."
+     "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object."
     }
    }
   },
@@ -5619,7 +5619,7 @@
     },
     "hostType": {
      "type": "string",
-     "description": "Full or partial URL of the host type resource to use for this host, in the format: zones/zone/hostTypes/host-type. This is provided by the client when the host is created. For example, the following is a valid partial url to a predefined host type:\n\nzones/us-central1-b/hostTypes/n1-host-64-416"
+     "description": "Full or partial URL of the host type resource to use for this host, in the format: zones/zone/hostTypes/host-type. This is provided by the client when the host is created. For example, the following is a valid partial url to a predefined host type:\nzones/us-central1-b/hostTypes/n1-host-64-416"
     },
     "id": {
      "type": "string",
@@ -7152,7 +7152,7 @@
     },
     "machineType": {
      "type": "string",
-     "description": "Full or partial URL of the machine type resource to use for this instance, in the format: zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:\n\nzones/us-central1-f/machineTypes/n1-standard-1 \n\nTo create a custom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):\n\nzones/zone/machineTypes/custom-CPUS-MEMORY \n\nFor example: zones/us-central1-f/machineTypes/custom-4-5120 \n\nFor a full list of restrictions, read the Specifications for custom machine types.",
+     "description": "Full or partial URL of the machine type resource to use for this instance, in the format: zones/zone/machineTypes/machine-type. This is provided by the client when the instance is created. For example, the following is a valid partial url to a predefined machine type:\nzones/us-central1-f/machineTypes/n1-standard-1\n\n\nTo create a custom machine type, provide a URL to a machine type in the following format, where CPUS is 1 or an even number up to 32 (2, 4, 6, ... 24, etc), and MEMORY is the total memory for this instance. Memory must be a multiple of 256 MB and must be supplied in MB (e.g. 5 GB of memory is 5120 MB):\nzones/zone/machineTypes/custom-CPUS-MEMORY\n\n\nFor example: zones/us-central1-f/machineTypes/custom-4-5120 \n\nFor a full list of restrictions, read the Specifications for custom machine types.",
      "annotations": {
       "required": [
        "compute.instances.insert"
@@ -7252,7 +7252,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the instance resides."
+     "description": "[Output Only] URL of the zone where the instance resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -7859,7 +7859,7 @@
     },
     "verifying": {
      "type": "integer",
-     "description": "[Output Only] The number of instances in the managed instance group that are being verified. More details regarding verification process are covered in the documentation of ManagedInstance.InstanceAction.VERIFYING enum field.",
+     "description": "[Output Only] The number of instances in the managed instance group that are being verified. See the managedInstances[].currentAction property in the listManagedInstances method documentation.",
      "format": "int32"
     }
    }
@@ -9982,7 +9982,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the regional interconnect attachment resides."
+     "description": "[Output Only] URL of the region where the regional interconnect attachment resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "router": {
      "type": "string",
@@ -12061,7 +12061,7 @@
    "properties": {
     "currentAction": {
      "type": "string",
-     "description": "[Output Only] The current action that the managed instance group has scheduled for the instance. Possible values: \n- NONE The instance is running, and the managed instance group does not have any scheduled actions for this instance. \n- CREATING The managed instance group is creating this instance. If the group fails to create this instance, it will try again until it is successful. \n- CREATING_WITHOUT_RETRIES The managed instance group is attempting to create this instance only once. If the group fails to create this instance, it does not try again and the group's targetSize value is decreased instead. \n- RECREATING The managed instance group is recreating this instance. \n- DELETING The managed instance group is permanently deleting this instance. \n- ABANDONING The managed instance group is abandoning this instance. The instance will be removed from the instance group and from any target pools that are associated with this group. \n- RESTARTING The managed instance group is restarting the instance. \n- REFRESHING The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance.",
+     "description": "[Output Only] The current action that the managed instance group has scheduled for the instance. Possible values: \n- NONE The instance is running, and the managed instance group does not have any scheduled actions for this instance. \n- CREATING The managed instance group is creating this instance. If the group fails to create this instance, it will try again until it is successful. \n- CREATING_WITHOUT_RETRIES The managed instance group is attempting to create this instance only once. If the group fails to create this instance, it does not try again and the group's targetSize value is decreased instead. \n- RECREATING The managed instance group is recreating this instance. \n- DELETING The managed instance group is permanently deleting this instance. \n- ABANDONING The managed instance group is abandoning this instance. The instance will be removed from the instance group and from any target pools that are associated with this group. \n- RESTARTING The managed instance group is restarting the instance. \n- REFRESHING The managed instance group is applying configuration changes to the instance without stopping it. For example, the group can update the target pool list for an instance without stopping that instance. \n- VERIFYING The managed instance group has created the instance and it is in the process of being verified.",
      "enum": [
       "ABANDONING",
       "CREATING",
@@ -13360,7 +13360,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] The URL of the region where the operation resides. Only available when performing regional operations."
+     "description": "[Output Only] The URL of the region where the operation resides. Only available when performing regional operations. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "selfLink": {
      "type": "string",
@@ -13487,7 +13487,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] The URL of the zone where the operation resides. Only available when performing per-zone operations."
+     "description": "[Output Only] The URL of the zone where the operation resides. Only available when performing per-zone operations. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -13869,11 +13869,11 @@
   "Policy": {
    "id": "Policy",
    "type": "object",
-   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam).",
+   "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam/docs).",
    "properties": {
     "auditConfigs": {
      "type": "array",
-     "description": "Specifies cloud audit logging configuration for this policy.",
+     "description": "Specifies cloud audit logging configuration for this policy. This field is only visible as GOOGLE_INTERNAL or IAM_AUDIT_CONFIG.",
      "items": {
       "$ref": "AuditConfig"
      }
@@ -13903,7 +13903,7 @@
     },
     "version": {
      "type": "integer",
-     "description": "Version of the `Policy`. The default version is 0.",
+     "description": "Deprecated.",
      "format": "int32"
     }
    }
@@ -15697,7 +15697,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URI of the region where the router resides."
+     "description": "[Output Only] URI of the region where the router resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "selfLink": {
      "type": "string",
@@ -17779,6 +17779,10 @@
      "type": "string",
      "description": "An optional description of this resource. Provide this property when you create the resource. This field can be set only at resource creation time."
     },
+    "enableFlowLogs": {
+     "type": "boolean",
+     "description": "Whether to enable flow logging for this subnetwork."
+    },
     "fingerprint": {
      "type": "string",
      "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a Subnetwork. An up-to-date fingerprint must be provided in order to update the Subnetwork.",
@@ -17786,7 +17790,7 @@
     },
     "gatewayAddress": {
      "type": "string",
-     "description": "[Output Only] The gateway address for default routes to reach destination addresses outside this subnetwork. This field can be set only at resource creation time."
+     "description": "[Output Only] The gateway address for default routes to reach destination addresses outside this subnetwork."
     },
     "id": {
      "type": "string",
@@ -18662,7 +18666,7 @@
     },
     "zone": {
      "type": "string",
-     "description": "[Output Only] URL of the zone where the target instance resides."
+     "description": "[Output Only] URL of the zone where the target instance resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     }
    }
   },
@@ -19930,7 +19934,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the target VPN gateway resides."
+     "description": "[Output Only] URL of the region where the target VPN gateway resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "selfLink": {
      "type": "string",
@@ -20403,7 +20407,7 @@
     },
     "tests": {
      "type": "array",
-     "description": "The list of expected URL mappings. Request to update this UrlMap will succeed only if all of the test cases pass.",
+     "description": "The list of expected URL mapping tests. Request to update this UrlMap will succeed only if all of the test cases pass. You can specify a maximum of 100 tests per UrlMap.",
      "items": {
       "$ref": "UrlMapTest"
      }
@@ -20823,7 +20827,7 @@
     },
     "region": {
      "type": "string",
-     "description": "[Output Only] URL of the region where the VPN tunnel resides."
+     "description": "[Output Only] URL of the region where the VPN tunnel resides. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body."
     },
     "remoteTrafficSelector": {
      "type": "array",
@@ -20882,12 +20886,7 @@
     },
     "targetVpnGateway": {
      "type": "string",
-     "description": "URL of the VPN gateway with which this VPN tunnel is associated. Provided by the client when the VPN tunnel is created.",
-     "annotations": {
-      "required": [
-       "compute.vpnTunnels.insert"
-      ]
-     }
+     "description": "URL of the Target VPN gateway with which this VPN tunnel is associated. Provided by the client when the VPN tunnel is created."
     }
    }
   },
@@ -24271,7 +24270,7 @@
      "id": "compute.firewalls.update",
      "path": "{project}/global/firewalls/{firewall}",
      "httpMethod": "PUT",
-     "description": "Updates the specified firewall rule with the data included in the request. Using PUT method, can only update following fields of firewall rule: allowed, description, sourceRanges, sourceTags, targetTags.",
+     "description": "Updates the specified firewall rule with the data included in the request. The PUT method can only update the following fields of firewall rule: allowed, description, sourceRanges, sourceTags, targetTags.",
      "parameters": {
       "firewall": {
        "type": "string",
@@ -33485,6 +33484,141 @@
     }
    }
   },
+  "nodeTemplates": {
+   "methods": {
+    "getIamPolicy": {
+     "id": "compute.nodeTemplates.getIamPolicy",
+     "path": "{project}/regions/{region}/nodeTemplates/{resource}/getIamPolicy",
+     "httpMethod": "GET",
+     "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    },
+    "setIamPolicy": {
+     "id": "compute.nodeTemplates.setIamPolicy",
+     "path": "{project}/regions/{region}/nodeTemplates/{resource}/setIamPolicy",
+     "httpMethod": "POST",
+     "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "Policy"
+     },
+     "response": {
+      "$ref": "Policy"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute"
+     ]
+    },
+    "testIamPermissions": {
+     "id": "compute.nodeTemplates.testIamPermissions",
+     "path": "{project}/regions/{region}/nodeTemplates/{resource}/testIamPermissions",
+     "httpMethod": "POST",
+     "description": "Returns permissions that a caller has on the specified resource.",
+     "parameters": {
+      "project": {
+       "type": "string",
+       "description": "Project ID for this request.",
+       "required": true,
+       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+       "location": "path"
+      },
+      "region": {
+       "type": "string",
+       "description": "The name of the region for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      },
+      "resource": {
+       "type": "string",
+       "description": "Name of the resource for this request.",
+       "required": true,
+       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "project",
+      "region",
+      "resource"
+     ],
+     "request": {
+      "$ref": "TestPermissionsRequest"
+     },
+     "response": {
+      "$ref": "TestPermissionsResponse"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/cloud-platform",
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/compute.readonly"
+     ]
+    }
+   }
+  },
   "projects": {
    "methods": {
     "disableXpnHost": {
@@ -34385,7 +34519,7 @@
      "parameters": {
       "backendService": {
        "type": "string",
-       "description": "Name of the BackendService resource to which the queried instance belongs.",
+       "description": "Name of the BackendService resource for which to get health.",
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
@@ -37472,6 +37606,11 @@
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
+      },
+      "validateOnly": {
+       "type": "boolean",
+       "description": "If true, the request will not be committed.",
+       "location": "query"
       }
      },
      "parameterOrder": [
@@ -37749,6 +37888,11 @@
        "required": true,
        "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
        "location": "path"
+      },
+      "validateOnly": {
+       "type": "boolean",
+       "description": "If true, the request will not be committed.",
+       "location": "query"
       }
      },
      "parameterOrder": [

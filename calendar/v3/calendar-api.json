@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"YWOzh2SDasdU84ArJnpYek-OMdg/BXRSlYDfsDJfIj56UYVQoal0GSY\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/yCy5sb24vtyNhrLP2aRyDfx5GsY\"",
  "discoveryVersion": "v1",
  "id": "calendar:v3",
  "name": "calendar",
  "version": "v3",
- "revision": "20180107",
+ "revision": "20180130",
  "title": "Calendar API",
  "description": "Manipulates events and other calendar data.",
  "ownerDomain": "google.com",
@@ -490,9 +490,35 @@
      "type": "string",
      "description": "Additional notes (such as instructions from the domain administrator, legal notices) to display to the user. Can contain HTML. The maximum length is 2048 characters. Optional."
     },
+    "parameters": {
+     "$ref": "ConferenceParameters",
+     "description": "Additional properties related to a conference. An example would be a solution-specific setting for enabling video streaming."
+    },
     "signature": {
      "type": "string",
      "description": "The signature of the conference data.\nGenereated on server side. Must be preserved while copying the conference data between events, otherwise the conference data will not be copied.\nUnset for a conference with a failed create request.\nOptional for a conference with a pending create request."
+    }
+   }
+  },
+  "ConferenceParameters": {
+   "id": "ConferenceParameters",
+   "type": "object",
+   "properties": {
+    "addOnParameters": {
+     "$ref": "ConferenceParametersAddOnParameters",
+     "description": "Additional add-on specific data."
+    }
+   }
+  },
+  "ConferenceParametersAddOnParameters": {
+   "id": "ConferenceParametersAddOnParameters",
+   "type": "object",
+   "properties": {
+    "parameters": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "string"
+     }
     }
    }
   },

@@ -604,6 +604,10 @@ type DatasetListDatasets struct {
 	// organize and group your datasets.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// Location: [Experimental] The geographic location where the data
+	// resides.
+	Location string `json:"location,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1256,6 +1260,10 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
+	// JobTimeoutMs: [Optional] Job timeout in milliseconds. If this time
+	// limit is exceeded, BigQuery may attempt to terminate the job.
+	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
+
 	// Labels: The labels associated with this job. You can use these to
 	// organize and group your jobs. Label keys and values can be no longer
 	// than 63 characters, can only contain lowercase letters, numeric
@@ -1848,6 +1856,10 @@ type JobReference struct {
 	// maximum length is 1,024 characters.
 	JobId string `json:"jobId,omitempty"`
 
+	// Location: [Experimental] The geographic location of the job. Required
+	// except for US and EU.
+	Location Location `json:"location,omitempty"`
+
 	// ProjectId: [Required] The ID of the project containing this job.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -1875,6 +1887,10 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 }
 
 type JobStatistics struct {
+	// CompletionRatio: [Experimental] [Output-only] Job progress (0.0 ->
+	// 1.0) for LOAD and EXTRACT jobs.
+	CompletionRatio float64 `json:"completionRatio,omitempty"`
+
 	// CreationTime: [Output-only] Creation time of this job, in
 	// milliseconds since the epoch. This field will be present on all jobs.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
@@ -1902,7 +1918,7 @@ type JobStatistics struct {
 	// processed in the query statistics instead.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// ForceSendFields is a list of field names (e.g. "CompletionRatio") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1910,12 +1926,13 @@ type JobStatistics struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreationTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompletionRatio") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1923,6 +1940,20 @@ func (s *JobStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *JobStatistics) UnmarshalJSON(data []byte) error {
+	type NoMethod JobStatistics
+	var s1 struct {
+		CompletionRatio gensupport.JSONFloat64 `json:"completionRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CompletionRatio = float64(s1.CompletionRatio)
+	return nil
 }
 
 type JobStatistics2 struct {
@@ -2133,6 +2164,8 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 }
 
 type JsonValue interface{}
+
+type Location string
 
 type ProjectList struct {
 	// Etag: A hash of the page of results
@@ -2396,6 +2429,10 @@ type QueryRequest struct {
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
+	// Location: [Experimental] The geographic location where the job should
+	// run. Required except for US and EU.
+	Location Location `json:"location,omitempty"`
+
 	// MaxResults: [Optional] The maximum number of rows of data to return
 	// per page of results. Setting this flag to a small value such as 1000
 	// and then paging through results might improve reliability when the
@@ -2559,10 +2596,6 @@ type QueryTimelineSample struct {
 	// CompletedInputs: Total parallel units of work completed by this
 	// query.
 	CompletedInputs int64 `json:"completedInputs,omitempty"`
-
-	// CompletedInputsForActiveStages: Total parallel units of work
-	// completed by the currently active stages.
-	CompletedInputsForActiveStages int64 `json:"completedInputsForActiveStages,omitempty"`
 
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
@@ -4290,6 +4323,13 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	return c
 }
 
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location of the job. Required except for US and EU.
+func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
+	c.urlParams_.Set("location", location)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4386,6 +4426,11 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "location": {
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "[Required] Project ID of the job to cancel",
 	//       "location": "path",
@@ -4424,6 +4469,13 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
+	return c
+}
+
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location of the job. Required except for US and EU.
+func (c *JobsGetCall) Location(location string) *JobsGetCall {
+	c.urlParams_.Set("location", location)
 	return c
 }
 
@@ -4536,6 +4588,11 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "location": {
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "projectId": {
 	//       "description": "[Required] Project ID of the requested job",
 	//       "location": "path",
@@ -4573,6 +4630,14 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 	c := &JobsGetQueryResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
 	c.jobId = jobId
+	return c
+}
+
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location where the job should run. Required except for US
+// and EU.
+func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {
+	c.urlParams_.Set("location", location)
 	return c
 }
 
@@ -4713,6 +4778,11 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 	//       "description": "[Required] Job ID of the query job",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {

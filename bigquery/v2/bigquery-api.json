@@ -1,11 +1,11 @@
 {
  "kind": "discovery#restDescription",
- "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/Mwae5p5zLH2_6imBWYbzfwPCRb0\"",
+ "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/3jmtu98JWbdkF_ra2Tpllsx4T2M\"",
  "discoveryVersion": "v1",
  "id": "bigquery:v2",
  "name": "bigquery",
  "version": "v2",
- "revision": "20180117",
+ "revision": "20180127",
  "title": "BigQuery API",
  "description": "A data platform for customers to create, manage, share and query data.",
  "ownerDomain": "google.com",
@@ -334,6 +334,10 @@
         "additionalProperties": {
          "type": "string"
         }
+       },
+       "location": {
+        "type": "string",
+        "description": "[Experimental] The geographic location where the data resides."
        }
       }
      }
@@ -776,6 +780,11 @@
      "$ref": "JobConfigurationExtract",
      "description": "[Pick one] Configures an extract job."
     },
+    "jobTimeoutMs": {
+     "type": "string",
+     "description": "[Optional] Job timeout in milliseconds. If this time limit is exceeded, BigQuery may attempt to terminate the job.",
+     "format": "int64"
+    },
     "labels": {
      "type": "object",
      "description": "The labels associated with this job. You can use these to organize and group your jobs. Label keys and values can be no longer than 63 characters, can only contain lowercase letters, numeric characters, underscores and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter and each label in the list must have a different key.",
@@ -1153,6 +1162,10 @@
       ]
      }
     },
+    "location": {
+     "$ref": "Location",
+     "description": "[Experimental] The geographic location of the job. Required except for US and EU."
+    },
     "projectId": {
      "type": "string",
      "description": "[Required] The ID of the project containing this job.",
@@ -1168,6 +1181,11 @@
    "id": "JobStatistics",
    "type": "object",
    "properties": {
+    "completionRatio": {
+     "type": "number",
+     "description": "[Experimental] [Output-only] Job progress (0.0 -\u003e 1.0) for LOAD and EXTRACT jobs.",
+     "format": "double"
+    },
     "creationTime": {
      "type": "string",
      "description": "[Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs.",
@@ -1364,6 +1382,10 @@
    "id": "JsonValue",
    "type": "any"
   },
+  "Location": {
+   "id": "Location",
+   "type": "string"
+  },
   "ProjectList": {
    "id": "ProjectList",
    "type": "object",
@@ -1523,6 +1545,10 @@
      "description": "The resource type of the request.",
      "default": "bigquery#queryRequest"
     },
+    "location": {
+     "$ref": "Location",
+     "description": "[Experimental] The geographic location where the job should run. Required except for US and EU."
+    },
     "maxResults": {
      "type": "integer",
      "description": "[Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies.",
@@ -1641,11 +1667,6 @@
     "completedInputs": {
      "type": "integer",
      "description": "Total parallel units of work completed by this query.",
-     "format": "int32"
-    },
-    "completedInputsForActiveStages": {
-     "type": "integer",
-     "description": "Total parallel units of work completed by the currently active stages.",
      "format": "int32"
     },
     "elapsedMs": {
@@ -2355,6 +2376,11 @@
        "required": true,
        "location": "path"
       },
+      "location": {
+       "type": "string",
+       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+       "location": "query"
+      },
       "projectId": {
        "type": "string",
        "description": "[Required] Project ID of the job to cancel",
@@ -2385,6 +2411,11 @@
        "description": "[Required] Job ID of the requested job",
        "required": true,
        "location": "path"
+      },
+      "location": {
+       "type": "string",
+       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+       "location": "query"
       },
       "projectId": {
        "type": "string",
@@ -2417,6 +2448,11 @@
        "description": "[Required] Job ID of the query job",
        "required": true,
        "location": "path"
+      },
+      "location": {
+       "type": "string",
+       "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+       "location": "query"
       },
       "maxResults": {
        "type": "integer",

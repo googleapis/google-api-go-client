@@ -8187,7 +8187,9 @@ type PresentationsPagesGetThumbnailCall struct {
 // specified page in the
 // presentation and returns a URL to the thumbnail image.
 //
-// This request counts as an expensive read request for quota purposes.
+// This request counts as an [expensive read request](/slides/limits)
+// for
+// quota purposes.
 func (r *PresentationsPagesService) GetThumbnail(presentationId string, pageObjectId string) *PresentationsPagesGetThumbnailCall {
 	c := &PresentationsPagesGetThumbnailCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
@@ -8320,7 +8322,7 @@ func (c *PresentationsPagesGetThumbnailCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates a thumbnail of the latest version of the specified page in the\npresentation and returns a URL to the thumbnail image.\n\nThis request counts as an expensive read request for quota purposes.",
+	//   "description": "Generates a thumbnail of the latest version of the specified page in the\npresentation and returns a URL to the thumbnail image.\n\nThis request counts as an [expensive read request](/slides/limits) for\nquota purposes.",
 	//   "flatPath": "v1/presentations/{presentationId}/pages/{pageObjectId}/thumbnail",
 	//   "httpMethod": "GET",
 	//   "id": "slides.presentations.pages.getThumbnail",

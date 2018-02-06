@@ -181,7 +181,7 @@ type Build struct {
 	Images []string `json:"images,omitempty"`
 
 	// LogUrl: URL to logs for this build in Google Cloud
-	// Logging.
+	// Console.
 	// @OutputOnly
 	LogUrl string `json:"logUrl,omitempty"`
 

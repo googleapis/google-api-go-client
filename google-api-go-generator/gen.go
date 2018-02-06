@@ -458,7 +458,7 @@ func (a *API) jsonBytes() []byte {
 					log.Fatal(err)
 				}
 				var err error
-				slurp, err = json.Marshal(d)
+				slurp, err = json.MarshalIndent(d, "", "  ")
 				if err != nil {
 					log.Fatal(err)
 				}

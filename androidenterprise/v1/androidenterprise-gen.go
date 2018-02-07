@@ -1662,6 +1662,10 @@ type ManagedConfigurationsSettings struct {
 	// string "androidenterprise#managedConfigurationsSettings".
 	Kind string `json:"kind,omitempty"`
 
+	// LastUpdatedTimestampMillis: The last updated time of the managed
+	// configuration settings in milliseconds since 1970-01-01T00:00:00Z.
+	LastUpdatedTimestampMillis int64 `json:"lastUpdatedTimestampMillis,omitempty,string"`
+
 	// ManagedProperty: The set of managed properties for this
 	// configuration.
 	ManagedProperty []*ManagedProperty `json:"managedProperty,omitempty"`

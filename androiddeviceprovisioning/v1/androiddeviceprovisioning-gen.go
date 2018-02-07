@@ -1794,7 +1794,7 @@ func (r *CustomersService) List() *CustomersListCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of customers to show in a page of results.
-// A number between 1 and 1000 (inclusive).
+// A number between 1 and 100 (inclusive).
 func (c *CustomersListCall) PageSize(pageSize int64) *CustomersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1905,7 +1905,7 @@ func (c *CustomersListCall) Do(opts ...googleapi.CallOption) (*CustomerListCusto
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of customers to show in a page of results.\nA number between 1 and 1000 (inclusive).",
+	//       "description": "The maximum number of customers to show in a page of results.\nA number between 1 and 100 (inclusive).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

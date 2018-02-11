@@ -970,7 +970,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // `destination_dataset_id` is created when needed and shared with
 // the
 // appropriate data source service account.
-// Next id: 20
+// Next id: 21
 type TransferConfig struct {
 	// DataRefreshWindowDays: The number of days to look back to
 	// automatically refresh the data.

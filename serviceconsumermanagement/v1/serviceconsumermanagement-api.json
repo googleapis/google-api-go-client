@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20180205",
+  "revision": "20180208",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -725,7 +725,7 @@
       "type": "object"
     },
     "Context": {
-      "description": "`Context` defines which contexts an API requests.\n\nExample:\n\n    context:\n      rules:\n      - selector: \"*\"\n        requested:\n        - google.rpc.context.ProjectContext\n        - google.rpc.context.OriginContext\n\nThe above specifies that all methods in the API request\n`google.rpc.context.ProjectContext` and\n`google.rpc.context.OriginContext`.\n\nAvailable context types are defined in package\n`google.rpc.context`.",
+      "description": "`Context` defines which contexts an API requests.\n\nExample:\n\n    context:\n      rules:\n      - selector: \"*\"\n        requested:\n        - google.rpc.context.ProjectContext\n        - google.rpc.context.OriginContext\n\nThe above specifies that all methods in the API request\n`google.rpc.context.ProjectContext` and\n`google.rpc.context.OriginContext`.\n\nAvailable context types are defined in package\n`google.rpc.context`.\n\nThis also provides mechanism to whitelist any protobuf message extension that\ncan be sent in grpc metadata using “x-goog-ext-\u003cextension_id\u003e-bin” and\n“x-goog-ext-\u003cextension_id\u003e-jspb” format. For example, list any service\nspecific protobuf types that can appear in grpc metadata as follows in your\nyaml file:\n\nExample:\n\n    context:\n      rules:\n       - selector: \"google.example.library.v1.LibraryService.CreateBook\"\n         allowed_request_extensions:\n         - google.foo.v1.NewExtension\n         allowed_response_extensions:\n         - google.foo.v1.NewExtension\n\nYou can also specify extension ID instead of fully qualified extension name\nhere.",
       "id": "Context",
       "properties": {
         "rules": {
@@ -742,6 +742,20 @@
       "description": "A context rule provides information about the context for an individual API\nelement.",
       "id": "ContextRule",
       "properties": {
+        "allowedRequestExtensions": {
+          "description": "A list of full type names or extension IDs of extensions allowed in grpc\nside channel from client to backend.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "allowedResponseExtensions": {
+          "description": "A list of full type names or extension IDs of extensions allowed in grpc\nside channel from backend to client.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "provided": {
           "description": "A list of full type names of provided contexts.",
           "items": {
@@ -2187,7 +2201,7 @@
       "id": "TenantProjectPolicy",
       "properties": {
         "policyBindings": {
-          "description": "Additional policy bindings to be applied on the tenant\nproject.\nAt least one owner must be set in the bindings. Among the list of members\nas owners, at least one of them must be either `user` or `group` based.",
+          "description": "Policy bindings to be applied to the tenant project, in addition to the\n'roles/owner' role granted to the Service Consumer Management service\naccount.\nAt least one binding must have the role `roles/owner`. Among the list of\nmembers for `roles/owner`, at least one of them must be either `user` or\n`group` type.",
           "items": {
             "$ref": "PolicyBinding"
           },

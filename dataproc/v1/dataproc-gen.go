@@ -2097,6 +2097,14 @@ func (r *ProjectsRegionsClustersService) Delete(projectId string, region string,
 	return c
 }
 
+// ClusterUuid sets the optional parameter "clusterUuid": Specifying the
+// cluster_uuid means the RPC should fail (with error NOT_FOUND) if
+// cluster with specified UUID does not exist.
+func (c *ProjectsRegionsClustersDeleteCall) ClusterUuid(clusterUuid string) *ProjectsRegionsClustersDeleteCall {
+	c.urlParams_.Set("clusterUuid", clusterUuid)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2194,6 +2202,11 @@ func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//       "description": "Required. The cluster name.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "clusterUuid": {
+	//       "description": "Optional. Specifying the cluster_uuid means the RPC should fail (with error NOT_FOUND) if cluster with specified UUID does not exist.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {

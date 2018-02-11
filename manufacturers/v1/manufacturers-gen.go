@@ -503,7 +503,8 @@ type Issue struct {
 	// https://support.google.com/manufacturers/answer/6124116.
 	Attribute string `json:"attribute,omitempty"`
 
-	// Description: Description of the issue.
+	// Description: Longer description of the issue focused on how to
+	// resolve it.
 	Description string `json:"description,omitempty"`
 
 	// Severity: The severity of the issue.

@@ -551,14 +551,14 @@ type GoogleCloudDialogflowV2Intent struct {
 	// `Response` field in API.AI console.
 	Messages []*GoogleCloudDialogflowV2IntentMessage `json:"messages,omitempty"`
 
-	// MlEnabled: Optional. Indicates whether Machine Learning is enabled
+	// MlDisabled: Optional. Indicates whether Machine Learning is disabled
 	// for the intent.
-	// Note: If `ml_enabled` setting is set to false, then this intent is
+	// Note: If `ml_diabled` setting is set to false, then this intent is
 	// not
 	// taken into account during inference in `ML ONLY` match mode.
 	// Also,
 	// auto-markup in the UI is turned off.
-	MlEnabled bool `json:"mlEnabled,omitempty"`
+	MlDisabled bool `json:"mlDisabled,omitempty"`
 
 	// Name: Required for all methods except `create` (`create` populates
 	// the name

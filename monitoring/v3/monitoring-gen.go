@@ -1856,7 +1856,7 @@ type ResourceGroup struct {
 	//   "RESOURCE_TYPE_UNSPECIFIED" - Default value (not valid).
 	//   "INSTANCE" - A group of instances from Google Cloud Platform (GCP)
 	// or Amazon Web Services (AWS).
-	//   "AWS_ELB_LOAD_BALANCER" - A group of AWS load balancers.
+	//   "AWS_ELB_LOAD_BALANCER" - A group of Amazon ELB load balancers.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GroupId") to
@@ -2281,8 +2281,11 @@ type UptimeCheckConfig struct {
 	// InternalCheckers.
 	IsInternal bool `json:"isInternal,omitempty"`
 
-	// MonitoredResource: The monitored resource associated with the
-	// configuration.
+	// MonitoredResource: The monitored resource
+	// (https://cloud.google.com/monitoring/api/resources) associated with
+	// the configuration. The following monitored resource types are
+	// supported for uptime checks:  uptime_url  gce_instance  gae_app
+	// aws_ec2_instance  aws_elb_load_balancer
 	MonitoredResource *MonitoredResource `json:"monitoredResource,omitempty"`
 
 	// Name: A unique resource name for this UptimeCheckConfig. The format
@@ -2292,8 +2295,9 @@ type UptimeCheckConfig struct {
 	// in the response.
 	Name string `json:"name,omitempty"`
 
-	// Period: How often the uptime check is performed. Currently, only 1,
-	// 5, 10, and 15 minutes are supported. Required.
+	// Period: How often, in seconds, the uptime check is performed.
+	// Currently, the only supported values are 60s (1 minute), 300s (5
+	// minutes), 600s (10 minutes), and 900s (15 minutes). Required.
 	Period string `json:"period,omitempty"`
 
 	// ResourceGroup: The group resource associated with the configuration.
@@ -5229,7 +5233,7 @@ func (c *ProjectsUptimeCheckConfigsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The project in which to create the uptime check. The formatis projects/[PROJECT_ID].",
+	//       "description": "The project in which to create the uptime check. The format  is projects/[PROJECT_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5361,7 +5365,7 @@ func (c *ProjectsUptimeCheckConfigsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The uptime check configuration to delete. The formatis projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "The uptime check configuration to delete. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -5501,7 +5505,7 @@ func (c *ProjectsUptimeCheckConfigsGetCall) Do(opts ...googleapi.CallOption) (*U
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The uptime check configuration to retrieve. The formatis projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
+	//       "description": "The uptime check configuration to retrieve. The format  is projects/[PROJECT_ID]/uptimeCheckConfigs/[UPTIME_CHECK_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/uptimeCheckConfigs/[^/]+$",
 	//       "required": true,
@@ -5673,7 +5677,7 @@ func (c *ProjectsUptimeCheckConfigsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The project whose uptime check configurations are listed. The formatis projects/[PROJECT_ID].",
+	//       "description": "The project whose uptime check configurations are listed. The format  is projects/[PROJECT_ID].",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

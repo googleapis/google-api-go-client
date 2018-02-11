@@ -20,6 +20,7 @@
   "description": "Upload, process, query, and search Genomics data in the cloud.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/genomics",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -398,7 +399,7 @@
       }
     }
   },
-  "revision": "20180128",
+  "revision": "20180208",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

@@ -751,8 +751,14 @@ type ExplainQueryStage struct {
 	// CPU-bound tasks.
 	ComputeRatioMax float64 `json:"computeRatioMax,omitempty"`
 
+	// EndMs: Stage end time in milliseconds.
+	EndMs int64 `json:"endMs,omitempty,string"`
+
 	// Id: Unique ID for stage within plan.
 	Id int64 `json:"id,omitempty,string"`
+
+	// InputStages: IDs for stages that are inputs to this stage.
+	InputStages googleapi.Int64s `json:"inputStages,omitempty"`
 
 	// Name: Human-readable name for stage.
 	Name string `json:"name,omitempty"`
@@ -786,6 +792,9 @@ type ExplainQueryStage struct {
 	// ShuffleOutputBytesSpilled: Total number of bytes written to shuffle
 	// and spilled to disk.
 	ShuffleOutputBytesSpilled int64 `json:"shuffleOutputBytesSpilled,omitempty,string"`
+
+	// StartMs: Stage start time in milliseconds.
+	StartMs int64 `json:"startMs,omitempty,string"`
 
 	// Status: Current status for the stage.
 	Status string `json:"status,omitempty"`
@@ -1488,7 +1497,8 @@ type JobConfigurationLoad struct {
 	// SourceFormat: [Optional] The format of the data files. For CSV files,
 	// specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For
 	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro,
-	// specify "AVRO". The default value is CSV.
+	// specify "AVRO". For parquet, specify "PARQUET". For orc, specify
+	// "ORC". The default value is CSV.
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
@@ -1858,7 +1868,7 @@ type JobReference struct {
 
 	// Location: [Experimental] The geographic location of the job. Required
 	// except for US and EU.
-	Location Location `json:"location,omitempty"`
+	Location string `json:"location,omitempty"`
 
 	// ProjectId: [Required] The ID of the project containing this job.
 	ProjectId string `json:"projectId,omitempty"`
@@ -2007,7 +2017,8 @@ type JobStatistics2 struct {
 	// query.
 	StatementType string `json:"statementType,omitempty"`
 
-	// Timeline: [Output-only] Describes a timeline of job execution.
+	// Timeline: [Output-only] [Experimental] Describes a timeline of job
+	// execution.
 	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
@@ -2164,8 +2175,6 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 }
 
 type JsonValue interface{}
-
-type Location string
 
 type ProjectList struct {
 	// Etag: A hash of the page of results
@@ -2431,7 +2440,7 @@ type QueryRequest struct {
 
 	// Location: [Experimental] The geographic location where the job should
 	// run. Required except for US and EU.
-	Location Location `json:"location,omitempty"`
+	Location string `json:"location,omitempty"`
 
 	// MaxResults: [Optional] The maximum number of rows of data to return
 	// per page of results. Setting this flag to a small value such as 1000
@@ -3290,6 +3299,11 @@ type TimePartitioning struct {
 	// by this field. The field must be a top-level TIMESTAMP or DATE field.
 	// Its mode must be NULLABLE or REQUIRED.
 	Field string `json:"field,omitempty"`
+
+	// RequirePartitionFilter: [Experimental] [Optional] If set to true,
+	// queries over this table require a partition filter that can be used
+	// for partition elimination to be specified.
+	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
 	// Type: [Required] The only type supported is DAY, which will generate
 	// one partition per day.

@@ -261,7 +261,7 @@
       }
     }
   },
-  "revision": "20180111",
+  "revision": "20180207",
   "rootUrl": "https://manufacturers.googleapis.com/",
   "schemas": {
     "Attributes": {
@@ -546,7 +546,7 @@
           "type": "string"
         },
         "description": {
-          "description": "Description of the issue.",
+          "description": "Longer description of the issue focused on how to resolve it.",
           "type": "string"
         },
         "severity": {

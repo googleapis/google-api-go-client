@@ -30,7 +30,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/2Tjh3liYXkmR8GH8r-QlP8dkxp4\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/4RE3yZ8G6hkc4zQ8l8vwLojqIsk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -3541,7 +3541,7 @@
       }
     }
   },
-  "revision": "20180125",
+  "revision": "20180205",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -8592,6 +8592,30 @@
       },
       "type": "object"
     },
+    "Nonprofit": {
+      "description": "Nonprofit information.",
+      "id": "Nonprofit",
+      "properties": {
+        "nonprofitId": {
+          "$ref": "NonprofitId",
+          "description": "Id of the nonprofit."
+        },
+        "nonprofitLegalName": {
+          "description": "Legal name of the nonprofit.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NonprofitId": {
+      "id": "NonprofitId",
+      "properties": {
+        "value": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PageInfo": {
       "description": "Paging details for lists of resources, including total number of items available and number of resources returned in a single page.",
       "id": "PageInfo",
@@ -9543,10 +9567,18 @@
           "description": "A rendered string that displays the purchase amount and currency (e.g., \"$1.00\"). The string is rendered for the given language.",
           "type": "string"
         },
+        "isSuperChatForGood": {
+          "description": "True if this event is a Super Chat for Good purchase.",
+          "type": "boolean"
+        },
         "messageType": {
           "description": "The tier for the paid message, which is based on the amount of money spent to purchase the message.",
           "format": "uint32",
           "type": "integer"
+        },
+        "nonprofit": {
+          "$ref": "Nonprofit",
+          "description": "If this event is a Super Chat for Good purchase, this field will contain information about the charity the purchase is donated to."
         },
         "supporterDetails": {
           "$ref": "ChannelProfileDetails",

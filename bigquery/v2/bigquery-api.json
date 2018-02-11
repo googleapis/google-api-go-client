@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/3jmtu98JWbdkF_ra2Tpllsx4T2M\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/7pl1sDmdBC-mu1KF-9O2eOURI9U\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -986,7 +986,7 @@
       }
     }
   },
-  "revision": "20180127",
+  "revision": "20180205",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -1336,10 +1336,23 @@
           "format": "double",
           "type": "number"
         },
+        "endMs": {
+          "description": "Stage end time in milliseconds.",
+          "format": "int64",
+          "type": "string"
+        },
         "id": {
           "description": "Unique ID for stage within plan.",
           "format": "int64",
           "type": "string"
+        },
+        "inputStages": {
+          "description": "IDs for stages that are inputs to this stage.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
         },
         "name": {
           "description": "Human-readable name for stage.",
@@ -1387,6 +1400,11 @@
         },
         "shuffleOutputBytesSpilled": {
           "description": "Total number of bytes written to shuffle and spilled to disk.",
+          "format": "int64",
+          "type": "string"
+        },
+        "startMs": {
+          "description": "Stage start time in milliseconds.",
           "format": "int64",
           "type": "string"
         },
@@ -1821,7 +1839,7 @@
           "type": "integer"
         },
         "sourceFormat": {
-          "description": "[Optional] The format of the data files. For CSV files, specify \"CSV\". For datastore backups, specify \"DATASTORE_BACKUP\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". For Avro, specify \"AVRO\". The default value is CSV.",
+          "description": "[Optional] The format of the data files. For CSV files, specify \"CSV\". For datastore backups, specify \"DATASTORE_BACKUP\". For newline-delimited JSON, specify \"NEWLINE_DELIMITED_JSON\". For Avro, specify \"AVRO\". For parquet, specify \"PARQUET\". For orc, specify \"ORC\". The default value is CSV.",
           "type": "string"
         },
         "sourceUris": {
@@ -2057,8 +2075,8 @@
           "type": "string"
         },
         "location": {
-          "$ref": "Location",
-          "description": "[Experimental] The geographic location of the job. Required except for US and EU."
+          "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+          "type": "string"
         },
         "projectId": {
           "annotations": {
@@ -2168,7 +2186,7 @@
           "type": "string"
         },
         "timeline": {
-          "description": "[Output-only] Describes a timeline of job execution.",
+          "description": "[Output-only] [Experimental] Describes a timeline of job execution.",
           "items": {
             "$ref": "QueryTimelineSample"
           },
@@ -2276,10 +2294,6 @@
     "JsonValue": {
       "id": "JsonValue",
       "type": "any"
-    },
-    "Location": {
-      "id": "Location",
-      "type": "string"
     },
     "ProjectList": {
       "id": "ProjectList",
@@ -2440,8 +2454,8 @@
           "type": "string"
         },
         "location": {
-          "$ref": "Location",
-          "description": "[Experimental] The geographic location where the job should run. Required except for US and EU."
+          "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+          "type": "string"
         },
         "maxResults": {
           "description": "[Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies.",
@@ -3002,6 +3016,11 @@
         "field": {
           "description": "[Experimental] [Optional] If not set, the table is partitioned by pseudo column '_PARTITIONTIME'; if set, the table is partitioned by this field. The field must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or REQUIRED.",
           "type": "string"
+        },
+        "requirePartitionFilter": {
+          "default": "false",
+          "description": "[Experimental] [Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.",
+          "type": "boolean"
         },
         "type": {
           "description": "[Required] The only type supported is DAY, which will generate one partition per day.",

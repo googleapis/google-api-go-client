@@ -328,6 +328,22 @@ type ApplicationPolicy struct {
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
+	// DelegatedScopes: The scopes delegated to the app from Android Device
+	// Policy.
+	//
+	// Possible values:
+	//   "DELEGATED_SCOPE_UNSPECIFIED" - No delegation scope specified.
+	//   "CERT_INSTALL" - Grants access to certificate installation and
+	// management.
+	//   "MANAGED_CONFIGURATIONS" - Grants access to managed configurations
+	// management.
+	//   "BLOCK_UNINSTALL" - Grants access to blocking uninstallation.
+	//   "PERMISSION_GRANT" - Grants access to permission policy and
+	// permission grant state.
+	//   "PACKAGE_ACCESS" - Grants access to package access state.
+	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
+	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
+
 	// InstallType: The type of installation to perform.
 	//
 	// Possible values:
@@ -358,6 +374,15 @@ type ApplicationPolicy struct {
 	// <tr><td>HIDDEN</td><td>string</td></tr>
 	// <tr><td>BUNDLE_ARRAY</td><td>array of objects</td></tr> </table>
 	ManagedConfiguration googleapi.RawMessage `json:"managedConfiguration,omitempty"`
+
+	// MinimumVersionCode: The minimum version of the app that runs on the
+	// device. If set, the device attempts to update the app to at least
+	// this version code. If the app is not up-to-date, the device will
+	// contain a NonComplianceDetail with non_compliance_reason set to
+	// APP_NOT_UPDATED. The app must already be published to Google Play
+	// with a version code greater than or equal to this value. At most 20
+	// apps may specify a minimum version code per policy.
+	MinimumVersionCode int64 `json:"minimumVersionCode,omitempty"`
 
 	// PackageName: The package name of the app. For example,
 	// com.google.android.youtube for the YouTube app.
@@ -674,11 +699,13 @@ func (s *Device) MarshalJSON() ([]byte, error) {
 // DeviceSettings: Information about security related device settings on
 // device.
 type DeviceSettings struct {
-	// AdbEnabled: If the ADB is enabled Settings.Global.ADB_ENABLED.
+	// AdbEnabled: Whether ADB
+	// (https://developer.android.com/studio/command-line/adb.html) is
+	// enabled on the device.
 	AdbEnabled bool `json:"adbEnabled,omitempty"`
 
-	// DevelopmentSettingsEnabled: If the developer mode is enabled
-	// Settings.Global.DEVELOPMENT_SETTINGS_ENABLED.
+	// DevelopmentSettingsEnabled: Whether developer mode is enabled on the
+	// device.
 	DevelopmentSettingsEnabled bool `json:"developmentSettingsEnabled,omitempty"`
 
 	// EncryptionStatus: Encryption status from DevicePolicyManager.
@@ -687,28 +714,31 @@ type DeviceSettings struct {
 	//   "ENCRYPTION_STATUS_UNSPECIFIED" - Unspecified. No device should
 	// have this type.
 	//   "UNSUPPORTED" - Encryption is not supported by the device.
-	//   "INACTIVE" - Encryption is supported by the device, but not
+	//   "INACTIVE" - Encryption is supported by the device, but is not
 	// currently active.
 	//   "ACTIVATING" - Encryption is not currently active, but is currently
 	// being activated.
-	//   "ACTIVE" - Encryption is active
+	//   "ACTIVE" - Encryption is active.
 	//   "ACTIVE_DEFAULT_KEY" - Encryption is active, but an encryption key
-	// is not set by the user
-	//   "ACTIVE_PER_USER" - Encrpyiton is active, and the encryption key is
+	// is not set by the user.
+	//   "ACTIVE_PER_USER" - Encryption is active, and the encryption key is
 	// tied to the user profile.
 	EncryptionStatus string `json:"encryptionStatus,omitempty"`
 
-	// IsDeviceSecure: Device secured with PIN/password.
+	// IsDeviceSecure: Whether the device is secured with PIN/password.
 	IsDeviceSecure bool `json:"isDeviceSecure,omitempty"`
 
-	// IsEncrypted: Whether the storage encryption is enabled
-	// DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE or
-	// DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER in N+ devices.
+	// IsEncrypted: Whether the storage encryption is enabled.
 	IsEncrypted bool `json:"isEncrypted,omitempty"`
 
-	// UnknownSourcesEnabled: If installing apps from unknown sources is
-	// enabled. Settings.Secure.INSTALL_NON_MARKET_APPS.
+	// UnknownSourcesEnabled: Whether installing apps from unknown sources
+	// is enabled.
 	UnknownSourcesEnabled bool `json:"unknownSourcesEnabled,omitempty"`
+
+	// VerifyAppsEnabled: Whether Verify Apps (Google Play Protect
+	// (https://support.google.com/googleplay/answer/2812853)) is enabled on
+	// the device.
+	VerifyAppsEnabled bool `json:"verifyAppsEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdbEnabled") to
 	// unconditionally include in API requests. By default, fields with
@@ -1418,6 +1448,10 @@ type NetworkInfo struct {
 	// Meid: MEID number of the CDMA device. For example, A00000292788E1.
 	Meid string `json:"meid,omitempty"`
 
+	// NetworkOperatorName: Alphabetic name of current registered operator.
+	// For example, Vodafone.
+	NetworkOperatorName string `json:"networkOperatorName,omitempty"`
+
 	// WifiMacAddress: Wi-Fi MAC address of the device. For example,
 	// 7c:11:11:11:11:11.
 	WifiMacAddress string `json:"wifiMacAddress,omitempty"`
@@ -1908,6 +1942,18 @@ type Policy struct {
 	// Use with vpn_config_disabled to prevent modification of this setting.
 	AlwaysOnVpnPackage *AlwaysOnVpnPackage `json:"alwaysOnVpnPackage,omitempty"`
 
+	// AndroidDevicePolicyTracks: The app tracks for Android Device Policy
+	// the device can access. The device receives the latest version among
+	// all accessible tracks. If no tracks are specified, then the device
+	// only uses the production track.
+	//
+	// Possible values:
+	//   "APP_TRACK_UNSPECIFIED" - This value is ignored.
+	//   "PRODUCTION" - The production track, which provides the latest
+	// stable release.
+	//   "BETA" - The beta track, which provides the latest beta release.
+	AndroidDevicePolicyTracks []string `json:"androidDevicePolicyTracks,omitempty"`
+
 	// Applications: Policy applied to apps.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
 
@@ -2368,6 +2414,12 @@ type SoftwareInfo struct {
 
 	// BootloaderVersion: The system bootloader version number, e.g. 0.6.7.
 	BootloaderVersion string `json:"bootloaderVersion,omitempty"`
+
+	// DeviceBuildSignature: SHA-256 hash of android.content.pm.Signature
+	// (https://developer.android.com/reference/android/content/pm/Signature.
+	// html) associated with the system package, which can be used to verify
+	// that the system build hasn't been modified.
+	DeviceBuildSignature string `json:"deviceBuildSignature,omitempty"`
 
 	// DeviceKernelVersion: Kernel version, for example, 2.6.32.9-g103d848.
 	DeviceKernelVersion string `json:"deviceKernelVersion,omitempty"`

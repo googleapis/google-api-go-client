@@ -288,6 +288,9 @@ type BatchUpdatePresentationResponse struct {
 	// replies to some requests may be empty.
 	Replies []*Response `json:"replies,omitempty"`
 
+	// WriteControl: The updated write control after applying the request.
+	WriteControl *WriteControl `json:"writeControl,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2114,6 +2117,11 @@ type Image struct {
 
 	// ImageProperties: The properties of the image.
 	ImageProperties *ImageProperties `json:"imageProperties,omitempty"`
+
+	// SourceUrl: The source URL is the URL used to insert the image. The
+	// source URL can be
+	// empty.
+	SourceUrl string `json:"sourceUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentUrl") to
 	// unconditionally include in API requests. By default, fields with

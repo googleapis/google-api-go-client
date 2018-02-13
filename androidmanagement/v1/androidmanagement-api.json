@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180129",
+  "revision": "20180207",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -864,6 +864,31 @@
           ],
           "type": "string"
         },
+        "delegatedScopes": {
+          "description": "The scopes delegated to the app from Android Device Policy.",
+          "enumDescriptions": [
+            "No delegation scope specified.",
+            "Grants access to certificate installation and management.",
+            "Grants access to managed configurations management.",
+            "Grants access to blocking uninstallation.",
+            "Grants access to permission policy and permission grant state.",
+            "Grants access to package access state.",
+            "Grants access for enabling system apps."
+          ],
+          "items": {
+            "enum": [
+              "DELEGATED_SCOPE_UNSPECIFIED",
+              "CERT_INSTALL",
+              "MANAGED_CONFIGURATIONS",
+              "BLOCK_UNINSTALL",
+              "PERMISSION_GRANT",
+              "PACKAGE_ACCESS",
+              "ENABLE_SYSTEM_APP"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "installType": {
           "description": "The type of installation to perform.",
           "enum": [
@@ -889,6 +914,11 @@
           },
           "description": "Managed configuration applied to the app. The format for the configuration is dictated by the ManagedProperty values supported by the app. Each field name in the managed configuration must match the key field of the ManagedProperty. The field value must be compatible with the type of the ManagedProperty: \u003ctable\u003e \u003ctr\u003e\u003ctd\u003e\u003ci\u003etype\u003c/i\u003e\u003c/td\u003e\u003ctd\u003e\u003ci\u003eJSON value\u003c/i\u003e\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eBOOL\u003c/td\u003e\u003ctd\u003etrue or false\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eSTRING\u003c/td\u003e\u003ctd\u003estring\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eINTEGER\u003c/td\u003e\u003ctd\u003enumber\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eCHOICE\u003c/td\u003e\u003ctd\u003estring\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eMULTISELECT\u003c/td\u003e\u003ctd\u003earray of strings\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eHIDDEN\u003c/td\u003e\u003ctd\u003estring\u003c/td\u003e\u003c/tr\u003e \u003ctr\u003e\u003ctd\u003eBUNDLE_ARRAY\u003c/td\u003e\u003ctd\u003earray of objects\u003c/td\u003e\u003c/tr\u003e \u003c/table\u003e",
           "type": "object"
+        },
+        "minimumVersionCode": {
+          "description": "The minimum version of the app that runs on the device. If set, the device attempts to update the app to at least this version code. If the app is not up-to-date, the device will contain a NonComplianceDetail with non_compliance_reason set to APP_NOT_UPDATED. The app must already be published to Google Play with a version code greater than or equal to this value. At most 20 apps may specify a minimum version code per policy.",
+          "format": "int32",
+          "type": "integer"
         },
         "packageName": {
           "description": "The package name of the app. For example, com.google.android.youtube for the YouTube app.",
@@ -1151,11 +1181,11 @@
       "id": "DeviceSettings",
       "properties": {
         "adbEnabled": {
-          "description": "If the ADB is enabled Settings.Global.ADB_ENABLED.",
+          "description": "Whether ADB (https://developer.android.com/studio/command-line/adb.html) is enabled on the device.",
           "type": "boolean"
         },
         "developmentSettingsEnabled": {
-          "description": "If the developer mode is enabled Settings.Global.DEVELOPMENT_SETTINGS_ENABLED.",
+          "description": "Whether developer mode is enabled on the device.",
           "type": "boolean"
         },
         "encryptionStatus": {
@@ -1172,24 +1202,28 @@
           "enumDescriptions": [
             "Unspecified. No device should have this type.",
             "Encryption is not supported by the device.",
-            "Encryption is supported by the device, but not currently active.",
+            "Encryption is supported by the device, but is not currently active.",
             "Encryption is not currently active, but is currently being activated.",
-            "Encryption is active",
-            "Encryption is active, but an encryption key is not set by the user",
-            "Encrpyiton is active, and the encryption key is tied to the user profile."
+            "Encryption is active.",
+            "Encryption is active, but an encryption key is not set by the user.",
+            "Encryption is active, and the encryption key is tied to the user profile."
           ],
           "type": "string"
         },
         "isDeviceSecure": {
-          "description": "Device secured with PIN/password.",
+          "description": "Whether the device is secured with PIN/password.",
           "type": "boolean"
         },
         "isEncrypted": {
-          "description": "Whether the storage encryption is enabled DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE or DevicePolicyManager.ENCRYPTION_STATUS_ACTIVE_PER_USER in N+ devices.",
+          "description": "Whether the storage encryption is enabled.",
           "type": "boolean"
         },
         "unknownSourcesEnabled": {
-          "description": "If installing apps from unknown sources is enabled. Settings.Secure.INSTALL_NON_MARKET_APPS.",
+          "description": "Whether installing apps from unknown sources is enabled.",
+          "type": "boolean"
+        },
+        "verifyAppsEnabled": {
+          "description": "Whether Verify Apps (Google Play Protect (https://support.google.com/googleplay/answer/2812853)) is enabled on the device.",
           "type": "boolean"
         }
       },
@@ -1711,6 +1745,10 @@
           "description": "MEID number of the CDMA device. For example, A00000292788E1.",
           "type": "string"
         },
+        "networkOperatorName": {
+          "description": "Alphabetic name of current registered operator. For example, Vodafone.",
+          "type": "string"
+        },
         "wifiMacAddress": {
           "description": "Wi-Fi MAC address of the device. For example, 7c:11:11:11:11:11.",
           "type": "string"
@@ -2050,6 +2088,23 @@
         "alwaysOnVpnPackage": {
           "$ref": "AlwaysOnVpnPackage",
           "description": "Configuration for an always-on VPN connection. Use with vpn_config_disabled to prevent modification of this setting."
+        },
+        "androidDevicePolicyTracks": {
+          "description": "The app tracks for Android Device Policy the device can access. The device receives the latest version among all accessible tracks. If no tracks are specified, then the device only uses the production track.",
+          "enumDescriptions": [
+            "This value is ignored.",
+            "The production track, which provides the latest stable release.",
+            "The beta track, which provides the latest beta release."
+          ],
+          "items": {
+            "enum": [
+              "APP_TRACK_UNSPECIFIED",
+              "PRODUCTION",
+              "BETA"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         },
         "applications": {
           "description": "Policy applied to apps.",
@@ -2461,6 +2516,10 @@
         },
         "bootloaderVersion": {
           "description": "The system bootloader version number, e.g. 0.6.7.",
+          "type": "string"
+        },
+        "deviceBuildSignature": {
+          "description": "SHA-256 hash of android.content.pm.Signature (https://developer.android.com/reference/android/content/pm/Signature.html) associated with the system package, which can be used to verify that the system build hasn't been modified.",
           "type": "string"
         },
         "deviceKernelVersion": {

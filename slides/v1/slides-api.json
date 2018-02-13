@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20180201",
+  "revision": "20180208",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -424,6 +424,10 @@
             "$ref": "Response"
           },
           "type": "array"
+        },
+        "writeControl": {
+          "$ref": "WriteControl",
+          "description": "The updated write control after applying the request."
         }
       },
       "type": "object"
@@ -1317,6 +1321,10 @@
         "imageProperties": {
           "$ref": "ImageProperties",
           "description": "The properties of the image."
+        },
+        "sourceUrl": {
+          "description": "The source URL is the URL used to insert the image. The source URL can be\nempty.",
+          "type": "string"
         }
       },
       "type": "object"

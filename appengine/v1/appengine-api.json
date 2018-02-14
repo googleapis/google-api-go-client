@@ -122,7 +122,7 @@
     "apps": {
       "methods": {
         "create": {
-          "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields:\nid - The ID of the target Cloud Platform project.\nlocation - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/python/console/).",
+          "description": "Creates an App Engine application for a Google Cloud Platform project. Required fields:\nid - The ID of the target Cloud Platform project.\nlocation - The region (https://cloud.google.com/appengine/docs/locations) where you want the App Engine application located.For more information about App Engine applications, see Managing Projects, Applications, and Billing (https://cloud.google.com/appengine/docs/standard/python/console/).",
           "flatPath": "v1/apps",
           "httpMethod": "POST",
           "id": "appengine.apps.create",
@@ -1333,7 +1333,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status):  For Version resources that use basic scaling, manual scaling, or run in  the App Engine flexible environment.\ninstance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class):  For Version resources that run in the App Engine standard environment.\nautomatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.\nautomatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.\nautomatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine Flexible environment.\nautomatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine Flexible environment.\nautomatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine Flexible environment.\nautomatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine Flexible environment.",
+                  "description": "Updates the specified Version resource. You can specify the following fields depending on the App Engine environment and type of scaling that the version resource uses:\nserving_status (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.serving_status):  For Version resources that use basic scaling, manual scaling, or run in  the App Engine flexible environment.\ninstance_class (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.instance_class):  For Version resources that run in the App Engine standard environment.\nautomatic_scaling.min_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.\nautomatic_scaling.max_idle_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine standard environment.\nautomatic_scaling.min_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine flexible environment.\nautomatic_scaling.max_total_instances (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine flexible environment.\nautomatic_scaling.cool_down_period_sec (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine flexible environment.\nautomatic_scaling.cpu_utilization.target_utilization (https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#Version.FIELDS.automatic_scaling):  For Version resources that use automatic scaling and run in the App  Engine flexible environment.",
                   "flatPath": "v1/apps/{appsId}/services/{servicesId}/versions/{versionsId}",
                   "httpMethod": "PATCH",
                   "id": "appengine.apps.services.versions.patch",
@@ -1583,7 +1583,7 @@
       }
     }
   },
-  "revision": "20180129",
+  "revision": "20180209",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -1708,7 +1708,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "Location from which this application will be run. Application instances will run out of data centers in the chosen location, which is also where all of the application's end user content is stored.Defaults to us-central.Options are:us-central - Central USeurope-west - Western Europeus-east1 - Eastern US",
+          "description": "Location from which this application runs. Application instances run out of the data centers in the specified location, which is also where all of the application's end user content is stored.Defaults to us-central1.View the list of supported locations (https://cloud.google.com/appengine/docs/locations).",
           "type": "string"
         },
         "name": {
@@ -1829,7 +1829,7 @@
           "type": "string"
         },
         "maxTotalInstances": {
-          "description": "Maximum number of instances that should be started to handle requests.",
+          "description": "Maximum number of instances that should be started to handle requests for this version.",
           "format": "int32",
           "type": "integer"
         },
@@ -1844,7 +1844,7 @@
           "type": "string"
         },
         "minTotalInstances": {
-          "description": "Minimum number of instances that should be maintained for this version.",
+          "description": "Minimum number of running instances that should be maintained for this version.",
           "format": "int32",
           "type": "integer"
         },
@@ -2579,11 +2579,11 @@
       "id": "LocationMetadata",
       "properties": {
         "flexibleEnvironmentAvailable": {
-          "description": "App Engine Flexible Environment is available in the given location.@OutputOnly",
+          "description": "App Engine flexible environment is available in the given location.@OutputOnly",
           "type": "boolean"
         },
         "standardEnvironmentAvailable": {
-          "description": "App Engine Standard Environment is available in the given location.@OutputOnly",
+          "description": "App Engine standard environment is available in the given location.@OutputOnly",
           "type": "boolean"
         }
       },
@@ -2613,7 +2613,7 @@
           "type": "array"
         },
         "instanceTag": {
-          "description": "Tag to apply to the VM instance during creation. for Only applicable in the App Engine flexible environment.",
+          "description": "Tag to apply to the instance during creation. Only applicable in the App Engine flexible environment.",
           "type": "string"
         },
         "name": {
@@ -2621,7 +2621,7 @@
           "type": "string"
         },
         "subnetworkName": {
-          "description": "Google Cloud Platform sub-network where the virtual machines are created. Specify the short name, not the resource path.If a subnetwork name is specified, a network name will also be required unless it is for the default network.\nIf the network the VM instance is being created in is a Legacy network, then the IP address is allocated from the IPv4Range.\nIf the network the VM instance is being created in is an auto Subnet Mode Network, then only network name should be specified (not the subnetwork_name) and the IP address is created from the IPCidrRange of the subnetwork that exists in that zone for that network.\nIf the network the VM instance is being created in is a custom Subnet Mode Network, then the subnetwork_name must be specified and the IP address is created from the IPCidrRange of the subnetwork.If specified, the subnetwork must exist in the same region as the App Engine flexible environment application.",
+          "description": "Google Cloud Platform sub-network where the virtual machines are created. Specify the short name, not the resource path.If a subnetwork name is specified, a network name will also be required unless it is for the default network.\nIf the network that the instance is being created in is a Legacy network, then the IP address is allocated from the IPv4Range.\nIf the network that the instance is being created in is an auto Subnet Mode Network, then only network name should be specified (not the subnetwork_name) and the IP address is created from the IPCidrRange of the subnetwork that exists in that zone for that network.\nIf the network that the instance is being created in is a custom Subnet Mode Network, then the subnetwork_name must be specified and the IP address is created from the IPCidrRange of the subnetwork.If specified, the subnetwork must exist in the same region as the App Engine flexible environment application.",
           "type": "string"
         }
       },
@@ -3046,12 +3046,12 @@
       "id": "StandardSchedulerSettings",
       "properties": {
         "maxInstances": {
-          "description": "Maximum number of instances for an app version. Set to zero to disable max_instances configuration.",
+          "description": "Maximum number of instances to run for this version. Set to zero to disable max_instances configuration.",
           "format": "int32",
           "type": "integer"
         },
         "minInstances": {
-          "description": "Minimum number of instances for an app version. Set to zero to disable min_instances configuration.",
+          "description": "Minimum number of instances to run for this version. Set to zero to disable min_instances configuration.",
           "format": "int32",
           "type": "integer"
         },
@@ -3350,7 +3350,7 @@
         },
         "healthCheck": {
           "$ref": "HealthCheck",
-          "description": "Configures health checking for VM instances. Unhealthy instances are stopped and replaced with new instances. Only applicable in the App Engine flexible environment.Only returned in GET requests if view=FULL is set."
+          "description": "Configures health checking for instances. Unhealthy instances are stopped and replaced with new instances. Only applicable in the App Engine flexible environment.Only returned in GET requests if view=FULL is set."
         },
         "id": {
           "description": "Relative name of the version within the service. Example: v1. Version names can contain only lowercase letters, numbers, or hyphens. Reserved names: \"default\", \"latest\", and any name with the prefix \"ah-\".",
@@ -3398,7 +3398,7 @@
         },
         "livenessCheck": {
           "$ref": "LivenessCheck",
-          "description": "Configures liveness health checking for VM instances. Unhealthy instances are stopped and replaced with new instancesOnly returned in GET requests if view=FULL is set."
+          "description": "Configures liveness health checking for instances. Unhealthy instances are stopped and replaced with new instancesOnly returned in GET requests if view=FULL is set."
         },
         "manualScaling": {
           "$ref": "ManualScaling",
@@ -3418,11 +3418,11 @@
         },
         "readinessCheck": {
           "$ref": "ReadinessCheck",
-          "description": "Configures readiness health checking for VM instances. Unhealthy instances are not put into the backend traffic rotation.Only returned in GET requests if view=FULL is set."
+          "description": "Configures readiness health checking for instances. Unhealthy instances are not put into the backend traffic rotation.Only returned in GET requests if view=FULL is set."
         },
         "resources": {
           "$ref": "Resources",
-          "description": "Machine resources for this version. Only applicable for VM runtimes."
+          "description": "Machine resources for this version. Only applicable in the App Engine flexible environment."
         },
         "runtime": {
           "description": "Desired runtime. Example: python27.",
@@ -3463,7 +3463,7 @@
           "type": "boolean"
         },
         "zones": {
-          "description": "The choice of gce zones to use for this App Engine Flexible version.",
+          "description": "The Google Compute Engine zones that are supported by this version in the App Engine flexible environment.",
           "items": {
             "type": "string"
           },

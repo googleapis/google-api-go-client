@@ -321,40 +321,6 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
-            "patch": {
-              "description": "Updates a specific job resource.\n\nCurrently the only supported fields to update are `labels`.",
-              "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}",
-              "httpMethod": "PATCH",
-              "id": "ml.projects.jobs.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The job name.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/jobs/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "updateMask": {
-                  "description": "Required. Specifies the path, relative to `Job`, of the field to update.\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your job resource.\n\nFor example, to change the labels of a job, the `update_mask` parameter\nwould be specified as `labels`, `etag`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"labels\": {\n         \"owner\": \"Google\",\n         \"color\": \"Blue\"\n      }\n      \"etag\": \"33a64df551425fcc55e4d42a148795d9f25f89d4\"\n    }\nIf `etag` matches the one on the server, the labels of the job will be\nreplaced with the given ones, and the server end `etag` will be\nrecalculated.\n\nCurrently the only supported update masks are `labels` and `etag`.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v1/{+name}",
-              "request": {
-                "$ref": "GoogleCloudMlV1__Job"
-              },
-              "response": {
-                "$ref": "GoogleCloudMlV1__Job"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
             "setIamPolicy": {
               "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
               "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:setIamPolicy",
@@ -641,7 +607,7 @@
                   "type": "string"
                 },
                 "updateMask": {
-                  "description": "Required. Specifies the path, relative to `Model`, of the field to update.\n\nFor example, to change the description of a model to \"foo\" and set its\ndefault version to \"version_1\", the `update_mask` parameter would be\nspecified as `description`, `default_version.name`, and the `PATCH`\nrequest body would specify the new value, as follows:\n    {\n      \"description\": \"foo\",\n      \"defaultVersion\": {\n        \"name\":\"version_1\"\n      }\n    }\nIn this example, the model is blindly overwritten since no etag is given.\n\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your model resource.\n\nCurrently the supported update masks are `description`,\n`default_version.name`, `labels`, and `etag`.",
+                  "description": "Required. Specifies the path, relative to `Model`, of the field to update.\n\nFor example, to change the description of a model to \"foo\" and set its\ndefault version to \"version_1\", the `update_mask` parameter would be\nspecified as `description`, `default_version.name`, and the `PATCH`\nrequest body would specify the new value, as follows:\n    {\n      \"description\": \"foo\",\n      \"defaultVersion\": {\n        \"name\":\"version_1\"\n      }\n    }\n\nCurrently the supported update masks are `description` and\n`default_version.name`.",
                   "format": "google-fieldmask",
                   "location": "query",
                   "type": "string"
@@ -854,7 +820,7 @@
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "Required. Specifies the path, relative to `Version`, of the field to\nupdate. Must be present and non-empty.\n\nFor example, to change the description of a version to \"foo\", the\n`update_mask` parameter would be specified as `description`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"description\": \"foo\"\n    }\nIn this example, the version is blindly overwritten since no etag is given.\n\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your version resource.\n\nCurrently the only supported update masks are `description`, `labels`, and\n`etag`, and `expire_time`.",
+                      "description": "Required. Specifies the path, relative to `Version`, of the field to\nupdate. Must be present and non-empty.\n\nFor example, to change the description of a version to \"foo\", the\n`update_mask` parameter would be specified as `description`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"description\": \"foo\"\n    }\n\nCurrently the only supported update mask is`description`.",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -1026,7 +992,7 @@
       }
     }
   },
-  "revision": "20180130",
+  "revision": "20180210",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1246,21 +1212,9 @@
           "description": "Output only. The details of a failure or a cancellation.",
           "type": "string"
         },
-        "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a job from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform job updates in order to avoid race\nconditions: An `etag` is returned in the response to `GetJob`, and\nsystems are expected to put that etag in the request to `UpdateJob` to\nensure that their change will be applied to the same version of the job.",
-          "format": "byte",
-          "type": "string"
-        },
         "jobId": {
           "description": "Required. The user-specified id of the job.",
           "type": "string"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Optional. One or more labels that you can add, to organize your jobs.\nEach label is a key-value pair, where both the key and the value are\narbitrary strings that you supply.\nFor more information, see the documentation on\n\u003ca href=\"/ml-engine/docs/how-tos/resource-labels\"\u003eusing labels\u003c/a\u003e.",
-          "type": "object"
         },
         "predictionInput": {
           "$ref": "GoogleCloudMlV1__PredictionInput",
@@ -1421,18 +1375,6 @@
           "description": "Optional. The description specified for the model when it was created.",
           "type": "string"
         },
-        "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a model from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform model updates in order to avoid race\nconditions: An `etag` is returned in the response to `GetModel`, and\nsystems are expected to put that etag in the request to `UpdateModel` to\nensure that their change will be applied to the model as intended.",
-          "format": "byte",
-          "type": "string"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Optional. One or more labels that you can add, to organize your models.\nEach label is a key-value pair, where both the key and the value are\narbitrary strings that you supply.\nFor more information, see the documentation on\n\u003ca href=\"/ml-engine/docs/how-tos/resource-labels\"\u003eusing labels\u003c/a\u003e.",
-          "type": "object"
-        },
         "name": {
           "description": "Required. The name specified for the model when it was created.\n\nThe model name must be unique within the project it is created in.",
           "type": "string"
@@ -1468,13 +1410,6 @@
         "isCancellationRequested": {
           "description": "Indicates whether a request to cancel this operation has been made.",
           "type": "boolean"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "The user labels, inherited from the model or the model version being\noperated on.",
-          "type": "object"
         },
         "modelName": {
           "description": "Contains the name of the model associated with the operation.",
@@ -1842,21 +1777,9 @@
           "description": "Output only. The details of a failure or a cancellation.",
           "type": "string"
         },
-        "etag": {
-          "description": "`etag` is used for optimistic concurrency control as a way to help\nprevent simultaneous updates of a model from overwriting each other.\nIt is strongly suggested that systems make use of the `etag` in the\nread-modify-write cycle to perform model updates in order to avoid race\nconditions: An `etag` is returned in the response to `GetVersion`, and\nsystems are expected to put that etag in the request to `UpdateVersion` to\nensure that their change will be applied to the model as intended.",
-          "format": "byte",
-          "type": "string"
-        },
         "isDefault": {
           "description": "Output only. If true, this version will be used to handle prediction\nrequests that do not specify a version.\n\nYou can change the default version by calling\n[projects.methods.versions.setDefault](/ml-engine/reference/rest/v1/projects.models.versions/setDefault).",
           "type": "boolean"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Optional. One or more labels that you can add, to organize your model\nversions. Each label is a key-value pair, where both the key and the value\nare arbitrary strings that you supply.\nFor more information, see the documentation on\n\u003ca href=\"/ml-engine/docs/how-tos/resource-labels\"\u003eusing labels\u003c/a\u003e.",
-          "type": "object"
         },
         "lastUseTime": {
           "description": "Output only. The time the version was last used for prediction.",
@@ -1902,10 +1825,6 @@
       "description": "Associates `members` with a `role`.",
       "id": "GoogleIamV1__Binding",
       "properties": {
-        "condition": {
-          "$ref": "GoogleType__Expr",
-          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently.\nThis field is only visible as GOOGLE_INTERNAL or CONDITION_TRUSTED_TESTER."
-        },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
@@ -1951,11 +1870,6 @@
         "policy": {
           "$ref": "GoogleIamV1__Policy",
           "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
-        },
-        "updateMask": {
-          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
-          "format": "google-fieldmask",
-          "type": "string"
         }
       },
       "type": "object"
@@ -2069,29 +1983,6 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleType__Expr": {
-      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
-      "id": "GoogleType__Expr",
-      "properties": {
-        "description": {
-          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
-          "type": "string"
-        },
-        "expression": {
-          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
-          "type": "string"
-        },
-        "location": {
-          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
-          "type": "string"
-        },
-        "title": {
-          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },

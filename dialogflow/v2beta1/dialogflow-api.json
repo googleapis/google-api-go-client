@@ -1275,7 +1275,7 @@
       }
     }
   },
-  "revision": "20180206",
+  "revision": "20180212",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2405,7 +2405,7 @@
           "description": "The collection of entity type to update or create."
         },
         "entityTypeBatchUri": {
-          "description": "Warning: Importing entity types from a URI is not implemented yet.\nThis feature is coming soon.\nThe URI to a Google Cloud Storage file containing entity types to update\nor create. The file format can either be a serialized proto (of\nEntityBatch type) or a JSON object. Note: The URI must start with\n\"gs://\".",
+          "description": "The URI to a Google Cloud Storage file containing entity types to update\nor create. The file format can either be a serialized proto (of\nEntityBatch type) or a JSON object. Note: The URI must start with\n\"gs://\".",
           "type": "string"
         },
         "languageCode": {
@@ -2443,7 +2443,7 @@
           "description": "The collection of intents to update or create."
         },
         "intentBatchUri": {
-          "description": "Warning: Importing intents from a URI is not implemented yet.\nThis feature is coming soon.\nThe URI to a Google Cloud Storage file containing intents to update or\ncreate. The file format can either be a serialized proto (of IntentBatch\ntype) or JSON object. Note: The URI must start with \"gs://\".",
+          "description": "The URI to a Google Cloud Storage file containing intents to update or\ncreate. The file format can either be a serialized proto (of IntentBatch\ntype) or JSON object. Note: The URI must start with \"gs://\".",
           "type": "string"
         },
         "intentView": {
@@ -2655,7 +2655,7 @@
       "id": "GoogleCloudDialogflowV2beta1ExportAgentRequest",
       "properties": {
         "agentUri": {
-          "description": "Warning: Exporting agents to a URI is not implemented yet.\nThis feature is coming soon.\n\nOptional. The Google Cloud Storage URI to export the agent to.\nNote: The URI must start with\n\"gs://\". If left unspecified, the serialized agent is returned inline.",
+          "description": "Optional. The Google Cloud Storage URI to export the agent to.\nNote: The URI must start with\n\"gs://\". If left unspecified, the serialized agent is returned inline.",
           "type": "string"
         }
       },
@@ -2687,7 +2687,7 @@
           "type": "string"
         },
         "agentUri": {
-          "description": "Warning: Importing agents from a URI is not implemented yet.\nThis feature is coming soon.\n\nThe URI to a Google Cloud Storage file containing the agent to import.\nNote: The URI must start with \"gs://\".",
+          "description": "The URI to a Google Cloud Storage file containing the agent to import.\nNote: The URI must start with \"gs://\".",
           "type": "string"
         }
       },
@@ -3645,7 +3645,7 @@
           "type": "string"
         },
         "agentUri": {
-          "description": "Warning: Restoring agents from a URI is not implemented yet.\nThis feature is coming soon.\n\nThe URI to a Google Cloud Storage file containing the agent to restore.\nNote: The URI must start with \"gs://\".",
+          "description": "The URI to a Google Cloud Storage file containing the agent to restore.\nNote: The URI must start with \"gs://\".",
           "type": "string"
         }
       },

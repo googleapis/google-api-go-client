@@ -705,7 +705,7 @@
       }
     }
   },
-  "revision": "20180129",
+  "revision": "20180209",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "AuthorizedCertificate": {
@@ -968,11 +968,11 @@
       "id": "LocationMetadata",
       "properties": {
         "flexibleEnvironmentAvailable": {
-          "description": "App Engine Flexible Environment is available in the given location.@OutputOnly",
+          "description": "App Engine flexible environment is available in the given location.@OutputOnly",
           "type": "boolean"
         },
         "standardEnvironmentAvailable": {
-          "description": "App Engine Standard Environment is available in the given location.@OutputOnly",
+          "description": "App Engine standard environment is available in the given location.@OutputOnly",
           "type": "boolean"
         }
       },

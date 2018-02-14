@@ -1306,11 +1306,11 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // LocationMetadata: Metadata for the given
 // google.cloud.location.Location.
 type LocationMetadata struct {
-	// FlexibleEnvironmentAvailable: App Engine Flexible Environment is
+	// FlexibleEnvironmentAvailable: App Engine flexible environment is
 	// available in the given location.@OutputOnly
 	FlexibleEnvironmentAvailable bool `json:"flexibleEnvironmentAvailable,omitempty"`
 
-	// StandardEnvironmentAvailable: App Engine Standard Environment is
+	// StandardEnvironmentAvailable: App Engine standard environment is
 	// available in the given location.@OutputOnly
 	StandardEnvironmentAvailable bool `json:"standardEnvironmentAvailable,omitempty"`
 

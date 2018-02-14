@@ -1789,7 +1789,7 @@ func (s *PlanNode) MarshalJSON() ([]byte, error) {
 //     }
 //
 // For a description of IAM and its features, see the
-// [IAM developer's guide](https://cloud.google.com/iam).
+// [IAM developer's guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// Bindings: Associates a list of `members` to a `role`.
 	// `bindings` with no members will result in an error.
@@ -1815,7 +1815,7 @@ type Policy struct {
 	// policy is overwritten blindly.
 	Etag string `json:"etag,omitempty"`
 
-	// Version: Version of the `Policy`. The default version is 0.
+	// Version: Deprecated.
 	Version int64 `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

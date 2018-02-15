@@ -940,7 +940,7 @@
                       ]
                     },
                     "update": {
-                      "description": "Updates the version and/or iamge type of a specific node pool.",
+                      "description": "Updates the version and/or image type of a specific node pool.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}",
                       "httpMethod": "PUT",
                       "id": "container.projects.locations.clusters.nodePools.update",
@@ -2192,7 +2192,7 @@
                       ]
                     },
                     "update": {
-                      "description": "Updates the version and/or iamge type of a specific node pool.",
+                      "description": "Updates the version and/or image type of a specific node pool.",
                       "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/update",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.update",
@@ -2372,7 +2372,7 @@
       }
     }
   },
-  "revision": "20180108",
+  "revision": "20180201",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2543,6 +2543,14 @@
           "$ref": "IPAllocationPolicy",
           "description": "Configuration for cluster IP allocation."
         },
+        "labelFingerprint": {
+          "description": "The fingerprint of the set of labels for this cluster.",
+          "type": "string"
+        },
+        "legacyAbac": {
+          "$ref": "LegacyAbac",
+          "description": "Configuration for the legacy ABAC authorization mode."
+        },
         "location": {
           "description": "[Output only] The name of the Google Compute Engine\n[zone](/compute/docs/regions-zones/regions-zones#available) or\n[region](/compute/docs/regions-zones/regions-zones#available) in which\nthe cluster resides.",
           "type": "string"
@@ -2605,6 +2613,13 @@
         "podSecurityPolicyConfig": {
           "$ref": "PodSecurityPolicyConfig",
           "description": "Configuration for the PodSecurityPolicy feature."
+        },
+        "resourceLabels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The resource labels for the cluster to use to annotate any related GCE\nresources.",
+          "type": "object"
         },
         "selfLink": {
           "description": "[Output only] Server-defined URL for the resource.",
@@ -2876,6 +2891,17 @@
       "properties": {
         "disabled": {
           "description": "Whether the Kubernetes Dashboard is enabled for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "LegacyAbac": {
+      "description": "Configuration for the legacy Attribute Based Access Control authorization\nmode.",
+      "id": "LegacyAbac",
+      "properties": {
+        "enabled": {
+          "description": "Whether the ABAC authorizer is enabled for this cluster. When enabled,\nidentities in the system, including service accounts, nodes, and\ncontrollers, will have statically granted permissions beyond those\nprovided by the RBAC configuration or IAM.",
           "type": "boolean"
         }
       },

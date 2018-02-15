@@ -116,6 +116,28 @@
   },
   "protocol": "rest",
   "resources": {
+    "applicationDetailService": {
+      "methods": {
+        "getApkDetails": {
+          "description": "Request the details of an Android application APK.",
+          "flatPath": "v1/applicationDetailService/getApkDetails",
+          "httpMethod": "POST",
+          "id": "testing.applicationDetailService.getApkDetails",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1/applicationDetailService/getApkDetails",
+          "request": {
+            "$ref": "FileReference"
+          },
+          "response": {
+            "$ref": "GetApkDetailsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
+    },
     "projects": {
       "resources": {
         "testMatrices": {
@@ -259,7 +281,7 @@
       }
     }
   },
-  "revision": "20180202",
+  "revision": "20180213",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -628,6 +650,47 @@
       },
       "type": "object"
     },
+    "ApkDetail": {
+      "description": "Android application details based on application manifest and apk archive\ncontents",
+      "id": "ApkDetail",
+      "properties": {
+        "apkManifest": {
+          "$ref": "ApkManifest"
+        }
+      },
+      "type": "object"
+    },
+    "ApkManifest": {
+      "description": "An Android app manifest. See\nhttp://developer.android.com/guide/topics/manifest/manifest-intro.html",
+      "id": "ApkManifest",
+      "properties": {
+        "applicationLabel": {
+          "description": "User-readable name for the application.",
+          "type": "string"
+        },
+        "intentFilters": {
+          "items": {
+            "$ref": "IntentFilter"
+          },
+          "type": "array"
+        },
+        "maxSdkVersion": {
+          "description": "Maximum API level on which the application is designed to run.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minSdkVersion": {
+          "description": "Minimum API level required for the application to run.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "packageName": {
+          "description": "Full Java-style package name for this application, e.g.\n\"com.example.foo\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CancelTestMatrixResponse": {
       "description": "Response containing the current state of the specified test matrix.",
       "id": "CancelTestMatrixResponse",
@@ -800,6 +863,17 @@
       },
       "type": "object"
     },
+    "GetApkDetailsResponse": {
+      "description": "Response containing the details of the specified Android application APK.",
+      "id": "GetApkDetailsResponse",
+      "properties": {
+        "apkDetail": {
+          "$ref": "ApkDetail",
+          "description": "Details of the Android APK."
+        }
+      },
+      "type": "object"
+    },
     "GoogleAuto": {
       "description": "Enables automatic Google account login.\nIf set, the service will automatically generate a Google test account and add\nit to the device, before executing the test. Note that test accounts might be\nreused.\nMany applications show their full set of functionalities when an account is\npresent on the device. Logging into the device with these generated accounts\nallows testing more functionalities.",
       "id": "GoogleAuto",
@@ -812,6 +886,31 @@
       "properties": {
         "gcsPath": {
           "description": "The path to a directory in GCS that will\neventually contain the results for this test.\nThe requesting user must have write access on the bucket in the supplied\npath.\nRequired",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "IntentFilter": {
+      "description": "The \u003cintent-filter\u003e section of an \u003cactivity\u003e tag.\nhttps://developer.android.com/guide/topics/manifest/intent-filter-element.html",
+      "id": "IntentFilter",
+      "properties": {
+        "actionNames": {
+          "description": "The android:name value of the \u003caction\u003e tag",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "categoryNames": {
+          "description": "The android:name value of the \u003ccategory\u003e tag",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mimeType": {
+          "description": "The android:mimeType value of the \u003cdata\u003e tag",
           "type": "string"
         }
       },
@@ -1136,7 +1235,8 @@
             "SCENARIO_LABEL_MALFORMED",
             "SCENARIO_NOT_DECLARED",
             "DEVICE_ADMIN_RECEIVER",
-            "TEST_ONLY_APK"
+            "TEST_ONLY_APK",
+            "NO_CODE_APK"
           ],
           "enumDescriptions": [
             "Do not use. For proto versioning only.",
@@ -1158,7 +1258,8 @@
             "There was an error when parsing a label's value.",
             "The request contains a scenario number that was not declared in the\nmanifest.",
             "Device administrator applications are not allowed.",
-            "The APK is marked as \"testOnly\"."
+            "The APK is marked as \"testOnly\".\nNOT USED",
+            "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code"
           ],
           "type": "string"
         },

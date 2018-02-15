@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/6MzzjizGEEG17YoWu6GBf4kYsdA\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/3sZY5SudRICrZaNsZzXj7Gt8kVY\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -3074,7 +3074,7 @@
       }
     }
   },
-  "revision": "20180126",
+  "revision": "20180209",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -5046,6 +5046,11 @@
           "type": "string"
         },
         "name": {
+          "annotations": {
+            "required": [
+              "drive.teamdrives.insert"
+            ]
+          },
           "description": "The name of this Team Drive.",
           "type": "string"
         },

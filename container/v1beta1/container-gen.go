@@ -519,6 +519,13 @@ type Cluster struct {
 	// IpAllocationPolicy: Configuration for cluster IP allocation.
 	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
+	// LabelFingerprint: The fingerprint of the set of labels for this
+	// cluster.
+	LabelFingerprint string `json:"labelFingerprint,omitempty"`
+
+	// LegacyAbac: Configuration for the legacy ABAC authorization mode.
+	LegacyAbac *LegacyAbac `json:"legacyAbac,omitempty"`
+
 	// Location: [Output only] The name of the Google Compute
 	// Engine
 	// [zone](/compute/docs/regions-zones/regions-zones#available)
@@ -619,6 +626,11 @@ type Cluster struct {
 	// PodSecurityPolicyConfig: Configuration for the PodSecurityPolicy
 	// feature.
 	PodSecurityPolicyConfig *PodSecurityPolicyConfig `json:"podSecurityPolicyConfig,omitempty"`
+
+	// ResourceLabels: The resource labels for the cluster to use to
+	// annotate any related GCE
+	// resources.
+	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -1267,6 +1279,42 @@ type KubernetesDashboard struct {
 
 func (s *KubernetesDashboard) MarshalJSON() ([]byte, error) {
 	type NoMethod KubernetesDashboard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LegacyAbac: Configuration for the legacy Attribute Based Access
+// Control authorization
+// mode.
+type LegacyAbac struct {
+	// Enabled: Whether the ABAC authorizer is enabled for this cluster.
+	// When enabled,
+	// identities in the system, including service accounts, nodes,
+	// and
+	// controllers, will have statically granted permissions beyond
+	// those
+	// provided by the RBAC configuration or IAM.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LegacyAbac) MarshalJSON() ([]byte, error) {
+	type NoMethod LegacyAbac
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7110,7 +7158,7 @@ type ProjectsLocationsClustersNodePoolsUpdateCall struct {
 	header_               http.Header
 }
 
-// Update: Updates the version and/or iamge type of a specific node
+// Update: Updates the version and/or image type of a specific node
 // pool.
 func (r *ProjectsLocationsClustersNodePoolsService) Update(name string, updatenodepoolrequest *UpdateNodePoolRequest) *ProjectsLocationsClustersNodePoolsUpdateCall {
 	c := &ProjectsLocationsClustersNodePoolsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7205,7 +7253,7 @@ func (c *ProjectsLocationsClustersNodePoolsUpdateCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the version and/or iamge type of a specific node pool.",
+	//   "description": "Updates the version and/or image type of a specific node pool.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "container.projects.locations.clusters.nodePools.update",
@@ -11903,7 +11951,7 @@ type ProjectsZonesClustersNodePoolsUpdateCall struct {
 	header_               http.Header
 }
 
-// Update: Updates the version and/or iamge type of a specific node
+// Update: Updates the version and/or image type of a specific node
 // pool.
 func (r *ProjectsZonesClustersNodePoolsService) Update(projectId string, zone string, clusterId string, nodePoolId string, updatenodepoolrequest *UpdateNodePoolRequest) *ProjectsZonesClustersNodePoolsUpdateCall {
 	c := &ProjectsZonesClustersNodePoolsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -12004,7 +12052,7 @@ func (c *ProjectsZonesClustersNodePoolsUpdateCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the version and/or iamge type of a specific node pool.",
+	//   "description": "Updates the version and/or image type of a specific node pool.",
 	//   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/update",
 	//   "httpMethod": "POST",
 	//   "id": "container.projects.zones.clusters.nodePools.update",

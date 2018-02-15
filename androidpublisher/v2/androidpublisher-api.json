@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/yZuI9Zc3vP87m6b_jbqnCJdkFDI\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/JHo8f1I6kYzk10q6NwBbUC9DMxw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2248,7 +2248,7 @@
         "voidedpurchases": {
           "methods": {
             "list": {
-              "description": "Lists the purchases that were cancelled, refunded or charged-back.",
+              "description": "Lists the purchases that were canceled, refunded or charged-back.",
               "httpMethod": "GET",
               "id": "androidpublisher.purchases.voidedpurchases.list",
               "parameterOrder": [
@@ -2411,7 +2411,7 @@
       }
     }
   },
-  "revision": "20180121",
+  "revision": "20180211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3075,7 +3075,7 @@
           "type": "string"
         },
         "purchaseState": {
-          "description": "The purchase state of the order. Possible values are:  \n- Purchased \n- Cancelled",
+          "description": "The purchase state of the order. Possible values are:  \n- Purchased \n- Canceled",
           "format": "int32",
           "type": "integer"
         },
@@ -3085,7 +3085,7 @@
           "type": "string"
         },
         "purchaseType": {
-          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account)",
+          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code)",
           "format": "int32",
           "type": "integer"
         }
@@ -3225,7 +3225,7 @@
           "type": "boolean"
         },
         "cancelReason": {
-          "description": "The reason why a subscription was cancelled or is not auto-renewing. Possible values are:  \n- User cancelled the subscription \n- Subscription was cancelled by the system, for example because of a billing problem \n- Subscription was replaced with a new subscription \n- Subscription was cancelled by the developer",
+          "description": "The reason why a subscription was canceled or is not auto-renewing. Possible values are:  \n- User canceled the subscription \n- Subscription was canceled by the system, for example because of a billing problem \n- Subscription was replaced with a new subscription \n- Subscription was canceled by the developer",
           "format": "int32",
           "type": "integer"
         },
@@ -3450,7 +3450,7 @@
       "type": "object"
     },
     "VoidedPurchase": {
-      "description": "A VoidedPurchase resource indicates a purchase that was either cancelled/refunded/charged-back.",
+      "description": "A VoidedPurchase resource indicates a purchase that was either canceled/refunded/charged-back.",
       "id": "VoidedPurchase",
       "properties": {
         "kind": {
@@ -3468,7 +3468,7 @@
           "type": "string"
         },
         "voidedTimeMillis": {
-          "description": "The time at which the purchase was cancelled/refunded/charged-back, in milliseconds since the epoch (Jan 1, 1970).",
+          "description": "The time at which the purchase was canceled/refunded/charged-back, in milliseconds since the epoch (Jan 1, 1970).",
           "format": "int64",
           "type": "string"
         }

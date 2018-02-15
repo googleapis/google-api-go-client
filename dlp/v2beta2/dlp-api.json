@@ -827,7 +827,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n\nThe length of this field should be no more than 500 characters.",
+                  "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n\nThe length of this field should be no more than 500 characters.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1047,11 +1047,162 @@
               ]
             }
           }
+        },
+        "jobTriggers": {
+          "methods": {
+            "create": {
+              "description": "Creates a job to run DLP actions such as scanning storage for sensitive\ninformation on a set schedule.",
+              "flatPath": "v2beta2/projects/{projectsId}/jobTriggers",
+              "httpMethod": "POST",
+              "id": "dlp.projects.jobTriggers.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "The parent resource name, for example projects/my-project-id.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta2/{+parent}/jobTriggers",
+              "request": {
+                "$ref": "GooglePrivacyDlpV2beta2CreateJobTriggerRequest"
+              },
+              "response": {
+                "$ref": "GooglePrivacyDlpV2beta2JobTrigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Deletes a job trigger.",
+              "flatPath": "v2beta2/projects/{projectsId}/jobTriggers/{jobTriggersId}",
+              "httpMethod": "DELETE",
+              "id": "dlp.projects.jobTriggers.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the project and the triggeredJob, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/jobTriggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta2/{+name}",
+              "response": {
+                "$ref": "GoogleProtobufEmpty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Gets a job trigger.",
+              "flatPath": "v2beta2/projects/{projectsId}/jobTriggers/{jobTriggersId}",
+              "httpMethod": "GET",
+              "id": "dlp.projects.jobTriggers.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the project and the triggeredJob, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/jobTriggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta2/{+name}",
+              "response": {
+                "$ref": "GooglePrivacyDlpV2beta2JobTrigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Lists job triggers.",
+              "flatPath": "v2beta2/projects/{projectsId}/jobTriggers",
+              "httpMethod": "GET",
+              "id": "dlp.projects.jobTriggers.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "orderBy": {
+                  "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by 'asc/desc' postfix, i.e.\n`\"create_time asc,name desc,schedule_mode asc\"`. This list is\ncase-insensitive.\n\nExample: `\"name asc,schedule_mode desc, status desc\"`\n\nSupported filters keys and values are:\n\n- `create_time`: corresponds to time the triggeredJob was created.\n- `update_time`: corresponds to time the triggeredJob was last updated.\n- `name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to the triggeredJob status.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Optional size of the page, can be limited by a server.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Optional page token to continue retrieval. Comes from previous call\nto ListJobTriggers. `order_by` and `filter` should not change for\nsubsequent calls, but can be omitted if token is specified.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "parent": {
+                  "description": "The parent resource name, for example projects/my-project-id.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta2/{+parent}/jobTriggers",
+              "response": {
+                "$ref": "GooglePrivacyDlpV2beta2ListJobTriggersResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "patch": {
+              "description": "Updates a job trigger.",
+              "flatPath": "v2beta2/projects/{projectsId}/jobTriggers/{jobTriggersId}",
+              "httpMethod": "PATCH",
+              "id": "dlp.projects.jobTriggers.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the project and the triggeredJob, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/jobTriggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2beta2/{+name}",
+              "request": {
+                "$ref": "GooglePrivacyDlpV2beta2UpdateJobTriggerRequest"
+              },
+              "response": {
+                "$ref": "GooglePrivacyDlpV2beta2JobTrigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
         }
       }
     }
   },
-  "revision": "20180130",
+  "revision": "20180213",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2beta1AuxiliaryTable": {
@@ -1969,6 +2120,21 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2Action": {
+      "description": "A task to execute on the completion of a job.",
+      "id": "GooglePrivacyDlpV2beta2Action",
+      "properties": {
+        "pubSub": {
+          "$ref": "GooglePrivacyDlpV2beta2PublishToPubSub",
+          "description": "Publish a notification to a pubsub topic."
+        },
+        "saveFindings": {
+          "$ref": "GooglePrivacyDlpV2beta2SaveFindings",
+          "description": "Save resulting findings in a provided location."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2AnalyzeDataSourceRiskDetails": {
       "description": "Result of a risk analysis operation request.",
       "id": "GooglePrivacyDlpV2beta2AnalyzeDataSourceRiskDetails",
@@ -2006,6 +2172,10 @@
         "jobConfig": {
           "$ref": "GooglePrivacyDlpV2beta2RiskAnalysisJobConfig",
           "description": "Configuration for this risk analysis job."
+        },
+        "jobId": {
+          "description": "Optional job ID to use for the created job. If not provided, a job ID will\nautomatically be generated. Must be unique within the project. The job ID\ncan contain uppercase and lowercase letters, numbers, and hyphens; that is,\nit must match the regular expression: `[a-zA-Z\\\\d-]+`. The maximum length\nis 100 characters. Can be empty to allow the system to generate one.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2237,6 +2407,11 @@
       "description": "Options defining a file or a set of files (path ending with *) within\na Google Cloud Storage bucket.",
       "id": "GooglePrivacyDlpV2beta2CloudStorageOptions",
       "properties": {
+        "bytesLimitPerFile": {
+          "description": "Max number of bytes to scan from a file. If a scanned file's size is bigger\nthan this value then the rest of the bytes are omitted.",
+          "format": "int64",
+          "type": "string"
+        },
         "fileSet": {
           "$ref": "GooglePrivacyDlpV2beta2FileSet"
         }
@@ -2371,6 +2546,21 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2CreateJobTriggerRequest": {
+      "description": "Request message for CreateJobTrigger.",
+      "id": "GooglePrivacyDlpV2beta2CreateJobTriggerRequest",
+      "properties": {
+        "jobTrigger": {
+          "$ref": "GooglePrivacyDlpV2beta2JobTrigger",
+          "description": "The JobTrigger to create."
+        },
+        "triggerId": {
+          "description": "The trigger id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2CryptoHashConfig": {
       "description": "Pseudonymization method that generates surrogates via cryptographic hashing.\nUses SHA-256.\nThe key size must be either 32 or 64 bytes.\nOutputs a 32 byte digest as an uppercase hex string\n(for example, 41D1567F7F99F1DC2A5FAB886DEE5BEE).\nCurrently, only string and integer values can be hashed.",
       "id": "GooglePrivacyDlpV2beta2CryptoHashConfig",
@@ -2447,6 +2637,13 @@
       "description": "Custom information type provided by the user. Used to find domain-specific\nsensitive information configurable to the data in question.",
       "id": "GooglePrivacyDlpV2beta2CustomInfoType",
       "properties": {
+        "detectionRules": {
+          "description": "Set of detection rules to apply to all findings of this custom info type.\nRules are applied in order that they are specified. Not supported for the\n`surrogate_type` custom info type.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2DetectionRule"
+          },
+          "type": "array"
+        },
         "dictionary": {
           "$ref": "GooglePrivacyDlpV2beta2Dictionary",
           "description": "Dictionary-based custom info type."
@@ -2454,6 +2651,30 @@
         "infoType": {
           "$ref": "GooglePrivacyDlpV2beta2InfoType",
           "description": "Info type configuration. All custom info types must have configurations\nthat do not conflict with built-in info types or other custom info types."
+        },
+        "likelihood": {
+          "description": "Likelihood to return for this custom info type. This base value can be\naltered by a detection rule if the finding meets the criteria specified by\nthe rule. Defaults to `VERY_LIKELY` if not specified.",
+          "enum": [
+            "LIKELIHOOD_UNSPECIFIED",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "enumDescriptions": [
+            "Default value; information with all likelihoods is included.",
+            "Few matching elements.",
+            "",
+            "Some matching elements.",
+            "",
+            "Many matching elements."
+          ],
+          "type": "string"
+        },
+        "regex": {
+          "$ref": "GooglePrivacyDlpV2beta2Regex",
+          "description": "Regex-based custom info type."
         },
         "surrogateType": {
           "$ref": "GooglePrivacyDlpV2beta2SurrogateType",
@@ -2578,6 +2799,17 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2DetectionRule": {
+      "description": "Rule for modifying a custom info type to alter behavior under certain\ncircumstances, depending on the specific details of the rule. Not supported\nfor the `surrogate_type` custom info type.",
+      "id": "GooglePrivacyDlpV2beta2DetectionRule",
+      "properties": {
+        "hotwordRule": {
+          "$ref": "GooglePrivacyDlpV2beta2HotwordRule",
+          "description": "Hotword-based detection rule."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2Dictionary": {
       "description": "Custom information type based on a dictionary of words or phrases. This can\nbe used to match sensitive information specific to the data, such as a list\nof employee IDs or job titles.\n\nDictionary words are case-insensitive and all characters other than letters\nand digits in the unicode [Basic Multilingual\nPlane](https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_Plane)\nwill be replaced with whitespace when scanning for matches, so the\ndictionary phrase \"Sam Johnson\" will match all three phrases \"sam johnson\",\n\"Sam, Johnson\", and \"Sam (Johnson)\". Additionally, the characters\nsurrounding any match must be of a different type than the adjacent\ncharacters within the word, so letters must be next to non-letters and\ndigits next to non-digits. For example, the dictionary word \"jen\" will\nmatch the first three letters of the text \"jen123\" but will return no\nmatches for \"jennifer\".\n\nDictionary words containing a large number of characters that are not\nletters or digits may result in unexpected findings because such characters\nare treated as whitespace.",
       "id": "GooglePrivacyDlpV2beta2Dictionary",
@@ -2613,6 +2845,10 @@
         "inspectDetails": {
           "$ref": "GooglePrivacyDlpV2beta2InspectDataSourceDetails",
           "description": "Results from inspecting a data source."
+        },
+        "jobTriggerName": {
+          "description": "If created by a job trigger, the resource name of the trigger that\ninstantiated the job.",
+          "type": "string"
         },
         "name": {
           "description": "The server-assigned name.",
@@ -2671,6 +2907,24 @@
         "field": {
           "$ref": "GooglePrivacyDlpV2beta2FieldId",
           "description": "Composite key indicating which field contains the entity identifier."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2Error": {
+      "description": "The results of an unsuccessful activation of the JobTrigger.",
+      "id": "GooglePrivacyDlpV2beta2Error",
+      "properties": {
+        "details": {
+          "$ref": "GoogleRpcStatus"
+        },
+        "timestamps": {
+          "description": "The times the error occurred.",
+          "items": {
+            "format": "google-datetime",
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2828,6 +3082,25 @@
         "upperBound": {
           "$ref": "GooglePrivacyDlpV2beta2Value",
           "description": "Upper bound value of buckets. All values greater than upper_bound are\ngrouped together into a single bucket; for example if `upper_bound` = 89,\nthen all values greater than 89 are replaced with the value “89+”.\n[Required]."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2HotwordRule": {
+      "description": "Detection rule that adjusts the likelihood of findings within a certain\nproximity of hotwords.",
+      "id": "GooglePrivacyDlpV2beta2HotwordRule",
+      "properties": {
+        "hotwordRegex": {
+          "$ref": "GooglePrivacyDlpV2beta2Regex",
+          "description": "Regex pattern defining what qualifies as a hotword."
+        },
+        "likelihoodAdjustment": {
+          "$ref": "GooglePrivacyDlpV2beta2LikelihoodAdjustment",
+          "description": "Likelihood adjustment to apply to all matching findings."
+        },
+        "proximity": {
+          "$ref": "GooglePrivacyDlpV2beta2Proximity",
+          "description": "Proximity of the finding within which the entire hotword must reside.\nThe total length of the window cannot exceed 1000 characters."
         }
       },
       "type": "object"
@@ -3089,6 +3362,10 @@
         "jobConfig": {
           "$ref": "GooglePrivacyDlpV2beta2InspectJobConfig",
           "description": "A configuration for the job."
+        },
+        "jobId": {
+          "description": "Optional job ID to use for the created job. If not provided, a job ID will\nautomatically be generated. Must be unique within the project. The job ID\ncan contain uppercase and lowercase letters, numbers, and hyphens; that is,\nit must match the regular expression: `[a-zA-Z\\\\d-]+`. The maximum length\nis 100 characters. Can be empty to allow the system to generate one.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3096,6 +3373,13 @@
     "GooglePrivacyDlpV2beta2InspectJobConfig": {
       "id": "GooglePrivacyDlpV2beta2InspectJobConfig",
       "properties": {
+        "actions": {
+          "description": "Actions to execute at the completion of the job. Are executed in the order\nprovided.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2Action"
+          },
+          "type": "array"
+        },
         "inspectConfig": {
           "$ref": "GooglePrivacyDlpV2beta2InspectConfig",
           "description": "How and what to scan for."
@@ -3160,6 +3444,73 @@
         },
         "updateTime": {
           "description": "The last update timestamp of a inspectTemplate, output only field.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2JobTrigger": {
+      "description": "Contains a configuration to make dlp api calls on a repeating basis.",
+      "id": "GooglePrivacyDlpV2beta2JobTrigger",
+      "properties": {
+        "createTime": {
+          "description": "The creation timestamp of a triggeredJob, output only field.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "User provided description (max 256 chars)",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Display name (max 100 chars)",
+          "type": "string"
+        },
+        "errors": {
+          "description": "A stream of errors encountered when the trigger was activated. Repeated\nerrors may result in the JobTrigger automaticaly being paused.\nWill return the last 100 errors. Whenever the JobTrigger is modified\nthis list will be cleared. Output only field.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2Error"
+          },
+          "type": "array"
+        },
+        "inspectJob": {
+          "$ref": "GooglePrivacyDlpV2beta2InspectJobConfig"
+        },
+        "lastRunTime": {
+          "description": "The timestamp of the last time this trigger executed.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "name": {
+          "description": "Unique resource name for the triggeredJob, assigned by the service when the\ntriggeredJob is created, for example\n`projects/dlp-test-project/triggeredJobs/53234423`.",
+          "type": "string"
+        },
+        "status": {
+          "description": "A status for this trigger. [required]",
+          "enum": [
+            "STATUS_UNSPECIFIED",
+            "HEALTHY",
+            "PAUSED",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "",
+            "Trigger is healthy.",
+            "Trigger is temporarily paused.",
+            "Trigger is cancelled and can not be resumed."
+          ],
+          "type": "string"
+        },
+        "triggers": {
+          "description": "A list of triggers which will be OR'ed together. Only one in the list\nneeds to trigger for a job to be started. The list may contain only\na single Schedule trigger and must have at least one object.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2Trigger"
+          },
+          "type": "array"
+        },
+        "updateTime": {
+          "description": "The last update timestamp of a triggeredJob, output only field.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -3468,6 +3819,38 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2LikelihoodAdjustment": {
+      "description": "Message for specifying an adjustment to the likelihood of a finding as\npart of a detection rule.",
+      "id": "GooglePrivacyDlpV2beta2LikelihoodAdjustment",
+      "properties": {
+        "fixedLikelihood": {
+          "description": "Set the likelihood of a finding to a fixed value.",
+          "enum": [
+            "LIKELIHOOD_UNSPECIFIED",
+            "VERY_UNLIKELY",
+            "UNLIKELY",
+            "POSSIBLE",
+            "LIKELY",
+            "VERY_LIKELY"
+          ],
+          "enumDescriptions": [
+            "Default value; information with all likelihoods is included.",
+            "Few matching elements.",
+            "",
+            "Some matching elements.",
+            "",
+            "Many matching elements."
+          ],
+          "type": "string"
+        },
+        "relativeLikelihood": {
+          "description": "Increase or decrease the likelihood by the specified number of\nlevels. For example, if a finding would be `POSSIBLE` without the\ndetection rule and `relative_likelihood` is 1, then it is upgraded to\n`LIKELY`, while a value of -1 would downgrade it to `UNLIKELY`.\nLikelihood may never drop below `VERY_UNLIKELY` or exceed\n`VERY_LIKELY`, so applying an adjustment of 1 followed by an\nadjustment of -1 when base likelihood is `VERY_LIKELY` will result in\na final likelihood of `LIKELY`.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse": {
       "description": "Response message for ListDeidentifyTemplates.",
       "id": "GooglePrivacyDlpV2beta2ListDeidentifyTemplatesResponse",
@@ -3531,6 +3914,24 @@
         },
         "nextPageToken": {
           "description": "If the next page is available then the next page token to be used\nin following ListInspectTemplates request.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2ListJobTriggersResponse": {
+      "description": "Response message for ListJobTriggers.",
+      "id": "GooglePrivacyDlpV2beta2ListJobTriggersResponse",
+      "properties": {
+        "jobTriggers": {
+          "description": "List of triggeredJobs, up to page_size in ListJobTriggersRequest.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2JobTrigger"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "If the next page is available then the next page token to be used\nin following ListJobTriggers request.",
           "type": "string"
         }
       },
@@ -3705,6 +4106,34 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2Proximity": {
+      "description": "Message for specifying a window around a finding to apply a detection\nrule.",
+      "id": "GooglePrivacyDlpV2beta2Proximity",
+      "properties": {
+        "windowAfter": {
+          "description": "Number of characters after the finding to consider.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "windowBefore": {
+          "description": "Number of characters before the finding to consider.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2PublishToPubSub": {
+      "description": "Publish the results of a DlpJob to a pub sub channel.\nCompatible with: Inpect, Risk",
+      "id": "GooglePrivacyDlpV2beta2PublishToPubSub",
+      "properties": {
+        "topic": {
+          "description": "Cloud Pub/Sub topic to send notifications to. The topic must have given\npublishing access rights to the DLP API service account executing\nthe long running DlpJob sending the notifications.\nFormat is projects/{project}/topics/{topic}.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2QuasiIdField": {
       "description": "A quasi-identifier column has a custom_tag, used to know which column\nin the data corresponds to which column in the statistical model.",
       "id": "GooglePrivacyDlpV2beta2QuasiIdField",
@@ -3840,6 +4269,17 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2Regex": {
+      "description": "Message defining a custom regular expression.",
+      "id": "GooglePrivacyDlpV2beta2Regex",
+      "properties": {
+        "pattern": {
+          "description": "Pattern defining the regular expression.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2ReidentifyContentRequest": {
       "description": "Request to re-identify an item.",
       "id": "GooglePrivacyDlpV2beta2ReidentifyContentRequest",
@@ -3939,6 +4379,13 @@
       "description": "Configuration for a risk analysis job.",
       "id": "GooglePrivacyDlpV2beta2RiskAnalysisJobConfig",
       "properties": {
+        "actions": {
+          "description": "Actions to execute at the completion of the job. Are executed in the order\nprovided.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2beta2Action"
+          },
+          "type": "array"
+        },
         "privacyMetric": {
           "$ref": "GooglePrivacyDlpV2beta2PrivacyMetric",
           "description": "Privacy metric to compute."
@@ -3962,6 +4409,28 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2SaveFindings": {
+      "description": "If set, the detailed findings will be persisted to the specified\nOutputStorageConfig. Compatible with: Inspect",
+      "id": "GooglePrivacyDlpV2beta2SaveFindings",
+      "properties": {
+        "outputConfig": {
+          "$ref": "GooglePrivacyDlpV2beta2OutputStorageConfig"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2Schedule": {
+      "description": "Schedule for triggeredJobs.",
+      "id": "GooglePrivacyDlpV2beta2Schedule",
+      "properties": {
+        "reccurrencePeriodDuration": {
+          "description": "With this option a job is started a regular periodic basis. For\nexample: every 10 minutes.\n\nA scheduled start time will be skipped if the previous\nexecution has not ended when its scheduled time occurs.\n\nThis value must be set to a time duration greater than or equal\nto 60 minutes and can be no longer than 60 days.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2StorageConfig": {
       "description": "Shared message indicating Cloud storage type.",
       "id": "GooglePrivacyDlpV2beta2StorageConfig",
@@ -3977,6 +4446,9 @@
         "datastoreOptions": {
           "$ref": "GooglePrivacyDlpV2beta2DatastoreOptions",
           "description": "Google Cloud Datastore options specification."
+        },
+        "timespanConfig": {
+          "$ref": "GooglePrivacyDlpV2beta2TimespanConfig"
         }
       },
       "type": "object"
@@ -4097,6 +4569,27 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2TimespanConfig": {
+      "description": "Configuration of the timespan of the items to include in scanning.\nCurrently only supported when inspecting Google Cloud Storage and BigQuery.",
+      "id": "GooglePrivacyDlpV2beta2TimespanConfig",
+      "properties": {
+        "enableAutoPopulationOfTimespanConfig": {
+          "description": "When the job is started by a JobTrigger we will automatically figure out\na valid start_time to avoid scanning files that have not been modified\nsince the last time the JobTrigger executed. This will be based on the\ntime of the execution of the last run of the JobTrigger.",
+          "type": "boolean"
+        },
+        "endTime": {
+          "description": "Exclude files newer than this value.\nIf set to zero, no upper time limit is applied.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "startTime": {
+          "description": "Exclude files older than this value.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2TransformationOverview": {
       "description": "Overview of the modifications that occurred.",
       "id": "GooglePrivacyDlpV2beta2TransformationOverview",
@@ -4168,6 +4661,17 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2Trigger": {
+      "description": "What event needs to occur for a new job to be started.",
+      "id": "GooglePrivacyDlpV2beta2Trigger",
+      "properties": {
+        "schedule": {
+          "$ref": "GooglePrivacyDlpV2beta2Schedule",
+          "description": "Create a job on a repeating basis based on the elapse of time."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2UnwrappedCryptoKey": {
       "description": "Using raw keys is prone to security risks due to accidentally\nleaking the key. Choose another type of key if possible.",
       "id": "GooglePrivacyDlpV2beta2UnwrappedCryptoKey",
@@ -4203,6 +4707,22 @@
         "inspectTemplate": {
           "$ref": "GooglePrivacyDlpV2beta2InspectTemplate",
           "description": "New InspectTemplate value."
+        },
+        "updateMask": {
+          "description": "Mask to control which fields get updated.",
+          "format": "google-fieldmask",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2UpdateJobTriggerRequest": {
+      "description": "Request message for UpdateJobTrigger.",
+      "id": "GooglePrivacyDlpV2beta2UpdateJobTriggerRequest",
+      "properties": {
+        "jobTrigger": {
+          "$ref": "GooglePrivacyDlpV2beta2JobTrigger",
+          "description": "New JobTrigger value."
         },
         "updateMask": {
           "description": "Mask to control which fields get updated.",

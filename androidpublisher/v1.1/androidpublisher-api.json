@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/6dC3d2bXqaEYDQ4ff3_tM64T-kM\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/Xvb720kj6kaUU3p6XJECzzWJnek\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -189,7 +189,7 @@
       }
     }
   },
-  "revision": "20180121",
+  "revision": "20180211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "InappPurchase": {
@@ -215,7 +215,7 @@
           "type": "string"
         },
         "purchaseState": {
-          "description": "The purchase state of the order. Possible values are:  \n- Purchased \n- Cancelled",
+          "description": "The purchase state of the order. Possible values are:  \n- Purchased \n- Canceled",
           "format": "int32",
           "type": "integer"
         },
@@ -225,7 +225,7 @@
           "type": "string"
         },
         "purchaseType": {
-          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account)",
+          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are:  \n- Test (i.e. purchased from a license testing account) \n- Promo (i.e. purchased using a promo code)",
           "format": "int32",
           "type": "integer"
         }

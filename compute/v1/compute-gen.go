@@ -4964,7 +4964,8 @@ type Disk struct {
 	Status string `json:"status,omitempty"`
 
 	// Type: URL of the disk type resource describing which disk type to use
-	// to create the disk. Provide this when creating the disk.
+	// to create the disk. Provide this when creating the disk. For example:
+	// project/zones/zone/diskTypes/pd-standard or pd-ssd
 	Type string `json:"type,omitempty"`
 
 	// Users: [Output Only] Links to the users of the disk (attached
@@ -6551,9 +6552,9 @@ type ForwardingRule struct {
 	// - TargetHttpProxy: 80, 8080
 	// - TargetHttpsProxy: 443
 	// - TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
-	// 995, 1883, 5222
+	// 995, 1688, 1883, 5222
 	// - TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
-	// 995, 1883, 5222
+	// 995, 1688, 1883, 5222
 	// - TargetVpnGateway: 500, 4500
 	PortRange string `json:"portRange,omitempty"`
 

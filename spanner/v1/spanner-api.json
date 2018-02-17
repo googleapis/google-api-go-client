@@ -1062,6 +1062,64 @@
                         "https://www.googleapis.com/auth/spanner.data"
                       ]
                     },
+                    "partitionQuery": {
+                      "description": "Creates a set of partition tokens that can be used to execute a query\noperation in parallel.  Each of the returned partition tokens can be used\nby ExecuteStreamingSql to specify a subset\nof the query result to read.  The same session and read-only transaction\nmust be used by the PartitionQueryRequest used to create the\npartition tokens and the ExecuteSqlRequests that use the partition tokens.\nPartition tokens become invalid when the session used to create them\nis deleted or begins a new transaction.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:partitionQuery",
+                      "httpMethod": "POST",
+                      "id": "spanner.projects.instances.databases.sessions.partitionQuery",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session used to create the partitions.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+session}:partitionQuery",
+                      "request": {
+                        "$ref": "PartitionQueryRequest"
+                      },
+                      "response": {
+                        "$ref": "PartitionResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ]
+                    },
+                    "partitionRead": {
+                      "description": "Creates a set of partition tokens that can be used to execute a read\noperation in parallel.  Each of the returned partition tokens can be used\nby StreamingRead to specify a subset of the read\nresult to read.  The same session and read-only transaction must be used by\nthe PartitionReadRequest used to create the partition tokens and the\nReadRequests that use the partition tokens.\nPartition tokens become invalid when the session used to create them\nis deleted or begins a new transaction.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:partitionRead",
+                      "httpMethod": "POST",
+                      "id": "spanner.projects.instances.databases.sessions.partitionRead",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session used to create the partitions.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+session}:partitionRead",
+                      "request": {
+                        "$ref": "PartitionReadRequest"
+                      },
+                      "response": {
+                        "$ref": "PartitionResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ]
+                    },
                     "read": {
                       "description": "Reads rows from the database using key lookups and scans, as a\nsimple key/value style alternative to\nExecuteSql.  This method cannot be used to\nreturn a result set larger than 10 MiB; if the read matches more\ndata than that, the read fails with a `FAILED_PRECONDITION`\nerror.\n\nReads inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be yielded in streaming fashion by calling\nStreamingRead instead.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:read",
@@ -1282,7 +1340,7 @@
       }
     }
   },
-  "revision": "20180207",
+  "revision": "20180206",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -1515,8 +1573,13 @@
           "description": "The SQL query string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL query with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
           "type": "object"
         },
+        "partitionToken": {
+          "description": "If present, results will be restricted to the specified partition\npreviously created using PartitionQuery().  There must be an exact\nmatch for the values of fields common to this message and the\nPartitionQueryRequest message used to create this partition_token.",
+          "format": "byte",
+          "type": "string"
+        },
         "queryMode": {
-          "description": "Used to control the amount of debugging information returned in\nResultSetStats.",
+          "description": "Used to control the amount of debugging information returned in\nResultSetStats. If partition_token is set, query_mode can only\nbe set to QueryMode.NORMAL.",
           "enum": [
             "NORMAL",
             "PLAN",
@@ -1886,6 +1949,121 @@
       },
       "type": "object"
     },
+    "Partition": {
+      "description": "Information returned for each partition returned in a\nPartitionResponse.",
+      "id": "Partition",
+      "properties": {
+        "partitionToken": {
+          "description": "This token can be passed to Read, StreamingRead, ExecuteSql, or\nExecuteStreamingSql requests to restrict the results to those identified by\nthis partition token.",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PartitionOptions": {
+      "description": "Options for a PartitionQueryRequest and\nPartitionReadRequest.",
+      "id": "PartitionOptions",
+      "properties": {
+        "maxPartitions": {
+          "description": "The desired maximum number of partitions to return.  For example, this may\nbe set to the number of workers available.  The default for this option\nis currently 10,000. The maximum value is currently 200,000.  This is only\na hint.  The actual number of partitions returned may be smaller than\nthis maximum count request.",
+          "format": "int64",
+          "type": "string"
+        },
+        "partitionSizeBytes": {
+          "description": "The desired data size for each partition generated.  The default for this\noption is currently 1 GiB.  This is only a hint. The actual size of each\npartition may be smaller or larger than this size request.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PartitionQueryRequest": {
+      "description": "The request for PartitionQuery",
+      "id": "PartitionQueryRequest",
+      "properties": {
+        "paramTypes": {
+          "additionalProperties": {
+            "$ref": "Type"
+          },
+          "description": "It is not always possible for Cloud Spanner to infer the right SQL type\nfrom a JSON value.  For example, values of type `BYTES` and values\nof type `STRING` both appear in params as JSON strings.\n\nIn these cases, `param_types` can be used to specify the exact\nSQL type for some or all of the SQL query parameters. See the\ndefinition of Type for more information\nabout SQL types.",
+          "type": "object"
+        },
+        "params": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "The SQL query string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The same\nparameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL query with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
+          "type": "object"
+        },
+        "partitionOptions": {
+          "$ref": "PartitionOptions",
+          "description": "Additional options that affect how many partitions are created."
+        },
+        "sql": {
+          "description": "The query request to generate partitions for. The request will fail if\nthe query is not root partitionable. The query plan of a root\npartitionable query has a single distributed union operator. A distributed\nunion operator conceptually divides one or more tables into multiple\nsplits, remotely evaluates a subquery independently on each split, and\nthen unions all results.",
+          "type": "string"
+        },
+        "transaction": {
+          "$ref": "TransactionSelector",
+          "description": "Read only snapshot transactions are supported, read/write and single use\ntransactions are not."
+        }
+      },
+      "type": "object"
+    },
+    "PartitionReadRequest": {
+      "description": "The request for PartitionRead",
+      "id": "PartitionReadRequest",
+      "properties": {
+        "columns": {
+          "description": "The columns of table to be returned for each row matching\nthis request.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "index": {
+          "description": "If non-empty, the name of an index on table. This index is\nused instead of the table primary key when interpreting key_set\nand sorting result rows. See key_set for further information.",
+          "type": "string"
+        },
+        "keySet": {
+          "$ref": "KeySet",
+          "description": "Required. `key_set` identifies the rows to be yielded. `key_set` names the\nprimary keys of the rows in table to be yielded, unless index\nis present. If index is present, then key_set instead names\nindex keys in index.\n\nIt is not an error for the `key_set` to name rows that do not\nexist in the database. Read yields nothing for nonexistent rows."
+        },
+        "partitionOptions": {
+          "$ref": "PartitionOptions",
+          "description": "Additional options that affect how many partitions are created."
+        },
+        "table": {
+          "description": "Required. The name of the table in the database to be read.",
+          "type": "string"
+        },
+        "transaction": {
+          "$ref": "TransactionSelector",
+          "description": "Read only snapshot transactions are supported, read/write and single use\ntransactions are not."
+        }
+      },
+      "type": "object"
+    },
+    "PartitionResponse": {
+      "description": "The response for PartitionQuery\nor PartitionRead",
+      "id": "PartitionResponse",
+      "properties": {
+        "partitions": {
+          "description": "Partitions created by this request.",
+          "items": {
+            "$ref": "Partition"
+          },
+          "type": "array"
+        },
+        "transaction": {
+          "$ref": "Transaction",
+          "description": "Transaction created by this request."
+        }
+      },
+      "type": "object"
+    },
     "PlanNode": {
       "description": "Node information for nodes appearing in a QueryPlan.plan_nodes.",
       "id": "PlanNode",
@@ -2033,11 +2211,16 @@
         },
         "keySet": {
           "$ref": "KeySet",
-          "description": "Required. `key_set` identifies the rows to be yielded. `key_set` names the\nprimary keys of the rows in table to be yielded, unless index\nis present. If index is present, then key_set instead names\nindex keys in index.\n\nRows are yielded in table primary key order (if index is empty)\nor index key order (if index is non-empty).\n\nIt is not an error for the `key_set` to name rows that do not\nexist in the database. Read yields nothing for nonexistent rows."
+          "description": "Required. `key_set` identifies the rows to be yielded. `key_set` names the\nprimary keys of the rows in table to be yielded, unless index\nis present. If index is present, then key_set instead names\nindex keys in index.\n\nIf the partition_token field is empty, rows are yielded\nin table primary key order (if index is empty) or index key order\n(if index is non-empty).  If the partition_token field is not\nempty, rows will be yielded in an unspecified order.\n\nIt is not an error for the `key_set` to name rows that do not\nexist in the database. Read yields nothing for nonexistent rows."
         },
         "limit": {
-          "description": "If greater than zero, only the first `limit` rows are yielded. If `limit`\nis zero, the default is no limit.",
+          "description": "If greater than zero, only the first `limit` rows are yielded. If `limit`\nis zero, the default is no limit. A limit cannot be specified if\n`partition_token` is set.",
           "format": "int64",
+          "type": "string"
+        },
+        "partitionToken": {
+          "description": "If present, results will be restricted to the specified partition\npreviously created using PartitionRead().    There must be an exact\nmatch for the values of fields common to this message and the\nPartitionReadRequest message used to create this partition_token.",
+          "format": "byte",
           "type": "string"
         },
         "resumeToken": {

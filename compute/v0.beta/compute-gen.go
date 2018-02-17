@@ -1293,6 +1293,22 @@ type AccessConfig struct {
 	// live in the same region as the zone of the instance.
 	NatIP string `json:"natIP,omitempty"`
 
+	// NetworkTier: This signifies the networking tier used for configuring
+	// this access configuration and can only take the following values:
+	// PREMIUM, STANDARD.
+	//
+	// If an AccessConfig is specified without a valid external IP address,
+	// an ephemeral IP will be created with this networkTier.
+	//
+	// If an AccessConfig with a valid external IP address is specified, it
+	// must match that of the networkTier associated with the Address
+	// resource owning that IP.
+	//
+	// Possible values:
+	//   "PREMIUM"
+	//   "STANDARD"
+	NetworkTier string `json:"networkTier,omitempty"`
+
 	// PublicPtrDomainName: The DNS domain name for the public PTR record.
 	// This field can only be set when the set_public_ptr field is enabled.
 	PublicPtrDomainName string `json:"publicPtrDomainName,omitempty"`
@@ -1398,6 +1414,17 @@ type Address struct {
 	// characters must be a dash, lowercase letter, or digit, except the
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
+
+	// NetworkTier: This signifies the networking tier used for configuring
+	// this Address and can only take the following values: PREMIUM ,
+	// STANDARD.
+	//
+	// If this field is not specified, it is assumed to be PREMIUM.
+	//
+	// Possible values:
+	//   "PREMIUM"
+	//   "STANDARD"
+	NetworkTier string `json:"networkTier,omitempty"`
 
 	// Region: [Output Only] URL of the region where the regional address
 	// resides. This field is not applicable to global addresses. You must
@@ -2194,7 +2221,7 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 // If there are AuditConfigs for both `allServices` and a specific
 // service, the union of the two AuditConfigs is used for that service:
 // the log_types specified in each AuditConfig are enabled, and the
-// exempted_members in each AuditConfig are exempted.
+// exempted_members in each AuditLogConfig are exempted.
 //
 // Example Policy with multiple AuditConfigs:
 //
@@ -2208,8 +2235,7 @@ func (s *AttachedDiskInitializeParams) MarshalJSON() ([]byte, error) {
 //
 // For fooservice, this policy enables DATA_READ, DATA_WRITE and
 // ADMIN_READ logging. It also exempts foo@gmail.com from DATA_READ
-// logging, and bar@gmail.com from DATA_WRITE logging. This message is
-// only visible as GOOGLE_INTERNAL or IAM_AUDIT_CONFIG.
+// logging, and bar@gmail.com from DATA_WRITE logging.
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
@@ -5040,6 +5066,7 @@ type Condition struct {
 	//   "APPROVER"
 	//   "ATTRIBUTION"
 	//   "AUTHORITY"
+	//   "CREDENTIALS_TYPE"
 	//   "JUSTIFICATION_TYPE"
 	//   "NO_ATTR"
 	//   "SECURITY_REALM"
@@ -5453,7 +5480,8 @@ type Disk struct {
 	StorageType string `json:"storageType,omitempty"`
 
 	// Type: URL of the disk type resource describing which disk type to use
-	// to create the disk. Provide this when creating the disk.
+	// to create the disk. Provide this when creating the disk. For example:
+	// project/zones/zone/diskTypes/pd-standard or pd-ssd
 	Type string `json:"type,omitempty"`
 
 	// Users: [Output Only] Links to the users of the disk (attached
@@ -7246,6 +7274,22 @@ type ForwardingRule struct {
 	// this field is not specified, the default network will be used.
 	Network string `json:"network,omitempty"`
 
+	// NetworkTier: This signifies the networking tier used for configuring
+	// this load balancer and can only take the following values: PREMIUM ,
+	// STANDARD.
+	//
+	// For regional ForwardingRule, the valid values are PREMIUM and
+	// STANDARD. For GlobalForwardingRule, the valid value is PREMIUM.
+	//
+	// If this field is not specified, it is assumed to be PREMIUM. If
+	// IPAddress is specified, this value must be equal to the networkTier
+	// of the Address.
+	//
+	// Possible values:
+	//   "PREMIUM"
+	//   "STANDARD"
+	NetworkTier string `json:"networkTier,omitempty"`
+
 	// PortRange: This field is used along with the target field for
 	// TargetHttpProxy, TargetHttpsProxy, TargetSslProxy, TargetTcpProxy,
 	// TargetVpnGateway, TargetPool, TargetInstance.
@@ -7260,9 +7304,9 @@ type ForwardingRule struct {
 	// - TargetHttpProxy: 80, 8080
 	// - TargetHttpsProxy: 443
 	// - TargetTcpProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
-	// 995, 1883, 5222
+	// 995, 1688, 1883, 5222
 	// - TargetSslProxy: 25, 43, 110, 143, 195, 443, 465, 587, 700, 993,
-	// 995, 1883, 5222
+	// 995, 1688, 1883, 5222
 	// - TargetVpnGateway: 500, 4500
 	PortRange string `json:"portRange,omitempty"`
 
@@ -16649,8 +16693,7 @@ func (s *PathRule) MarshalJSON() ([]byte, error) {
 // guide](https://cloud.google.com/iam/docs).
 type Policy struct {
 	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy. This field is only visible as GOOGLE_INTERNAL or
-	// IAM_AUDIT_CONFIG.
+	// policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
 
 	// Bindings: Associates a list of `members` to a `role`. `bindings` with
@@ -16724,6 +16767,16 @@ type Project struct {
 	// CreationTimestamp: [Output Only] Creation timestamp in RFC3339 text
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+
+	// DefaultNetworkTier: This signifies the default network tier used for
+	// configuring resources of the project and can only take the following
+	// values: PREMIUM, STANDARD. Initially the default network tier is
+	// PREMIUM.
+	//
+	// Possible values:
+	//   "PREMIUM"
+	//   "STANDARD"
+	DefaultNetworkTier string `json:"defaultNetworkTier,omitempty"`
 
 	// DefaultServiceAccount: [Output Only] Default service account used by
 	// VMs running in this project.
@@ -16919,6 +16972,37 @@ type ProjectsListXpnHostsRequest struct {
 
 func (s *ProjectsListXpnHostsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectsListXpnHostsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsSetDefaultNetworkTierRequest struct {
+	// NetworkTier: Default network tier to be set.
+	//
+	// Possible values:
+	//   "PREMIUM"
+	//   "STANDARD"
+	NetworkTier string `json:"networkTier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkTier") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkTier") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectsSetDefaultNetworkTierRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectsSetDefaultNetworkTierRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -66232,6 +66316,168 @@ func (c *ProjectsSetCommonInstanceMetadataCall) Do(opts ...googleapi.CallOption)
 	//   "path": "{project}/setCommonInstanceMetadata",
 	//   "request": {
 	//     "$ref": "Metadata"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute"
+	//   ]
+	// }
+
+}
+
+// method id "compute.projects.setDefaultNetworkTier":
+
+type ProjectsSetDefaultNetworkTierCall struct {
+	s                                    *Service
+	project                              string
+	projectssetdefaultnetworktierrequest *ProjectsSetDefaultNetworkTierRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// SetDefaultNetworkTier: Sets the default network tier of the project.
+// The default network tier is used when an
+// address/forwardingRule/instance is created without specifying the
+// network tier field.
+func (r *ProjectsService) SetDefaultNetworkTier(project string, projectssetdefaultnetworktierrequest *ProjectsSetDefaultNetworkTierRequest) *ProjectsSetDefaultNetworkTierCall {
+	c := &ProjectsSetDefaultNetworkTierCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.projectssetdefaultnetworktierrequest = projectssetdefaultnetworktierrequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the
+// same request ID, the server can check if original operation with the
+// same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments.
+//
+// The request ID must be a valid UUID with the exception that zero UUID
+// is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsSetDefaultNetworkTierCall) RequestId(requestId string) *ProjectsSetDefaultNetworkTierCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsSetDefaultNetworkTierCall) Fields(s ...googleapi.Field) *ProjectsSetDefaultNetworkTierCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsSetDefaultNetworkTierCall) Context(ctx context.Context) *ProjectsSetDefaultNetworkTierCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsSetDefaultNetworkTierCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsSetDefaultNetworkTierCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectssetdefaultnetworktierrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/setDefaultNetworkTier")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.projects.setDefaultNetworkTier" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsSetDefaultNetworkTierCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the default network tier of the project. The default network tier is used when an address/forwardingRule/instance is created without specifying the network tier field.",
+	//   "httpMethod": "POST",
+	//   "id": "compute.projects.setDefaultNetworkTier",
+	//   "parameterOrder": [
+	//     "project"
+	//   ],
+	//   "parameters": {
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/setDefaultNetworkTier",
+	//   "request": {
+	//     "$ref": "ProjectsSetDefaultNetworkTierRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

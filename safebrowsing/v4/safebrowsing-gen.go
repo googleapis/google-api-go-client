@@ -872,7 +872,9 @@ type RiceDeltaEncoding struct {
 
 	// FirstValue: The offset of the first entry in the encoded data, or, if
 	// only a single
-	// integer was encoded, that single integer's value.
+	// integer was encoded, that single integer's value. If the field is
+	// empty or
+	// missing, assume zero.
 	FirstValue int64 `json:"firstValue,omitempty,string"`
 
 	// NumEntries: The number of entries that are delta encoded in the

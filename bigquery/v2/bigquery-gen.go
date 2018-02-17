@@ -664,6 +664,42 @@ func (s *DatasetReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DestinationTableProperties struct {
+	// Description: [Optional] The description for the destination table.
+	// This will only be used if the destination table is newly created. If
+	// the table already exists and a value different than the current
+	// description is provided, the job will fail.
+	Description string `json:"description,omitempty"`
+
+	// FriendlyName: [Optional] The friendly name for the destination table.
+	// This will only be used if the destination table is newly created. If
+	// the table already exists and a value different than the current
+	// friendly name is provided, the job will fail.
+	FriendlyName string `json:"friendlyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DestinationTableProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DestinationTableProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type EncryptionConfiguration struct {
 	// KmsKeyName: [Optional] Describes the Cloud KMS encryption key that
 	// will be used to protect destination BigQuery table. The BigQuery
@@ -1312,8 +1348,9 @@ func (s *JobConfiguration) MarshalJSON() ([]byte, error) {
 
 type JobConfigurationExtract struct {
 	// Compression: [Optional] The compression type to use for exported
-	// files. Possible values include GZIP and NONE. The default value is
-	// NONE.
+	// files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The
+	// default value is NONE. DEFLATE and SNAPPY are only supported for
+	// Avro.
 	Compression string `json:"compression,omitempty"`
 
 	// DestinationFormat: [Optional] The exported file format. Possible
@@ -1394,13 +1431,17 @@ type JobConfigurationLoad struct {
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// DestinationEncryptionConfiguration: [Experimental] Custom encryption
-	// configuration (e.g., Cloud KMS keys).
+	// DestinationEncryptionConfiguration: Custom encryption configuration
+	// (e.g., Cloud KMS keys).
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
 	// DestinationTable: [Required] The destination table to load the data
 	// into.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
+
+	// DestinationTableProperties: [Experimental] [Optional] Properties with
+	// which to create the destination table if it is new.
+	DestinationTableProperties *DestinationTableProperties `json:"destinationTableProperties,omitempty"`
 
 	// Encoding: [Optional] The character encoding of the data. The
 	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
@@ -1574,8 +1615,8 @@ type JobConfigurationQuery struct {
 	// unqualified table names in the query.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
-	// DestinationEncryptionConfiguration: [Experimental] Custom encryption
-	// configuration (e.g., Cloud KMS keys).
+	// DestinationEncryptionConfiguration: Custom encryption configuration
+	// (e.g., Cloud KMS keys).
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
 	// DestinationTable: [Optional] Describes the table where the query
@@ -1715,8 +1756,8 @@ type JobConfigurationTableCopy struct {
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// DestinationEncryptionConfiguration: [Experimental] Custom encryption
-	// configuration (e.g., Cloud KMS keys).
+	// DestinationEncryptionConfiguration: Custom encryption configuration
+	// (e.g., Cloud KMS keys).
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
 	// DestinationTable: [Required] The destination table
@@ -2600,11 +2641,11 @@ type QueryTimelineSample struct {
 	// ActiveInputs: Total number of active workers. This does not
 	// correspond directly to slot usage. This is the largest value observed
 	// since the last sample.
-	ActiveInputs int64 `json:"activeInputs,omitempty"`
+	ActiveInputs int64 `json:"activeInputs,omitempty,string"`
 
 	// CompletedInputs: Total parallel units of work completed by this
 	// query.
-	CompletedInputs int64 `json:"completedInputs,omitempty"`
+	CompletedInputs int64 `json:"completedInputs,omitempty,string"`
 
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
@@ -2685,8 +2726,8 @@ type Table struct {
 	// Description: [Optional] A user-friendly description of this table.
 	Description string `json:"description,omitempty"`
 
-	// EncryptionConfiguration: [Experimental] Custom encryption
-	// configuration (e.g., Cloud KMS keys).
+	// EncryptionConfiguration: Custom encryption configuration (e.g., Cloud
+	// KMS keys).
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
 	// Etag: [Output-only] A hash of this resource.

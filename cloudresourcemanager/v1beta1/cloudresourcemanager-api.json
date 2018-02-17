@@ -576,7 +576,7 @@
       }
     }
   },
-  "revision": "20180129",
+  "revision": "20180214",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -802,7 +802,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "A friendly string to be used to refer to the Organization in the UI.\nAssigned by the server, set to the primary domain of the G Suite\ncustomer that owns the organization.\n@OutputOnly",
+          "description": "A human-readable string that refers to the Organization in the\nGCP Console UI. This string is set by the server and cannot be\nchanged. The string will be set to the primary domain (for example,\n\"google.com\") of the G Suite customer that owns the organization.\n@OutputOnly",
           "type": "string"
         },
         "lifecycleState": {
@@ -824,7 +824,7 @@
           "type": "string"
         },
         "organizationId": {
-          "description": "An immutable id for the Organization that is assigned on creation. This\nshould be omitted when creating a new Organization.\nThis field is read-only.\nThis field is deprecated and will be removed in v1. Use name instead.",
+          "description": "An immutable id for the Organization that is assigned on creation. This\nshould be omitted when creating a new Organization.\nThis field is read-only.",
           "type": "string"
         },
         "owner": {

@@ -269,7 +269,7 @@
       }
     }
   },
-  "revision": "20180130",
+  "revision": "20180215",
   "rootUrl": "https://safebrowsing.googleapis.com/",
   "schemas": {
     "Checksum": {
@@ -765,7 +765,7 @@
           "type": "string"
         },
         "firstValue": {
-          "description": "The offset of the first entry in the encoded data, or, if only a single\ninteger was encoded, that single integer's value.",
+          "description": "The offset of the first entry in the encoded data, or, if only a single\ninteger was encoded, that single integer's value. If the field is empty or\nmissing, assume zero.",
           "format": "int64",
           "type": "string"
         },

@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/7pl1sDmdBC-mu1KF-9O2eOURI9U\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/OaqVMTEcX5L63gqgZRXrZJKJU08\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -986,7 +986,7 @@
       }
     }
   },
-  "revision": "20180205",
+  "revision": "20180211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -1271,6 +1271,20 @@
             ]
           },
           "description": "[Optional] The ID of the project containing this dataset.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DestinationTableProperties": {
+      "id": "DestinationTableProperties",
+      "properties": {
+        "description": {
+          "description": "[Optional] The description for the destination table. This will only be used if the destination table is newly created. If the table already exists and a value different than the current description is provided, the job will fail.",
+          "type": "string"
+        },
+        "friendlyName": {
+          "description": "[Optional] The friendly name for the destination table. This will only be used if the destination table is newly created. If the table already exists and a value different than the current friendly name is provided, the job will fail.",
           "type": "string"
         }
       },
@@ -1719,7 +1733,7 @@
       "id": "JobConfigurationExtract",
       "properties": {
         "compression": {
-          "description": "[Optional] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE.",
+          "description": "[Optional] The compression type to use for exported files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The default value is NONE. DEFLATE and SNAPPY are only supported for Avro.",
           "type": "string"
         },
         "destinationFormat": {
@@ -1774,11 +1788,15 @@
         },
         "destinationEncryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
-          "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys)."
         },
         "destinationTable": {
           "$ref": "TableReference",
           "description": "[Required] The destination table to load the data into."
+        },
+        "destinationTableProperties": {
+          "$ref": "DestinationTableProperties",
+          "description": "[Experimental] [Optional] Properties with which to create the destination table if it is new."
         },
         "encoding": {
           "description": "[Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties.",
@@ -1878,7 +1896,7 @@
         },
         "destinationEncryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
-          "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys)."
         },
         "destinationTable": {
           "$ref": "TableReference",
@@ -1973,7 +1991,7 @@
         },
         "destinationEncryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
-          "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys)."
         },
         "destinationTable": {
           "$ref": "TableReference",
@@ -2569,13 +2587,13 @@
       "properties": {
         "activeInputs": {
           "description": "Total number of active workers. This does not correspond directly to slot usage. This is the largest value observed since the last sample.",
-          "format": "int32",
-          "type": "integer"
+          "format": "int64",
+          "type": "string"
         },
         "completedInputs": {
           "description": "Total parallel units of work completed by this query.",
-          "format": "int32",
-          "type": "integer"
+          "format": "int64",
+          "type": "string"
         },
         "elapsedMs": {
           "description": "Milliseconds elapsed since the start of query execution.",
@@ -2630,7 +2648,7 @@
         },
         "encryptionConfiguration": {
           "$ref": "EncryptionConfiguration",
-          "description": "[Experimental] Custom encryption configuration (e.g., Cloud KMS keys)."
+          "description": "Custom encryption configuration (e.g., Cloud KMS keys)."
         },
         "etag": {
           "description": "[Output-only] A hash of this resource.",

@@ -1554,7 +1554,7 @@
       }
     }
   },
-  "revision": "20180126",
+  "revision": "20180208",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -4832,6 +4832,42 @@
       },
       "type": "object"
     },
+    "WorkerLifecycleEvent": {
+      "description": "A report of an event in a worker's lifecycle.\nThe proto contains one event, because the worker is expected to\nasynchronously send each message immediately after the event.\nDue to this asynchrony, messages may arrive out of order (or missing), and it\nis up to the consumer to interpret.\nThe timestamp of the event is in the enclosing WorkerMessage proto.",
+      "id": "WorkerLifecycleEvent",
+      "properties": {
+        "event": {
+          "description": "The event being reported.",
+          "enum": [
+            "UNKNOWN_EVENT",
+            "CONTAINER_START",
+            "NETWORK_UP",
+            "STAGING_FILES_DOWNLOAD_START",
+            "STAGING_FILES_DOWNLOAD_FINISH",
+            "SDK_INSTALL_START",
+            "SDK_INSTALL_FINISH"
+          ],
+          "enumDescriptions": [
+            "Invalid event.",
+            "Our container code starts running. Multiple containers could be\ndistinguished with WorkerMessage.labels if desired.",
+            "The worker has a functional external network connection.",
+            "Started downloading staging files.",
+            "Finished downloading all staging files.",
+            "For applicable SDKs, started installation of SDK and worker packages.",
+            "Finished installing SDK."
+          ],
+          "type": "string"
+        },
+        "metadata": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Other stats that can accompany an event. E.g.\n{ \"downloaded_bytes\" : \"123456\" }",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "WorkerMessage": {
       "description": "WorkerMessage provides information to the backend about a worker.",
       "id": "WorkerMessage",
@@ -4851,6 +4887,10 @@
         "workerHealthReport": {
           "$ref": "WorkerHealthReport",
           "description": "The health of a worker."
+        },
+        "workerLifecycleEvent": {
+          "$ref": "WorkerLifecycleEvent",
+          "description": "Record of worker lifecycle events."
         },
         "workerMessageCode": {
           "$ref": "WorkerMessageCode",

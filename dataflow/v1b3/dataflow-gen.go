@@ -6096,6 +6096,60 @@ func (s *WorkerHealthReportResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// WorkerLifecycleEvent: A report of an event in a worker's
+// lifecycle.
+// The proto contains one event, because the worker is expected
+// to
+// asynchronously send each message immediately after the event.
+// Due to this asynchrony, messages may arrive out of order (or
+// missing), and it
+// is up to the consumer to interpret.
+// The timestamp of the event is in the enclosing WorkerMessage proto.
+type WorkerLifecycleEvent struct {
+	// Event: The event being reported.
+	//
+	// Possible values:
+	//   "UNKNOWN_EVENT" - Invalid event.
+	//   "CONTAINER_START" - Our container code starts running. Multiple
+	// containers could be
+	// distinguished with WorkerMessage.labels if desired.
+	//   "NETWORK_UP" - The worker has a functional external network
+	// connection.
+	//   "STAGING_FILES_DOWNLOAD_START" - Started downloading staging files.
+	//   "STAGING_FILES_DOWNLOAD_FINISH" - Finished downloading all staging
+	// files.
+	//   "SDK_INSTALL_START" - For applicable SDKs, started installation of
+	// SDK and worker packages.
+	//   "SDK_INSTALL_FINISH" - Finished installing SDK.
+	Event string `json:"event,omitempty"`
+
+	// Metadata: Other stats that can accompany an event. E.g.
+	// { "downloaded_bytes" : "123456" }
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Event") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerLifecycleEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerLifecycleEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WorkerMessage: WorkerMessage provides information to the backend
 // about a worker.
 type WorkerMessage struct {
@@ -6118,6 +6172,9 @@ type WorkerMessage struct {
 
 	// WorkerHealthReport: The health of a worker.
 	WorkerHealthReport *WorkerHealthReport `json:"workerHealthReport,omitempty"`
+
+	// WorkerLifecycleEvent: Record of worker lifecycle events.
+	WorkerLifecycleEvent *WorkerLifecycleEvent `json:"workerLifecycleEvent,omitempty"`
 
 	// WorkerMessageCode: A worker message code.
 	WorkerMessageCode *WorkerMessageCode `json:"workerMessageCode,omitempty"`

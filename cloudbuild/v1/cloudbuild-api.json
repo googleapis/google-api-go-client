@@ -572,7 +572,7 @@
       }
     }
   },
-  "revision": "20180206",
+  "revision": "20180220",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "Build": {
@@ -658,13 +658,13 @@
           ],
           "enumDescriptions": [
             "Status of the build is unknown.",
-            "Build is queued; work has not yet begun.",
-            "Build is being executed.",
-            "Build finished successfully.",
-            "Build failed to complete successfully.",
-            "Build failed due to an internal cause.",
-            "Build took longer than was allowed.",
-            "Build was canceled by a user."
+            "Build or step is queued; work has not yet begun.",
+            "Build or step is being executed.",
+            "Build or step finished successfully.",
+            "Build or step failed to complete successfully.",
+            "Build or step failed due to an internal cause.",
+            "Build or step took longer than was allowed.",
+            "Build or step was canceled by a user."
           ],
           "type": "string"
         },
@@ -838,6 +838,35 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "status": {
+          "description": "Status of the build step. At this time, build step status is only updated\non build completion; step status is not updated in real-time as the build\nprogresses.\n@OutputOnly",
+          "enum": [
+            "STATUS_UNKNOWN",
+            "QUEUED",
+            "WORKING",
+            "SUCCESS",
+            "FAILURE",
+            "INTERNAL_ERROR",
+            "TIMEOUT",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Status of the build is unknown.",
+            "Build or step is queued; work has not yet begun.",
+            "Build or step is being executed.",
+            "Build or step finished successfully.",
+            "Build or step failed to complete successfully.",
+            "Build or step failed due to an internal cause.",
+            "Build or step took longer than was allowed.",
+            "Build or step was canceled by a user."
+          ],
+          "type": "string"
+        },
+        "timeout": {
+          "description": "Time limit for executing this build step. If not defined, the step has no\ntime limit and will be allowed to continue to run until either it completes\nor the build itself times out.",
+          "format": "google-duration",
+          "type": "string"
         },
         "timing": {
           "$ref": "TimeSpan",
@@ -1258,7 +1287,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Container Builder API",
+  "title": "Cloud Container Builder API",
   "version": "v1",
   "version_module": true
 }

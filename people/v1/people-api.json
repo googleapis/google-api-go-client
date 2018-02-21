@@ -596,7 +596,7 @@
       }
     }
   },
-  "revision": "20180205",
+  "revision": "20180217",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -1988,7 +1988,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google People API",
+  "title": "People API",
   "version": "v1",
   "version_module": true
 }

@@ -1,4 +1,4 @@
-// Package people provides access to the Google People API.
+// Package people provides access to the People API.
 //
 // See https://developers.google.com/people/
 //

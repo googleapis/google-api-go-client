@@ -1,4 +1,4 @@
-// Package cloudbuild provides access to the Google Cloud Container Builder API.
+// Package cloudbuild provides access to the Cloud Container Builder API.
 //
 // See https://cloud.google.com/container-builder/docs/
 //
@@ -227,13 +227,13 @@ type Build struct {
 	//
 	// Possible values:
 	//   "STATUS_UNKNOWN" - Status of the build is unknown.
-	//   "QUEUED" - Build is queued; work has not yet begun.
-	//   "WORKING" - Build is being executed.
-	//   "SUCCESS" - Build finished successfully.
-	//   "FAILURE" - Build failed to complete successfully.
-	//   "INTERNAL_ERROR" - Build failed due to an internal cause.
-	//   "TIMEOUT" - Build took longer than was allowed.
-	//   "CANCELLED" - Build was canceled by a user.
+	//   "QUEUED" - Build or step is queued; work has not yet begun.
+	//   "WORKING" - Build or step is being executed.
+	//   "SUCCESS" - Build or step finished successfully.
+	//   "FAILURE" - Build or step failed to complete successfully.
+	//   "INTERNAL_ERROR" - Build or step failed due to an internal cause.
+	//   "TIMEOUT" - Build or step took longer than was allowed.
+	//   "CANCELLED" - Build or step was canceled by a user.
 	Status string `json:"status,omitempty"`
 
 	// StatusDetail: Customer-readable message about the current
@@ -498,6 +498,31 @@ type BuildStep struct {
 	// a Cloud KMS
 	// crypto key. These values must be specified in the build's secrets.
 	SecretEnv []string `json:"secretEnv,omitempty"`
+
+	// Status: Status of the build step. At this time, build step status is
+	// only updated
+	// on build completion; step status is not updated in real-time as the
+	// build
+	// progresses.
+	// @OutputOnly
+	//
+	// Possible values:
+	//   "STATUS_UNKNOWN" - Status of the build is unknown.
+	//   "QUEUED" - Build or step is queued; work has not yet begun.
+	//   "WORKING" - Build or step is being executed.
+	//   "SUCCESS" - Build or step finished successfully.
+	//   "FAILURE" - Build or step failed to complete successfully.
+	//   "INTERNAL_ERROR" - Build or step failed due to an internal cause.
+	//   "TIMEOUT" - Build or step took longer than was allowed.
+	//   "CANCELLED" - Build or step was canceled by a user.
+	Status string `json:"status,omitempty"`
+
+	// Timeout: Time limit for executing this build step. If not defined,
+	// the step has no
+	// time limit and will be allowed to continue to run until either it
+	// completes
+	// or the build itself times out.
+	Timeout string `json:"timeout,omitempty"`
 
 	// Timing: Stores timing information for executing this build
 	// step.

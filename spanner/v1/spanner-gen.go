@@ -629,6 +629,9 @@ func (s *Database) MarshalJSON() ([]byte, error) {
 type Delete struct {
 	// KeySet: Required. The primary keys of the rows within table to
 	// delete.
+	// Delete is idempotent. The transaction will succeed even if some or
+	// all
+	// rows do not exist.
 	KeySet *KeySet `json:"keySet,omitempty"`
 
 	// Table: Required. The table whose rows will be deleted.
@@ -1724,9 +1727,9 @@ type PartitionOptions struct {
 	// option
 	// is currently 10,000. The maximum value is currently 200,000.  This is
 	// only
-	// a hint.  The actual number of partitions returned may be smaller
-	// than
-	// this maximum count request.
+	// a hint.  The actual number of partitions returned may be smaller or
+	// larger
+	// than this maximum count request.
 	MaxPartitions int64 `json:"maxPartitions,omitempty,string"`
 
 	// PartitionSizeBytes: The desired data size for each partition

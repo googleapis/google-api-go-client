@@ -2958,6 +2958,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "vision:v1p2beta1",
+   "name": "vision",
+   "version": "v1p2beta1",
+   "title": "Google Cloud Vision API",
+   "description": "Integrates Google Vision features, including image labeling, face, logo, and landmark detection, optical character recognition (OCR), and detection of explicit content, into applications.",
+   "discoveryRestUrl": "https://vision.googleapis.com/$discovery/rest?version=v1p2beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/vision/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "vision:v1",
    "name": "vision",
    "version": "v1",

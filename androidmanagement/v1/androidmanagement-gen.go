@@ -1533,8 +1533,8 @@ type NonComplianceDetail struct {
 	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is disallowed.
 	//   "API_LEVEL" - The setting is not supported in the API level of the
 	// Android version running on the device.
-	//   "MANAGEMENT_MODE" - The management mode (profile owner, device
-	// owner, etc.) doesn't support the setting.
+	//   "ADMIN_TYPE" - The admin type (profile owner, device owner, etc.)
+	// doesn't support the setting.
 	//   "USER_ACTION" - The user has not taken required action to comply
 	// with the setting.
 	//   "INVALID_VALUE" - The setting has an invalid value.
@@ -1597,8 +1597,8 @@ type NonComplianceDetailCondition struct {
 	//   "NON_COMPLIANCE_REASON_UNSPECIFIED" - This value is disallowed.
 	//   "API_LEVEL" - The setting is not supported in the API level of the
 	// Android version running on the device.
-	//   "MANAGEMENT_MODE" - The management mode (profile owner, device
-	// owner, etc.) doesn't support the setting.
+	//   "ADMIN_TYPE" - The admin type (profile owner, device owner, etc.)
+	// doesn't support the setting.
 	//   "USER_ACTION" - The user has not taken required action to comply
 	// with the setting.
 	//   "INVALID_VALUE" - The setting has an invalid value.

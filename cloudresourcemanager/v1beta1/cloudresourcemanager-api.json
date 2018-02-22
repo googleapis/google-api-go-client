@@ -576,7 +576,7 @@
       }
     }
   },
-  "revision": "20180214",
+  "revision": "20180219",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -1015,6 +1015,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Resource Manager API",
+  "title": "Cloud Resource Manager API",
   "version": "v1beta1"
 }

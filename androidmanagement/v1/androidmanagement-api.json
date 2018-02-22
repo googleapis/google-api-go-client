@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180212",
+  "revision": "20180207",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1803,7 +1803,7 @@
           "enum": [
             "NON_COMPLIANCE_REASON_UNSPECIFIED",
             "API_LEVEL",
-            "MANAGEMENT_MODE",
+            "ADMIN_TYPE",
             "USER_ACTION",
             "INVALID_VALUE",
             "APP_NOT_INSTALLED",
@@ -1816,7 +1816,7 @@
           "enumDescriptions": [
             "This value is disallowed.",
             "The setting is not supported in the API level of the Android version running on the device.",
-            "The management mode (profile owner, device owner, etc.) doesn't support the setting.",
+            "The admin type (profile owner, device owner, etc.) doesn't support the setting.",
             "The user has not taken required action to comply with the setting.",
             "The setting has an invalid value.",
             "The app required to implement the policy is not installed.",
@@ -1848,7 +1848,7 @@
           "enum": [
             "NON_COMPLIANCE_REASON_UNSPECIFIED",
             "API_LEVEL",
-            "MANAGEMENT_MODE",
+            "ADMIN_TYPE",
             "USER_ACTION",
             "INVALID_VALUE",
             "APP_NOT_INSTALLED",
@@ -1861,7 +1861,7 @@
           "enumDescriptions": [
             "This value is disallowed.",
             "The setting is not supported in the API level of the Android version running on the device.",
-            "The management mode (profile owner, device owner, etc.) doesn't support the setting.",
+            "The admin type (profile owner, device owner, etc.) doesn't support the setting.",
             "The user has not taken required action to comply with the setting.",
             "The setting has an invalid value.",
             "The app required to implement the policy is not installed.",

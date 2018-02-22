@@ -578,7 +578,7 @@
       }
     }
   },
-  "revision": "20180130",
+  "revision": "20180220",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GoogleLongrunningCancelOperationRequest": {
@@ -673,6 +673,22 @@
         "table": {
           "$ref": "GooglePrivacyDlpV2beta1BigQueryTable",
           "description": "Auxiliary table location. [required]"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta1BigQueryKey": {
+      "description": "LINT.IfChange\nRow key for identifying a record in BigQuery table.",
+      "id": "GooglePrivacyDlpV2beta1BigQueryKey",
+      "properties": {
+        "rowNumber": {
+          "description": "Absolute number of the row from the beginning of the table at the time\nof scanning.",
+          "format": "int64",
+          "type": "string"
+        },
+        "tableReference": {
+          "$ref": "GooglePrivacyDlpV2beta1BigQueryTable",
+          "description": "Complete BigQuery table reference."
         }
       },
       "type": "object"
@@ -2287,6 +2303,9 @@
       "description": "Message for a unique key indicating a record that contains a finding.",
       "id": "GooglePrivacyDlpV2beta1RecordKey",
       "properties": {
+        "bigQueryKey": {
+          "$ref": "GooglePrivacyDlpV2beta1BigQueryKey"
+        },
         "cloudStorageKey": {
           "$ref": "GooglePrivacyDlpV2beta1CloudStorageKey"
         },

@@ -1202,7 +1202,7 @@
       }
     }
   },
-  "revision": "20180213",
+  "revision": "20180220",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2beta1AuxiliaryTable": {
@@ -2198,6 +2198,22 @@
         "table": {
           "$ref": "GooglePrivacyDlpV2beta2BigQueryTable",
           "description": "Auxiliary table location. [required]"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2BigQueryKey": {
+      "description": "Row key for identifying a record in BigQuery table.",
+      "id": "GooglePrivacyDlpV2beta2BigQueryKey",
+      "properties": {
+        "rowNumber": {
+          "description": "Absolute number of the row from the beginning of the table at the time\nof scanning.",
+          "format": "int64",
+          "type": "string"
+        },
+        "tableReference": {
+          "$ref": "GooglePrivacyDlpV2beta2BigQueryTable",
+          "description": "Complete BigQuery table reference."
         }
       },
       "type": "object"
@@ -4179,6 +4195,9 @@
       "description": "Message for a unique key indicating a record that contains a finding.",
       "id": "GooglePrivacyDlpV2beta2RecordKey",
       "properties": {
+        "bigQueryKey": {
+          "$ref": "GooglePrivacyDlpV2beta2BigQueryKey"
+        },
         "cloudStorageKey": {
           "$ref": "GooglePrivacyDlpV2beta2CloudStorageKey"
         },

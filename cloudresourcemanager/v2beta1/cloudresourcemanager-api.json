@@ -430,7 +430,7 @@
       }
     }
   },
-  "revision": "20180129",
+  "revision": "20180219",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -843,6 +843,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Resource Manager API",
+  "title": "Cloud Resource Manager API",
   "version": "v2beta1"
 }

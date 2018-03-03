@@ -1583,7 +1583,7 @@
       }
     }
   },
-  "revision": "20180209",
+  "revision": "20180222",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -3641,6 +3641,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google App Engine Admin API",
+  "title": "App Engine Admin API",
   "version": "v1beta"
 }

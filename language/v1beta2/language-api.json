@@ -236,7 +236,7 @@
       }
     }
   },
-  "revision": "20180206",
+  "revision": "20180226",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -1245,7 +1245,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Natural Language API",
+  "title": "Cloud Natural Language API",
   "version": "v1beta2",
   "version_module": true
 }

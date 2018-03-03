@@ -1,4 +1,4 @@
-// Package dataflow provides access to the Google Dataflow API.
+// Package dataflow provides access to the Dataflow API.
 //
 // See https://cloud.google.com/dataflow
 //
@@ -3946,9 +3946,19 @@ type RuntimeEnvironment struct {
 	// available to your pipeline during execution, from 1 to 1000.
 	MaxWorkers int64 `json:"maxWorkers,omitempty"`
 
+	// Network: Network to which VMs will be assigned.  If empty or
+	// unspecified,
+	// the service will use the network "default".
+	Network string `json:"network,omitempty"`
+
 	// ServiceAccountEmail: The email address of the service account to run
 	// the job as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// Subnetwork: Subnetwork to which VMs will be assigned, if desired.
+	// Expected to be of
+	// the form "regions/REGION/subnetworks/SUBNETWORK".
+	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// TempLocation: The Cloud Storage path to use for temporary files.
 	// Must be a valid Cloud Storage URL, beginning with `gs://`.
@@ -6106,10 +6116,16 @@ func (s *WorkerHealthReportResponse) MarshalJSON() ([]byte, error) {
 // is up to the consumer to interpret.
 // The timestamp of the event is in the enclosing WorkerMessage proto.
 type WorkerLifecycleEvent struct {
+	// ContainerStartTime: The start time of this container. All events will
+	// report this so that
+	// events can be grouped together across container/VM restarts.
+	ContainerStartTime string `json:"containerStartTime,omitempty"`
+
 	// Event: The event being reported.
 	//
 	// Possible values:
 	//   "UNKNOWN_EVENT" - Invalid event.
+	//   "OS_START" - The time the VM started.
 	//   "CONTAINER_START" - Our container code starts running. Multiple
 	// containers could be
 	// distinguished with WorkerMessage.labels if desired.
@@ -6127,20 +6143,21 @@ type WorkerLifecycleEvent struct {
 	// { "downloaded_bytes" : "123456" }
 	Metadata map[string]string `json:"metadata,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Event") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ContainerStartTime")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Event") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContainerStartTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20180208",
+  "revision": "20180301",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -690,7 +690,7 @@
       "type": "object"
     },
     "BillingConfig": {
-      "description": "Describes billing configuration for new a Tenant Project",
+      "description": "Describes billing configuration for a new Tenant Project",
       "id": "BillingConfig",
       "properties": {
         "billingAccount": {

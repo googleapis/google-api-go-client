@@ -1,4 +1,4 @@
-// Package appengine provides access to the Google App Engine Admin API.
+// Package appengine provides access to the App Engine Admin API.
 //
 // See https://cloud.google.com/appengine/docs/admin-api/
 //

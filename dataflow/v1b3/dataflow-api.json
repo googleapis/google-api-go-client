@@ -1554,7 +1554,7 @@
       }
     }
   },
-  "revision": "20180208",
+  "revision": "20180220",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3613,8 +3613,16 @@
           "format": "int32",
           "type": "integer"
         },
+        "network": {
+          "description": "Network to which VMs will be assigned.  If empty or unspecified,\nthe service will use the network \"default\".",
+          "type": "string"
+        },
         "serviceAccountEmail": {
           "description": "The email address of the service account to run the job as.",
+          "type": "string"
+        },
+        "subnetwork": {
+          "description": "Subnetwork to which VMs will be assigned, if desired.  Expected to be of\nthe form \"regions/REGION/subnetworks/SUBNETWORK\".",
           "type": "string"
         },
         "tempLocation": {
@@ -4836,10 +4844,16 @@
       "description": "A report of an event in a worker's lifecycle.\nThe proto contains one event, because the worker is expected to\nasynchronously send each message immediately after the event.\nDue to this asynchrony, messages may arrive out of order (or missing), and it\nis up to the consumer to interpret.\nThe timestamp of the event is in the enclosing WorkerMessage proto.",
       "id": "WorkerLifecycleEvent",
       "properties": {
+        "containerStartTime": {
+          "description": "The start time of this container. All events will report this so that\nevents can be grouped together across container/VM restarts.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "event": {
           "description": "The event being reported.",
           "enum": [
             "UNKNOWN_EVENT",
+            "OS_START",
             "CONTAINER_START",
             "NETWORK_UP",
             "STAGING_FILES_DOWNLOAD_START",
@@ -4849,6 +4863,7 @@
           ],
           "enumDescriptions": [
             "Invalid event.",
+            "The time the VM started.",
             "Our container code starts running. Multiple containers could be\ndistinguished with WorkerMessage.labels if desired.",
             "The worker has a functional external network connection.",
             "Started downloading staging files.",
@@ -5151,6 +5166,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google Dataflow API",
+  "title": "Dataflow API",
   "version": "v1b3"
 }

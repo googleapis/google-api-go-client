@@ -1735,6 +1735,7 @@ type NodeConfig struct {
 	// Additionally, to avoid ambiguity, keys must not conflict with any
 	// other
 	// metadata keys for the project or be one of the reserved keys:
+	//  "cluster-location"
 	//  "cluster-name"
 	//  "cluster-uid"
 	//  "configure-sh"
@@ -3252,16 +3253,26 @@ func (s *UpdateNodePoolRequest) MarshalJSON() ([]byte, error) {
 // configuration to expose to
 // workloads on the node pool.
 type WorkloadMetadataConfig struct {
-	// NodeMetadata: NodeMetadata is the configuration for if and how to
-	// expose the node
-	// metadata to the workload running on the node.
+	// NodeMetadata: NodeMetadata is the configuration for how to expose the
+	// node metadata to
+	// the workload running on the node.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Not set.
-	//   "SECURE" - Expose only a secure subset of metadata to pods.
-	// Currently, this blocks
-	// kube-env, but exposes all other metadata.
-	//   "EXPOSE" - Expose all GCE metadata to pods.
+	//   "SECURE" - Prevent workloads not in hostNetwork from accessing
+	// certain VM metadata,
+	// specifically kube-env, which contains Kubelet credentials, and
+	// the
+	// instance identity token.
+	//
+	// Metadata concealment is a temporary security solution available while
+	// the
+	// bootstrapping process for cluster nodes is being redesigned
+	// with
+	// significant security improvements.  This feature is scheduled to
+	// be
+	// deprecated in the future and later removed.
+	//   "EXPOSE" - Expose all VM metadata to pods.
 	NodeMetadata string `json:"nodeMetadata,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "NodeMetadata") to

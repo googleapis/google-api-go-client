@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20180213",
+  "revision": "20180227",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1325,7 +1325,7 @@
       "type": "object"
     },
     "TestSetup": {
-      "description": "A description of how to set up the device prior to running the test",
+      "description": "A description of how to set up the Android device prior to running the test.",
       "id": "TestSetup",
       "properties": {
         "account": {
@@ -1390,7 +1390,7 @@
         },
         "testSetup": {
           "$ref": "TestSetup",
-          "description": "Test setup requirements e.g. files to install, bootstrap scripts\nOptional"
+          "description": "Test setup requirements for Android e.g. files to install, bootstrap\nscripts.\nOptional"
         },
         "testTimeout": {
           "description": "Max time a test execution is allowed to run before it is\nautomatically cancelled.\nOptional, default is 5 min.",

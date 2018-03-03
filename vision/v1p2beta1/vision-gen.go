@@ -4,10 +4,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/vision/v1p1beta1"
+//   import "google.golang.org/api/vision/v1p2beta1"
 //   ...
 //   visionService, err := vision.New(oauthHttpClient)
-package vision // import "google.golang.org/api/vision/v1p1beta1"
+package vision // import "google.golang.org/api/vision/v1p2beta1"
 
 import (
 	"bytes"
@@ -40,9 +40,9 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "vision:v1p1beta1"
+const apiId = "vision:v1p2beta1"
 const apiName = "vision"
-const apiVersion = "v1p1beta1"
+const apiVersion = "v1p2beta1"
 const basePath = "https://vision.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -59,6 +59,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Files = NewFilesService(s)
 	s.Images = NewImagesService(s)
 	return s, nil
 }
@@ -68,6 +69,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Files *FilesService
+
 	Images *ImagesService
 }
 
@@ -76,6 +79,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFilesService(s *Service) *FilesService {
+	rs := &FilesService{s: s}
+	return rs
+}
+
+type FilesService struct {
+	s *Service
 }
 
 func NewImagesService(s *Service) *ImagesService {
@@ -286,18 +298,18 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1AnnotateImageRequest: Request for
+// GoogleCloudVisionV1p2beta1AnnotateImageRequest: Request for
 // performing Google Cloud Vision API tasks over a user-provided
 // image, with user-requested features.
-type GoogleCloudVisionV1p1beta1AnnotateImageRequest struct {
+type GoogleCloudVisionV1p2beta1AnnotateImageRequest struct {
 	// Features: Requested features.
-	Features []*GoogleCloudVisionV1p1beta1Feature `json:"features,omitempty"`
+	Features []*GoogleCloudVisionV1p2beta1Feature `json:"features,omitempty"`
 
 	// Image: The image to be processed.
-	Image *GoogleCloudVisionV1p1beta1Image `json:"image,omitempty"`
+	Image *GoogleCloudVisionV1p2beta1Image `json:"image,omitempty"`
 
 	// ImageContext: Additional context that may accompany the image.
-	ImageContext *GoogleCloudVisionV1p1beta1ImageContext `json:"imageContext,omitempty"`
+	ImageContext *GoogleCloudVisionV1p2beta1ImageContext `json:"imageContext,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Features") to
 	// unconditionally include in API requests. By default, fields with
@@ -316,18 +328,23 @@ type GoogleCloudVisionV1p1beta1AnnotateImageRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1AnnotateImageRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1AnnotateImageRequest
+func (s *GoogleCloudVisionV1p2beta1AnnotateImageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AnnotateImageRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1AnnotateImageResponse: Response to an image
+// GoogleCloudVisionV1p2beta1AnnotateImageResponse: Response to an image
 // annotation request.
-type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
+type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
+	// Context: If present, contextual information is needed to understand
+	// where this image
+	// comes from.
+	Context *GoogleCloudVisionV1p2beta1ImageAnnotationContext `json:"context,omitempty"`
+
 	// CropHintsAnnotation: If present, crop hints have completed
 	// successfully.
-	CropHintsAnnotation *GoogleCloudVisionV1p1beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
+	CropHintsAnnotation *GoogleCloudVisionV1p2beta1CropHintsAnnotation `json:"cropHintsAnnotation,omitempty"`
 
 	// Error: If set, represents the error message for the operation.
 	// Note that filled-in image annotations are guaranteed to be
@@ -336,7 +353,7 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 
 	// FaceAnnotations: If present, face detection has completed
 	// successfully.
-	FaceAnnotations []*GoogleCloudVisionV1p1beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
+	FaceAnnotations []*GoogleCloudVisionV1p2beta1FaceAnnotation `json:"faceAnnotations,omitempty"`
 
 	// FullTextAnnotation: If present, text (OCR) detection or document
 	// (OCR) text detection has
@@ -344,64 +361,135 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	// This annotation provides the structural hierarchy for the OCR
 	// detected
 	// text.
-	FullTextAnnotation *GoogleCloudVisionV1p1beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
+	FullTextAnnotation *GoogleCloudVisionV1p2beta1TextAnnotation `json:"fullTextAnnotation,omitempty"`
 
 	// ImagePropertiesAnnotation: If present, image properties were
 	// extracted successfully.
-	ImagePropertiesAnnotation *GoogleCloudVisionV1p1beta1ImageProperties `json:"imagePropertiesAnnotation,omitempty"`
+	ImagePropertiesAnnotation *GoogleCloudVisionV1p2beta1ImageProperties `json:"imagePropertiesAnnotation,omitempty"`
 
 	// LabelAnnotations: If present, label detection has completed
 	// successfully.
-	LabelAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"labelAnnotations,omitempty"`
+	LabelAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"labelAnnotations,omitempty"`
 
 	// LandmarkAnnotations: If present, landmark detection has completed
 	// successfully.
-	LandmarkAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
+	LandmarkAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
 	// successfully.
-	LogoAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"logoAnnotations,omitempty"`
+	LogoAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"logoAnnotations,omitempty"`
 
 	// SafeSearchAnnotation: If present, safe-search annotation has
 	// completed successfully.
-	SafeSearchAnnotation *GoogleCloudVisionV1p1beta1SafeSearchAnnotation `json:"safeSearchAnnotation,omitempty"`
+	SafeSearchAnnotation *GoogleCloudVisionV1p2beta1SafeSearchAnnotation `json:"safeSearchAnnotation,omitempty"`
 
 	// TextAnnotations: If present, text (OCR) detection has completed
 	// successfully.
-	TextAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"textAnnotations,omitempty"`
+	TextAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"textAnnotations,omitempty"`
 
 	// WebDetection: If present, web detection has completed successfully.
-	WebDetection *GoogleCloudVisionV1p1beta1WebDetection `json:"webDetection,omitempty"`
+	WebDetection *GoogleCloudVisionV1p2beta1WebDetection `json:"webDetection,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CropHintsAnnotation")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CropHintsAnnotation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Context") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1AnnotateImageResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1AnnotateImageResponse
+func (s *GoogleCloudVisionV1p2beta1AnnotateImageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AnnotateImageResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest: Multiple image
-// annotation requests are batched into a single service call.
-type GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest struct {
-	// Requests: Individual image annotation requests for this batch.
-	Requests []*GoogleCloudVisionV1p1beta1AnnotateImageRequest `json:"requests,omitempty"`
+// GoogleCloudVisionV1p2beta1AsyncAnnotateFileRequest: An offline file
+// annotation request.
+type GoogleCloudVisionV1p2beta1AsyncAnnotateFileRequest struct {
+	// Features: Required. Requested features.
+	Features []*GoogleCloudVisionV1p2beta1Feature `json:"features,omitempty"`
+
+	// ImageContext: Additional context that may accompany the image(s) in
+	// the file.
+	ImageContext *GoogleCloudVisionV1p2beta1ImageContext `json:"imageContext,omitempty"`
+
+	// InputConfig: Required. Information about the input file.
+	InputConfig *GoogleCloudVisionV1p2beta1InputConfig `json:"inputConfig,omitempty"`
+
+	// OutputConfig: Required. The desired output location and metadata
+	// (e.g. format).
+	OutputConfig *GoogleCloudVisionV1p2beta1OutputConfig `json:"outputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Features") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Features") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1AsyncAnnotateFileRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AsyncAnnotateFileRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse: The response for
+// a single offline file annotation request.
+type GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse struct {
+	// OutputConfig: The output location and metadata from
+	// AsyncAnnotateFileRequest.
+	OutputConfig *GoogleCloudVisionV1p2beta1OutputConfig `json:"outputConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest: Multiple
+// async file annotation requests are batched into a single
+// service
+// call.
+type GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest struct {
+	// Requests: Individual async file annotation requests for this batch.
+	Requests []*GoogleCloudVisionV1p2beta1AsyncAnnotateFileRequest `json:"requests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Requests") to
 	// unconditionally include in API requests. By default, fields with
@@ -420,18 +508,78 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest
+func (s *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse: Response to a
+// GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse: Response
+// to an async batch file annotation request.
+type GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse struct {
+	// Responses: The list of file annotation responses, one for each
+	// request in
+	// AsyncBatchAnnotateFilesRequest.
+	Responses []*GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Responses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Responses") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest: Multiple image
+// annotation requests are batched into a single service call.
+type GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest struct {
+	// Requests: Individual image annotation requests for this batch.
+	Requests []*GoogleCloudVisionV1p2beta1AnnotateImageRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse: Response to a
 // batch image annotation request.
-type GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse struct {
+type GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse struct {
 	// Responses: Individual responses to image annotation requests within
 	// the batch.
-	Responses []*GoogleCloudVisionV1p1beta1AnnotateImageResponse `json:"responses,omitempty"`
+	Responses []*GoogleCloudVisionV1p2beta1AnnotateImageResponse `json:"responses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -454,14 +602,14 @@ type GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse
+func (s *GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Block: Logical element on the page.
-type GoogleCloudVisionV1p1beta1Block struct {
+// GoogleCloudVisionV1p2beta1Block: Logical element on the page.
+type GoogleCloudVisionV1p2beta1Block struct {
 	// BlockType: Detected block type (text, image etc) for this block.
 	//
 	// Possible values:
@@ -497,17 +645,17 @@ type GoogleCloudVisionV1p1beta1Block struct {
 	//         1----0
 	//
 	//   and the vertice order will still be (0, 1, 2, 3).
-	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
+	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Paragraphs: List of paragraphs in this block (if this blocks is of
 	// type text).
-	Paragraphs []*GoogleCloudVisionV1p1beta1Paragraph `json:"paragraphs,omitempty"`
+	Paragraphs []*GoogleCloudVisionV1p2beta1Paragraph `json:"paragraphs,omitempty"`
 
 	// Property: Additional information detected for the block.
-	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
+	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BlockType") to
 	// unconditionally include in API requests. By default, fields with
@@ -526,14 +674,14 @@ type GoogleCloudVisionV1p1beta1Block struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Block) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Block
+func (s *GoogleCloudVisionV1p2beta1Block) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Block
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Block) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Block
+func (s *GoogleCloudVisionV1p2beta1Block) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Block
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -546,11 +694,11 @@ func (s *GoogleCloudVisionV1p1beta1Block) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1BoundingPoly: A bounding polygon for the
+// GoogleCloudVisionV1p2beta1BoundingPoly: A bounding polygon for the
 // detected image annotation.
-type GoogleCloudVisionV1p1beta1BoundingPoly struct {
+type GoogleCloudVisionV1p2beta1BoundingPoly struct {
 	// Vertices: The bounding polygon vertices.
-	Vertices []*GoogleCloudVisionV1p1beta1Vertex `json:"vertices,omitempty"`
+	Vertices []*GoogleCloudVisionV1p2beta1Vertex `json:"vertices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Vertices") to
 	// unconditionally include in API requests. By default, fields with
@@ -569,16 +717,16 @@ type GoogleCloudVisionV1p1beta1BoundingPoly struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1BoundingPoly) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1BoundingPoly
+func (s *GoogleCloudVisionV1p2beta1BoundingPoly) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1BoundingPoly
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1ColorInfo: Color information consists of
+// GoogleCloudVisionV1p2beta1ColorInfo: Color information consists of
 // RGB channels, score, and the fraction of
 // the image that the color occupies in the image.
-type GoogleCloudVisionV1p1beta1ColorInfo struct {
+type GoogleCloudVisionV1p2beta1ColorInfo struct {
 	// Color: RGB components of the color.
 	Color *Color `json:"color,omitempty"`
 
@@ -607,14 +755,14 @@ type GoogleCloudVisionV1p1beta1ColorInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1ColorInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1ColorInfo
+func (s *GoogleCloudVisionV1p2beta1ColorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ColorInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1ColorInfo) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1ColorInfo
+func (s *GoogleCloudVisionV1p2beta1ColorInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1ColorInfo
 	var s1 struct {
 		PixelFraction gensupport.JSONFloat64 `json:"pixelFraction"`
 		Score         gensupport.JSONFloat64 `json:"score"`
@@ -629,13 +777,13 @@ func (s *GoogleCloudVisionV1p1beta1ColorInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1CropHint: Single crop hint that is used to
+// GoogleCloudVisionV1p2beta1CropHint: Single crop hint that is used to
 // generate a new crop when serving an image.
-type GoogleCloudVisionV1p1beta1CropHint struct {
+type GoogleCloudVisionV1p2beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
 	// coordinates of the bounding
 	// box are in the original image's scale, as returned in `ImageParams`.
-	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Confidence of this being a salient region.  Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
@@ -662,14 +810,14 @@ type GoogleCloudVisionV1p1beta1CropHint struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1CropHint) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1CropHint
+func (s *GoogleCloudVisionV1p2beta1CropHint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1CropHint
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1CropHint) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1CropHint
+func (s *GoogleCloudVisionV1p2beta1CropHint) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1CropHint
 	var s1 struct {
 		Confidence         gensupport.JSONFloat64 `json:"confidence"`
 		ImportanceFraction gensupport.JSONFloat64 `json:"importanceFraction"`
@@ -684,11 +832,11 @@ func (s *GoogleCloudVisionV1p1beta1CropHint) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1CropHintsAnnotation: Set of crop hints that
+// GoogleCloudVisionV1p2beta1CropHintsAnnotation: Set of crop hints that
 // are used to generate new crops when serving images.
-type GoogleCloudVisionV1p1beta1CropHintsAnnotation struct {
+type GoogleCloudVisionV1p2beta1CropHintsAnnotation struct {
 	// CropHints: Crop hint results.
-	CropHints []*GoogleCloudVisionV1p1beta1CropHint `json:"cropHints,omitempty"`
+	CropHints []*GoogleCloudVisionV1p2beta1CropHint `json:"cropHints,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CropHints") to
 	// unconditionally include in API requests. By default, fields with
@@ -707,15 +855,15 @@ type GoogleCloudVisionV1p1beta1CropHintsAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1CropHintsAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1CropHintsAnnotation
+func (s *GoogleCloudVisionV1p2beta1CropHintsAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1CropHintsAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1CropHintsParams: Parameters for crop hints
+// GoogleCloudVisionV1p2beta1CropHintsParams: Parameters for crop hints
 // annotation request.
-type GoogleCloudVisionV1p1beta1CropHintsParams struct {
+type GoogleCloudVisionV1p2beta1CropHintsParams struct {
 	// AspectRatios: Aspect ratios in floats, representing the ratio of the
 	// width to the height
 	// of the image. For example, if the desired aspect ratio is 4/3,
@@ -746,17 +894,17 @@ type GoogleCloudVisionV1p1beta1CropHintsParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1CropHintsParams) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1CropHintsParams
+func (s *GoogleCloudVisionV1p2beta1CropHintsParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1CropHintsParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1DominantColorsAnnotation: Set of dominant
+// GoogleCloudVisionV1p2beta1DominantColorsAnnotation: Set of dominant
 // colors and their corresponding scores.
-type GoogleCloudVisionV1p1beta1DominantColorsAnnotation struct {
+type GoogleCloudVisionV1p2beta1DominantColorsAnnotation struct {
 	// Colors: RGB color values with their score and pixel fraction.
-	Colors []*GoogleCloudVisionV1p1beta1ColorInfo `json:"colors,omitempty"`
+	Colors []*GoogleCloudVisionV1p2beta1ColorInfo `json:"colors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Colors") to
 	// unconditionally include in API requests. By default, fields with
@@ -775,19 +923,19 @@ type GoogleCloudVisionV1p1beta1DominantColorsAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1DominantColorsAnnotation
+func (s *GoogleCloudVisionV1p2beta1DominantColorsAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1DominantColorsAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1EntityAnnotation: Set of detected entity
+// GoogleCloudVisionV1p2beta1EntityAnnotation: Set of detected entity
 // features.
-type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
+type GoogleCloudVisionV1p2beta1EntityAnnotation struct {
 	// BoundingPoly: Image region to which this entity belongs. Not
 	// produced
 	// for `LABEL_DETECTION` features.
-	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: **Deprecated. Use `score` instead.**
 	// The accuracy of the entity detection in an image.
@@ -816,7 +964,7 @@ type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
 	// may indicate the location of the place where the image was
 	// taken.
 	// Location information is usually present for landmarks.
-	Locations []*GoogleCloudVisionV1p1beta1LocationInfo `json:"locations,omitempty"`
+	Locations []*GoogleCloudVisionV1p2beta1LocationInfo `json:"locations,omitempty"`
 
 	// Mid: Opaque entity ID. Some IDs may be available in
 	// [Google Knowledge Graph
@@ -827,7 +975,7 @@ type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
 	// Properties: Some entities may have optional user-supplied `Property`
 	// (name/value)
 	// fields, such a score or string that qualifies the entity.
-	Properties []*GoogleCloudVisionV1p1beta1Property `json:"properties,omitempty"`
+	Properties []*GoogleCloudVisionV1p2beta1Property `json:"properties,omitempty"`
 
 	// Score: Overall score of the result. Range [0, 1].
 	Score float64 `json:"score,omitempty"`
@@ -860,14 +1008,14 @@ type GoogleCloudVisionV1p1beta1EntityAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1EntityAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1EntityAnnotation
+func (s *GoogleCloudVisionV1p2beta1EntityAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1EntityAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1EntityAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1EntityAnnotation
+func (s *GoogleCloudVisionV1p2beta1EntityAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1EntityAnnotation
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		Score      gensupport.JSONFloat64 `json:"score"`
@@ -884,9 +1032,9 @@ func (s *GoogleCloudVisionV1p1beta1EntityAnnotation) UnmarshalJSON(data []byte) 
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1FaceAnnotation: A face annotation object
+// GoogleCloudVisionV1p2beta1FaceAnnotation: A face annotation object
 // contains the results of face detection.
-type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
+type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	// AngerLikelihood: Anger likelihood.
 	//
 	// Possible values:
@@ -930,7 +1078,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	// `BoundingPoly` (the polygon will be unbounded) if only a partial
 	// face
 	// appears in the image to be annotated.
-	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// DetectionConfidence: Detection confidence. Range [0, 1].
 	DetectionConfidence float64 `json:"detectionConfidence,omitempty"`
@@ -945,7 +1093,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	// the
 	// landmarker results, only on the initial face detection, hence
 	// the <code>fd</code> (face detection) prefix.
-	FdBoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
+	FdBoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"fdBoundingPoly,omitempty"`
 
 	// HeadwearLikelihood: Headwear likelihood.
 	//
@@ -983,7 +1131,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	LandmarkingConfidence float64 `json:"landmarkingConfidence,omitempty"`
 
 	// Landmarks: Detected face landmarks.
-	Landmarks []*GoogleCloudVisionV1p1beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
+	Landmarks []*GoogleCloudVisionV1p2beta1FaceAnnotationLandmark `json:"landmarks,omitempty"`
 
 	// PanAngle: Yaw angle, which indicates the leftward/rightward angle
 	// that the face is
@@ -1070,14 +1218,14 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1FaceAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1FaceAnnotation
+func (s *GoogleCloudVisionV1p2beta1FaceAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1FaceAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1FaceAnnotation) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1FaceAnnotation
+func (s *GoogleCloudVisionV1p2beta1FaceAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1FaceAnnotation
 	var s1 struct {
 		DetectionConfidence   gensupport.JSONFloat64 `json:"detectionConfidence"`
 		LandmarkingConfidence gensupport.JSONFloat64 `json:"landmarkingConfidence"`
@@ -1098,11 +1246,11 @@ func (s *GoogleCloudVisionV1p1beta1FaceAnnotation) UnmarshalJSON(data []byte) er
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1FaceAnnotationLandmark: A face-specific
+// GoogleCloudVisionV1p2beta1FaceAnnotationLandmark: A face-specific
 // landmark (for example, a face feature).
-type GoogleCloudVisionV1p1beta1FaceAnnotationLandmark struct {
+type GoogleCloudVisionV1p2beta1FaceAnnotationLandmark struct {
 	// Position: Face landmark position.
-	Position *GoogleCloudVisionV1p1beta1Position `json:"position,omitempty"`
+	Position *GoogleCloudVisionV1p2beta1Position `json:"position,omitempty"`
 
 	// Type: Face landmark type.
 	//
@@ -1162,18 +1310,18 @@ type GoogleCloudVisionV1p1beta1FaceAnnotationLandmark struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1FaceAnnotationLandmark) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1FaceAnnotationLandmark
+func (s *GoogleCloudVisionV1p2beta1FaceAnnotationLandmark) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1FaceAnnotationLandmark
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Feature: The type of Google Cloud Vision
+// GoogleCloudVisionV1p2beta1Feature: The type of Google Cloud Vision
 // API detection to perform, and the maximum
 // number of results to return for that type. Multiple `Feature` objects
 // can
 // be specified in the `features` list.
-type GoogleCloudVisionV1p1beta1Feature struct {
+type GoogleCloudVisionV1p2beta1Feature struct {
 	// MaxResults: Maximum number of results of this type. Does not apply
 	// to
 	// `TEXT_DETECTION`, `DOCUMENT_TEXT_DETECTION`, or `CROP_HINTS`.
@@ -1228,15 +1376,95 @@ type GoogleCloudVisionV1p1beta1Feature struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Feature) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Feature
+func (s *GoogleCloudVisionV1p2beta1Feature) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Feature
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Image: Client image to perform Google Cloud
+// GoogleCloudVisionV1p2beta1GcsDestination: The Google Cloud Storage
+// location where the output will be written to.
+type GoogleCloudVisionV1p2beta1GcsDestination struct {
+	// Uri: Google Cloud Storage URI where the results will be stored.
+	// Results will
+	// be in JSON format and preceded by its corresponding input URI. This
+	// field
+	// can either represent a single file, or a prefix for multiple
+	// outputs.
+	// Prefixes must end in a `/`.
+	//
+	// Examples:
+	//
+	// *    File: gs://bucket-name/filename.json
+	// *    Prefix: gs://bucket-name/prefix/here/
+	// *    File: gs://bucket-name/prefix/here
+	//
+	// If multiple outputs, each response is still AnnotateFileResponse,
+	// each of
+	// which contains some subset of the full list of
+	// AnnotateImageResponse.
+	// Multiple outputs can happen if, for example, the output JSON is too
+	// large
+	// and overflows into multiple sharded files.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1GcsDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1GcsDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1GcsSource: The Google Cloud Storage
+// location where the input will be read from.
+type GoogleCloudVisionV1p2beta1GcsSource struct {
+	// Uri: Google Cloud Storage URI for the input file. This must only be a
+	// GCS
+	// object. Wildcards are not currently supported.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1GcsSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1GcsSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1Image: Client image to perform Google Cloud
 // Vision API tasks over.
-type GoogleCloudVisionV1p1beta1Image struct {
+type GoogleCloudVisionV1p2beta1Image struct {
 	// Content: Image content, represented as a stream of bytes.
 	// Note: As with all `bytes` fields, protobuffers use a pure
 	// binary
@@ -1248,7 +1476,7 @@ type GoogleCloudVisionV1p1beta1Image struct {
 	// URL. If both `content` and `source` are provided for an image,
 	// `content`
 	// takes precedence and is used to perform the image annotation request.
-	Source *GoogleCloudVisionV1p1beta1ImageSource `json:"source,omitempty"`
+	Source *GoogleCloudVisionV1p2beta1ImageSource `json:"source,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
 	// unconditionally include in API requests. By default, fields with
@@ -1267,17 +1495,52 @@ type GoogleCloudVisionV1p1beta1Image struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Image) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Image
+func (s *GoogleCloudVisionV1p2beta1Image) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Image
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1ImageContext: Image context and/or
+// GoogleCloudVisionV1p2beta1ImageAnnotationContext: If an image was
+// produced from a file (e.g. a PDF), this message gives
+// information about the source of that image.
+type GoogleCloudVisionV1p2beta1ImageAnnotationContext struct {
+	// PageNumber: If the file was a PDF or TIFF, this field gives the page
+	// number within
+	// the file used to produce the image.
+	PageNumber int64 `json:"pageNumber,omitempty"`
+
+	// Uri: The URI of the file used to produce the image.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PageNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PageNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ImageAnnotationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ImageAnnotationContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ImageContext: Image context and/or
 // feature-specific parameters.
-type GoogleCloudVisionV1p1beta1ImageContext struct {
+type GoogleCloudVisionV1p2beta1ImageContext struct {
 	// CropHintsParams: Parameters for crop hints annotation request.
-	CropHintsParams *GoogleCloudVisionV1p1beta1CropHintsParams `json:"cropHintsParams,omitempty"`
+	CropHintsParams *GoogleCloudVisionV1p2beta1CropHintsParams `json:"cropHintsParams,omitempty"`
 
 	// LanguageHints: List of languages to use for TEXT_DETECTION. In most
 	// cases, an empty value
@@ -1298,10 +1561,10 @@ type GoogleCloudVisionV1p1beta1ImageContext struct {
 
 	// LatLongRect: lat/long rectangle that specifies the location of the
 	// image.
-	LatLongRect *GoogleCloudVisionV1p1beta1LatLongRect `json:"latLongRect,omitempty"`
+	LatLongRect *GoogleCloudVisionV1p2beta1LatLongRect `json:"latLongRect,omitempty"`
 
 	// WebDetectionParams: Parameters for web detection.
-	WebDetectionParams *GoogleCloudVisionV1p1beta1WebDetectionParams `json:"webDetectionParams,omitempty"`
+	WebDetectionParams *GoogleCloudVisionV1p2beta1WebDetectionParams `json:"webDetectionParams,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CropHintsParams") to
 	// unconditionally include in API requests. By default, fields with
@@ -1321,17 +1584,17 @@ type GoogleCloudVisionV1p1beta1ImageContext struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1ImageContext) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1ImageContext
+func (s *GoogleCloudVisionV1p2beta1ImageContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ImageContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1ImageProperties: Stores image properties,
+// GoogleCloudVisionV1p2beta1ImageProperties: Stores image properties,
 // such as dominant colors.
-type GoogleCloudVisionV1p1beta1ImageProperties struct {
+type GoogleCloudVisionV1p2beta1ImageProperties struct {
 	// DominantColors: If present, dominant colors completed successfully.
-	DominantColors *GoogleCloudVisionV1p1beta1DominantColorsAnnotation `json:"dominantColors,omitempty"`
+	DominantColors *GoogleCloudVisionV1p2beta1DominantColorsAnnotation `json:"dominantColors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DominantColors") to
 	// unconditionally include in API requests. By default, fields with
@@ -1351,15 +1614,15 @@ type GoogleCloudVisionV1p1beta1ImageProperties struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1ImageProperties) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1ImageProperties
+func (s *GoogleCloudVisionV1p2beta1ImageProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ImageProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1ImageSource: External image source (Google
+// GoogleCloudVisionV1p2beta1ImageSource: External image source (Google
 // Cloud Storage or web URL image location).
-type GoogleCloudVisionV1p1beta1ImageSource struct {
+type GoogleCloudVisionV1p2beta1ImageSource struct {
 	// GcsImageUri: **Use `image_uri` instead.**
 	//
 	// The Google Cloud Storage  URI of the
@@ -1415,15 +1678,49 @@ type GoogleCloudVisionV1p1beta1ImageSource struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1ImageSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1ImageSource
+func (s *GoogleCloudVisionV1p2beta1ImageSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ImageSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1LatLongRect: Rectangle determined by min
+// GoogleCloudVisionV1p2beta1InputConfig: The desired input location and
+// metadata.
+type GoogleCloudVisionV1p2beta1InputConfig struct {
+	// GcsSource: The Google Cloud Storage location to read the input from.
+	GcsSource *GoogleCloudVisionV1p2beta1GcsSource `json:"gcsSource,omitempty"`
+
+	// MimeType: The type of the file. Currently only "application/pdf" and
+	// "image/tiff"
+	// are supported. Wildcards are not supported.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsSource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsSource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1InputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1InputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1LatLongRect: Rectangle determined by min
 // and max `LatLng` pairs.
-type GoogleCloudVisionV1p1beta1LatLongRect struct {
+type GoogleCloudVisionV1p2beta1LatLongRect struct {
 	// MaxLatLng: Max lat/long pair.
 	MaxLatLng *LatLng `json:"maxLatLng,omitempty"`
 
@@ -1447,15 +1744,15 @@ type GoogleCloudVisionV1p1beta1LatLongRect struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1LatLongRect) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1LatLongRect
+func (s *GoogleCloudVisionV1p2beta1LatLongRect) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1LatLongRect
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1LocationInfo: Detected entity location
+// GoogleCloudVisionV1p2beta1LocationInfo: Detected entity location
 // information.
-type GoogleCloudVisionV1p1beta1LocationInfo struct {
+type GoogleCloudVisionV1p2beta1LocationInfo struct {
 	// LatLng: lat/long location coordinates.
 	LatLng *LatLng `json:"latLng,omitempty"`
 
@@ -1476,16 +1773,105 @@ type GoogleCloudVisionV1p1beta1LocationInfo struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1LocationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1LocationInfo
+func (s *GoogleCloudVisionV1p2beta1LocationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1LocationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Page: Detected page from OCR.
-type GoogleCloudVisionV1p1beta1Page struct {
+// GoogleCloudVisionV1p2beta1OperationMetadata: Contains metadata for
+// the BatchAnnotateImages operation.
+type GoogleCloudVisionV1p2beta1OperationMetadata struct {
+	// CreateTime: The time when the batch request was received.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// State: Current state of the batch operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid.
+	//   "CREATED" - Request is received.
+	//   "RUNNING" - Request is actively being processed.
+	//   "DONE" - The batch processing is done.
+	//   "CANCELLED" - The batch processing was cancelled.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: The time when the operation result was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1OutputConfig: The desired output location
+// and metadata.
+type GoogleCloudVisionV1p2beta1OutputConfig struct {
+	// BatchSize: The max number of response protos to put into each output
+	// JSON file on GCS.
+	// The valid range is [1, 100]. If not specified, the default value is
+	// 20.
+	//
+	// For example, for one pdf file with 100 pages, 100 response protos
+	// will
+	// be generated. If `batch_size` = 20, then 5 json files each
+	// containing 20 response protos will be written under the
+	// prefix
+	// `gcs_destination`.`uri`.
+	//
+	// Currently, batch_size only applies to GcsDestination, with potential
+	// future
+	// support for other output configurations.
+	BatchSize int64 `json:"batchSize,omitempty"`
+
+	// GcsDestination: The Google Cloud Storage location to write the
+	// output(s) to.
+	GcsDestination *GoogleCloudVisionV1p2beta1GcsDestination `json:"gcsDestination,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatchSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1OutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1OutputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1Page: Detected page from OCR.
+type GoogleCloudVisionV1p2beta1Page struct {
 	// Blocks: List of blocks of text, images etc on this page.
-	Blocks []*GoogleCloudVisionV1p1beta1Block `json:"blocks,omitempty"`
+	Blocks []*GoogleCloudVisionV1p2beta1Block `json:"blocks,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the page. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
@@ -1496,7 +1882,7 @@ type GoogleCloudVisionV1p1beta1Page struct {
 	Height int64 `json:"height,omitempty"`
 
 	// Property: Additional information detected on the page.
-	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
+	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
 	// Width: Page width. For PDFs the unit is points. For images
 	// (including
@@ -1520,14 +1906,14 @@ type GoogleCloudVisionV1p1beta1Page struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Page) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Page
+func (s *GoogleCloudVisionV1p2beta1Page) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Page
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Page) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Page
+func (s *GoogleCloudVisionV1p2beta1Page) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Page
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -1540,9 +1926,9 @@ func (s *GoogleCloudVisionV1p1beta1Page) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1Paragraph: Structural unit of text
+// GoogleCloudVisionV1p2beta1Paragraph: Structural unit of text
 // representing a number of words in certain order.
-type GoogleCloudVisionV1p1beta1Paragraph struct {
+type GoogleCloudVisionV1p2beta1Paragraph struct {
 	// BoundingBox: The bounding box for the paragraph.
 	// The vertices are in the order of top-left, top-right,
 	// bottom-right,
@@ -1562,17 +1948,17 @@ type GoogleCloudVisionV1p1beta1Paragraph struct {
 	//      |    |
 	//      1----0
 	//   and the vertice order will still be (0, 1, 2, 3).
-	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
+	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
 	// [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Property: Additional information detected for the paragraph.
-	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
+	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
 	// Words: List of words in this paragraph.
-	Words []*GoogleCloudVisionV1p1beta1Word `json:"words,omitempty"`
+	Words []*GoogleCloudVisionV1p2beta1Word `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
@@ -1591,14 +1977,14 @@ type GoogleCloudVisionV1p1beta1Paragraph struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Paragraph) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Paragraph
+func (s *GoogleCloudVisionV1p2beta1Paragraph) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Paragraph
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Paragraph) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Paragraph
+func (s *GoogleCloudVisionV1p2beta1Paragraph) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Paragraph
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -1611,11 +1997,11 @@ func (s *GoogleCloudVisionV1p1beta1Paragraph) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1Position: A 3D position in the image, used
+// GoogleCloudVisionV1p2beta1Position: A 3D position in the image, used
 // primarily for Face detection landmarks.
 // A valid Position must have both x and y coordinates.
 // The position coordinates are in the same scale as the original image.
-type GoogleCloudVisionV1p1beta1Position struct {
+type GoogleCloudVisionV1p2beta1Position struct {
 	// X: X coordinate.
 	X float64 `json:"x,omitempty"`
 
@@ -1642,14 +2028,14 @@ type GoogleCloudVisionV1p1beta1Position struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Position) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Position
+func (s *GoogleCloudVisionV1p2beta1Position) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Position
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Position) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Position
+func (s *GoogleCloudVisionV1p2beta1Position) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Position
 	var s1 struct {
 		X gensupport.JSONFloat64 `json:"x"`
 		Y gensupport.JSONFloat64 `json:"y"`
@@ -1666,9 +2052,9 @@ func (s *GoogleCloudVisionV1p1beta1Position) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1Property: A `Property` consists of a
+// GoogleCloudVisionV1p2beta1Property: A `Property` consists of a
 // user-supplied name/value pair.
-type GoogleCloudVisionV1p1beta1Property struct {
+type GoogleCloudVisionV1p2beta1Property struct {
 	// Name: Name of the property.
 	Name string `json:"name,omitempty"`
 
@@ -1695,18 +2081,18 @@ type GoogleCloudVisionV1p1beta1Property struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Property) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Property
+func (s *GoogleCloudVisionV1p2beta1Property) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Property
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1SafeSearchAnnotation: Set of features
+// GoogleCloudVisionV1p2beta1SafeSearchAnnotation: Set of features
 // pertaining to the image, computed by computer vision
 // methods over safe-search verticals (for example, adult, spoof,
 // medical,
 // violence).
-type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
+type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	// Adult: Represents the adult content likelihood for the image. Adult
 	// content may
 	// contain elements such as nudity, pornographic images or cartoons,
@@ -1816,14 +2202,14 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1SafeSearchAnnotation
+func (s *GoogleCloudVisionV1p2beta1SafeSearchAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1SafeSearchAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Symbol: A single symbol representation.
-type GoogleCloudVisionV1p1beta1Symbol struct {
+// GoogleCloudVisionV1p2beta1Symbol: A single symbol representation.
+type GoogleCloudVisionV1p2beta1Symbol struct {
 	// BoundingBox: The bounding box for the symbol.
 	// The vertices are in the order of top-left, top-right,
 	// bottom-right,
@@ -1843,14 +2229,14 @@ type GoogleCloudVisionV1p1beta1Symbol struct {
 	//      |    |
 	//      1----0
 	//   and the vertice order will still be (0, 1, 2, 3).
-	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
+	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the symbol. Range [0,
 	// 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Property: Additional information detected for the symbol.
-	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
+	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
 	// Text: The actual UTF-8 representation of the symbol.
 	Text string `json:"text,omitempty"`
@@ -1872,14 +2258,14 @@ type GoogleCloudVisionV1p1beta1Symbol struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Symbol) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Symbol
+func (s *GoogleCloudVisionV1p2beta1Symbol) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Symbol
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Symbol) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Symbol
+func (s *GoogleCloudVisionV1p2beta1Symbol) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Symbol
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -1892,7 +2278,7 @@ func (s *GoogleCloudVisionV1p1beta1Symbol) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1TextAnnotation: TextAnnotation contains a
+// GoogleCloudVisionV1p2beta1TextAnnotation: TextAnnotation contains a
 // structured representation of OCR extracted text.
 // The hierarchy of an OCR extracted text structure is like this:
 //     TextAnnotation -> Page -> Block -> Paragraph -> Word ->
@@ -1904,9 +2290,9 @@ func (s *GoogleCloudVisionV1p1beta1Symbol) UnmarshalJSON(data []byte) error {
 // to the TextAnnotation.TextProperty message definition below for
 // more
 // detail.
-type GoogleCloudVisionV1p1beta1TextAnnotation struct {
+type GoogleCloudVisionV1p2beta1TextAnnotation struct {
 	// Pages: List of pages detected by OCR.
-	Pages []*GoogleCloudVisionV1p1beta1Page `json:"pages,omitempty"`
+	Pages []*GoogleCloudVisionV1p2beta1Page `json:"pages,omitempty"`
 
 	// Text: UTF-8 text detected on the pages.
 	Text string `json:"text,omitempty"`
@@ -1928,15 +2314,15 @@ type GoogleCloudVisionV1p1beta1TextAnnotation struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1TextAnnotation) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotation
+func (s *GoogleCloudVisionV1p2beta1TextAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1TextAnnotation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak: Detected start
+// GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak: Detected start
 // or end of a structural component.
-type GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak struct {
+type GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak struct {
 	// IsPrefix: True if break prepends the element.
 	IsPrefix bool `json:"isPrefix,omitempty"`
 
@@ -1970,15 +2356,15 @@ type GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak
+func (s *GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage: Detected
+// GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage: Detected
 // language for a structural component.
-type GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage struct {
+type GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage struct {
 	// Confidence: Confidence of detected language. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
@@ -2006,14 +2392,14 @@ type GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage
+func (s *GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage
+func (s *GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -2026,15 +2412,15 @@ func (s *GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage) UnmarshalJSON
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1TextAnnotationTextProperty: Additional
+// GoogleCloudVisionV1p2beta1TextAnnotationTextProperty: Additional
 // information detected on the structural component.
-type GoogleCloudVisionV1p1beta1TextAnnotationTextProperty struct {
+type GoogleCloudVisionV1p2beta1TextAnnotationTextProperty struct {
 	// DetectedBreak: Detected start or end of a text segment.
-	DetectedBreak *GoogleCloudVisionV1p1beta1TextAnnotationDetectedBreak `json:"detectedBreak,omitempty"`
+	DetectedBreak *GoogleCloudVisionV1p2beta1TextAnnotationDetectedBreak `json:"detectedBreak,omitempty"`
 
 	// DetectedLanguages: A list of detected languages together with
 	// confidence.
-	DetectedLanguages []*GoogleCloudVisionV1p1beta1TextAnnotationDetectedLanguage `json:"detectedLanguages,omitempty"`
+	DetectedLanguages []*GoogleCloudVisionV1p2beta1TextAnnotationDetectedLanguage `json:"detectedLanguages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DetectedBreak") to
 	// unconditionally include in API requests. By default, fields with
@@ -2053,17 +2439,17 @@ type GoogleCloudVisionV1p1beta1TextAnnotationTextProperty struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1TextAnnotationTextProperty
+func (s *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1TextAnnotationTextProperty
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1Vertex: A vertex represents a 2D point in
+// GoogleCloudVisionV1p2beta1Vertex: A vertex represents a 2D point in
 // the image.
 // NOTE: the vertex coordinates are in the same scale as the original
 // image.
-type GoogleCloudVisionV1p1beta1Vertex struct {
+type GoogleCloudVisionV1p2beta1Vertex struct {
 	// X: X coordinate.
 	X int64 `json:"x,omitempty"`
 
@@ -2087,25 +2473,25 @@ type GoogleCloudVisionV1p1beta1Vertex struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Vertex) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Vertex
+func (s *GoogleCloudVisionV1p2beta1Vertex) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Vertex
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1WebDetection: Relevant information for the
+// GoogleCloudVisionV1p2beta1WebDetection: Relevant information for the
 // image from the Internet.
-type GoogleCloudVisionV1p1beta1WebDetection struct {
+type GoogleCloudVisionV1p2beta1WebDetection struct {
 	// BestGuessLabels: Best guess text labels for the request image.
-	BestGuessLabels []*GoogleCloudVisionV1p1beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
+	BestGuessLabels []*GoogleCloudVisionV1p2beta1WebDetectionWebLabel `json:"bestGuessLabels,omitempty"`
 
 	// FullMatchingImages: Fully matching images from the Internet.
 	// Can include resized copies of the query image.
-	FullMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
+	FullMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PagesWithMatchingImages: Web pages containing the matching images
 	// from the Internet.
-	PagesWithMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
+	PagesWithMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebPage `json:"pagesWithMatchingImages,omitempty"`
 
 	// PartialMatchingImages: Partial matching images from the
 	// Internet.
@@ -2113,13 +2499,13 @@ type GoogleCloudVisionV1p1beta1WebDetection struct {
 	// For
 	// example an original image will likely have partial matching for its
 	// crops.
-	PartialMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
+	PartialMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
 	// VisuallySimilarImages: The visually similar image results.
-	VisuallySimilarImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"visuallySimilarImages,omitempty"`
+	VisuallySimilarImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"visuallySimilarImages,omitempty"`
 
 	// WebEntities: Deduced entities from similar images on the Internet.
-	WebEntities []*GoogleCloudVisionV1p1beta1WebDetectionWebEntity `json:"webEntities,omitempty"`
+	WebEntities []*GoogleCloudVisionV1p2beta1WebDetectionWebEntity `json:"webEntities,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BestGuessLabels") to
 	// unconditionally include in API requests. By default, fields with
@@ -2139,15 +2525,15 @@ type GoogleCloudVisionV1p1beta1WebDetection struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetection) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetection
+func (s *GoogleCloudVisionV1p2beta1WebDetection) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1WebDetectionParams: Parameters for web
+// GoogleCloudVisionV1p2beta1WebDetectionParams: Parameters for web
 // detection request.
-type GoogleCloudVisionV1p1beta1WebDetectionParams struct {
+type GoogleCloudVisionV1p2beta1WebDetectionParams struct {
 	// IncludeGeoResults: Whether to include results derived from the geo
 	// information in the image.
 	IncludeGeoResults bool `json:"includeGeoResults,omitempty"`
@@ -2170,15 +2556,15 @@ type GoogleCloudVisionV1p1beta1WebDetectionParams struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionParams) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionParams
+func (s *GoogleCloudVisionV1p2beta1WebDetectionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1WebDetectionWebEntity: Entity deduced from
+// GoogleCloudVisionV1p2beta1WebDetectionWebEntity: Entity deduced from
 // similar images on the Internet.
-type GoogleCloudVisionV1p1beta1WebDetectionWebEntity struct {
+type GoogleCloudVisionV1p2beta1WebDetectionWebEntity struct {
 	// Description: Canonical description of the entity, in English.
 	Description string `json:"description,omitempty"`
 
@@ -2206,14 +2592,14 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebEntity struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebEntity) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebEntity
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebEntity) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebEntity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebEntity) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebEntity
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebEntity) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebEntity
 	var s1 struct {
 		Score gensupport.JSONFloat64 `json:"score"`
 		*NoMethod
@@ -2226,9 +2612,9 @@ func (s *GoogleCloudVisionV1p1beta1WebDetectionWebEntity) UnmarshalJSON(data []b
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1WebDetectionWebImage: Metadata for online
+// GoogleCloudVisionV1p2beta1WebDetectionWebImage: Metadata for online
 // images.
-type GoogleCloudVisionV1p1beta1WebDetectionWebImage struct {
+type GoogleCloudVisionV1p2beta1WebDetectionWebImage struct {
 	// Score: (Deprecated) Overall relevancy score for the image.
 	Score float64 `json:"score,omitempty"`
 
@@ -2252,14 +2638,14 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebImage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebImage) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebImage
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebImage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebImage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebImage) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebImage
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebImage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebImage
 	var s1 struct {
 		Score gensupport.JSONFloat64 `json:"score"`
 		*NoMethod
@@ -2272,9 +2658,9 @@ func (s *GoogleCloudVisionV1p1beta1WebDetectionWebImage) UnmarshalJSON(data []by
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1WebDetectionWebLabel: Label to provide
+// GoogleCloudVisionV1p2beta1WebDetectionWebLabel: Label to provide
 // extra metadata for the web detection.
-type GoogleCloudVisionV1p1beta1WebDetectionWebLabel struct {
+type GoogleCloudVisionV1p2beta1WebDetectionWebLabel struct {
 	// Label: Label for extra metadata.
 	Label string `json:"label,omitempty"`
 
@@ -2302,18 +2688,18 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebLabel struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebLabel) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebLabel
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebLabel) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebLabel
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudVisionV1p1beta1WebDetectionWebPage: Metadata for web
+// GoogleCloudVisionV1p2beta1WebDetectionWebPage: Metadata for web
 // pages.
-type GoogleCloudVisionV1p1beta1WebDetectionWebPage struct {
+type GoogleCloudVisionV1p2beta1WebDetectionWebPage struct {
 	// FullMatchingImages: Fully matching images on the page.
 	// Can include resized copies of the query image.
-	FullMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
+	FullMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"fullMatchingImages,omitempty"`
 
 	// PageTitle: Title for the web page, may contain HTML markups.
 	PageTitle string `json:"pageTitle,omitempty"`
@@ -2324,7 +2710,7 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebPage struct {
 	// example an original image will likely have partial matching for
 	// its
 	// crops.
-	PartialMatchingImages []*GoogleCloudVisionV1p1beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
+	PartialMatchingImages []*GoogleCloudVisionV1p2beta1WebDetectionWebImage `json:"partialMatchingImages,omitempty"`
 
 	// Score: (Deprecated) Overall relevancy score for the web page.
 	Score float64 `json:"score,omitempty"`
@@ -2350,14 +2736,14 @@ type GoogleCloudVisionV1p1beta1WebDetectionWebPage struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebPage) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebPage
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebPage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebPage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1WebDetectionWebPage) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1WebDetectionWebPage
+func (s *GoogleCloudVisionV1p2beta1WebDetectionWebPage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1WebDetectionWebPage
 	var s1 struct {
 		Score gensupport.JSONFloat64 `json:"score"`
 		*NoMethod
@@ -2370,8 +2756,8 @@ func (s *GoogleCloudVisionV1p1beta1WebDetectionWebPage) UnmarshalJSON(data []byt
 	return nil
 }
 
-// GoogleCloudVisionV1p1beta1Word: A word representation.
-type GoogleCloudVisionV1p1beta1Word struct {
+// GoogleCloudVisionV1p2beta1Word: A word representation.
+type GoogleCloudVisionV1p2beta1Word struct {
 	// BoundingBox: The bounding box for the word.
 	// The vertices are in the order of top-left, top-right,
 	// bottom-right,
@@ -2391,17 +2777,17 @@ type GoogleCloudVisionV1p1beta1Word struct {
 	//      |    |
 	//      1----0
 	//   and the vertice order will still be (0, 1, 2, 3).
-	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
+	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
 	Confidence float64 `json:"confidence,omitempty"`
 
 	// Property: Additional information detected for the word.
-	Property *GoogleCloudVisionV1p1beta1TextAnnotationTextProperty `json:"property,omitempty"`
+	Property *GoogleCloudVisionV1p2beta1TextAnnotationTextProperty `json:"property,omitempty"`
 
 	// Symbols: List of symbols in the word.
 	// The order of the symbols follows the natural reading order.
-	Symbols []*GoogleCloudVisionV1p1beta1Symbol `json:"symbols,omitempty"`
+	Symbols []*GoogleCloudVisionV1p2beta1Symbol `json:"symbols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
 	// unconditionally include in API requests. By default, fields with
@@ -2420,14 +2806,14 @@ type GoogleCloudVisionV1p1beta1Word struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *GoogleCloudVisionV1p1beta1Word) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p1beta1Word
+func (s *GoogleCloudVisionV1p2beta1Word) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Word
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
-	type NoMethod GoogleCloudVisionV1p1beta1Word
+func (s *GoogleCloudVisionV1p2beta1Word) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1Word
 	var s1 struct {
 		Confidence gensupport.JSONFloat64 `json:"confidence"`
 		*NoMethod
@@ -2438,205 +2824,6 @@ func (s *GoogleCloudVisionV1p1beta1Word) UnmarshalJSON(data []byte) error {
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
-}
-
-// GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse: The response for
-// a single offline file annotation request.
-type GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse struct {
-	// OutputConfig: The output location and metadata from
-	// AsyncAnnotateFileRequest.
-	OutputConfig *GoogleCloudVisionV1p2beta1OutputConfig `json:"outputConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse: Response
-// to an async batch file annotation request.
-type GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse struct {
-	// Responses: The list of file annotation responses, one for each
-	// request in
-	// AsyncBatchAnnotateFilesRequest.
-	Responses []*GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse `json:"responses,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Responses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Responses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVisionV1p2beta1GcsDestination: The Google Cloud Storage
-// location where the output will be written to.
-type GoogleCloudVisionV1p2beta1GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
-	//
-	// Examples:
-	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
-	//
-	// If multiple outputs, each response is still AnnotateFileResponse,
-	// each of
-	// which contains some subset of the full list of
-	// AnnotateImageResponse.
-	// Multiple outputs can happen if, for example, the output JSON is too
-	// large
-	// and overflows into multiple sharded files.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Uri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Uri") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p2beta1GcsDestination) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p2beta1GcsDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVisionV1p2beta1OperationMetadata: Contains metadata for
-// the BatchAnnotateImages operation.
-type GoogleCloudVisionV1p2beta1OperationMetadata struct {
-	// CreateTime: The time when the batch request was received.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// State: Current state of the batch operation.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - Invalid.
-	//   "CREATED" - Request is received.
-	//   "RUNNING" - Request is actively being processed.
-	//   "DONE" - The batch processing is done.
-	//   "CANCELLED" - The batch processing was cancelled.
-	State string `json:"state,omitempty"`
-
-	// UpdateTime: The time when the operation result was last updated.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p2beta1OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p2beta1OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudVisionV1p2beta1OutputConfig: The desired output location
-// and metadata.
-type GoogleCloudVisionV1p2beta1OutputConfig struct {
-	// BatchSize: The max number of response protos to put into each output
-	// JSON file on GCS.
-	// The valid range is [1, 100]. If not specified, the default value is
-	// 20.
-	//
-	// For example, for one pdf file with 100 pages, 100 response protos
-	// will
-	// be generated. If `batch_size` = 20, then 5 json files each
-	// containing 20 response protos will be written under the
-	// prefix
-	// `gcs_destination`.`uri`.
-	//
-	// Currently, batch_size only applies to GcsDestination, with potential
-	// future
-	// support for other output configurations.
-	BatchSize int64 `json:"batchSize,omitempty"`
-
-	// GcsDestination: The Google Cloud Storage location to write the
-	// output(s) to.
-	GcsDestination *GoogleCloudVisionV1p2beta1GcsDestination `json:"gcsDestination,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BatchSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BatchSize") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudVisionV1p2beta1OutputConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudVisionV1p2beta1OutputConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // LatLng: An object representing a latitude/longitude pair. This is
@@ -2694,6 +2881,81 @@ func (s *LatLng) UnmarshalJSON(data []byte) error {
 	s.Latitude = float64(s1.Latitude)
 	s.Longitude = float64(s1.Longitude)
 	return nil
+}
+
+// Operation: This resource represents a long-running operation that is
+// the result of a
+// network API call.
+type Operation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress.
+	// If `true`, the operation is completed, and either `error` or
+	// `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation.
+	// It typically
+	// contains progress information and common metadata such as create
+	// time.
+	// Some services might not provide such metadata.  Any method that
+	// returns a
+	// long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that
+	// originally returns it. If you use the default HTTP mapping,
+	// the
+	// `name` should have the format of `operations/some/unique/name`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success.
+	// If the original
+	// method returns no data on success, such as `Delete`, the response
+	// is
+	// `google.protobuf.Empty`.  If the original method is
+	// standard
+	// `Get`/`Create`/`Update`, the response should be the resource.  For
+	// other
+	// methods, the response should have the type `XxxResponse`, where
+	// `Xxx`
+	// is the original method name.  For example, if the original method
+	// name
+	// is `TakeSnapshot()`, the inferred response type
+	// is
+	// `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Operation) MarshalJSON() ([]byte, error) {
+	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Status: The `Status` type defines a logical error model that is
@@ -2815,20 +3077,151 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "vision.files.asyncBatchAnnotate":
+
+type FilesAsyncBatchAnnotateCall struct {
+	s                                                        *Service
+	googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest
+	urlParams_                                               gensupport.URLParams
+	ctx_                                                     context.Context
+	header_                                                  http.Header
+}
+
+// AsyncBatchAnnotate: Run async image detection and annotation for a
+// list of generic files (e.g.
+// PDF) which may contain multiple pages and multiple images per
+// page.
+// Progress and results can be retrieved through
+// the
+// `google.longrunning.Operations` interface.
+// `Operation.metadata` contains `OperationMetadata`
+// (metadata).
+// `Operation.response` contains `AsyncBatchAnnotateFilesResponse`
+// (results).
+func (r *FilesService) AsyncBatchAnnotate(googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest *GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest) *FilesAsyncBatchAnnotateCall {
+	c := &FilesAsyncBatchAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest = googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FilesAsyncBatchAnnotateCall) Fields(s ...googleapi.Field) *FilesAsyncBatchAnnotateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FilesAsyncBatchAnnotateCall) Context(ctx context.Context) *FilesAsyncBatchAnnotateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FilesAsyncBatchAnnotateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FilesAsyncBatchAnnotateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p2beta1asyncbatchannotatefilesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p2beta1/files:asyncBatchAnnotate")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vision.files.asyncBatchAnnotate" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FilesAsyncBatchAnnotateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Run async image detection and annotation for a list of generic files (e.g.\nPDF) which may contain multiple pages and multiple images per page.\nProgress and results can be retrieved through the\n`google.longrunning.Operations` interface.\n`Operation.metadata` contains `OperationMetadata` (metadata).\n`Operation.response` contains `AsyncBatchAnnotateFilesResponse` (results).",
+	//   "flatPath": "v1p2beta1/files:asyncBatchAnnotate",
+	//   "httpMethod": "POST",
+	//   "id": "vision.files.asyncBatchAnnotate",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1p2beta1/files:asyncBatchAnnotate",
+	//   "request": {
+	//     "$ref": "GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-vision"
+	//   ]
+	// }
+
+}
+
 // method id "vision.images.annotate":
 
 type ImagesAnnotateCall struct {
 	s                                                    *Service
-	googlecloudvisionv1p1beta1batchannotateimagesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest
+	googlecloudvisionv1p2beta1batchannotateimagesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest
 	urlParams_                                           gensupport.URLParams
 	ctx_                                                 context.Context
 	header_                                              http.Header
 }
 
 // Annotate: Run image detection and annotation for a batch of images.
-func (r *ImagesService) Annotate(googlecloudvisionv1p1beta1batchannotateimagesrequest *GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest) *ImagesAnnotateCall {
+func (r *ImagesService) Annotate(googlecloudvisionv1p2beta1batchannotateimagesrequest *GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest) *ImagesAnnotateCall {
 	c := &ImagesAnnotateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.googlecloudvisionv1p1beta1batchannotateimagesrequest = googlecloudvisionv1p1beta1batchannotateimagesrequest
+	c.googlecloudvisionv1p2beta1batchannotateimagesrequest = googlecloudvisionv1p2beta1batchannotateimagesrequest
 	return c
 }
 
@@ -2864,13 +3257,13 @@ func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p1beta1batchannotateimagesrequest)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudvisionv1p2beta1batchannotateimagesrequest)
 	if err != nil {
 		return nil, err
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p1beta1/images:annotate")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1p2beta1/images:annotate")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -2878,15 +3271,15 @@ func (c *ImagesAnnotateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "vision.images.annotate" call.
-// Exactly one of *GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse
+// Exactly one of *GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse
 // or error will be non-nil. Any non-2xx status code is an error.
 // Response headers are in either
-// *GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse.ServerResponse.
+// *GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse.ServerResponse.
 // Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was
 // returned.
-func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse, error) {
+func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -2905,7 +3298,7 @@ func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVisio
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse{
+	ret := &GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -2918,17 +3311,17 @@ func (c *ImagesAnnotateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudVisio
 	return ret, nil
 	// {
 	//   "description": "Run image detection and annotation for a batch of images.",
-	//   "flatPath": "v1p1beta1/images:annotate",
+	//   "flatPath": "v1p2beta1/images:annotate",
 	//   "httpMethod": "POST",
 	//   "id": "vision.images.annotate",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "v1p1beta1/images:annotate",
+	//   "path": "v1p2beta1/images:annotate",
 	//   "request": {
-	//     "$ref": "GoogleCloudVisionV1p1beta1BatchAnnotateImagesRequest"
+	//     "$ref": "GoogleCloudVisionV1p2beta1BatchAnnotateImagesRequest"
 	//   },
 	//   "response": {
-	//     "$ref": "GoogleCloudVisionV1p1beta1BatchAnnotateImagesResponse"
+	//     "$ref": "GoogleCloudVisionV1p2beta1BatchAnnotateImagesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

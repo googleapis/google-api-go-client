@@ -142,7 +142,7 @@
       }
     }
   },
-  "revision": "20180122",
+  "revision": "20180221",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "Color": {
@@ -919,7 +919,7 @@
           "type": "number"
         },
         "height": {
-          "description": "Page height in pixels.",
+          "description": "Page height. For PDFs the unit is points. For images (including\nTIFFs) the unit is pixels.",
           "format": "int32",
           "type": "integer"
         },
@@ -928,7 +928,7 @@
           "description": "Additional information detected on the page."
         },
         "width": {
-          "description": "Page width in pixels.",
+          "description": "Page width. For PDFs the unit is points. For images (including\nTIFFs) the unit is pixels.",
           "format": "int32",
           "type": "integer"
         }
@@ -1403,6 +1403,93 @@
             "$ref": "GoogleCloudVisionV1p1beta1Symbol"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse": {
+      "description": "The response for a single offline file annotation request.",
+      "id": "GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse",
+      "properties": {
+        "outputConfig": {
+          "$ref": "GoogleCloudVisionV1p2beta1OutputConfig",
+          "description": "The output location and metadata from AsyncAnnotateFileRequest."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse": {
+      "description": "Response to an async batch file annotation request.",
+      "id": "GoogleCloudVisionV1p2beta1AsyncBatchAnnotateFilesResponse",
+      "properties": {
+        "responses": {
+          "description": "The list of file annotation responses, one for each request in\nAsyncBatchAnnotateFilesRequest.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1GcsDestination": {
+      "description": "The Google Cloud Storage location where the output will be written to.",
+      "id": "GoogleCloudVisionV1p2beta1GcsDestination",
+      "properties": {
+        "uri": {
+          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1OperationMetadata": {
+      "description": "Contains metadata for the BatchAnnotateImages operation.",
+      "id": "GoogleCloudVisionV1p2beta1OperationMetadata",
+      "properties": {
+        "createTime": {
+          "description": "The time when the batch request was received.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "Current state of the batch operation.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CREATED",
+            "RUNNING",
+            "DONE",
+            "CANCELLED"
+          ],
+          "enumDescriptions": [
+            "Invalid.",
+            "Request is received.",
+            "Request is actively being processed.",
+            "The batch processing is done.",
+            "The batch processing was cancelled."
+          ],
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The time when the operation result was last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1OutputConfig": {
+      "description": "The desired output location and metadata.",
+      "id": "GoogleCloudVisionV1p2beta1OutputConfig",
+      "properties": {
+        "batchSize": {
+          "description": "The max number of response protos to put into each output JSON file on GCS.\nThe valid range is [1, 100]. If not specified, the default value is 20.\n\nFor example, for one pdf file with 100 pages, 100 response protos will\nbe generated. If `batch_size` = 20, then 5 json files each\ncontaining 20 response protos will be written under the prefix\n`gcs_destination`.`uri`.\n\nCurrently, batch_size only applies to GcsDestination, with potential future\nsupport for other output configurations.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "gcsDestination": {
+          "$ref": "GoogleCloudVisionV1p2beta1GcsDestination",
+          "description": "The Google Cloud Storage location to write the output(s) to."
         }
       },
       "type": "object"

@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/OaqVMTEcX5L63gqgZRXrZJKJU08\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/635jJ7Ek3ovMh_Mrru9RCl0fBYw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -493,11 +493,23 @@
               "location": "query",
               "type": "boolean"
             },
+            "maxCreationTime": {
+              "description": "Max value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created before or at this timestamp are returned",
+              "format": "uint64",
+              "location": "query",
+              "type": "string"
+            },
             "maxResults": {
               "description": "Maximum number of results to return",
               "format": "uint32",
               "location": "query",
               "type": "integer"
+            },
+            "minCreationTime": {
+              "description": "Min value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created after or at this timestamp are returned",
+              "format": "uint64",
+              "location": "query",
+              "type": "string"
             },
             "pageToken": {
               "description": "Page token, returned by a previous call, to request the next page of results",
@@ -986,7 +998,7 @@
       }
     }
   },
-  "revision": "20180211",
+  "revision": "20180223",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {

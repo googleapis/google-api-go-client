@@ -818,6 +818,16 @@ type DemoteMasterContext struct {
 	// replicating from the on-premises master.
 	ReplicaConfiguration *DemoteMasterConfiguration `json:"replicaConfiguration,omitempty"`
 
+	// VerifyGtidConsistency: Verify GTID consistency for demote operation.
+	// Default value: True. Second Generation instances only. Setting this
+	// flag to false enables you to bypass GTID consistency check between
+	// on-premises master and Cloud SQL instance during the demotion
+	// operation but also exposes you to the risk of future replication
+	// failures. Change the value only if you know the reason for the GTID
+	// divergence and are confident that doing so will not cause any
+	// replication issues.
+	VerifyGtidConsistency bool `json:"verifyGtidConsistency,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

@@ -491,6 +491,16 @@
                   "location": "path",
                   "required": true,
                   "type": "string"
+                },
+                "view": {
+                  "description": "Specifies which parts of the Hold to return.",
+                  "enum": [
+                    "HOLD_VIEW_UNSPECIFIED",
+                    "BASIC_HOLD",
+                    "FULL_HOLD"
+                  ],
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1/matters/{matterId}/holds/{holdId}",
@@ -525,6 +535,16 @@
                 },
                 "pageToken": {
                   "description": "The pagination token as returned in the response.\nAn empty token means start from the beginning.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "view": {
+                  "description": "Specifies which parts of the Hold to return.",
+                  "enum": [
+                    "HOLD_VIEW_UNSPECIFIED",
+                    "BASIC_HOLD",
+                    "FULL_HOLD"
+                  ],
                   "location": "query",
                   "type": "string"
                 }
@@ -687,7 +707,7 @@
       }
     }
   },
-  "revision": "20180105",
+  "revision": "20180217",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AddMatterPermissionsRequest": {
@@ -768,7 +788,7 @@
       "type": "object"
     },
     "HeldDriveQuery": {
-      "description": "Query options for drive holds.",
+      "description": "Query options for Drive holds.",
       "id": "HeldDriveQuery",
       "properties": {
         "includeTeamDriveFiles": {
@@ -830,7 +850,7 @@
           "type": "string"
         },
         "orgUnitId": {
-          "description": "The org unit's immutable ID as provided by the admin SDK.",
+          "description": "The org unit's immutable ID as provided by the Admin SDK.",
           "type": "string"
         }
       },

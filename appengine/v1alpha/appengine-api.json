@@ -705,7 +705,7 @@
       }
     }
   },
-  "revision": "20180209",
+  "revision": "20180222",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "AuthorizedCertificate": {
@@ -1310,6 +1310,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google App Engine Admin API",
+  "title": "App Engine Admin API",
   "version": "v1alpha"
 }

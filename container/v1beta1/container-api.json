@@ -2372,7 +2372,7 @@
       }
     }
   },
-  "revision": "20180201",
+  "revision": "20180213",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3108,7 +3108,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The metadata key/value pairs assigned to instances in the cluster.\n\nKeys must conform to the regexp [a-zA-Z0-9-_]+ and be less than 128 bytes\nin length. These are reflected as part of a URL in the metadata server.\nAdditionally, to avoid ambiguity, keys must not conflict with any other\nmetadata keys for the project or be one of the reserved keys:\n \"cluster-name\"\n \"cluster-uid\"\n \"configure-sh\"\n \"gci-update-strategy\"\n \"gci-ensure-gke-docker\"\n \"instance-template\"\n \"kube-env\"\n \"startup-script\"\n \"user-data\"\n\nValues are free-form strings, and only have meaning as interpreted by\nthe image running in the instance. The only restriction placed on them is\nthat each value's size must be less than or equal to 32 KB.\n\nThe total size of all keys and values must be less than 512 KB.",
+          "description": "The metadata key/value pairs assigned to instances in the cluster.\n\nKeys must conform to the regexp [a-zA-Z0-9-_]+ and be less than 128 bytes\nin length. These are reflected as part of a URL in the metadata server.\nAdditionally, to avoid ambiguity, keys must not conflict with any other\nmetadata keys for the project or be one of the reserved keys:\n \"cluster-location\"\n \"cluster-name\"\n \"cluster-uid\"\n \"configure-sh\"\n \"gci-update-strategy\"\n \"gci-ensure-gke-docker\"\n \"instance-template\"\n \"kube-env\"\n \"startup-script\"\n \"user-data\"\n\nValues are free-form strings, and only have meaning as interpreted by\nthe image running in the instance. The only restriction placed on them is\nthat each value's size must be less than or equal to 32 KB.\n\nThe total size of all keys and values must be less than 512 KB.",
           "type": "object"
         },
         "minCpuPlatform": {
@@ -3948,7 +3948,7 @@
       "id": "WorkloadMetadataConfig",
       "properties": {
         "nodeMetadata": {
-          "description": "NodeMetadata is the configuration for if and how to expose the node\nmetadata to the workload running on the node.",
+          "description": "NodeMetadata is the configuration for how to expose the node metadata to\nthe workload running on the node.",
           "enum": [
             "UNSPECIFIED",
             "SECURE",
@@ -3956,8 +3956,8 @@
           ],
           "enumDescriptions": [
             "Not set.",
-            "Expose only a secure subset of metadata to pods.  Currently, this blocks\nkube-env, but exposes all other metadata.",
-            "Expose all GCE metadata to pods."
+            "Prevent workloads not in hostNetwork from accessing certain VM metadata,\nspecifically kube-env, which contains Kubelet credentials, and the\ninstance identity token.\n\nMetadata concealment is a temporary security solution available while the\nbootstrapping process for cluster nodes is being redesigned with\nsignificant security improvements.  This feature is scheduled to be\ndeprecated in the future and later removed.",
+            "Expose all VM metadata to pods."
           ],
           "type": "string"
         }

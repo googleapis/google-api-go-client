@@ -15,6 +15,7 @@
   "description": "Manages encryption for your cloud services the same way you do on-premises. You can generate, use, rotate, and destroy AES256 encryption keys.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/kms/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -854,7 +855,7 @@
       }
     }
   },
-  "revision": "20180205",
+  "revision": "20180301",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {

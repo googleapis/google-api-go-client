@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/IwpEcW28RbHh0KmIM_nhYnmex88\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/sCf-H7GljP1gmUVuX6UzDmXzTLg\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1161,7 +1161,7 @@
       }
     }
   },
-  "revision": "20180205",
+  "revision": "20180301",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1248,7 +1248,7 @@
       "properties": {
         "androidAppInfo": {
           "$ref": "AndroidAppInfo",
-          "description": "Infomation about the application under test."
+          "description": "Information about the application under test."
         },
         "androidInstrumentationTest": {
           "$ref": "AndroidInstrumentationTest",
@@ -1727,7 +1727,7 @@
       "id": "ListScreenshotClustersResponse",
       "properties": {
         "clusters": {
-          "description": "The set of clustres associated with an execution Always set",
+          "description": "The set of clusters associated with an execution Always set",
           "items": {
             "$ref": "ScreenshotCluster"
           },

@@ -767,7 +767,7 @@ func (s *Billing) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BillingConfig: Describes billing configuration for new a Tenant
+// BillingConfig: Describes billing configuration for a new Tenant
 // Project
 type BillingConfig struct {
 	// BillingAccount: Name of the billing account.

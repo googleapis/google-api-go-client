@@ -658,57 +658,9 @@
       }
     }
   },
-  "revision": "20180208",
+  "revision": "20180222",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
-    "AuditConfig": {
-      "description": "Specifies the audit configuration for a service.\nThe configuration determines which permission types are logged, and what\nidentities, if any, are exempted from logging.\nAn AuditConfig must have one or more AuditLogConfigs.\n\nIf there are AuditConfigs for both `allServices` and a specific service,\nthe union of the two AuditConfigs is used for that service: the log_types\nspecified in each AuditConfig are enabled, and the exempted_members in each\nAuditLogConfig are exempted.\n\nExample Policy with multiple AuditConfigs:\n\n    {\n      \"audit_configs\": [\n        {\n          \"service\": \"allServices\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n              \"exempted_members\": [\n                \"user:foo@gmail.com\"\n              ]\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n            },\n            {\n              \"log_type\": \"ADMIN_READ\",\n            }\n          ]\n        },\n        {\n          \"service\": \"fooservice.googleapis.com\"\n          \"audit_log_configs\": [\n            {\n              \"log_type\": \"DATA_READ\",\n            },\n            {\n              \"log_type\": \"DATA_WRITE\",\n              \"exempted_members\": [\n                \"user:bar@gmail.com\"\n              ]\n            }\n          ]\n        }\n      ]\n    }\n\nFor fooservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ\nlogging. It also exempts foo@gmail.com from DATA_READ logging, and\nbar@gmail.com from DATA_WRITE logging.",
-      "id": "AuditConfig",
-      "properties": {
-        "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
-          "items": {
-            "$ref": "AuditLogConfig"
-          },
-          "type": "array"
-        },
-        "service": {
-          "description": "Specifies a service that will be enabled for audit logging.\nFor example, `storage.googleapis.com`, `cloudsql.googleapis.com`.\n`allServices` is a special value that covers all services.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AuditLogConfig": {
-      "description": "Provides the configuration for logging a type of permissions.\nExample:\n\n    {\n      \"audit_log_configs\": [\n        {\n          \"log_type\": \"DATA_READ\",\n          \"exempted_members\": [\n            \"user:foo@gmail.com\"\n          ]\n        },\n        {\n          \"log_type\": \"DATA_WRITE\",\n        }\n      ]\n    }\n\nThis enables 'DATA_READ' and 'DATA_WRITE' logging, while exempting\nfoo@gmail.com from DATA_READ logging.",
-      "id": "AuditLogConfig",
-      "properties": {
-        "exemptedMembers": {
-          "description": "Specifies the identities that do not cause logging for this type of\npermission.\nFollows the same format of Binding.members.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "logType": {
-          "description": "The log type that this config enables.",
-          "enum": [
-            "LOG_TYPE_UNSPECIFIED",
-            "ADMIN_READ",
-            "DATA_WRITE",
-            "DATA_READ"
-          ],
-          "enumDescriptions": [
-            "Default case. Should never be this.",
-            "Admin reads. Example: CloudIAM getIamPolicy",
-            "Data writes. Example: CloudSQL Users create",
-            "Data reads. Example: CloudSQL Users list"
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
@@ -788,7 +740,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The metadata key-value pairs assigned to the device. This metadata is not\ninterpreted or indexed by Cloud IoT Core. It can be used to add contextual\ninformation for the device.\n\nKeys must conform to the regular expression [a-zA-Z0-9-_]+ and be less than\n128 bytes in length.\n\nValues are free-form strings. Each value must be less than or equal to 32\nKB in size.\n\nThe total size of all keys and values must be less than 256 KB, and the\nmaximum number of key-value pairs is 500.",
+          "description": "The metadata key-value pairs assigned to the device. This metadata is not\ninterpreted or indexed by Cloud IoT Core. It can be used to add contextual\ninformation for the device.\n\nKeys must conform to the regular expression a-zA-Z+ and\nbe less than 128 bytes in length.\n\nValues are free-form strings. Each value must be less than or equal to 32\nKB in size.\n\nThe total size of all keys and values must be less than 256 KB, and the\nmaximum number of key-value pairs is 500.",
           "type": "object"
         },
         "name": {
@@ -915,7 +867,7 @@
       "type": "object"
     },
     "EventNotificationConfig": {
-      "description": "The configuration to forward telemetry events.",
+      "description": "The configuration for forwarding telemetry events.",
       "id": "EventNotificationConfig",
       "properties": {
         "pubsubTopicName": {
@@ -923,6 +875,7 @@
           "type": "string"
         },
         "subfolderMatches": {
+          "description": "If the subfolder name matches this string exactly, this configuration will\nbe used. The string must not include the leading '/' character. If empty,\nall strings are matched. This field is used only for telemetry events;\nsubfolders are not supported for state changes.",
           "type": "string"
         }
       },
@@ -1061,13 +1014,6 @@
       "description": "Defines an Identity and Access Management (IAM) policy. It is used to\nspecify access control policies for Cloud Platform resources.\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of\n`members` to a `role`, where the members can be user accounts, Google groups,\nGoogle domains, and service accounts. A `role` is a named list of permissions\ndefined by IAM.\n\n**Example**\n\n    {\n      \"bindings\": [\n        {\n          \"role\": \"roles/owner\",\n          \"members\": [\n            \"user:mike@example.com\",\n            \"group:admins@example.com\",\n            \"domain:google.com\",\n            \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n          ]\n        },\n        {\n          \"role\": \"roles/viewer\",\n          \"members\": [\"user:sean@example.com\"]\n        }\n      ]\n    }\n\nFor a description of IAM and its features, see the\n[IAM developer's guide](https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
-        "auditConfigs": {
-          "description": "Specifies cloud audit logging configuration for this policy.",
-          "items": {
-            "$ref": "AuditConfig"
-          },
-          "type": "array"
-        },
         "bindings": {
           "description": "Associates a list of `members` to a `role`.\n`bindings` with no members will result in an error.",
           "items": {
@@ -1162,11 +1108,6 @@
         "policy": {
           "$ref": "Policy",
           "description": "REQUIRED: The complete policy to be applied to the `resource`. The size of\nthe policy is limited to a few 10s of KB. An empty policy is a\nvalid policy but certain Cloud Platform services (such as Projects)\nmight reject them."
-        },
-        "updateMask": {
-          "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
-          "format": "google-fieldmask",
-          "type": "string"
         }
       },
       "type": "object"
@@ -1272,7 +1213,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud IoT API",
+  "title": "Cloud IoT API",
   "version": "v1",
   "version_module": true
 }

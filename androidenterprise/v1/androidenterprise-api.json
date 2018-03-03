@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/xGQpa0ZFJyFLexGdkhzOgaWpUDQ\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/BekewWSAdUldI-NtmUAiG8YIr08\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2804,7 +2804,7 @@
       }
     }
   },
-  "revision": "20180131",
+  "revision": "20180221",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3750,6 +3750,10 @@
       "description": "The device policy for a given managed device.",
       "id": "Policy",
       "properties": {
+        "autoUpdatePolicy": {
+          "description": "The auto-update policy for apps installed on the device. \"choiceToTheUser\" allows the device's user to configure the app update policy. \"always\" enables auto updates. \"never\" disables auto updates. \"wifiOnly\" enables auto updates only when the device is connected to wifi.",
+          "type": "string"
+        },
         "productAvailabilityPolicy": {
           "description": "The availability granted to the device for the specified products. \"all\" gives the device access to all products, regardless of approval status. \"allApproved\" entitles the device to access all products that are approved for the enterprise. \"allApproved\" and \"all\" do not enable automatic visibility of \"alpha\" or \"beta\" tracks. \"whitelist\" grants the device access the products specified in productPolicy[]. Only products that are approved or products that were previously approved (products with revoked approval) by the enterprise can be whitelisted. If no value is provided, the availability set at the user level is applied by default.",
           "type": "string"

@@ -430,7 +430,7 @@
       }
     }
   },
-  "revision": "20180201",
+  "revision": "20180228",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -924,7 +924,7 @@
             "Zero is an illegal value.",
             "New transfers will be performed based on the schedule.",
             "New transfers will not be scheduled.",
-            "This is a soft delete state. After a transfer job is set to this\nstate, the job and all the transfer executions are subject to\ngarbage collection."
+            "This is a soft delete state. After a transfer job is set to this\nstate, the job and all the transfer executions are subject to\ngarbage collection. Transfer jobs become eligible for garbage collection\n30 days after their status is set to `DELETED`."
           ],
           "type": "string"
         },
@@ -1071,7 +1071,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Storage Transfer API",
+  "title": "Storage Transfer API",
   "version": "v1",
   "version_module": true
 }

@@ -1202,7 +1202,7 @@
       }
     }
   },
-  "revision": "20180220",
+  "revision": "20180227",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2beta1AuxiliaryTable": {
@@ -2725,6 +2725,71 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2DateShiftConfig": {
+      "description": "Shifts dates by random number of days, with option to be consistent for the\nsame context.",
+      "id": "GooglePrivacyDlpV2beta2DateShiftConfig",
+      "properties": {
+        "context": {
+          "$ref": "GooglePrivacyDlpV2beta2FieldId",
+          "description": "Points to the field that contains the context, for example, an entity id.\nIf set, must also set method. If set, shift will be consistent for the\ngiven context."
+        },
+        "cryptoKey": {
+          "$ref": "GooglePrivacyDlpV2beta2CryptoKey",
+          "description": "Causes the shift to be computed based on this key and the context. This\nresults in the same shift for the same context and crypto_key."
+        },
+        "lowerBoundDays": {
+          "description": "For example, -5 means shift date to at most 5 days back in the past.\n[Required]",
+          "format": "int32",
+          "type": "integer"
+        },
+        "upperBoundDays": {
+          "description": "Range of shift in days. Actual shift will be selected at random within this\nrange (inclusive ends). Negative means shift to earlier in time. Must not\nbe more than 365250 days (1000 years) each direction.\n\nFor example, 3 means shift date to at most 3 days into the future.\n[Required]",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2DateTime": {
+      "description": "Message for a date time object.",
+      "id": "GooglePrivacyDlpV2beta2DateTime",
+      "properties": {
+        "date": {
+          "$ref": "GoogleTypeDate",
+          "description": "One or more of the following must be set. All fields are optional, but\nwhen set must be valid date or time values."
+        },
+        "dayOfWeek": {
+          "enum": [
+            "DAY_OF_WEEK_UNSPECIFIED",
+            "MONDAY",
+            "TUESDAY",
+            "WEDNESDAY",
+            "THURSDAY",
+            "FRIDAY",
+            "SATURDAY",
+            "SUNDAY"
+          ],
+          "enumDescriptions": [
+            "The unspecified day-of-week.",
+            "The day-of-week of Monday.",
+            "The day-of-week of Tuesday.",
+            "The day-of-week of Wednesday.",
+            "The day-of-week of Thursday.",
+            "The day-of-week of Friday.",
+            "The day-of-week of Saturday.",
+            "The day-of-week of Sunday."
+          ],
+          "type": "string"
+        },
+        "time": {
+          "$ref": "GoogleTypeTimeOfDay"
+        },
+        "timeZone": {
+          "$ref": "GooglePrivacyDlpV2beta2TimeZone"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2DeidentifyConfig": {
       "description": "The configuration that controls how the data will change.",
       "id": "GooglePrivacyDlpV2beta2DeidentifyConfig",
@@ -3055,6 +3120,10 @@
         "quote": {
           "description": "The content that was found. Even if the content is not textual, it\nmay be converted to a textual representation here.\nProvided if requested by the `InspectConfig` and the finding is\nless than or equal to 4096 bytes long. If the finding exceeds 4096 bytes\nin length, the quote may be omitted.",
           "type": "string"
+        },
+        "quoteInfo": {
+          "$ref": "GooglePrivacyDlpV2beta2QuoteInfo",
+          "description": "Contains data parsed from quotes. Only populated if include_quote was set\nto true and a supported infoType was requested. Currently supported\ninfoTypes: DATE, DATE_OF_BIRTH and TIME."
         }
       },
       "type": "object"
@@ -3116,7 +3185,7 @@
         },
         "proximity": {
           "$ref": "GooglePrivacyDlpV2beta2Proximity",
-          "description": "Proximity of the finding within which the entire hotword must reside.\nThe total length of the window cannot exceed 1000 characters."
+          "description": "Proximity of the finding within which the entire hotword must reside.\nThe total length of the window cannot exceed 1000 characters. Note that\nthe finding itself will be included in the window, so that hotwords may\nbe used to match substrings of the finding itself. For example, the\ncertainty of a phone number regex \"\\(\\d{3}\\) \\d{3}-\\d{4}\" could be\nadjusted upwards if the area code is known to be the local area code of\na company office using the hotword regex \"\\(xxx\\)\", where \"xxx\"\nis the area code in question."
         }
       },
       "type": "object"
@@ -4024,9 +4093,29 @@
       "description": "Cloud repository for storing output.",
       "id": "GooglePrivacyDlpV2beta2OutputStorageConfig",
       "properties": {
+        "outputSchema": {
+          "description": "Schema used for writing the findings. Columns are derived from the\n`Finding` object. If appending to an existing table, any columns from the\npredefined schema that are missing will be added. No columns in the\nexisting table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table,\nand no changes will be made to an existing table.",
+          "enum": [
+            "OUTPUT_SCHEMA_UNSPECIFIED",
+            "BASIC_COLUMNS",
+            "GCS_COLUMNS",
+            "DATASTORE_COLUMNS",
+            "BIG_QUERY_COLUMNS",
+            "ALL_COLUMNS"
+          ],
+          "enumDescriptions": [
+            "",
+            "Basic schema including only `info_type`, `quote`, `certainty`, and\n`timestamp`.",
+            "Schema tailored to findings from scanning Google Cloud Storage.",
+            "Schema tailored to findings from scanning Google Datastore.",
+            "Schema tailored to findings from scanning Google BigQuery.",
+            "Schema containing all columns."
+          ],
+          "type": "string"
+        },
         "table": {
           "$ref": "GooglePrivacyDlpV2beta2BigQueryTable",
-          "description": "Store findings in a new table in an existing dataset. If table_id is not\nset a new one will be generated for you with the following format:\ndlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific timezone will be used for\ngenerating the date details."
+          "description": "Store findings in an existing table or a new table in an existing\ndataset. Each column in an existing table must have the same name, type,\nand mode of a field in the `Finding` object. If table_id is not set a new\none will be generated for you with the following format:\ndlp_googleapis_yyyy_mm_dd_[dlp_job_id]. Pacific timezone will be used for\ngenerating the date details."
         }
       },
       "type": "object"
@@ -4081,6 +4170,9 @@
         },
         "cryptoReplaceFfxFpeConfig": {
           "$ref": "GooglePrivacyDlpV2beta2CryptoReplaceFfxFpeConfig"
+        },
+        "dateShiftConfig": {
+          "$ref": "GooglePrivacyDlpV2beta2DateShiftConfig"
         },
         "fixedSizeBucketingConfig": {
           "$ref": "GooglePrivacyDlpV2beta2FixedSizeBucketingConfig"
@@ -4159,6 +4251,16 @@
         },
         "field": {
           "$ref": "GooglePrivacyDlpV2beta2FieldId"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2beta2QuoteInfo": {
+      "description": "Message for infoType-dependent details parsed from quote.",
+      "id": "GooglePrivacyDlpV2beta2QuoteInfo",
+      "properties": {
+        "dateTime": {
+          "$ref": "GooglePrivacyDlpV2beta2DateTime"
         }
       },
       "type": "object"
@@ -4588,6 +4690,17 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2beta2TimeZone": {
+      "id": "GooglePrivacyDlpV2beta2TimeZone",
+      "properties": {
+        "offsetMinutes": {
+          "description": "Set only if the offset can be determined. Positive for time ahead of UTC.\nE.g. For \"UTC-9\", this value is -540.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2beta2TimespanConfig": {
       "description": "Configuration of the timespan of the items to include in scanning.\nCurrently only supported when inspecting Google Cloud Storage and BigQuery.",
       "id": "GooglePrivacyDlpV2beta2TimespanConfig",
@@ -4760,6 +4873,29 @@
         },
         "dateValue": {
           "$ref": "GoogleTypeDate"
+        },
+        "dayOfWeekValue": {
+          "enum": [
+            "DAY_OF_WEEK_UNSPECIFIED",
+            "MONDAY",
+            "TUESDAY",
+            "WEDNESDAY",
+            "THURSDAY",
+            "FRIDAY",
+            "SATURDAY",
+            "SUNDAY"
+          ],
+          "enumDescriptions": [
+            "The unspecified day-of-week.",
+            "The day-of-week of Monday.",
+            "The day-of-week of Tuesday.",
+            "The day-of-week of Wednesday.",
+            "The day-of-week of Thursday.",
+            "The day-of-week of Friday.",
+            "The day-of-week of Saturday.",
+            "The day-of-week of Sunday."
+          ],
+          "type": "string"
         },
         "floatValue": {
           "format": "double",

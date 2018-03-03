@@ -283,7 +283,7 @@ func (s *HeldAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HeldDriveQuery: Query options for drive holds.
+// HeldDriveQuery: Query options for Drive holds.
 type HeldDriveQuery struct {
 	// IncludeTeamDriveFiles: If true, include files in Team Drives in the
 	// hold.
@@ -398,7 +398,7 @@ type HeldOrgUnit struct {
 	// immutable.
 	HoldTime string `json:"holdTime,omitempty"`
 
-	// OrgUnitId: The org unit's immutable ID as provided by the admin SDK.
+	// OrgUnitId: The org unit's immutable ID as provided by the Admin SDK.
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HoldTime") to
@@ -2498,6 +2498,18 @@ func (r *MattersHoldsService) Get(matterId string, holdId string) *MattersHoldsG
 	return c
 }
 
+// View sets the optional parameter "view": Specifies which parts of the
+// Hold to return.
+//
+// Possible values:
+//   "HOLD_VIEW_UNSPECIFIED"
+//   "BASIC_HOLD"
+//   "FULL_HOLD"
+func (c *MattersHoldsGetCall) View(view string) *MattersHoldsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2613,6 +2625,16 @@ func (c *MattersHoldsGetCall) Do(opts ...googleapi.CallOption) (*Hold, error) {
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Hold to return.",
+	//       "enum": [
+	//         "HOLD_VIEW_UNSPECIFIED",
+	//         "BASIC_HOLD",
+	//         "FULL_HOLD"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/matters/{matterId}/holds/{holdId}",
@@ -2660,6 +2682,18 @@ func (c *MattersHoldsListCall) PageSize(pageSize int64) *MattersHoldsListCall {
 // An empty token means start from the beginning.
 func (c *MattersHoldsListCall) PageToken(pageToken string) *MattersHoldsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which parts of the
+// Hold to return.
+//
+// Possible values:
+//   "HOLD_VIEW_UNSPECIFIED"
+//   "BASIC_HOLD"
+//   "FULL_HOLD"
+func (c *MattersHoldsListCall) View(view string) *MattersHoldsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -2779,6 +2813,16 @@ func (c *MattersHoldsListCall) Do(opts ...googleapi.CallOption) (*ListHoldsRespo
 	//     },
 	//     "pageToken": {
 	//       "description": "The pagination token as returned in the response.\nAn empty token means start from the beginning.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which parts of the Hold to return.",
+	//       "enum": [
+	//         "HOLD_VIEW_UNSPECIFIED",
+	//         "BASIC_HOLD",
+	//         "FULL_HOLD"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }

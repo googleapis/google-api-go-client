@@ -312,7 +312,7 @@ func (s *AndroidRoboTest) MarshalJSON() ([]byte, error) {
 
 // AndroidTest: An Android mobile test specification.
 type AndroidTest struct {
-	// AndroidAppInfo: Infomation about the application under test.
+	// AndroidAppInfo: Information about the application under test.
 	AndroidAppInfo *AndroidAppInfo `json:"androidAppInfo,omitempty"`
 
 	// AndroidInstrumentationTest: An Android instrumentation test.
@@ -1329,7 +1329,7 @@ func (s *ListPerfSamplesResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListScreenshotClustersResponse struct {
-	// Clusters: The set of clustres associated with an execution Always set
+	// Clusters: The set of clusters associated with an execution Always set
 	Clusters []*ScreenshotCluster `json:"clusters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

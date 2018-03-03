@@ -184,7 +184,7 @@
       }
     }
   },
-  "revision": "20180130",
+  "revision": "20180227",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "LongRunningRecognizeRequest": {
@@ -257,16 +257,12 @@
       "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
       "id": "RecognitionConfig",
       "properties": {
-        "enableWordConfidence": {
-          "description": "*Optional* If `true`, the top result includes a list of words and the\nconfidence for those words. If `false`, no word-level confidence\ninformation is returned. The default is `false`.",
-          "type": "boolean"
-        },
         "enableWordTimeOffsets": {
           "description": "*Optional* If `true`, the top result includes a list of words and\nthe start and end time offsets (timestamps) for those words. If\n`false`, no word-level time offset information is returned. The default is\n`false`.",
           "type": "boolean"
         },
         "encoding": {
-          "description": "*Required* Encoding of audio data sent in all `RecognitionAudio` messages.",
+          "description": "Encoding of audio data sent in all `RecognitionAudio` messages.\nThis field is optional for `FLAC` and `WAV` audio files and required\nfor all other audio formats. For details, see AudioEncoding.",
           "enum": [
             "ENCODING_UNSPECIFIED",
             "LINEAR16",
@@ -280,7 +276,7 @@
           "enumDescriptions": [
             "Not specified.",
             "Uncompressed 16-bit signed little-endian samples (Linear PCM).",
-            "[`FLAC`](https://xiph.org/flac/documentation.html) (Free Lossless Audio\nCodec) is the recommended encoding because it is\nlossless--therefore recognition is not compromised--and\nrequires only about half the bandwidth of `LINEAR16`. `FLAC` stream\nencoding supports 16-bit and 24-bit samples, however, not all fields in\n`STREAMINFO` are supported.",
+            "`FLAC` (Free Lossless Audio\nCodec) is the recommended encoding because it is\nlossless--therefore recognition is not compromised--and\nrequires only about half the bandwidth of `LINEAR16`. `FLAC` stream\nencoding supports 16-bit and 24-bit samples, however, not all fields in\n`STREAMINFO` are supported.",
             "8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law.",
             "Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz` must be 8000.",
             "Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.",
@@ -303,7 +299,7 @@
           "type": "boolean"
         },
         "sampleRateHertz": {
-          "description": "*Required* Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).",
+          "description": "Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).\nThis field is optional for `FLAC` and `WAV` audio files and required\nfor all other audio formats. For details, see AudioEncoding.",
           "format": "int32",
           "type": "integer"
         },

@@ -2100,8 +2100,8 @@ func (s *TestMatrix) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TestSetup: A description of how to set up the device prior to running
-// the test
+// TestSetup: A description of how to set up the Android device prior to
+// running the test.
 type TestSetup struct {
 	// Account: The device will be logged in on this account for the
 	// duration of the test.
@@ -2198,8 +2198,9 @@ type TestSpecification struct {
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
 
-	// TestSetup: Test setup requirements e.g. files to install, bootstrap
-	// scripts
+	// TestSetup: Test setup requirements for Android e.g. files to install,
+	// bootstrap
+	// scripts.
 	// Optional
 	TestSetup *TestSetup `json:"testSetup,omitempty"`
 

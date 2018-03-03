@@ -133,8 +133,7 @@ type ProjectsRegionsOperationsService struct {
 }
 
 // AcceleratorConfig: Specifies the type and number of accelerator cards
-// attached to the instances of an instance group (see GPUs on Compute
-// Engine).
+// attached to the instances of an instance. See GPUs on Compute Engine.
 type AcceleratorConfig struct {
 	// AcceleratorCount: The number of the accelerator cards of this type
 	// exposed to this instance.
@@ -142,9 +141,13 @@ type AcceleratorConfig struct {
 
 	// AcceleratorTypeUri: Full URL, partial URI, or short name of the
 	// accelerator type resource to expose to this instance. See Google
-	// Compute Engine AcceleratorTypes(
-	// /compute/docs/reference/beta/acceleratorTypes)Examples *
-	// https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 * projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 *
+	// Compute Engine
+	// AcceleratorTypes.Examples:
+	// https://www.googleapis.com/compute/beta/pro
+	// jects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80
+	//
+	// projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k
+	// 80
 	// nvidia-tesla-k80
 	AcceleratorTypeUri string `json:"acceleratorTypeUri,omitempty"`
 
@@ -1839,6 +1842,16 @@ type SubmitJobRequest struct {
 	// Job: Required. The job resource.
 	Job *Job `json:"job,omitempty"`
 
+	// RequestId: Optional. A unique id used to identify the request. If the
+	// server receives two SubmitJobRequest requests with the same id, then
+	// the second request will be ignored and the first Job created and
+	// stored in the backend is returned.It is recommended to always set
+	// this value to a UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id
+	// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+	// and hyphens (-). The maximum length is 40 characters.
+	RequestId string `json:"requestId,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Job") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1953,6 +1966,20 @@ func (r *ProjectsRegionsClustersService) Create(projectId string, region string,
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique id used
+// to identify the request. If the server receives two
+// CreateClusterRequest requests with the same id, then the second
+// request will be ignored and the first google.longrunning.Operation
+// created and stored in the backend is returned.It is recommended to
+// always set this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id
+// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+// and hyphens (-). The maximum length is 40 characters.
+func (c *ProjectsRegionsClustersCreateCall) RequestId(requestId string) *ProjectsRegionsClustersCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2060,6 +2087,11 @@ func (c *ProjectsRegionsClustersCreateCall) Do(opts ...googleapi.CallOption) (*O
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique id used to identify the request. If the server receives two CreateClusterRequest requests with the same id, then the second request will be ignored and the first google.longrunning.Operation created and stored in the backend is returned.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "v1/projects/{projectId}/regions/{region}/clusters",
@@ -2102,6 +2134,20 @@ func (r *ProjectsRegionsClustersService) Delete(projectId string, region string,
 // cluster with specified UUID does not exist.
 func (c *ProjectsRegionsClustersDeleteCall) ClusterUuid(clusterUuid string) *ProjectsRegionsClustersDeleteCall {
 	c.urlParams_.Set("clusterUuid", clusterUuid)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A unique id used
+// to identify the request. If the server receives two
+// DeleteClusterRequest requests with the same id, then the second
+// request will be ignored and the first google.longrunning.Operation
+// created and stored in the backend is returned.It is recommended to
+// always set this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id
+// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+// and hyphens (-). The maximum length is 40 characters.
+func (c *ProjectsRegionsClustersDeleteCall) RequestId(requestId string) *ProjectsRegionsClustersDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -2219,6 +2265,11 @@ func (c *ProjectsRegionsClustersDeleteCall) Do(opts ...googleapi.CallOption) (*O
 	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique id used to identify the request. If the server receives two DeleteClusterRequest requests with the same id, then the second request will be ignored and the first google.longrunning.Operation created and stored in the backend is returned.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -2800,6 +2851,20 @@ func (c *ProjectsRegionsClustersPatchCall) GracefulDecommissionTimeout(gracefulD
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": A unique id used
+// to identify the request. If the server receives two
+// UpdateClusterRequest requests with the same id, then the second
+// request will be ignored and the first google.longrunning.Operation
+// created and stored in the backend is returned.It is recommended to
+// always set this value to a UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id
+// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+// and hyphens (-). The maximum length is 40 characters.
+func (c *ProjectsRegionsClustersPatchCall) RequestId(requestId string) *ProjectsRegionsClustersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": Required.
 // Specifies the path, relative to Cluster, of the field to update. For
 // example, to change the number of workers in a cluster to 5, the
@@ -2959,6 +3024,11 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "description": "Required. The Cloud Dataproc region in which to handle the request.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A unique id used to identify the request. If the server receives two UpdateClusterRequest requests with the same id, then the second request will be ignored and the first google.longrunning.Operation created and stored in the backend is returned.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The id must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {

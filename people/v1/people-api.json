@@ -501,7 +501,7 @@
               "type": "string"
             },
             "updatePersonFields": {
-              "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* braggingRights\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* skills\n* urls",
+              "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* urls",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -596,7 +596,7 @@
       }
     }
   },
-  "revision": "20180301",
+  "revision": "20180303",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

@@ -199,6 +199,11 @@ type CorpusQuery struct {
 	// be Groups.
 	GroupsQuery *HeldGroupsQuery `json:"groupsQuery,omitempty"`
 
+	// HangoutsChatQuery: Details pertaining to Hangouts Chat holds. If set,
+	// corpus must be
+	// Hangouts Chat.
+	HangoutsChatQuery *HeldHangoutsChatQuery `json:"hangoutsChatQuery,omitempty"`
+
 	// MailQuery: Details pertaining to mail holds. If set, corpus must be
 	// mail.
 	MailQuery *HeldMailQuery `json:"mailQuery,omitempty"`
@@ -352,6 +357,34 @@ func (s *HeldGroupsQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HeldHangoutsChatQuery: Query options for hangouts chat holds.
+type HeldHangoutsChatQuery struct {
+	// IncludeRooms: If true, include rooms the user has participated in.
+	IncludeRooms bool `json:"includeRooms,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeRooms") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeRooms") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HeldHangoutsChatQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod HeldHangoutsChatQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HeldMailQuery: Query options for mail holds.
 type HeldMailQuery struct {
 	// EndTime: The end time range for the search query. These timestamps
@@ -445,6 +478,7 @@ type Hold struct {
 	//   "DRIVE" - Drive.
 	//   "MAIL" - Mail.
 	//   "GROUPS" - Groups.
+	//   "HANGOUTS_CHAT" - Hangouts Chat.
 	Corpus string `json:"corpus,omitempty"`
 
 	// HoldId: The unique immutable ID of the hold. Assigned during

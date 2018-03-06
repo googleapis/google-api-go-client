@@ -167,7 +167,7 @@
           ]
         },
         "create": {
-          "description": "Creates a new presentation using the title given in the request. Other\nfields in the request are ignored.\nReturns the created presentation.",
+          "description": "Creates a new presentation using the title given in the request. If a\npresentationId is provided, uses it as the ID of the new presentation.\nOtherwise, a new presentationId is generated.\nReturns the created presentation.",
           "flatPath": "v1/presentations",
           "httpMethod": "POST",
           "id": "slides.presentations.create",
@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20180216",
+  "revision": "20180301",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -504,7 +504,7 @@
           "type": "string"
         },
         "url": {
-          "description": "The image URL.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in either in PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
+          "description": "The image URL.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
           "type": "string"
         }
       },
@@ -2429,7 +2429,7 @@
           "type": "string"
         },
         "imageUrl": {
-          "description": "The image URL.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in either in PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
+          "description": "The image URL.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
           "type": "string"
         },
         "pageObjectIds": {
@@ -2574,7 +2574,7 @@
           "type": "string"
         },
         "url": {
-          "description": "The URL of the new image.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in either in PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
+          "description": "The URL of the new image.\n\nThe image is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Images must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
           "type": "string"
         }
       },
@@ -3375,7 +3375,7 @@
       "id": "StretchedPictureFill",
       "properties": {
         "contentUrl": {
-          "description": "Reading the content_url:\n\nAn URL to a picture with a default lifetime of 30 minutes.\nThis URL is tagged with the account of the requester. Anyone with the URL\neffectively accesses the picture as the original requester. Access to the\npicture may be lost if the presentation's sharing settings change.\n\nWriting the content_url:\n\nThe picture is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Pictures must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in either in PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
+          "description": "Reading the content_url:\n\nAn URL to a picture with a default lifetime of 30 minutes.\nThis URL is tagged with the account of the requester. Anyone with the URL\neffectively accesses the picture as the original requester. Access to the\npicture may be lost if the presentation's sharing settings change.\n\nWriting the content_url:\n\nThe picture is fetched once at insertion time and a copy is stored for\ndisplay inside the presentation. Pictures must be less than 50MB in size,\ncannot exceed 25 megapixels, and must be in one of PNG, JPEG, or GIF\nformat.\n\nThe provided URL can be at most 2 kB in length.",
           "type": "string"
         },
         "size": {

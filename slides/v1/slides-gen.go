@@ -483,7 +483,7 @@ type CreateImageRequest struct {
 	// for
 	// display inside the presentation. Images must be less than 50MB in
 	// size,
-	// cannot exceed 25 megapixels, and must be in either in PNG, JPEG, or
+	// cannot exceed 25 megapixels, and must be in one of PNG, JPEG, or
 	// GIF
 	// format.
 	//
@@ -4092,7 +4092,7 @@ type ReplaceAllShapesWithImageRequest struct {
 	// for
 	// display inside the presentation. Images must be less than 50MB in
 	// size,
-	// cannot exceed 25 megapixels, and must be in either in PNG, JPEG, or
+	// cannot exceed 25 megapixels, and must be in one of PNG, JPEG, or
 	// GIF
 	// format.
 	//
@@ -4389,7 +4389,7 @@ type ReplaceImageRequest struct {
 	// for
 	// display inside the presentation. Images must be less than 50MB in
 	// size,
-	// cannot exceed 25 megapixels, and must be in either in PNG, JPEG, or
+	// cannot exceed 25 megapixels, and must be in one of PNG, JPEG, or
 	// GIF
 	// format.
 	//
@@ -5584,7 +5584,7 @@ type StretchedPictureFill struct {
 	// for
 	// display inside the presentation. Pictures must be less than 50MB in
 	// size,
-	// cannot exceed 25 megapixels, and must be in either in PNG, JPEG, or
+	// cannot exceed 25 megapixels, and must be in one of PNG, JPEG, or
 	// GIF
 	// format.
 	//
@@ -7864,8 +7864,10 @@ type PresentationsCreateCall struct {
 }
 
 // Create: Creates a new presentation using the title given in the
-// request. Other
-// fields in the request are ignored.
+// request. If a
+// presentationId is provided, uses it as the ID of the new
+// presentation.
+// Otherwise, a new presentationId is generated.
 // Returns the created presentation.
 func (r *PresentationsService) Create(presentation *Presentation) *PresentationsCreateCall {
 	c := &PresentationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7956,7 +7958,7 @@ func (c *PresentationsCreateCall) Do(opts ...googleapi.CallOption) (*Presentatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new presentation using the title given in the request. Other\nfields in the request are ignored.\nReturns the created presentation.",
+	//   "description": "Creates a new presentation using the title given in the request. If a\npresentationId is provided, uses it as the ID of the new presentation.\nOtherwise, a new presentationId is generated.\nReturns the created presentation.",
 	//   "flatPath": "v1/presentations",
 	//   "httpMethod": "POST",
 	//   "id": "slides.presentations.create",

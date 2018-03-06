@@ -144,6 +144,27 @@ type Action struct {
 	// with any values specified in the Pipeline message.  These values
 	// overwrite
 	// any in the Pipeline message.
+	//
+	// In addition to the values passed here, a few other values
+	// are
+	// automatically injected into the environment.  These cannot be hidden
+	// or
+	// overwritten.
+	//
+	// `GOOGLE_PIPELINE_FAILED` will be set to "1" if the pipeline has
+	// failed
+	// because an action has exited with a non-zero status (and did not have
+	// the
+	// IGNORE_EXIT_STATUS flag set).  This can be used to determine if
+	// additional
+	// debug or logging actions should execute.
+	//
+	// `GOOGLE_LAST_EXIT_STATUS` will be set to the exit status of the
+	// last
+	// non-background action that executed.  This can be used by workflow
+	// engine
+	// authors to determine whether an individual action has succeeded or
+	// failed.
 	Environment map[string]string `json:"environment,omitempty"`
 
 	// Flags: The set of flags to apply to this action.
@@ -166,6 +187,17 @@ type Action struct {
 	// failed.  This is useful for actions that copy output files off of the
 	// VM
 	// or for debugging.
+	//   "ENABLE_FUSE" - Enable access to the FUSE device for this action.
+	// Filesystems can then
+	// be mounted into disks shared with other actions.  The other actions
+	// do
+	// not need the ENABLE_FUSE flag to access the mounted filesystem.
+	//
+	// This has the effect of causing the container to be executed
+	// with
+	// CAP_SYS_ADMIN and exposes /dev/fuse to the container, so it should
+	// only
+	// be used for containers you trust.
 	//   "PUBLISH_EXPOSED_PORTS" - Expose all ports specified by EXPOSE
 	// statements in the container.  To
 	// discover the host side port numbers, consult the ACTION_STARTED event
@@ -1326,7 +1358,7 @@ func (s *Resources) MarshalJSON() ([]byte, error) {
 type RunPipelineRequest struct {
 	// Labels: User defined labels to associate with the returned operation.
 	//  These
-	// labels are not propogated to any Google Cloud Platform resources used
+	// labels are not propagated to any Google Cloud Platform resources used
 	// by
 	// the operation, and may be modified at any time.
 	//
@@ -1768,17 +1800,19 @@ type PipelinesRunCall struct {
 
 // Run: Runs a pipeline.
 //
-// **Note:** In order to use this method, the Genomics Service Agent
-// must have
-// access to your project.  This is done automatically when the Genomics
-// API
-// is first enabled, but if you delete this permission, or if you
-// have
-// already enabled the Genomics API prior to the launch of the v2alpha1
-// API,
-// you must disable and re-enable the API to grant the Genomics Service
+// **Note:** In order to use this method, the Genomics Service
 // Agent
-// the required permissions.
+// must have access to your project.  This is done automatically when
+// the
+// Genomics API is first enabled, but if you delete this permission, or
+// if
+// you have already enabled the Genomics API prior to the launch of
+// the
+// v2alpha1 API, you must disable and re-enable the API to grant the
+// Genomics
+// Service Agent the required permissions.
+//
+// [1]: /genomics/gsa
 func (r *PipelinesService) Run(runpipelinerequest *RunPipelineRequest) *PipelinesRunCall {
 	c := &PipelinesRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.runpipelinerequest = runpipelinerequest
@@ -1868,7 +1902,7 @@ func (c *PipelinesRunCall) Do(opts ...googleapi.CallOption) (*Operation, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Runs a pipeline.\n\n**Note:** In order to use this method, the Genomics Service Agent must have\naccess to your project.  This is done automatically when the Genomics API\nis first enabled, but if you delete this permission, or if you have\nalready enabled the Genomics API prior to the launch of the v2alpha1 API,\nyou must disable and re-enable the API to grant the Genomics Service Agent\nthe required permissions.",
+	//   "description": "Runs a pipeline.\n\n**Note:** In order to use this method, the Genomics Service Agent\nmust have access to your project.  This is done automatically when the\nGenomics API is first enabled, but if you delete this permission, or if\nyou have already enabled the Genomics API prior to the launch of the\nv2alpha1 API, you must disable and re-enable the API to grant the Genomics\nService Agent the required permissions.\n\n[1]: /genomics/gsa",
 	//   "flatPath": "v2alpha1/pipelines:run",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.pipelines.run",

@@ -4257,7 +4257,6 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 // * addresses
 // * biographies
 // * birthdays
-// * braggingRights
 // * emailAddresses
 // * events
 // * genders
@@ -4271,7 +4270,6 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 // * phoneNumbers
 // * relations
 // * residences
-// * skills
 // * urls
 func (c *PeopleUpdateContactCall) UpdatePersonFields(updatePersonFields string) *PeopleUpdateContactCall {
 	c.urlParams_.Set("updatePersonFields", updatePersonFields)
@@ -4380,7 +4378,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "updatePersonFields": {
-	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* braggingRights\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* skills\n* urls",
+	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* urls",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

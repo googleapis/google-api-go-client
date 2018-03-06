@@ -189,7 +189,7 @@
       }
     }
   },
-  "revision": "20180201",
+  "revision": "20180303",
   "rootUrl": "https://firebasedynamiclinks-ipv6.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -236,10 +236,10 @@
       "properties": {
         "dynamicLinkInfo": {
           "$ref": "DynamicLinkInfo",
-          "description": "Information about the Dynamic Link to be shortened.\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically)."
+          "description": "Information about the Dynamic Link to be shortened.\n[Learn more](https://firebase.google.com/docs/reference/dynamic-links/link-shortener)."
         },
         "longDynamicLink": {
-          "description": "Full long Dynamic Link URL with desired query parameters specified.\nFor example,\n\"https://sample.app.goo.gl/?link=http://www.google.com\u0026apn=com.sample\",\n[Learn more](https://firebase.google.com/docs/dynamic-links/android#create-a-dynamic-link-programmatically).",
+          "description": "Full long Dynamic Link URL with desired query parameters specified.\nFor example,\n\"https://sample.app.goo.gl/?link=http://www.google.com\u0026apn=com.sample\",\n[Learn more](https://firebase.google.com/docs/reference/dynamic-links/link-shortener).",
           "type": "string"
         },
         "suffix": {

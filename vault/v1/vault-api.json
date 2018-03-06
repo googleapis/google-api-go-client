@@ -707,7 +707,7 @@
       }
     }
   },
-  "revision": "20180217",
+  "revision": "20180303",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AddMatterPermissionsRequest": {
@@ -757,6 +757,10 @@
         "groupsQuery": {
           "$ref": "HeldGroupsQuery",
           "description": "Details pertaining to Groups holds. If set, corpus must be Groups."
+        },
+        "hangoutsChatQuery": {
+          "$ref": "HeldHangoutsChatQuery",
+          "description": "Details pertaining to Hangouts Chat holds. If set, corpus must be\nHangouts Chat."
         },
         "mailQuery": {
           "$ref": "HeldMailQuery",
@@ -819,6 +823,17 @@
       },
       "type": "object"
     },
+    "HeldHangoutsChatQuery": {
+      "description": "Query options for hangouts chat holds.",
+      "id": "HeldHangoutsChatQuery",
+      "properties": {
+        "includeRooms": {
+          "description": "If true, include rooms the user has participated in.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "HeldMailQuery": {
       "description": "Query options for mail holds.",
       "id": "HeldMailQuery",
@@ -873,13 +888,15 @@
             "CORPUS_TYPE_UNSPECIFIED",
             "DRIVE",
             "MAIL",
-            "GROUPS"
+            "GROUPS",
+            "HANGOUTS_CHAT"
           ],
           "enumDescriptions": [
             "No corpus specified.",
             "Drive.",
             "Mail.",
-            "Groups."
+            "Groups.",
+            "Hangouts Chat."
           ],
           "type": "string"
         },

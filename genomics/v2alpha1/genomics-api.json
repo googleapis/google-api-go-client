@@ -120,7 +120,7 @@
     "pipelines": {
       "methods": {
         "run": {
-          "description": "Runs a pipeline.\n\n**Note:** In order to use this method, the Genomics Service Agent must have\naccess to your project.  This is done automatically when the Genomics API\nis first enabled, but if you delete this permission, or if you have\nalready enabled the Genomics API prior to the launch of the v2alpha1 API,\nyou must disable and re-enable the API to grant the Genomics Service Agent\nthe required permissions.",
+          "description": "Runs a pipeline.\n\n**Note:** In order to use this method, the Genomics Service Agent\nmust have access to your project.  This is done automatically when the\nGenomics API is first enabled, but if you delete this permission, or if\nyou have already enabled the Genomics API prior to the launch of the\nv2alpha1 API, you must disable and re-enable the API to grant the Genomics\nService Agent the required permissions.\n\n[1]: /genomics/gsa",
           "flatPath": "v2alpha1/pipelines:run",
           "httpMethod": "POST",
           "id": "genomics.pipelines.run",
@@ -278,7 +278,7 @@
       }
     }
   },
-  "revision": "20180225",
+  "revision": "20180303",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Action": {
@@ -300,7 +300,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The environment to pass into the container.  This environment is merged\nwith any values specified in the Pipeline message.  These values overwrite\nany in the Pipeline message.",
+          "description": "The environment to pass into the container.  This environment is merged\nwith any values specified in the Pipeline message.  These values overwrite\nany in the Pipeline message.\n\nIn addition to the values passed here, a few other values are\nautomatically injected into the environment.  These cannot be hidden or\noverwritten.\n\n`GOOGLE_PIPELINE_FAILED` will be set to \"1\" if the pipeline has failed\nbecause an action has exited with a non-zero status (and did not have the\nIGNORE_EXIT_STATUS flag set).  This can be used to determine if additional\ndebug or logging actions should execute.\n\n`GOOGLE_LAST_EXIT_STATUS` will be set to the exit status of the last\nnon-background action that executed.  This can be used by workflow engine\nauthors to determine whether an individual action has succeeded or failed.",
           "type": "object"
         },
         "flags": {
@@ -310,6 +310,7 @@
             "Normally, a non-zero exit status causes the pipeline to fail.  This flag\nallows execution of other actions to continue instead.",
             "This flag allows an action to continue running in the background while\nexecuting subsequent actions.  This is useful to provide services to\nother actions (or to provide debugging support tools like ssh servers).",
             "Normally, once an action fails no further actions are run.  This flag\nindicates that this action must be run even if the pipeline has already\nfailed.  This is useful for actions that copy output files off of the VM\nor for debugging.",
+            "Enable access to the FUSE device for this action.  Filesystems can then\nbe mounted into disks shared with other actions.  The other actions do\nnot need the ENABLE_FUSE flag to access the mounted filesystem.\n\nThis has the effect of causing the container to be executed with\nCAP_SYS_ADMIN and exposes /dev/fuse to the container, so it should only\nbe used for containers you trust.",
             "Expose all ports specified by EXPOSE statements in the container.  To\ndiscover the host side port numbers, consult the ACTION_STARTED event in\nthe operation metadata."
           ],
           "items": {
@@ -318,6 +319,7 @@
               "IGNORE_EXIT_STATUS",
               "RUN_IN_BACKGROUND",
               "ALWAYS_RUN",
+              "ENABLE_FUSE",
               "PUBLISH_EXPOSED_PORTS"
             ],
             "type": "string"
@@ -912,7 +914,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "User defined labels to associate with the returned operation.  These\nlabels are not propogated to any Google Cloud Platform resources used by\nthe operation, and may be modified at any time.\n\nTo associate labels with resources created while executing the operation,\nsee the appropriate resource message (i.e., VirtualMachine).",
+          "description": "User defined labels to associate with the returned operation.  These\nlabels are not propagated to any Google Cloud Platform resources used by\nthe operation, and may be modified at any time.\n\nTo associate labels with resources created while executing the operation,\nsee the appropriate resource message (i.e., VirtualMachine).",
           "type": "object"
         },
         "pipeline": {

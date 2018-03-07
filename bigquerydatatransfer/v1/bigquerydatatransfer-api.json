@@ -1160,7 +1160,7 @@
       }
     }
   },
-  "revision": "20180202",
+  "revision": "20180303",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1491,6 +1491,10 @@
       "description": "A resource that represents Google Cloud Platform location.",
       "id": "Location",
       "properties": {
+        "displayName": {
+          "description": "The friendly name for this location, typically a nearby city name.\nFor example, \"Tokyo\".",
+          "type": "string"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"

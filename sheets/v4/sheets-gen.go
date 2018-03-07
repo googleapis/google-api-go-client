@@ -1528,7 +1528,7 @@ type BatchUpdateSpreadsheetRequest struct {
 
 	// ResponseIncludeGridData: True if grid data should be returned.
 	// Meaningful only if
-	// if include_spreadsheet_in_response is 'true'.
+	// if include_spreadsheet_response is 'true'.
 	// This parameter is ignored if a field mask was set in the request.
 	ResponseIncludeGridData bool `json:"responseIncludeGridData,omitempty"`
 
@@ -7610,9 +7610,9 @@ type SpreadsheetProperties struct {
 
 	// DefaultFormat: The default format of all cells in the
 	// spreadsheet.
-	// CellData.effectiveFormat will not be set if
-	// the cell's format is equal to this default format. This field is
-	// read-only.
+	// CellData.effectiveFormat will not be set if the
+	// cell's format is equal to this default format.
+	// This field is read-only.
 	DefaultFormat *CellFormat `json:"defaultFormat,omitempty"`
 
 	// IterativeCalculationSettings: Determines whether and how circular

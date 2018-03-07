@@ -207,7 +207,8 @@
                 "CANCELED",
                 "FAILED",
                 "TIMED_OUT",
-                "UNKNOWN"
+                "UNKNOWN",
+                "DELAYED"
               ],
               "location": "query",
               "repeated": true,
@@ -302,7 +303,8 @@
                 "CANCELED",
                 "FAILED",
                 "TIMED_OUT",
-                "UNKNOWN"
+                "UNKNOWN",
+                "DELAYED"
               ],
               "location": "query",
               "repeated": true,
@@ -751,7 +753,7 @@
       }
     }
   },
-  "revision": "20180203",
+  "revision": "20180305",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -1124,7 +1126,8 @@
             "CANCELED",
             "FAILED",
             "TIMED_OUT",
-            "UNKNOWN"
+            "UNKNOWN",
+            "DELAYED"
           ],
           "enumDescriptions": [
             "Unspecified status.",
@@ -1134,7 +1137,8 @@
             "The process was cancelled.",
             "The process failed.",
             "The process timed out.",
-            "Process status unknown."
+            "Process status unknown.",
+            "The process is delayed, waiting for quota."
           ],
           "type": "string"
         },

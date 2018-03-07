@@ -1064,7 +1064,7 @@ type History struct {
 	HistoryId string `json:"historyId,omitempty"`
 
 	// Name: A name to uniquely identify a history within a project. Maximum
-	// of 100 characters.
+	// of 200 characters.
 	//
 	// - In response always set - In create request: always set
 	Name string `json:"name,omitempty"`

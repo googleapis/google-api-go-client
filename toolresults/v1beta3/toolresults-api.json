@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/sCf-H7GljP1gmUVuX6UzDmXzTLg\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/OOjgT8IY-Au1VG1YGOqumfltLCM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1161,7 +1161,7 @@
       }
     }
   },
-  "revision": "20180301",
+  "revision": "20180305",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1616,7 +1616,7 @@
           "type": "string"
         },
         "name": {
-          "description": "A name to uniquely identify a history within a project. Maximum of 100 characters.\n\n- In response always set - In create request: always set",
+          "description": "A name to uniquely identify a history within a project. Maximum of 200 characters.\n\n- In response always set - In create request: always set",
           "type": "string"
         }
       },

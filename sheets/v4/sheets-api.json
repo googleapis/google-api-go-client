@@ -819,7 +819,7 @@
       }
     }
   },
-  "revision": "20180222",
+  "revision": "20180306",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1540,7 +1540,7 @@
           "type": "array"
         },
         "responseIncludeGridData": {
-          "description": "True if grid data should be returned. Meaningful only if\nif include_spreadsheet_response is 'true'.\nThis parameter is ignored if a field mask was set in the request.",
+          "description": "True if grid data should be returned. Meaningful only if\nif include_spreadsheet_in_response is 'true'.\nThis parameter is ignored if a field mask was set in the request.",
           "type": "boolean"
         },
         "responseRanges": {
@@ -5006,7 +5006,7 @@
         },
         "defaultFormat": {
           "$ref": "CellFormat",
-          "description": "The default format of all cells in the spreadsheet.\nCellData.effectiveFormat will not be set if the\ncell's format is equal to this default format.\nThis field is read-only."
+          "description": "The default format of all cells in the spreadsheet.\nCellData.effectiveFormat will not be set if\nthe cell's format is equal to this default format. This field is read-only."
         },
         "iterativeCalculationSettings": {
           "$ref": "IterativeCalculationSettings",

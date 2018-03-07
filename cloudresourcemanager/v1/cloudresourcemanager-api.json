@@ -12,7 +12,7 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://cloudresourcemanager.googleapis.com/",
+  "baseUrl": "https://content-cloudresourcemanager.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud Resource Manager",
   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
@@ -744,7 +744,7 @@
           ]
         },
         "create": {
-          "description": "Request that a new Project be created. The result is an Operation which\ncan be used to track the creation process. It is automatically deleted\nafter a few hours, so there is no need to call DeleteOperation.\n\nOur SLO permits Project creation to take up to 30 seconds at the 90th\npercentile. As of 2016-08-29, we are observing 6 seconds 50th percentile\nlatency. 95th percentile latency is around 11 seconds. We recommend\npolling at the 5th second with an exponential backoff.\n\nAuthorization requires the Google IAM permission\n`resourcemanager.projects.create` on the specified parent for the new\nproject.",
+          "description": "Request that a new Project be created. The result is an Operation which\ncan be used to track the creation process. It is automatically deleted\nafter a few hours, so there is no need to call DeleteOperation.\n\nOur SLO permits Project creation to take up to 30 seconds at the 90th\npercentile. As of 2016-08-29, we are observing 6 seconds 50th percentile\nlatency. 95th percentile latency is around 11 seconds. We recommend\npolling at the 5th second with an exponential backoff.\n\nAuthorization requires the Google IAM permission\n`resourcemanager.projects.create` on the specified parent for the new\nproject. The parent is identified by a specified ResourceId,\nwhich must include both an ID and a type, such as organization.",
           "flatPath": "v1/projects",
           "httpMethod": "POST",
           "id": "cloudresourcemanager.projects.create",
@@ -1155,8 +1155,8 @@
       }
     }
   },
-  "revision": "20180219",
-  "rootUrl": "https://cloudresourcemanager.googleapis.com/",
+  "revision": "20180305",
+  "rootUrl": "https://content-cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
       "description": "Identifying information for a single ancestor of a project.",
@@ -1745,7 +1745,7 @@
       "id": "OrganizationOwner",
       "properties": {
         "directoryCustomerId": {
-          "description": "The Google for Work customer id used in the Directory API.",
+          "description": "The G Suite customer id used in the Directory API.",
           "type": "string"
         }
       },
@@ -1880,7 +1880,7 @@
       "id": "SearchOrganizationsRequest",
       "properties": {
         "filter": {
-          "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a Google for Work domain, for example:\n\n|Filter|Description|\n|------|-----------|\n|owner.directorycustomerid:123456789|Organizations with\n`owner.directory_customer_id` equal to `123456789`.|\n|domain:google.com|Organizations corresponding to the domain `google.com`.|\n\nThis field is optional.",
+          "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\n|Filter|Description|\n|------|-----------|\n|owner.directorycustomerid:123456789|Organizations with\n`owner.directory_customer_id` equal to `123456789`.|\n|domain:google.com|Organizations corresponding to the domain `google.com`.|\n\nThis field is optional.",
           "type": "string"
         },
         "pageSize": {

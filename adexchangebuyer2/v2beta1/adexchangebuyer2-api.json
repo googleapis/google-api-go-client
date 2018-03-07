@@ -533,11 +533,6 @@
                   "required": true,
                   "type": "string"
                 },
-                "accountId1": {
-                  "description": "The account the creative belongs to.",
-                  "location": "query",
-                  "type": "string"
-                },
                 "duplicateIdMode": {
                   "description": "Indicates if multiple creatives can share an ID or not. Default is\nNO_DUPLICATES (one ID per creative).",
                   "enum": [
@@ -678,11 +673,6 @@
                   "description": "The account that this creative belongs to.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
                   "location": "path",
                   "required": true,
-                  "type": "string"
-                },
-                "accountId1": {
-                  "description": "The account the creative belongs to.",
-                  "location": "query",
                   "type": "string"
                 },
                 "creativeId": {
@@ -1957,7 +1947,7 @@
       }
     }
   },
-  "revision": "20180301",
+  "revision": "20180305",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {

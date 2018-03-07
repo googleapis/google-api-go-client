@@ -3186,26 +3186,26 @@ func (s *GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo) MarshalJSON() ([]
 // GoogleCloudDialogflowV2beta1IntentMessage: Corresponds to the
 // `Response` field in API.AI console.
 type GoogleCloudDialogflowV2beta1IntentMessage struct {
-	// BasicCard: The basic card response for Actions on Google.
+	// BasicCard: Displays a basic card for Actions on Google.
 	BasicCard *GoogleCloudDialogflowV2beta1IntentMessageBasicCard `json:"basicCard,omitempty"`
 
-	// Card: The card response.
+	// Card: Displays a card.
 	Card *GoogleCloudDialogflowV2beta1IntentMessageCard `json:"card,omitempty"`
 
-	// CarouselSelect: The carousel card response for Actions on Google.
+	// CarouselSelect: Displays a carousel card for Actions on Google.
 	CarouselSelect *GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect `json:"carouselSelect,omitempty"`
 
-	// Image: The image response.
+	// Image: Displays an image.
 	Image *GoogleCloudDialogflowV2beta1IntentMessageImage `json:"image,omitempty"`
 
-	// LinkOutSuggestion: The link out suggestion chip for Actions on
+	// LinkOutSuggestion: Displays a link out suggestion chip for Actions on
 	// Google.
 	LinkOutSuggestion *GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion `json:"linkOutSuggestion,omitempty"`
 
-	// ListSelect: The list card response for Actions on Google.
+	// ListSelect: Displays a list card for Actions on Google.
 	ListSelect *GoogleCloudDialogflowV2beta1IntentMessageListSelect `json:"listSelect,omitempty"`
 
-	// Payload: The response containing a custom payload.
+	// Payload: Returns a response containing a custom payload.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Platform: Optional. The platform that this message is intended for.
@@ -3222,17 +3222,17 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	//   "ACTIONS_ON_GOOGLE" - Actions on Google.
 	Platform string `json:"platform,omitempty"`
 
-	// QuickReplies: The quick replies response.
+	// QuickReplies: Displays quick replies.
 	QuickReplies *GoogleCloudDialogflowV2beta1IntentMessageQuickReplies `json:"quickReplies,omitempty"`
 
-	// SimpleResponses: The voice and text-only responses for Actions on
+	// SimpleResponses: Returns a voice or text-only response for Actions on
 	// Google.
 	SimpleResponses *GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses `json:"simpleResponses,omitempty"`
 
-	// Suggestions: The suggestion chips for Actions on Google.
+	// Suggestions: Displays suggestion chips for Actions on Google.
 	Suggestions *GoogleCloudDialogflowV2beta1IntentMessageSuggestions `json:"suggestions,omitempty"`
 
-	// Text: The text response.
+	// Text: Returns a text response.
 	Text *GoogleCloudDialogflowV2beta1IntentMessageText `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BasicCard") to

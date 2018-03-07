@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "cloudresourcemanager:v1beta1"
 const apiName = "cloudresourcemanager"
 const apiVersion = "v1beta1"
-const basePath = "https://cloudresourcemanager.googleapis.com/"
+const basePath = "https://content-cloudresourcemanager.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -702,8 +702,8 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 // descendants will
 // be deleted.
 type OrganizationOwner struct {
-	// DirectoryCustomerId: The Google for Work customer id used in the
-	// Directory API.
+	// DirectoryCustomerId: The G Suite customer id used in the Directory
+	// API.
 	DirectoryCustomerId string `json:"directoryCustomerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectoryCustomerId")
@@ -1466,7 +1466,7 @@ func (r *OrganizationsService) List() *OrganizationsListCall {
 //
 // Organizations may be filtered by `owner.directoryCustomerId` or
 // by
-// `domain`, where the domain is a Google for Work domain, for
+// `domain`, where the domain is a G Suite domain, for
 // example:
 //
 // |Filter|Description|
@@ -1598,7 +1598,7 @@ func (c *OrganizationsListCall) Do(opts ...googleapi.CallOption) (*ListOrganizat
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a Google for Work domain, for example:\n\n|Filter|Description|\n|------|-----------|\n|owner.directorycustomerid:123456789|Organizations with `owner.directory_customer_id` equal to `123456789`.|\n|domain:google.com|Organizations corresponding to the domain `google.com`.|\n\nThis field is optional.",
+	//       "description": "An optional query string used to filter the Organizations to return in\nthe response. Filter rules are case-insensitive.\n\n\nOrganizations may be filtered by `owner.directoryCustomerId` or by\n`domain`, where the domain is a G Suite domain, for example:\n\n|Filter|Description|\n|------|-----------|\n|owner.directorycustomerid:123456789|Organizations with `owner.directory_customer_id` equal to `123456789`.|\n|domain:google.com|Organizations corresponding to the domain `google.com`.|\n\nThis field is optional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2081,7 +2081,11 @@ type ProjectsCreateCall struct {
 //
 // Several APIs are activated automatically for the Project,
 // including
-// Google Cloud Storage.
+// Google Cloud Storage. The parent is identified by a
+// specified
+// ResourceId, which must include both an ID and a type, such
+// as
+// project, folder, or organization.
 func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
 	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2178,7 +2182,7 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Project, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Project resource.\n\nInitially, the Project resource is owned by its creator exclusively.\nThe creator can later grant permission to others to read or update the\nProject.\n\nSeveral APIs are activated automatically for the Project, including\nGoogle Cloud Storage.",
+	//   "description": "Creates a Project resource.\n\nInitially, the Project resource is owned by its creator exclusively.\nThe creator can later grant permission to others to read or update the\nProject.\n\nSeveral APIs are activated automatically for the Project, including\nGoogle Cloud Storage. The parent is identified by a specified\nResourceId, which must include both an ID and a type, such as\nproject, folder, or organization.",
 	//   "flatPath": "v1beta1/projects",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.create",

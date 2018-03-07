@@ -658,7 +658,7 @@
       }
     }
   },
-  "revision": "20180222",
+  "revision": "20180227",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -814,7 +814,7 @@
           "type": "array"
         },
         "eventNotificationConfigs": {
-          "description": "The configuration for notification of telemetry events received from the\ndevice. All telemetry events that were successfully published by the\ndevice and acknowledged by Cloud IoT Core are guaranteed to be\ndelivered to Cloud Pub/Sub. Only the first configuration is used. If you\ntry to publish a device telemetry event using MQTT without specifying a\nCloud Pub/Sub topic for the device's registry, the connection closes\nautomatically. If you try to do so using an HTTP connection, an error\nis returned.",
+          "description": "The configuration for notification of telemetry events received from the\ndevice. All telemetry events that were successfully published by the\ndevice and acknowledged by Cloud IoT Core are guaranteed to be\ndelivered to Cloud Pub/Sub. If multiple configurations match a message,\nonly the first matching configuration is used. If you try to publish a\ndevice telemetry event using MQTT without specifying a Cloud Pub/Sub topic\nfor the device's registry, the connection closes automatically. If you try\nto do so using an HTTP connection, an error is returned. Up to 10\nconfigurations may be provided.",
           "items": {
             "$ref": "EventNotificationConfig"
           },

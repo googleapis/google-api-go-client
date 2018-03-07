@@ -1642,7 +1642,7 @@
       }
     }
   },
-  "revision": "20180226",
+  "revision": "20180303",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3282,34 +3282,34 @@
       "properties": {
         "basicCard": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageBasicCard",
-          "description": "The basic card response for Actions on Google."
+          "description": "Displays a basic card for Actions on Google."
         },
         "card": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageCard",
-          "description": "The card response."
+          "description": "Displays a card."
         },
         "carouselSelect": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageCarouselSelect",
-          "description": "The carousel card response for Actions on Google."
+          "description": "Displays a carousel card for Actions on Google."
         },
         "image": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageImage",
-          "description": "The image response."
+          "description": "Displays an image."
         },
         "linkOutSuggestion": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageLinkOutSuggestion",
-          "description": "The link out suggestion chip for Actions on Google."
+          "description": "Displays a link out suggestion chip for Actions on Google."
         },
         "listSelect": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageListSelect",
-          "description": "The list card response for Actions on Google."
+          "description": "Displays a list card for Actions on Google."
         },
         "payload": {
           "additionalProperties": {
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The response containing a custom payload.",
+          "description": "Returns a response containing a custom payload.",
           "type": "object"
         },
         "platform": {
@@ -3340,19 +3340,19 @@
         },
         "quickReplies": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageQuickReplies",
-          "description": "The quick replies response."
+          "description": "Displays quick replies."
         },
         "simpleResponses": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageSimpleResponses",
-          "description": "The voice and text-only responses for Actions on Google."
+          "description": "Returns a voice or text-only response for Actions on Google."
         },
         "suggestions": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageSuggestions",
-          "description": "The suggestion chips for Actions on Google."
+          "description": "Displays suggestion chips for Actions on Google."
         },
         "text": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageText",
-          "description": "The text response."
+          "description": "Returns a text response."
         }
       },
       "type": "object"

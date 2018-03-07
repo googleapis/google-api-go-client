@@ -524,15 +524,17 @@ type DeviceRegistry struct {
 	// the
 	// device and acknowledged by Cloud IoT Core are guaranteed to
 	// be
-	// delivered to Cloud Pub/Sub. Only the first configuration is used. If
-	// you
-	// try to publish a device telemetry event using MQTT without specifying
+	// delivered to Cloud Pub/Sub. If multiple configurations match a
+	// message,
+	// only the first matching configuration is used. If you try to publish
 	// a
-	// Cloud Pub/Sub topic for the device's registry, the connection
-	// closes
-	// automatically. If you try to do so using an HTTP connection, an
-	// error
-	// is returned.
+	// device telemetry event using MQTT without specifying a Cloud Pub/Sub
+	// topic
+	// for the device's registry, the connection closes automatically. If
+	// you try
+	// to do so using an HTTP connection, an error is returned. Up to
+	// 10
+	// configurations may be provided.
 	EventNotificationConfigs []*EventNotificationConfig `json:"eventNotificationConfigs,omitempty"`
 
 	// HttpConfig: The DeviceService (HTTP) configuration for this device

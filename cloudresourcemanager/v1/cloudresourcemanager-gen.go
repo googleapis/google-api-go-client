@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "cloudresourcemanager:v1"
 const apiName = "cloudresourcemanager"
 const apiVersion = "v1"
-const basePath = "https://cloudresourcemanager.googleapis.com/"
+const basePath = "https://content-cloudresourcemanager.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -1613,8 +1613,8 @@ func (s *Organization) MarshalJSON() ([]byte, error) {
 // descendants will
 // be deleted.
 type OrganizationOwner struct {
-	// DirectoryCustomerId: The Google for Work customer id used in the
-	// Directory API.
+	// DirectoryCustomerId: The G Suite customer id used in the Directory
+	// API.
 	DirectoryCustomerId string `json:"directoryCustomerId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DirectoryCustomerId")
@@ -1971,7 +1971,7 @@ type SearchOrganizationsRequest struct {
 	//
 	// Organizations may be filtered by `owner.directoryCustomerId` or
 	// by
-	// `domain`, where the domain is a Google for Work domain, for
+	// `domain`, where the domain is a G Suite domain, for
 	// example:
 	//
 	// |Filter|Description|
@@ -5576,7 +5576,8 @@ type ProjectsCreateCall struct {
 // permission
 // `resourcemanager.projects.create` on the specified parent for the
 // new
-// project.
+// project. The parent is identified by a specified ResourceId,
+// which must include both an ID and a type, such as organization.
 func (r *ProjectsService) Create(project *Project) *ProjectsCreateCall {
 	c := &ProjectsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5666,7 +5667,7 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Request that a new Project be created. The result is an Operation which\ncan be used to track the creation process. It is automatically deleted\nafter a few hours, so there is no need to call DeleteOperation.\n\nOur SLO permits Project creation to take up to 30 seconds at the 90th\npercentile. As of 2016-08-29, we are observing 6 seconds 50th percentile\nlatency. 95th percentile latency is around 11 seconds. We recommend\npolling at the 5th second with an exponential backoff.\n\nAuthorization requires the Google IAM permission\n`resourcemanager.projects.create` on the specified parent for the new\nproject.",
+	//   "description": "Request that a new Project be created. The result is an Operation which\ncan be used to track the creation process. It is automatically deleted\nafter a few hours, so there is no need to call DeleteOperation.\n\nOur SLO permits Project creation to take up to 30 seconds at the 90th\npercentile. As of 2016-08-29, we are observing 6 seconds 50th percentile\nlatency. 95th percentile latency is around 11 seconds. We recommend\npolling at the 5th second with an exponential backoff.\n\nAuthorization requires the Google IAM permission\n`resourcemanager.projects.create` on the specified parent for the new\nproject. The parent is identified by a specified ResourceId,\nwhich must include both an ID and a type, such as organization.",
 	//   "flatPath": "v1/projects",
 	//   "httpMethod": "POST",
 	//   "id": "cloudresourcemanager.projects.create",

@@ -19,6 +19,7 @@ import (
 	"net/http"
 
 	"golang.org/x/oauth2"
+	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
 )
@@ -59,6 +60,16 @@ func WithCredentialsFile(filename string) ClientOption {
 // Deprecated: Use WithCredentialsFile instead.
 func WithServiceAccountFile(filename string) ClientOption {
 	return WithCredentialsFile(filename)
+}
+
+type withCreds google.DefaultCredentials
+
+func (w *withCreds) Apply(o *internal.DialSettings) {
+	o.Credentials = (*google.DefaultCredentials)(w)
+}
+
+func WithCredentials(creds *google.DefaultCredentials) ClientOption {
+	return (*withCreds)(creds)
 }
 
 // WithEndpoint returns a ClientOption that overrides the default endpoint

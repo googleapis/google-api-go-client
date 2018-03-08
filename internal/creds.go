@@ -28,8 +28,15 @@ import (
 // Creds returns credential information obtained from DialSettings, or if none, then
 // it returns default credential information.
 func Creds(ctx context.Context, ds *DialSettings) (*google.DefaultCredentials, error) {
+	if ds.Credentials != nil {
+		return ds.Credentials, nil
+	}
 	if ds.CredentialsFile != "" {
-		return credFileTokenSource(ctx, ds.CredentialsFile, ds.Scopes...)
+		data, err := ioutil.ReadFile(ds.CredentialsFile)
+		if err != nil {
+			return nil, fmt.Errorf("cannot read credentials file: %v", err)
+		}
+		return credsFromJSON(ctx, data, ds.Scopes...)
 	}
 	if ds.TokenSource != nil {
 		return &google.DefaultCredentials{TokenSource: ds.TokenSource}, nil
@@ -37,13 +44,10 @@ func Creds(ctx context.Context, ds *DialSettings) (*google.DefaultCredentials, e
 	return google.FindDefaultCredentials(ctx, ds.Scopes...)
 }
 
-// credFileTokenSource reads a refresh token file or a service account and returns
-// a TokenSource constructed from the config.
-func credFileTokenSource(ctx context.Context, filename string, scope ...string) (*google.DefaultCredentials, error) {
-	data, err := ioutil.ReadFile(filename)
-	if err != nil {
-		return nil, fmt.Errorf("cannot read credentials file: %v", err)
-	}
+// credFromJSON parses JSON for a refresh token or service account and returns
+// credentials constructed from it.
+// TODO(jba): move to oauth2/google.
+func credsFromJSON(ctx context.Context, data []byte, scope ...string) (*google.DefaultCredentials, error) {
 	// See if it is a refresh token credentials file first.
 	ts, ok, err := refreshTokenTokenSource(ctx, data, scope...)
 	if err != nil {

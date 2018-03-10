@@ -1364,7 +1364,7 @@
       }
     }
   },
-  "revision": "20180213",
+  "revision": "20180223",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1604,7 +1604,8 @@
             "RUNNING",
             "RECONCILING",
             "STOPPING",
-            "ERROR"
+            "ERROR",
+            "DEGRADED"
           ],
           "enumDescriptions": [
             "Not set.",
@@ -1612,7 +1613,8 @@
             "The RUNNING state indicates the cluster has been created and is fully\nusable.",
             "The RECONCILING state indicates that some work is actively being done on\nthe cluster, such as upgrading the master or node software. Details can\nbe found in the `statusMessage` field.",
             "The STOPPING state indicates the cluster is being deleted.",
-            "The ERROR state indicates the cluster may be unusable. Details\ncan be found in the `statusMessage` field."
+            "The ERROR state indicates the cluster may be unusable. Details\ncan be found in the `statusMessage` field.",
+            "The DEGRADED state indicates the cluster requires user action to restore\nfull functionality. Details can be found in the `statusMessage` field."
           ],
           "type": "string"
         },

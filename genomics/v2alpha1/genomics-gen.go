@@ -203,6 +203,27 @@ type Action struct {
 	// discover the host side port numbers, consult the ACTION_STARTED event
 	// in
 	// the operation metadata.
+	//   "DISABLE_IMAGE_PREFETCH" - Normally, all container images are
+	// downloaded before any actions are
+	// executed.  This helps prevent typos in URIs or issues like lack of
+	// disk
+	// space from wasting large amounts of compute resources.
+	//
+	// If set, this flag prevents the worker from downloading the image
+	// until
+	// just before the action is executed.
+	//
+	// This is useful for two reasons: first, if the image is large and a
+	// step
+	// earlier in the pipeline can fail, it can save time to avoid fetching
+	// the
+	// image until it is needed.
+	//
+	// Second, if the image is private (that is, it requires running
+	// `docker
+	// login` to access) this flag **must** be set so that a preceding
+	// action
+	// can establish the credentials required to fetch it.
 	Flags []string `json:"flags,omitempty"`
 
 	// ImageUri: The URI to pull the container image from.  Note that all

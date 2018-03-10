@@ -574,6 +574,12 @@ type AndroidRoboTest struct {
 	// Optional
 	RoboDirectives []*RoboDirective `json:"roboDirectives,omitempty"`
 
+	// RoboScript: A JSON file with a sequence of actions Robo should
+	// perform as a prologue
+	// for the crawl.
+	// Optional
+	RoboScript *FileReference `json:"roboScript,omitempty"`
+
 	// StartingIntents: The intents used to launch the app for the crawl.
 	// If none are provided, then the main launcher activity is launched.
 	// If some are provided, then only those provided are launched (the
@@ -753,6 +759,41 @@ type AndroidVersion struct {
 
 func (s *AndroidVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Apk: An Android package file to install.
+type Apk struct {
+	// Location: The path to an APK to be installed on the device before the
+	// test begins.
+	// Optional
+	Location *FileReference `json:"location,omitempty"`
+
+	// PackageName: The java package for the APK to be installed.
+	// Optional, value is determined by examining the application's
+	// manifest.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Apk) MarshalJSON() ([]byte, error) {
+	type NoMethod Apk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1039,6 +1080,9 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 type DeviceFile struct {
 	// ObbFile: A reference to an opaque binary blob file
 	ObbFile *ObbFile `json:"obbFile,omitempty"`
+
+	// RegularFile: A reference to a regular file
+	RegularFile *RegularFile `json:"regularFile,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ObbFile") to
 	// unconditionally include in API requests. By default, fields with
@@ -1545,6 +1589,64 @@ type Orientation struct {
 
 func (s *Orientation) MarshalJSON() ([]byte, error) {
 	type NoMethod Orientation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RegularFile: A file or directory to install on the device before the
+// test starts
+type RegularFile struct {
+	// Content: Required
+	Content *FileReference `json:"content,omitempty"`
+
+	// DevicePath: Where to put the content on the device. Must be an
+	// absolute, whitelisted
+	// path. If the file exists, it will be replaced.
+	// The following device-side directories and any of their subdirectories
+	// are
+	// whitelisted:
+	// <p>${EXTERNAL_STORAGE}, or /sdcard</p>
+	// <p>${ANDROID_DATA}/local/tmp, or /data/local/tmp</p>
+	// <p>Specifying a path outside of these directory trees is
+	// invalid.
+	//
+	// <p> The paths /sdcard and /data will be made available and treated
+	// as
+	// implicit path substitutions. E.g. if /sdcard on a particular device
+	// does
+	// not map to external storage, the system will replace it with the
+	// external
+	// storage path prefix for that device and copy the file there.
+	//
+	// <p> It is strongly advised to use the <a
+	// href=
+	// "http://developer.android.com/reference/android/os/Environment.h
+	// tml">
+	// Environment API</a> in app and test code to access files on the
+	// device in a
+	// portable way.
+	// Required
+	DevicePath string `json:"devicePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegularFile) MarshalJSON() ([]byte, error) {
+	type NoMethod RegularFile
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2107,6 +2209,12 @@ type TestSetup struct {
 	// duration of the test.
 	// Optional
 	Account *Account `json:"account,omitempty"`
+
+	// AdditionalApks: APKs to install in addition to those being directly
+	// tested.
+	// Currently capped at 100.
+	// Optional
+	AdditionalApks []*Apk `json:"additionalApks,omitempty"`
 
 	// DirectoriesToPull: List of directories on the device to upload to GCS
 	// at the end of the test;

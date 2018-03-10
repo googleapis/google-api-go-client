@@ -1947,7 +1947,7 @@
       }
     }
   },
-  "revision": "20180305",
+  "revision": "20180308",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2846,8 +2846,6 @@
           "description": "DEPRECATED: use repeated formats field instead.\nThe format on which to filter; optional.",
           "enum": [
             "FORMAT_UNSPECIFIED",
-            "DISPLAY",
-            "VIDEO",
             "NATIVE_DISPLAY",
             "NATIVE_VIDEO",
             "NON_NATIVE_DISPLAY",
@@ -2855,8 +2853,6 @@
           ],
           "enumDescriptions": [
             "A placeholder for an undefined format; indicates that no format filter\nwill be applied.",
-            "DEPRECATED: use combination of NATIVE_DISPLAY and NON_NATIVE_DISPLAY\nThe ad impression is display format (i.e. an image).",
-            "DEPRECATED: use combination of NATIVE_VIDEO and NON_NATIVE_VIDEO\nThe ad impression is video format.",
             "The ad impression is a native ad, and display (i.e. image) format.",
             "The ad impression is a native ad, and video format.",
             "The ad impression is not a native ad, and display (i.e. image) format.",
@@ -2868,8 +2864,6 @@
           "description": "The list of formats on which to filter; may be empty. The filters\nrepresented by multiple formats are ORed together (i.e. if non-empty,\nresults must match any one of the formats).",
           "enumDescriptions": [
             "A placeholder for an undefined format; indicates that no format filter\nwill be applied.",
-            "DEPRECATED: use combination of NATIVE_DISPLAY and NON_NATIVE_DISPLAY\nThe ad impression is display format (i.e. an image).",
-            "DEPRECATED: use combination of NATIVE_VIDEO and NON_NATIVE_VIDEO\nThe ad impression is video format.",
             "The ad impression is a native ad, and display (i.e. image) format.",
             "The ad impression is a native ad, and video format.",
             "The ad impression is not a native ad, and display (i.e. image) format.",
@@ -2878,8 +2872,6 @@
           "items": {
             "enum": [
               "FORMAT_UNSPECIFIED",
-              "DISPLAY",
-              "VIDEO",
               "NATIVE_DISPLAY",
               "NATIVE_VIDEO",
               "NON_NATIVE_DISPLAY",

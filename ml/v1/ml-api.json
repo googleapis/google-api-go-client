@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180228",
+  "revision": "20180306",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1666,7 +1666,7 @@
           "description": "Optional. The set of Hyperparameters to tune."
         },
         "jobDir": {
-          "description": "Optional. A Google Cloud Storage path in which to store training outputs\nand other data needed for training. This path is passed to your TensorFlow\nprogram as the 'job_dir' command-line argument. The benefit of specifying\nthis field is that Cloud ML validates the path for use in training.",
+          "description": "Optional. A Google Cloud Storage path in which to store training outputs\nand other data needed for training. This path is passed to your TensorFlow\nprogram as the '--job-dir' command-line argument. The benefit of specifying\nthis field is that Cloud ML validates the path for use in training.",
           "type": "string"
         },
         "masterType": {
@@ -1766,7 +1766,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__Version": {
-      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).\n\nLINT.IfChange",
+      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).",
       "id": "GoogleCloudMlV1__Version",
       "properties": {
         "autoScaling": {
@@ -1788,6 +1788,22 @@
         },
         "errorMessage": {
           "description": "Output only. The details of a failure or a cancellation.",
+          "type": "string"
+        },
+        "framework": {
+          "description": "The ML framework used to train this version of the model. If not specified,\ndefaults to `TENSORFLOW`",
+          "enum": [
+            "FRAMEWORK_UNSPECIFIED",
+            "TENSORFLOW",
+            "SCIKIT_LEARN",
+            "XGBOOST"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "isDefault": {
@@ -2063,7 +2079,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Machine Learning Engine",
+  "title": "Cloud Machine Learning Engine",
   "version": "v1",
   "version_module": true
 }

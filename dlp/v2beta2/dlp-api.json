@@ -1202,7 +1202,7 @@
       }
     }
   },
-  "revision": "20180227",
+  "revision": "20180308",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2beta1AuxiliaryTable": {
@@ -2310,6 +2310,11 @@
       "properties": {
         "bucketSize": {
           "description": "Total number of values in this bucket.",
+          "format": "int64",
+          "type": "string"
+        },
+        "bucketValueCount": {
+          "description": "Total number of distinct values in this bucket.",
           "format": "int64",
           "type": "string"
         },
@@ -3647,6 +3652,11 @@
           "format": "int64",
           "type": "string"
         },
+        "bucketValueCount": {
+          "description": "Total number of distinct equivalence classes in this bucket.",
+          "format": "int64",
+          "type": "string"
+        },
         "bucketValues": {
           "description": "Sample of equivalence classes in this bucket. The total number of\nclasses returned per bucket is capped at 20.",
           "items": {
@@ -3712,6 +3722,11 @@
       "properties": {
         "bucketSize": {
           "description": "Number of records within these anonymity bounds.",
+          "format": "int64",
+          "type": "string"
+        },
+        "bucketValueCount": {
+          "description": "Total number of distinct quasi-identifier tuple values in this bucket.",
           "format": "int64",
           "type": "string"
         },
@@ -3867,6 +3882,11 @@
       "properties": {
         "bucketSize": {
           "description": "Total number of equivalence classes in this bucket.",
+          "format": "int64",
+          "type": "string"
+        },
+        "bucketValueCount": {
+          "description": "Total number of distinct equivalence classes in this bucket.",
           "format": "int64",
           "type": "string"
         },

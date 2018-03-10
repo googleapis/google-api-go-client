@@ -653,7 +653,7 @@
       }
     }
   },
-  "revision": "20180203",
+  "revision": "20180305",
   "rootUrl": "https://proximitybeacon.googleapis.com/",
   "schemas": {
     "AdvertisedId": {
@@ -1153,7 +1153,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Proximity Beacon API",
+  "title": "Proximity Beacon API",
   "version": "v1beta1",
   "version_module": true
 }

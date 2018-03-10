@@ -2554,6 +2554,9 @@ type GooglePrivacyDlpV2beta2CategoricalStatsHistogramBucket struct {
 	// BucketSize: Total number of values in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
 
+	// BucketValueCount: Total number of distinct values in this bucket.
+	BucketValueCount int64 `json:"bucketValueCount,omitempty,string"`
+
 	// BucketValues: Sample of value frequencies in this bucket. The total
 	// number of
 	// values returned per bucket is capped at 20.
@@ -5198,6 +5201,10 @@ type GooglePrivacyDlpV2beta2KAnonymityHistogramBucket struct {
 	// BucketSize: Total number of equivalence classes in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
 
+	// BucketValueCount: Total number of distinct equivalence classes in
+	// this bucket.
+	BucketValueCount int64 `json:"bucketValueCount,omitempty,string"`
+
 	// BucketValues: Sample of equivalence classes in this bucket. The total
 	// number of
 	// classes returned per bucket is capped at 20.
@@ -5336,6 +5343,10 @@ func (s *GooglePrivacyDlpV2beta2KMapEstimationConfig) MarshalJSON() ([]byte, err
 type GooglePrivacyDlpV2beta2KMapEstimationHistogramBucket struct {
 	// BucketSize: Number of records within these anonymity bounds.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
+
+	// BucketValueCount: Total number of distinct quasi-identifier tuple
+	// values in this bucket.
+	BucketValueCount int64 `json:"bucketValueCount,omitempty,string"`
 
 	// BucketValues: Sample of quasi-identifier tuple values in this bucket.
 	// The total
@@ -5648,6 +5659,10 @@ func (s *GooglePrivacyDlpV2beta2LDiversityEquivalenceClass) MarshalJSON() ([]byt
 type GooglePrivacyDlpV2beta2LDiversityHistogramBucket struct {
 	// BucketSize: Total number of equivalence classes in this bucket.
 	BucketSize int64 `json:"bucketSize,omitempty,string"`
+
+	// BucketValueCount: Total number of distinct equivalence classes in
+	// this bucket.
+	BucketValueCount int64 `json:"bucketValueCount,omitempty,string"`
 
 	// BucketValues: Sample of equivalence classes in this bucket. The total
 	// number of

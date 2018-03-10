@@ -5500,6 +5500,8 @@ func (c *ServicesListCall) Filter(filter string) *ServicesListCall {
 
 // PageSize sets the optional parameter "pageSize": Requested size of
 // the next page of data.
+// Requested page size cannot exceed 200.
+//  If not set, the default page size is 50.
 func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5621,7 +5623,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested size of the next page of data.",
+	//       "description": "Requested size of the next page of data.\nRequested page size cannot exceed 200.\n If not set, the default page size is 50.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

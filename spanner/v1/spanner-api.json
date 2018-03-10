@@ -1340,7 +1340,7 @@
       }
     }
   },
-  "revision": "20180220",
+  "revision": "20180228",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -1966,12 +1966,12 @@
       "id": "PartitionOptions",
       "properties": {
         "maxPartitions": {
-          "description": "The desired maximum number of partitions to return.  For example, this may\nbe set to the number of workers available.  The default for this option\nis currently 10,000. The maximum value is currently 200,000.  This is only\na hint.  The actual number of partitions returned may be smaller or larger\nthan this maximum count request.",
+          "description": "**Note:** This hint is currently ignored by PartitionQuery and\nPartitionRead requests.\n\nThe desired maximum number of partitions to return.  For example, this may\nbe set to the number of workers available.  The default for this option\nis currently 10,000. The maximum value is currently 200,000.  This is only\na hint.  The actual number of partitions returned may be smaller or larger\nthan this maximum count request.",
           "format": "int64",
           "type": "string"
         },
         "partitionSizeBytes": {
-          "description": "The desired data size for each partition generated.  The default for this\noption is currently 1 GiB.  This is only a hint. The actual size of each\npartition may be smaller or larger than this size request.",
+          "description": "**Note:** This hint is currently ignored by PartitionQuery and\nPartitionRead requests.\n\nThe desired data size for each partition generated.  The default for this\noption is currently 1 GiB.  This is only a hint. The actual size of each\npartition may be smaller or larger than this size request.",
           "format": "int64",
           "type": "string"
         }
@@ -2522,7 +2522,7 @@
             "Encoded as JSON `true` or `false`.",
             "Encoded as `string`, in decimal format.",
             "Encoded as `number`, or the strings `\"NaN\"`, `\"Infinity\"`, or\n`\"-Infinity\"`.",
-            "Encoded as `string` in RFC 3339 timestamp format. The time zone\nmust be present, and must be `\"Z\"`.\n\nIf the schema has the column option\n`allow_commit_timestamp=true`, the placeholder string\n`\"spanner.commit_timestamp()\"` can be used to instruct the system\nto insert the commit timestamp associated with the transaction\ncommit.",
+            "Encoded as `string` in RFC 3339 timestamp format. The time zone\nmust be present, and must be `\"Z\"`.",
             "Encoded as `string` in RFC 3339 date format.",
             "Encoded as `string`.",
             "Encoded as a base64-encoded `string`, as described in RFC 4648,\nsection 4.",

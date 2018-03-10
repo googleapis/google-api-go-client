@@ -278,7 +278,7 @@
       }
     }
   },
-  "revision": "20180303",
+  "revision": "20180307",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Action": {
@@ -311,7 +311,8 @@
             "This flag allows an action to continue running in the background while\nexecuting subsequent actions.  This is useful to provide services to\nother actions (or to provide debugging support tools like ssh servers).",
             "Normally, once an action fails no further actions are run.  This flag\nindicates that this action must be run even if the pipeline has already\nfailed.  This is useful for actions that copy output files off of the VM\nor for debugging.",
             "Enable access to the FUSE device for this action.  Filesystems can then\nbe mounted into disks shared with other actions.  The other actions do\nnot need the ENABLE_FUSE flag to access the mounted filesystem.\n\nThis has the effect of causing the container to be executed with\nCAP_SYS_ADMIN and exposes /dev/fuse to the container, so it should only\nbe used for containers you trust.",
-            "Expose all ports specified by EXPOSE statements in the container.  To\ndiscover the host side port numbers, consult the ACTION_STARTED event in\nthe operation metadata."
+            "Expose all ports specified by EXPOSE statements in the container.  To\ndiscover the host side port numbers, consult the ACTION_STARTED event in\nthe operation metadata.",
+            "Normally, all container images are downloaded before any actions are\nexecuted.  This helps prevent typos in URIs or issues like lack of disk\nspace from wasting large amounts of compute resources.\n\nIf set, this flag prevents the worker from downloading the image until\njust before the action is executed.\n\nThis is useful for two reasons: first, if the image is large and a step\nearlier in the pipeline can fail, it can save time to avoid fetching the\nimage until it is needed.\n\nSecond, if the image is private (that is, it requires running `docker\nlogin` to access) this flag **must** be set so that a preceding action\ncan establish the credentials required to fetch it."
           ],
           "items": {
             "enum": [
@@ -320,7 +321,8 @@
               "RUN_IN_BACKGROUND",
               "ALWAYS_RUN",
               "ENABLE_FUSE",
-              "PUBLISH_EXPOSED_PORTS"
+              "PUBLISH_EXPOSED_PORTS",
+              "DISABLE_IMAGE_PREFETCH"
             ],
             "type": "string"
           },

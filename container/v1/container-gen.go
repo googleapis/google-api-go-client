@@ -560,6 +560,10 @@ type Cluster struct {
 	//   "ERROR" - The ERROR state indicates the cluster may be unusable.
 	// Details
 	// can be found in the `statusMessage` field.
+	//   "DEGRADED" - The DEGRADED state indicates the cluster requires user
+	// action to restore
+	// full functionality. Details can be found in the `statusMessage`
+	// field.
 	Status string `json:"status,omitempty"`
 
 	// StatusMessage: [Output only] Additional information about the current

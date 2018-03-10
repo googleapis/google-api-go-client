@@ -1822,7 +1822,7 @@ type DatafeedsCustomBatchRequestEntry struct {
 	// Datafeed: The data feed to insert.
 	Datafeed *Datafeed `json:"datafeed,omitempty"`
 
-	// DatafeedId: The ID of the data feed to get or delete.
+	// DatafeedId: The ID of the data feed to get, delete or fetch.
 	DatafeedId uint64 `json:"datafeedId,omitempty,string"`
 
 	// MerchantId: The ID of the managing account.

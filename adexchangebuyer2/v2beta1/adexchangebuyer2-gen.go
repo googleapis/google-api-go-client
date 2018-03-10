@@ -1682,12 +1682,6 @@ type FilterSet struct {
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
 	// indicates that no format filter
 	// will be applied.
-	//   "DISPLAY" - DEPRECATED: use combination of NATIVE_DISPLAY and
-	// NON_NATIVE_DISPLAY
-	// The ad impression is display format (i.e. an image).
-	//   "VIDEO" - DEPRECATED: use combination of NATIVE_VIDEO and
-	// NON_NATIVE_VIDEO
-	// The ad impression is video format.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
 	// (i.e. image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
@@ -1708,12 +1702,6 @@ type FilterSet struct {
 	//   "FORMAT_UNSPECIFIED" - A placeholder for an undefined format;
 	// indicates that no format filter
 	// will be applied.
-	//   "DISPLAY" - DEPRECATED: use combination of NATIVE_DISPLAY and
-	// NON_NATIVE_DISPLAY
-	// The ad impression is display format (i.e. an image).
-	//   "VIDEO" - DEPRECATED: use combination of NATIVE_VIDEO and
-	// NON_NATIVE_VIDEO
-	// The ad impression is video format.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
 	// (i.e. image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video

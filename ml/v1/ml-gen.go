@@ -1,4 +1,4 @@
-// Package ml provides access to the Google Cloud Machine Learning Engine.
+// Package ml provides access to the Cloud Machine Learning Engine.
 //
 // See https://cloud.google.com/ml/
 //
@@ -1358,7 +1358,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// training outputs
 	// and other data needed for training. This path is passed to your
 	// TensorFlow
-	// program as the 'job_dir' command-line argument. The benefit of
+	// program as the '--job-dir' command-line argument. The benefit of
 	// specifying
 	// this field is that Cloud ML validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
@@ -1665,8 +1665,6 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
-//
-// LINT.IfChange
 type GoogleCloudMlV1__Version struct {
 	// AutoScaling: Automatically scale the number of nodes used to serve
 	// the model in
@@ -1706,6 +1704,17 @@ type GoogleCloudMlV1__Version struct {
 	// ErrorMessage: Output only. The details of a failure or a
 	// cancellation.
 	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// Framework: The ML framework used to train this version of the model.
+	// If not specified,
+	// defaults to `TENSORFLOW`
+	//
+	// Possible values:
+	//   "FRAMEWORK_UNSPECIFIED"
+	//   "TENSORFLOW"
+	//   "SCIKIT_LEARN"
+	//   "XGBOOST"
+	Framework string `json:"framework,omitempty"`
 
 	// IsDefault: Output only. If true, this version will be used to handle
 	// prediction

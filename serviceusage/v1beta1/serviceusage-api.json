@@ -319,7 +319,7 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "Requested size of the next page of data.",
+              "description": "Requested size of the next page of data.\nRequested page size cannot exceed 200.\n If not set, the default page size is 50.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -349,7 +349,7 @@
       }
     }
   },
-  "revision": "20180303",
+  "revision": "20180308",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {

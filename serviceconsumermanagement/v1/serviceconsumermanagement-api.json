@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20180301",
+  "revision": "20180308",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2150,7 +2150,7 @@
           "type": "string"
         },
         "tenantResources": {
-          "description": "Resources constituting the tenancy unit.\nThere can be at most 512 tenant resources in a tenancy units.",
+          "description": "Resources constituting the tenancy unit.\nThere can be at most 512 tenant resources in a tenancy unit.",
           "items": {
             "$ref": "TenantResource"
           },

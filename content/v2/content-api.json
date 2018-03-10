@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/gJB8GL3rqyQgZKVcAAG1fQCi82g\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/1qOLk-oK_dMC3AStRBy-xt64OKE\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2497,7 +2497,7 @@
       }
     }
   },
-  "revision": "20180227",
+  "revision": "20180305",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3551,7 +3551,7 @@
           "description": "The data feed to insert."
         },
         "datafeedId": {
-          "description": "The ID of the data feed to get or delete.",
+          "description": "The ID of the data feed to get, delete or fetch.",
           "format": "uint64",
           "type": "string"
         },

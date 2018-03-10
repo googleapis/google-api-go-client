@@ -4276,7 +4276,7 @@ type TenancyUnit struct {
 	Service string `json:"service,omitempty"`
 
 	// TenantResources: Resources constituting the tenancy unit.
-	// There can be at most 512 tenant resources in a tenancy units.
+	// There can be at most 512 tenant resources in a tenancy unit.
 	TenantResources []*TenantResource `json:"tenantResources,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

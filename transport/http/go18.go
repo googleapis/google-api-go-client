@@ -19,13 +19,13 @@ package http
 import (
 	"net/http"
 
+	"go.opencensus.io/exporter/stackdriver/propagation"
 	"go.opencensus.io/plugin/ochttp"
-	ocgoogle "go.opencensus.io/plugin/ochttp/propagation/google"
 )
 
 func addOCTransport(trans http.RoundTripper) http.RoundTripper {
 	return &ochttp.Transport{
 		Base:        trans,
-		Propagation: &ocgoogle.HTTPFormat{},
+		Propagation: &propagation.HTTPFormat{},
 	}
 }

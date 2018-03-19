@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180306",
+  "revision": "20180315",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1487,7 +1487,7 @@
           "type": "array"
         },
         "maxValue": {
-          "description": "Required if typeis `DOUBLE` or `INTEGER`. This field\nshould be unset if type is `CATEGORICAL`. This value should be integers if\ntype is `INTEGER`.",
+          "description": "Required if type is `DOUBLE` or `INTEGER`. This field\nshould be unset if type is `CATEGORICAL`. This value should be integers if\ntype is `INTEGER`.",
           "format": "double",
           "type": "number"
         },
@@ -1821,6 +1821,10 @@
         },
         "name": {
           "description": "Required.The name specified for the version when it was created.\n\nThe version name must be unique within the model it is created in.",
+          "type": "string"
+        },
+        "pythonVersion": {
+          "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Python '3.5' is available when `runtime_version` is set\nto '1.4' and above. Python '2.7' works with all supported runtime versions.",
           "type": "string"
         },
         "runtimeVersion": {

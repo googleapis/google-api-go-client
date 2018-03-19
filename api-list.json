@@ -791,7 +791,7 @@
    "id": "cloudresourcemanager:v1",
    "name": "cloudresourcemanager",
    "version": "v1",
-   "title": "Google Cloud Resource Manager API",
+   "title": "Cloud Resource Manager API",
    "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
    "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -799,14 +799,14 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/resource-manager",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
    "id": "cloudresourcemanager:v1beta1",
    "name": "cloudresourcemanager",
    "version": "v1beta1",
-   "title": "Google Cloud Resource Manager API",
+   "title": "Cloud Resource Manager API",
    "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
    "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -818,10 +818,25 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudresourcemanager:v2",
+   "name": "cloudresourcemanager",
+   "version": "v2",
+   "title": "Cloud Resource Manager API",
+   "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
+   "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/resource-manager",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudresourcemanager:v2beta1",
    "name": "cloudresourcemanager",
    "version": "v2beta1",
-   "title": "Google Cloud Resource Manager API",
+   "title": "Cloud Resource Manager API",
    "description": "The Google Cloud Resource Manager API provides methods for creating, reading, and updating project metadata.",
    "discoveryRestUrl": "https://cloudresourcemanager.googleapis.com/$discovery/rest?version=v2beta1",
    "icons": {
@@ -2014,6 +2029,7 @@
     "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
    },
+   "documentationLink": "https://developers.google.com/speed/docs/insights/v4/getting-started",
    "preferred": true
   },
   {
@@ -2610,7 +2626,7 @@
    "id": "speech:v1",
    "name": "speech",
    "version": "v1",
-   "title": "Google Cloud Speech API",
+   "title": "Cloud Speech API",
    "description": "Converts audio to text by applying powerful neural network models.",
    "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -2625,7 +2641,7 @@
    "id": "speech:v1beta1",
    "name": "speech",
    "version": "v1beta1",
-   "title": "Google Cloud Speech API",
+   "title": "Cloud Speech API",
    "description": "Converts audio to text by applying powerful neural network models.",
    "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {

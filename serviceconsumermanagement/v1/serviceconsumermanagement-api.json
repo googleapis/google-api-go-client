@@ -257,7 +257,7 @@
           ],
           "parameters": {
             "pageSize": {
-              "description": "The maximum number of results returned by this request. Currently, the\ndefault maximum is set to 1000. If page_size is not provided or provided a\nnumber larger than 1000, it will be automatically set to 1000.\n\nOptional.",
+              "description": "The maximum number of results returned by this request. Currently, the\ndefault maximum is set to 1000. If page_size is not provided or the size\nprovided is a number larger than 1000, it will be automatically set to\n1000.\n\nOptional.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -275,7 +275,7 @@
               "type": "string"
             },
             "query": {
-              "description": "Set a query `{expression}` for querying tenancy units. Your `{expression}`\nmust be in the format: `field_name=literal_string`. The `field_name` is the\nname of the field you want to compare. Supported fields are\n`tenant_resources.tag` and`tenant_resources.resource`.\n\nFor example, to search tenancy units that contain at least one tenant\nresource with given tag 'xyz', use query `tenant_resources.tag=xyz`.\nTo search tenancy units that contain at least one tenant resource with\ngiven resource name 'projects/123456', use query\n`tenant_resources.resource=projects/123456`.\n\nMultiple expressions can be joined with `AND`s. Tenancy units must match\nall expressions to be included in the result set. For example,\n`tenant_resources.tag=xyz AND tenant_resources.resource=projects/123456`\n\nOptional.",
+              "description": "Set a query `{expression}` for querying tenancy units. Your `{expression}`\nmust be in the format: `field_name=literal_string`. The `field_name` is the\nname of the field you want to compare. Supported fields are\n`tenant_resources.tag` and `tenant_resources.resource`.\n\nFor example, to search tenancy units that contain at least one tenant\nresource with given tag 'xyz', use query `tenant_resources.tag=xyz`.\nTo search tenancy units that contain at least one tenant resource with\ngiven resource name 'projects/123456', use query\n`tenant_resources.resource=projects/123456`.\n\nMultiple expressions can be joined with `AND`s. Tenancy units must match\nall expressions to be included in the result set. For example,\n`tenant_resources.tag=xyz AND tenant_resources.resource=projects/123456`\n\nOptional.",
               "location": "query",
               "type": "string"
             }
@@ -293,7 +293,7 @@
         "tenancyUnits": {
           "methods": {
             "addProject": {
-              "description": "Add a new tenant project to the tenancy unit.\nThere can be at most 512 tenant projects in a tenancy units.\nIf there are previously failed AddTenantProject calls, you might need to\ncall RemoveTenantProject first to clean them before you can make another\nAddTenantProject with the same tag.\nOperation\u003cresponse: Empty\u003e.",
+              "description": "Add a new tenant project to the tenancy unit.\nThere can be at most 512 tenant projects in a tenancy unit.\nIf there are previously failed `AddTenantProject` calls, you might need to\ncall `RemoveTenantProject` first to clean them before you can make another\n`AddTenantProject` with the same tag.\nOperation\u003cresponse: Empty\u003e.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:addProject",
               "httpMethod": "POST",
               "id": "serviceconsumermanagement.services.tenancyUnits.addProject",
@@ -349,7 +349,7 @@
               ]
             },
             "delete": {
-              "description": "Delete tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resource in it.\nOperation\u003cresponse: Empty\u003e.",
+              "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resource in it.\nOperation\u003cresponse: Empty\u003e.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}",
               "httpMethod": "DELETE",
               "id": "serviceconsumermanagement.services.tenancyUnits.delete",
@@ -374,7 +374,7 @@
               ]
             },
             "list": {
-              "description": "Find tenancy unit for a service and consumer.\nThis method should not be used in producers' runtime path, e.g. finding\nthe tenant project number when creating VMs. Producers should persist\nthe tenant project information after the project is created.",
+              "description": "Find the tenancy unit for a service and consumer.\nThis method should not be used in producers' runtime path, for example\nfinding the tenant project number when creating VMs. Producers should\npersist the tenant project information after the project is created.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits",
               "httpMethod": "GET",
               "id": "serviceconsumermanagement.services.tenancyUnits.list",
@@ -447,11 +447,11 @@
       }
     }
   },
-  "revision": "20180308",
+  "revision": "20180313",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
-      "description": "Request to add a newly created and configured tenant project to tenancy\nunit.",
+      "description": "Request to add a newly created and configured tenant project to a tenancy\nunit.",
       "id": "AddTenantProjectRequest",
       "properties": {
         "projectConfig": {
@@ -690,7 +690,7 @@
       "type": "object"
     },
     "BillingConfig": {
-      "description": "Describes billing configuration for a new Tenant Project",
+      "description": "Describes billing configuration for a new tenant project.",
       "id": "BillingConfig",
       "properties": {
         "billingAccount": {
@@ -793,7 +793,7 @@
       "id": "CreateTenancyUnitRequest",
       "properties": {
         "tenancyUnitId": {
-          "description": "Optional producer provided identifier of the tenancy unit\nMust be no longer than 40 characters and preferably URI friendly\nIf it is not provided, UID for the tenancy unit will be auto generated\nIt must be unique across a service.\nIf the tenancy unit already exists for the service and consumer pair,\nCreateTenancyUnit will return existing tenancy unit if provided identifier\nis identical or empty, otherwise the call will fail.",
+          "description": "Optional producer provided identifier of the tenancy unit.\nMust be no longer than 40 characters and preferably URI friendly.\nIf it is not provided, a UID for the tenancy unit will be auto generated.\nIt must be unique across a service.\nIf the tenancy unit already exists for the service and consumer pair,\n`CreateTenancyUnit` will return the existing tenancy unit if the provided\nidentifier is identical or empty, otherwise the call will fail.",
           "type": "string"
         }
       },
@@ -1276,7 +1276,7 @@
           "type": "string"
         },
         "tenancyUnits": {
-          "description": "Tenancy Units matching the request.",
+          "description": "Tenancy units matching the request.",
           "items": {
             "$ref": "TenancyUnit"
           },
@@ -1738,7 +1738,7 @@
       "id": "PolicyBinding",
       "properties": {
         "members": {
-          "description": "Uses the same format as in IAM policy.\n`member` must include both prefix and id. E.g., `user:{emailId}`,\n`serviceAccount:{emailId}`, `group:{emailId}`.",
+          "description": "Uses the same format as in IAM policy.\n`member` must include both prefix and ID. For example, `user:{emailId}`,\n`serviceAccount:{emailId}`, `group:{emailId}`.",
           "items": {
             "type": "string"
           },
@@ -2012,7 +2012,7 @@
           "type": "string"
         },
         "tenantProjectRoles": {
-          "description": "Roles for the service account above on tenant project.",
+          "description": "Roles for the associated service account for the tenant project.",
           "items": {
             "type": "string"
           },
@@ -2133,7 +2133,7 @@
       "id": "TenancyUnit",
       "properties": {
         "consumer": {
-          "description": "@OutputOnly Cloud resource One Platform Name of the consumer of this\nservice. For example 'projects/123456'.",
+          "description": "@OutputOnly Cloud resource name of the consumer of this service.\nFor example 'projects/123456'.",
           "type": "string"
         },
         "createTime": {
@@ -2165,7 +2165,7 @@
       "properties": {
         "billingConfig": {
           "$ref": "BillingConfig",
-          "description": "Billing account properties.\nIt may be specified explicitly, or created from the specified group\nduring provisioning"
+          "description": "Billing account properties.\nIt might be specified explicitly, or created from the specified group\nduring provisioning"
         },
         "folder": {
           "description": "Folder where project in this tenancy unit must be located\nThis folder must have been previously created with proper\npermissions for the caller to create and configure a project in it.\nValid folder resource names have the format `folders/{folder_number}`\n(for example, `folders/123456`).",
@@ -2183,7 +2183,7 @@
           "description": "Configuration for IAM service account on tenant project."
         },
         "services": {
-          "description": "Google Cloud API names of services that will be activated on this project\nduring provisioning.  If any of these services can not be activated,\naddTenantProject method will fail.\nFor example: 'compute.googleapis.com','cloudfunctions.googleapis.com'",
+          "description": "Google Cloud API names of services that will be activated on this project\nduring provisioning.  If any of these services can not be activated,\nthe `addTenantProject` method will fail.\nFor example: 'compute.googleapis.com','cloudfunctions.googleapis.com'",
           "items": {
             "type": "string"
           },
@@ -2197,7 +2197,7 @@
       "type": "object"
     },
     "TenantProjectPolicy": {
-      "description": "Describes policy settings that need to be applied to a newly\ncreated Tenant Project.",
+      "description": "Describes policy settings that need to be applied to a newly\ncreated tenant project.",
       "id": "TenantProjectPolicy",
       "properties": {
         "policyBindings": {
@@ -2215,7 +2215,7 @@
       "id": "TenantResource",
       "properties": {
         "resource": {
-          "description": "@OutputOnly Identifier of the tenant resource.\nFor cloud projects it is in the form 'projects/{number}'.\nFor example 'projects/123456'.",
+          "description": "@OutputOnly Identifier of the tenant resource.\nFor cloud projects, it is in the form 'projects/{number}'.\nFor example 'projects/123456'.",
           "type": "string"
         },
         "status": {

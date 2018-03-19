@@ -2372,7 +2372,7 @@
       }
     }
   },
-  "revision": "20180223",
+  "revision": "20180312",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2578,6 +2578,10 @@
           "$ref": "MasterAuthorizedNetworksConfig",
           "description": "The configuration options for master authorized networks feature."
         },
+        "masterIpv4CidrBlock": {
+          "description": "The IP prefix in CIDR notation to use for the hosted master network.\nThis prefix will be used for assigning private IP addresses to the\nmaster or set of masters, as well as the ILB VIP.",
+          "type": "string"
+        },
         "monitoringService": {
           "description": "The monitoring service the cluster should use to write metrics.\nCurrently available options:\n\n* `monitoring.googleapis.com` - the Google Cloud Monitoring service.\n* `none` - no metrics will be exported from the cluster.\n* if left as an empty string, `monitoring.googleapis.com` will be used.",
           "type": "string"
@@ -2613,6 +2617,10 @@
         "podSecurityPolicyConfig": {
           "$ref": "PodSecurityPolicyConfig",
           "description": "Configuration for the PodSecurityPolicy feature."
+        },
+        "privateCluster": {
+          "description": "If this is a private cluster setup. Private clusters are clusters that, by\ndefault have no external IP addresses on the nodes and where nodes and the\nmaster communicate over private IP addresses.",
+          "type": "boolean"
         },
         "resourceLabels": {
           "additionalProperties": {

@@ -1035,7 +1035,8 @@ type GoogleCloudMlV1__ParameterSpec struct {
 	// should not contain more than 1,000 values.
 	DiscreteValues []float64 `json:"discreteValues,omitempty"`
 
-	// MaxValue: Required if typeis `DOUBLE` or `INTEGER`. This field
+	// MaxValue: Required if type is `DOUBLE` or `INTEGER`. This
+	// field
 	// should be unset if type is `CATEGORICAL`. This value should be
 	// integers if
 	// type is `INTEGER`.
@@ -1748,6 +1749,14 @@ type GoogleCloudMlV1__Version struct {
 	//
 	// The version name must be unique within the model it is created in.
 	Name string `json:"name,omitempty"`
+
+	// PythonVersion: Optional. The version of Python used in prediction. If
+	// not set, the default
+	// version is '2.7'. Python '3.5' is available when `runtime_version` is
+	// set
+	// to '1.4' and above. Python '2.7' works with all supported runtime
+	// versions.
+	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
 	// for this deployment.

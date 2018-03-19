@@ -563,6 +563,13 @@ type Cluster struct {
 	// authorized networks feature.
 	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
 
+	// MasterIpv4CidrBlock: The IP prefix in CIDR notation to use for the
+	// hosted master network.
+	// This prefix will be used for assigning private IP addresses to
+	// the
+	// master or set of masters, as well as the ILB VIP.
+	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
+
 	// MonitoringService: The monitoring service the cluster should use to
 	// write metrics.
 	// Currently available options:
@@ -627,6 +634,13 @@ type Cluster struct {
 	// PodSecurityPolicyConfig: Configuration for the PodSecurityPolicy
 	// feature.
 	PodSecurityPolicyConfig *PodSecurityPolicyConfig `json:"podSecurityPolicyConfig,omitempty"`
+
+	// PrivateCluster: If this is a private cluster setup. Private clusters
+	// are clusters that, by
+	// default have no external IP addresses on the nodes and where nodes
+	// and the
+	// master communicate over private IP addresses.
+	PrivateCluster bool `json:"privateCluster,omitempty"`
 
 	// ResourceLabels: The resource labels for the cluster to use to
 	// annotate any related GCE

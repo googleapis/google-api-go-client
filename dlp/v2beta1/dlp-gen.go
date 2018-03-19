@@ -1,4 +1,4 @@
-// Package dlp provides access to the DLP API.
+// Package dlp provides access to the Cloud DLP API.
 //
 // See https://cloud.google.com/dlp/docs/
 //

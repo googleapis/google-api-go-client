@@ -578,7 +578,7 @@
       }
     }
   },
-  "revision": "20180220",
+  "revision": "20180315",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GoogleLongrunningCancelOperationRequest": {
@@ -2827,7 +2827,7 @@
     }
   },
   "servicePath": "",
-  "title": "DLP API",
+  "title": "Cloud DLP API",
   "version": "v2beta1",
   "version_module": true
 }

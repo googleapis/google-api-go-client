@@ -25,9 +25,7 @@ import (
 
 func addOCTransport(trans http.RoundTripper) http.RoundTripper {
 	return &ochttp.Transport{
-		Base: trans,
-		// TODO(ramonza): enable stats after census-instrumentation/opencensus-go#302
-		NoStats:     true,
+		Base:        trans,
 		Propagation: &ocgoogle.HTTPFormat{},
 	}
 }

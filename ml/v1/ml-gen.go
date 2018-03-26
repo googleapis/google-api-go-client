@@ -1348,6 +1348,7 @@ type GoogleCloudMlV1__SetDefaultVersionRequest struct {
 // details, see the guide to
 // <a href="/ml-engine/docs/training-jobs">submitting a training
 // job</a>.
+// Next ID: 22
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command line arguments to pass to the program.
 	Args []string `json:"args,omitempty"`

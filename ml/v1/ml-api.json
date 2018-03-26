@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180315",
+  "revision": "20180320",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1651,7 +1651,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__TrainingInput": {
-      "description": "Represents input parameters for a training job. When using the\ngcloud command to submit your training job, you can specify\nthe input parameters as command-line arguments and/or in a YAML configuration\nfile referenced from the --config command-line argument. For\ndetails, see the guide to\n\u003ca href=\"/ml-engine/docs/training-jobs\"\u003esubmitting a training job\u003c/a\u003e.",
+      "description": "Represents input parameters for a training job. When using the\ngcloud command to submit your training job, you can specify\nthe input parameters as command-line arguments and/or in a YAML configuration\nfile referenced from the --config command-line argument. For\ndetails, see the guide to\n\u003ca href=\"/ml-engine/docs/training-jobs\"\u003esubmitting a training job\u003c/a\u003e.\nNext ID: 22",
       "id": "GoogleCloudMlV1__TrainingInput",
       "properties": {
         "args": {

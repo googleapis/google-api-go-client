@@ -2395,7 +2395,7 @@
    "id": "script:v1",
    "name": "script",
    "version": "v1",
-   "title": "Google Apps Script API",
+   "title": "Apps Script API",
    "description": "An API for managing and executing Google Apps Script projects.",
    "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -2844,6 +2844,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/cloud-test-lab/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "texttospeech:v1beta1",
+   "name": "texttospeech",
+   "version": "v1beta1",
+   "title": "Cloud Text-to-Speech API",
+   "description": "Cloud Text-to-Speech API.",
+   "discoveryRestUrl": "https://texttospeech.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "http://cloud.google.com/speech/text-to-speech/",
    "preferred": true
   },
   {

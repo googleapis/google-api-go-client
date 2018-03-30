@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/430OMYxRvf9sCM_VRkUKZWSfR7U\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/eJTlhAFjCoKr6Jd4MPFAfd8JyPA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -1772,49 +1772,6 @@
         }
       }
     },
-    "entitlements": {
-      "methods": {
-        "list": {
-          "description": "Lists the user's current inapp item or subscription entitlements",
-          "httpMethod": "GET",
-          "id": "androidpublisher.entitlements.list",
-          "parameterOrder": [
-            "packageName"
-          ],
-          "parameters": {
-            "maxResults": {
-              "format": "uint32",
-              "location": "query",
-              "type": "integer"
-            },
-            "packageName": {
-              "description": "The package name of the application the inapp product was sold in (for example, 'com.some.thing').",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "productId": {
-              "description": "The product id of the inapp product (for example, 'sku1'). This can be used to restrict the result set.",
-              "location": "query",
-              "type": "string"
-            },
-            "startIndex": {
-              "format": "uint32",
-              "location": "query",
-              "type": "integer"
-            },
-            "token": {
-              "location": "query",
-              "type": "string"
-            }
-          },
-          "path": "{packageName}/entitlements",
-          "response": {
-            "$ref": "EntitlementsListResponse"
-          }
-        }
-      }
-    },
     "inappproducts": {
       "methods": {
         "delete": {
@@ -2411,7 +2368,7 @@
       }
     }
   },
-  "revision": "20180319",
+  "revision": "20180327",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2648,48 +2605,6 @@
           "description": "Screen width in pixels",
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "Entitlement": {
-      "description": "An Entitlement resource indicates a user's current entitlement to an inapp item or subscription.",
-      "id": "Entitlement",
-      "properties": {
-        "kind": {
-          "default": "androidpublisher#entitlement",
-          "description": "This kind represents an entitlement object in the androidpublisher service.",
-          "type": "string"
-        },
-        "productId": {
-          "description": "The SKU of the product.",
-          "type": "string"
-        },
-        "productType": {
-          "description": "The type of the inapp product. Possible values are:  \n- In-app item: \"inapp\" \n- Subscription: \"subs\"",
-          "type": "string"
-        },
-        "token": {
-          "description": "The token which can be verified using the subscriptions or products API.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "EntitlementsListResponse": {
-      "id": "EntitlementsListResponse",
-      "properties": {
-        "pageInfo": {
-          "$ref": "PageInfo"
-        },
-        "resources": {
-          "items": {
-            "$ref": "Entitlement"
-          },
-          "type": "array"
-        },
-        "tokenPagination": {
-          "$ref": "TokenPagination"
         }
       },
       "type": "object"

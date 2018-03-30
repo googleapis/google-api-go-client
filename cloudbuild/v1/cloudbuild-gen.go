@@ -137,7 +137,6 @@ type ArtifactObjects struct {
 	Location string `json:"location,omitempty"`
 
 	// Paths: Path globs used to match files in the build's workspace.
-	//
 	Paths []string `json:"paths,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
@@ -483,7 +482,6 @@ type BuildOptions struct {
 	// Possible values:
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
-	//   "MD5" - Use a md5 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 
 	// SubstitutionOption: Option to specify behavior when there is an error
@@ -856,7 +854,6 @@ type Hash struct {
 	// Possible values:
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
-	//   "MD5" - Use a md5 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.

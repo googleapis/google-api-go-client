@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180320",
+  "revision": "20180327",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1791,7 +1791,7 @@
           "type": "string"
         },
         "framework": {
-          "description": "The ML framework used to train this version of the model. If not specified,\ndefaults to `TENSORFLOW`",
+          "description": "Optional. The machine learning framework Cloud ML Engine uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\nand `XGBOOST`. If you do not specify a framework, Cloud ML Engine uses\nTensorFlow. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also set\nthe runtime version of the model to 1.4 or greater.",
           "enum": [
             "FRAMEWORK_UNSPECIFIED",
             "TENSORFLOW",

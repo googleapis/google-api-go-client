@@ -1707,9 +1707,15 @@ type GoogleCloudMlV1__Version struct {
 	// cancellation.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
-	// Framework: The ML framework used to train this version of the model.
-	// If not specified,
-	// defaults to `TENSORFLOW`
+	// Framework: Optional. The machine learning framework Cloud ML Engine
+	// uses to train
+	// this version of the model. Valid values are `TENSORFLOW`,
+	// `SCIKIT_LEARN`,
+	// and `XGBOOST`. If you do not specify a framework, Cloud ML Engine
+	// uses
+	// TensorFlow. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also
+	// set
+	// the runtime version of the model to 1.4 or greater.
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED"

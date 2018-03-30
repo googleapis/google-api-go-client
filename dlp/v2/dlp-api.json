@@ -118,7 +118,7 @@
     "infoTypes": {
       "methods": {
         "list": {
-          "description": "Returns sensitive information types DLP supports.",
+          "description": "Returns a list of the sensitive information types that the DLP API\nsupports. For more information, see [Listing supported predefined\ninfoTypes](/dlp/docs/listing-infotypes).",
           "flatPath": "v2/infoTypes",
           "httpMethod": "GET",
           "id": "dlp.infoTypes.list",
@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180320",
+  "revision": "20180328",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1366,6 +1366,7 @@
           "description": "The type of data stored in the bytes string. Default will be TEXT_UTF8.",
           "enum": [
             "BYTES_TYPE_UNSPECIFIED",
+            "IMAGE",
             "IMAGE_JPEG",
             "IMAGE_BMP",
             "IMAGE_PNG",
@@ -1373,6 +1374,7 @@
             "TEXT_UTF8"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -1516,6 +1518,23 @@
         },
         "fileSet": {
           "$ref": "GooglePrivacyDlpV2FileSet"
+        },
+        "fileTypes": {
+          "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied.",
+          "enumDescriptions": [
+            "Includes all files.",
+            "Includes all file extensions not covered by other types.",
+            "Included file extensions:\n  c, cc, cpp, cxx, c++, cs, css, dart, eml, go, h, hh, hpp, hxx, h++, hs,\n  html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json, ocaml, md, mkd,\n  markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw, rb, rbw, rs, rc,\n  scala, sh, sql, tex, txt, asc, text, brf, vcard, vcs, wml, xml, xsl, xsd,\n  yml, yaml."
+          ],
+          "items": {
+            "enum": [
+              "FILE_TYPE_UNSPECIFIED",
+              "BINARY_FILE",
+              "TEXT_FILE"
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2498,7 +2517,7 @@
           "type": "boolean"
         },
         "infoTypes": {
-          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or found in documentation.\nEmpty info_types runs all enabled detectors.",
+          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or found in documentation.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoType"
           },
@@ -3729,7 +3748,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2SurrogateType": {
-      "description": "Message for detecting output from deidentification transformations\nsuch as\n[`CryptoReplaceFfxFpeConfig`](/dlp/docs/reference/rest/v2/content/deidentify#CryptoReplaceFfxFpeConfig).\nThese types of transformations are\nthose that perform pseudonymization, thereby producing a \"surrogate\" as\noutput. This should be used in conjunction with a field on the\ntransformation such as `surrogate_info_type`. This custom info type does\nnot support the use of `detection_rules`.",
+      "description": "Message for detecting output from deidentification transformations\nsuch as\n[`CryptoReplaceFfxFpeConfig`](/dlp/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig).\nThese types of transformations are\nthose that perform pseudonymization, thereby producing a \"surrogate\" as\noutput. This should be used in conjunction with a field on the\ntransformation such as `surrogate_info_type`. This custom info type does\nnot support the use of `detection_rules`.",
       "id": "GooglePrivacyDlpV2SurrogateType",
       "properties": {},
       "type": "object"

@@ -1296,8 +1296,7 @@ type GoogleCloudVisionV1p1beta1ImageContext struct {
 	// [supported languages](/vision/docs/languages).
 	LanguageHints []string `json:"languageHints,omitempty"`
 
-	// LatLongRect: lat/long rectangle that specifies the location of the
-	// image.
+	// LatLongRect: Not used.
 	LatLongRect *GoogleCloudVisionV1p1beta1LatLongRect `json:"latLongRect,omitempty"`
 
 	// WebDetectionParams: Parameters for web detection.
@@ -2446,9 +2445,6 @@ type GoogleCloudVisionV1p2beta1AsyncAnnotateFileResponse struct {
 	// OutputConfig: The output location and metadata from
 	// AsyncAnnotateFileRequest.
 	OutputConfig *GoogleCloudVisionV1p2beta1OutputConfig `json:"outputConfig,omitempty"`
-
-	// Outputs: The full list of output files in GCS.
-	Outputs []*GoogleCloudVisionV1p2beta1GcsDestination `json:"outputs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OutputConfig") to
 	// unconditionally include in API requests. By default, fields with

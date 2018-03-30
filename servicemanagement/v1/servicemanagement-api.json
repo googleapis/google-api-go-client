@@ -18,7 +18,7 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://content-servicemanagement.googleapis.com/",
+  "baseUrl": "https://servicemanagement.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Service Management",
   "description": "Google Service Management allows service producers to publish their services on Google Cloud Platform so that they can be discovered and used by service consumers.",
@@ -887,8 +887,8 @@
       }
     }
   },
-  "revision": "20180317",
-  "rootUrl": "https://content-servicemanagement.googleapis.com/",
+  "revision": "20180323",
+  "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
       "description": "Generated advice about this change, used for providing more\ninformation about how a change will affect the existing service.",

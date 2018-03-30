@@ -570,6 +570,7 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//
 	// Possible values:
 	//   "BYTES_TYPE_UNSPECIFIED"
+	//   "IMAGE"
 	//   "IMAGE_JPEG"
 	//   "IMAGE_BMP"
 	//   "IMAGE_PNG"
@@ -833,6 +834,27 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	BytesLimitPerFile int64 `json:"bytesLimitPerFile,omitempty,string"`
 
 	FileSet *GooglePrivacyDlpV2FileSet `json:"fileSet,omitempty"`
+
+	// FileTypes: List of file type groups to include in the scan.
+	// If empty, all files are scanned and available data format
+	// processors
+	// are applied.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
+	//   "BINARY_FILE" - Includes all file extensions not covered by other
+	// types.
+	//   "TEXT_FILE" - Included file extensions:
+	//   c, cc, cpp, cxx, c++, cs, css, dart, eml, go, h, hh, hpp, hxx, h++,
+	// hs,
+	//   html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json, ocaml, md,
+	// mkd,
+	//   markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw, rb, rbw,
+	// rs, rc,
+	//   scala, sh, sql, tex, txt, asc, text, brf, vcard, vcs, wml, xml,
+	// xsl, xsd,
+	//   yml, yaml.
+	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BytesLimitPerFile")
 	// to unconditionally include in API requests. By default, fields with
@@ -2827,9 +2849,7 @@ type GooglePrivacyDlpV2InspectConfig struct {
 
 	// InfoTypes: Restricts what info_types to look for. The values must
 	// correspond to
-	// InfoType values returned by ListInfoTypes or found in
-	// documentation.
-	// Empty info_types runs all enabled detectors.
+	// InfoType values returned by ListInfoTypes or found in documentation.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
 	Limits *GooglePrivacyDlpV2FindingLimits `json:"limits,omitempty"`
@@ -5271,8 +5291,8 @@ func (s *GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 // deidentification transformations
 // such
 // as
-// [`CryptoReplaceFfxFpeConfig`](/dlp/docs/reference/rest/v2/content/d
-// eidentify#CryptoReplaceFfxFpeConfig).
+// [`CryptoReplaceFfxFpeConfig`](/dlp/docs/reference/rest/v2/organizat
+// ions.deidentifyTemplates#cryptoreplaceffxfpeconfig).
 // These types of transformations are
 // those that perform pseudonymization, thereby producing a "surrogate"
 // as
@@ -8121,7 +8141,11 @@ type InfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Returns sensitive information types DLP supports.
+// List: Returns a list of the sensitive information types that the DLP
+// API
+// supports. For more information, see [Listing supported
+// predefined
+// infoTypes](/dlp/docs/listing-infotypes).
 func (r *InfoTypesService) List() *InfoTypesListCall {
 	c := &InfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -8236,7 +8260,7 @@ func (c *InfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns sensitive information types DLP supports.",
+	//   "description": "Returns a list of the sensitive information types that the DLP API\nsupports. For more information, see [Listing supported predefined\ninfoTypes](/dlp/docs/listing-infotypes).",
 	//   "flatPath": "v2/infoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.infoTypes.list",

@@ -572,7 +572,7 @@
       }
     }
   },
-  "revision": "20180327",
+  "revision": "20180329",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -584,7 +584,7 @@
           "type": "string"
         },
         "paths": {
-          "description": "Path globs used to match files in the build's workspace.\n",
+          "description": "Path globs used to match files in the build's workspace.",
           "items": {
             "type": "string"
           },
@@ -812,14 +812,12 @@
           "description": "Requested hash for SourceProvenance.",
           "enumDescriptions": [
             "No hash requested.",
-            "Use a sha256 hash.",
-            "Use a md5 hash."
+            "Use a sha256 hash."
           ],
           "items": {
             "enum": [
               "NONE",
-              "SHA256",
-              "MD5"
+              "SHA256"
             ],
             "type": "string"
           },
@@ -1033,13 +1031,11 @@
           "description": "The type of hash that was performed.",
           "enum": [
             "NONE",
-            "SHA256",
-            "MD5"
+            "SHA256"
           ],
           "enumDescriptions": [
             "No hash requested.",
-            "Use a sha256 hash.",
-            "Use a md5 hash."
+            "Use a sha256 hash."
           ],
           "type": "string"
         },

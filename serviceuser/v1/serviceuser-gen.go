@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "serviceuser:v1"
 const apiName = "serviceuser"
 const apiVersion = "v1"
-const basePath = "https://content-serviceuser.googleapis.com/"
+const basePath = "https://serviceuser.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

@@ -15,7 +15,7 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://content-serviceuser.googleapis.com/",
+  "baseUrl": "https://serviceuser.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Service User",
   "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
@@ -256,8 +256,8 @@
       }
     }
   },
-  "revision": "20180316",
-  "rootUrl": "https://content-serviceuser.googleapis.com/",
+  "revision": "20180323",
+  "rootUrl": "https://serviceuser.googleapis.com/",
   "schemas": {
     "Api": {
       "description": "Api is a light-weight descriptor for an API Interface.\n\nInterfaces are also described as \"protocol buffer services\" in some contexts,\nsuch as by the \"service\" keyword in a .proto file, but they are different\nfrom API Services, which represent a concrete implementation of an interface\nas opposed to simply a description of methods and bindings. They are also\nsometimes simply referred to as \"APIs\" in other contexts, such as the name of\nthis message itself. See https://cloud.google.com/apis/design/glossary for\ndetailed terminology.",

@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "servicemanagement:v1"
 const apiName = "servicemanagement"
 const apiVersion = "v1"
-const basePath = "https://content-servicemanagement.googleapis.com/"
+const basePath = "https://servicemanagement.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

@@ -2642,26 +2642,25 @@ func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 }
 
 type QueryTimelineSample struct {
-	// ActiveInputs: Total number of active workers. This does not
-	// correspond directly to slot usage. This is the largest value observed
-	// since the last sample.
-	ActiveInputs int64 `json:"activeInputs,omitempty,string"`
+	// ActiveUnits: Total number of units currently being processed by
+	// workers. This does not correspond directly to slot usage. This is the
+	// largest value observed since the last sample.
+	ActiveUnits int64 `json:"activeUnits,omitempty,string"`
 
-	// CompletedInputs: Total parallel units of work completed by this
-	// query.
-	CompletedInputs int64 `json:"completedInputs,omitempty,string"`
+	// CompletedUnits: Total parallel units of work completed by this query.
+	CompletedUnits int64 `json:"completedUnits,omitempty,string"`
 
 	// ElapsedMs: Milliseconds elapsed since the start of query execution.
 	ElapsedMs int64 `json:"elapsedMs,omitempty,string"`
 
-	// PendingInputs: Total parallel units of work remaining for the active
+	// PendingUnits: Total parallel units of work remaining for the active
 	// stages.
-	PendingInputs int64 `json:"pendingInputs,omitempty,string"`
+	PendingUnits int64 `json:"pendingUnits,omitempty,string"`
 
 	// TotalSlotMs: Cumulative slot-ms consumed by the query.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "ActiveInputs") to
+	// ForceSendFields is a list of field names (e.g. "ActiveUnits") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2669,7 +2668,7 @@ type QueryTimelineSample struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ActiveInputs") to include
+	// NullFields is a list of field names (e.g. "ActiveUnits") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

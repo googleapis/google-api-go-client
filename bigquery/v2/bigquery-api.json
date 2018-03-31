@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/77sYFu0di9EzzwuBGmUFES4JWbE\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/heK7tYZ7nP8tv8caYkYlUBOTuOY\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20180311",
+  "revision": "20180325",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -2602,12 +2602,12 @@
     "QueryTimelineSample": {
       "id": "QueryTimelineSample",
       "properties": {
-        "activeInputs": {
-          "description": "Total number of active workers. This does not correspond directly to slot usage. This is the largest value observed since the last sample.",
+        "activeUnits": {
+          "description": "Total number of units currently being processed by workers. This does not correspond directly to slot usage. This is the largest value observed since the last sample.",
           "format": "int64",
           "type": "string"
         },
-        "completedInputs": {
+        "completedUnits": {
           "description": "Total parallel units of work completed by this query.",
           "format": "int64",
           "type": "string"
@@ -2617,7 +2617,7 @@
           "format": "int64",
           "type": "string"
         },
-        "pendingInputs": {
+        "pendingUnits": {
           "description": "Total parallel units of work remaining for the active stages.",
           "format": "int64",
           "type": "string"

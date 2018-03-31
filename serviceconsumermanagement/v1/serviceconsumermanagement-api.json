@@ -447,7 +447,7 @@
       }
     }
   },
-  "revision": "20180322",
+  "revision": "20180330",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -585,7 +585,7 @@
       "id": "AuthenticationRule",
       "properties": {
         "allowWithoutCredential": {
-          "description": "Whether to allow requests without a credential. The credential can be\nan OAuth token, Google cookies (first-party auth) or EndUserCreds.\n\nFor requests without credentials, if the service control environment is\nspecified, each incoming request **must** be associated with a service\nconsumer. This can be done by passing an API key that belongs to a consumer\nproject.",
+          "description": "If true, the service accepts API keys without any other credential.",
           "type": "boolean"
         },
         "customAuth": {
@@ -2004,7 +2004,7 @@
       "id": "ServiceAccountConfig",
       "properties": {
         "accountId": {
-          "description": "ID of the IAM service account to be created in tenant project.\nThe email format of the service account will be\n\"\u003caccount-id\u003e@\u003ctenant-project-id\u003e.iam.gserviceaccount.com\".\nThis account id has to be unique within tenant project and producers\nhave to guarantee it.",
+          "description": "ID of the IAM service account to be created in tenant project.\nThe email format of the service account will be\n\"\u003caccount-id\u003e@\u003ctenant-project-id\u003e.iam.gserviceaccount.com\".\nThis account id has to be unique within tenant project and producers\nhave to guarantee it. And it must be 6-30 characters long, and matches the\nregular expression `[a-z]([-a-z0-9]*[a-z0-9])`.",
           "type": "string"
         },
         "tenantProjectRoles": {

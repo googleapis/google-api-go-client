@@ -9,7 +9,7 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://content-tpu.googleapis.com/",
+  "baseUrl": "https://tpu.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "TPU",
   "description": "TPU API provides customers with access to Google TPU technology.",
@@ -120,7 +120,7 @@
         "locations": {
           "methods": {
             "get": {
-              "description": "Get information about a location.",
+              "description": "Gets information about a location.",
               "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}",
               "httpMethod": "GET",
               "id": "tpu.projects.locations.get",
@@ -697,8 +697,8 @@
       }
     }
   },
-  "revision": "20180303",
-  "rootUrl": "https://content-tpu.googleapis.com/",
+  "revision": "20180330",
+  "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
       "description": "A accelerator type that a Node can be configured with.",

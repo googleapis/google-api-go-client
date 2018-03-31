@@ -1156,7 +1156,7 @@
       }
     }
   },
-  "revision": "20180317",
+  "revision": "20180329",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1247,7 +1247,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Data source resource name.",
+          "description": "Output only. Data source resource name.",
           "type": "string"
         },
         "parameters": {
@@ -1576,7 +1576,7 @@
       "type": "object"
     },
     "TransferConfig": {
-      "description": "Represents a data transfer configuration. A transfer configuration\ncontains all metadata needed to perform a data transfer. For example,\n`destination_dataset_id` specifies where data should be stored.\nWhen a new transfer configuration is created, the specified\n`destination_dataset_id` is created when needed and shared with the\nappropriate data source service account.\nNext id: 21",
+      "description": "Represents a data transfer configuration. A transfer configuration\ncontains all metadata needed to perform a data transfer. For example,\n`destination_dataset_id` specifies where data should be stored.\nWhen a new transfer configuration is created, the specified\n`destination_dataset_id` is created when needed and shared with the\nappropriate data source service account.",
       "id": "TransferConfig",
       "properties": {
         "dataRefreshWindowDays": {
@@ -1691,7 +1691,7 @@
       "type": "object"
     },
     "TransferRun": {
-      "description": "Represents a data transfer run.\nNext id: 27",
+      "description": "Represents a data transfer run.",
       "id": "TransferRun",
       "properties": {
         "dataSourceId": {

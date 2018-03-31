@@ -321,7 +321,7 @@ type DataSource struct {
 	// schedule runs.
 	MinimumScheduleInterval string `json:"minimumScheduleInterval,omitempty"`
 
-	// Name: Data source resource name.
+	// Name: Output only. Data source resource name.
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Data source parameters.
@@ -972,7 +972,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // `destination_dataset_id` is created when needed and shared with
 // the
 // appropriate data source service account.
-// Next id: 21
 type TransferConfig struct {
 	// DataRefreshWindowDays: The number of days to look back to
 	// automatically refresh the data.
@@ -1137,7 +1136,6 @@ func (s *TransferMessage) MarshalJSON() ([]byte, error) {
 }
 
 // TransferRun: Represents a data transfer run.
-// Next id: 27
 type TransferRun struct {
 	// DataSourceId: Output only. Data source id.
 	DataSourceId string `json:"dataSourceId,omitempty"`

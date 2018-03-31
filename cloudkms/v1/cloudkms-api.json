@@ -855,7 +855,7 @@
       }
     }
   },
-  "revision": "20180316",
+  "revision": "20180329",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -863,7 +863,7 @@
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "AuditLogConfig"
           },

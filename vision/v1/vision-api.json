@@ -303,7 +303,7 @@
       }
     }
   },
-  "revision": "20180320",
+  "revision": "20180327",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateImageRequest": {
@@ -946,13 +946,6 @@
         "outputConfig": {
           "$ref": "GoogleCloudVisionV1p2beta1OutputConfig",
           "description": "The output location and metadata from AsyncAnnotateFileRequest."
-        },
-        "outputs": {
-          "description": "The full list of output files in GCS.",
-          "items": {
-            "$ref": "GoogleCloudVisionV1p2beta1GcsDestination"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -1066,7 +1059,7 @@
         },
         "latLongRect": {
           "$ref": "LatLongRect",
-          "description": "lat/long rectangle that specifies the location of the image."
+          "description": "Not used."
         },
         "webDetectionParams": {
           "$ref": "WebDetectionParams",

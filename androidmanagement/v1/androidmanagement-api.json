@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180320",
+  "revision": "20180326",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2472,7 +2472,7 @@
           "type": "boolean"
         },
         "usbMassStorageEnabled": {
-          "description": "Allows admins to toggle whether USB storge is enabled or disabled on user's devices. Next ID: 113",
+          "description": "Allows admins to toggle whether USB storge is enabled or disabled on user's devices. Next ID: 114",
           "type": "boolean"
         },
         "version": {

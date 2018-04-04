@@ -2075,7 +2075,7 @@ type BooleanCondition struct {
 	// Supported by data validation.
 	// Requires a single ConditionValue,
 	// and the value must be a valid range in A1 notation.
-	//   "ONE_OF_LIST" - The cell's value must in the list of condition
+	//   "ONE_OF_LIST" - The cell's value must be in the list of condition
 	// values.
 	// Supported by data validation.
 	// Supports any number of condition values,
@@ -2778,8 +2778,9 @@ type ChartSourceRange struct {
 	// The domain (if it exists) & all series must have the same number
 	// of source ranges. If using more than one source range, then the
 	// source
-	// range at a given offset must be contiguous across the domain and
-	// series.
+	// range at a given offset must be in order and contiguous across the
+	// domain
+	// and series.
 	//
 	// For example, these are valid configurations:
 	//
@@ -3221,7 +3222,7 @@ type ConditionValue struct {
 
 	// UserEnteredValue: A value the condition is based on.
 	// The value will be parsed as if the user typed into a cell.
-	// Formulas are supported (and must begin with an `=`).
+	// Formulas are supported (and must begin with an `=` or a '+').
 	UserEnteredValue string `json:"userEnteredValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "RelativeDate") to
@@ -5313,20 +5314,21 @@ func (s *HistogramChartSpec) UnmarshalJSON(data []byte) error {
 //     | Grand Total |            $29.12 |
 //     +-------------+-------------------+
 type HistogramRule struct {
-	// End: Optional. The maximum value at which items will be placed into
-	// buckets
+	// End: The maximum value at which items will be placed into buckets
 	// of constant size. Values above end will be lumped into a single
 	// bucket.
+	// This field is optional.
 	End float64 `json:"end,omitempty"`
 
-	// Interval: Required. The size of the buckets that will be created.
-	// Must be positive.
+	// Interval: The size of the buckets that will be created. Must be
+	// positive.
 	Interval float64 `json:"interval,omitempty"`
 
-	// Start: Optional. The minimum value at which items will be placed into
+	// Start: The minimum value at which items will be placed into
 	// buckets
 	// of constant size. Values below start will be lumped into a single
 	// bucket.
+	// This field is optional.
 	Start float64 `json:"start,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "End") to
@@ -8967,11 +8969,11 @@ type WaterfallChartCustomSubtotal struct {
 	// indices,
 	// but subtotals do not affect the indices of the data points.
 	// For
-	// example, if a series has 3 data points, their indices will always be
-	// 0,
-	// 1, and 2, regardless of how many subtotals exist on the series or
-	// what
-	// data points they are associated with.
+	// example, if a series has three data points, their indices will
+	// always
+	// be 0, 1, and 2, regardless of how many subtotals exist on the series
+	// or
+	// what data points they are associated with.
 	SubtotalIndex int64 `json:"subtotalIndex,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataIsSubtotal") to

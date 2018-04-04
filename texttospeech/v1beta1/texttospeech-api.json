@@ -12,7 +12,7 @@
   "baseUrl": "https://texttospeech.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Texttospeech",
-  "description": "Cloud Text-to-Speech API.",
+  "description": "Synthesizes natural-sounding speech by applying powerful neural network models.",
   "discoveryVersion": "v1",
   "documentationLink": "http://cloud.google.com/speech/text-to-speech/",
   "fullyEncodeReservedExpansion": true,
@@ -163,7 +163,7 @@
       }
     }
   },
-  "revision": "20180323",
+  "revision": "20180330",
   "rootUrl": "https://texttospeech.googleapis.com/",
   "schemas": {
     "AudioConfig": {

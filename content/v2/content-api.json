@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/7AU-xNxfu9N_gwoFbvlNkxATsnE\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/SHuwnKbM3hXa9oBr79fOifz9nl4\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -398,6 +398,12 @@
               "required": true,
               "type": "string"
             },
+            "destinations": {
+              "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
             "merchantId": {
               "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
               "format": "uint64",
@@ -422,6 +428,12 @@
             "merchantId"
           ],
           "parameters": {
+            "destinations": {
+              "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
             "maxResults": {
               "description": "The maximum number of account statuses to return in the response, used for paging.",
               "format": "uint32",
@@ -677,6 +689,43 @@
             }
           },
           "path": "{merchantId}/datafeeds/{datafeedId}",
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "fetchnow": {
+          "description": "Invokes a fetch for the datafeed in your Merchant Center account.",
+          "httpMethod": "POST",
+          "id": "content.datafeeds.fetchnow",
+          "parameterOrder": [
+            "merchantId",
+            "datafeedId"
+          ],
+          "parameters": {
+            "datafeedId": {
+              "description": "The ID of the datafeed to be fetched.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "dryRun": {
+              "description": "Flag to run the request in dry-run mode.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "merchantId": {
+              "description": "The ID of the account that manages the datafeed. This account cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/datafeeds/{datafeedId}/fetchNow",
+          "response": {
+            "$ref": "DatafeedsFetchNowResponse"
+          },
           "scopes": [
             "https://www.googleapis.com/auth/content"
           ]
@@ -2534,6 +2583,12 @@
             "productId"
           ],
           "parameters": {
+            "destinations": {
+              "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
             "includeAttributes": {
               "description": "Flag to include full product data in the result of this get request. The default value is false.",
               "location": "query",
@@ -2569,6 +2624,12 @@
             "merchantId"
           ],
           "parameters": {
+            "destinations": {
+              "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
             "includeAttributes": {
               "description": "Flag to include full product data in the results of the list request. The default value is false.",
               "location": "query",
@@ -2830,7 +2891,7 @@
       }
     }
   },
-  "revision": "20180316",
+  "revision": "20180403",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -2992,6 +3053,10 @@
           "description": "Country for which this issue is reported.",
           "type": "string"
         },
+        "destination": {
+          "description": "The destination the issue applies to.",
+          "type": "string"
+        },
         "detail": {
           "description": "Additional details about the issue.",
           "type": "string"
@@ -3016,6 +3081,10 @@
       "properties": {
         "country": {
           "description": "Country for which this issue is reported.",
+          "type": "string"
+        },
+        "destination": {
+          "description": "The destination the issue applies to.",
           "type": "string"
         },
         "detail": {
@@ -3347,6 +3416,13 @@
           "description": "An entry ID, unique within the batch request.",
           "format": "uint32",
           "type": "integer"
+        },
+        "destinations": {
+          "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "merchantId": {
           "description": "The ID of the managing account.",
@@ -3933,6 +4009,17 @@
         "errors": {
           "$ref": "Errors",
           "description": "A list of errors defined if and only if the request failed."
+        }
+      },
+      "type": "object"
+    },
+    "DatafeedsFetchNowResponse": {
+      "id": "DatafeedsFetchNowResponse",
+      "properties": {
+        "kind": {
+          "default": "content#datafeedsFetchNowResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#datafeedsFetchNowResponse\".",
+          "type": "string"
         }
       },
       "type": "object"
@@ -6648,7 +6735,7 @@
           "description": "The store information to submit. Set this only if the method is insert."
         },
         "storeCode": {
-          "description": "The store code. Required only to get/submit store information.",
+          "description": "The store code. Set this only if the method is delete or get.",
           "type": "string"
         },
         "targetMerchantId": {
@@ -7854,6 +7941,10 @@
     "ProductStatusDataQualityIssue": {
       "id": "ProductStatusDataQualityIssue",
       "properties": {
+        "destination": {
+          "description": "The destination the issue applies to.",
+          "type": "string"
+        },
         "detail": {
           "description": "A more detailed error string.",
           "type": "string"
@@ -8125,6 +8216,13 @@
           "description": "An entry ID, unique within the batch request.",
           "format": "uint32",
           "type": "integer"
+        },
+        "destinations": {
+          "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "includeAttributes": {
           "type": "boolean"

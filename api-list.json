@@ -2380,7 +2380,7 @@
    "id": "safebrowsing:v4",
    "name": "safebrowsing",
    "version": "v4",
-   "title": "Google Safe Browsing API",
+   "title": "Safe Browsing API",
    "description": "Enables client applications to check web resources (most commonly URLs) against Google-generated lists of unsafe web resources.",
    "discoveryRestUrl": "https://safebrowsing.googleapis.com/$discovery/rest?version=v4",
    "icons": {
@@ -2836,7 +2836,7 @@
    "id": "testing:v1",
    "name": "testing",
    "version": "v1",
-   "title": "Google Cloud Testing API",
+   "title": "Cloud Testing API",
    "description": "Allows developers to run automated tests for their mobile applications on Google infrastructure.",
    "discoveryRestUrl": "https://testing.googleapis.com/$discovery/rest?version=v1",
    "icons": {

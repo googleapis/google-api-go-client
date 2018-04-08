@@ -3317,6 +3317,14 @@ type Type struct {
 	//   "TIMESTAMP" - Encoded as `string` in RFC 3339 timestamp format. The
 	// time zone
 	// must be present, and must be "Z".
+	//
+	// If the schema has the column option
+	// `allow_commit_timestamp=true`, the placeholder
+	// string
+	// "spanner.commit_timestamp()" can be used to instruct the system
+	// to insert the commit timestamp associated with the
+	// transaction
+	// commit.
 	//   "DATE" - Encoded as `string` in RFC 3339 date format.
 	//   "STRING" - Encoded as `string`.
 	//   "BYTES" - Encoded as a base64-encoded `string`, as described in RFC

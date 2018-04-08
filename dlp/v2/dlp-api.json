@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180328",
+  "revision": "20180404",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -5055,7 +5055,7 @@
           "type": "integer"
         },
         "month": {
-          "description": "Month of year. Must be from 1 to 12.",
+          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a date without a\nmonth.",
           "format": "int32",
           "type": "integer"
         },

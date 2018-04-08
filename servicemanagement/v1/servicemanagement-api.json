@@ -887,7 +887,7 @@
       }
     }
   },
-  "revision": "20180323",
+  "revision": "20180330",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -958,7 +958,7 @@
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "AuditLogConfig"
           },
@@ -1069,7 +1069,7 @@
       "id": "AuthenticationRule",
       "properties": {
         "allowWithoutCredential": {
-          "description": "Whether to allow requests without a credential. The credential can be\nan OAuth token, Google cookies (first-party auth) or EndUserCreds.\n\nFor requests without credentials, if the service control environment is\nspecified, each incoming request **must** be associated with a service\nconsumer. This can be done by passing an API key that belongs to a consumer\nproject.",
+          "description": "If true, the service accepts API keys without any other credential.",
           "type": "boolean"
         },
         "customAuth": {

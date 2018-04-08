@@ -1340,7 +1340,7 @@
       }
     }
   },
-  "revision": "20180228",
+  "revision": "20180327",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -2522,7 +2522,7 @@
             "Encoded as JSON `true` or `false`.",
             "Encoded as `string`, in decimal format.",
             "Encoded as `number`, or the strings `\"NaN\"`, `\"Infinity\"`, or\n`\"-Infinity\"`.",
-            "Encoded as `string` in RFC 3339 timestamp format. The time zone\nmust be present, and must be `\"Z\"`.",
+            "Encoded as `string` in RFC 3339 timestamp format. The time zone\nmust be present, and must be `\"Z\"`.\n\nIf the schema has the column option\n`allow_commit_timestamp=true`, the placeholder string\n`\"spanner.commit_timestamp()\"` can be used to instruct the system\nto insert the commit timestamp associated with the transaction\ncommit.",
             "Encoded as `string` in RFC 3339 date format.",
             "Encoded as `string`.",
             "Encoded as a base64-encoded `string`, as described in RFC 4648,\nsection 4.",

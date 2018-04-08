@@ -331,7 +331,6 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
-	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit
@@ -642,18 +641,8 @@ func (s *Authentication) MarshalJSON() ([]byte, error) {
 // will be
 // ignored.
 type AuthenticationRule struct {
-	// AllowWithoutCredential: Whether to allow requests without a
-	// credential. The credential can be
-	// an OAuth token, Google cookies (first-party auth) or
-	// EndUserCreds.
-	//
-	// For requests without credentials, if the service control environment
-	// is
-	// specified, each incoming request **must** be associated with a
-	// service
-	// consumer. This can be done by passing an API key that belongs to a
-	// consumer
-	// project.
+	// AllowWithoutCredential: If true, the service accepts API keys without
+	// any other credential.
 	AllowWithoutCredential bool `json:"allowWithoutCredential,omitempty"`
 
 	// CustomAuth: Configuration for custom authentication.

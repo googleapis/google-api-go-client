@@ -1155,7 +1155,7 @@
       }
     }
   },
-  "revision": "20180315",
+  "revision": "20180402",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -1174,7 +1174,7 @@
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "AuditLogConfig"
           },

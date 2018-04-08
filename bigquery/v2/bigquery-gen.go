@@ -448,7 +448,7 @@ type Dataset struct {
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
 	// Location: The geographic location where the dataset should reside.
-	// Possible values include EU and US. The default value is US.
+	// The default value is US.
 	Location string `json:"location,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource

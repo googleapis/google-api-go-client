@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/daIK3TPc7g4vSYPDdeU4jy_NNhw\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/JTBN9gpDAJnkVMHM9myVeE9iZN0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -17875,7 +17875,7 @@
       }
     }
   },
-  "revision": "20180312",
+  "revision": "20180323",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -31441,6 +31441,10 @@
         "config": {
           "$ref": "SecurityPolicyRuleMatcherConfig",
           "description": "The configuration options available when specifying versioned_expr. This field must be specified if versioned_expr is specified and cannot be specified if versioned_expr is not specified."
+        },
+        "expr": {
+          "$ref": "Expr",
+          "description": "User defined CEVAL expression. A CEVAL expression is used to specify match criteria such as origin.ip, source.region_code and contents in the request header."
         },
         "srcIpRanges": {
           "description": "CIDR IP address range.",

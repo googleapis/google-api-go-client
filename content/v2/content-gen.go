@@ -449,6 +449,9 @@ type AccountStatusAccountLevelIssue struct {
 	// Country: Country for which this issue is reported.
 	Country string `json:"country,omitempty"`
 
+	// Destination: The destination the issue applies to.
+	Destination string `json:"destination,omitempty"`
+
 	// Detail: Additional details about the issue.
 	Detail string `json:"detail,omitempty"`
 
@@ -487,6 +490,9 @@ func (s *AccountStatusAccountLevelIssue) MarshalJSON() ([]byte, error) {
 type AccountStatusDataQualityIssue struct {
 	// Country: Country for which this issue is reported.
 	Country string `json:"country,omitempty"`
+
+	// Destination: The destination the issue applies to.
+	Destination string `json:"destination,omitempty"`
 
 	// Detail: A more detailed description of the issue.
 	Detail string `json:"detail,omitempty"`
@@ -1035,6 +1041,10 @@ type AccountstatusesCustomBatchRequestEntry struct {
 
 	// BatchId: An entry ID, unique within the batch request.
 	BatchId int64 `json:"batchId,omitempty"`
+
+	// Destinations: If set, only issues for the specified destinations are
+	// returned, otherwise only issues for the Shopping destination.
+	Destinations []string `json:"destinations,omitempty"`
 
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
@@ -1932,6 +1942,38 @@ type DatafeedsCustomBatchResponseEntry struct {
 
 func (s *DatafeedsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod DatafeedsCustomBatchResponseEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DatafeedsFetchNowResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#datafeedsFetchNowResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatafeedsFetchNowResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DatafeedsFetchNowResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6330,8 +6372,8 @@ type PosCustomBatchRequestEntry struct {
 	// is insert.
 	Store *PosStore `json:"store,omitempty"`
 
-	// StoreCode: The store code. Required only to get/submit store
-	// information.
+	// StoreCode: The store code. Set this only if the method is delete or
+	// get.
 	StoreCode string `json:"storeCode,omitempty"`
 
 	// TargetMerchantId: The ID of the account for which to get/submit data.
@@ -7620,6 +7662,9 @@ func (s *ProductStatus) MarshalJSON() ([]byte, error) {
 }
 
 type ProductStatusDataQualityIssue struct {
+	// Destination: The destination the issue applies to.
+	Destination string `json:"destination,omitempty"`
+
 	// Detail: A more detailed error string.
 	Detail string `json:"detail,omitempty"`
 
@@ -7645,7 +7690,7 @@ type ProductStatusDataQualityIssue struct {
 	// ValueProvided: The value the attribute had at time of evaluation.
 	ValueProvided string `json:"valueProvided,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Detail") to
+	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -7653,10 +7698,10 @@ type ProductStatusDataQualityIssue struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Detail") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Destination") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -8096,6 +8141,10 @@ func (s *ProductstatusesCustomBatchRequest) MarshalJSON() ([]byte, error) {
 type ProductstatusesCustomBatchRequestEntry struct {
 	// BatchId: An entry ID, unique within the batch request.
 	BatchId int64 `json:"batchId,omitempty"`
+
+	// Destinations: If set, only issues for the specified destinations are
+	// returned, otherwise only issues for the Shopping destination.
+	Destinations []string `json:"destinations,omitempty"`
 
 	IncludeAttributes bool `json:"includeAttributes,omitempty"`
 
@@ -10495,6 +10544,14 @@ func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *Accou
 	return c
 }
 
+// Destinations sets the optional parameter "destinations": If set, only
+// issues for the specified destinations are returned, otherwise only
+// issues for the Shopping destination.
+func (c *AccountstatusesGetCall) Destinations(destinations ...string) *AccountstatusesGetCall {
+	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -10605,6 +10662,12 @@ func (c *AccountstatusesGetCall) Do(opts ...googleapi.CallOption) (*AccountStatu
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "destinations": {
+	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
 	//       "format": "uint64",
@@ -10640,6 +10703,14 @@ type AccountstatusesListCall struct {
 func (r *AccountstatusesService) List(merchantId uint64) *AccountstatusesListCall {
 	c := &AccountstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
+	return c
+}
+
+// Destinations sets the optional parameter "destinations": If set, only
+// issues for the specified destinations are returned, otherwise only
+// issues for the Shopping destination.
+func (c *AccountstatusesListCall) Destinations(destinations ...string) *AccountstatusesListCall {
+	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
 	return c
 }
 
@@ -10759,6 +10830,12 @@ func (c *AccountstatusesListCall) Do(opts ...googleapi.CallOption) (*Accountstat
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "destinations": {
+	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "maxResults": {
 	//       "description": "The maximum number of account statuses to return in the response, used for paging.",
 	//       "format": "uint32",
@@ -11834,6 +11911,154 @@ func (c *DatafeedsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     }
 	//   },
 	//   "path": "{merchantId}/datafeeds/{datafeedId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.datafeeds.fetchnow":
+
+type DatafeedsFetchnowCall struct {
+	s          *APIService
+	merchantId uint64
+	datafeedId uint64
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Fetchnow: Invokes a fetch for the datafeed in your Merchant Center
+// account.
+func (r *DatafeedsService) Fetchnow(merchantId uint64, datafeedId uint64) *DatafeedsFetchnowCall {
+	c := &DatafeedsFetchnowCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.datafeedId = datafeedId
+	return c
+}
+
+// DryRun sets the optional parameter "dryRun": Flag to run the request
+// in dry-run mode.
+func (c *DatafeedsFetchnowCall) DryRun(dryRun bool) *DatafeedsFetchnowCall {
+	c.urlParams_.Set("dryRun", fmt.Sprint(dryRun))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatafeedsFetchnowCall) Fields(s ...googleapi.Field) *DatafeedsFetchnowCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DatafeedsFetchnowCall) Context(ctx context.Context) *DatafeedsFetchnowCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatafeedsFetchnowCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DatafeedsFetchnowCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/datafeeds/{datafeedId}/fetchNow")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"datafeedId": strconv.FormatUint(c.datafeedId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.datafeeds.fetchnow" call.
+// Exactly one of *DatafeedsFetchNowResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatafeedsFetchNowResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DatafeedsFetchnowCall) Do(opts ...googleapi.CallOption) (*DatafeedsFetchNowResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &DatafeedsFetchNowResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Invokes a fetch for the datafeed in your Merchant Center account.",
+	//   "httpMethod": "POST",
+	//   "id": "content.datafeeds.fetchnow",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "datafeedId"
+	//   ],
+	//   "parameters": {
+	//     "datafeedId": {
+	//       "description": "The ID of the datafeed to be fetched.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "dryRun": {
+	//       "description": "Flag to run the request in dry-run mode.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "merchantId": {
+	//       "description": "The ID of the account that manages the datafeed. This account cannot be a multi-client account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/datafeeds/{datafeedId}/fetchNow",
+	//   "response": {
+	//     "$ref": "DatafeedsFetchNowResponse"
+	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"
 	//   ]
@@ -19819,6 +20044,14 @@ func (r *ProductstatusesService) Get(merchantId uint64, productId string) *Produ
 	return c
 }
 
+// Destinations sets the optional parameter "destinations": If set, only
+// issues for the specified destinations are returned, otherwise only
+// issues for the Shopping destination.
+func (c *ProductstatusesGetCall) Destinations(destinations ...string) *ProductstatusesGetCall {
+	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
+	return c
+}
+
 // IncludeAttributes sets the optional parameter "includeAttributes":
 // Flag to include full product data in the result of this get request.
 // The default value is false.
@@ -19930,6 +20163,12 @@ func (c *ProductstatusesGetCall) Do(opts ...googleapi.CallOption) (*ProductStatu
 	//     "productId"
 	//   ],
 	//   "parameters": {
+	//     "destinations": {
+	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "includeAttributes": {
 	//       "description": "Flag to include full product data in the result of this get request. The default value is false.",
 	//       "location": "query",
@@ -19976,6 +20215,14 @@ type ProductstatusesListCall struct {
 func (r *ProductstatusesService) List(merchantId uint64) *ProductstatusesListCall {
 	c := &ProductstatusesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
+	return c
+}
+
+// Destinations sets the optional parameter "destinations": If set, only
+// issues for the specified destinations are returned, otherwise only
+// issues for the Shopping destination.
+func (c *ProductstatusesListCall) Destinations(destinations ...string) *ProductstatusesListCall {
+	c.urlParams_.SetMulti("destinations", append([]string{}, destinations...))
 	return c
 }
 
@@ -20112,6 +20359,12 @@ func (c *ProductstatusesListCall) Do(opts ...googleapi.CallOption) (*Productstat
 	//     "merchantId"
 	//   ],
 	//   "parameters": {
+	//     "destinations": {
+	//       "description": "If set, only issues for the specified destinations are returned, otherwise only issues for the Shopping destination.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
 	//     "includeAttributes": {
 	//       "description": "Flag to include full product data in the results of the list request. The default value is false.",
 	//       "location": "query",

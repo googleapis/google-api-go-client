@@ -139,6 +139,11 @@ type ArtifactObjects struct {
 	// Paths: Path globs used to match files in the build's workspace.
 	Paths []string `json:"paths,omitempty"`
 
+	// Timing: Stores timing information for pushing all artifact
+	// objects.
+	// @OutputOnly
+	Timing *TimeSpan `json:"timing,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Location") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -158,6 +163,42 @@ type ArtifactObjects struct {
 
 func (s *ArtifactObjects) MarshalJSON() ([]byte, error) {
 	type NoMethod ArtifactObjects
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ArtifactResult: An artifact that was uploaded during a build. This
+// is a single record in the artifact manifest JSON file.
+type ArtifactResult struct {
+	// FileHash: The file hash of the artifact.
+	FileHash []*FileHashes `json:"fileHash,omitempty"`
+
+	// Location: The path of an artifact in a Google Cloud Storage bucket,
+	// with the
+	// generation number. For
+	// example,
+	// `gs://mybucket/path/to/output.jar#generation`.
+	Location string `json:"location,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FileHash") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileHash") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ArtifactResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ArtifactResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -482,6 +523,7 @@ type BuildOptions struct {
 	// Possible values:
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
+	//   "MD5" - Use a md5 hash.
 	SourceProvenanceHash []string `json:"sourceProvenanceHash,omitempty"`
 
 	// SubstitutionOption: Option to specify behavior when there is an error
@@ -854,6 +896,7 @@ type Hash struct {
 	// Possible values:
 	//   "NONE" - No hash requested.
 	//   "SHA256" - Use a sha256 hash.
+	//   "MD5" - Use a md5 hash.
 	Type string `json:"type,omitempty"`
 
 	// Value: The hash value.

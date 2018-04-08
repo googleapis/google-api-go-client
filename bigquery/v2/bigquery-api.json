@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/heK7tYZ7nP8tv8caYkYlUBOTuOY\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/iDfyNvZh0dQsh6eOzkOY2to1cnQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20180325",
+  "revision": "20180401",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -1198,7 +1198,7 @@
           "type": "string"
         },
         "location": {
-          "description": "The geographic location where the dataset should reside. Possible values include EU and US. The default value is US.",
+          "description": "The geographic location where the dataset should reside. The default value is US.",
           "type": "string"
         },
         "selfLink": {

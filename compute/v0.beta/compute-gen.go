@@ -20527,6 +20527,11 @@ type SecurityPolicyRuleMatcher struct {
 	// specified and cannot be specified if versioned_expr is not specified.
 	Config *SecurityPolicyRuleMatcherConfig `json:"config,omitempty"`
 
+	// Expr: User defined CEVAL expression. A CEVAL expression is used to
+	// specify match criteria such as origin.ip, source.region_code and
+	// contents in the request header.
+	Expr *Expr `json:"expr,omitempty"`
+
 	// SrcIpRanges: CIDR IP address range.
 	SrcIpRanges []string `json:"srcIpRanges,omitempty"`
 

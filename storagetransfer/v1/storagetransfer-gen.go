@@ -145,8 +145,10 @@ func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AwsS3Data: An AwsS3Data can be a data source, but not a data sink.
-// In an AwsS3Data, an object's name is the S3 object's key name.
+// AwsS3Data: An AwsS3Data resource can be a data source, but not a data
+// sink.
+// In an AwsS3Data resource, an object's name is the S3 object's key
+// name.
 type AwsS3Data struct {
 	// AwsAccessKey: AWS access key used to sign the API requests to the AWS
 	// S3 bucket.
@@ -478,11 +480,12 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GcsData: In a GcsData, an object's name is the Google Cloud Storage
-// object's name and
-// its `lastModificationTime` refers to the object's updated time, which
-// changes
-// when the content or the metadata of the object is updated.
+// GcsData: In a GcsData resource, an object's name is the Google Cloud
+// Storage object's
+// name and its `lastModificationTime` refers to the object's updated
+// time,
+// which changes when the content or the metadata of the object is
+// updated.
 type GcsData struct {
 	// BucketName: Google Cloud Storage bucket name (see
 	// [Bucket Name
@@ -546,11 +549,11 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// HttpData: An HttpData specifies a list of objects on the web to be
-// transferred over
-// HTTP.  The information of the objects to be transferred is contained
-// in a
-// file referenced by a URL. The first line in the file must
+// HttpData: An HttpData resource specifies a list of objects on the web
+// to be transferred
+// over HTTP.  The information of the objects to be transferred is
+// contained in
+// a file referenced by a URL. The first line in the file must
 // be
 // "TsvHttpData-1.0", which specifies the format of the file.
 // Subsequent lines
@@ -565,16 +568,17 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // * MD5 - The base64-encoded MD5 hash of the object.
 //
 // For an example of a valid TSV file, see
-// [Transferring data from
+// [Transferring data
+// from
 // URLs](https://cloud.google.com/storage/transfer/create-url-list).
 //
-// Whe
-// n transferring data based on a URL list, keep the following in
+//
+// When transferring data based on a URL list, keep the following in
 // mind:
 //
-// * When an object located at `http(s)://hostname:port/<URL-path>` is
-// transferred
-// to a data sink, the name of the object at the data sink
+// * When an object located at `http(s)://hostname:port/<URL-path>`
+// is
+// transferred to a data sink, the name of the object at the data sink
 // is
 // `<hostname>/<URL-path>`.
 //

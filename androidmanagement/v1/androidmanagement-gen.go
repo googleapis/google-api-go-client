@@ -968,6 +968,11 @@ type Enterprise struct {
 	// required if Pub/Sub notifications are enabled.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
+	// TermsAndConditions: Terms and conditions that must be accepted when
+	// provisioning a device for this enterprise. A page of terms is
+	// generated for each value in this list.
+	TermsAndConditions []*TermsAndConditions `json:"termsAndConditions,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2704,6 +2709,39 @@ type SystemUpdate struct {
 
 func (s *SystemUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod SystemUpdate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TermsAndConditions: A terms and conditions page to be accepted during
+// provisioning.
+type TermsAndConditions struct {
+	// Content: A well-formatted HTML string. It will be parsed on the
+	// client with android.text.Html#fromHtml.
+	Content *UserFacingMessage `json:"content,omitempty"`
+
+	// Header: A short header which appears above the HTML content.
+	Header *UserFacingMessage `json:"header,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TermsAndConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod TermsAndConditions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

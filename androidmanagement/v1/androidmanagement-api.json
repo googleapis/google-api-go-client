@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180326",
+  "revision": "20180402",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1399,6 +1399,13 @@
         "pubsubTopic": {
           "description": "The topic that Cloud Pub/Sub notifications are published to, in the form projects/{project}/topics/{topic}. This field is only required if Pub/Sub notifications are enabled.",
           "type": "string"
+        },
+        "termsAndConditions": {
+          "description": "Terms and conditions that must be accepted when provisioning a device for this enterprise. A page of terms is generated for each value in this list.",
+          "items": {
+            "$ref": "TermsAndConditions"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2714,6 +2721,21 @@
             "Postpone automatic install up to a maximum of 30 days."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TermsAndConditions": {
+      "description": "A terms and conditions page to be accepted during provisioning.",
+      "id": "TermsAndConditions",
+      "properties": {
+        "content": {
+          "$ref": "UserFacingMessage",
+          "description": "A well-formatted HTML string. It will be parsed on the client with android.text.Html#fromHtml."
+        },
+        "header": {
+          "$ref": "UserFacingMessage",
+          "description": "A short header which appears above the HTML content."
         }
       },
       "type": "object"

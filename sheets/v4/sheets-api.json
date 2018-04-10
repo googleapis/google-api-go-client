@@ -819,7 +819,7 @@
       }
     }
   },
-  "revision": "20180329",
+  "revision": "20180405",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -1175,6 +1175,10 @@
       "description": "A single series of data in a chart.\nFor example, if charting stock prices over time, multiple series may exist,\none for the \"Open Price\", \"High Price\", \"Low Price\" and \"Close Price\".",
       "id": "BasicChartSeries",
       "properties": {
+        "color": {
+          "$ref": "Color",
+          "description": "The color for elements (i.e. bars, lines, points) associated with this\nseries.  If empty, a default color will be used."
+        },
         "lineStyle": {
           "$ref": "LineStyle",
           "description": "The line style of this series. Valid only if the\nchartType is AREA,\nLINE, or SCATTER.\nCOMBO charts are also supported if the\nseries chart type is\nAREA or LINE."

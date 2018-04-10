@@ -1677,7 +1677,7 @@
    "id": "iam:v1",
    "name": "iam",
    "version": "v1",
-   "title": "Google Identity and Access Management (IAM) API",
+   "title": "Identity and Access Management (IAM) API",
    "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
    "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -2455,7 +2455,7 @@
    "id": "servicemanagement:v1",
    "name": "servicemanagement",
    "version": "v1",
-   "title": "Google Service Management API",
+   "title": "Service Management API",
    "description": "Google Service Management allows service producers to publish their services on Google Cloud Platform so that they can be discovered and used by service consumers.",
    "discoveryRestUrl": "https://servicemanagement.googleapis.com/$discovery/rest?version=v1",
    "icons": {

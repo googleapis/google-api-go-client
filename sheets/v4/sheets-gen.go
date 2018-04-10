@@ -941,6 +941,11 @@ func (s *BasicChartDomain) MarshalJSON() ([]byte, error) {
 // one for the "Open Price", "High Price", "Low Price" and "Close
 // Price".
 type BasicChartSeries struct {
+	// Color: The color for elements (i.e. bars, lines, points) associated
+	// with this
+	// series.  If empty, a default color will be used.
+	Color *Color `json:"color,omitempty"`
+
 	// LineStyle: The line style of this series. Valid only if the
 	// chartType is AREA,
 	// LINE, or SCATTER.
@@ -1004,7 +1009,7 @@ type BasicChartSeries struct {
 	// chart</a>.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LineStyle") to
+	// ForceSendFields is a list of field names (e.g. "Color") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1012,8 +1017,8 @@ type BasicChartSeries struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LineStyle") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Color") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

@@ -741,7 +741,7 @@
       }
     }
   },
-  "revision": "20180403",
+  "revision": "20180327",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1801,7 +1801,7 @@
       "properties": {
         "arrayValue": {
           "$ref": "ArrayValue",
-          "description": "An array value.\n\nCannot directly contain another array value, though can contain an\nmap which contains another array."
+          "description": "An array value.\n\nCannot contain another array value."
         },
         "booleanValue": {
           "description": "A boolean value.",

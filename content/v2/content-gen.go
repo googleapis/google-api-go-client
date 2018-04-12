@@ -3688,15 +3688,15 @@ type OrderCustomer struct {
 	// email, but a proxy email.
 	Email string `json:"email,omitempty"`
 
-	// ExplicitMarketingPreference: If set, this indicates the user
-	// explicitly chose to opt in or out of providing marketing rights to
-	// the merchant. If unset, this indicates the user has already made this
-	// choice in a previous purchase, and was thus not shown the marketing
-	// right opt in/out checkbox during the checkout flow.
+	// ExplicitMarketingPreference: Deprecated. Please use
+	// marketingRightsInfo instead.
 	ExplicitMarketingPreference bool `json:"explicitMarketingPreference,omitempty"`
 
 	// FullName: Full name of the customer.
 	FullName string `json:"fullName,omitempty"`
+
+	// MarketingRightsInfo: Customer's marketing preferences.
+	MarketingRightsInfo *OrderCustomerMarketingRightsInfo `json:"marketingRightsInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
@@ -3717,6 +3717,46 @@ type OrderCustomer struct {
 
 func (s *OrderCustomer) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderCustomer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrderCustomerMarketingRightsInfo struct {
+	// ExplicitMarketingPreference: Last known user selection regarding
+	// marketing preferences. In certain cases this selection might not be
+	// known, so this field would be empty.
+	ExplicitMarketingPreference string `json:"explicitMarketingPreference,omitempty"`
+
+	// LastUpdatedTimestamp: Timestamp when last time marketing preference
+	// was updated. Could be empty, if user wasn't offered a selection yet.
+	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
+
+	// MarketingEmailAddress: Email address that can be used for marketing
+	// purposes. This field is only filled when explicitMarketingPreference
+	// is equal to 'granted'.
+	MarketingEmailAddress string `json:"marketingEmailAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExplicitMarketingPreference") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExplicitMarketingPreference") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrderCustomerMarketingRightsInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderCustomerMarketingRightsInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7760,8 +7800,18 @@ type ProductStatusItemLevelIssue struct {
 	// Code: The error code of the issue.
 	Code string `json:"code,omitempty"`
 
+	// Description: A short issue description in English.
+	Description string `json:"description,omitempty"`
+
 	// Destination: The destination the issue applies to.
 	Destination string `json:"destination,omitempty"`
+
+	// Detail: A detailed issue description in English.
+	Detail string `json:"detail,omitempty"`
+
+	// Documentation: The URL of a web page to help with resolving this
+	// issue.
+	Documentation string `json:"documentation,omitempty"`
 
 	// Resolution: Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
@@ -8386,6 +8436,9 @@ type Service struct {
 	// delivery of the product. Required.
 	DeliveryTime *DeliveryTime `json:"deliveryTime,omitempty"`
 
+	// Eligibility: Eligibility for this service.
+	Eligibility string `json:"eligibility,omitempty"`
+
 	// MinimumOrderValue: Minimum order value for this service. If set,
 	// indicates that customers will have to spend at least this amount. All
 	// prices within a service must have the same currency.
@@ -8819,15 +8872,15 @@ type TestOrderCustomer struct {
 	// Email: Email address of the customer.
 	Email string `json:"email,omitempty"`
 
-	// ExplicitMarketingPreference: If set, this indicates the user
-	// explicitly chose to opt in or out of providing marketing rights to
-	// the merchant. If unset, this indicates the user has already made this
-	// choice in a previous purchase, and was thus not shown the marketing
-	// right opt in/out checkbox during the checkout flow. Optional.
+	// ExplicitMarketingPreference: Deprecated. Please use
+	// marketingRightsInfo instead.
 	ExplicitMarketingPreference bool `json:"explicitMarketingPreference,omitempty"`
 
 	// FullName: Full name of the customer.
 	FullName string `json:"fullName,omitempty"`
+
+	// MarketingRightsInfo: Customer's marketing preferences.
+	MarketingRightsInfo *TestOrderCustomerMarketingRightsInfo `json:"marketingRightsInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
 	// unconditionally include in API requests. By default, fields with
@@ -8848,6 +8901,41 @@ type TestOrderCustomer struct {
 
 func (s *TestOrderCustomer) MarshalJSON() ([]byte, error) {
 	type NoMethod TestOrderCustomer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TestOrderCustomerMarketingRightsInfo struct {
+	// ExplicitMarketingPreference: Last know user use selection regards
+	// marketing preferences. In certain cases selection might not be known,
+	// so this field would be empty.
+	ExplicitMarketingPreference string `json:"explicitMarketingPreference,omitempty"`
+
+	// LastUpdatedTimestamp: Timestamp when last time marketing preference
+	// was updated. Could be empty, if user wasn't offered a selection yet.
+	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ExplicitMarketingPreference") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ExplicitMarketingPreference") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TestOrderCustomerMarketingRightsInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TestOrderCustomerMarketingRightsInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

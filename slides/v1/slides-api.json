@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20180402",
+  "revision": "20180409",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -1525,7 +1525,7 @@
       "type": "object"
     },
     "Line": {
-      "description": "A PageElement kind representing a\nnon-connector line, straight connector, curved connector or bent connector.",
+      "description": "A PageElement kind representing a\nnon-connector line, straight connector, curved connector, or bent connector.",
       "id": "Line",
       "properties": {
         "lineProperties": {
@@ -2409,7 +2409,7 @@
       "type": "object"
     },
     "ReplaceAllShapesWithImageRequest": {
-      "description": "Replaces all shapes that match the given criteria with the provided image.",
+      "description": "Replaces all shapes that match the given criteria with the provided image.\n\nThe images replacing the shapes are rectangular after being inserted into\nthe presentation and do not take on the forms of the shapes.",
       "id": "ReplaceAllShapesWithImageRequest",
       "properties": {
         "containsText": {

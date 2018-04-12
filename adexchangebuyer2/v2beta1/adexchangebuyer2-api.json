@@ -849,6 +849,45 @@
               }
             }
           }
+        },
+        "publishers": {
+          "methods": {
+            "list": {
+              "description": "Lists publishers that had recent inventory matches with the requesting\nbuyer.",
+              "flatPath": "v2beta1/accounts/{accountId}/publishers",
+              "httpMethod": "GET",
+              "id": "adexchangebuyer2.accounts.publishers.list",
+              "parameterOrder": [
+                "accountId"
+              ],
+              "parameters": {
+                "accountId": {
+                  "description": "Account ID of the requesting buyer.",
+                  "format": "int64",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "environment": {
+                  "description": "Optional environment (WEB, APP) for which to return publishers. If\nspecified, response will only include publishers that had recent inventory\nmatches with the requesting buyer on the specified platform.",
+                  "enum": [
+                    "ENVIRONMENT_UNSPECIFIED",
+                    "WEB",
+                    "APP"
+                  ],
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v2beta1/accounts/{accountId}/publishers",
+              "response": {
+                "$ref": "ListPublishersResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/adexchange.buyer"
+              ]
+            }
+          }
         }
       }
     },
@@ -1947,7 +1986,7 @@
       }
     }
   },
-  "revision": "20180404",
+  "revision": "20180409",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2886,6 +2925,13 @@
           },
           "type": "array"
         },
+        "publisherIdentifiers": {
+          "description": "For Exchange Bidding buyers only.\nThe list of publisher identifiers on which to filter; may be empty.\nThe filters represented by multiple publisher identifiers are ORed\ntogether.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "realtimeTimeRange": {
           "$ref": "RealtimeTimeRange",
           "description": "An open-ended realtime time range, defined by the aggregation start\ntimestamp."
@@ -2895,7 +2941,7 @@
           "description": "A relative date range, defined by an offset from today and a duration.\nInterpreted relative to Pacific time zone."
         },
         "sellerNetworkIds": {
-          "description": "The list of IDs of the seller (publisher) networks on which to filter;\nmay be empty. The filters represented by multiple seller network IDs are\nORed together (i.e. if non-empty, results must match any one of the\npublisher networks).\nSee [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\nfile for the set of existing seller network IDs.",
+          "description": "For Ad Exchange buyers only.\nThe list of IDs of the seller (publisher) networks on which to filter;\nmay be empty. The filters represented by multiple seller network IDs are\nORed together (i.e. if non-empty, results must match any one of the\npublisher networks).\nSee [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\nfile for the set of existing seller network IDs.",
           "items": {
             "format": "int32",
             "type": "integer"
@@ -3354,6 +3400,20 @@
       },
       "type": "object"
     },
+    "ListPublishersResponse": {
+      "description": "Response message for listing publishers that had recent inventory matches\nwith the requesting buyer.",
+      "id": "ListPublishersResponse",
+      "properties": {
+        "publisher": {
+          "description": "List of publishers.",
+          "items": {
+            "$ref": "Publisher"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "LocationContext": {
       "description": "@OutputOnly The Geo criteria the restriction applies to.",
       "id": "LocationContext",
@@ -3495,6 +3555,21 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Publisher": {
+      "description": "The publisher ID and name contain values relevant to the requesting buyer\ndepending on whether it is an Ad Exchange buyer or Exchange Bidding buyer.",
+      "id": "Publisher",
+      "properties": {
+        "publisherDisplayName": {
+          "description": "Publisher name contains:\n- Seller network name when the requesting buyer is an Ad Exchange buyer.\n- DFP network name or AdMob publisher code when the requesting buyer is an\n  Exchange Bidding buyer.",
+          "type": "string"
+        },
+        "publisherId": {
+          "description": "Publisher ID contains:\n- Seller network ID when the requesting buyer is an Ad Exchange buyer.\n  See [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\n- DFP network code or AdMob publisher code when the requesting buyer is an\n  Exchange Bidding buyer.",
+          "type": "string"
         }
       },
       "type": "object"

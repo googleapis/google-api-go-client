@@ -2545,7 +2545,7 @@ func (s *LayoutReference) MarshalJSON() ([]byte, error) {
 }
 
 // Line: A PageElement kind representing a
-// non-connector line, straight connector, curved connector or bent
+// non-connector line, straight connector, curved connector, or bent
 // connector.
 type Line struct {
 	// LineProperties: The properties of the line.
@@ -4055,6 +4055,10 @@ func (s *RefreshSheetsChartRequest) MarshalJSON() ([]byte, error) {
 
 // ReplaceAllShapesWithImageRequest: Replaces all shapes that match the
 // given criteria with the provided image.
+//
+// The images replacing the shapes are rectangular after being inserted
+// into
+// the presentation and do not take on the forms of the shapes.
 type ReplaceAllShapesWithImageRequest struct {
 	// ContainsText: If set, this request will replace all of the shapes
 	// that contain the

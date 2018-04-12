@@ -500,6 +500,21 @@ func (s *GoogleCloudMlV1__HyperparameterOutput) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__HyperparameterSpec: Represents a set of
 // hyperparameters to optimize.
 type GoogleCloudMlV1__HyperparameterSpec struct {
+	// Algorithm: Optional. The search algorithm specified for the
+	// hyperparameter
+	// tuning job.
+	// Uses the default CloudML Engine hyperparameter tuning
+	// algorithm if unspecified.
+	//
+	// Possible values:
+	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by
+	// hyperparameter tuning service.
+	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
+	// use grid search,
+	// all parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.
+	//   "RANDOM_SEARCH" - Simple random search within the feasible space.
+	Algorithm string `json:"algorithm,omitempty"`
+
 	// EnableTrialEarlyStopping: Optional. Indicates if the hyperparameter
 	// tuning job enables auto trial
 	// early stopping.
@@ -561,22 +576,20 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// study guid and resume the study.
 	ResumePreviousJobId string `json:"resumePreviousJobId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableTrialEarlyStopping") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Algorithm") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EnableTrialEarlyStopping")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Algorithm") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1348,7 +1361,6 @@ type GoogleCloudMlV1__SetDefaultVersionRequest struct {
 // details, see the guide to
 // <a href="/ml-engine/docs/training-jobs">submitting a training
 // job</a>.
-// Next ID: 22
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command line arguments to pass to the program.
 	Args []string `json:"args,omitempty"`
@@ -1877,7 +1889,6 @@ func (s *GoogleCloudMlV1__Version) MarshalJSON() ([]byte, error) {
 type GoogleIamV1__AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
-	// Next ID: 4
 	AuditLogConfigs []*GoogleIamV1__AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit

@@ -2307,9 +2307,7 @@ func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
 type Value struct {
 	// ArrayValue: An array value.
 	//
-	// Cannot directly contain another array value, though can contain
-	// an
-	// map which contains another array.
+	// Cannot contain another array value.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 
 	// BooleanValue: A boolean value.

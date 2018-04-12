@@ -2141,8 +2141,7 @@ type Policy struct {
 	AutoUpdatePolicy string `json:"autoUpdatePolicy,omitempty"`
 
 	// MaintenanceWindow: The maintenance window defining when apps running
-	// in the foreground should be updated. This feature is only supported
-	// on fully managed devices.
+	// in the foreground should be updated.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// ProductAvailabilityPolicy: The availability granted to the device for

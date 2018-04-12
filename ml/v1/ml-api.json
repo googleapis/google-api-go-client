@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180327",
+  "revision": "20180407",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1161,6 +1161,20 @@
       "description": "Represents a set of hyperparameters to optimize.",
       "id": "GoogleCloudMlV1__HyperparameterSpec",
       "properties": {
+        "algorithm": {
+          "description": "Optional. The search algorithm specified for the hyperparameter\ntuning job.\nUses the default CloudML Engine hyperparameter tuning\nalgorithm if unspecified.",
+          "enum": [
+            "ALGORITHM_UNSPECIFIED",
+            "GRID_SEARCH",
+            "RANDOM_SEARCH"
+          ],
+          "enumDescriptions": [
+            "The default algorithm used by hyperparameter tuning service.",
+            "Simple grid search within the feasible space. To use grid search,\nall parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.",
+            "Simple random search within the feasible space."
+          ],
+          "type": "string"
+        },
         "enableTrialEarlyStopping": {
           "description": "Optional. Indicates if the hyperparameter tuning job enables auto trial\nearly stopping.",
           "type": "boolean"
@@ -1651,7 +1665,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__TrainingInput": {
-      "description": "Represents input parameters for a training job. When using the\ngcloud command to submit your training job, you can specify\nthe input parameters as command-line arguments and/or in a YAML configuration\nfile referenced from the --config command-line argument. For\ndetails, see the guide to\n\u003ca href=\"/ml-engine/docs/training-jobs\"\u003esubmitting a training job\u003c/a\u003e.\nNext ID: 22",
+      "description": "Represents input parameters for a training job. When using the\ngcloud command to submit your training job, you can specify\nthe input parameters as command-line arguments and/or in a YAML configuration\nfile referenced from the --config command-line argument. For\ndetails, see the guide to\n\u003ca href=\"/ml-engine/docs/training-jobs\"\u003esubmitting a training job\u003c/a\u003e.",
       "id": "GoogleCloudMlV1__TrainingInput",
       "properties": {
         "args": {
@@ -1859,7 +1873,7 @@
       "id": "GoogleIamV1__AuditConfig",
       "properties": {
         "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "GoogleIamV1__AuditLogConfig"
           },

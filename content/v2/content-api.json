@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/SHuwnKbM3hXa9oBr79fOifz9nl4\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/N1MAtX34RnbbCW8uerWwBvV6zYM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2891,7 +2891,7 @@
       }
     }
   },
-  "revision": "20180403",
+  "revision": "20180405",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5069,11 +5069,33 @@
           "type": "string"
         },
         "explicitMarketingPreference": {
-          "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the checkout flow.",
+          "description": "Deprecated. Please use marketingRightsInfo instead.",
           "type": "boolean"
         },
         "fullName": {
           "description": "Full name of the customer.",
+          "type": "string"
+        },
+        "marketingRightsInfo": {
+          "$ref": "OrderCustomerMarketingRightsInfo",
+          "description": "Customer's marketing preferences."
+        }
+      },
+      "type": "object"
+    },
+    "OrderCustomerMarketingRightsInfo": {
+      "id": "OrderCustomerMarketingRightsInfo",
+      "properties": {
+        "explicitMarketingPreference": {
+          "description": "Last known user selection regarding marketing preferences. In certain cases this selection might not be known, so this field would be empty.",
+          "type": "string"
+        },
+        "lastUpdatedTimestamp": {
+          "description": "Timestamp when last time marketing preference was updated. Could be empty, if user wasn't offered a selection yet.",
+          "type": "string"
+        },
+        "marketingEmailAddress": {
+          "description": "Email address that can be used for marketing purposes. This field is only filled when explicitMarketingPreference is equal to 'granted'.",
           "type": "string"
         }
       },
@@ -8013,8 +8035,20 @@
           "description": "The error code of the issue.",
           "type": "string"
         },
+        "description": {
+          "description": "A short issue description in English.",
+          "type": "string"
+        },
         "destination": {
           "description": "The destination the issue applies to.",
+          "type": "string"
+        },
+        "detail": {
+          "description": "A detailed issue description in English.",
+          "type": "string"
+        },
+        "documentation": {
+          "description": "The URL of a web page to help with resolving this issue.",
           "type": "string"
         },
         "resolution": {
@@ -8373,6 +8407,10 @@
           "$ref": "DeliveryTime",
           "description": "Time spent in various aspects from order to the delivery of the product. Required."
         },
+        "eligibility": {
+          "description": "Eligibility for this service.",
+          "type": "string"
+        },
         "minimumOrderValue": {
           "$ref": "Price",
           "description": "Minimum order value for this service. If set, indicates that customers will have to spend at least this amount. All prices within a service must have the same currency."
@@ -8680,11 +8718,29 @@
           "type": "string"
         },
         "explicitMarketingPreference": {
-          "description": "If set, this indicates the user explicitly chose to opt in or out of providing marketing rights to the merchant. If unset, this indicates the user has already made this choice in a previous purchase, and was thus not shown the marketing right opt in/out checkbox during the checkout flow. Optional.",
+          "description": "Deprecated. Please use marketingRightsInfo instead.",
           "type": "boolean"
         },
         "fullName": {
           "description": "Full name of the customer.",
+          "type": "string"
+        },
+        "marketingRightsInfo": {
+          "$ref": "TestOrderCustomerMarketingRightsInfo",
+          "description": "Customer's marketing preferences."
+        }
+      },
+      "type": "object"
+    },
+    "TestOrderCustomerMarketingRightsInfo": {
+      "id": "TestOrderCustomerMarketingRightsInfo",
+      "properties": {
+        "explicitMarketingPreference": {
+          "description": "Last know user use selection regards marketing preferences. In certain cases selection might not be known, so this field would be empty.",
+          "type": "string"
+        },
+        "lastUpdatedTimestamp": {
+          "description": "Timestamp when last time marketing preference was updated. Could be empty, if user wasn't offered a selection yet.",
           "type": "string"
         }
       },

@@ -120,7 +120,7 @@
         "locations": {
           "methods": {
             "get": {
-              "description": "Get information about a location.",
+              "description": "Gets information about a location.",
               "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}",
               "httpMethod": "GET",
               "id": "cloudtasks.projects.locations.get",
@@ -802,7 +802,7 @@
       }
     }
   },
-  "revision": "20180302",
+  "revision": "20180406",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {
@@ -1010,7 +1010,7 @@
       "id": "LeaseTasksRequest",
       "properties": {
         "filter": {
-          "description": "`filter` can be used to specify a subset of tasks to lease.\n\nWhen `filter` is set to `tag=\u003cmy-tag\u003e` then the\nresponse will contain only tasks whose\ntag is equal to `\u003cmy-tag\u003e`. `\u003cmy-tag\u003e` must be\nless than 500 characters.\n\nWhen `filter` is set to `tag_function=oldest_tag()`, only tasks which have\nthe same tag as the task with the oldest schedule_time will be returned.\n\nGrammar Syntax:\n\n* `filter = \"tag=\" tag | \"tag_function=\" function`\n\n* `tag = string`\n\n* `function = \"oldest_tag()\"`\n\nThe `oldest_tag()` function returns tasks which have the same tag as the\noldest task (ordered by schedule time).\n\nSDK compatibility: Although the SDK allows tags to be either\nstring or\n[bytes](/appengine/docs/standard/java/javadoc/com/google/appengine/api/taskqueue/TaskOptions.html#tag-byte:A-),\nonly UTF-8 encoded tags can be used in Cloud Tasks. Tag which\naren't UTF-8 encoded can't be used in the\nfilter and the task's\ntag will be displayed as empty in Cloud Tasks.",
+          "description": "`filter` can be used to specify a subset of tasks to lease.\n\nWhen `filter` is set to `tag=\u003cmy-tag\u003e` then the\nresponse will contain only tasks whose\ntag is equal to `\u003cmy-tag\u003e`. `\u003cmy-tag\u003e` must be\nless than 500 characters.\n\nWhen `filter` is set to `tag_function=oldest_tag()`, only tasks which have\nthe same tag as the task with the oldest\nschedule_time will be returned.\n\nGrammar Syntax:\n\n* `filter = \"tag=\" tag | \"tag_function=\" function`\n\n* `tag = string`\n\n* `function = \"oldest_tag()\"`\n\nThe `oldest_tag()` function returns tasks which have the same tag as the\noldest task (ordered by schedule time).\n\nSDK compatibility: Although the SDK allows tags to be either\nstring or\n[bytes](/appengine/docs/standard/java/javadoc/com/google/appengine/api/taskqueue/TaskOptions.html#tag-byte:A-),\nonly UTF-8 encoded tags can be used in Cloud Tasks. Tag which\naren't UTF-8 encoded can't be used in the\nfilter and the task's\ntag will be displayed as empty in Cloud Tasks.",
           "type": "string"
         },
         "leaseDuration": {

@@ -1074,7 +1074,7 @@
       }
     }
   },
-  "revision": "20180223",
+  "revision": "20180406",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1082,7 +1082,7 @@
       "id": "AuditConfig",
       "properties": {
         "auditLogConfigs": {
-          "description": "The configuration for logging of each type of permission.\nNext ID: 4",
+          "description": "The configuration for logging of each type of permission.",
           "items": {
             "$ref": "AuditLogConfig"
           },
@@ -1791,7 +1791,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Identity and Access Management (IAM) API",
+  "title": "Identity and Access Management (IAM) API",
   "version": "v1",
   "version_module": true
 }

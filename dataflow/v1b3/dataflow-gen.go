@@ -3141,6 +3141,12 @@ type MetricUpdate struct {
 	// of numeric values.
 	Distribution interface{} `json:"distribution,omitempty"`
 
+	// Gauge: A struct value describing properties of a Gauge.
+	// Metrics of gauge type show the value of a metric across time, and
+	// is
+	// aggregated based on the newest value.
+	Gauge interface{} `json:"gauge,omitempty"`
+
 	// Internal: Worker-computed aggregate value for internal use by the
 	// Dataflow
 	// service.

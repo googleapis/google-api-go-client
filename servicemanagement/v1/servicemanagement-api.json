@@ -887,7 +887,7 @@
       }
     }
   },
-  "revision": "20180406",
+  "revision": "20180330",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -3119,6 +3119,6 @@
     }
   },
   "servicePath": "",
-  "title": "Service Management API",
+  "title": "Google Service Management API",
   "version": "v1"
 }

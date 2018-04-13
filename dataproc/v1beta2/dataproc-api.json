@@ -1630,7 +1630,7 @@
       }
     }
   },
-  "revision": "20180404",
+  "revision": "20180409",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2799,7 +2799,7 @@
       "id": "SoftwareConfig",
       "properties": {
         "imageVersion": {
-          "description": "Optional. The version of software inside the cluster. It must match the regular expression [0-9]+\\.[0-9]+. If unspecified, it defaults to the latest version (see Cloud Dataproc Versioning).",
+          "description": "Optional. The version of software inside the cluster. It must be one of the supported Cloud Dataproc Versions, such as \"1.2\" (including a subminor version, such as \"1.2.29\"), or the \"preview\" version. If unspecified, it defaults to the latest version.",
           "type": "string"
         },
         "properties": {
@@ -3202,7 +3202,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Dataproc API",
+  "title": "Cloud Dataproc API",
   "version": "v1beta2",
   "version_module": true
 }

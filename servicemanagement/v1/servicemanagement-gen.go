@@ -1,4 +1,4 @@
-// Package servicemanagement provides access to the Service Management API.
+// Package servicemanagement provides access to the Google Service Management API.
 //
 // See https://cloud.google.com/service-management/
 //

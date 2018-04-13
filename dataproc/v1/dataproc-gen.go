@@ -1,4 +1,4 @@
-// Package dataproc provides access to the Google Cloud Dataproc API.
+// Package dataproc provides access to the Cloud Dataproc API.
 //
 // See https://cloud.google.com/dataproc/
 //
@@ -1608,8 +1608,9 @@ func (s *QueryList) MarshalJSON() ([]byte, error) {
 // the cluster.
 type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster.
-	// It must match the regular expression [0-9]+\.[0-9]+. If unspecified,
-	// it defaults to the latest version (see Cloud Dataproc Versioning).
+	// It must be one of the supported Cloud Dataproc Versions, such as
+	// "1.2" (including a subminor version, such as "1.2.29"), or the
+	// "preview" version. If unspecified, it defaults to the latest version.
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// Properties: Optional. The properties to set on daemon config

@@ -1078,7 +1078,7 @@ func (s *Correction) MarshalJSON() ([]byte, error) {
 
 // Creative: A creative and its classification data.
 //
-// Next ID: 31
+// Next ID: 35
 type Creative struct {
 	// AccountId: The account that this creative belongs to.
 	// Can be used to filter the response of the

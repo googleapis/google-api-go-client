@@ -1,4 +1,4 @@
-// Package iam provides access to the Google Identity and Access Management (IAM) API.
+// Package iam provides access to the Identity and Access Management (IAM) API.
 //
 // See https://cloud.google.com/iam/
 //
@@ -240,7 +240,6 @@ type RolesService struct {
 type AuditConfig struct {
 	// AuditLogConfigs: The configuration for logging of each type of
 	// permission.
-	// Next ID: 4
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
 
 	// Service: Specifies a service that will be enabled for audit

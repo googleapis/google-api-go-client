@@ -571,6 +571,8 @@ type Node struct {
 	// found in the `help_description` field.
 	//   "STOPPED" - 7 - Reserved. Was SUSPENDED.
 	// TPU node is stopped.
+	//   "STOPPING" - TPU node is currently stopping.
+	//   "STARTING" - TPU node is currently starting.
 	State string `json:"state,omitempty"`
 
 	// TensorflowVersion: The version of Tensorflow running in the

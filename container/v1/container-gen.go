@@ -1,4 +1,4 @@
-// Package container provides access to the Google Kubernetes Engine API.
+// Package container provides access to the Kubernetes Engine API.
 //
 // See https://cloud.google.com/container-engine/
 //
@@ -845,8 +845,9 @@ type CompleteIPRotationRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to
-	// complete IP rotation.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// complete IP
+	// rotation. Specified in the format
+	// 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Deprecated. The Google Developers Console [project ID or
@@ -949,8 +950,9 @@ type CreateNodePoolRequest struct {
 	NodePool *NodePool `json:"nodePool,omitempty"`
 
 	// Parent: The parent (project, location, cluster id) where the node
-	// pool will be created.
-	// Specified in the format
+	// pool will be
+	// created. Specified in the
+	// format
 	// 'projects/*/locations/*/clusters/*/nodePools/*'.
 	Parent string `json:"parent,omitempty"`
 
@@ -1779,9 +1781,10 @@ type NodeConfig struct {
 	// or
 	// <code>minCpuPlatform: &quot;Intel Sandy Bridge&quot;</code>. For
 	// more
-	// information, read [how to specify min CPU
-	// platform](https://cloud.google.com/compute/docs/instances/specify-min-
-	// cpu-platform)
+	// information, read [how to specify min
+	// CPU
+	// platform](https://cloud.google.com/compute/docs/instances/specify-
+	// min-cpu-platform)
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// OauthScopes: The set of Google API scopes to be made available on all
@@ -2740,8 +2743,8 @@ type SetNetworkPolicyRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to set
-	// networking policy.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// networking
+	// policy. Specified in the format 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// NetworkPolicy: Configuration options for the NetworkPolicy feature.
@@ -2973,8 +2976,9 @@ type StartIPRotationRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to
-	// start IP rotation.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// start IP
+	// rotation. Specified in the format
+	// 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Deprecated. The Google Developers Console [project ID or
@@ -2983,6 +2987,9 @@ type StartIPRotationRequest struct {
 	// tnumber).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// RotateCredentials: Whether to rotate credentials during IP rotation.
+	RotateCredentials bool `json:"rotateCredentials,omitempty"`
 
 	// Zone: Deprecated. The name of the Google Compute
 	// Engine
@@ -3143,8 +3150,9 @@ type UpdateNodePoolRequest struct {
 	ImageType string `json:"imageType,omitempty"`
 
 	// Name: The name (project, location, cluster, node pool) of the node
-	// pool to update.
-	// Specified in the format
+	// pool to
+	// update. Specified in the
+	// format
 	// 'projects/*/locations/*/clusters/*/nodePools/*'.
 	Name string `json:"name,omitempty"`
 
@@ -3490,7 +3498,7 @@ func (c *ProjectsLocationsClustersCompleteIpRotationCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to complete IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to complete IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5263,7 +5271,7 @@ func (c *ProjectsLocationsClustersSetNetworkPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to set networking policy.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to set networking\npolicy. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5533,7 +5541,7 @@ func (c *ProjectsLocationsClustersStartIpRotationCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to start IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to start IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5938,7 +5946,7 @@ func (c *ProjectsLocationsClustersNodePoolsCreateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pool will be created.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pool will be\ncreated. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -6109,7 +6117,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -6306,7 +6314,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -6495,7 +6503,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -7181,7 +7189,7 @@ func (c *ProjectsLocationsClustersNodePoolsUpdateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool) of the node pool to update.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool) of the node pool to\nupdate. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -7552,9 +7560,11 @@ func (c *ProjectsLocationsOperationsListCall) ProjectId(projectId string) *Proje
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the
-// Google Compute Engine [zone](/compute/docs/zones#available)
-// to return operations for, or `-` for all zones.
-// This field has been deprecated and replaced by the parent field.
+// Google Compute Engine
+// [zone](/compute/docs/zones#available) to return operations for, or
+// `-` for
+// all zones. This field has been deprecated and replaced by the parent
+// field.
 func (c *ProjectsLocationsOperationsListCall) Zone(zone string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("zone", zone)
 	return c
@@ -7675,7 +7685,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+	//       "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -10865,8 +10875,9 @@ func (r *ProjectsZonesClustersNodePoolsService) Delete(projectId string, zone st
 }
 
 // Name sets the optional parameter "name": The name (project, location,
-// cluster, node pool id) of the node pool to delete.
-// Specified in the format
+// cluster, node pool id) of the node pool to
+// delete. Specified in the
+// format
 // 'projects/*/locations/*/clusters/*/nodePools/*'.
 func (c *ProjectsZonesClustersNodePoolsDeleteCall) Name(name string) *ProjectsZonesClustersNodePoolsDeleteCall {
 	c.urlParams_.Set("name", name)
@@ -10975,7 +10986,7 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11034,8 +11045,9 @@ func (r *ProjectsZonesClustersNodePoolsService) Get(projectId string, zone strin
 }
 
 // Name sets the optional parameter "name": The name (project, location,
-// cluster, node pool id) of the node pool to get.
-// Specified in the format
+// cluster, node pool id) of the node pool to
+// get. Specified in the
+// format
 // 'projects/*/locations/*/clusters/*/nodePools/*'.
 func (c *ProjectsZonesClustersNodePoolsGetCall) Name(name string) *ProjectsZonesClustersNodePoolsGetCall {
 	c.urlParams_.Set("name", name)
@@ -11157,7 +11169,7 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11214,8 +11226,8 @@ func (r *ProjectsZonesClustersNodePoolsService) List(projectId string, zone stri
 }
 
 // Parent sets the optional parameter "parent": The parent (project,
-// location, cluster id) where the node pools will be listed.
-// Specified in the format 'projects/*/locations/*/clusters/*'.
+// location, cluster id) where the node pools will be
+// listed. Specified in the format 'projects/*/locations/*/clusters/*'.
 func (c *ProjectsZonesClustersNodePoolsListCall) Parent(parent string) *ProjectsZonesClustersNodePoolsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -11334,7 +11346,7 @@ func (c *ProjectsZonesClustersNodePoolsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12492,7 +12504,7 @@ func (c *ProjectsZonesOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+	//       "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

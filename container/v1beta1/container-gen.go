@@ -1,4 +1,4 @@
-// Package container provides access to the Google Kubernetes Engine API.
+// Package container provides access to the Kubernetes Engine API.
 //
 // See https://cloud.google.com/container-engine/
 //
@@ -77,6 +77,7 @@ func (s *Service) userAgent() string {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
+	rs.Aggregated = NewProjectsAggregatedService(s)
 	rs.Locations = NewProjectsLocationsService(s)
 	rs.Zones = NewProjectsZonesService(s)
 	return rs
@@ -85,9 +86,32 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
+	Aggregated *ProjectsAggregatedService
+
 	Locations *ProjectsLocationsService
 
 	Zones *ProjectsZonesService
+}
+
+func NewProjectsAggregatedService(s *Service) *ProjectsAggregatedService {
+	rs := &ProjectsAggregatedService{s: s}
+	rs.UsableSubnetworks = NewProjectsAggregatedUsableSubnetworksService(s)
+	return rs
+}
+
+type ProjectsAggregatedService struct {
+	s *Service
+
+	UsableSubnetworks *ProjectsAggregatedUsableSubnetworksService
+}
+
+func NewProjectsAggregatedUsableSubnetworksService(s *Service) *ProjectsAggregatedUsableSubnetworksService {
+	rs := &ProjectsAggregatedUsableSubnetworksService{s: s}
+	return rs
+}
+
+type ProjectsAggregatedUsableSubnetworksService struct {
+	s *Service
 }
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
@@ -611,6 +635,9 @@ type Cluster struct {
 	// the name.
 	Network string `json:"network,omitempty"`
 
+	// NetworkConfig: Configuration for cluster networking.
+	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+
 	// NetworkPolicy: Configuration options for the NetworkPolicy feature.
 	NetworkPolicy *NetworkPolicy `json:"networkPolicy,omitempty"`
 
@@ -655,8 +682,8 @@ type Cluster struct {
 	PrivateCluster bool `json:"privateCluster,omitempty"`
 
 	// ResourceLabels: The resource labels for the cluster to use to
-	// annotate any related GCE
-	// resources.
+	// annotate any related
+	// Google Compute Engine resources.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
@@ -868,8 +895,9 @@ type CompleteIPRotationRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to
-	// complete IP rotation.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// complete IP
+	// rotation. Specified in the format
+	// 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Deprecated. The Google Developers Console [project ID or
@@ -972,8 +1000,9 @@ type CreateNodePoolRequest struct {
 	NodePool *NodePool `json:"nodePool,omitempty"`
 
 	// Parent: The parent (project, location, cluster id) where the node
-	// pool will be created.
-	// Specified in the format
+	// pool will be
+	// created. Specified in the
+	// format
 	// 'projects/*/locations/*/clusters/*/nodePools/*'.
 	Parent string `json:"parent,omitempty"`
 
@@ -1483,6 +1512,51 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListUsableSubnetworksResponse: ListUsableSubnetworksResponse is the
+// response of
+// ListUsableSubnetworksRequest.
+type ListUsableSubnetworksResponse struct {
+	// NextPageToken: This token allows you to get the next page of results
+	// for list requests.
+	// If the number of results is larger than `page_size`, use
+	// the
+	// `next_page_token` as a value for the query parameter `page_token` in
+	// the
+	// next request. The value will become empty when there are no more
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Subnetworks: A list of usable subnetworks in the specified network
+	// project.
+	Subnetworks []*UsableSubnetwork `json:"subnetworks,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListUsableSubnetworksResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListUsableSubnetworksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MaintenancePolicy: MaintenancePolicy defines the maintenance policy
 // to be used for the cluster.
 type MaintenancePolicy struct {
@@ -1646,6 +1720,46 @@ type MasterAuthorizedNetworksConfig struct {
 
 func (s *MasterAuthorizedNetworksConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod MasterAuthorizedNetworksConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NetworkConfig: NetworkConfig reports the relative names of network &
+// subnetwork.
+type NetworkConfig struct {
+	// Network: Output only. The name of the Google Compute
+	// Engine
+	// network(/compute/docs/networks-and-firewalls#networks).
+	// Example
+	// : projects/my-project/global/networks/my-network
+	Network string `json:"network,omitempty"`
+
+	// Subnetwork: Output only. The name of the Google Compute
+	// Engine
+	// [subnetwork](/compute/docs/vpc).
+	// Example:
+	// projects/my-project/regions/us-central1/subnetworks/my-subnet
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Network") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Network") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1816,9 +1930,10 @@ type NodeConfig struct {
 	// or
 	// <code>minCpuPlatform: &quot;Intel Sandy Bridge&quot;</code>. For
 	// more
-	// information, read [how to specify min CPU
-	// platform](https://cloud.google.com/compute/docs/instances/specify-min-
-	// cpu-platform)
+	// information, read [how to specify min
+	// CPU
+	// platform](https://cloud.google.com/compute/docs/instances/specify-
+	// min-cpu-platform)
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
 	// OauthScopes: The set of Google API scopes to be made available on all
@@ -2858,8 +2973,8 @@ type SetNetworkPolicyRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to set
-	// networking policy.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// networking
+	// policy. Specified in the format 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// NetworkPolicy: Configuration options for the NetworkPolicy feature.
@@ -3091,8 +3206,9 @@ type StartIPRotationRequest struct {
 	ClusterId string `json:"clusterId,omitempty"`
 
 	// Name: The name (project, location, cluster id) of the cluster to
-	// start IP rotation.
-	// Specified in the format 'projects/*/locations/*/clusters/*'.
+	// start IP
+	// rotation. Specified in the format
+	// 'projects/*/locations/*/clusters/*'.
 	Name string `json:"name,omitempty"`
 
 	// ProjectId: Deprecated. The Google Developers Console [project ID or
@@ -3101,6 +3217,9 @@ type StartIPRotationRequest struct {
 	// tnumber).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// RotateCredentials: Whether to rotate credentials during IP rotation.
+	RotateCredentials bool `json:"rotateCredentials,omitempty"`
 
 	// Zone: Deprecated. The name of the Google Compute
 	// Engine
@@ -3261,8 +3380,9 @@ type UpdateNodePoolRequest struct {
 	ImageType string `json:"imageType,omitempty"`
 
 	// Name: The name (project, location, cluster, node pool) of the node
-	// pool to update.
-	// Specified in the format
+	// pool to
+	// update. Specified in the
+	// format
 	// 'projects/*/locations/*/clusters/*/nodePools/*'.
 	Name string `json:"name,omitempty"`
 
@@ -3324,6 +3444,46 @@ func (s *UpdateNodePoolRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UsableSubnetwork: UsableSubnetwork resource returns the subnetwork
+// name, its associated network
+// and the primary CIDR range.
+type UsableSubnetwork struct {
+	// IpCidrRange: The range of internal addresses that are owned by this
+	// subnetwork.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// Network: Network Name.
+	// Example: projects/my-project/global/networks/my-network
+	Network string `json:"network,omitempty"`
+
+	// Subnetwork: Subnetwork Name.
+	// Example:
+	// projects/my-project/regions/us-central1/subnetworks/my-subnet
+	Subnetwork string `json:"subnetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsableSubnetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod UsableSubnetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WorkloadMetadataConfig: WorkloadMetadataConfig defines the metadata
 // configuration to expose to
 // workloads on the node pool.
@@ -3371,6 +3531,215 @@ func (s *WorkloadMetadataConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkloadMetadataConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "container.projects.aggregated.usableSubnetworks.list":
+
+type ProjectsAggregatedUsableSubnetworksListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists subnetworks that are usable for creating clusters in a
+// project.
+func (r *ProjectsAggregatedUsableSubnetworksService) List(parent string) *ProjectsAggregatedUsableSubnetworksListCall {
+	c := &ProjectsAggregatedUsableSubnetworksListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering currently only
+// supports equality on the networkProjectId and must
+// be in the form: "networkProjectId=[PROJECTID]", where
+// `networkProjectId`
+// is the project which owns the listed subnetworks. This defaults to
+// the
+// parent project ID.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Filter(filter string) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The max number of
+// results per page that should be returned. If the number
+// of available results is larger than `page_size`, a `next_page_token`
+// is
+// returned which can be used to get the next page of results in
+// subsequent
+// requests. Acceptable values are 0 to 500, inclusive. (Default: 500)
+func (c *ProjectsAggregatedUsableSubnetworksListCall) PageSize(pageSize int64) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set this to the nextPageToken returned by
+// previous list requests to get the next page of results.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) PageToken(pageToken string) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Fields(s ...googleapi.Field) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) IfNoneMatch(entityTag string) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Context(ctx context.Context) *ProjectsAggregatedUsableSubnetworksListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAggregatedUsableSubnetworksListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/aggregated/usableSubnetworks")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "container.projects.aggregated.usableSubnetworks.list" call.
+// Exactly one of *ListUsableSubnetworksResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListUsableSubnetworksResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Do(opts ...googleapi.CallOption) (*ListUsableSubnetworksResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListUsableSubnetworksResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists subnetworks that are usable for creating clusters in a project.",
+	//   "flatPath": "v1beta1/projects/{projectsId}/aggregated/usableSubnetworks",
+	//   "httpMethod": "GET",
+	//   "id": "container.projects.aggregated.usableSubnetworks.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filtering currently only supports equality on the networkProjectId and must\nbe in the form: \"networkProjectId=[PROJECTID]\", where `networkProjectId`\nis the project which owns the listed subnetworks. This defaults to the\nparent project ID.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The max number of results per page that should be returned. If the number\nof available results is larger than `page_size`, a `next_page_token` is\nreturned which can be used to get the next page of results in subsequent\nrequests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set this to the nextPageToken returned by\nprevious list requests to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent project where subnetworks are usable.\nSpecified in the format 'projects/*'.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/{+parent}/aggregated/usableSubnetworks",
+	//   "response": {
+	//     "$ref": "ListUsableSubnetworksResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAggregatedUsableSubnetworksListCall) Pages(ctx context.Context, f func(*ListUsableSubnetworksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "container.projects.locations.getServerConfig":
@@ -3657,7 +4026,7 @@ func (c *ProjectsLocationsClustersCompleteIpRotationCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to complete IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to complete IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5430,7 +5799,7 @@ func (c *ProjectsLocationsClustersSetNetworkPolicyCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to set networking policy.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to set networking\npolicy. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -5700,7 +6069,7 @@ func (c *ProjectsLocationsClustersStartIpRotationCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster id) of the cluster to start IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The name (project, location, cluster id) of the cluster to start IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -6105,7 +6474,7 @@ func (c *ProjectsLocationsClustersNodePoolsCreateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pool will be created.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pool will be\ncreated. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -6276,7 +6645,7 @@ func (c *ProjectsLocationsClustersNodePoolsDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -6473,7 +6842,7 @@ func (c *ProjectsLocationsClustersNodePoolsGetCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -6662,7 +7031,7 @@ func (c *ProjectsLocationsClustersNodePoolsListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
 	//       "required": true,
@@ -7348,7 +7717,7 @@ func (c *ProjectsLocationsClustersNodePoolsUpdateCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool) of the node pool to update.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool) of the node pool to\nupdate. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
 	//       "required": true,
@@ -7719,9 +8088,11 @@ func (c *ProjectsLocationsOperationsListCall) ProjectId(projectId string) *Proje
 }
 
 // Zone sets the optional parameter "zone": Deprecated. The name of the
-// Google Compute Engine [zone](/compute/docs/zones#available)
-// to return operations for, or `-` for all zones.
-// This field has been deprecated and replaced by the parent field.
+// Google Compute Engine
+// [zone](/compute/docs/zones#available) to return operations for, or
+// `-` for
+// all zones. This field has been deprecated and replaced by the parent
+// field.
 func (c *ProjectsLocationsOperationsListCall) Zone(zone string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("zone", zone)
 	return c
@@ -7842,7 +8213,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+	//       "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11032,8 +11403,9 @@ func (r *ProjectsZonesClustersNodePoolsService) Delete(projectId string, zone st
 }
 
 // Name sets the optional parameter "name": The name (project, location,
-// cluster, node pool id) of the node pool to delete.
-// Specified in the format
+// cluster, node pool id) of the node pool to
+// delete. Specified in the
+// format
 // 'projects/*/locations/*/clusters/*/nodePools/*'.
 func (c *ProjectsZonesClustersNodePoolsDeleteCall) Name(name string) *ProjectsZonesClustersNodePoolsDeleteCall {
 	c.urlParams_.Set("name", name)
@@ -11142,7 +11514,7 @@ func (c *ProjectsZonesClustersNodePoolsDeleteCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11201,8 +11573,9 @@ func (r *ProjectsZonesClustersNodePoolsService) Get(projectId string, zone strin
 }
 
 // Name sets the optional parameter "name": The name (project, location,
-// cluster, node pool id) of the node pool to get.
-// Specified in the format
+// cluster, node pool id) of the node pool to
+// get. Specified in the
+// format
 // 'projects/*/locations/*/clusters/*/nodePools/*'.
 func (c *ProjectsZonesClustersNodePoolsGetCall) Name(name string) *ProjectsZonesClustersNodePoolsGetCall {
 	c.urlParams_.Set("name", name)
@@ -11324,7 +11697,7 @@ func (c *ProjectsZonesClustersNodePoolsGetCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+	//       "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11381,8 +11754,8 @@ func (r *ProjectsZonesClustersNodePoolsService) List(projectId string, zone stri
 }
 
 // Parent sets the optional parameter "parent": The parent (project,
-// location, cluster id) where the node pools will be listed.
-// Specified in the format 'projects/*/locations/*/clusters/*'.
+// location, cluster id) where the node pools will be
+// listed. Specified in the format 'projects/*/locations/*/clusters/*'.
 func (c *ProjectsZonesClustersNodePoolsListCall) Parent(parent string) *ProjectsZonesClustersNodePoolsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -11501,7 +11874,7 @@ func (c *ProjectsZonesClustersNodePoolsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+	//       "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12659,7 +13032,7 @@ func (c *ProjectsZonesOperationsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//       "type": "string"
 	//     },
 	//     "zone": {
-	//       "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+	//       "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

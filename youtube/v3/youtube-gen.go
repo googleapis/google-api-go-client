@@ -2365,6 +2365,7 @@ type ChannelStatus struct {
 	//   "private"
 	//   "public"
 	//   "unlisted"
+	//   "unlisted_new"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IsLinked") to
@@ -3262,6 +3263,7 @@ type ContentRating struct {
 	//
 	// Possible values:
 	//   "ilfilm12"
+	//   "ilfilm14"
 	//   "ilfilm16"
 	//   "ilfilm18"
 	//   "ilfilmAa"
@@ -5057,6 +5059,7 @@ type LiveBroadcastStatus struct {
 	//   "private"
 	//   "public"
 	//   "unlisted"
+	//   "unlisted_new"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// RecordingStatus: The broadcast's recording status.
@@ -6832,6 +6835,7 @@ type PlaylistItemStatus struct {
 	//   "private"
 	//   "public"
 	//   "unlisted"
+	//   "unlisted_new"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
@@ -7040,6 +7044,7 @@ type PlaylistStatus struct {
 	//   "private"
 	//   "public"
 	//   "unlisted"
+	//   "unlisted_new"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PrivacyStatus") to
@@ -9519,6 +9524,7 @@ type VideoStatus struct {
 	//   "private"
 	//   "public"
 	//   "unlisted"
+	//   "unlisted_new"
 	PrivacyStatus string `json:"privacyStatus,omitempty"`
 
 	// PublicStatsViewable: This value indicates if the extended video

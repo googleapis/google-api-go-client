@@ -4470,7 +4470,7 @@ func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2PublishToPubSub: Publish the results of a DlpJob to
 // a pub sub channel.
-// Compatible with: Inspect, Risk
+// Compatible with: Inpect, Risk
 type GooglePrivacyDlpV2PublishToPubSub struct {
 	// Topic: Cloud Pub/Sub topic to send notifications to. The topic must
 	// have given
@@ -5016,8 +5016,8 @@ type GooglePrivacyDlpV2ReplaceWithInfoTypeConfig struct {
 type GooglePrivacyDlpV2RequestedOptions struct {
 	JobConfig *GooglePrivacyDlpV2InspectJobConfig `json:"jobConfig,omitempty"`
 
-	// SnapshotInspectTemplate: If run with an InspectTemplate, a snapshot
-	// of its state at the time of
+	// SnapshotInspectTemplate: If run with an inspect template, a snapshot
+	// of it's state at the time of
 	// this run.
 	SnapshotInspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"snapshotInspectTemplate,omitempty"`
 
@@ -5144,10 +5144,7 @@ func (s *GooglePrivacyDlpV2Row) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2SaveFindings: If set, the detailed findings will be
 // persisted to the specified
-// OutputStorageConfig. Only a single instance of this action can
-// be
-// specified.
-// Compatible with: Inspect
+// OutputStorageConfig. Compatible with: Inspect
 type GooglePrivacyDlpV2SaveFindings struct {
 	OutputConfig *GooglePrivacyDlpV2OutputStorageConfig `json:"outputConfig,omitempty"`
 
@@ -8304,9 +8301,9 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a de-identify template for re-using frequently used
 // configuration
-// for de-identifying content, images, and storage.
+// for Deidentifying content, images, and storage.
 func (r *OrganizationsDeidentifyTemplatesService) Create(parent string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesCreateCall {
 	c := &OrganizationsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8401,7 +8398,7 @@ func (c *OrganizationsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.",
+	//   "description": "Creates a de-identify template for re-using frequently used configuration\nfor Deidentifying content, images, and storage.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.deidentifyTemplates.create",
@@ -8441,7 +8438,7 @@ type OrganizationsDeidentifyTemplatesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a DeidentifyTemplate.
+// Delete: Deletes a de-identify template.
 func (r *OrganizationsDeidentifyTemplatesService) Delete(name string) *OrganizationsDeidentifyTemplatesDeleteCall {
 	c := &OrganizationsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8529,7 +8526,7 @@ func (c *OrganizationsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a DeidentifyTemplate.",
+	//   "description": "Deletes a de-identify template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.organizations.deidentifyTemplates.delete",
@@ -8567,7 +8564,7 @@ type OrganizationsDeidentifyTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a DeidentifyTemplate.
+// Get: Gets a de-identify template.
 func (r *OrganizationsDeidentifyTemplatesService) Get(name string) *OrganizationsDeidentifyTemplatesGetCall {
 	c := &OrganizationsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8669,7 +8666,7 @@ func (c *OrganizationsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a DeidentifyTemplate.",
+	//   "description": "Gets a de-identify template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.deidentifyTemplates.get",
@@ -8707,7 +8704,7 @@ type OrganizationsDeidentifyTemplatesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists DeidentifyTemplates.
+// List: Lists de-identify templates.
 func (r *OrganizationsDeidentifyTemplatesService) List(parent string) *OrganizationsDeidentifyTemplatesListCall {
 	c := &OrganizationsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8826,7 +8823,7 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists DeidentifyTemplates.",
+	//   "description": "Lists de-identify templates.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.deidentifyTemplates.list",
@@ -8896,7 +8893,7 @@ type OrganizationsDeidentifyTemplatesPatchCall struct {
 	header_                                           http.Header
 }
 
-// Patch: Updates the DeidentifyTemplate.
+// Patch: Updates the de-identify template.
 func (r *OrganizationsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *OrganizationsDeidentifyTemplatesPatchCall {
 	c := &OrganizationsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8991,7 +8988,7 @@ func (c *OrganizationsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the DeidentifyTemplate.",
+	//   "description": "Updates the de-identify template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.organizations.deidentifyTemplates.patch",
@@ -9032,7 +9029,7 @@ type OrganizationsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an inspect template for re-using frequently used
 // configuration
 // for inspecting content, images, and storage.
 func (r *OrganizationsInspectTemplatesService) Create(parent string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *OrganizationsInspectTemplatesCreateCall {
@@ -9129,7 +9126,7 @@ func (c *OrganizationsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.",
+	//   "description": "Creates an inspect template for re-using frequently used configuration\nfor inspecting content, images, and storage.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.inspectTemplates.create",
@@ -9169,7 +9166,7 @@ type OrganizationsInspectTemplatesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an InspectTemplate.
+// Delete: Deletes an inspect template.
 func (r *OrganizationsInspectTemplatesService) Delete(name string) *OrganizationsInspectTemplatesDeleteCall {
 	c := &OrganizationsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9257,7 +9254,7 @@ func (c *OrganizationsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an InspectTemplate.",
+	//   "description": "Deletes an inspect template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.organizations.inspectTemplates.delete",
@@ -9295,7 +9292,7 @@ type OrganizationsInspectTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an InspectTemplate.
+// Get: Gets an inspect template.
 func (r *OrganizationsInspectTemplatesService) Get(name string) *OrganizationsInspectTemplatesGetCall {
 	c := &OrganizationsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9397,7 +9394,7 @@ func (c *OrganizationsInspectTemplatesGetCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an InspectTemplate.",
+	//   "description": "Gets an inspect template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.inspectTemplates.get",
@@ -9435,7 +9432,7 @@ type OrganizationsInspectTemplatesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InspectTemplates.
+// List: Lists inspect templates.
 func (r *OrganizationsInspectTemplatesService) List(parent string) *OrganizationsInspectTemplatesListCall {
 	c := &OrganizationsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9554,7 +9551,7 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists InspectTemplates.",
+	//   "description": "Lists inspect templates.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.inspectTemplates.list",
@@ -9624,7 +9621,7 @@ type OrganizationsInspectTemplatesPatchCall struct {
 	header_                                        http.Header
 }
 
-// Patch: Updates the InspectTemplate.
+// Patch: Updates the inspect template.
 func (r *OrganizationsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *OrganizationsInspectTemplatesPatchCall {
 	c := &OrganizationsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9719,7 +9716,7 @@ func (c *OrganizationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the InspectTemplate.",
+	//   "description": "Updates the inspect template.",
 	//   "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.organizations.inspectTemplates.patch",
@@ -10179,9 +10176,9 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 	header_                                           http.Header
 }
 
-// Create: Creates a DeidentifyTemplate for re-using frequently used
+// Create: Creates a de-identify template for re-using frequently used
 // configuration
-// for de-identifying content, images, and storage.
+// for Deidentifying content, images, and storage.
 func (r *ProjectsDeidentifyTemplatesService) Create(parent string, googleprivacydlpv2createdeidentifytemplaterequest *GooglePrivacyDlpV2CreateDeidentifyTemplateRequest) *ProjectsDeidentifyTemplatesCreateCall {
 	c := &ProjectsDeidentifyTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10276,7 +10273,7 @@ func (c *ProjectsDeidentifyTemplatesCreateCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.",
+	//   "description": "Creates a de-identify template for re-using frequently used configuration\nfor Deidentifying content, images, and storage.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.deidentifyTemplates.create",
@@ -10316,7 +10313,7 @@ type ProjectsDeidentifyTemplatesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a DeidentifyTemplate.
+// Delete: Deletes a de-identify template.
 func (r *ProjectsDeidentifyTemplatesService) Delete(name string) *ProjectsDeidentifyTemplatesDeleteCall {
 	c := &ProjectsDeidentifyTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10404,7 +10401,7 @@ func (c *ProjectsDeidentifyTemplatesDeleteCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a DeidentifyTemplate.",
+	//   "description": "Deletes a de-identify template.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.deidentifyTemplates.delete",
@@ -10442,7 +10439,7 @@ type ProjectsDeidentifyTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a DeidentifyTemplate.
+// Get: Gets a de-identify template.
 func (r *ProjectsDeidentifyTemplatesService) Get(name string) *ProjectsDeidentifyTemplatesGetCall {
 	c := &ProjectsDeidentifyTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10544,7 +10541,7 @@ func (c *ProjectsDeidentifyTemplatesGetCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a DeidentifyTemplate.",
+	//   "description": "Gets a de-identify template.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.deidentifyTemplates.get",
@@ -10582,7 +10579,7 @@ type ProjectsDeidentifyTemplatesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists DeidentifyTemplates.
+// List: Lists de-identify templates.
 func (r *ProjectsDeidentifyTemplatesService) List(parent string) *ProjectsDeidentifyTemplatesListCall {
 	c := &ProjectsDeidentifyTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10701,7 +10698,7 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists DeidentifyTemplates.",
+	//   "description": "Lists de-identify templates.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.deidentifyTemplates.list",
@@ -10771,7 +10768,7 @@ type ProjectsDeidentifyTemplatesPatchCall struct {
 	header_                                           http.Header
 }
 
-// Patch: Updates the DeidentifyTemplate.
+// Patch: Updates the de-identify template.
 func (r *ProjectsDeidentifyTemplatesService) Patch(name string, googleprivacydlpv2updatedeidentifytemplaterequest *GooglePrivacyDlpV2UpdateDeidentifyTemplateRequest) *ProjectsDeidentifyTemplatesPatchCall {
 	c := &ProjectsDeidentifyTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10866,7 +10863,7 @@ func (c *ProjectsDeidentifyTemplatesPatchCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the DeidentifyTemplate.",
+	//   "description": "Updates the de-identify template.",
 	//   "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.projects.deidentifyTemplates.patch",
@@ -11047,8 +11044,8 @@ type ProjectsDlpJobsCreateCall struct {
 }
 
 // Create: Creates a new job to inspect storage or calculate risk
-// metrics.
-// [How-to guide](/dlp/docs/compute-risk-analysis).
+// metrics [How-to
+// guide](/dlp/docs/compute-risk-analysis).
 func (r *ProjectsDlpJobsService) Create(parent string, googleprivacydlpv2createdlpjobrequest *GooglePrivacyDlpV2CreateDlpJobRequest) *ProjectsDlpJobsCreateCall {
 	c := &ProjectsDlpJobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11142,7 +11139,7 @@ func (c *ProjectsDlpJobsCreateCall) Do(opts ...googleapi.CallOption) (*GooglePri
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new job to inspect storage or calculate risk metrics.\n[How-to guide](/dlp/docs/compute-risk-analysis).",
+	//   "description": "Creates a new job to inspect storage or calculate risk metrics [How-to\nguide](/dlp/docs/compute-risk-analysis).",
 	//   "flatPath": "v2/projects/{projectsId}/dlpJobs",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.dlpJobs.create",
@@ -11835,7 +11832,7 @@ type ProjectsInspectTemplatesCreateCall struct {
 	header_                                        http.Header
 }
 
-// Create: Creates an InspectTemplate for re-using frequently used
+// Create: Creates an inspect template for re-using frequently used
 // configuration
 // for inspecting content, images, and storage.
 func (r *ProjectsInspectTemplatesService) Create(parent string, googleprivacydlpv2createinspecttemplaterequest *GooglePrivacyDlpV2CreateInspectTemplateRequest) *ProjectsInspectTemplatesCreateCall {
@@ -11932,7 +11929,7 @@ func (c *ProjectsInspectTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.",
+	//   "description": "Creates an inspect template for re-using frequently used configuration\nfor inspecting content, images, and storage.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.inspectTemplates.create",
@@ -11972,7 +11969,7 @@ type ProjectsInspectTemplatesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an InspectTemplate.
+// Delete: Deletes an inspect template.
 func (r *ProjectsInspectTemplatesService) Delete(name string) *ProjectsInspectTemplatesDeleteCall {
 	c := &ProjectsInspectTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12060,7 +12057,7 @@ func (c *ProjectsInspectTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an InspectTemplate.",
+	//   "description": "Deletes an inspect template.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.inspectTemplates.delete",
@@ -12098,7 +12095,7 @@ type ProjectsInspectTemplatesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets an InspectTemplate.
+// Get: Gets an inspect template.
 func (r *ProjectsInspectTemplatesService) Get(name string) *ProjectsInspectTemplatesGetCall {
 	c := &ProjectsInspectTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12200,7 +12197,7 @@ func (c *ProjectsInspectTemplatesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets an InspectTemplate.",
+	//   "description": "Gets an inspect template.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.inspectTemplates.get",
@@ -12238,7 +12235,7 @@ type ProjectsInspectTemplatesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists InspectTemplates.
+// List: Lists inspect templates.
 func (r *ProjectsInspectTemplatesService) List(parent string) *ProjectsInspectTemplatesListCall {
 	c := &ProjectsInspectTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12357,7 +12354,7 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists InspectTemplates.",
+	//   "description": "Lists inspect templates.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.inspectTemplates.list",
@@ -12427,7 +12424,7 @@ type ProjectsInspectTemplatesPatchCall struct {
 	header_                                        http.Header
 }
 
-// Patch: Updates the InspectTemplate.
+// Patch: Updates the inspect template.
 func (r *ProjectsInspectTemplatesService) Patch(name string, googleprivacydlpv2updateinspecttemplaterequest *GooglePrivacyDlpV2UpdateInspectTemplateRequest) *ProjectsInspectTemplatesPatchCall {
 	c := &ProjectsInspectTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12522,7 +12519,7 @@ func (c *ProjectsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the InspectTemplate.",
+	//   "description": "Updates the inspect template.",
 	//   "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.projects.inspectTemplates.patch",

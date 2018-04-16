@@ -168,7 +168,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to complete IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+                      "description": "The name (project, location, cluster id) of the cluster to complete IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -535,7 +535,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to set networking policy.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+                      "description": "The name (project, location, cluster id) of the cluster to set networking\npolicy. Specified in the format 'projects/*/locations/*/clusters/*'.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -591,7 +591,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name (project, location, cluster id) of the cluster to start IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+                      "description": "The name (project, location, cluster id) of the cluster to start IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                       "required": true,
@@ -679,7 +679,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pool will be created.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The parent (project, location, cluster id) where the node pool will be\ncreated. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
@@ -712,7 +712,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
                           "required": true,
@@ -757,7 +757,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
                           "required": true,
@@ -802,7 +802,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+                          "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
                           "required": true,
@@ -949,7 +949,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name (project, location, cluster, node pool) of the node pool to update.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The name (project, location, cluster, node pool) of the node pool to\nupdate. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+/nodePools/[^/]+$",
                           "required": true,
@@ -1063,7 +1063,7 @@
                       "type": "string"
                     },
                     "zone": {
-                      "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+                      "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
                       "location": "query",
                       "type": "string"
                     }
@@ -1923,7 +1923,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "The name (project, location, cluster, node pool id) of the node pool to delete.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The name (project, location, cluster, node pool id) of the node pool to\ndelete. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "query",
                           "type": "string"
                         },
@@ -1973,7 +1973,7 @@
                           "type": "string"
                         },
                         "name": {
-                          "description": "The name (project, location, cluster, node pool id) of the node pool to get.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+                          "description": "The name (project, location, cluster, node pool id) of the node pool to\nget. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
                           "location": "query",
                           "type": "string"
                         },
@@ -2022,7 +2022,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The parent (project, location, cluster id) where the node pools will be listed.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+                          "description": "The parent (project, location, cluster id) where the node pools will be\nlisted. Specified in the format 'projects/*/locations/*/clusters/*'.",
                           "location": "query",
                           "type": "string"
                         },
@@ -2351,7 +2351,7 @@
                       "type": "string"
                     },
                     "zone": {
-                      "description": "Deprecated. The name of the Google Compute Engine [zone](/compute/docs/zones#available)\nto return operations for, or `-` for all zones.\nThis field has been deprecated and replaced by the parent field.",
+                      "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) to return operations for, or `-` for\nall zones. This field has been deprecated and replaced by the parent field.",
                       "location": "path",
                       "required": true,
                       "type": "string"
@@ -2372,7 +2372,7 @@
       }
     }
   },
-  "revision": "20180308",
+  "revision": "20180412",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2717,7 +2717,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to complete IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+          "description": "The name (project, location, cluster id) of the cluster to complete IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
           "type": "string"
         },
         "projectId": {
@@ -2767,7 +2767,7 @@
           "description": "The node pool to create."
         },
         "parent": {
-          "description": "The parent (project, location, cluster id) where the node pool will be created.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+          "description": "The parent (project, location, cluster id) where the node pool will be\ncreated. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
           "type": "string"
         },
         "projectId": {
@@ -3102,7 +3102,7 @@
           "type": "object"
         },
         "minCpuPlatform": {
-          "description": "Minimum CPU platform to be used by this instance. The instance may be\nscheduled on the specified or newer CPU platform. Applicable values are the\nfriendly names of CPU platforms, such as\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Haswell\u0026quot;\u003c/code\u003e or\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Sandy Bridge\u0026quot;\u003c/code\u003e. For more\ninformation, read [how to specify min CPU platform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)",
+          "description": "Minimum CPU platform to be used by this instance. The instance may be\nscheduled on the specified or newer CPU platform. Applicable values are the\nfriendly names of CPU platforms, such as\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Haswell\u0026quot;\u003c/code\u003e or\n\u003ccode\u003eminCpuPlatform: \u0026quot;Intel Sandy Bridge\u0026quot;\u003c/code\u003e. For more\ninformation, read [how to specify min CPU\nplatform](https://cloud.google.com/compute/docs/instances/specify-min-cpu-platform)",
           "type": "string"
         },
         "oauthScopes": {
@@ -3656,7 +3656,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to set networking policy.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+          "description": "The name (project, location, cluster id) of the cluster to set networking\npolicy. Specified in the format 'projects/*/locations/*/clusters/*'.",
           "type": "string"
         },
         "networkPolicy": {
@@ -3777,12 +3777,16 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster id) of the cluster to start IP rotation.\nSpecified in the format 'projects/*/locations/*/clusters/*'.",
+          "description": "The name (project, location, cluster id) of the cluster to start IP\nrotation. Specified in the format 'projects/*/locations/*/clusters/*'.",
           "type": "string"
         },
         "projectId": {
           "description": "Deprecated. The Google Developers Console [project ID or project\nnumber](https://developers.google.com/console/help/new/#projectnumber).\nThis field has been deprecated and replaced by the name field.",
           "type": "string"
+        },
+        "rotateCredentials": {
+          "description": "Whether to rotate credentials during IP rotation.",
+          "type": "boolean"
         },
         "zone": {
           "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
@@ -3858,7 +3862,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name (project, location, cluster, node pool) of the node pool to update.\nSpecified in the format 'projects/*/locations/*/clusters/*/nodePools/*'.",
+          "description": "The name (project, location, cluster, node pool) of the node pool to\nupdate. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",
           "type": "string"
         },
         "nodePoolId": {
@@ -3882,6 +3886,6 @@
     }
   },
   "servicePath": "",
-  "title": "Google Kubernetes Engine API",
+  "title": "Kubernetes Engine API",
   "version": "v1"
 }

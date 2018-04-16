@@ -731,7 +731,7 @@ type GetAncestryResponse struct {
 	// hierarchy. The
 	// first ancestor is the project itself, followed by the project's
 	// parent,
-	// etc.
+	// etc..
 	Ancestor []*Ancestor `json:"ancestor,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

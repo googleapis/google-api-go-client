@@ -1164,7 +1164,7 @@ func (s *AcceleratorTypeListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type AcceleratorTypesScopedList struct {
-	// AcceleratorTypes: [Output Only] List of accelerator types contained
+	// AcceleratorTypes: [Output Only] A list of accelerator types contained
 	// in this scope.
 	AcceleratorTypes []*AcceleratorType `json:"acceleratorTypes,omitempty"`
 
@@ -1818,7 +1818,7 @@ func (s *AddressListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type AddressesScopedList struct {
-	// Addresses: [Output Only] List of addresses contained in this scope.
+	// Addresses: [Output Only] A list of addresses contained in this scope.
 	Addresses []*Address `json:"addresses,omitempty"`
 
 	// Warning: [Output Only] Informational warning which replaces the list
@@ -2838,7 +2838,7 @@ func (s *AutoscalerStatusDetails) MarshalJSON() ([]byte, error) {
 }
 
 type AutoscalersScopedList struct {
-	// Autoscalers: [Output Only] List of autoscalers contained in this
+	// Autoscalers: [Output Only] A list of autoscalers contained in this
 	// scope.
 	Autoscalers []*Autoscaler `json:"autoscalers,omitempty"`
 
@@ -4252,7 +4252,7 @@ func (s *BackendServiceListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type BackendServicesScopedList struct {
-	// BackendServices: List of BackendServices contained in this scope.
+	// BackendServices: A list of BackendServices contained in this scope.
 	BackendServices []*BackendService `json:"backendServices,omitempty"`
 
 	// Warning: Informational warning which replaces the list of backend
@@ -4588,8 +4588,8 @@ type Commitment struct {
 	// used.
 	Region string `json:"region,omitempty"`
 
-	// Resources: List of commitment amounts for particular resources. Note
-	// that VCPU and MEMORY resource commitments must occur together.
+	// Resources: A list of commitment amounts for particular resources.
+	// Note that VCPU and MEMORY resource commitments must occur together.
 	Resources []*ResourceCommitment `json:"resources,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
@@ -4953,7 +4953,7 @@ func (s *CommitmentListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type CommitmentsScopedList struct {
-	// Commitments: [Output Only] List of commitments contained in this
+	// Commitments: [Output Only] A list of commitments contained in this
 	// scope.
 	Commitments []*Commitment `json:"commitments,omitempty"`
 
@@ -5188,6 +5188,10 @@ func (s *ConnectionDraining) MarshalJSON() ([]byte, error) {
 
 // CustomerEncryptionKey: Represents a customer-supplied encryption key
 type CustomerEncryptionKey struct {
+	// KmsKeyName: The name of the encryption key that is stored in Google
+	// Cloud KMS.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
 	// RawKey: Specifies a 256-bit customer-supplied encryption key, encoded
 	// in RFC 4648 base64 to either encrypt or decrypt this resource.
 	RawKey string `json:"rawKey,omitempty"`
@@ -5201,7 +5205,7 @@ type CustomerEncryptionKey struct {
 	// - The key is wrapped using a RSA public key certificate provided by
 	// Google.
 	// - After being wrapped, the key must be encoded in RFC 4648 base64
-	// encoding.  Get the RSA public key certificate provided by Google
+	// encoding.  Gets the RSA public key certificate provided by Google
 	// at:
 	// https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingre
 	// ss.pem
@@ -5211,7 +5215,7 @@ type CustomerEncryptionKey struct {
 	// customer-supplied encryption key that protects this resource.
 	Sha256 string `json:"sha256,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RawKey") to
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5219,8 +5223,8 @@ type CustomerEncryptionKey struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RawKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -6357,7 +6361,8 @@ func (s *DiskTypeListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type DiskTypesScopedList struct {
-	// DiskTypes: [Output Only] List of disk types contained in this scope.
+	// DiskTypes: [Output Only] A list of disk types contained in this
+	// scope.
 	DiskTypes []*DiskType `json:"diskTypes,omitempty"`
 
 	// Warning: [Output Only] Informational warning which replaces the list
@@ -6518,7 +6523,7 @@ func (s *DisksResizeRequest) MarshalJSON() ([]byte, error) {
 }
 
 type DisksScopedList struct {
-	// Disks: [Output Only] List of disks contained in this scope.
+	// Disks: [Output Only] A list of disks contained in this scope.
 	Disks []*Disk `json:"disks,omitempty"`
 
 	// Warning: [Output Only] Informational warning which replaces the list
@@ -7762,7 +7767,7 @@ func (s *ForwardingRuleListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type ForwardingRulesScopedList struct {
-	// ForwardingRules: List of forwarding rules contained in this scope.
+	// ForwardingRules: A list of forwarding rules contained in this scope.
 	ForwardingRules []*ForwardingRule `json:"forwardingRules,omitempty"`
 
 	// Warning: Informational warning which replaces the list of forwarding
@@ -9366,7 +9371,7 @@ type Instance struct {
 	// must be created before you can assign them.
 	Disks []*AttachedDisk `json:"disks,omitempty"`
 
-	// GuestAccelerators: List of the type and count of accelerator cards
+	// GuestAccelerators: A list of the type and count of accelerator cards
 	// attached to the instance.
 	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
 
@@ -9720,8 +9725,8 @@ type InstanceGroup struct {
 	// instance group belong.
 	Network string `json:"network,omitempty"`
 
-	// Region: The URL of the region where the instance group is located
-	// (for regional resources).
+	// Region: [Output Only] The URL of the region where the instance group
+	// is located (for regional resources).
 	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] The URL for this instance group. The server
@@ -9732,8 +9737,8 @@ type InstanceGroup struct {
 	// group.
 	Size int64 `json:"size,omitempty"`
 
-	// Subnetwork: The URL of the subnetwork to which all instances in the
-	// instance group belong.
+	// Subnetwork: [Output Only] The URL of the subnetwork to which all
+	// instances in the instance group belong.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Zone: [Output Only] The URL of the zone where the instance group is
@@ -12390,7 +12395,7 @@ func (s *InstanceWithNamedPorts) MarshalJSON() ([]byte, error) {
 }
 
 type InstancesScopedList struct {
-	// Instances: [Output Only] List of instances contained in this scope.
+	// Instances: [Output Only] A list of instances contained in this scope.
 	Instances []*Instance `json:"instances,omitempty"`
 
 	// Warning: [Output Only] Informational warning which replaces the list
@@ -12555,7 +12560,7 @@ func (s *InstancesSetLabelsRequest) MarshalJSON() ([]byte, error) {
 }
 
 type InstancesSetMachineResourcesRequest struct {
-	// GuestAccelerators: List of the type and count of accelerator cards
+	// GuestAccelerators: A list of the type and count of accelerator cards
 	// attached to the instance.
 	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
 
@@ -12719,7 +12724,7 @@ type Interconnect struct {
 	// set to true.
 	AdminEnabled bool `json:"adminEnabled,omitempty"`
 
-	// CircuitInfos: [Output Only] List of CircuitInfo objects, that
+	// CircuitInfos: [Output Only] A list of CircuitInfo objects, that
 	// describe the individual circuits in this LAG.
 	CircuitInfos []*InterconnectCircuitInfo `json:"circuitInfos,omitempty"`
 
@@ -12735,7 +12740,7 @@ type Interconnect struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
-	// ExpectedOutages: [Output Only] List of outages expected for this
+	// ExpectedOutages: [Output Only] A list of outages expected for this
 	// Interconnect.
 	ExpectedOutages []*InterconnectOutageNotification `json:"expectedOutages,omitempty"`
 
@@ -13472,7 +13477,7 @@ func (s *InterconnectAttachmentPrivateInfo) MarshalJSON() ([]byte, error) {
 }
 
 type InterconnectAttachmentsScopedList struct {
-	// InterconnectAttachments: List of interconnect attachments contained
+	// InterconnectAttachments: A list of interconnect attachments contained
 	// in this scope.
 	InterconnectAttachments []*InterconnectAttachment `json:"interconnectAttachments,omitempty"`
 
@@ -15081,7 +15086,7 @@ func (s *MachineTypeListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type MachineTypesScopedList struct {
-	// MachineTypes: [Output Only] List of machine types contained in this
+	// MachineTypes: [Output Only] A list of machine types contained in this
 	// scope.
 	MachineTypes []*MachineType `json:"machineTypes,omitempty"`
 
@@ -15590,7 +15595,7 @@ type Network struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// Peerings: [Output Only] List of network peerings for the resource.
+	// Peerings: [Output Only] A list of network peerings for the resource.
 	Peerings []*NetworkPeering `json:"peerings,omitempty"`
 
 	// RoutingConfig: The network-level routing configuration for this
@@ -16650,7 +16655,8 @@ func (s *OperationListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type OperationsScopedList struct {
-	// Operations: [Output Only] List of operations contained in this scope.
+	// Operations: [Output Only] A list of operations contained in this
+	// scope.
 	Operations []*Operation `json:"operations,omitempty"`
 
 	// Warning: [Output Only] Informational warning which replaces the list
@@ -18124,7 +18130,7 @@ func (s *RegionInstanceGroupManagersDeleteInstancesRequest) MarshalJSON() ([]byt
 }
 
 type RegionInstanceGroupManagersListInstancesResponse struct {
-	// ManagedInstances: List of managed instances.
+	// ManagedInstances: A list of managed instances.
 	ManagedInstances []*ManagedInstance `json:"managedInstances,omitempty"`
 
 	// NextPageToken: [Output Only] This token allows you to get the next
@@ -19911,7 +19917,7 @@ func (s *RoutersPreviewResponse) MarshalJSON() ([]byte, error) {
 }
 
 type RoutersScopedList struct {
-	// Routers: List of routers contained in this scope.
+	// Routers: A list of routers contained in this scope.
 	Routers []*Router `json:"routers,omitempty"`
 
 	// Warning: Informational warning which replaces the list of routers
@@ -20247,9 +20253,9 @@ type SecurityPolicy struct {
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
 
-	// Rules: List of rules that belong to this policy. There must always be
-	// a default rule (rule with priority 2147483647 and match "*"). If no
-	// rules are provided when creating a security policy, a default rule
+	// Rules: A list of rules that belong to this policy. There must always
+	// be a default rule (rule with priority 2147483647 and match "*"). If
+	// no rules are provided when creating a security policy, a default rule
 	// with action "allow" will be added.
 	Rules []*SecurityPolicyRule `json:"rules,omitempty"`
 
@@ -21465,8 +21471,8 @@ type SslPolicy struct {
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// CustomFeatures: List of features enabled when the selected profile is
-	// CUSTOM. The
+	// CustomFeatures: A list of features enabled when the selected profile
+	// is CUSTOM. The
 	// - method returns the set of features that can be specified in this
 	// list. This field must be empty if the profile is not CUSTOM.
 	CustomFeatures []string `json:"customFeatures,omitempty"`
@@ -22192,7 +22198,7 @@ func (s *SubnetworksExpandIpCidrRangeRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SubnetworksScopedList struct {
-	// Subnetworks: List of subnetworks contained in this scope.
+	// Subnetworks: A list of subnetworks contained in this scope.
 	Subnetworks []*Subnetwork `json:"subnetworks,omitempty"`
 
 	// Warning: An informational warning that appears when the list of
@@ -23368,7 +23374,7 @@ func (s *TargetInstanceListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type TargetInstancesScopedList struct {
-	// TargetInstances: List of target instances contained in this scope.
+	// TargetInstances: A list of target instances contained in this scope.
 	TargetInstances []*TargetInstance `json:"targetInstances,omitempty"`
 
 	// Warning: Informational warning which replaces the list of addresses
@@ -24111,7 +24117,7 @@ func (s *TargetPoolsRemoveInstanceRequest) MarshalJSON() ([]byte, error) {
 }
 
 type TargetPoolsScopedList struct {
-	// TargetPools: List of target pools contained in this scope.
+	// TargetPools: A list of target pools contained in this scope.
 	TargetPools []*TargetPool `json:"targetPools,omitempty"`
 
 	// Warning: Informational warning which replaces the list of addresses
@@ -25299,7 +25305,7 @@ func (s *TargetVpnGatewayListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type TargetVpnGatewaysScopedList struct {
-	// TargetVpnGateways: [Output Only] List of target vpn gateways
+	// TargetVpnGateways: [Output Only] A list of target vpn gateways
 	// contained in this scope.
 	TargetVpnGateways []*TargetVpnGateway `json:"targetVpnGateways,omitempty"`
 
@@ -26644,7 +26650,7 @@ func (s *VpnTunnelListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelsScopedList struct {
-	// VpnTunnels: List of vpn tunnels contained in this scope.
+	// VpnTunnels: A list of vpn tunnels contained in this scope.
 	VpnTunnels []*VpnTunnel `json:"vpnTunnels,omitempty"`
 
 	// Warning: Informational warning which replaces the list of addresses
@@ -48294,7 +48300,7 @@ type InstanceGroupManagersGetCall struct {
 }
 
 // Get: Returns all of the details about the specified managed instance
-// group. Get a list of available managed instance groups by making a
+// group. Gets a list of available managed instance groups by making a
 // list() request.
 func (r *InstanceGroupManagersService) Get(project string, zone string, instanceGroupManager string) *InstanceGroupManagersGetCall {
 	c := &InstanceGroupManagersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -48400,7 +48406,7 @@ func (c *InstanceGroupManagersGetCall) Do(opts ...googleapi.CallOption) (*Instan
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all of the details about the specified managed instance group. Get a list of available managed instance groups by making a list() request.",
+	//   "description": "Returns all of the details about the specified managed instance group. Gets a list of available managed instance groups by making a list() request.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceGroupManagers.get",
 	//   "parameterOrder": [
@@ -52891,8 +52897,8 @@ type InstanceTemplatesGetCall struct {
 	header_          http.Header
 }
 
-// Get: Returns the specified instance template. Get a list of available
-// instance templates by making a list() request.
+// Get: Returns the specified instance template. Gets a list of
+// available instance templates by making a list() request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instanceTemplates/get
 func (r *InstanceTemplatesService) Get(project string, instanceTemplate string) *InstanceTemplatesGetCall {
 	c := &InstanceTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -52996,7 +53002,7 @@ func (c *InstanceTemplatesGetCall) Do(opts ...googleapi.CallOption) (*InstanceTe
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified instance template. Get a list of available instance templates by making a list() request.",
+	//   "description": "Returns the specified instance template. Gets a list of available instance templates by making a list() request.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instanceTemplates.get",
 	//   "parameterOrder": [
@@ -63350,7 +63356,7 @@ type MachineTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the specified machine type. Get a list of available
+// Get: Returns the specified machine type. Gets a list of available
 // machine types by making a list() request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/machineTypes/get
 func (r *MachineTypesService) Get(project string, zone string, machineType string) *MachineTypesGetCall {
@@ -63457,7 +63463,7 @@ func (c *MachineTypesGetCall) Do(opts ...googleapi.CallOption) (*MachineType, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified machine type. Get a list of available machine types by making a list() request.",
+	//   "description": "Returns the specified machine type. Gets a list of available machine types by making a list() request.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.machineTypes.get",
 	//   "parameterOrder": [
@@ -66077,7 +66083,7 @@ type ProjectsGetXpnHostCall struct {
 	header_      http.Header
 }
 
-// GetXpnHost: Get the shared VPC host project that this project links
+// GetXpnHost: Gets the shared VPC host project that this project links
 // to. May be empty if no link exists.
 func (r *ProjectsService) GetXpnHost(project string) *ProjectsGetXpnHostCall {
 	c := &ProjectsGetXpnHostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -66179,7 +66185,7 @@ func (c *ProjectsGetXpnHostCall) Do(opts ...googleapi.CallOption) (*Project, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the shared VPC host project that this project links to. May be empty if no link exists.",
+	//   "description": "Gets the shared VPC host project that this project links to. May be empty if no link exists.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.projects.getXpnHost",
 	//   "parameterOrder": [
@@ -66217,7 +66223,7 @@ type ProjectsGetXpnResourcesCall struct {
 	header_      http.Header
 }
 
-// GetXpnResources: Get service resources (a.k.a service project)
+// GetXpnResources: Gets service resources (a.k.a service project)
 // associated with this host project.
 func (r *ProjectsService) GetXpnResources(project string) *ProjectsGetXpnResourcesCall {
 	c := &ProjectsGetXpnResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -66343,7 +66349,7 @@ func (c *ProjectsGetXpnResourcesCall) Do(opts ...googleapi.CallOption) (*Project
 	}
 	return ret, nil
 	// {
-	//   "description": "Get service resources (a.k.a service project) associated with this host project.",
+	//   "description": "Gets service resources (a.k.a service project) associated with this host project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.projects.getXpnResources",
 	//   "parameterOrder": [
@@ -66421,7 +66427,7 @@ type ProjectsListXpnHostsCall struct {
 	header_                     http.Header
 }
 
-// ListXpnHosts: List all shared VPC host projects visible to the user
+// ListXpnHosts: Lists all shared VPC host projects visible to the user
 // in an organization.
 func (r *ProjectsService) ListXpnHosts(project string, projectslistxpnhostsrequest *ProjectsListXpnHostsRequest) *ProjectsListXpnHostsCall {
 	c := &ProjectsListXpnHostsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -66540,7 +66546,7 @@ func (c *ProjectsListXpnHostsCall) Do(opts ...googleapi.CallOption) (*XpnHostLis
 	}
 	return ret, nil
 	// {
-	//   "description": "List all shared VPC host projects visible to the user in an organization.",
+	//   "description": "Lists all shared VPC host projects visible to the user in an organization.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.projects.listXpnHosts",
 	//   "parameterOrder": [
@@ -83986,7 +83992,7 @@ type SslPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: List all of the ordered rules present in a single specified
+// Get: Lists all of the ordered rules present in a single specified
 // policy.
 func (r *SslPoliciesService) Get(project string, sslPolicy string) *SslPoliciesGetCall {
 	c := &SslPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -84090,7 +84096,7 @@ func (c *SslPoliciesGetCall) Do(opts ...googleapi.CallOption) (*SslPolicy, error
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the ordered rules present in a single specified policy.",
+	//   "description": "Lists all of the ordered rules present in a single specified policy.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.sslPolicies.get",
 	//   "parameterOrder": [
@@ -84296,7 +84302,7 @@ type SslPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: List all the SSL policies that have been configured for the
+// List: Lists all the SSL policies that have been configured for the
 // specified project.
 func (r *SslPoliciesService) List(project string) *SslPoliciesListCall {
 	c := &SslPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -84461,7 +84467,7 @@ func (c *SslPoliciesListCall) Do(opts ...googleapi.CallOption) (*SslPoliciesList
 	}
 	return ret, nil
 	// {
-	//   "description": "List all the SSL policies that have been configured for the specified project.",
+	//   "description": "Lists all the SSL policies that have been configured for the specified project.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.sslPolicies.list",
 	//   "parameterOrder": [

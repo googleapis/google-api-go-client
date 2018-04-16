@@ -4368,7 +4368,9 @@ type EntriesWriteCall struct {
 // This API method is the only way to send log entries to Stackdriver
 // Logging. This method is used, directly or indirectly, by the
 // Stackdriver Logging agent (fluentd) and all logging libraries
-// configured to use Stackdriver Logging.
+// configured to use Stackdriver Logging. A single request may contain
+// log entries for a maximum of 1000 different resources (projects,
+// organizations, billing accounts or folders)
 func (r *EntriesService) Write(writelogentriesrequest *WriteLogEntriesRequest) *EntriesWriteCall {
 	c := &EntriesWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.writelogentriesrequest = writelogentriesrequest
@@ -4458,7 +4460,7 @@ func (c *EntriesWriteCall) Do(opts ...googleapi.CallOption) (*WriteLogEntriesRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Log entry resourcesWrites log entries to Stackdriver Logging. This API method is the only way to send log entries to Stackdriver Logging. This method is used, directly or indirectly, by the Stackdriver Logging agent (fluentd) and all logging libraries configured to use Stackdriver Logging.",
+	//   "description": "Log entry resourcesWrites log entries to Stackdriver Logging. This API method is the only way to send log entries to Stackdriver Logging. This method is used, directly or indirectly, by the Stackdriver Logging agent (fluentd) and all logging libraries configured to use Stackdriver Logging. A single request may contain log entries for a maximum of 1000 different resources (projects, organizations, billing accounts or folders)",
 	//   "flatPath": "v2/entries:write",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.write",

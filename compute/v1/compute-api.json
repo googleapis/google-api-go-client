@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/Gatpcf2w8Sp4sZBOa8DIZmgUmI8\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/YuzmGMZgZ_itJuXZM_bqzOztCI4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -4159,7 +4159,7 @@
           ]
         },
         "get": {
-          "description": "Returns all of the details about the specified managed instance group. Get a list of available managed instance groups by making a list() request.",
+          "description": "Returns all of the details about the specified managed instance group. Gets a list of available managed instance groups by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.instanceGroupManagers.get",
           "parameterOrder": [
@@ -5029,7 +5029,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified instance template. Get a list of available instance templates by making a list() request.",
+          "description": "Returns the specified instance template. Gets a list of available instance templates by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.instanceTemplates.get",
           "parameterOrder": [
@@ -7384,7 +7384,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified machine type. Get a list of available machine types by making a list() request.",
+          "description": "Returns the specified machine type. Gets a list of available machine types by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.machineTypes.get",
           "parameterOrder": [
@@ -7958,7 +7958,7 @@
           ]
         },
         "getXpnHost": {
-          "description": "Get the shared VPC host project that this project links to. May be empty if no link exists.",
+          "description": "Gets the shared VPC host project that this project links to. May be empty if no link exists.",
           "httpMethod": "GET",
           "id": "compute.projects.getXpnHost",
           "parameterOrder": [
@@ -7983,7 +7983,7 @@
           ]
         },
         "getXpnResources": {
-          "description": "Get service resources (a.k.a service project) associated with this host project.",
+          "description": "Gets service resources (a.k.a service project) associated with this host project.",
           "httpMethod": "GET",
           "id": "compute.projects.getXpnResources",
           "parameterOrder": [
@@ -8027,7 +8027,7 @@
           ]
         },
         "listXpnHosts": {
-          "description": "List all shared VPC host projects visible to the user in an organization.",
+          "description": "Lists all shared VPC host projects visible to the user in an organization.",
           "httpMethod": "POST",
           "id": "compute.projects.listXpnHosts",
           "parameterOrder": [
@@ -10932,7 +10932,7 @@
           ]
         },
         "get": {
-          "description": "List all of the ordered rules present in a single specified policy.",
+          "description": "Lists all of the ordered rules present in a single specified policy.",
           "httpMethod": "GET",
           "id": "compute.sslPolicies.get",
           "parameterOrder": [
@@ -10998,7 +10998,7 @@
           ]
         },
         "list": {
-          "description": "List all the SSL policies that have been configured for the specified project.",
+          "description": "Lists all the SSL policies that have been configured for the specified project.",
           "httpMethod": "GET",
           "id": "compute.sslPolicies.list",
           "parameterOrder": [
@@ -14361,7 +14361,7 @@
       }
     }
   },
-  "revision": "20180312",
+  "revision": "20180329",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -14655,7 +14655,7 @@
       "id": "AcceleratorTypesScopedList",
       "properties": {
         "acceleratorTypes": {
-          "description": "[Output Only] List of accelerator types contained in this scope.",
+          "description": "[Output Only] A list of accelerator types contained in this scope.",
           "items": {
             "$ref": "AcceleratorType"
           },
@@ -15110,7 +15110,7 @@
       "id": "AddressesScopedList",
       "properties": {
         "addresses": {
-          "description": "[Output Only] List of addresses contained in this scope.",
+          "description": "[Output Only] A list of addresses contained in this scope.",
           "items": {
             "$ref": "Address"
           },
@@ -15695,7 +15695,7 @@
       "id": "AutoscalersScopedList",
       "properties": {
         "autoscalers": {
-          "description": "[Output Only] List of autoscalers contained in this scope.",
+          "description": "[Output Only] A list of autoscalers contained in this scope.",
           "items": {
             "$ref": "Autoscaler"
           },
@@ -16506,7 +16506,7 @@
       "id": "BackendServicesScopedList",
       "properties": {
         "backendServices": {
-          "description": "List of BackendServices contained in this scope.",
+          "description": "A list of BackendServices contained in this scope.",
           "items": {
             "$ref": "BackendService"
           },
@@ -16692,7 +16692,7 @@
           "type": "string"
         },
         "resources": {
-          "description": "List of commitment amounts for particular resources. Note that VCPU and MEMORY resource commitments must occur together.",
+          "description": "A list of commitment amounts for particular resources. Note that VCPU and MEMORY resource commitments must occur together.",
           "items": {
             "$ref": "ResourceCommitment"
           },
@@ -16957,7 +16957,7 @@
       "id": "CommitmentsScopedList",
       "properties": {
         "commitments": {
-          "description": "[Output Only] List of commitments contained in this scope.",
+          "description": "[Output Only] A list of commitments contained in this scope.",
           "items": {
             "$ref": "Commitment"
           },
@@ -17791,7 +17791,7 @@
       "id": "DiskTypesScopedList",
       "properties": {
         "diskTypes": {
-          "description": "[Output Only] List of disk types contained in this scope.",
+          "description": "[Output Only] A list of disk types contained in this scope.",
           "items": {
             "$ref": "DiskType"
           },
@@ -17896,7 +17896,7 @@
       "id": "DisksScopedList",
       "properties": {
         "disks": {
-          "description": "[Output Only] List of disks contained in this scope.",
+          "description": "[Output Only] A list of disks contained in this scope.",
           "items": {
             "$ref": "Disk"
           },
@@ -18586,7 +18586,7 @@
       "id": "ForwardingRulesScopedList",
       "properties": {
         "forwardingRules": {
-          "description": "List of forwarding rules contained in this scope.",
+          "description": "A list of forwarding rules contained in this scope.",
           "items": {
             "$ref": "ForwardingRule"
           },
@@ -19738,7 +19738,7 @@
           "type": "array"
         },
         "guestAccelerators": {
-          "description": "List of the type and count of accelerator cards attached to the instance.",
+          "description": "A list of the type and count of accelerator cards attached to the instance.",
           "items": {
             "$ref": "AcceleratorConfig"
           },
@@ -20019,7 +20019,7 @@
           "type": "string"
         },
         "region": {
-          "description": "The URL of the region where the instance group is located (for regional resources).",
+          "description": "[Output Only] The URL of the region where the instance group is located (for regional resources).",
           "type": "string"
         },
         "selfLink": {
@@ -20032,7 +20032,7 @@
           "type": "integer"
         },
         "subnetwork": {
-          "description": "The URL of the subnetwork to which all instances in the instance group belong.",
+          "description": "[Output Only] The URL of the subnetwork to which all instances in the instance group belong.",
           "type": "string"
         },
         "zone": {
@@ -21600,7 +21600,7 @@
       "id": "InstancesScopedList",
       "properties": {
         "instances": {
-          "description": "[Output Only] List of instances contained in this scope.",
+          "description": "[Output Only] A list of instances contained in this scope.",
           "items": {
             "$ref": "Instance"
           },
@@ -21711,7 +21711,7 @@
       "id": "InstancesSetMachineResourcesRequest",
       "properties": {
         "guestAccelerators": {
-          "description": "List of the type and count of accelerator cards attached to the instance.",
+          "description": "A list of the type and count of accelerator cards attached to the instance.",
           "items": {
             "$ref": "AcceleratorConfig"
           },
@@ -21779,7 +21779,7 @@
           "type": "boolean"
         },
         "circuitInfos": {
-          "description": "[Output Only] List of CircuitInfo objects, that describe the individual circuits in this LAG.",
+          "description": "[Output Only] A list of CircuitInfo objects, that describe the individual circuits in this LAG.",
           "items": {
             "$ref": "InterconnectCircuitInfo"
           },
@@ -21798,7 +21798,7 @@
           "type": "string"
         },
         "expectedOutages": {
-          "description": "[Output Only] List of outages expected for this Interconnect.",
+          "description": "[Output Only] A list of outages expected for this Interconnect.",
           "items": {
             "$ref": "InterconnectOutageNotification"
           },
@@ -22216,7 +22216,7 @@
       "id": "InterconnectAttachmentsScopedList",
       "properties": {
         "interconnectAttachments": {
-          "description": "List of interconnect attachments contained in this scope.",
+          "description": "A list of interconnect attachments contained in this scope.",
           "items": {
             "$ref": "InterconnectAttachment"
           },
@@ -23068,7 +23068,7 @@
           "type": "string"
         },
         "scratchDisks": {
-          "description": "[Output Only] List of extended scratch disks assigned to the instance.",
+          "description": "[Output Only] A list of extended scratch disks assigned to the instance.",
           "items": {
             "properties": {
               "diskGb": {
@@ -23320,7 +23320,7 @@
       "id": "MachineTypesScopedList",
       "properties": {
         "machineTypes": {
-          "description": "[Output Only] List of machine types contained in this scope.",
+          "description": "[Output Only] A list of machine types contained in this scope.",
           "items": {
             "$ref": "MachineType"
           },
@@ -23621,7 +23621,7 @@
           "type": "string"
         },
         "peerings": {
-          "description": "[Output Only] List of network peerings for the resource.",
+          "description": "[Output Only] A list of network peerings for the resource.",
           "items": {
             "$ref": "NetworkPeering"
           },
@@ -24336,7 +24336,7 @@
       "id": "OperationsScopedList",
       "properties": {
         "operations": {
-          "description": "[Output Only] List of operations contained in this scope.",
+          "description": "[Output Only] A list of operations contained in this scope.",
           "items": {
             "$ref": "Operation"
           },
@@ -25165,7 +25165,7 @@
       "id": "RegionInstanceGroupManagersListInstancesResponse",
       "properties": {
         "managedInstances": {
-          "description": "List of managed instances.",
+          "description": "A list of managed instances.",
           "items": {
             "$ref": "ManagedInstance"
           },
@@ -26373,7 +26373,7 @@
       "id": "RoutersScopedList",
       "properties": {
         "routers": {
-          "description": "List of routers contained in this scope.",
+          "description": "A list of routers contained in this scope.",
           "items": {
             "$ref": "Router"
           },
@@ -27088,7 +27088,7 @@
           "type": "string"
         },
         "customFeatures": {
-          "description": "List of features enabled when the selected profile is CUSTOM. The\n- method returns the set of features that can be specified in this list. This field must be empty if the profile is not CUSTOM.",
+          "description": "A list of features enabled when the selected profile is CUSTOM. The\n- method returns the set of features that can be specified in this list. This field must be empty if the profile is not CUSTOM.",
           "items": {
             "type": "string"
           },
@@ -27577,7 +27577,7 @@
       "id": "SubnetworksScopedList",
       "properties": {
         "subnetworks": {
-          "description": "List of subnetworks contained in this scope.",
+          "description": "A list of subnetworks contained in this scope.",
           "items": {
             "$ref": "Subnetwork"
           },
@@ -28334,7 +28334,7 @@
       "id": "TargetInstancesScopedList",
       "properties": {
         "targetInstances": {
-          "description": "List of target instances contained in this scope.",
+          "description": "A list of target instances contained in this scope.",
           "items": {
             "$ref": "TargetInstance"
           },
@@ -28800,7 +28800,7 @@
       "id": "TargetPoolsScopedList",
       "properties": {
         "targetPools": {
-          "description": "List of target pools contained in this scope.",
+          "description": "A list of target pools contained in this scope.",
           "items": {
             "$ref": "TargetPool"
           },
@@ -29613,7 +29613,7 @@
       "id": "TargetVpnGatewaysScopedList",
       "properties": {
         "targetVpnGateways": {
-          "description": "[Output Only] List of target vpn gateways contained in this scope.",
+          "description": "[Output Only] A list of target vpn gateways contained in this scope.",
           "items": {
             "$ref": "TargetVpnGateway"
           },
@@ -30362,7 +30362,7 @@
       "id": "VpnTunnelsScopedList",
       "properties": {
         "vpnTunnels": {
-          "description": "List of vpn tunnels contained in this scope.",
+          "description": "A list of vpn tunnels contained in this scope.",
           "items": {
             "$ref": "VpnTunnel"
           },

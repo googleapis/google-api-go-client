@@ -150,7 +150,7 @@
         "deidentifyTemplates": {
           "methods": {
             "create": {
-              "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.",
+              "description": "Creates a de-identify template for re-using frequently used configuration\nfor Deidentifying content, images, and storage.",
               "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
               "httpMethod": "POST",
               "id": "dlp.organizations.deidentifyTemplates.create",
@@ -178,7 +178,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a DeidentifyTemplate.",
+              "description": "Deletes a de-identify template.",
               "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "DELETE",
               "id": "dlp.organizations.deidentifyTemplates.delete",
@@ -203,7 +203,7 @@
               ]
             },
             "get": {
-              "description": "Gets a DeidentifyTemplate.",
+              "description": "Gets a de-identify template.",
               "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "GET",
               "id": "dlp.organizations.deidentifyTemplates.get",
@@ -228,7 +228,7 @@
               ]
             },
             "list": {
-              "description": "Lists DeidentifyTemplates.",
+              "description": "Lists de-identify templates.",
               "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates",
               "httpMethod": "GET",
               "id": "dlp.organizations.deidentifyTemplates.list",
@@ -264,7 +264,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the DeidentifyTemplate.",
+              "description": "Updates the de-identify template.",
               "flatPath": "v2/organizations/{organizationsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "PATCH",
               "id": "dlp.organizations.deidentifyTemplates.patch",
@@ -296,7 +296,7 @@
         "inspectTemplates": {
           "methods": {
             "create": {
-              "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.",
+              "description": "Creates an inspect template for re-using frequently used configuration\nfor inspecting content, images, and storage.",
               "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
               "httpMethod": "POST",
               "id": "dlp.organizations.inspectTemplates.create",
@@ -324,7 +324,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an InspectTemplate.",
+              "description": "Deletes an inspect template.",
               "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "DELETE",
               "id": "dlp.organizations.inspectTemplates.delete",
@@ -349,7 +349,7 @@
               ]
             },
             "get": {
-              "description": "Gets an InspectTemplate.",
+              "description": "Gets an inspect template.",
               "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "GET",
               "id": "dlp.organizations.inspectTemplates.get",
@@ -374,7 +374,7 @@
               ]
             },
             "list": {
-              "description": "Lists InspectTemplates.",
+              "description": "Lists inspect templates.",
               "flatPath": "v2/organizations/{organizationsId}/inspectTemplates",
               "httpMethod": "GET",
               "id": "dlp.organizations.inspectTemplates.list",
@@ -410,7 +410,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the InspectTemplate.",
+              "description": "Updates the inspect template.",
               "flatPath": "v2/organizations/{organizationsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "PATCH",
               "id": "dlp.organizations.inspectTemplates.patch",
@@ -534,7 +534,7 @@
         "deidentifyTemplates": {
           "methods": {
             "create": {
-              "description": "Creates a DeidentifyTemplate for re-using frequently used configuration\nfor de-identifying content, images, and storage.",
+              "description": "Creates a de-identify template for re-using frequently used configuration\nfor Deidentifying content, images, and storage.",
               "flatPath": "v2/projects/{projectsId}/deidentifyTemplates",
               "httpMethod": "POST",
               "id": "dlp.projects.deidentifyTemplates.create",
@@ -562,7 +562,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a DeidentifyTemplate.",
+              "description": "Deletes a de-identify template.",
               "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "DELETE",
               "id": "dlp.projects.deidentifyTemplates.delete",
@@ -587,7 +587,7 @@
               ]
             },
             "get": {
-              "description": "Gets a DeidentifyTemplate.",
+              "description": "Gets a de-identify template.",
               "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "GET",
               "id": "dlp.projects.deidentifyTemplates.get",
@@ -612,7 +612,7 @@
               ]
             },
             "list": {
-              "description": "Lists DeidentifyTemplates.",
+              "description": "Lists de-identify templates.",
               "flatPath": "v2/projects/{projectsId}/deidentifyTemplates",
               "httpMethod": "GET",
               "id": "dlp.projects.deidentifyTemplates.list",
@@ -648,7 +648,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the DeidentifyTemplate.",
+              "description": "Updates the de-identify template.",
               "flatPath": "v2/projects/{projectsId}/deidentifyTemplates/{deidentifyTemplatesId}",
               "httpMethod": "PATCH",
               "id": "dlp.projects.deidentifyTemplates.patch",
@@ -708,7 +708,7 @@
               ]
             },
             "create": {
-              "description": "Creates a new job to inspect storage or calculate risk metrics.\n[How-to guide](/dlp/docs/compute-risk-analysis).",
+              "description": "Creates a new job to inspect storage or calculate risk metrics [How-to\nguide](/dlp/docs/compute-risk-analysis).",
               "flatPath": "v2/projects/{projectsId}/dlpJobs",
               "httpMethod": "POST",
               "id": "dlp.projects.dlpJobs.create",
@@ -873,7 +873,7 @@
         "inspectTemplates": {
           "methods": {
             "create": {
-              "description": "Creates an InspectTemplate for re-using frequently used configuration\nfor inspecting content, images, and storage.",
+              "description": "Creates an inspect template for re-using frequently used configuration\nfor inspecting content, images, and storage.",
               "flatPath": "v2/projects/{projectsId}/inspectTemplates",
               "httpMethod": "POST",
               "id": "dlp.projects.inspectTemplates.create",
@@ -901,7 +901,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes an InspectTemplate.",
+              "description": "Deletes an inspect template.",
               "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "DELETE",
               "id": "dlp.projects.inspectTemplates.delete",
@@ -926,7 +926,7 @@
               ]
             },
             "get": {
-              "description": "Gets an InspectTemplate.",
+              "description": "Gets an inspect template.",
               "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "GET",
               "id": "dlp.projects.inspectTemplates.get",
@@ -951,7 +951,7 @@
               ]
             },
             "list": {
-              "description": "Lists InspectTemplates.",
+              "description": "Lists inspect templates.",
               "flatPath": "v2/projects/{projectsId}/inspectTemplates",
               "httpMethod": "GET",
               "id": "dlp.projects.inspectTemplates.list",
@@ -987,7 +987,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the InspectTemplate.",
+              "description": "Updates the inspect template.",
               "flatPath": "v2/projects/{projectsId}/inspectTemplates/{inspectTemplatesId}",
               "httpMethod": "PATCH",
               "id": "dlp.projects.inspectTemplates.patch",
@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180411",
+  "revision": "20180404",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3366,7 +3366,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2PublishToPubSub": {
-      "description": "Publish the results of a DlpJob to a pub sub channel.\nCompatible with: Inspect, Risk",
+      "description": "Publish the results of a DlpJob to a pub sub channel.\nCompatible with: Inpect, Risk",
       "id": "GooglePrivacyDlpV2PublishToPubSub",
       "properties": {
         "topic": {
@@ -3613,7 +3613,7 @@
         },
         "snapshotInspectTemplate": {
           "$ref": "GooglePrivacyDlpV2InspectTemplate",
-          "description": "If run with an InspectTemplate, a snapshot of its state at the time of\nthis run."
+          "description": "If run with an inspect template, a snapshot of it's state at the time of\nthis run."
         }
       },
       "type": "object"
@@ -3676,7 +3676,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2SaveFindings": {
-      "description": "If set, the detailed findings will be persisted to the specified\nOutputStorageConfig. Only a single instance of this action can be\nspecified.\nCompatible with: Inspect",
+      "description": "If set, the detailed findings will be persisted to the specified\nOutputStorageConfig. Compatible with: Inspect",
       "id": "GooglePrivacyDlpV2SaveFindings",
       "properties": {
         "outputConfig": {

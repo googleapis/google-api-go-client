@@ -1155,7 +1155,7 @@
       }
     }
   },
-  "revision": "20180402",
+  "revision": "20180411",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -1399,7 +1399,7 @@
       "id": "GetAncestryResponse",
       "properties": {
         "ancestor": {
-          "description": "Ancestors are ordered from bottom to top of the resource hierarchy. The\nfirst ancestor is the project itself, followed by the project's parent,\netc.",
+          "description": "Ancestors are ordered from bottom to top of the resource hierarchy. The\nfirst ancestor is the project itself, followed by the project's parent,\netc..",
           "items": {
             "$ref": "Ancestor"
           },

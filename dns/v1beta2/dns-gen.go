@@ -3095,8 +3095,7 @@ type ManagedZonesPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Update an existing ManagedZone. This method supports patch
-// semantics.
+// Patch: Apply a partial update to an existing ManagedZone.
 func (r *ManagedZonesService) Patch(project string, managedZone string, managedzone *ManagedZone) *ManagedZonesPatchCall {
 	c := &ManagedZonesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -3201,7 +3200,7 @@ func (c *ManagedZonesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Update an existing ManagedZone. This method supports patch semantics.",
+	//   "description": "Apply a partial update to an existing ManagedZone.",
 	//   "httpMethod": "PATCH",
 	//   "id": "dns.managedZones.patch",
 	//   "parameterOrder": [

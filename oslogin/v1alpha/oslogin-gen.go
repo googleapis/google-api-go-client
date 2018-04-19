@@ -135,7 +135,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ImportSshPublicKeyResponse: A response message for importing an SSH
+// ImportSshPublicKeyResponse: A response message from importing an SSH
 // public key.
 type ImportSshPublicKeyResponse struct {
 	// LoginProfile: The login profile information for the user.
@@ -223,6 +223,17 @@ type PosixAccount struct {
 
 	// HomeDirectory: The path to the home directory for this account.
 	HomeDirectory string `json:"homeDirectory,omitempty"`
+
+	// OperatingSystemType: The operating system type where this account
+	// applies.
+	//
+	// Possible values:
+	//   "OPERATING_SYSTEM_TYPE_UNSPECIFIED" - The operating system type
+	// associated with the user account information is
+	// unspecified.
+	//   "LINUX" - Linux user account information.
+	//   "WINDOWS" - Windows user account information.
+	OperatingSystemType string `json:"operatingSystemType,omitempty"`
 
 	// Primary: Only one POSIX account can be marked as primary.
 	Primary bool `json:"primary,omitempty"`

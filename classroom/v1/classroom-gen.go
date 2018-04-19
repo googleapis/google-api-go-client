@@ -658,7 +658,7 @@ type Course struct {
 
 	// Name: Name of the course.
 	// For example, "10th Grade Biology".
-	// The name is required. It must be between 1 and 750 characters and a
+	// The name is required. It must be between 1 and 50 characters and a
 	// valid
 	// UTF-8 string.
 	Name string `json:"name,omitempty"`

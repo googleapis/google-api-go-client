@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/e5F2mTs50sJnLnMkzFkqjWW6G1k\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/v680dF4W5NrRgzO5GCihpZpsTEU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -587,7 +587,7 @@
           ]
         },
         "patch": {
-          "description": "Update an existing ManagedZone. This method supports patch semantics.",
+          "description": "Apply a partial update to an existing ManagedZone.",
           "httpMethod": "PATCH",
           "id": "dns.managedZones.patch",
           "parameterOrder": [
@@ -760,7 +760,7 @@
       }
     }
   },
-  "revision": "20180314",
+  "revision": "20180412",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Change": {

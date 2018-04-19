@@ -1044,8 +1044,10 @@ func (s *DevicesLongRunningOperationResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dpc: An EMM's DPC ([device policy
-// controller](/android/work/dpc/build-dpc)).
+// Dpc: An EMM's DPC ([device
+// policy
+// controller](http://developer.android.com/work/dpc/build-dpc.htm
+// l)).
 // Zero-touch enrollment installs a DPC (listed in the `Configuration`)
 // on a
 // device to maintain the customer's mobile policies. All the DPCs

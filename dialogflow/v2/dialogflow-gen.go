@@ -1268,7 +1268,7 @@ type GoogleCloudDialogflowV2Intent struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "expectUserResponse": true,
 	//   "isSsml": false,
 	//   "noInputPrompts": [],
@@ -1319,7 +1319,7 @@ type GoogleCloudDialogflowV2Intent struct {
 	//     },
 	//     "intent": "actions.intent.OPTION"
 	//   }
-	// }
+	// }</pre>
 	DefaultResponsePlatforms []string `json:"defaultResponsePlatforms,omitempty"`
 
 	// DisplayName: Required. The name of this intent.
@@ -1576,7 +1576,7 @@ type GoogleCloudDialogflowV2IntentMessage struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "expectUserResponse": true,
 	//   "isSsml": false,
 	//   "noInputPrompts": [],
@@ -1627,7 +1627,7 @@ type GoogleCloudDialogflowV2IntentMessage struct {
 	//     },
 	//     "intent": "actions.intent.OPTION"
 	//   }
-	// }
+	// }</pre>
 	Platform string `json:"platform,omitempty"`
 
 	// QuickReplies: The quick replies response.
@@ -3186,7 +3186,7 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "google": {
 	//     "expectUserResponse": true,
 	//     "richResponse": {
@@ -3199,7 +3199,7 @@ type GoogleCloudDialogflowV2WebhookResponse struct {
 	//       ]
 	//     }
 	//   }
-	// }
+	// }</pre>
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Source: Optional. This value is passed directly to
@@ -3595,7 +3595,7 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "expectUserResponse": true,
 	//   "isSsml": false,
 	//   "noInputPrompts": [],
@@ -3646,7 +3646,7 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	//     },
 	//     "intent": "actions.intent.OPTION"
 	//   }
-	// }
+	// }</pre>
 	DefaultResponsePlatforms []string `json:"defaultResponsePlatforms,omitempty"`
 
 	// DisplayName: Required. The name of this intent.
@@ -3887,7 +3887,7 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "expectUserResponse": true,
 	//   "isSsml": false,
 	//   "noInputPrompts": [],
@@ -3938,7 +3938,7 @@ type GoogleCloudDialogflowV2beta1IntentMessage struct {
 	//     },
 	//     "intent": "actions.intent.OPTION"
 	//   }
-	// }
+	// }</pre>
 	Platform string `json:"platform,omitempty"`
 
 	// QuickReplies: Displays quick replies.
@@ -4771,6 +4771,41 @@ func (s *GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata: Metadata in
+// google::longrunning::Operation for Knowledge operations.
+type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {
+	// State: Required. The current state of this operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "PENDING" - The operation has been created.
+	//   "RUNNING" - The operation is currently running.
+	//   "DONE" - The operation is done, either cancelled or completed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest: Represents
 // the contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.
@@ -5030,7 +5065,7 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	// Webhook
 	// Format](https://developers.google.com/actions/dialogflow/webho
 	// ok)
-	// {
+	// <pre>{
 	//   "google": {
 	//     "expectUserResponse": true,
 	//     "richResponse": {
@@ -5043,7 +5078,7 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 	//       ]
 	//     }
 	//   }
-	// }
+	// }</pre>
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Source: Optional. This value is passed directly to

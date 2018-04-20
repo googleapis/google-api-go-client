@@ -372,6 +372,13 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// allowed.
 	IdentifyingFields []*GooglePrivacyDlpV2FieldId `json:"identifyingFields,omitempty"`
 
+	// RowsLimit: Max number of rows to scan. If the table has more rows
+	// than this value, the
+	// rest of the rows are omitted. If not set, or if set to 0, all rows
+	// will be
+	// scanned. Cannot be used in conjunction with TimespanConfig.
+	RowsLimit int64 `json:"rowsLimit,omitempty,string"`
+
 	// TableReference: Complete BigQuery table reference.
 	TableReference *GooglePrivacyDlpV2BigQueryTable `json:"tableReference,omitempty"`
 
@@ -842,18 +849,18 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	//
 	// Possible values:
 	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
-	//   "BINARY_FILE" - Includes all file extensions not covered by other
-	// types.
+	//   "BINARY_FILE" - Includes all file extensions not covered by text
+	// file types.
 	//   "TEXT_FILE" - Included file extensions:
-	//   c, cc, cpp, cxx, c++, cs, css, dart, eml, go, h, hh, hpp, hxx, h++,
-	// hs,
-	//   html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json, ocaml, md,
-	// mkd,
-	//   markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw, rb, rbw,
-	// rs, rc,
-	//   scala, sh, sql, tex, txt, asc, text, brf, vcard, vcs, wml, xml,
-	// xsl, xsd,
-	//   yml, yaml.
+	//   asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh,
+	// hpp,
+	//   hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js,
+	// json,
+	//   ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py,
+	// pyw,
+	//   rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs,
+	// wml,
+	//   xml, xsl, xsd, yml, yaml.
 	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BytesLimitPerFile")

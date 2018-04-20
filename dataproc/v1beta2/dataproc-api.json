@@ -1630,7 +1630,7 @@
       }
     }
   },
-  "revision": "20180409",
+  "revision": "20180416",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2689,7 +2689,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.A Policy consists of a list of bindings. A Binding binds a list of members to a role, where the members can be user accounts, Google groups, Google domains, and service accounts. A role is a named list of permissions defined by IAM.Example\n{\n  \"bindings\": [\n    {\n      \"role\": \"roles/owner\",\n      \"members\": [\n        \"user:mike@example.com\",\n        \"group:admins@example.com\",\n        \"domain:google.com\",\n        \"serviceAccount:my-other-app@appspot.gserviceaccount.com\",\n      ]\n    },\n    {\n      \"role\": \"roles/viewer\",\n      \"members\": [\"user:sean@example.com\"]\n    }\n  ]\n}\nFor a description of IAM and its features, see the IAM developer's guide (https://cloud.google.com/iam/docs).",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.A Policy consists of a list of bindings. A binding binds a list of members to a role, where the members can be user accounts, Google groups, Google domains, and service accounts. A role is a named list of permissions defined by IAM.JSON Example\n{\n  \"bindings\": [\n    {\n      \"role\": \"roles/owner\",\n      \"members\": [\n        \"user:mike@example.com\",\n        \"group:admins@example.com\",\n        \"domain:google.com\",\n        \"serviceAccount:my-other-app@appspot.gserviceaccount.com\"\n      ]\n    },\n    {\n      \"role\": \"roles/viewer\",\n      \"members\": [\"user:sean@example.com\"]\n    }\n  ]\n}\nYAML Example\nbindings:\n- members:\n  - user:mike@example.com\n  - group:admins@example.com\n  - domain:google.com\n  - serviceAccount:my-other-app@appspot.gserviceaccount.com\n  role: roles/owner\n- members:\n  - user:sean@example.com\n  role: roles/viewer\nFor a description of IAM and its features, see the IAM developer's guide (https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
         "bindings": {

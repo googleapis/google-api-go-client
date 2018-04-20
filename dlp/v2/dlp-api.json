@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180413",
+  "revision": "20180417",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1266,6 +1266,11 @@
             "$ref": "GooglePrivacyDlpV2FieldId"
           },
           "type": "array"
+        },
+        "rowsLimit": {
+          "description": "Max number of rows to scan. If the table has more rows than this value, the\nrest of the rows are omitted. If not set, or if set to 0, all rows will be\nscanned. Cannot be used in conjunction with TimespanConfig.",
+          "format": "int64",
+          "type": "string"
         },
         "tableReference": {
           "$ref": "GooglePrivacyDlpV2BigQueryTable",
@@ -1523,8 +1528,8 @@
           "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied.",
           "enumDescriptions": [
             "Includes all files.",
-            "Includes all file extensions not covered by other types.",
-            "Included file extensions:\n  c, cc, cpp, cxx, c++, cs, css, dart, eml, go, h, hh, hpp, hxx, h++, hs,\n  html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json, ocaml, md, mkd,\n  markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw, rb, rbw, rs, rc,\n  scala, sh, sql, tex, txt, asc, text, brf, vcard, vcs, wml, xml, xsl, xsd,\n  yml, yaml."
+            "Includes all file extensions not covered by text file types.",
+            "Included file extensions:\n  asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh, hpp,\n  hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json,\n  ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw,\n  rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs, wml,\n  xml, xsl, xsd, yml, yaml."
           ],
           "items": {
             "enum": [

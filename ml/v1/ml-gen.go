@@ -287,10 +287,8 @@ type GoogleCloudMlV1__AutoScaling struct {
 	// cost of operating this model will be at least
 	// `rate` * `min_nodes` * number of hours since last billing
 	// cycle,
-	// where `rate` is the cost per node-hour as documented
-	// in
-	// [pricing](https://cloud.google.com/ml-engine/pricing#prediction_pri
-	// cing),
+	// where `rate` is the cost per node-hour as documented in the
+	// [pricing guide](/ml-engine/docs/pricing),
 	// even if no predictions are performed. There is additional cost for
 	// each
 	// prediction performed.
@@ -928,9 +926,9 @@ type GoogleCloudMlV1__Model struct {
 	// deployed.
 	// Currently only one region per model is supported.
 	// Defaults to 'us-central1' if nothing is set.
-	// See the <a href="/ml-engine/docs/regions">available regions</a>
-	// for
-	// ML Engine services.
+	// See the <a href="/ml-engine/docs/tensorflow/regions">available
+	// regions</a>
+	// for ML Engine services.
 	// Note:
 	// *   No matter where a model is deployed, it can always be accessed
 	// by
@@ -1215,8 +1213,7 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// model. The string must use the following
 	// format:
 	//
-	// "projects/<var>[YOUR_PROJECT]</var>/models/<var>[YOUR_MODEL]
-	// </var>"
+	// "projects/YOUR_PROJECT/models/YOUR_MODEL"
 	ModelName string `json:"modelName,omitempty"`
 
 	// OutputPath: Required. The output Google Cloud Storage location.
@@ -1224,9 +1221,9 @@ type GoogleCloudMlV1__PredictionInput struct {
 
 	// Region: Required. The Google Compute Engine region to run the
 	// prediction job in.
-	// See the <a href="/ml-engine/docs/regions">available regions</a>
-	// for
-	// ML Engine services.
+	// See the <a href="/ml-engine/docs/tensorflow/regions">available
+	// regions</a>
+	// for ML Engine services.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
@@ -1267,8 +1264,8 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// of the version
 	// information:
 	//
-	// "projects/<var>[YOUR_PROJECT]</var>/models/<var>YOUR_MO
-	// DEL/versions/<var>[YOUR_VERSION]</var>"
+	// "projects/YOUR_PROJECT/models/YOUR_MODEL/versions/YOUR_
+	// VERSION"
 	VersionName string `json:"versionName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchSize") to
@@ -1359,7 +1356,8 @@ type GoogleCloudMlV1__SetDefaultVersionRequest struct {
 // configuration
 // file referenced from the --config command-line argument. For
 // details, see the guide to
-// <a href="/ml-engine/docs/training-jobs">submitting a training
+// <a href="/ml-engine/docs/tensorflow/training-jobs">submitting a
+// training
 // job</a>.
 type GoogleCloudMlV1__TrainingInput struct {
 	// Args: Optional. Command line arguments to pass to the program.
@@ -1423,8 +1421,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   A machine equivalent to <code
 	// suppresswarning="true">standard</code> that
 	//   also includes a single NVIDIA Tesla K80 GPU. See more about
-	//   <a href="/ml-engine/docs/how-tos/using-gpus">
-	//   using GPUs for training your model</a>.
+	//   <a href="/ml-engine/docs/tensorflow/using-gpus">using GPUs to
+	//   train your model</a>.
 	//   </dd>
 	//   <dt>complex_model_m_gpu</dt>
 	//   <dd>
@@ -1455,6 +1453,15 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// includes
 	//   four NVIDIA Tesla P100 GPUs. The availability of these GPUs is in
 	//   the Beta launch stage.
+	//   </dd>
+	//   <dt>standard_tpu</dt>
+	//   <dd>
+	//   A TPU VM including one Cloud TPU. The availability of Cloud TPU is
+	// in
+	//   <i>Beta</i> launch stage. See more about
+	//   <a href="/ml-engine/docs/tensorflow/using-tpus">using TPUs to
+	// train
+	//   your model</a>.
 	//   </dd>
 	// </dl>
 	//
@@ -1505,9 +1512,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// Region: Required. The Google Compute Engine region to run the
 	// training job in.
-	// See the <a href="/ml-engine/docs/regions">available regions</a>
-	// for
-	// ML Engine services.
+	// See the <a href="/ml-engine/docs/tensorflow/regions">available
+	// regions</a>
+	// for ML Engine services.
 	Region string `json:"region,omitempty"`
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
@@ -1528,8 +1535,10 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// servers.
 	//   "BASIC_GPU" - A single worker instance [with
 	// a
-	// GPU](/ml-engine/docs/how-tos/using-gpus).
-	//   "BASIC_TPU" - A single worker instance with a [Cloud TPU](/tpu)
+	// GPU](/ml-engine/docs/tensorflow/using-gpus).
+	//   "BASIC_TPU" - A single worker instance with a
+	// [Cloud TPU](/ml-engine/docs/tensorflow/using-tpus).
+	// The availability of Cloud TPU is in <i>Beta</i> launch stage.
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
 	// own cluster specification. When you use this tier, set values
@@ -1693,9 +1702,9 @@ type GoogleCloudMlV1__Version struct {
 	// DeploymentUri: Required. The Google Cloud Storage location of the
 	// trained model used to
 	// create the version. See the
-	// [overview of
+	// [guide to
 	// model
-	// deployment](/ml-engine/docs/concepts/deployment-overview) for
+	// deployment](/ml-engine/docs/tensorflow/deploying-models) for
 	// more
 	// information.
 	//
@@ -2054,7 +2063,7 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // specify access control policies for Cloud Platform resources.
 //
 //
-// A `Policy` consists of a list of `bindings`. A `Binding` binds a list
+// A `Policy` consists of a list of `bindings`. A `binding` binds a list
 // of
 // `members` to a `role`, where the members can be user accounts, Google
 // groups,
@@ -2062,7 +2071,7 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 // permissions
 // defined by IAM.
 //
-// **Example**
+// **JSON Example**
 //
 //     {
 //       "bindings": [
@@ -2073,7 +2082,7 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //             "group:admins@example.com",
 //             "domain:google.com",
 //
-// "serviceAccount:my-other-app@appspot.gserviceaccount.com",
+// "serviceAccount:my-other-app@appspot.gserviceaccount.com"
 //           ]
 //         },
 //         {
@@ -2082,6 +2091,20 @@ func (s *GoogleIamV1__Binding) MarshalJSON() ([]byte, error) {
 //         }
 //       ]
 //     }
+//
+// **YAML Example**
+//
+//     bindings:
+//     - members:
+//       - user:mike@example.com
+//       - group:admins@example.com
+//       - domain:google.com
+//       - serviceAccount:my-other-app@appspot.gserviceaccount.com
+//       role: roles/owner
+//     - members:
+//       - user:sean@example.com
+//       role: roles/viewer
+//
 //
 // For a description of IAM and its features, see the
 // [IAM developer's guide](https://cloud.google.com/iam/docs).
@@ -2519,7 +2542,7 @@ type ProjectsGetConfigCall struct {
 
 // GetConfig: Get the service account information associated with your
 // project. You need
-// this information in order to grant the service account persmissions
+// this information in order to grant the service account permissions
 // for
 // the Google Cloud Storage location where you put your model training
 // code
@@ -2625,7 +2648,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMl
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the service account information associated with your project. You need\nthis information in order to grant the service account persmissions for\nthe Google Cloud Storage location where you put your model training code\nfor training the model with Google Cloud Machine Learning.",
+	//   "description": "Get the service account information associated with your project. You need\nthis information in order to grant the service account permissions for\nthe Google Cloud Storage location where you put your model training code\nfor training the model with Google Cloud Machine Learning.",
 	//   "flatPath": "v1/projects/{projectsId}:getConfig",
 	//   "httpMethod": "GET",
 	//   "id": "ml.projects.getConfig",
@@ -3379,7 +3402,8 @@ func (r *ProjectsJobsService) List(parent string) *ProjectsJobsListCall {
 // <p><code>gcloud ml-engine jobs list --filter='jobId:rnn*
 // AND state:FAILED'</code>
 // <p>For more examples, see the guide to
-// <a href="/ml-engine/docs/monitor-training">monitoring jobs</a>.
+// <a href="/ml-engine/docs/tensorflow/monitor-training">monitoring
+// jobs</a>.
 func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3512,7 +3536,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudMlV
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
+	//       "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/tensorflow/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

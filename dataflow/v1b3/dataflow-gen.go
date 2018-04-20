@@ -476,6 +476,11 @@ type AutoscalingEvent struct {
 	// num_workers value.
 	Time string `json:"time,omitempty"`
 
+	// WorkerPool: A short and friendly name for the worker pool this event
+	// refers to,
+	// populated from the value of PoolStageRelation::user_pool_name.
+	WorkerPool string `json:"workerPool,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CurrentNumWorkers")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

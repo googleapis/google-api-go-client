@@ -7,7 +7,7 @@
    "id": "abusiveexperiencereport:v1",
    "name": "abusiveexperiencereport",
    "version": "v1",
-   "title": "Google Abusive Experience Report API",
+   "title": "Abusive Experience Report API",
    "description": "View Abusive Experience Report data, and get a list of sites that have a significant number of abusive experiences.",
    "discoveryRestUrl": "https://abusiveexperiencereport.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -148,7 +148,7 @@
    "id": "adexperiencereport:v1",
    "name": "adexperiencereport",
    "version": "v1",
-   "title": "Google Ad Experience Report API",
+   "title": "Ad Experience Report API",
    "description": "View Ad Experience Report data, and get a list of sites that have a significant number of annoying ads.",
    "discoveryRestUrl": "https://adexperiencereport.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -959,7 +959,7 @@
    "id": "container:v1",
    "name": "container",
    "version": "v1",
-   "title": "Google Kubernetes Engine API",
+   "title": "Kubernetes Engine API",
    "description": "The Google Kubernetes Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
    "discoveryRestUrl": "https://container.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -974,7 +974,7 @@
    "id": "container:v1beta1",
    "name": "container",
    "version": "v1beta1",
-   "title": "Google Kubernetes Engine API",
+   "title": "Kubernetes Engine API",
    "description": "The Google Kubernetes Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
    "discoveryRestUrl": "https://container.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {

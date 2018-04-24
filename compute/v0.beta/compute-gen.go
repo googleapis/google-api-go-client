@@ -19519,6 +19519,18 @@ type RouterBgpPeer struct {
 	// Only IPv4 is supported.
 	IpAddress string `json:"ipAddress,omitempty"`
 
+	// ManagementType: [Output Only] Type of how the resource/configuration
+	// of the BGP peer is managed. MANAGED_BY_USER is the default value;
+	// MANAGED_BY_ATTACHMENT represents an BGP peer that is automatically
+	// created for PARTNER interconnectAttachment, Google will automatically
+	// create/delete this type of BGP peer when the PARTNER
+	// interconnectAttachment is created/deleted.
+	//
+	// Possible values:
+	//   "MANAGED_BY_ATTACHMENT"
+	//   "MANAGED_BY_USER"
+	ManagementType string `json:"managementType,omitempty"`
+
 	// Name: Name of this BGP peer. The name must be 1-63 characters long
 	// and comply with RFC1035.
 	Name string `json:"name,omitempty"`
@@ -19573,6 +19585,18 @@ type RouterInterface struct {
 	// resource and it could either be a VPN Tunnel or an interconnect
 	// attachment.
 	LinkedVpnTunnel string `json:"linkedVpnTunnel,omitempty"`
+
+	// ManagementType: [Output Only] Type of how the resource/configuration
+	// of the interface is managed. MANAGED_BY_USER is the default value;
+	// MANAGED_BY_ATTACHMENT represents an interface that is automatically
+	// created for PARTNER type interconnectAttachment, Google will
+	// automatically create/update/delete this type of interface when the
+	// PARTNER interconnectAttachment is created/provisioned/deleted.
+	//
+	// Possible values:
+	//   "MANAGED_BY_ATTACHMENT"
+	//   "MANAGED_BY_USER"
+	ManagementType string `json:"managementType,omitempty"`
 
 	// Name: Name of this interface entry. The name must be 1-63 characters
 	// long and comply with RFC1035.
@@ -21501,13 +21525,12 @@ type SslPolicy struct {
 
 	// MinTlsVersion: The minimum version of SSL protocol that can be used
 	// by the clients to establish a connection with the load balancer. This
-	// can be one of TLS_1_0, TLS_1_1, TLS_1_2, TLS_1_3.
+	// can be one of TLS_1_0, TLS_1_1, TLS_1_2.
 	//
 	// Possible values:
 	//   "TLS_1_0"
 	//   "TLS_1_1"
 	//   "TLS_1_2"
-	//   "TLS_1_3"
 	MinTlsVersion string `json:"minTlsVersion,omitempty"`
 
 	// Name: Name of the resource. The name must be 1-63 characters long,

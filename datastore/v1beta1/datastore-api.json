@@ -177,7 +177,7 @@
       }
     }
   },
-  "revision": "20180321",
+  "revision": "20180417",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "GoogleDatastoreAdminV1CommonMetadata": {
@@ -618,7 +618,7 @@
     }
   },
   "servicePath": "",
-  "title": "Google Cloud Datastore API",
+  "title": "Cloud Datastore API",
   "version": "v1beta1",
   "version_module": true
 }

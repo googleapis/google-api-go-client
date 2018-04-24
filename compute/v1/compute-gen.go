@@ -19114,13 +19114,12 @@ type SslPolicy struct {
 
 	// MinTlsVersion: The minimum version of SSL protocol that can be used
 	// by the clients to establish a connection with the load balancer. This
-	// can be one of TLS_1_0, TLS_1_1, TLS_1_2, TLS_1_3.
+	// can be one of TLS_1_0, TLS_1_1, TLS_1_2.
 	//
 	// Possible values:
 	//   "TLS_1_0"
 	//   "TLS_1_1"
 	//   "TLS_1_2"
-	//   "TLS_1_3"
 	MinTlsVersion string `json:"minTlsVersion,omitempty"`
 
 	// Name: Name of the resource. The name must be 1-63 characters long,

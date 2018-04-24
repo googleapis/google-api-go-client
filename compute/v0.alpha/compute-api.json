@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/ByEZEzGIq-TNcKe0RsPdjS3d3zg\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/6T9UP_RNWkFLqUNdvXQr_m04dCw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -22741,7 +22741,7 @@
       }
     }
   },
-  "revision": "20180329",
+  "revision": "20180419",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -37799,6 +37799,7 @@
             "INTERCONNECTS",
             "INTERNAL_ADDRESSES",
             "IN_USE_ADDRESSES",
+            "IN_USE_MAINTENANCE_WINDOWS",
             "LOCAL_SSD_TOTAL_GB",
             "NETWORKS",
             "NVIDIA_K80_GPUS",
@@ -37812,6 +37813,7 @@
             "PRIVATE_V6_ACCESS_SUBNETWORKS",
             "REGIONAL_AUTOSCALERS",
             "REGIONAL_INSTANCE_GROUP_MANAGERS",
+            "RESOURCE_POLICIES",
             "ROUTERS",
             "ROUTES",
             "SECURITY_POLICIES",
@@ -37832,6 +37834,8 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -41384,15 +41388,13 @@
           "type": "string"
         },
         "minTlsVersion": {
-          "description": "The minimum version of SSL protocol that can be used by the clients to establish a connection with the load balancer. This can be one of TLS_1_0, TLS_1_1, TLS_1_2, TLS_1_3.",
+          "description": "The minimum version of SSL protocol that can be used by the clients to establish a connection with the load balancer. This can be one of TLS_1_0, TLS_1_1, TLS_1_2.",
           "enum": [
             "TLS_1_0",
             "TLS_1_1",
-            "TLS_1_2",
-            "TLS_1_3"
+            "TLS_1_2"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             ""

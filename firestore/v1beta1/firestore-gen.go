@@ -1,4 +1,4 @@
-// Package firestore provides access to the Google Cloud Firestore API.
+// Package firestore provides access to the Cloud Firestore API.
 //
 // See https://cloud.google.com/firestore
 //
@@ -2307,7 +2307,9 @@ func (s *UnaryFilter) MarshalJSON() ([]byte, error) {
 type Value struct {
 	// ArrayValue: An array value.
 	//
-	// Cannot contain another array value.
+	// Cannot directly contain another array value, though can contain
+	// an
+	// map which contains another array.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 
 	// BooleanValue: A boolean value.

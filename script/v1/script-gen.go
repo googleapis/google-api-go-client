@@ -1467,9 +1467,10 @@ func (s *ScriptStackTraceElement) MarshalJSON() ([]byte, error) {
 // Script itself) throws an exception, the response body's error field
 // contains this `Status` object.
 type Status struct {
-	// Code: The status code. For this API, this value either: <ul> <li> 3,
-	// indicating an `INVALID_ARGUMENT` error, or</li> <li> 1, indicating a
-	// `CANCELLED` execution.</li> </ul>
+	// Code: The status code. For this API, this value either: <ul> <li> 10,
+	// indicating a `SCRIPT_TIMEOUT` error,</li> <li> 3, indicating an
+	// `INVALID_ARGUMENT` error, or</li> <li> 1, indicating a `CANCELLED`
+	// execution.</li> </ul>
 	Code int64 `json:"code,omitempty"`
 
 	// Details: An array that contains a single ExecutionError object that

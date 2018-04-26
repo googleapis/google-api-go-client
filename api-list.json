@@ -701,7 +701,7 @@
    "id": "cloudfunctions:v1",
    "name": "cloudfunctions",
    "version": "v1",
-   "title": "Google Cloud Functions API",
+   "title": "Cloud Functions API",
    "description": "Manages lightweight user-provided functions executed in response to events.",
    "discoveryRestUrl": "https://cloudfunctions.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -716,7 +716,7 @@
    "id": "cloudfunctions:v1beta2",
    "name": "cloudfunctions",
    "version": "v1beta2",
-   "title": "Google Cloud Functions API",
+   "title": "Cloud Functions API",
    "description": "Manages lightweight user-provided functions executed in response to events.",
    "discoveryRestUrl": "https://cloudfunctions.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
@@ -1052,7 +1052,7 @@
    "id": "dataproc:v1",
    "name": "dataproc",
    "version": "v1",
-   "title": "Google Cloud Dataproc API",
+   "title": "Cloud Dataproc API",
    "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
    "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -1067,7 +1067,7 @@
    "id": "dataproc:v1beta2",
    "name": "dataproc",
    "version": "v1beta2",
-   "title": "Google Cloud Dataproc API",
+   "title": "Cloud Dataproc API",
    "description": "Manages Hadoop-based clusters and jobs on Google Cloud Platform.",
    "discoveryRestUrl": "https://dataproc.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
@@ -2843,7 +2843,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "http://cloud.google.com/speech/text-to-speech/",
+   "documentationLink": "http://cloud.google.com/text-to-speech/",
    "preferred": true
   },
   {
@@ -3047,6 +3047,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "websecurityscanner:v1alpha",
+   "name": "websecurityscanner",
+   "version": "v1alpha",
+   "title": "Web Security Scanner API",
+   "description": "Web Security Scanner API (under development).",
+   "discoveryRestUrl": "https://websecurityscanner.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/security-scanner/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "youtube:v3",
    "name": "youtube",
    "version": "v3",
@@ -3075,7 +3090,7 @@
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
    },
    "documentationLink": "http://developers.google.com/youtube/analytics/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -3095,6 +3110,21 @@
     "deprecated"
    ],
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "youtubeAnalytics:v2",
+   "name": "youtubeAnalytics",
+   "version": "v2",
+   "title": "YouTube Analytics API",
+   "description": "Retrieves your YouTube Analytics data.",
+   "discoveryRestUrl": "https://youtubeanalytics.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "http://developers.google.com/youtube/analytics",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

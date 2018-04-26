@@ -528,6 +528,9 @@ type SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
+	// Note: When enable_speaker_diarization is true, you will see all the
+	// words
+	// from the beginning of the audio.
 	Words []*WordInfo `json:"words,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
@@ -731,6 +734,17 @@ type WordInfo struct {
 	// can
 	// vary.
 	EndTime string `json:"endTime,omitempty"`
+
+	// SpeakerTag: Output only. A distinct integer value is assigned for
+	// every speaker within
+	// the audio. This field specifies which one of those speakers was
+	// detected to
+	// have spoken this word. Value ranges from '1' to
+	// diarization_speaker_count.
+	// speaker_tag is set if enable_speaker_diarization = 'true' and only in
+	// the
+	// top alternative.
+	SpeakerTag int64 `json:"speakerTag,omitempty"`
 
 	// StartTime: Output only. Time offset relative to the beginning of the
 	// audio,

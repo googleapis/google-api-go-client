@@ -490,9 +490,10 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 // updated.
 type GcsData struct {
 	// BucketName: Google Cloud Storage bucket name (see
-	// [Bucket Name
-	// Requirements](https://cloud.google.com/storage/docs/bucket-naming#requ
-	// irements)).
+	// [Bucket
+	// Name
+	// Requirements](https://cloud.google.com/storage/docs/naming#requir
+	// ements)).
 	// Required.
 	BucketName string `json:"bucketName,omitempty"`
 

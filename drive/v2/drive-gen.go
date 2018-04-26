@@ -11677,7 +11677,7 @@ type PropertiesPatchCall struct {
 	header_     http.Header
 }
 
-// Patch: Updates a property. This method supports patch semantics.
+// Patch: Updates a property.
 func (r *PropertiesService) Patch(fileId string, propertyKey string, property *Property) *PropertiesPatchCall {
 	c := &PropertiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -11781,7 +11781,7 @@ func (c *PropertiesPatchCall) Do(opts ...googleapi.CallOption) (*Property, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a property. This method supports patch semantics.",
+	//   "description": "Updates a property.",
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.properties.patch",
 	//   "parameterOrder": [

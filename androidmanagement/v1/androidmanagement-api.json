@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180402",
+  "revision": "20180417",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -849,7 +849,7 @@
       "id": "ApplicationPolicy",
       "properties": {
         "defaultPermissionPolicy": {
-          "description": "The default policy for all permissions requested by the app. If specified, this overrides the policy-level default_permission_policy which applies to all apps.",
+          "description": "The default policy for all permissions requested by the app. If specified, this overrides the policy-level default_permission_policy which applies to all apps. It does not override the permission_grants which applies to all apps.",
           "enum": [
             "PERMISSION_POLICY_UNSPECIFIED",
             "PROMPT",
@@ -925,7 +925,7 @@
           "type": "string"
         },
         "permissionGrants": {
-          "description": "Explicit permission grants or denials for the app. These values override the default_permission_policy.",
+          "description": "Explicit permission grants or denials for the app. These values override the default_permission_policy and permission_grants which apply to all apps.",
           "items": {
             "$ref": "PermissionGrant"
           },
@@ -2479,7 +2479,7 @@
           "type": "boolean"
         },
         "usbMassStorageEnabled": {
-          "description": "Allows admins to toggle whether USB storge is enabled or disabled on user's devices. Next ID: 114",
+          "description": "Allows admins to toggle whether USB storge is enabled or disabled on user's devices.",
           "type": "boolean"
         },
         "version": {

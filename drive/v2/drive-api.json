@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/n6L7I7T7JqUooJchg84pjB1v3cs\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/QNdWTfMZy1f8DAVutKpxefv4Rio\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -2331,7 +2331,7 @@
           ]
         },
         "patch": {
-          "description": "Updates a property. This method supports patch semantics.",
+          "description": "Updates a property.",
           "httpMethod": "PATCH",
           "id": "drive.properties.patch",
           "parameterOrder": [
@@ -3074,7 +3074,7 @@
       }
     }
   },
-  "revision": "20180330",
+  "revision": "20180413",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {

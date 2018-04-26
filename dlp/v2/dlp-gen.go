@@ -210,6 +210,10 @@ type GooglePrivacyDlpV2Action struct {
 	// PubSub: Publish a notification to a pubsub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
 
+	// PublishSummaryToCscc: Publish summary to Cloud Security Command
+	// Center (Alpha).
+	PublishSummaryToCscc *GooglePrivacyDlpV2PublishSummaryToCscc `json:"publishSummaryToCscc,omitempty"`
+
 	// SaveFindings: Save resulting findings in a provided location.
 	SaveFindings *GooglePrivacyDlpV2SaveFindings `json:"saveFindings,omitempty"`
 
@@ -883,6 +887,37 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 
 func (s *GooglePrivacyDlpV2CloudStorageOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2CloudStorageOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudStoragePath: Message representing a path in
+// Cloud Storage.
+type GooglePrivacyDlpV2CloudStoragePath struct {
+	// Path: A url representing a file or path (no wildcards) in Cloud
+	// Storage.
+	// Example: gs://[BUCKET_NAME]/dictionary.txt
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudStoragePath) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStoragePath
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1982,10 +2017,15 @@ func (s *GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 // characters
 // are treated as whitespace.
 type GooglePrivacyDlpV2Dictionary struct {
+	// CloudStoragePath: Newline-delimited file of words in Cloud Storage.
+	// Only a single file
+	// is accepted.
+	CloudStoragePath *GooglePrivacyDlpV2CloudStoragePath `json:"cloudStoragePath,omitempty"`
+
 	// WordList: List of words or phrases to search for.
 	WordList *GooglePrivacyDlpV2WordList `json:"wordList,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "WordList") to
+	// ForceSendFields is a list of field names (e.g. "CloudStoragePath") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1993,12 +2033,13 @@ type GooglePrivacyDlpV2Dictionary struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "WordList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudStoragePath") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4473,6 +4514,24 @@ func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2Proximity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2PublishSummaryToCscc: Publish the result summary of
+// a DlpJob to the Cloud Security
+// Command Center (CSCC Alpha).
+// This action is only available for projects which are parts of
+// an organization and whitelisted for the alpha Cloud Security
+// Command
+// Center.
+// The action will publish count of finding instances and their info
+// types.
+// The summary of findings will be persisted in CSCC and are governed by
+// CSCC
+// service-specific policy, see
+// https://cloud.google.com/terms/service-terms
+// Only a single instance of this action can be specified.
+// Compatible with: Inspect
+type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 }
 
 // GooglePrivacyDlpV2PublishToPubSub: Publish the results of a DlpJob to

@@ -807,6 +807,10 @@ type Message struct {
 	// this message.
 	Annotations []*Annotation `json:"annotations,omitempty"`
 
+	// ArgumentText: Plain-text body of the message with all bot mentions
+	// stripped out.
+	ArgumentText string `json:"argumentText,omitempty"`
+
 	// Cards: Rich, formatted and interactive cards that can be used to
 	// display UI
 	// elements such as: formatted texts, buttons, clickable images. Cards

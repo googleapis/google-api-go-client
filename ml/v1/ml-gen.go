@@ -1519,7 +1519,9 @@ type GoogleCloudMlV1__TrainingInput struct {
 
 	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
 	// for training.  If not
-	// set, Google Cloud ML will choose the latest stable version.
+	// set, Google Cloud ML will choose a stable version, which is defined
+	// in the
+	// documentation of runtime version list.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ScaleTier: Required. Specifies the machine types, the number of
@@ -2008,7 +2010,7 @@ type GoogleIamV1__Binding struct {
 	//
 	// * `user:{emailid}`: An email address that represents a specific
 	// Google
-	//    account. For example, `alice@gmail.com` or `joe@example.com`.
+	//    account. For example, `alice@gmail.com` .
 	//
 	//
 	// * `serviceAccount:{emailid}`: An email address that represents a

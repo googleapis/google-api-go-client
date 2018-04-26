@@ -430,7 +430,7 @@
       }
     }
   },
-  "revision": "20180405",
+  "revision": "20180423",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -575,7 +575,7 @@
       "id": "GcsData",
       "properties": {
         "bucketName": {
-          "description": "Google Cloud Storage bucket name (see\n[Bucket Name Requirements](https://cloud.google.com/storage/docs/bucket-naming#requirements)).\nRequired.",
+          "description": "Google Cloud Storage bucket name (see\n[Bucket Name\nRequirements](https://cloud.google.com/storage/docs/naming#requirements)).\nRequired.",
           "type": "string"
         }
       },

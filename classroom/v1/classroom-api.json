@@ -1990,7 +1990,7 @@
       }
     }
   },
-  "revision": "20180416",
+  "revision": "20180423",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "Announcement": {
@@ -2204,7 +2204,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of the course.\nFor example, \"10th Grade Biology\".\nThe name is required. It must be between 1 and 50 characters and a valid\nUTF-8 string.",
+          "description": "Name of the course.\nFor example, \"10th Grade Biology\".\nThe name is required. It must be between 1 and 750 characters and a valid\nUTF-8 string.",
           "type": "string"
         },
         "ownerId": {

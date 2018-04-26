@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180417",
+  "revision": "20180424",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1180,6 +1180,10 @@
         "pubSub": {
           "$ref": "GooglePrivacyDlpV2PublishToPubSub",
           "description": "Publish a notification to a pubsub topic."
+        },
+        "publishSummaryToCscc": {
+          "$ref": "GooglePrivacyDlpV2PublishSummaryToCscc",
+          "description": "Publish summary to Cloud Security Command Center (Alpha)."
         },
         "saveFindings": {
           "$ref": "GooglePrivacyDlpV2SaveFindings",
@@ -1540,6 +1544,17 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2CloudStoragePath": {
+      "description": "Message representing a path in Cloud Storage.",
+      "id": "GooglePrivacyDlpV2CloudStoragePath",
+      "properties": {
+        "path": {
+          "description": "A url representing a file or path (no wildcards) in Cloud Storage.\nExample: gs://[BUCKET_NAME]/dictionary.txt",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2049,6 +2064,10 @@
       "description": "Custom information type based on a dictionary of words or phrases. This can\nbe used to match sensitive information specific to the data, such as a list\nof employee IDs or job titles.\n\nDictionary words are case-insensitive and all characters other than letters\nand digits in the unicode [Basic Multilingual\nPlane](https://en.wikipedia.org/wiki/Plane_%28Unicode%29#Basic_Multilingual_Plane)\nwill be replaced with whitespace when scanning for matches, so the\ndictionary phrase \"Sam Johnson\" will match all three phrases \"sam johnson\",\n\"Sam, Johnson\", and \"Sam (Johnson)\". Additionally, the characters\nsurrounding any match must be of a different type than the adjacent\ncharacters within the word, so letters must be next to non-letters and\ndigits next to non-digits. For example, the dictionary word \"jen\" will\nmatch the first three letters of the text \"jen123\" but will return no\nmatches for \"jennifer\".\n\nDictionary words containing a large number of characters that are not\nletters or digits may result in unexpected findings because such characters\nare treated as whitespace.",
       "id": "GooglePrivacyDlpV2Dictionary",
       "properties": {
+        "cloudStoragePath": {
+          "$ref": "GooglePrivacyDlpV2CloudStoragePath",
+          "description": "Newline-delimited file of words in Cloud Storage. Only a single file\nis accepted."
+        },
         "wordList": {
           "$ref": "GooglePrivacyDlpV2WordList",
           "description": "List of words or phrases to search for."
@@ -3368,6 +3387,12 @@
           "type": "integer"
         }
       },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2PublishSummaryToCscc": {
+      "description": "Publish the result summary of a DlpJob to the Cloud Security\nCommand Center (CSCC Alpha).\nThis action is only available for projects which are parts of\nan organization and whitelisted for the alpha Cloud Security Command\nCenter.\nThe action will publish count of finding instances and their info types.\nThe summary of findings will be persisted in CSCC and are governed by CSCC\nservice-specific policy, see https://cloud.google.com/terms/service-terms\nOnly a single instance of this action can be specified.\nCompatible with: Inspect",
+      "id": "GooglePrivacyDlpV2PublishSummaryToCscc",
+      "properties": {},
       "type": "object"
     },
     "GooglePrivacyDlpV2PublishToPubSub": {

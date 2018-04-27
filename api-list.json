@@ -2913,7 +2913,7 @@
    "id": "vault:v1",
    "name": "vault",
    "version": "v1",
-   "title": "Google Vault API",
+   "title": "G Suite Vault API",
    "description": "Archiving and eDiscovery for G Suite.",
    "discoveryRestUrl": "https://vault.googleapis.com/$discovery/rest?version=v1",
    "icons": {

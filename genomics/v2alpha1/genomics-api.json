@@ -278,9 +278,25 @@
       }
     }
   },
-  "revision": "20180307",
+  "revision": "20180426",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
+    "Accelerator": {
+      "description": "Carries information about an accelerator that can be attached to a VM.",
+      "id": "Accelerator",
+      "properties": {
+        "count": {
+          "description": "How many accelerators of this type to attach.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The accelerator type string (eg nvidia-tesla-k80).\n\nOnly NVIDIA GPU accelerators are currently supported.  If an NVIDIA GPU is\nattached, the required runtime libraries will be made available to all\ncontainers under `/usr/local/nvidia`.  The driver version to install must\nbe specified using the NVIDIA driver version parameter on the virtual\nmachine specification.  Note that attaching a GPU increases the worker VM\nstartup time by a few minutes.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Action": {
       "description": "Action specifies a single action that runs a docker container.",
       "id": "Action",
@@ -661,6 +677,11 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "endTime": {
+          "description": "The time at which execution was completed and resources were cleaned up.",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "events": {
           "description": "The list of events that have happened so far during the execution of this\noperation.",
           "items": {
@@ -678,6 +699,11 @@
         "pipeline": {
           "$ref": "Pipeline",
           "description": "The pipeline this operation represents."
+        },
+        "startTime": {
+          "description": "The first time at which resources were allocated to execute the pipeline.",
+          "format": "google-datetime",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1003,6 +1029,13 @@
       "description": "Carries information about a Compute Engine VM resource.",
       "id": "VirtualMachine",
       "properties": {
+        "accelerators": {
+          "description": "The list of accelerators to attach to the VM.",
+          "items": {
+            "$ref": "Accelerator"
+          },
+          "type": "array"
+        },
         "bootDiskSizeGb": {
           "description": "The size of the boot disk, in gigabytes. The boot disk must be large\nenough to accommodate all of the docker images from each action in the\npipeline at the same time. If not specified, a small but reasonable\ndefault value is used.",
           "format": "int32",
@@ -1037,6 +1070,10 @@
         "network": {
           "$ref": "Network",
           "description": "The VM network configuration."
+        },
+        "nvidiaDriverVersion": {
+          "description": "The NVIDIA driver version to use when attaching an NVIDIA GPU accelerator.\nThe version specified here must be compatible with the GPU libraries\ncontained in the container being executed, and must be one of the drivers\nhosted in the 'nvidia-drivers-us-public' bucket on Google Cloud Storage.",
+          "type": "string"
         },
         "preemptible": {
           "description": "If true, allocate a preemptible VM.",

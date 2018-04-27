@@ -182,7 +182,7 @@
               "type": "string"
             },
             "userProcessFilter.projectName": {
-              "description": "Optional field used to limit returned processes to those originating from\nprojects with a specific project name.",
+              "description": "Optional field used to limit returned processes to those originating from\nprojects with project names containing a specific string.",
               "location": "query",
               "type": "string"
             },
@@ -753,7 +753,7 @@
       }
     }
   },
-  "revision": "20180420",
+  "revision": "20180425",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {

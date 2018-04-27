@@ -9,7 +9,7 @@
     }
   },
   "basePath": "",
-  "baseUrl": "https://firebasedynamiclinks-ipv6.googleapis.com/",
+  "baseUrl": "https://firebasedynamiclinks.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Firebase Dynamic Links",
   "description": "Programmatically creates and manages Firebase Dynamic Links.",
@@ -211,8 +211,8 @@
       }
     }
   },
-  "revision": "20180403",
-  "rootUrl": "https://firebasedynamiclinks-ipv6.googleapis.com/",
+  "revision": "20180425",
+  "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
       "description": "Tracking parameters supported by Dynamic Link.",

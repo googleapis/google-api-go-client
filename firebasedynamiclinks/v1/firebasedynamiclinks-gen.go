@@ -43,7 +43,7 @@ var _ = ctxhttp.Do
 const apiId = "firebasedynamiclinks:v1"
 const apiName = "firebasedynamiclinks"
 const apiVersion = "v1"
-const basePath = "https://firebasedynamiclinks-ipv6.googleapis.com/"
+const basePath = "https://firebasedynamiclinks.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (

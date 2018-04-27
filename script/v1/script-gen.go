@@ -1649,7 +1649,7 @@ func (c *ProcessesListCall) UserProcessFilterFunctionName(userProcessFilterFunct
 // UserProcessFilterProjectName sets the optional parameter
 // "userProcessFilter.projectName": Optional field used to limit
 // returned processes to those originating from
-// projects with a specific project name.
+// projects with project names containing a specific string.
 func (c *ProcessesListCall) UserProcessFilterProjectName(userProcessFilterProjectName string) *ProcessesListCall {
 	c.urlParams_.Set("userProcessFilter.projectName", userProcessFilterProjectName)
 	return c
@@ -1852,7 +1852,7 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//       "type": "string"
 	//     },
 	//     "userProcessFilter.projectName": {
-	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with a specific project name.",
+	//       "description": "Optional field used to limit returned processes to those originating from\nprojects with project names containing a specific string.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

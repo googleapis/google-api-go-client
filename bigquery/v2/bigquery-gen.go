@@ -478,7 +478,8 @@ type Dataset struct {
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
 	// Location: The geographic location where the dataset should reside.
-	// The default value is US.
+	// The default value is US. See details at
+	// https://cloud.google.com/bigquery/docs/dataset-locations.
 	Location string `json:"location,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
@@ -817,7 +818,7 @@ type ExplainQueryStage struct {
 	// CPU-bound tasks.
 	ComputeRatioMax float64 `json:"computeRatioMax,omitempty"`
 
-	// EndMs: Stage end time in milliseconds.
+	// EndMs: Stage end time represented as milliseconds since epoch.
 	EndMs int64 `json:"endMs,omitempty,string"`
 
 	// Id: Unique ID for stage within plan.
@@ -859,7 +860,7 @@ type ExplainQueryStage struct {
 	// and spilled to disk.
 	ShuffleOutputBytesSpilled int64 `json:"shuffleOutputBytesSpilled,omitempty,string"`
 
-	// StartMs: Stage start time in milliseconds.
+	// StartMs: Stage start time represented as milliseconds since epoch.
 	StartMs int64 `json:"startMs,omitempty,string"`
 
 	// Status: Current status for the stage.

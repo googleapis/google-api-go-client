@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/HZKhFy06IVFqEEhwU_5FzPIumPE\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/gVaGwgauJVeZQYUf3vu2wBnDPGw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -138,7 +138,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified accelerator type. Get a list of available accelerator types by making a list() request.",
+          "description": "Returns the specified accelerator type. Gets a list of available accelerator types by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.acceleratorTypes.get",
           "parameterOrder": [
@@ -669,7 +669,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified autoscaler resource. Get a list of available autoscalers by making a list() request.",
+          "description": "Returns the specified autoscaler resource. Gets a list of available autoscalers by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.autoscalers.get",
           "parameterOrder": [
@@ -1074,7 +1074,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified BackendBucket resource. Get a list of available backend buckets by making a list() request.",
+          "description": "Returns the specified BackendBucket resource. Gets a list of available backend buckets by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.backendBuckets.get",
           "parameterOrder": [
@@ -1447,7 +1447,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified BackendService resource. Get a list of available backend services by making a list() request.",
+          "description": "Returns the specified BackendService resource. Gets a list of available backend services by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.backendServices.get",
           "parameterOrder": [
@@ -1811,7 +1811,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified disk type. Get a list of available disk types by making a list() request.",
+          "description": "Returns the specified disk type. Gets a list of available disk types by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.diskTypes.get",
           "parameterOrder": [
@@ -2061,7 +2061,7 @@
           ]
         },
         "get": {
-          "description": "Returns a specified persistent disk. Get a list of available persistent disks by making a list() request.",
+          "description": "Returns a specified persistent disk. Gets a list of available persistent disks by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.disks.get",
           "parameterOrder": [
@@ -3050,7 +3050,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified address resource. Get a list of available addresses by making a list() request.",
+          "description": "Returns the specified address resource. Gets a list of available addresses by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.globalAddresses.get",
           "parameterOrder": [
@@ -3281,7 +3281,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified GlobalForwardingRule resource. Get a list of available forwarding rules by making a list() request.",
+          "description": "Returns the specified GlobalForwardingRule resource. Gets a list of available forwarding rules by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.globalForwardingRules.get",
           "parameterOrder": [
@@ -3594,7 +3594,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves the specified Operations resource. Get a list of operations by making a list() request.",
+          "description": "Retrieves the specified Operations resource. Gets a list of operations by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.globalOperations.get",
           "parameterOrder": [
@@ -3719,7 +3719,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified HealthCheck resource. Get a list of available health checks by making a list() request.",
+          "description": "Returns the specified HealthCheck resource. Gets a list of available health checks by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.healthChecks.get",
           "parameterOrder": [
@@ -3996,7 +3996,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified HttpHealthCheck resource. Get a list of available HTTP health checks by making a list() request.",
+          "description": "Returns the specified HttpHealthCheck resource. Gets a list of available HTTP health checks by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.httpHealthChecks.get",
           "parameterOrder": [
@@ -4273,7 +4273,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified HttpsHealthCheck resource. Get a list of available HTTPS health checks by making a list() request.",
+          "description": "Returns the specified HttpsHealthCheck resource. Gets a list of available HTTPS health checks by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.httpsHealthChecks.get",
           "parameterOrder": [
@@ -4591,7 +4591,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified image. Get a list of available images by making a list() request.",
+          "description": "Returns the specified image. Gets a list of available images by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.images.get",
           "parameterOrder": [
@@ -5778,7 +5778,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified instance group. Get a list of available instance groups by making a list() request.",
+          "description": "Returns the specified instance group. Gets a list of available instance groups by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.instanceGroups.get",
           "parameterOrder": [
@@ -6636,7 +6636,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified Instance resource. Get a list of available instances by making a list() request.",
+          "description": "Returns the specified Instance resource. Gets a list of available instances by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.instances.get",
           "parameterOrder": [
@@ -7495,7 +7495,7 @@
           ]
         },
         "start": {
-          "description": "Starts an instance that was stopped using the using the instances().stop method. For more information, see Restart an instance.",
+          "description": "Starts an instance that was stopped using the instances().stop method. For more information, see Restart an instance.",
           "httpMethod": "POST",
           "id": "compute.instances.start",
           "parameterOrder": [
@@ -7541,7 +7541,7 @@
           ]
         },
         "startWithEncryptionKey": {
-          "description": "Starts an instance that was stopped using the using the instances().stop method. For more information, see Restart an instance.",
+          "description": "Starts an instance that was stopped using the instances().stop method. For more information, see Restart an instance.",
           "httpMethod": "POST",
           "id": "compute.instances.startWithEncryptionKey",
           "parameterOrder": [
@@ -8179,7 +8179,7 @@
     "interconnectLocations": {
       "methods": {
         "get": {
-          "description": "Returns the details for the specified interconnect location. Get a list of available interconnect locations by making a list() request.",
+          "description": "Returns the details for the specified interconnect location. Gets a list of available interconnect locations by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.interconnectLocations.get",
           "parameterOrder": [
@@ -8304,7 +8304,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified interconnect. Get a list of available interconnects by making a list() request.",
+          "description": "Returns the specified interconnect. Gets a list of available interconnects by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.interconnects.get",
           "parameterOrder": [
@@ -8968,7 +8968,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified network. Get a list of available networks by making a list() request.",
+          "description": "Returns the specified network. Gets a list of available networks by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.networks.get",
           "parameterOrder": [
@@ -10440,7 +10440,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified commitment resource. Get a list of available commitments by making a list() request.",
+          "description": "Returns the specified commitment resource. Gets a list of available commitments by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.regionCommitments.get",
           "parameterOrder": [
@@ -10584,7 +10584,7 @@
     "regionDiskTypes": {
       "methods": {
         "get": {
-          "description": "Returns the specified regional disk type. Get a list of available disk types by making a list() request.",
+          "description": "Returns the specified regional disk type. Gets a list of available disk types by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.regionDiskTypes.get",
           "parameterOrder": [
@@ -12189,7 +12189,7 @@
     "regions": {
       "methods": {
         "get": {
-          "description": "Returns the specified Region resource. Get a list of available regions by making a list() request.",
+          "description": "Returns the specified Region resource. Gets a list of available regions by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.regions.get",
           "parameterOrder": [
@@ -12371,7 +12371,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified Router resource. Get a list of available routers by making a list() request.",
+          "description": "Returns the specified Router resource. Gets a list of available routers by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.routers.get",
           "parameterOrder": [
@@ -12783,7 +12783,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified Route resource. Get a list of available routes by making a list() request.",
+          "description": "Returns the specified Route resource. Gets a list of available routes by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.routes.get",
           "parameterOrder": [
@@ -13371,7 +13371,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified Snapshot resource. Get a list of available snapshots by making a list() request.",
+          "description": "Returns the specified Snapshot resource. Gets a list of available snapshots by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.snapshots.get",
           "parameterOrder": [
@@ -13569,7 +13569,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified SslCertificate resource. Get a list of available SSL certificates by making a list() request.",
+          "description": "Returns the specified SslCertificate resource. Gets a list of available SSL certificates by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.sslCertificates.get",
           "parameterOrder": [
@@ -13796,7 +13796,7 @@
           ]
         },
         "insert": {
-          "description": "Returns the specified SSL policy resource. Get a list of available SSL policies by making a list() request.",
+          "description": "Returns the specified SSL policy resource. Gets a list of available SSL policies by making a list() request.",
           "httpMethod": "POST",
           "id": "compute.sslPolicies.insert",
           "parameterOrder": [
@@ -14152,7 +14152,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified subnetwork. Get a list of available subnetworks list() request.",
+          "description": "Returns the specified subnetwork. Gets a list of available subnetworks list() request.",
           "httpMethod": "GET",
           "id": "compute.subnetworks.get",
           "parameterOrder": [
@@ -14612,7 +14612,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified TargetHttpProxy resource. Get a list of available target HTTP proxies by making a list() request.",
+          "description": "Returns the specified TargetHttpProxy resource. Gets a list of available target HTTP proxies by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetHttpProxies.get",
           "parameterOrder": [
@@ -14848,7 +14848,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified TargetHttpsProxy resource. Get a list of available target HTTPS proxies by making a list() request.",
+          "description": "Returns the specified TargetHttpsProxy resource. Gets a list of available target HTTPS proxies by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetHttpsProxies.get",
           "parameterOrder": [
@@ -15262,7 +15262,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified TargetInstance resource. Get a list of available target instances by making a list() request.",
+          "description": "Returns the specified TargetInstance resource. Gets a list of available target instances by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetInstances.get",
           "parameterOrder": [
@@ -15644,7 +15644,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified target pool. Get a list of available target pools by making a list() request.",
+          "description": "Returns the specified target pool. Gets a list of available target pools by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetPools.get",
           "parameterOrder": [
@@ -16069,7 +16069,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified TargetSslProxy resource. Get a list of available target SSL proxies by making a list() request.",
+          "description": "Returns the specified TargetSslProxy resource. Gets a list of available target SSL proxies by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetSslProxies.get",
           "parameterOrder": [
@@ -16427,7 +16427,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified TargetTcpProxy resource. Get a list of available target TCP proxies by making a list() request.",
+          "description": "Returns the specified TargetTcpProxy resource. Gets a list of available target TCP proxies by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetTcpProxies.get",
           "parameterOrder": [
@@ -16724,7 +16724,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified target VPN gateway. Get a list of available target VPN gateways by making a list() request.",
+          "description": "Returns the specified target VPN gateway. Gets a list of available target VPN gateways by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.targetVpnGateways.get",
           "parameterOrder": [
@@ -17000,7 +17000,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified UrlMap resource. Get a list of available URL maps by making a list() request.",
+          "description": "Returns the specified UrlMap resource. Gets a list of available URL maps by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.urlMaps.get",
           "parameterOrder": [
@@ -17411,7 +17411,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified VpnTunnel resource. Get a list of available VPN tunnels by making a list() request.",
+          "description": "Returns the specified VpnTunnel resource. Gets a list of available VPN tunnels by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.vpnTunnels.get",
           "parameterOrder": [
@@ -17790,7 +17790,7 @@
     "zones": {
       "methods": {
         "get": {
-          "description": "Returns the specified Zone resource. Get a list of available zones by making a list() request.",
+          "description": "Returns the specified Zone resource. Gets a list of available zones by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.zones.get",
           "parameterOrder": [
@@ -17875,7 +17875,7 @@
       }
     }
   },
-  "revision": "20180419",
+  "revision": "20180417",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -22704,6 +22704,45 @@
       },
       "type": "object"
     },
+    "HTTP2HealthCheck": {
+      "id": "HTTP2HealthCheck",
+      "properties": {
+        "host": {
+          "description": "The value of the host header in the HTTP/2 health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used.",
+          "type": "string"
+        },
+        "port": {
+          "description": "The TCP port number for the health check request. The default value is 443. Valid values are 1 through 65535.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "portName": {
+          "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence.",
+          "type": "string"
+        },
+        "proxyHeader": {
+          "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+          "enum": [
+            "NONE",
+            "PROXY_V1"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "requestPath": {
+          "description": "The request path of the HTTP/2 health check request. The default value is /.",
+          "type": "string"
+        },
+        "response": {
+          "description": "The string to match anywhere in the first 1024 bytes of the response body. If left empty (the default value), the status code determines health. The response data can only be ASCII.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "HTTPHealthCheck": {
       "id": "HTTPHealthCheck",
       "properties": {
@@ -22804,6 +22843,9 @@
           "format": "int32",
           "type": "integer"
         },
+        "http2HealthCheck": {
+          "$ref": "HTTP2HealthCheck"
+        },
         "httpHealthCheck": {
           "$ref": "HTTPHealthCheck"
         },
@@ -22844,6 +22886,7 @@
           "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
           "enum": [
             "HTTP",
+            "HTTP2",
             "HTTPS",
             "INVALID",
             "SSL",
@@ -22851,6 +22894,7 @@
             "UDP"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -23751,7 +23795,7 @@
           "type": "string"
         },
         "labelFingerprint": {
-          "description": "A fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.\n\nTo see the latest fingerprint, make get() request to the instance.",
+          "description": "A fingerprint for this request, which is essentially a hash of the label's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels.\n\nTo see the latest fingerprint, make get() request to the instance.",
           "format": "byte",
           "type": "string"
         },
@@ -24312,7 +24356,7 @@
           "type": "string"
         },
         "fingerprint": {
-          "description": "[Output Only] The fingerprint of the resource data. You can use this optional field for optimistic locking when you update the resource.",
+          "description": "Fingerprint of this resource. This field may be used in optimistic locking. It will be ignored when inserting an InstanceGroupManager. An up-to-date fingerprint must be provided in order to update the InstanceGroupManager or the field need to be unset.",
           "format": "byte",
           "type": "string"
         },
@@ -24365,7 +24409,7 @@
           "type": "string"
         },
         "serviceAccount": {
-          "description": "[Output Only] The service account to be used as credentials for all operations performed by the managed instance group on instances. The service accounts needs all permissions required to create and delete instances. By default, the service account {projectNumber}@cloudservices.gserviceaccount.com is used.",
+          "description": "The service account to be used as credentials for all operations performed by the managed instance group on instances. The service accounts needs all permissions required to create and delete instances. By default, the service account {projectNumber}@cloudservices.gserviceaccount.com is used.",
           "type": "string"
         },
         "targetPools": {
@@ -27023,7 +27067,7 @@
       "id": "InterconnectOutageNotification",
       "properties": {
         "affectedCircuits": {
-          "description": "Iff issue_type is IT_PARTIAL_OUTAGE, a list of the Google-side circuit IDs that will be affected.",
+          "description": "If issue_type is IT_PARTIAL_OUTAGE, a list of the Google-side circuit IDs that will be affected.",
           "items": {
             "type": "string"
           },
@@ -28895,7 +28939,7 @@
       "type": "object"
     },
     "Policy": {
-      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `Binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\", ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam/docs).",
+      "description": "Defines an Identity and Access Management (IAM) policy. It is used to specify access control policies for Cloud Platform resources.\n\n\n\nA `Policy` consists of a list of `bindings`. A `binding` binds a list of `members` to a `role`, where the members can be user accounts, Google groups, Google domains, and service accounts. A `role` is a named list of permissions defined by IAM.\n\n**JSON Example**\n\n{ \"bindings\": [ { \"role\": \"roles/owner\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-other-app@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/viewer\", \"members\": [\"user:sean@example.com\"] } ] }\n\n**YAML Example**\n\nbindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-other-app@appspot.gserviceaccount.com role: roles/owner - members: - user:sean@example.com role: roles/viewer\n\n\n\nFor a description of IAM and its features, see the [IAM developer's guide](https://cloud.google.com/iam/docs).",
       "id": "Policy",
       "properties": {
         "auditConfigs": {
@@ -32736,7 +32780,7 @@
       "id": "Tags",
       "properties": {
         "fingerprint": {
-          "description": "Specifies a fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.\n\nTo see the latest fingerprint, make get() request to the instance.",
+          "description": "Specifies a fingerprint for this request, which is essentially a hash of the tags' contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update tags. You must always provide an up-to-date fingerprint hash in order to update or change tags.\n\nTo see the latest fingerprint, make get() request to the instance.",
           "format": "byte",
           "type": "string"
         },

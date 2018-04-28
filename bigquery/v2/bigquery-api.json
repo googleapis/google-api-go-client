@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/EH1WrA9bmAKud9N8fBrRAX4nt90\"",
+  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/E14_MM_ZC1hfGw6JtSQJ3NWEyZg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20180416",
+  "revision": "20180422",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -1211,7 +1211,7 @@
           "type": "string"
         },
         "location": {
-          "description": "The geographic location where the dataset should reside. The default value is US.",
+          "description": "The geographic location where the dataset should reside. The default value is US. See details at https://cloud.google.com/bigquery/docs/dataset-locations.",
           "type": "string"
         },
         "selfLink": {
@@ -1376,7 +1376,7 @@
           "type": "number"
         },
         "endMs": {
-          "description": "Stage end time in milliseconds.",
+          "description": "Stage end time represented as milliseconds since epoch.",
           "format": "int64",
           "type": "string"
         },
@@ -1443,7 +1443,7 @@
           "type": "string"
         },
         "startMs": {
-          "description": "Stage start time in milliseconds.",
+          "description": "Stage start time represented as milliseconds since epoch.",
           "format": "int64",
           "type": "string"
         },

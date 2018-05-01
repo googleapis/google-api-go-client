@@ -927,10 +927,7 @@ func (s *EnrollmentToken) MarshalJSON() ([]byte, error) {
 
 // Enterprise: The configuration applied to an enterprise.
 type Enterprise struct {
-	// AppAutoApprovalEnabled: Whether permissions for apps installed via
-	// policy are automatically approved. If enabled, you must display an
-	// app's permissions to the enterprise admin before setting the app to
-	// be installed in a policy.
+	// AppAutoApprovalEnabled: Deprecated and unused.
 	AppAutoApprovalEnabled bool `json:"appAutoApprovalEnabled,omitempty"`
 
 	// EnabledNotificationTypes: The types of Google Pub/Sub notifications

@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180417",
+  "revision": "20180423",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1355,7 +1355,7 @@
       "id": "Enterprise",
       "properties": {
         "appAutoApprovalEnabled": {
-          "description": "Whether permissions for apps installed via policy are automatically approved. If enabled, you must display an app's permissions to the enterprise admin before setting the app to be installed in a policy.",
+          "description": "Deprecated and unused.",
           "type": "boolean"
         },
         "enabledNotificationTypes": {

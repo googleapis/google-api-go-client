@@ -728,6 +728,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudiot:v1alpha1",
+   "name": "cloudiot",
+   "version": "v1alpha1",
+   "title": "Cloud IoT API",
+   "description": "Registers and manages IoT (Internet of Things) devices that connect to the Google Cloud Platform.",
+   "discoveryRestUrl": "https://cloudiot.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/iot",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudiot:v1",
    "name": "cloudiot",
    "version": "v1",
@@ -2078,86 +2093,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "prediction:v1.2",
-   "name": "prediction",
-   "version": "v1.2",
-   "title": "Prediction API",
-   "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.2/rest",
-   "discoveryLink": "./apis/prediction/v1.2/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
-   },
-   "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "prediction:v1.3",
-   "name": "prediction",
-   "version": "v1.3",
-   "title": "Prediction API",
-   "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.3/rest",
-   "discoveryLink": "./apis/prediction/v1.3/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
-   },
-   "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "prediction:v1.4",
-   "name": "prediction",
-   "version": "v1.4",
-   "title": "Prediction API",
-   "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.4/rest",
-   "discoveryLink": "./apis/prediction/v1.4/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
-   },
-   "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "prediction:v1.5",
-   "name": "prediction",
-   "version": "v1.5",
-   "title": "Prediction API",
-   "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.5/rest",
-   "discoveryLink": "./apis/prediction/v1.5/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
-   },
-   "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "prediction:v1.6",
-   "name": "prediction",
-   "version": "v1.6",
-   "title": "Prediction API",
-   "description": "Lets you access a cloud hosted machine learning service that makes it easy to build smart apps",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/prediction/v1.6/rest",
-   "discoveryLink": "./apis/prediction/v1.6/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/feature/predictionapi-16.png",
-    "x32": "https://www.google.com/images/icons/feature/predictionapi-32.png"
-   },
-   "documentationLink": "https://developers.google.com/prediction/docs/developer-guide",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "proximitybeacon:v1beta1",
    "name": "proximitybeacon",
    "version": "v1beta1",
@@ -2176,7 +2111,7 @@
    "id": "pubsub:v1beta1a",
    "name": "pubsub",
    "version": "v1beta1a",
-   "title": "Google Cloud Pub/Sub API",
+   "title": "Cloud Pub/Sub API",
    "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
    "discoveryRestUrl": "https://pubsub.googleapis.com/$discovery/rest?version=v1beta1a",
    "icons": {
@@ -2191,7 +2126,7 @@
    "id": "pubsub:v1",
    "name": "pubsub",
    "version": "v1",
-   "title": "Google Cloud Pub/Sub API",
+   "title": "Cloud Pub/Sub API",
    "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
    "discoveryRestUrl": "https://pubsub.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -2206,7 +2141,7 @@
    "id": "pubsub:v1beta2",
    "name": "pubsub",
    "version": "v1beta2",
-   "title": "Google Cloud Pub/Sub API",
+   "title": "Cloud Pub/Sub API",
    "description": "Provides reliable, many-to-many, asynchronous messaging between applications.",
    "discoveryRestUrl": "https://pubsub.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
@@ -2404,6 +2339,51 @@
    },
    "documentationLink": "https://developers.google.com/webmaster-tools/search-console-api/",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicebroker:v1alpha1",
+   "name": "servicebroker",
+   "version": "v1alpha1",
+   "title": "Service Broker API",
+   "description": "The Google Cloud Platform Service Broker API provides Google hosted implementation of the Open Service Broker API (https://www.openservicebrokerapi.org/).",
+   "discoveryRestUrl": "https://servicebroker.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/concepts/add-on/service-broker",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicebroker:v1",
+   "name": "servicebroker",
+   "version": "v1",
+   "title": "Service Broker API",
+   "description": "The Google Cloud Platform Service Broker API provides Google hosted implementation of the Open Service Broker API (https://www.openservicebrokerapi.org/).",
+   "discoveryRestUrl": "https://servicebroker.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/concepts/add-on/service-broker",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicebroker:v1beta1",
+   "name": "servicebroker",
+   "version": "v1beta1",
+   "title": "Service Broker API",
+   "description": "The Google Cloud Platform Service Broker API provides Google hosted implementation of the Open Service Broker API (https://www.openservicebrokerapi.org/).",
+   "discoveryRestUrl": "https://servicebroker.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/kubernetes-engine/docs/concepts/add-on/service-broker",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

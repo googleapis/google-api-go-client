@@ -341,9 +341,7 @@ type DataSource struct {
 	// When set to `true`, user can override default schedule.
 	SupportsCustomSchedule bool `json:"supportsCustomSchedule,omitempty"`
 
-	// SupportsMultipleTransfers: Indicates whether the data source supports
-	// multiple transfers
-	// to different BigQuery targets.
+	// SupportsMultipleTransfers: Deprecated. This field has no effect.
 	SupportsMultipleTransfers bool `json:"supportsMultipleTransfers,omitempty"`
 
 	// TransferType: Deprecated. This field has no effect.

@@ -1664,6 +1664,47 @@ func (s *Season) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SubscriptionCancelSurveyResult: Information provided by the user when
+// they complete the subscription cancellation flow (cancellation reason
+// survey).
+type SubscriptionCancelSurveyResult struct {
+	// CancelSurveyReason: The cancellation reason the user chose in the
+	// survey. Possible values are:
+	// - Other
+	// - I don't use this service enough
+	// - Technical issues
+	// - Cost-related reasons
+	// - I found a better app
+	CancelSurveyReason int64 `json:"cancelSurveyReason,omitempty"`
+
+	// UserInputCancelReason: The customized input cancel reason from the
+	// user. Only present when cancelReason is 0.
+	UserInputCancelReason string `json:"userInputCancelReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelSurveyReason")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelSurveyReason") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SubscriptionCancelSurveyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SubscriptionCancelSurveyResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SubscriptionDeferralInfo: A SubscriptionDeferralInfo contains the
 // data needed to defer a subscription purchase to a future expiry time.
 type SubscriptionDeferralInfo struct {
@@ -1718,6 +1759,11 @@ type SubscriptionPurchase struct {
 	// - Subscription was replaced with a new subscription
 	// - Subscription was canceled by the developer
 	CancelReason *int64 `json:"cancelReason,omitempty"`
+
+	// CancelSurveyResult: Information provided by the user when they
+	// complete the subscription cancellation flow (cancellation reason
+	// survey).
+	CancelSurveyResult *SubscriptionCancelSurveyResult `json:"cancelSurveyResult,omitempty"`
 
 	// CountryCode: ISO 3166-1 alpha-2 billing country/region code of the
 	// user at the time the subscription was granted.
@@ -7958,9 +8004,8 @@ func (c *EditsTracksGetCall) Do(opts ...googleapi.CallOption) (*Track, error) {
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8259,9 +8304,8 @@ func (c *EditsTracksPatchCall) Do(opts ...googleapi.CallOption) (*Track, error) 
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8415,9 +8459,8 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }

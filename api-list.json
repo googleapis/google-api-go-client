@@ -923,6 +923,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "composer:v1beta1",
+   "name": "composer",
+   "version": "v1beta1",
+   "title": "Cloud Composer API",
+   "description": "Manages Apache Airflow environments on Google Cloud Platform.",
+   "discoveryRestUrl": "https://composer.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/composer/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "compute:alpha",
    "name": "compute",
    "version": "alpha",
@@ -2746,38 +2761,6 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/tag-manager/api/v2/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "taskqueue:v1beta1",
-   "name": "taskqueue",
-   "version": "v1beta1",
-   "title": "TaskQueue API",
-   "description": "Accesses a Google App Engine Pull Task Queue over REST.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/taskqueue/v1beta1/rest",
-   "discoveryLink": "./apis/taskqueue/v1beta1/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/app_engine-16.png",
-    "x32": "https://www.google.com/images/icons/product/app_engine-32.png"
-   },
-   "documentationLink": "https://developers.google.com/appengine/docs/python/taskqueue/rest",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "taskqueue:v1beta2",
-   "name": "taskqueue",
-   "version": "v1beta2",
-   "title": "TaskQueue API",
-   "description": "Accesses a Google App Engine Pull Task Queue over REST.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/taskqueue/v1beta2/rest",
-   "discoveryLink": "./apis/taskqueue/v1beta2/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/app_engine-16.png",
-    "x32": "https://www.google.com/images/icons/product/app_engine-32.png"
-   },
-   "documentationLink": "https://developers.google.com/appengine/docs/python/taskqueue/rest",
    "preferred": true
   },
   {

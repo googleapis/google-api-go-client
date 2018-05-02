@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"-iA1DTNe4s-I6JZXPt1t1Ypy8IU/eJTlhAFjCoKr6Jd4MPFAfd8JyPA\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/e3MuT7-T4mkaaCQS_qVwD7HvOQ8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -60,12 +60,12 @@
       "type": "boolean"
     },
     "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+      "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
       "location": "query",
       "type": "string"
     },
     "userIp": {
-      "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+      "description": "Deprecated. Please use quotaUser instead.",
       "location": "query",
       "type": "string"
     }
@@ -1641,9 +1641,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -1709,9 +1708,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -1750,9 +1748,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -2368,7 +2365,7 @@
       }
     }
   },
-  "revision": "20180327",
+  "revision": "20180501",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3114,6 +3111,22 @@
       },
       "type": "object"
     },
+    "SubscriptionCancelSurveyResult": {
+      "description": "Information provided by the user when they complete the subscription cancellation flow (cancellation reason survey).",
+      "id": "SubscriptionCancelSurveyResult",
+      "properties": {
+        "cancelSurveyReason": {
+          "description": "The cancellation reason the user chose in the survey. Possible values are:  \n- Other \n- I don't use this service enough \n- Technical issues \n- Cost-related reasons \n- I found a better app",
+          "format": "int32",
+          "type": "integer"
+        },
+        "userInputCancelReason": {
+          "description": "The customized input cancel reason from the user. Only present when cancelReason is 0.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SubscriptionDeferralInfo": {
       "description": "A SubscriptionDeferralInfo contains the data needed to defer a subscription purchase to a future expiry time.",
       "id": "SubscriptionDeferralInfo",
@@ -3143,6 +3156,10 @@
           "description": "The reason why a subscription was canceled or is not auto-renewing. Possible values are:  \n- User canceled the subscription \n- Subscription was canceled by the system, for example because of a billing problem \n- Subscription was replaced with a new subscription \n- Subscription was canceled by the developer",
           "format": "int32",
           "type": "integer"
+        },
+        "cancelSurveyResult": {
+          "$ref": "SubscriptionCancelSurveyResult",
+          "description": "Information provided by the user when they complete the subscription cancellation flow (cancellation reason survey)."
         },
         "countryCode": {
           "description": "ISO 3166-1 alpha-2 billing country/region code of the user at the time the subscription was granted.",

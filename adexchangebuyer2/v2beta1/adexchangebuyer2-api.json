@@ -849,45 +849,6 @@
               }
             }
           }
-        },
-        "publishers": {
-          "methods": {
-            "list": {
-              "description": "Lists publishers that had recent inventory matches with the requesting\nbuyer.",
-              "flatPath": "v2beta1/accounts/{accountId}/publishers",
-              "httpMethod": "GET",
-              "id": "adexchangebuyer2.accounts.publishers.list",
-              "parameterOrder": [
-                "accountId"
-              ],
-              "parameters": {
-                "accountId": {
-                  "description": "Account ID of the requesting buyer.",
-                  "format": "int64",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                },
-                "environment": {
-                  "description": "Optional environment (WEB, APP) for which to return publishers. If\nspecified, response will only include publishers that had recent inventory\nmatches with the requesting buyer on the specified platform.",
-                  "enum": [
-                    "ENVIRONMENT_UNSPECIFIED",
-                    "WEB",
-                    "APP"
-                  ],
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/accounts/{accountId}/publishers",
-              "response": {
-                "$ref": "ListPublishersResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/adexchange.buyer"
-              ]
-            }
-          }
         }
       }
     },
@@ -1986,7 +1947,7 @@
       }
     }
   },
-  "revision": "20180411",
+  "revision": "20180430",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2741,7 +2702,9 @@
             "MAXIMUM_NUMBER_OF_HTTP_CALLS_EXCEEDED",
             "MAXIMUM_NUMBER_OF_COOKIES_EXCEEDED",
             "PERSONAL_LOANS",
-            "UNSUPPORTED_FLASH_CONTENT"
+            "UNSUPPORTED_FLASH_CONTENT",
+            "MISUSE_BY_OMID_SCRIPT",
+            "NON_WHITELISTED_OMID_VENDOR"
           ],
           "enumDescriptions": [
             "The length of the image animation is longer than allowed.",
@@ -2837,7 +2800,9 @@
             "Maximum number of HTTP calls exceeded.",
             "Maximum number of cookies exceeded.",
             "Financial service ad does not adhere to specifications.",
-            "Flash content was found in an unsupported context."
+            "Flash content was found in an unsupported context.",
+            "Misuse by an Open Measurement SDK script.",
+            "Use of an Open Measurement SDK vendor not on approved whitelist."
           ],
           "type": "string"
         }
@@ -3400,20 +3365,6 @@
       },
       "type": "object"
     },
-    "ListPublishersResponse": {
-      "description": "Response message for listing publishers that had recent inventory matches\nwith the requesting buyer.",
-      "id": "ListPublishersResponse",
-      "properties": {
-        "publisher": {
-          "description": "List of publishers.",
-          "items": {
-            "$ref": "Publisher"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "LocationContext": {
       "description": "@OutputOnly The Geo criteria the restriction applies to.",
       "id": "LocationContext",
@@ -3555,21 +3506,6 @@
             "type": "string"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "Publisher": {
-      "description": "The publisher ID and name contain values relevant to the requesting buyer\ndepending on whether it is an Ad Exchange buyer or Exchange Bidding buyer.",
-      "id": "Publisher",
-      "properties": {
-        "publisherDisplayName": {
-          "description": "Publisher name contains:\n- Seller network name when the requesting buyer is an Ad Exchange buyer.\n- DFP network name or AdMob publisher code when the requesting buyer is an\n  Exchange Bidding buyer.",
-          "type": "string"
-        },
-        "publisherId": {
-          "description": "Publisher ID contains:\n- Seller network ID when the requesting buyer is an Ad Exchange buyer.\n  See [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\n- DFP network code or AdMob publisher code when the requesting buyer is an\n  Exchange Bidding buyer.",
-          "type": "string"
         }
       },
       "type": "object"

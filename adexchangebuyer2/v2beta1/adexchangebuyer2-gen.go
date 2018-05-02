@@ -82,7 +82,6 @@ func NewAccountsService(s *Service) *AccountsService {
 	rs := &AccountsService{s: s}
 	rs.Clients = NewAccountsClientsService(s)
 	rs.Creatives = NewAccountsCreativesService(s)
-	rs.Publishers = NewAccountsPublishersService(s)
 	return rs
 }
 
@@ -92,8 +91,6 @@ type AccountsService struct {
 	Clients *AccountsClientsService
 
 	Creatives *AccountsCreativesService
-
-	Publishers *AccountsPublishersService
 }
 
 func NewAccountsClientsService(s *Service) *AccountsClientsService {
@@ -147,15 +144,6 @@ func NewAccountsCreativesDealAssociationsService(s *Service) *AccountsCreativesD
 }
 
 type AccountsCreativesDealAssociationsService struct {
-	s *Service
-}
-
-func NewAccountsPublishersService(s *Service) *AccountsPublishersService {
-	rs := &AccountsPublishersService{s: s}
-	return rs
-}
-
-type AccountsPublishersService struct {
 	s *Service
 }
 
@@ -1601,6 +1589,9 @@ type Disapproval struct {
 	// specifications.
 	//   "UNSUPPORTED_FLASH_CONTENT" - Flash content was found in an
 	// unsupported context.
+	//   "MISUSE_BY_OMID_SCRIPT" - Misuse by an Open Measurement SDK script.
+	//   "NON_WHITELISTED_OMID_VENDOR" - Use of an Open Measurement SDK
+	// vendor not on approved whitelist.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -2771,40 +2762,6 @@ func (s *ListNonBillableWinningBidsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListPublishersResponse: Response message for listing publishers that
-// had recent inventory matches
-// with the requesting buyer.
-type ListPublishersResponse struct {
-	// Publisher: List of publishers.
-	Publisher []*Publisher `json:"publisher,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Publisher") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Publisher") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListPublishersResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListPublishersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // LocationContext: @OutputOnly The Geo criteria the restriction applies
 // to.
 type LocationContext struct {
@@ -3047,55 +3004,6 @@ type PlatformContext struct {
 
 func (s *PlatformContext) MarshalJSON() ([]byte, error) {
 	type NoMethod PlatformContext
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Publisher: The publisher ID and name contain values relevant to the
-// requesting buyer
-// depending on whether it is an Ad Exchange buyer or Exchange Bidding
-// buyer.
-type Publisher struct {
-	// PublisherDisplayName: Publisher name contains:
-	// - Seller network name when the requesting buyer is an Ad Exchange
-	// buyer.
-	// - DFP network name or AdMob publisher code when the requesting buyer
-	// is an
-	//   Exchange Bidding buyer.
-	PublisherDisplayName string `json:"publisherDisplayName,omitempty"`
-
-	// PublisherId: Publisher ID contains:
-	// - Seller network ID when the requesting buyer is an Ad Exchange
-	// buyer.
-	//   See
-	// [seller-network-ids](https://developers.google.com/ad-exchange/rtb/dow
-	// nloads/seller-network-ids)
-	// - DFP network code or AdMob publisher code when the requesting buyer
-	// is an
-	//   Exchange Bidding buyer.
-	PublisherId string `json:"publisherId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "PublisherDisplayName") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PublisherDisplayName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Publisher) MarshalJSON() ([]byte, error) {
-	type NoMethod Publisher
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6655,172 +6563,6 @@ func (c *AccountsCreativesDealAssociationsRemoveCall) Do(opts ...googleapi.CallO
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
-}
-
-// method id "adexchangebuyer2.accounts.publishers.list":
-
-type AccountsPublishersListCall struct {
-	s            *Service
-	accountId    int64
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists publishers that had recent inventory matches with the
-// requesting
-// buyer.
-func (r *AccountsPublishersService) List(accountId int64) *AccountsPublishersListCall {
-	c := &AccountsPublishersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.accountId = accountId
-	return c
-}
-
-// Environment sets the optional parameter "environment": Optional
-// environment (WEB, APP) for which to return publishers. If
-// specified, response will only include publishers that had recent
-// inventory
-// matches with the requesting buyer on the specified platform.
-//
-// Possible values:
-//   "ENVIRONMENT_UNSPECIFIED"
-//   "WEB"
-//   "APP"
-func (c *AccountsPublishersListCall) Environment(environment string) *AccountsPublishersListCall {
-	c.urlParams_.Set("environment", environment)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsPublishersListCall) Fields(s ...googleapi.Field) *AccountsPublishersListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AccountsPublishersListCall) IfNoneMatch(entityTag string) *AccountsPublishersListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsPublishersListCall) Context(ctx context.Context) *AccountsPublishersListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsPublishersListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsPublishersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/accounts/{accountId}/publishers")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"accountId": strconv.FormatInt(c.accountId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "adexchangebuyer2.accounts.publishers.list" call.
-// Exactly one of *ListPublishersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListPublishersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountsPublishersListCall) Do(opts ...googleapi.CallOption) (*ListPublishersResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &ListPublishersResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists publishers that had recent inventory matches with the requesting\nbuyer.",
-	//   "flatPath": "v2beta1/accounts/{accountId}/publishers",
-	//   "httpMethod": "GET",
-	//   "id": "adexchangebuyer2.accounts.publishers.list",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "Account ID of the requesting buyer.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environment": {
-	//       "description": "Optional environment (WEB, APP) for which to return publishers. If\nspecified, response will only include publishers that had recent inventory\nmatches with the requesting buyer on the specified platform.",
-	//       "enum": [
-	//         "ENVIRONMENT_UNSPECIFIED",
-	//         "WEB",
-	//         "APP"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/accounts/{accountId}/publishers",
-	//   "response": {
-	//     "$ref": "ListPublishersResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/adexchange.buyer"

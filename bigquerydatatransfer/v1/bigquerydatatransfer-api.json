@@ -1156,7 +1156,7 @@
       }
     }
   },
-  "revision": "20180409",
+  "revision": "20180429",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1269,7 +1269,7 @@
           "type": "boolean"
         },
         "supportsMultipleTransfers": {
-          "description": "Indicates whether the data source supports multiple transfers\nto different BigQuery targets.",
+          "description": "Deprecated. This field has no effect.",
           "type": "boolean"
         },
         "transferType": {

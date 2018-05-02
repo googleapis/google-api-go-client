@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/FPPqigwpUfcq0KjlERaD9pSts-Q\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/blGRSY67TF0Ucqi9Lmjq2_vW804\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -68,12 +68,12 @@
       "type": "boolean"
     },
     "quotaUser": {
-      "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+      "description": "An opaque string that represents a user for quota purposes. Must not exceed 40 characters.",
       "location": "query",
       "type": "string"
     },
     "userIp": {
-      "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+      "description": "Deprecated. Please use quotaUser instead.",
       "location": "query",
       "type": "string"
     }

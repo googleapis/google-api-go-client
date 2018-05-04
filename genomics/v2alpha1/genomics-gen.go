@@ -268,6 +268,11 @@ type Action struct {
 	// login` to access) this flag **must** be set so that a preceding
 	// action
 	// can establish the credentials required to fetch it.
+	//   "DISABLE_STANDARD_ERROR_CAPTURE" - Normally, a small portion of the
+	// container's standard error stream is
+	// captured and returned inside the ContainerStoppedEvent.  Setting
+	// this
+	// flag disables this functionality.
 	Flags []string `json:"flags,omitempty"`
 
 	// ImageUri: The URI to pull the container image from.  Note that all
@@ -539,6 +544,22 @@ type ContainerStoppedEvent struct {
 
 	// ExitStatus: The exit status of the container.
 	ExitStatus int64 `json:"exitStatus,omitempty"`
+
+	// Stderr: The tail end of any content written to standard error by the
+	// container.
+	// To prevent this from being recorded if the action is known to
+	// emit
+	// large amounts of debugging noise or sensitive information, set
+	// the
+	// DISABLE_STANDARD_ERROR_CAPTURE flag.
+	//
+	// Note that only a small amount of the end of the stream is captured
+	// here.
+	// The entire stream is stored in the /google/logs directory mounted
+	// into
+	// each action, and may be copied off the machine as described
+	// elsewhere.
+	Stderr string `json:"stderr,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionId") to
 	// unconditionally include in API requests. By default, fields with

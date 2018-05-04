@@ -617,19 +617,19 @@ func (s *GoogleCloudVideointelligenceV1ShotChangeDetectionConfig) MarshalJSON() 
 // GoogleCloudVideointelligenceV1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
-	// ProgressPercent: Approximate percentage processed thus
-	// far.
-	// Guaranteed to be 100 when fully processed.
+	// ProgressPercent: Output only. Approximate percentage processed thus
+	// far. Guaranteed to be
+	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
-	// StartTime: Time when the request was received.
+	// StartTime: Output only. Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
-	// UpdateTime: Time of the most recent update.
+	// UpdateTime: Output only. Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
@@ -658,9 +658,11 @@ func (s *GoogleCloudVideointelligenceV1VideoAnnotationProgress) MarshalJSON() ([
 // GoogleCloudVideointelligenceV1VideoAnnotationResults: Annotation
 // results for a single video.
 type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
-	// Error: If set, indicates an error. Note that for a single
-	// `AnnotateVideoRequest`
-	// some videos may succeed and some may fail.
+	// Error: Output only. Non-streaming error only. If set, indicates an
+	// error. Note
+	// that for a single `AnnotateVideoRequest` some videos may succeed and
+	// some
+	// may fail.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
 	// ExplicitAnnotation: Explicit content annotation.
@@ -670,7 +672,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
@@ -720,11 +722,11 @@ type GoogleCloudVideointelligenceV1VideoContext struct {
 	// LabelDetectionConfig: Config for LABEL_DETECTION.
 	LabelDetectionConfig *GoogleCloudVideointelligenceV1LabelDetectionConfig `json:"labelDetectionConfig,omitempty"`
 
-	// Segments: Video segments to annotate. The segments may overlap and
-	// are not required
-	// to be contiguous or span the whole video. If unspecified, each
-	// video
-	// is treated as a single segment.
+	// Segments: Non-streaming request only. Video segments to annotate. The
+	// segments may
+	// overlap and are not required to be contiguous or span the whole
+	// video. If
+	// unspecified, each video is treated as a single segment.
 	Segments []*GoogleCloudVideointelligenceV1VideoSegment `json:"segments,omitempty"`
 
 	// ShotChangeDetectionConfig: Config for SHOT_CHANGE_DETECTION.
@@ -1481,19 +1483,19 @@ func (s *GoogleCloudVideointelligenceV1beta2LabelSegment) UnmarshalJSON(data []b
 // GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
-	// ProgressPercent: Approximate percentage processed thus
-	// far.
-	// Guaranteed to be 100 when fully processed.
+	// ProgressPercent: Output only. Approximate percentage processed thus
+	// far. Guaranteed to be
+	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
-	// StartTime: Time when the request was received.
+	// StartTime: Output only. Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
-	// UpdateTime: Time of the most recent update.
+	// UpdateTime: Output only. Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
@@ -1522,9 +1524,11 @@ func (s *GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress) MarshalJSON
 // GoogleCloudVideointelligenceV1beta2VideoAnnotationResults: Annotation
 // results for a single video.
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
-	// Error: If set, indicates an error. Note that for a single
-	// `AnnotateVideoRequest`
-	// some videos may succeed and some may fail.
+	// Error: Output only. Non-streaming error only. If set, indicates an
+	// error. Note
+	// that for a single `AnnotateVideoRequest` some videos may succeed and
+	// some
+	// may fail.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
 	// ExplicitAnnotation: Explicit content annotation.
@@ -1534,7 +1538,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
@@ -2280,19 +2284,19 @@ func (s *GoogleCloudVideointelligenceV1p1beta1SpeechTranscription) MarshalJSON()
 // GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 
-	// ProgressPercent: Approximate percentage processed thus
-	// far.
-	// Guaranteed to be 100 when fully processed.
+	// ProgressPercent: Output only. Approximate percentage processed thus
+	// far. Guaranteed to be
+	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
-	// StartTime: Time when the request was received.
+	// StartTime: Output only. Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
-	// UpdateTime: Time of the most recent update.
+	// UpdateTime: Output only. Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InputUri") to
@@ -2321,9 +2325,11 @@ func (s *GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress) MarshalJS
 // GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults:
 // Annotation results for a single video.
 type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
-	// Error: If set, indicates an error. Note that for a single
-	// `AnnotateVideoRequest`
-	// some videos may succeed and some may fail.
+	// Error: Output only. Non-streaming error only. If set, indicates an
+	// error. Note
+	// that for a single `AnnotateVideoRequest` some videos may succeed and
+	// some
+	// may fail.
 	Error *GoogleRpcStatus `json:"error,omitempty"`
 
 	// ExplicitAnnotation: Explicit content annotation.
@@ -2336,7 +2342,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	FrameLabelAnnotations []*GoogleCloudVideointelligenceV1p1beta1LabelAnnotation `json:"frameLabelAnnotations,omitempty"`
 
-	// InputUri: Video file location in
+	// InputUri: Output only. Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
 

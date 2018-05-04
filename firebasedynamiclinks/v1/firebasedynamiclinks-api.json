@@ -211,7 +211,7 @@
       }
     }
   },
-  "revision": "20180425",
+  "revision": "20180502",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -421,13 +421,15 @@
             "DYNAMIC_LINK_PLATFORM_UNSPECIFIED",
             "ANDROID",
             "IOS",
-            "DESKTOP"
+            "DESKTOP",
+            "OTHER"
           ],
           "enumDescriptions": [
             "Unspecified platform.",
             "Represents Android platform.\nAll apps and browsers on Android are classfied in this category.",
             "Represents iOS platform.\nAll apps and browsers on iOS are classfied in this category.",
-            "Represents desktop.\nNote: other platforms like Windows, Blackberry, Amazon fall into this\ncategory."
+            "Represents desktop.",
+            "Platforms are not categorized as Android/iOS/Destop fall into here."
           ],
           "type": "string"
         }

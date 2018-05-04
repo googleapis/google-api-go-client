@@ -1005,10 +1005,9 @@ type InstanceGroupConfig struct {
 	// cluster instances. Inferred from SoftwareConfig.image_version.
 	ImageUri string `json:"imageUri,omitempty"`
 
-	// InstanceNames: Optional. The list of instance names. Cloud Dataproc
-	// derives the names from cluster_name, num_instances, and the instance
-	// group if not set by user (recommended practice is to let Cloud
-	// Dataproc derive the name).
+	// InstanceNames: Output only. The list of instance names. Cloud
+	// Dataproc derives the names from cluster_name, num_instances, and the
+	// instance group.
 	InstanceNames []string `json:"instanceNames,omitempty"`
 
 	// IsPreemptible: Optional. Specifies that this instance group contains

@@ -1554,6 +1554,9 @@ func (s *Queue) MarshalJSON() ([]byte, error) {
 // by a
 // queue, regardless of whether the dispatch is a first task attempt or
 // a retry.
+//
+// Note: The debugging command, RunTask, will run a task
+// even if the queue has reached its RateLimits.
 type RateLimits struct {
 	// MaxBurstSize: Output only. The max burst size.
 	//
@@ -1612,10 +1615,14 @@ type RateLimits struct {
 	// default.
 	//
 	//
-	// The maximum allowed value is 5,000. -1 indicates no limit.
+	// The maximum allowed value is 5,000.
 	//
 	// This field is output only for
-	// [pull queues](google.cloud.tasks.v2beta2.PullTarget).
+	// [pull queues](google.cloud.tasks.v2beta2.PullTarget) and always -1,
+	// which
+	// indicates no limit. No other queue types can have
+	// `max_concurrent_tasks`
+	// set to -1.
 	//
 	//
 	// This field has the same meaning as
@@ -5735,38 +5742,36 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 
 // Run: Forces a task to run now.
 //
+// When this method is called, Cloud Tasks will dispatch the task, even
+// if
+// the task is already running, the queue has reached its RateLimits
+// or
+// is PAUSED.
+//
 // This command is meant to be used for manual debugging. For
 // example, RunTask can be used to retry a failed
 // task after a fix has been made or to manually force a task to
 // be
 // dispatched now.
 //
-// When this method is called, Cloud Tasks will dispatch the task to
-// its
-// target, even if the queue is PAUSED.
-//
 // The dispatched task is returned. That is, the task that is
 // returned
 // contains the status after the task is dispatched but
 // before the task is received by its target.
 //
-// If Cloud Tasks receives a successful response from the
-// task's
-// handler, then the task will be deleted; otherwise the
+// If Cloud Tasks receives a successful response from the task's
+// target, then the task will be deleted; otherwise the
 // task's
 // schedule_time will be reset to the time that
 // RunTask was called plus the retry delay specified
-// in the queue and task's RetryConfig.
+// in the queue's RetryConfig.
 //
 // RunTask returns
 // NOT_FOUND when it is called on a
-// task that has already succeeded or permanently
-// failed. FAILED_PRECONDITION
-// is returned when RunTask is called on task
-// that is dispatched or already running.
+// task that has already succeeded or permanently failed.
 //
-// RunTask cannot be called on
-// pull tasks.
+// RunTask cannot be called on a
+// pull task.
 func (r *ProjectsLocationsQueuesTasksService) Run(name string, runtaskrequest *RunTaskRequest) *ProjectsLocationsQueuesTasksRunCall {
 	c := &ProjectsLocationsQueuesTasksRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5860,7 +5865,7 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Forces a task to run now.\n\nThis command is meant to be used for manual debugging. For\nexample, RunTask can be used to retry a failed\ntask after a fix has been made or to manually force a task to be\ndispatched now.\n\nWhen this method is called, Cloud Tasks will dispatch the task to its\ntarget, even if the queue is PAUSED.\n\nThe dispatched task is returned. That is, the task that is returned\ncontains the status after the task is dispatched but\nbefore the task is received by its target.\n\nIf Cloud Tasks receives a successful response from the task's\nhandler, then the task will be deleted; otherwise the task's\nschedule_time will be reset to the time that\nRunTask was called plus the retry delay specified\nin the queue and task's RetryConfig.\n\nRunTask returns\nNOT_FOUND when it is called on a\ntask that has already succeeded or permanently\nfailed. FAILED_PRECONDITION\nis returned when RunTask is called on task\nthat is dispatched or already running.\n\nRunTask cannot be called on\npull tasks.",
+	//   "description": "Forces a task to run now.\n\nWhen this method is called, Cloud Tasks will dispatch the task, even if\nthe task is already running, the queue has reached its RateLimits or\nis PAUSED.\n\nThis command is meant to be used for manual debugging. For\nexample, RunTask can be used to retry a failed\ntask after a fix has been made or to manually force a task to be\ndispatched now.\n\nThe dispatched task is returned. That is, the task that is returned\ncontains the status after the task is dispatched but\nbefore the task is received by its target.\n\nIf Cloud Tasks receives a successful response from the task's\ntarget, then the task will be deleted; otherwise the task's\nschedule_time will be reset to the time that\nRunTask was called plus the retry delay specified\nin the queue's RetryConfig.\n\nRunTask returns\nNOT_FOUND when it is called on a\ntask that has already succeeded or permanently failed.\n\nRunTask cannot be called on a\npull task.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:run",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.tasks.run",

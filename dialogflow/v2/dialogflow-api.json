@@ -1275,7 +1275,7 @@
       }
     }
   },
-  "revision": "20180422",
+  "revision": "20180430",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2646,7 +2646,7 @@
           "type": "string"
         },
         "speechRecognitionConfidence": {
-          "description": "The Speech recognition confidence between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. The default of 0.0 is a sentinel value indicating that confidence\nwas not set.\n\nYou should not rely on this field as it isn't guaranteed to be accurate, or\neven set. In particular this field isn't set in Webhook calls and for\nStreamingDetectIntent since the streaming endpoint has separate confidence\nestimates per portion of the audio in StreamingRecognitionResult.",
+          "description": "The Speech recognition confidence between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. The default of 0.0 is a sentinel value indicating that confidence\nwas not set.\n\nThis field is not guaranteed to be accurate or set. In particular this\nfield isn't set for StreamingDetectIntent since the streaming endpoint has\nseparate confidence estimates per portion of the audio in\nStreamingRecognitionResult.",
           "format": "float",
           "type": "number"
         },
@@ -3730,7 +3730,7 @@
           "type": "string"
         },
         "speechRecognitionConfidence": {
-          "description": "The Speech recognition confidence between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. The default of 0.0 is a sentinel value indicating that confidence\nwas not set.\n\nYou should not rely on this field as it isn't guaranteed to be accurate, or\neven set. In particular this field isn't set in Webhook calls and for\nStreamingDetectIntent since the streaming endpoint has separate confidence\nestimates per portion of the audio in StreamingRecognitionResult.",
+          "description": "The Speech recognition confidence between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. The default of 0.0 is a sentinel value indicating that confidence\nwas not set.\n\nThis field is not guaranteed to be accurate or set. In particular this\nfield isn't set for StreamingDetectIntent since the streaming endpoint has\nseparate confidence estimates per portion of the audio in\nStreamingRecognitionResult.",
           "format": "float",
           "type": "number"
         },

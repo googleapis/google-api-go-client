@@ -632,6 +632,19 @@ func (r *UsersProjectsService) Delete(name string) *UsersProjectsDeleteCall {
 	return c
 }
 
+// OperatingSystemType sets the optional parameter
+// "operatingSystemType": The type of operating system associated with
+// the account.
+//
+// Possible values:
+//   "OPERATING_SYSTEM_TYPE_UNSPECIFIED"
+//   "LINUX"
+//   "WINDOWS"
+func (c *UsersProjectsDeleteCall) OperatingSystemType(operatingSystemType string) *UsersProjectsDeleteCall {
+	c.urlParams_.Set("operatingSystemType", operatingSystemType)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -726,6 +739,16 @@ func (c *UsersProjectsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/projects/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "operatingSystemType": {
+	//       "description": "The type of operating system associated with the account.",
+	//       "enum": [
+	//         "OPERATING_SYSTEM_TYPE_UNSPECIFIED",
+	//         "LINUX",
+	//         "WINDOWS"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

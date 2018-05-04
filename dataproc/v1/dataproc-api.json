@@ -783,7 +783,7 @@
       }
     }
   },
-  "revision": "20180409",
+  "revision": "20180502",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1250,7 +1250,7 @@
           "type": "string"
         },
         "instanceNames": {
-          "description": "Optional. The list of instance names. Cloud Dataproc derives the names from cluster_name, num_instances, and the instance group if not set by user (recommended practice is to let Cloud Dataproc derive the name).",
+          "description": "Output only. The list of instance names. Cloud Dataproc derives the names from cluster_name, num_instances, and the instance group.",
           "items": {
             "type": "string"
           },

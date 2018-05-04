@@ -1310,36 +1310,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dlp:v2beta1",
-   "name": "dlp",
-   "version": "v2beta1",
-   "title": "Cloud Data Loss Prevention (DLP) API",
-   "description": "Provides methods for detection, risk analysis, and de-identification of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
-   "discoveryRestUrl": "https://dlp.googleapis.com/$discovery/rest?version=v2beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/dlp/docs/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "dlp:v2beta2",
-   "name": "dlp",
-   "version": "v2beta2",
-   "title": "Cloud Data Loss Prevention (DLP) API",
-   "description": "Provides methods for detection, risk analysis, and de-identification of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
-   "discoveryRestUrl": "https://dlp.googleapis.com/$discovery/rest?version=v2beta2",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/dlp/docs/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "dns:v1",
    "name": "dns",
    "version": "v1",
@@ -2331,7 +2301,7 @@
    "name": "script",
    "version": "v1",
    "title": "Apps Script API",
-   "description": "An API for managing and executing Google Apps Script projects.",
+   "description": "An API for managing and executing Google Apps Script projects. Note: In order to use this API in your apps, you must  enable it for use. To allow other apps to manage your scripts, you must  grant them access.",
    "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

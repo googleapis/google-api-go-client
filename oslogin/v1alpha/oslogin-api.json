@@ -207,6 +207,16 @@
                   "pattern": "^users/[^/]+/projects/[^/]+$",
                   "required": true,
                   "type": "string"
+                },
+                "operatingSystemType": {
+                  "description": "The type of operating system associated with the account.",
+                  "enum": [
+                    "OPERATING_SYSTEM_TYPE_UNSPECIFIED",
+                    "LINUX",
+                    "WINDOWS"
+                  ],
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1alpha/{+name}",
@@ -314,7 +324,7 @@
       }
     }
   },
-  "revision": "20180413",
+  "revision": "20180430",
   "rootUrl": "https://oslogin.googleapis.com/",
   "schemas": {
     "Empty": {

@@ -18,6 +18,7 @@
   "description": "Provides reliable, many-to-many, asynchronous messaging between applications.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/pubsub/docs",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -467,7 +468,7 @@
       }
     }
   },
-  "revision": "20180402",
+  "revision": "20180423",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {

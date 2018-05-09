@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/Q1HHztnl9IrxZzbtwYt8T3VlHFw\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/3-7T6UkO_NIPVO3b8h9Pjt9YiaU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -2756,7 +2756,7 @@
       }
     }
   },
-  "revision": "20180404",
+  "revision": "20180430",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -2832,10 +2832,10 @@
           "type": "array"
         },
         "encryption": {
-          "description": "Encryption configuration used by default for newly inserted objects, when no encryption config is specified.",
+          "description": "Encryption configuration for a bucket.",
           "properties": {
             "defaultKmsKeyName": {
-              "description": "A Cloud KMS key that will be used to encrypt objects inserted into this bucket, if no encryption method is specified. Limited availability; usable only by enabled projects.",
+              "description": "A Cloud KMS key that will be used to encrypt objects inserted into this bucket, if no encryption method is specified.",
               "type": "string"
             }
           },

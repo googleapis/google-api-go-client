@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/PNUnFmurkt6UcyajxjbWsLH2mTY\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/fYQPONZBNcqEhRZuvE1tarGD280\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2891,7 +2891,7 @@
       }
     }
   },
-  "revision": "20180410",
+  "revision": "20180507",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -4731,6 +4731,15 @@
         },
         "method": {
           "type": "string"
+        },
+        "posExternalAccountId": {
+          "description": "The account ID by which this merchant is known to the POS provider.",
+          "type": "string"
+        },
+        "posProviderId": {
+          "description": "The ID of POS provider. Required only for SetPosProvider.",
+          "format": "uint64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4777,6 +4786,13 @@
         "liaSettings": {
           "$ref": "LiaSettings",
           "description": "The retrieved or updated Lia settings."
+        },
+        "posProviders": {
+          "description": "The list of POS providers.",
+          "items": {
+            "$ref": "PosProviders"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -7064,6 +7080,42 @@
             "$ref": "PosStore"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PosProviders": {
+      "id": "PosProviders",
+      "properties": {
+        "country": {
+          "description": "Country code.",
+          "type": "string"
+        },
+        "posProviders": {
+          "description": "A list of POS providers.",
+          "items": {
+            "$ref": "PosProvidersPosProvider"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PosProvidersPosProvider": {
+      "id": "PosProvidersPosProvider",
+      "properties": {
+        "displayName": {
+          "description": "The display name of Pos Provider.",
+          "type": "string"
+        },
+        "fullName": {
+          "description": "The full name of this POS Provider.",
+          "type": "string"
+        },
+        "providerId": {
+          "description": "The ID of the account.",
+          "format": "uint64",
+          "type": "string"
         }
       },
       "type": "object"

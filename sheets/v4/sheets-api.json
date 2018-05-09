@@ -819,7 +819,7 @@
       }
     }
   },
-  "revision": "20180405",
+  "revision": "20180503",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -878,6 +878,31 @@
         "rule": {
           "$ref": "ConditionalFormatRule",
           "description": "The rule to add."
+        }
+      },
+      "type": "object"
+    },
+    "AddDimensionGroupRequest": {
+      "description": "Creates a group over the specified range.\n\nIf the requested range is a superset of the range of an existing group G,\nthen the depth of G will be incremented and this new group G' will have the\ndepth of that group. For example, a group [C:D, depth 1] + [B:E] results in\ngroups [B:E, depth 1] and [C:D, depth 2].\nIf the requested range is a subset of the range of an existing group G,\nthen the depth of the new group G' will be one greater than the depth of G.\nFor example, a group [B:E, depth 1] + [C:D] results in groups [B:E, depth 1]\nand [C:D, depth 2].\nIf the requested range starts before and ends within, or starts within and\nends after, the range of an existing group G, then the range of the existing\ngroup G will become the union of the ranges, and the new group G' will have\ndepth one greater than the depth of G and range as the intersection of the\nranges. For example, a group [B:D, depth 1] + [C:E] results in groups [B:E,\ndepth 1] and [C:D, depth 2].",
+      "id": "AddDimensionGroupRequest",
+      "properties": {
+        "range": {
+          "$ref": "DimensionRange",
+          "description": "The range over which to create a group."
+        }
+      },
+      "type": "object"
+    },
+    "AddDimensionGroupResponse": {
+      "description": "The result of adding a group.",
+      "id": "AddDimensionGroupResponse",
+      "properties": {
+        "dimensionGroups": {
+          "description": "All groups of a dimension after adding a group to that dimension.",
+          "items": {
+            "$ref": "DimensionGroup"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1806,7 +1831,8 @@
             "ONE_OF_LIST",
             "BLANK",
             "NOT_BLANK",
-            "CUSTOM_FORMULA"
+            "CUSTOM_FORMULA",
+            "BOOLEAN"
           ],
           "enumDescriptions": [
             "The default value, do not use.",
@@ -1837,7 +1863,8 @@
             "The cell's value must be in the list of condition values.\nSupported by data validation.\nSupports any number of condition values,\none per item in the list.\nFormulas are not supported in the values.",
             "The cell's value must be empty.\nSupported by conditional formatting and filters.\nRequires no ConditionValues.",
             "The cell's value must not be empty.\nSupported by conditional formatting and filters.\nRequires no ConditionValues.",
-            "The condition's formula must evaluate to true.\nSupported by data validation, conditional formatting and filters.\nRequires a single ConditionValue."
+            "The condition's formula must evaluate to true.\nSupported by data validation, conditional formatting and filters.\nRequires a single ConditionValue.",
+            "The cell's value must be TRUE/FALSE or in the list of condition values.\nSupported by data validation.\nRenders as a cell checkbox.\nSupports zero, one or two ConditionValue.  No\nvalues indicates the cell must be TRUE or FALSE, where TRUE renders as\nchecked and FALSE renders as unchecked.  One value indicates the cell\nwill render as checked when it contains that value and unchecked when it\nis blank.  Two values indicate that the cell will render as checked when\nit contains the first value and unchecked when it contains the second\nvalue.  For example, [\"Yes\",\"\"No\"] indicates that the cell will render a\nchecked box when it has the value \"Yes\" and an unchecked box when it has\nthe value \"No\"."
           ],
           "type": "string"
         },
@@ -2660,6 +2687,53 @@
       },
       "type": "object"
     },
+    "DateTimeRule": {
+      "description": "Allows you to organize the date-time values in a source data column into\nbuckets based on selected parts of their date or time values. For example,\nconsider a pivot table showing sales transactions by date:\n\n    +----------+--------------+\n    | Date     | SUM of Sales |\n    +----------+--------------+\n    | 1/1/2017 |      $621.14 |\n    | 2/3/2017 |      $708.84 |\n    | 5/8/2017 |      $326.84 |\n    ...\n    +----------+--------------+\nApplying a date-time group rule with a DateTimeRuleType of YEAR_MONTH\nresults in the following pivot table.\n\n    +--------------+--------------+\n    | Grouped Date | SUM of Sales |\n    +--------------+--------------+\n    | 2017-Jan     |   $53,731.78 |\n    | 2017-Feb     |   $83,475.32 |\n    | 2017-Mar     |   $94,385.05 |\n    ...\n    +--------------+--------------+",
+      "id": "DateTimeRule",
+      "properties": {
+        "type": {
+          "description": "The type of date-time grouping to apply.",
+          "enum": [
+            "DATE_TIME_RULE_TYPE_UNSPECIFIED",
+            "SECOND",
+            "MINUTE",
+            "HOUR",
+            "HOUR_MINUTE",
+            "HOUR_MINUTE_AMPM",
+            "DAY_OF_WEEK",
+            "DAY_OF_YEAR",
+            "DAY_OF_MONTH",
+            "DAY_MONTH",
+            "MONTH",
+            "QUARTER",
+            "YEAR",
+            "YEAR_MONTH",
+            "YEAR_QUARTER",
+            "YEAR_MONTH_DAY"
+          ],
+          "enumDescriptions": [
+            "The default type, do not use.",
+            "Group dates by second, from 0 to 59",
+            "Group dates by minute, from 0 to 59",
+            "Group dates by hour using a 24-hour system, from 0 to 23",
+            "Group dates by hour and minute using a 24-hour system, e.g. 19:45",
+            "Group dates by hour and minute using a 12-hour system, e.g. 7:45 PM. The\nAM/PM designation will be translated based on the spreadsheet locale.",
+            "Group dates by day of week, e.g. Sunday. The days of the week will be\ntranslated based on the spreadsheet locale.",
+            "Group dates by day of year, from 1 to 366. Note that dates after Feb. 29\nfall in different buckets in leap years than in non-leap years.",
+            "Group dates by day of month, from 1 to 31",
+            "Group dates by day and month, e.g. 22-Nov. The month will be translated\nbased on the spreadsheet locale.",
+            "Group dates by month, e.g. Nov. The month will be translated based on the\nspreadsheet locale.",
+            "Group dates by quarter, e.g. Q1 (which represents Jan-Mar)",
+            "Group dates by year, e.g. 2008",
+            "Group dates by year and month, e.g. 2008-Nov. The month will be\ntranslated based on the spreadsheet locale.",
+            "Group dates by year and quarter, e.g. 2008 Q4",
+            "Group dates by year, month, and day, e.g. 2008-11-22"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "DeleteBandingRequest": {
       "description": "Removes the banded range with the given ID from the spreadsheet.",
       "id": "DeleteBandingRequest",
@@ -2719,6 +2793,31 @@
           "description": "The metadata that was deleted.",
           "items": {
             "$ref": "DeveloperMetadata"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "DeleteDimensionGroupRequest": {
+      "description": "Deletes a group over the specified range by decrementing the depth of the\ndimensions in the range.\n\nFor example, assume the sheet has a depth-1 group over B:E and a depth-2\ngroup over C:D. Deleting a group over D:E would leave the sheet with a\ndepth-1 group over B:D and a depth-2 group over C:C.",
+      "id": "DeleteDimensionGroupRequest",
+      "properties": {
+        "range": {
+          "$ref": "DimensionRange",
+          "description": "The range of the group to be deleted."
+        }
+      },
+      "type": "object"
+    },
+    "DeleteDimensionGroupResponse": {
+      "description": "The result of deleting a group.",
+      "id": "DeleteDimensionGroupResponse",
+      "properties": {
+        "dimensionGroups": {
+          "description": "All groups of a dimension after deleting a group from that dimension.",
+          "items": {
+            "$ref": "DimensionGroup"
           },
           "type": "array"
         }
@@ -2962,6 +3061,26 @@
             "Project-visible metadata is only visible to and accessible by the developer\nproject that created the metadata."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DimensionGroup": {
+      "description": "A group over an interval of rows or columns on a sheet, which can contain or\nbe contained within other groups. A group can be collapsed or expanded as a\nunit on the sheet.",
+      "id": "DimensionGroup",
+      "properties": {
+        "collapsed": {
+          "description": "True if this group is collapsed. A collapsed group will remain collapsed if\nan overlapping group at a shallower depth is expanded.\n\ncollapsed == true does not imply that all dimensions within the group are\nhidden, since a dimension's visibility can change independently from this\ngroup property. However, when this property is updated, all dimensions\nwithin it will be set to hidden if collapsed == true, or set to visible if\ncollapsed == false.",
+          "type": "boolean"
+        },
+        "depth": {
+          "description": "The depth of the group, representing how many groups have a range that\nwholly contains the range of this group.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "range": {
+          "$ref": "DimensionRange",
+          "description": "The range over which this group exists."
         }
       },
       "type": "object"
@@ -3459,6 +3578,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "columnGroupControlAfter": {
+          "description": "True if the column grouping control toggle is shown after the group.",
+          "type": "boolean"
+        },
         "frozenColumnCount": {
           "description": "The number of columns that are frozen in the grid.",
           "format": "int32",
@@ -3477,6 +3600,10 @@
           "description": "The number of rows in the grid.",
           "format": "int32",
           "type": "integer"
+        },
+        "rowGroupControlAfter": {
+          "description": "True if the row grouping control toggle is shown after the group.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4158,6 +4285,10 @@
       "description": "An optional setting on a PivotGroup that defines buckets for the values\nin the source data column rather than breaking out each individual value.\nOnly one PivotGroup with a group rule may be added for each column in\nthe source data, though on any given column you may add both a\nPivotGroup that has a rule and a PivotGroup that does not.",
       "id": "PivotGroupRule",
       "properties": {
+        "dateTimeRule": {
+          "$ref": "DateTimeRule",
+          "description": "A DateTimeRule."
+        },
         "histogramRule": {
           "$ref": "HistogramRule",
           "description": "A HistogramRule."
@@ -4418,6 +4549,10 @@
           "$ref": "AddConditionalFormatRuleRequest",
           "description": "Adds a new conditional format rule."
         },
+        "addDimensionGroup": {
+          "$ref": "AddDimensionGroupRequest",
+          "description": "Creates a group over the specified range."
+        },
         "addFilterView": {
           "$ref": "AddFilterViewRequest",
           "description": "Adds a filter view."
@@ -4481,6 +4616,10 @@
         "deleteDimension": {
           "$ref": "DeleteDimensionRequest",
           "description": "Deletes rows or columns in a sheet."
+        },
+        "deleteDimensionGroup": {
+          "$ref": "DeleteDimensionGroupRequest",
+          "description": "Deletes a group over the specified range."
         },
         "deleteEmbeddedObject": {
           "$ref": "DeleteEmbeddedObjectRequest",
@@ -4590,6 +4729,10 @@
           "$ref": "UpdateDeveloperMetadataRequest",
           "description": "Updates an existing developer metadata entry"
         },
+        "updateDimensionGroup": {
+          "$ref": "UpdateDimensionGroupRequest",
+          "description": "Updates the state of the specified group."
+        },
         "updateDimensionProperties": {
           "$ref": "UpdateDimensionPropertiesRequest",
           "description": "Updates dimensions' properties."
@@ -4633,6 +4776,10 @@
           "$ref": "AddChartResponse",
           "description": "A reply from adding a chart."
         },
+        "addDimensionGroup": {
+          "$ref": "AddDimensionGroupResponse",
+          "description": "A reply from adding a dimension group."
+        },
         "addFilterView": {
           "$ref": "AddFilterViewResponse",
           "description": "A reply from adding a filter view."
@@ -4660,6 +4807,10 @@
         "deleteDeveloperMetadata": {
           "$ref": "DeleteDeveloperMetadataResponse",
           "description": "A reply from deleting a developer metadata entry."
+        },
+        "deleteDimensionGroup": {
+          "$ref": "DeleteDimensionGroupResponse",
+          "description": "A reply from deleting a dimension group."
         },
         "duplicateFilterView": {
           "$ref": "DuplicateFilterViewResponse",
@@ -4778,6 +4929,13 @@
           },
           "type": "array"
         },
+        "columnGroups": {
+          "description": "All column groups on this sheet, ordered by increasing range start index,\nthen by group depth.",
+          "items": {
+            "$ref": "DimensionGroup"
+          },
+          "type": "array"
+        },
         "conditionalFormats": {
           "description": "The conditional format rules in this sheet.",
           "items": {
@@ -4821,6 +4979,13 @@
           "description": "The protected ranges in this sheet.",
           "items": {
             "$ref": "ProtectedRange"
+          },
+          "type": "array"
+        },
+        "rowGroups": {
+          "description": "All row groups on this sheet, ordered by increasing range start index, then\nby group depth.",
+          "items": {
+            "$ref": "DimensionGroup"
           },
           "type": "array"
         }
@@ -5434,6 +5599,22 @@
             "$ref": "DeveloperMetadata"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "UpdateDimensionGroupRequest": {
+      "description": "Updates the state of the specified group.",
+      "id": "UpdateDimensionGroupRequest",
+      "properties": {
+        "dimensionGroup": {
+          "$ref": "DimensionGroup",
+          "description": "The group whose state should be updated. The range and depth of the group\nshould specify a valid group on the sheet, and all other fields updated."
+        },
+        "fields": {
+          "description": "The fields that should be updated.  At least one field must be specified.\nThe root `dimensionGroup` is implied and should not be specified.\nA single `\"*\"` can be used as short-hand for listing every field.",
+          "format": "google-fieldmask",
+          "type": "string"
         }
       },
       "type": "object"

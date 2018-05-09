@@ -286,6 +286,91 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AddDimensionGroupRequest: Creates a group over the specified
+// range.
+//
+// If the requested range is a superset of the range of an existing
+// group G,
+// then the depth of G will be incremented and this new group G' will
+// have the
+// depth of that group. For example, a group [C:D, depth 1] + [B:E]
+// results in
+// groups [B:E, depth 1] and [C:D, depth 2].
+// If the requested range is a subset of the range of an existing group
+// G,
+// then the depth of the new group G' will be one greater than the depth
+// of G.
+// For example, a group [B:E, depth 1] + [C:D] results in groups [B:E,
+// depth 1]
+// and [C:D, depth 2].
+// If the requested range starts before and ends within, or starts
+// within and
+// ends after, the range of an existing group G, then the range of the
+// existing
+// group G will become the union of the ranges, and the new group G'
+// will have
+// depth one greater than the depth of G and range as the intersection
+// of the
+// ranges. For example, a group [B:D, depth 1] + [C:E] results in groups
+// [B:E,
+// depth 1] and [C:D, depth 2].
+type AddDimensionGroupRequest struct {
+	// Range: The range over which to create a group.
+	Range *DimensionRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDimensionGroupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddDimensionGroupResponse: The result of adding a group.
+type AddDimensionGroupResponse struct {
+	// DimensionGroups: All groups of a dimension after adding a group to
+	// that dimension.
+	DimensionGroups []*DimensionGroup `json:"dimensionGroups,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddDimensionGroupResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDimensionGroupResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AddFilterViewRequest: Adds a filter view.
 type AddFilterViewRequest struct {
 	// Filter: The filter to add. The filterViewId
@@ -2097,6 +2182,26 @@ type BooleanCondition struct {
 	// Supported by data validation, conditional formatting and
 	// filters.
 	// Requires a single ConditionValue.
+	//   "BOOLEAN" - The cell's value must be TRUE/FALSE or in the list of
+	// condition values.
+	// Supported by data validation.
+	// Renders as a cell checkbox.
+	// Supports zero, one or two ConditionValue.  No
+	// values indicates the cell must be TRUE or FALSE, where TRUE renders
+	// as
+	// checked and FALSE renders as unchecked.  One value indicates the
+	// cell
+	// will render as checked when it contains that value and unchecked when
+	// it
+	// is blank.  Two values indicate that the cell will render as checked
+	// when
+	// it contains the first value and unchecked when it contains the
+	// second
+	// value.  For example, ["Yes",""No"] indicates that the cell will
+	// render a
+	// checked box when it has the value "Yes" and an unchecked box when it
+	// has
+	// the value "No".
 	Type string `json:"type,omitempty"`
 
 	// Values: The values of the condition. The number of supported values
@@ -3616,6 +3721,92 @@ func (s *DataValidationRule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DateTimeRule: Allows you to organize the date-time values in a source
+// data column into
+// buckets based on selected parts of their date or time values. For
+// example,
+// consider a pivot table showing sales transactions by date:
+//
+//     +----------+--------------+
+//     | Date     | SUM of Sales |
+//     +----------+--------------+
+//     | 1/1/2017 |      $621.14 |
+//     | 2/3/2017 |      $708.84 |
+//     | 5/8/2017 |      $326.84 |
+//     ...
+//     +----------+--------------+
+// Applying a date-time group rule with a DateTimeRuleType of
+// YEAR_MONTH
+// results in the following pivot table.
+//
+//     +--------------+--------------+
+//     | Grouped Date | SUM of Sales |
+//     +--------------+--------------+
+//     | 2017-Jan     |   $53,731.78 |
+//     | 2017-Feb     |   $83,475.32 |
+//     | 2017-Mar     |   $94,385.05 |
+//     ...
+//     +--------------+--------------+
+type DateTimeRule struct {
+	// Type: The type of date-time grouping to apply.
+	//
+	// Possible values:
+	//   "DATE_TIME_RULE_TYPE_UNSPECIFIED" - The default type, do not use.
+	//   "SECOND" - Group dates by second, from 0 to 59
+	//   "MINUTE" - Group dates by minute, from 0 to 59
+	//   "HOUR" - Group dates by hour using a 24-hour system, from 0 to 23
+	//   "HOUR_MINUTE" - Group dates by hour and minute using a 24-hour
+	// system, e.g. 19:45
+	//   "HOUR_MINUTE_AMPM" - Group dates by hour and minute using a 12-hour
+	// system, e.g. 7:45 PM. The
+	// AM/PM designation will be translated based on the spreadsheet locale.
+	//   "DAY_OF_WEEK" - Group dates by day of week, e.g. Sunday. The days
+	// of the week will be
+	// translated based on the spreadsheet locale.
+	//   "DAY_OF_YEAR" - Group dates by day of year, from 1 to 366. Note
+	// that dates after Feb. 29
+	// fall in different buckets in leap years than in non-leap years.
+	//   "DAY_OF_MONTH" - Group dates by day of month, from 1 to 31
+	//   "DAY_MONTH" - Group dates by day and month, e.g. 22-Nov. The month
+	// will be translated
+	// based on the spreadsheet locale.
+	//   "MONTH" - Group dates by month, e.g. Nov. The month will be
+	// translated based on the
+	// spreadsheet locale.
+	//   "QUARTER" - Group dates by quarter, e.g. Q1 (which represents
+	// Jan-Mar)
+	//   "YEAR" - Group dates by year, e.g. 2008
+	//   "YEAR_MONTH" - Group dates by year and month, e.g. 2008-Nov. The
+	// month will be
+	// translated based on the spreadsheet locale.
+	//   "YEAR_QUARTER" - Group dates by year and quarter, e.g. 2008 Q4
+	//   "YEAR_MONTH_DAY" - Group dates by year, month, and day, e.g.
+	// 2008-11-22
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DateTimeRule) MarshalJSON() ([]byte, error) {
+	type NoMethod DateTimeRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeleteBandingRequest: Removes the banded range with the given ID from
 // the spreadsheet.
 type DeleteBandingRequest struct {
@@ -3765,6 +3956,72 @@ type DeleteDeveloperMetadataResponse struct {
 
 func (s *DeleteDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteDeveloperMetadataResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteDimensionGroupRequest: Deletes a group over the specified range
+// by decrementing the depth of the
+// dimensions in the range.
+//
+// For example, assume the sheet has a depth-1 group over B:E and a
+// depth-2
+// group over C:D. Deleting a group over D:E would leave the sheet with
+// a
+// depth-1 group over B:D and a depth-2 group over C:C.
+type DeleteDimensionGroupRequest struct {
+	// Range: The range of the group to be deleted.
+	Range *DimensionRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Range") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Range") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDimensionGroupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeleteDimensionGroupResponse: The result of deleting a group.
+type DeleteDimensionGroupResponse struct {
+	// DimensionGroups: All groups of a dimension after deleting a group
+	// from that dimension.
+	DimensionGroups []*DimensionGroup `json:"dimensionGroups,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionGroups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionGroups") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteDimensionGroupResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDimensionGroupResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4260,6 +4517,58 @@ type DeveloperMetadataLookup struct {
 
 func (s *DeveloperMetadataLookup) MarshalJSON() ([]byte, error) {
 	type NoMethod DeveloperMetadataLookup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DimensionGroup: A group over an interval of rows or columns on a
+// sheet, which can contain or
+// be contained within other groups. A group can be collapsed or
+// expanded as a
+// unit on the sheet.
+type DimensionGroup struct {
+	// Collapsed: True if this group is collapsed. A collapsed group will
+	// remain collapsed if
+	// an overlapping group at a shallower depth is expanded.
+	//
+	// collapsed == true does not imply that all dimensions within the group
+	// are
+	// hidden, since a dimension's visibility can change independently from
+	// this
+	// group property. However, when this property is updated, all
+	// dimensions
+	// within it will be set to hidden if collapsed == true, or set to
+	// visible if
+	// collapsed == false.
+	Collapsed bool `json:"collapsed,omitempty"`
+
+	// Depth: The depth of the group, representing how many groups have a
+	// range that
+	// wholly contains the range of this group.
+	Depth int64 `json:"depth,omitempty"`
+
+	// Range: The range over which this group exists.
+	Range *DimensionRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collapsed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collapsed") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DimensionGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod DimensionGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5065,6 +5374,10 @@ type GridProperties struct {
 	// ColumnCount: The number of columns in the grid.
 	ColumnCount int64 `json:"columnCount,omitempty"`
 
+	// ColumnGroupControlAfter: True if the column grouping control toggle
+	// is shown after the group.
+	ColumnGroupControlAfter bool `json:"columnGroupControlAfter,omitempty"`
+
 	// FrozenColumnCount: The number of columns that are frozen in the grid.
 	FrozenColumnCount int64 `json:"frozenColumnCount,omitempty"`
 
@@ -5076,6 +5389,10 @@ type GridProperties struct {
 
 	// RowCount: The number of rows in the grid.
 	RowCount int64 `json:"rowCount,omitempty"`
+
+	// RowGroupControlAfter: True if the row grouping control toggle is
+	// shown after the group.
+	RowGroupControlAfter bool `json:"rowGroupControlAfter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ColumnCount") to
 	// unconditionally include in API requests. By default, fields with
@@ -6431,13 +6748,16 @@ func (s *PivotGroup) MarshalJSON() ([]byte, error) {
 // a
 // PivotGroup that has a rule and a PivotGroup that does not.
 type PivotGroupRule struct {
+	// DateTimeRule: A DateTimeRule.
+	DateTimeRule *DateTimeRule `json:"dateTimeRule,omitempty"`
+
 	// HistogramRule: A HistogramRule.
 	HistogramRule *HistogramRule `json:"histogramRule,omitempty"`
 
 	// ManualRule: A ManualRule.
 	ManualRule *ManualRule `json:"manualRule,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HistogramRule") to
+	// ForceSendFields is a list of field names (e.g. "DateTimeRule") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6445,7 +6765,7 @@ type PivotGroupRule struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HistogramRule") to include
+	// NullFields is a list of field names (e.g. "DateTimeRule") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -6872,6 +7192,9 @@ type Request struct {
 	// AddConditionalFormatRule: Adds a new conditional format rule.
 	AddConditionalFormatRule *AddConditionalFormatRuleRequest `json:"addConditionalFormatRule,omitempty"`
 
+	// AddDimensionGroup: Creates a group over the specified range.
+	AddDimensionGroup *AddDimensionGroupRequest `json:"addDimensionGroup,omitempty"`
+
 	// AddFilterView: Adds a filter view.
 	AddFilterView *AddFilterViewRequest `json:"addFilterView,omitempty"`
 
@@ -6922,6 +7245,9 @@ type Request struct {
 
 	// DeleteDimension: Deletes rows or columns in a sheet.
 	DeleteDimension *DeleteDimensionRequest `json:"deleteDimension,omitempty"`
+
+	// DeleteDimensionGroup: Deletes a group over the specified range.
+	DeleteDimensionGroup *DeleteDimensionGroupRequest `json:"deleteDimensionGroup,omitempty"`
 
 	// DeleteEmbeddedObject: Deletes an embedded object (e.g, chart, image)
 	// in a sheet.
@@ -7009,6 +7335,9 @@ type Request struct {
 	// UpdateDeveloperMetadata: Updates an existing developer metadata entry
 	UpdateDeveloperMetadata *UpdateDeveloperMetadataRequest `json:"updateDeveloperMetadata,omitempty"`
 
+	// UpdateDimensionGroup: Updates the state of the specified group.
+	UpdateDimensionGroup *UpdateDimensionGroupRequest `json:"updateDimensionGroup,omitempty"`
+
 	// UpdateDimensionProperties: Updates dimensions' properties.
 	UpdateDimensionProperties *UpdateDimensionPropertiesRequest `json:"updateDimensionProperties,omitempty"`
 
@@ -7062,6 +7391,9 @@ type Response struct {
 	// AddChart: A reply from adding a chart.
 	AddChart *AddChartResponse `json:"addChart,omitempty"`
 
+	// AddDimensionGroup: A reply from adding a dimension group.
+	AddDimensionGroup *AddDimensionGroupResponse `json:"addDimensionGroup,omitempty"`
+
 	// AddFilterView: A reply from adding a filter view.
 	AddFilterView *AddFilterViewResponse `json:"addFilterView,omitempty"`
 
@@ -7085,6 +7417,9 @@ type Response struct {
 	// DeleteDeveloperMetadata: A reply from deleting a developer metadata
 	// entry.
 	DeleteDeveloperMetadata *DeleteDeveloperMetadataResponse `json:"deleteDeveloperMetadata,omitempty"`
+
+	// DeleteDimensionGroup: A reply from deleting a dimension group.
+	DeleteDimensionGroup *DeleteDimensionGroupResponse `json:"deleteDimensionGroup,omitempty"`
 
 	// DuplicateFilterView: A reply from duplicating a filter view.
 	DuplicateFilterView *DuplicateFilterViewResponse `json:"duplicateFilterView,omitempty"`
@@ -7302,6 +7637,11 @@ type Sheet struct {
 	// Charts: The specifications of every chart on this sheet.
 	Charts []*EmbeddedChart `json:"charts,omitempty"`
 
+	// ColumnGroups: All column groups on this sheet, ordered by increasing
+	// range start index,
+	// then by group depth.
+	ColumnGroups []*DimensionGroup `json:"columnGroups,omitempty"`
+
 	// ConditionalFormats: The conditional format rules in this sheet.
 	ConditionalFormats []*ConditionalFormatRule `json:"conditionalFormats,omitempty"`
 
@@ -7333,6 +7673,11 @@ type Sheet struct {
 
 	// ProtectedRanges: The protected ranges in this sheet.
 	ProtectedRanges []*ProtectedRange `json:"protectedRanges,omitempty"`
+
+	// RowGroups: All row groups on this sheet, ordered by increasing range
+	// start index, then
+	// by group depth.
+	RowGroups []*DimensionGroup `json:"rowGroups,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BandedRanges") to
 	// unconditionally include in API requests. By default, fields with
@@ -8440,6 +8785,45 @@ type UpdateDeveloperMetadataResponse struct {
 
 func (s *UpdateDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDeveloperMetadataResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDimensionGroupRequest: Updates the state of the specified
+// group.
+type UpdateDimensionGroupRequest struct {
+	// DimensionGroup: The group whose state should be updated. The range
+	// and depth of the group
+	// should specify a valid group on the sheet, and all other fields
+	// updated.
+	DimensionGroup *DimensionGroup `json:"dimensionGroup,omitempty"`
+
+	// Fields: The fields that should be updated.  At least one field must
+	// be specified.
+	// The root `dimensionGroup` is implied and should not be specified.
+	// A single "*" can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DimensionGroup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DimensionGroup") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateDimensionGroupRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDimensionGroupRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

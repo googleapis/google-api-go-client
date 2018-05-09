@@ -3143,6 +3143,14 @@ type LiasettingsCustomBatchRequestEntry struct {
 
 	Method string `json:"method,omitempty"`
 
+	// PosExternalAccountId: The account ID by which this merchant is known
+	// to the POS provider.
+	PosExternalAccountId string `json:"posExternalAccountId,omitempty"`
+
+	// PosProviderId: The ID of POS provider. Required only for
+	// SetPosProvider.
+	PosProviderId uint64 `json:"posProviderId,omitempty,string"`
+
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3217,6 +3225,9 @@ type LiasettingsCustomBatchResponseEntry struct {
 
 	// LiaSettings: The retrieved or updated Lia settings.
 	LiaSettings *LiaSettings `json:"liaSettings,omitempty"`
+
+	// PosProviders: The list of POS providers.
+	PosProviders []*PosProviders `json:"posProviders,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BatchId") to
 	// unconditionally include in API requests. By default, fields with
@@ -6714,6 +6725,69 @@ type PosListResponse struct {
 
 func (s *PosListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PosListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type PosProviders struct {
+	// Country: Country code.
+	Country string `json:"country,omitempty"`
+
+	// PosProviders: A list of POS providers.
+	PosProviders []*PosProvidersPosProvider `json:"posProviders,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PosProviders) MarshalJSON() ([]byte, error) {
+	type NoMethod PosProviders
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type PosProvidersPosProvider struct {
+	// DisplayName: The display name of Pos Provider.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FullName: The full name of this POS Provider.
+	FullName string `json:"fullName,omitempty"`
+
+	// ProviderId: The ID of the account.
+	ProviderId uint64 `json:"providerId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PosProvidersPosProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod PosProvidersPosProvider
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

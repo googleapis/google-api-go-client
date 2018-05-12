@@ -270,9 +270,21 @@ func ProcessMediaOptions(opts []MediaOption) *MediaOptions {
 
 func ResolveRelative(basestr, relstr string) string {
 	u, _ := url.Parse(basestr)
+	relstrHasColon := strings.Contains(relstr, ":")
+	afterColonPath := ""
+	if relstrHasColon {		
+		relstrAfterColon := strings.SplitAfter(relstr, ":")
+		if len(relstrAfterColon) > 1 {
+			relstr = relstrAfterColon[0][1:]
+			afterColonPath = relstrAfterColon[1]
+		}
+	}
 	rel, _ := url.Parse(relstr)
 	u = u.ResolveReference(rel)
 	us := u.String()
+	if relstrHasColon {
+		us = fmt.Sprintf("%s:%s", us, afterColonPath)
+	}
 	us = strings.Replace(us, "%7B", "{", -1)
 	us = strings.Replace(us, "%7D", "}", -1)
 	return us

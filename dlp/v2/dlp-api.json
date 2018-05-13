@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180501",
+  "revision": "20180507",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1548,7 +1548,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CloudStoragePath": {
-      "description": "Message representing a path in Cloud Storage.",
+      "description": "Message representing a single file or path in Cloud Storage.",
       "id": "GooglePrivacyDlpV2CloudStoragePath",
       "properties": {
         "path": {

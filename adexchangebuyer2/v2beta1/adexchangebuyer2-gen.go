@@ -1592,6 +1592,7 @@ type Disapproval struct {
 	//   "MISUSE_BY_OMID_SCRIPT" - Misuse by an Open Measurement SDK script.
 	//   "NON_WHITELISTED_OMID_VENDOR" - Use of an Open Measurement SDK
 	// vendor not on approved whitelist.
+	//   "DESTINATION_EXPERIENCE" - Unacceptable landing page.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

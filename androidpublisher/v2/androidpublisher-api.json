@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/e3MuT7-T4mkaaCQS_qVwD7HvOQ8\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/LDFr6YaJ8-u0RqM_DYpFxlF3LR4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -584,6 +584,85 @@
               "path": "{packageName}/edits/{editId}/apks",
               "response": {
                 "$ref": "Apk"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ],
+              "supportsMediaUpload": true
+            }
+          }
+        },
+        "bundles": {
+          "methods": {
+            "list": {
+              "httpMethod": "GET",
+              "id": "androidpublisher.edits.bundles.list",
+              "parameterOrder": [
+                "packageName",
+                "editId"
+              ],
+              "parameters": {
+                "editId": {
+                  "description": "Unique identifier for this edit.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "packageName": {
+                  "description": "Unique identifier for the Android app that is being updated; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/edits/{editId}/bundles",
+              "response": {
+                "$ref": "BundlesListResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            },
+            "upload": {
+              "httpMethod": "POST",
+              "id": "androidpublisher.edits.bundles.upload",
+              "mediaUpload": {
+                "accept": [
+                  "application/octet-stream"
+                ],
+                "maxSize": "2GB",
+                "protocols": {
+                  "resumable": {
+                    "multipart": true,
+                    "path": "/resumable/upload/androidpublisher/v2/applications/{packageName}/edits/{editId}/bundles"
+                  },
+                  "simple": {
+                    "multipart": true,
+                    "path": "/upload/androidpublisher/v2/applications/{packageName}/edits/{editId}/bundles"
+                  }
+                }
+              },
+              "parameterOrder": [
+                "packageName",
+                "editId"
+              ],
+              "parameters": {
+                "editId": {
+                  "description": "Unique identifier for this edit.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "packageName": {
+                  "description": "Unique identifier for the Android app that is being updated; for example, \"com.spiffygame\".",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "{packageName}/edits/{editId}/bundles",
+              "response": {
+                "$ref": "Bundle"
               },
               "scopes": [
                 "https://www.googleapis.com/auth/androidpublisher"
@@ -2365,7 +2444,7 @@
       }
     }
   },
-  "revision": "20180501",
+  "revision": "20180504",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2498,6 +2577,42 @@
         },
         "id": {
           "description": "The ID of the edit that can be used in subsequent API calls.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Bundle": {
+      "id": "Bundle",
+      "properties": {
+        "sha1": {
+          "description": "A sha1 hash of the upload payload, encoded as a hex string and matching the output of the sha1sum command.",
+          "type": "string"
+        },
+        "sha256": {
+          "description": "A sha256 hash of the upload payload, encoded as a hex string and matching the output of the sha256sum command.",
+          "type": "string"
+        },
+        "versionCode": {
+          "description": "The version code of the Android App Bundle. As specified in the Android App Bundle's base module APK manifest file.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "BundlesListResponse": {
+      "id": "BundlesListResponse",
+      "properties": {
+        "bundles": {
+          "items": {
+            "$ref": "Bundle"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "androidpublisher#bundlesListResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidpublisher#bundlesListResponse\".",
           "type": "string"
         }
       },
@@ -3316,6 +3431,7 @@
           "type": "number"
         },
         "versionCodes": {
+          "description": "Version codes to make active on this track. Note that this list should contain all versions you wish to be active, including those you wish to retain from previous releases.",
           "items": {
             "format": "int32",
             "type": "integer"

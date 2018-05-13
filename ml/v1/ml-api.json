@@ -992,7 +992,7 @@
       }
     }
   },
-  "revision": "20180420",
+  "revision": "20180507",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1065,13 +1065,15 @@
           "enumDescriptions": [
             "Unspecified accelerator type. Default to no GPU.",
             "Nvidia tesla k80 GPU.",
-            "Nvidia tesla P100 GPU."
+            "Nvidia tesla P100 GPU.",
+            "Nvidia tesla V100 GPU."
           ],
           "items": {
             "enum": [
               "ACCELERATOR_TYPE_UNSPECIFIED",
               "NVIDIA_TESLA_K80",
-              "NVIDIA_TESLA_P100"
+              "NVIDIA_TESLA_P100",
+              "NVIDIA_TESLA_V100"
             ],
             "type": "string"
           },

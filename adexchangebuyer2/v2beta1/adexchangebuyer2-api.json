@@ -1947,7 +1947,7 @@
       }
     }
   },
-  "revision": "20180430",
+  "revision": "20180509",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2704,7 +2704,8 @@
             "PERSONAL_LOANS",
             "UNSUPPORTED_FLASH_CONTENT",
             "MISUSE_BY_OMID_SCRIPT",
-            "NON_WHITELISTED_OMID_VENDOR"
+            "NON_WHITELISTED_OMID_VENDOR",
+            "DESTINATION_EXPERIENCE"
           ],
           "enumDescriptions": [
             "The length of the image animation is longer than allowed.",
@@ -2802,7 +2803,8 @@
             "Financial service ad does not adhere to specifications.",
             "Flash content was found in an unsupported context.",
             "Misuse by an Open Measurement SDK script.",
-            "Use of an Open Measurement SDK vendor not on approved whitelist."
+            "Use of an Open Measurement SDK vendor not on approved whitelist.",
+            "Unacceptable landing page."
           ],
           "type": "string"
         }

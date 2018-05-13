@@ -202,6 +202,31 @@
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
+            },
+            "list": {
+              "description": "",
+              "flatPath": "v1beta1/projects/{projectsId}/locations",
+              "httpMethod": "GET",
+              "id": "container.projects.locations.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "Contains the name of the resource requested.\nSpecific in the format 'projects/*/locations'.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1beta1/{+parent}/locations",
+              "response": {
+                "$ref": "ListLocationsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           },
           "resources": {
@@ -2421,7 +2446,7 @@
       }
     }
   },
-  "revision": "20180412",
+  "revision": "20180427",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2991,6 +3016,24 @@
       },
       "type": "object"
     },
+    "ListLocationsResponse": {
+      "description": "ListLocationsResponse returns the list of all GKE locations and their\nrecommendation state.",
+      "id": "ListLocationsResponse",
+      "properties": {
+        "locations": {
+          "description": "A full list of GKE locations.",
+          "items": {
+            "$ref": "Location"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Only return ListLocationsResponse that occur after the page_token. This\nvalue should be populated from the ListLocationsResponse.next_page_token if\nthat response token was set (which happens when listing more Locations than\nfit in a single ListLocationsResponse).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListNodePoolsResponse": {
       "description": "ListNodePoolsResponse is the result of ListNodePoolsRequest.",
       "id": "ListNodePoolsResponse",
@@ -3040,6 +3083,35 @@
             "$ref": "UsableSubnetwork"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Location": {
+      "description": "Location returns the location name, and if the location is recommended\nfor GKE cluster scheduling.",
+      "id": "Location",
+      "properties": {
+        "name": {
+          "description": "Contains the name of the resource requested.\nSpecific in the format 'projects/*/locations/*'.",
+          "type": "string"
+        },
+        "recommended": {
+          "description": "Recommended is a bool combining the drain state of the location (ie- has\nthe region been drained manually?), and the stockout status of any zone\naccording to Zone Advisor. This will be internal only for use by pantheon.",
+          "type": "boolean"
+        },
+        "type": {
+          "description": "Contains the type of location this Location is for.\nRegional or Zonal.",
+          "enum": [
+            "LOCATION_TYPE_UNSPECIFIED",
+            "ZONE",
+            "REGION"
+          ],
+          "enumDescriptions": [
+            "LOCATION_TYPE_UNSPECIFIED means the location type was not determined.",
+            "A GKE Location where Zonal clusters can be created.",
+            "A GKE Location where Regional clusters can be created."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

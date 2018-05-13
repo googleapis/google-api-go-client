@@ -1619,6 +1619,21 @@ func (c *ProjectsLocationsGroupsDevicesListCall) FieldMask(fieldMask string) *Pr
 	return c
 }
 
+// GatewayType sets the optional parameter "gatewayType": If `GATEWAY`
+// is specified, only gateways are returned. If `NON_GATEWAY`
+// specified, only non-gateway devices are returned.
+// If
+// `GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.
+//
+// Possible values:
+//   "GATEWAY_TYPE_UNSPECIFIED"
+//   "GATEWAY"
+//   "NON_GATEWAY"
+func (c *ProjectsLocationsGroupsDevicesListCall) GatewayType(gatewayType string) *ProjectsLocationsGroupsDevicesListCall {
+	c.urlParams_.Set("gatewayType", gatewayType)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
@@ -1758,6 +1773,16 @@ func (c *ProjectsLocationsGroupsDevicesListCall) Do(opts ...googleapi.CallOption
 	//     "fieldMask": {
 	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayType": {
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nspecified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.",
+	//       "enum": [
+	//         "GATEWAY_TYPE_UNSPECIFIED",
+	//         "GATEWAY",
+	//         "NON_GATEWAY"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3447,6 +3472,21 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string)
 	return c
 }
 
+// GatewayType sets the optional parameter "gatewayType": If `GATEWAY`
+// is specified, only gateways are returned. If `NON_GATEWAY`
+// specified, only non-gateway devices are returned.
+// If
+// `GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.
+//
+// Possible values:
+//   "GATEWAY_TYPE_UNSPECIFIED"
+//   "GATEWAY"
+//   "NON_GATEWAY"
+func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayType(gatewayType string) *ProjectsLocationsRegistriesDevicesListCall {
+	c.urlParams_.Set("gatewayType", gatewayType)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
@@ -3586,6 +3626,16 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Do(opts ...googleapi.CallOp
 	//     "fieldMask": {
 	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayType": {
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nspecified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.",
+	//       "enum": [
+	//         "GATEWAY_TYPE_UNSPECIFIED",
+	//         "GATEWAY",
+	//         "NON_GATEWAY"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },

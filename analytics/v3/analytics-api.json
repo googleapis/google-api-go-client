@@ -29,7 +29,7 @@
   "description": "Views and manages your Google Analytics data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/analytics/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/6p-mtXtqM7RLWG_i-dRwl-jH568\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/0X5eq1A8RZv5UHZPwERUEGMzwZM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/analytics-16.png",
     "x32": "https://www.google.com/images/icons/product/analytics-32.png"
@@ -3759,7 +3759,7 @@
       }
     }
   },
-  "revision": "20180417",
+  "revision": "20180509",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7259,6 +7259,14 @@
           "description": "Time this web property was created.",
           "format": "date-time",
           "readOnly": true,
+          "type": "string"
+        },
+        "dataRetentionResetOnNewActivity": {
+          "description": "Set to true to reset the retention period of the user identifier with each new event from that user (thus setting the expiration date to current time plus retention period).\nSet to false to delete data associated with the user identifer automatically after the rentention period.\nThis property cannot be set on insert.",
+          "type": "boolean"
+        },
+        "dataRetentionTtl": {
+          "description": "The length of time for which user and event data is retained.\nThis property cannot be set on insert.",
           "type": "string"
         },
         "defaultProfileId": {

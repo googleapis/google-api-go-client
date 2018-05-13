@@ -3755,6 +3755,7 @@ type BackendService struct {
 	//
 	// Possible values:
 	//   "HTTP"
+	//   "HTTP2"
 	//   "HTTPS"
 	//   "SSL"
 	//   "TCP"
@@ -4405,8 +4406,7 @@ type Binding struct {
 	// account.
 	//
 	// * `user:{emailid}`: An email address that represents a specific
-	// Google account. For example, `alice@gmail.com` or
-	// `joe@example.com`.
+	// Google account. For example, `alice@gmail.com` .
 	//
 	//
 	//
@@ -6009,6 +6009,12 @@ type DiskType struct {
 
 	// Name: [Output Only] Name of the resource.
 	Name string `json:"name,omitempty"`
+
+	// Region: [Output Only] URL of the region where the disk type resides.
+	// Only applicable for regional resources. You must specify this field
+	// as part of the HTTP request URL. It is not settable as a field in the
+	// request body.
+	Region string `json:"region,omitempty"`
 
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -16110,7 +16116,8 @@ func (s *NetworksRemovePeeringRequest) MarshalJSON() ([]byte, error) {
 // (== resource_for beta.regionOperations ==) (== resource_for
 // v1.zoneOperations ==) (== resource_for beta.zoneOperations ==)
 type Operation struct {
-	// ClientOperationId: [Output Only] Reserved for future use.
+	// ClientOperationId: [Output Only] The value of `requestId` if you
+	// provided it in the request. Not present otherwise.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
 
 	// CreationTimestamp: [Deprecated] This field is deprecated.
@@ -18774,6 +18781,44 @@ type RegionSetLabelsRequest struct {
 
 func (s *RegionSetLabelsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionSetLabelsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RegionSetPolicyRequest struct {
+	// Bindings: Flatten Policy to create a backwacd compatible wire-format.
+	// Deprecated. Use 'policy' to specify bindings.
+	Bindings []*Binding `json:"bindings,omitempty"`
+
+	// Etag: Flatten Policy to create a backward compatible wire-format.
+	// Deprecated. Use 'policy' to specify the etag.
+	Etag string `json:"etag,omitempty"`
+
+	// Policy: REQUIRED: The complete policy to be applied to the
+	// 'resource'. The size of the policy is limited to a few 10s of KB. An
+	// empty policy is in general a valid policy but certain services (like
+	// Projects) might reject them.
+	Policy *Policy `json:"policy,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bindings") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bindings") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionSetPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionSetPolicyRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -27590,8 +27635,7 @@ type AcceleratorTypesGetCall struct {
 	header_         http.Header
 }
 
-// Get: Returns the specified accelerator type. Gets a list of available
-// accelerator types by making a list() request.
+// Get: Returns the specified accelerator type.
 func (r *AcceleratorTypesService) Get(project string, zone string, acceleratorType string) *AcceleratorTypesGetCall {
 	c := &AcceleratorTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -27696,7 +27740,7 @@ func (c *AcceleratorTypesGetCall) Do(opts ...googleapi.CallOption) (*Accelerator
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified accelerator type. Gets a list of available accelerator types by making a list() request.",
+	//   "description": "Returns the specified accelerator type.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.acceleratorTypes.get",
 	//   "parameterOrder": [
@@ -61296,7 +61340,7 @@ type InterconnectsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns the specified interconnect. Gets a list of available
+// Get: Returns the specified interconnect. Get a list of available
 // interconnects by making a list() request.
 func (r *InterconnectsService) Get(project string, interconnect string) *InterconnectsGetCall {
 	c := &InterconnectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -61400,7 +61444,7 @@ func (c *InterconnectsGetCall) Do(opts ...googleapi.CallOption) (*Interconnect, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the specified interconnect. Gets a list of available interconnects by making a list() request.",
+	//   "description": "Returns the specified interconnect. Get a list of available interconnects by making a list() request.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.interconnects.get",
 	//   "parameterOrder": [
@@ -62951,7 +62995,7 @@ type LicensesListCall struct {
 // List: Retrieves the list of licenses available in the specified
 // project. This method does not get any licenses that belong to other
 // projects, including licenses attached to publicly-available images,
-// like Debian 8. If you want to get a list of publicly-available
+// like Debian 9. If you want to get a list of publicly-available
 // licenses, use this method to make a request to the respective image
 // project, such as debian-cloud or windows-cloud.
 func (r *LicensesService) List(project string) *LicensesListCall {
@@ -63117,7 +63161,7 @@ func (c *LicensesListCall) Do(opts ...googleapi.CallOption) (*LicensesListRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 8. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
+	//   "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 9. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.licenses.list",
 	//   "parameterOrder": [
@@ -86972,24 +87016,24 @@ func (c *SubnetworksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, err
 // method id "compute.subnetworks.setIamPolicy":
 
 type SubnetworksSetIamPolicyCall struct {
-	s          *Service
-	project    string
-	region     string
-	resource   string
-	policy     *Policy
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                      *Service
+	project                string
+	region                 string
+	resource               string
+	regionsetpolicyrequest *RegionSetPolicyRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
 }
 
 // SetIamPolicy: Sets the access control policy on the specified
 // resource. Replaces any existing policy.
-func (r *SubnetworksService) SetIamPolicy(project string, region string, resource string, policy *Policy) *SubnetworksSetIamPolicyCall {
+func (r *SubnetworksService) SetIamPolicy(project string, region string, resource string, regionsetpolicyrequest *RegionSetPolicyRequest) *SubnetworksSetIamPolicyCall {
 	c := &SubnetworksSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.region = region
 	c.resource = resource
-	c.policy = policy
+	c.regionsetpolicyrequest = regionsetpolicyrequest
 	return c
 }
 
@@ -87025,7 +87069,7 @@ func (c *SubnetworksSetIamPolicyCall) doRequest(alt string) (*http.Response, err
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.policy)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionsetpolicyrequest)
 	if err != nil {
 		return nil, err
 	}
@@ -87114,7 +87158,7 @@ func (c *SubnetworksSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//   },
 	//   "path": "{project}/regions/{region}/subnetworks/{resource}/setIamPolicy",
 	//   "request": {
-	//     "$ref": "Policy"
+	//     "$ref": "RegionSetPolicyRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"

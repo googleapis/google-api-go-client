@@ -154,6 +154,16 @@
                           "location": "query",
                           "type": "string"
                         },
+                        "gatewayType": {
+                          "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nspecified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.",
+                          "enum": [
+                            "GATEWAY_TYPE_UNSPECIFIED",
+                            "GATEWAY",
+                            "NON_GATEWAY"
+                          ],
+                          "location": "query",
+                          "type": "string"
+                        },
                         "pageSize": {
                           "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested, but if there is a non-empty `page_token`, it\nindicates that more entries are available.",
                           "format": "int32",
@@ -544,6 +554,16 @@
                         "fieldMask": {
                           "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
                           "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "gatewayType": {
+                          "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nspecified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` specified, all devices are returned.",
+                          "enum": [
+                            "GATEWAY_TYPE_UNSPECIFIED",
+                            "GATEWAY",
+                            "NON_GATEWAY"
+                          ],
                           "location": "query",
                           "type": "string"
                         },
@@ -1015,7 +1035,7 @@
       }
     }
   },
-  "revision": "20180424",
+  "revision": "20180501",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
     "Binding": {

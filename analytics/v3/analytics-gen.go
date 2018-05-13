@@ -5526,6 +5526,20 @@ type Webproperty struct {
 	// Created: Time this web property was created.
 	Created string `json:"created,omitempty"`
 
+	// DataRetentionResetOnNewActivity: Set to true to reset the retention
+	// period of the user identifier with each new event from that user
+	// (thus setting the expiration date to current time plus retention
+	// period).
+	// Set to false to delete data associated with the user identifer
+	// automatically after the rentention period.
+	// This property cannot be set on insert.
+	DataRetentionResetOnNewActivity bool `json:"dataRetentionResetOnNewActivity,omitempty"`
+
+	// DataRetentionTtl: The length of time for which user and event data is
+	// retained.
+	// This property cannot be set on insert.
+	DataRetentionTtl string `json:"dataRetentionTtl,omitempty"`
+
 	// DefaultProfileId: Default view (profile) ID.
 	DefaultProfileId int64 `json:"defaultProfileId,omitempty,string"`
 

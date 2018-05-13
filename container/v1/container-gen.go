@@ -570,9 +570,8 @@ type Cluster struct {
 	// endpoint.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
 
-	// MasterAuthorizedNetworksConfig: Master authorized networks is a Beta
-	// feature.
-	// The configuration options for master authorized networks feature.
+	// MasterAuthorizedNetworksConfig: The configuration options for master
+	// authorized networks feature.
 	MasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"masterAuthorizedNetworksConfig,omitempty"`
 
 	// MonitoringService: The monitoring service the cluster should use to
@@ -752,10 +751,8 @@ type ClusterUpdate struct {
 	// This list must always include the cluster's primary zone.
 	DesiredLocations []string `json:"desiredLocations,omitempty"`
 
-	// DesiredMasterAuthorizedNetworksConfig: Master authorized networks is
-	// a Beta feature.
-	// The desired configuration options for master authorized networks
-	// feature.
+	// DesiredMasterAuthorizedNetworksConfig: The desired configuration
+	// options for master authorized networks feature.
 	DesiredMasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"desiredMasterAuthorizedNetworksConfig,omitempty"`
 
 	// DesiredMasterVersion: The Kubernetes version to change the master
@@ -1574,10 +1571,8 @@ func (s *MasterAuth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MasterAuthorizedNetworksConfig: Master authorized networks is a Beta
-// feature.
-// Configuration options for the master authorized networks feature.
-// Enabled
+// MasterAuthorizedNetworksConfig: Configuration options for the master
+// authorized networks feature. Enabled
 // master authorized networks will disallow all external traffic to
 // access
 // Kubernetes master through HTTPS except traffic from the given CIDR

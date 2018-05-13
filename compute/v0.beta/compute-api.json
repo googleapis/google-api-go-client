@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/sPz-4RgAS-zNcdDLTbcBp8HrEnY\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/injzol5OJYImoyc_4_PefG_Oiuc\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -138,7 +138,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified accelerator type. Gets a list of available accelerator types by making a list() request.",
+          "description": "Returns the specified accelerator type.",
           "httpMethod": "GET",
           "id": "compute.acceleratorTypes.get",
           "parameterOrder": [
@@ -8304,7 +8304,7 @@
           ]
         },
         "get": {
-          "description": "Returns the specified interconnect. Gets a list of available interconnects by making a list() request.",
+          "description": "Returns the specified interconnect. Get a list of available interconnects by making a list() request.",
           "httpMethod": "GET",
           "id": "compute.interconnects.get",
           "parameterOrder": [
@@ -8684,7 +8684,7 @@
           ]
         },
         "list": {
-          "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 8. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
+          "description": "Retrieves the list of licenses available in the specified project. This method does not get any licenses that belong to other projects, including licenses attached to publicly-available images, like Debian 9. If you want to get a list of publicly-available licenses, use this method to make a request to the respective image project, such as debian-cloud or windows-cloud.",
           "httpMethod": "GET",
           "id": "compute.licenses.list",
           "parameterOrder": [
@@ -14465,7 +14465,7 @@
           },
           "path": "{project}/regions/{region}/subnetworks/{resource}/setIamPolicy",
           "request": {
-            "$ref": "Policy"
+            "$ref": "RegionSetPolicyRequest"
           },
           "response": {
             "$ref": "Policy"
@@ -17875,7 +17875,7 @@
       }
     }
   },
-  "revision": "20180427",
+  "revision": "20180428",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -19862,12 +19862,14 @@
           "description": "The protocol this BackendService uses to communicate with backends.\n\nPossible values are HTTP, HTTPS, TCP, and SSL. The default is HTTP.\n\nFor internal load balancing, the possible values are TCP and UDP, and the default is TCP.",
           "enum": [
             "HTTP",
+            "HTTP2",
             "HTTPS",
             "SSL",
             "TCP",
             "UDP"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -20302,7 +20304,7 @@
           "description": "The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently. This field is only visible as GOOGLE_INTERNAL or CONDITION_TRUSTED_TESTER."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` or `joe@example.com`.\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
           "items": {
             "type": "string"
           },
@@ -21419,6 +21421,10 @@
         "name": {
           "description": "[Output Only] Name of the resource.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "region": {
+          "description": "[Output Only] URL of the region where the disk type resides. Only applicable for regional resources. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.",
           "type": "string"
         },
         "selfLink": {
@@ -28364,7 +28370,7 @@
       "id": "Operation",
       "properties": {
         "clientOperationId": {
-          "description": "[Output Only] Reserved for future use.",
+          "description": "[Output Only] The value of `requestId` if you provided it in the request. Not present otherwise.",
           "type": "string"
         },
         "creationTimestamp": {
@@ -30175,6 +30181,28 @@
           },
           "description": "The labels to set for this resource.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "RegionSetPolicyRequest": {
+      "id": "RegionSetPolicyRequest",
+      "properties": {
+        "bindings": {
+          "description": "Flatten Policy to create a backwacd compatible wire-format. Deprecated. Use 'policy' to specify bindings.",
+          "items": {
+            "$ref": "Binding"
+          },
+          "type": "array"
+        },
+        "etag": {
+          "description": "Flatten Policy to create a backward compatible wire-format. Deprecated. Use 'policy' to specify the etag.",
+          "format": "byte",
+          "type": "string"
+        },
+        "policy": {
+          "$ref": "Policy",
+          "description": "REQUIRED: The complete policy to be applied to the 'resource'. The size of the policy is limited to a few 10s of KB. An empty policy is in general a valid policy but certain services (like Projects) might reject them."
         }
       },
       "type": "object"

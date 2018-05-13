@@ -345,6 +345,7 @@ type GoogleCloudMlV1__Capability struct {
 	// Default to no GPU.
 	//   "NVIDIA_TESLA_K80" - Nvidia tesla k80 GPU.
 	//   "NVIDIA_TESLA_P100" - Nvidia tesla P100 GPU.
+	//   "NVIDIA_TESLA_V100" - Nvidia tesla V100 GPU.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:

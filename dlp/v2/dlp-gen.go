@@ -879,8 +879,8 @@ func (s *GooglePrivacyDlpV2CloudStorageOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2CloudStoragePath: Message representing a path in
-// Cloud Storage.
+// GooglePrivacyDlpV2CloudStoragePath: Message representing a single
+// file or path in Cloud Storage.
 type GooglePrivacyDlpV2CloudStoragePath struct {
 	// Path: A url representing a file or path (no wildcards) in Cloud
 	// Storage.

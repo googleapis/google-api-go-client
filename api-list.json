@@ -744,21 +744,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudiot:v1alpha1",
-   "name": "cloudiot",
-   "version": "v1alpha1",
-   "title": "Cloud IoT API",
-   "description": "Registers and manages IoT (Internet of Things) devices that connect to the Google Cloud Platform.",
-   "discoveryRestUrl": "https://cloudiot.googleapis.com/$discovery/rest?version=v1alpha1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/iot",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "cloudiot:v1",
    "name": "cloudiot",
    "version": "v1",
@@ -2837,7 +2822,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "http://cloud.google.com/text-to-speech/",
+   "documentationLink": "https://cloud.google.com/text-to-speech/",
    "preferred": true
   },
   {
@@ -3117,7 +3102,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "http://developers.google.com/youtube/analytics",
+   "documentationLink": "https://developers.google.com/youtube/analytics",
    "preferred": true
   },
   {

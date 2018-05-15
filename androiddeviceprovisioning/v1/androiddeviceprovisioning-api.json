@@ -747,7 +747,7 @@
       }
     }
   },
-  "revision": "20180413",
+  "revision": "20180511",
   "rootUrl": "https://androiddeviceprovisioning.googleapis.com/",
   "schemas": {
     "ClaimDeviceRequest": {
@@ -838,6 +838,22 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "termsStatus": {
+          "description": "Output only. Whether any user from the company has accepted the latest\nTerms of Service (ToS). See\nTermsStatus.",
+          "enum": [
+            "TERMS_STATUS_UNSPECIFIED",
+            "TERMS_STATUS_NOT_ACCEPTED",
+            "TERMS_STATUS_ACCEPTED",
+            "TERMS_STATUS_STALE"
+          ],
+          "enumDescriptions": [
+            "Default value. This value should never be set if the enum is present.",
+            "None of the company's users have accepted the ToS.",
+            "One (or more) of the company's users has accepted the ToS.",
+            "None of the company's users has accepted the current ToS but at least one\nuser accepted a previous ToS."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

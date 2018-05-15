@@ -14,7 +14,7 @@
   "canonicalName": "Texttospeech",
   "description": "Synthesizes natural-sounding speech by applying powerful neural network models.",
   "discoveryVersion": "v1",
-  "documentationLink": "http://cloud.google.com/text-to-speech/",
+  "documentationLink": "https://cloud.google.com/text-to-speech/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -163,7 +163,7 @@
       }
     }
   },
-  "revision": "20180425",
+  "revision": "20180512",
   "rootUrl": "https://texttospeech.googleapis.com/",
   "schemas": {
     "AudioConfig": {

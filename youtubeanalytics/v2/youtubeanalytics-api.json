@@ -26,7 +26,7 @@
   "canonicalName": "YouTube Analytics",
   "description": "Retrieves your YouTube Analytics data.",
   "discoveryVersion": "v1",
-  "documentationLink": "http://developers.google.com/youtube/analytics",
+  "documentationLink": "https://developers.google.com/youtube/analytics",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -431,7 +431,7 @@
       }
     }
   },
-  "revision": "20180424",
+  "revision": "20180515",
   "rootUrl": "https://youtubeanalytics.googleapis.com/",
   "schemas": {
     "EmptyResponse": {

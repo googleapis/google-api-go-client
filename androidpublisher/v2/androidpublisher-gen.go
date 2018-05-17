@@ -58,6 +58,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Edits = NewEditsService(s)
 	s.Inappproducts = NewInappproductsService(s)
+	s.Orders = NewOrdersService(s)
 	s.Purchases = NewPurchasesService(s)
 	s.Reviews = NewReviewsService(s)
 	return s, nil
@@ -71,6 +72,8 @@ type Service struct {
 	Edits *EditsService
 
 	Inappproducts *InappproductsService
+
+	Orders *OrdersService
 
 	Purchases *PurchasesService
 
@@ -219,6 +222,15 @@ func NewInappproductsService(s *Service) *InappproductsService {
 }
 
 type InappproductsService struct {
+	s *Service
+}
+
+func NewOrdersService(s *Service) *OrdersService {
+	rs := &OrdersService{s: s}
+	return rs
+}
+
+type OrdersService struct {
 	s *Service
 }
 
@@ -9810,6 +9822,126 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	//   "response": {
 	//     "$ref": "InAppProduct"
 	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.orders.refund":
+
+type OrdersRefundCall struct {
+	s           *Service
+	packageName string
+	orderId     string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Refund: Refund a user's subscription or in-app purchase order.
+func (r *OrdersService) Refund(packageName string, orderId string) *OrdersRefundCall {
+	c := &OrdersRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.orderId = orderId
+	return c
+}
+
+// Revoke sets the optional parameter "revoke": Whether to revoke the
+// purchased item. If set to true, access to the subscription or in-app
+// item will be terminated immediately. If the item is a recurring
+// subscription, all future payments will also be terminated. Consumed
+// in-app items need to be handled by developer's app. (optional)
+func (c *OrdersRefundCall) Revoke(revoke bool) *OrdersRefundCall {
+	c.urlParams_.Set("revoke", fmt.Sprint(revoke))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrdersRefundCall) Fields(s ...googleapi.Field) *OrdersRefundCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrdersRefundCall) Context(ctx context.Context) *OrdersRefundCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersRefundCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrdersRefundCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{packageName}/orders/{orderId}:refund")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"orderId":     c.orderId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.orders.refund" call.
+func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Refund a user's subscription or in-app purchase order.",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.orders.refund",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "orderId": {
+	//       "description": "The order ID provided to the user when the subscription or in-app order was purchased.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "The package name of the application for which this subscription or in-app item was purchased (for example, 'com.some.thing').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revoke": {
+	//       "description": "Whether to revoke the purchased item. If set to true, access to the subscription or in-app item will be terminated immediately. If the item is a recurring subscription, all future payments will also be terminated. Consumed in-app items need to be handled by developer's app. (optional)",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "{packageName}/orders/{orderId}:refund",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
 	//   ]

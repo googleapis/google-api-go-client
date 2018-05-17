@@ -371,6 +371,13 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// scanned. Cannot be used in conjunction with TimespanConfig.
 	RowsLimit int64 `json:"rowsLimit,omitempty,string"`
 
+	// Possible values:
+	//   "SAMPLE_METHOD_UNSPECIFIED"
+	//   "TOP" - Scan from the top (default).
+	//   "RANDOM_START" - Randomly pick the row to start scanning. The
+	// scanned rows are contiguous.
+	SampleMethod string `json:"sampleMethod,omitempty"`
+
 	// TableReference: Complete BigQuery table reference.
 	TableReference *GooglePrivacyDlpV2BigQueryTable `json:"tableReference,omitempty"`
 
@@ -854,6 +861,21 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// wml,
 	//   xml, xsl, xsd, yml, yaml.
 	FileTypes []string `json:"fileTypes,omitempty"`
+
+	// FilesLimitPercent: Limits the number of files to scan to this
+	// percentage of the input FileSet.
+	// Number of files scanned is rounded down. Must be between 0 and
+	// 100,
+	// inclusively. Both 0 and 100 means no limit. Defaults to 0.
+	FilesLimitPercent int64 `json:"filesLimitPercent,omitempty"`
+
+	// Possible values:
+	//   "SAMPLE_METHOD_UNSPECIFIED"
+	//   "TOP" - Scan from the top (default).
+	//   "RANDOM_START" - For each file larger than bytes_limit_per_file,
+	// randomly pick the offset
+	// to start scanning. The scanned bytes are contiguous.
+	SampleMethod string `json:"sampleMethod,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BytesLimitPerFile")
 	// to unconditionally include in API requests. By default, fields with
@@ -1424,8 +1446,7 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	//
 	// - a 64 bit integer is encoded followed by a single byte of value 1
 	// - a string is encoded in UTF-8 format followed by a single byte of
-	// value
-	//  å 2
+	// value 2
 	Context *GooglePrivacyDlpV2FieldId `json:"context,omitempty"`
 
 	// CryptoKey: The key used by the encryption algorithm. [required]

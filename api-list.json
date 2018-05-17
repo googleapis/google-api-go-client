@@ -1113,7 +1113,7 @@
    "id": "datastore:v1",
    "name": "datastore",
    "version": "v1",
-   "title": "Google Cloud Datastore API",
+   "title": "Cloud Datastore API",
    "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.",
    "discoveryRestUrl": "https://datastore.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -1128,7 +1128,7 @@
    "id": "datastore:v1beta1",
    "name": "datastore",
    "version": "v1beta1",
-   "title": "Google Cloud Datastore API",
+   "title": "Cloud Datastore API",
    "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.",
    "discoveryRestUrl": "https://datastore.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -1143,7 +1143,7 @@
    "id": "datastore:v1beta3",
    "name": "datastore",
    "version": "v1beta3",
-   "title": "Google Cloud Datastore API",
+   "title": "Cloud Datastore API",
    "description": "Accesses the schemaless NoSQL database to provide fully managed, robust, scalable storage for your application.",
    "discoveryRestUrl": "https://datastore.googleapis.com/$discovery/rest?version=v1beta3",
    "icons": {
@@ -1459,7 +1459,7 @@
    "id": "firestore:v1beta1",
    "name": "firestore",
    "version": "v1beta1",
-   "title": "Google Cloud Firestore API",
+   "title": "Cloud Firestore API",
    "description": "",
    "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -2861,7 +2861,7 @@
    "id": "translate:v2",
    "name": "translate",
    "version": "v2",
-   "title": "Google Cloud Translation API",
+   "title": "Cloud Translation API",
    "description": "The Google Cloud Translation API lets websites and programs integrate with Google Translate programmatically.",
    "discoveryRestUrl": "https://translation.googleapis.com/$discovery/rest?version=v2",
    "icons": {

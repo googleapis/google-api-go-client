@@ -341,7 +341,7 @@
           ]
         },
         "create": {
-          "description": "Creates a new job.",
+          "description": "Creates a new job.\n\nTypically, the job becomes searchable within 10 seconds, but it may take\nup to 5 minutes.",
           "flatPath": "v2/jobs",
           "httpMethod": "POST",
           "id": "jobs.jobs.create",
@@ -360,7 +360,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes the specified job. You can specify whether to synchronously wait\nfor validation, indexing, and general processing to be completed before\nthe response is returned.",
+          "description": "Deletes the specified job.\n\nTypically, the job becomes unsearchable within 10 seconds, but it may take\nup to 5 minutes.",
           "flatPath": "v2/jobs/{jobsId}",
           "httpMethod": "DELETE",
           "id": "jobs.jobs.delete",
@@ -410,7 +410,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves the specified job, whose status is OPEN or recently EXPIRED\nin 60 days.",
+          "description": "Retrieves the specified job, whose status is OPEN or recently EXPIRED\nwithin the last 90 days.",
           "flatPath": "v2/jobs/{jobsId}",
           "httpMethod": "GET",
           "id": "jobs.jobs.get",
@@ -493,7 +493,7 @@
           ]
         },
         "patch": {
-          "description": "Updates the specified job. You can specify whether to synchronously wait\nfor validation, indexing, and general processing to be completed before\nthe response is returned.\n\nIf this call is executed synchronously, the returned job\nis guaranteed to be fully processed and complete upon response.\nThe `companyName` and `distributorCompanyId` job fields cannot be updated.",
+          "description": "Updates the specified job.\n\nTypically, the updated contents become visible in search results within 10\nseconds, but it may take up to 5 minutes.",
           "flatPath": "v2/jobs/{jobsId}",
           "httpMethod": "PATCH",
           "id": "jobs.jobs.patch",
@@ -625,7 +625,7 @@
       }
     }
   },
-  "revision": "20180509",
+  "revision": "20180514",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1180,7 +1180,7 @@
       "type": "object"
     },
     "CreateJobRequest": {
-      "description": "Input only.\n\nCreate job request.\n\nThe job typically becomes searchable within 10 seconds, but it may take\nup to 5 minutes for the job to become searchable.",
+      "description": "Input only.\n\nCreate job request.",
       "id": "CreateJobRequest",
       "properties": {
         "disableStreetAddressResolution": {
@@ -1323,7 +1323,7 @@
       "type": "object"
     },
     "DeleteJobsByFilterRequest": {
-      "description": "Deprecated. Use BatchDeleteJobsRequest instead.\n\nInput only.\n\nDelete job by filter request.\n\nThe job typically becomes unsearchable within 10 seconds, but it may take\nup to 5 minutes for the job to become unsearchable.",
+      "description": "Deprecated. Use BatchDeleteJobsRequest instead.\n\nInput only.\n\nDelete job by filter request.\n\nThe job typically becomes unsearchable within 10 seconds, but it may take\nup to 5 minutes.",
       "id": "DeleteJobsByFilterRequest",
       "properties": {
         "disableFastProcess": {
@@ -3249,7 +3249,7 @@
       "type": "object"
     },
     "UpdateJobRequest": {
-      "description": "Input only.\n\nUpdate job request.\n\nThe job typically becomes searchable within 10 seconds, but it may take\nup to 5 minutes for the job to become searchable.",
+      "description": "Input only.\n\nUpdate job request.",
       "id": "UpdateJobRequest",
       "properties": {
         "disableStreetAddressResolution": {

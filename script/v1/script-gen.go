@@ -848,6 +848,9 @@ type GoogleAppsScriptTypeProcess struct {
 	//   "TRIGGER" - The process was started from an event-based trigger.
 	//   "WEBAPP" - The process was started from a web app entry point.
 	//   "EDITOR" - The process was started using the Apps Script IDE.
+	//   "SIMPLE_TRIGGER" - The process was started from a GSuite simple
+	// trigger.
+	//   "MENU" - The process was started from a GSuite menu item.
 	ProcessType string `json:"processType,omitempty"`
 
 	// ProjectName: Name of the script being executed.
@@ -1706,6 +1709,8 @@ func (c *ProcessesListCall) UserProcessFilterStatuses(userProcessFilterStatuses 
 //   "TRIGGER"
 //   "WEBAPP"
 //   "EDITOR"
+//   "SIMPLE_TRIGGER"
+//   "MENU"
 func (c *ProcessesListCall) UserProcessFilterTypes(userProcessFilterTypes ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.types", append([]string{}, userProcessFilterTypes...))
 	return c
@@ -1893,7 +1898,9 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "TIME_DRIVEN",
 	//         "TRIGGER",
 	//         "WEBAPP",
-	//         "EDITOR"
+	//         "EDITOR",
+	//         "SIMPLE_TRIGGER",
+	//         "MENU"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2053,6 +2060,8 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStatuses(scriptPro
 //   "TRIGGER"
 //   "WEBAPP"
 //   "EDITOR"
+//   "SIMPLE_TRIGGER"
+//   "MENU"
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterTypes(scriptProcessFilterTypes ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.types", append([]string{}, scriptProcessFilterTypes...))
 	return c
@@ -2235,7 +2244,9 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "TIME_DRIVEN",
 	//         "TRIGGER",
 	//         "WEBAPP",
-	//         "EDITOR"
+	//         "EDITOR",
+	//         "SIMPLE_TRIGGER",
+	//         "MENU"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

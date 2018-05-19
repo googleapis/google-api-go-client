@@ -1163,10 +1163,6 @@ func (s *CompletionResult) MarshalJSON() ([]byte, error) {
 // CreateJobRequest: Input only.
 //
 // Create job request.
-//
-// The job typically becomes searchable within 10 seconds, but it may
-// take
-// up to 5 minutes for the job to become searchable.
 type CreateJobRequest struct {
 	// DisableStreetAddressResolution: If set to `true`, the service will
 	// not attempt to resolve a
@@ -1495,7 +1491,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 //
 // The job typically becomes unsearchable within 10 seconds, but it may
 // take
-// up to 5 minutes for the job to become unsearchable.
+// up to 5 minutes.
 type DeleteJobsByFilterRequest struct {
 	// DisableFastProcess: Optional.
 	//
@@ -5248,10 +5244,6 @@ func (s *StringValues) MarshalJSON() ([]byte, error) {
 // UpdateJobRequest: Input only.
 //
 // Update job request.
-//
-// The job typically becomes searchable within 10 seconds, but it may
-// take
-// up to 5 minutes for the job to become searchable.
 type UpdateJobRequest struct {
 	// DisableStreetAddressResolution: If set to `true`, the service will
 	// not attempt resolve a more precise
@@ -6459,6 +6451,10 @@ type JobsCreateCall struct {
 }
 
 // Create: Creates a new job.
+//
+// Typically, the job becomes searchable within 10 seconds, but it may
+// take
+// up to 5 minutes.
 func (r *JobsService) Create(createjobrequest *CreateJobRequest) *JobsCreateCall {
 	c := &JobsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createjobrequest = createjobrequest
@@ -6548,7 +6544,7 @@ func (c *JobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new job.",
+	//   "description": "Creates a new job.\n\nTypically, the job becomes searchable within 10 seconds, but it may take\nup to 5 minutes.",
 	//   "flatPath": "v2/jobs",
 	//   "httpMethod": "POST",
 	//   "id": "jobs.jobs.create",
@@ -6579,11 +6575,11 @@ type JobsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified job. You can specify whether to
-// synchronously wait
-// for validation, indexing, and general processing to be completed
-// before
-// the response is returned.
+// Delete: Deletes the specified job.
+//
+// Typically, the job becomes unsearchable within 10 seconds, but it may
+// take
+// up to 5 minutes.
 func (r *JobsService) Delete(name string) *JobsDeleteCall {
 	c := &JobsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6686,7 +6682,7 @@ func (c *JobsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified job. You can specify whether to synchronously wait\nfor validation, indexing, and general processing to be completed before\nthe response is returned.",
+	//   "description": "Deletes the specified job.\n\nTypically, the job becomes unsearchable within 10 seconds, but it may take\nup to 5 minutes.",
 	//   "flatPath": "v2/jobs/{jobsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "jobs.jobs.delete",
@@ -6859,7 +6855,7 @@ type JobsGetCall struct {
 
 // Get: Retrieves the specified job, whose status is OPEN or recently
 // EXPIRED
-// in 60 days.
+// within the last 90 days.
 func (r *JobsService) Get(name string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6960,7 +6956,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the specified job, whose status is OPEN or recently EXPIRED\nin 60 days.",
+	//   "description": "Retrieves the specified job, whose status is OPEN or recently EXPIRED\nwithin the last 90 days.",
 	//   "flatPath": "v2/jobs/{jobsId}",
 	//   "httpMethod": "GET",
 	//   "id": "jobs.jobs.get",
@@ -7355,16 +7351,11 @@ type JobsPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Updates the specified job. You can specify whether to
-// synchronously wait
-// for validation, indexing, and general processing to be completed
-// before
-// the response is returned.
+// Patch: Updates the specified job.
 //
-// If this call is executed synchronously, the returned job
-// is guaranteed to be fully processed and complete upon response.
-// The `companyName` and `distributorCompanyId` job fields cannot be
-// updated.
+// Typically, the updated contents become visible in search results
+// within 10
+// seconds, but it may take up to 5 minutes.
 func (r *JobsService) Patch(name string, updatejobrequest *UpdateJobRequest) *JobsPatchCall {
 	c := &JobsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7458,7 +7449,7 @@ func (c *JobsPatchCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the specified job. You can specify whether to synchronously wait\nfor validation, indexing, and general processing to be completed before\nthe response is returned.\n\nIf this call is executed synchronously, the returned job\nis guaranteed to be fully processed and complete upon response.\nThe `companyName` and `distributorCompanyId` job fields cannot be updated.",
+	//   "description": "Updates the specified job.\n\nTypically, the updated contents become visible in search results within 10\nseconds, but it may take up to 5 minutes.",
 	//   "flatPath": "v2/jobs/{jobsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "jobs.jobs.patch",

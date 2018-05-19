@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20180406",
+  "revision": "20180518",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1282,7 +1282,9 @@
             "SCENARIO_NOT_DECLARED",
             "DEVICE_ADMIN_RECEIVER",
             "TEST_ONLY_APK",
-            "NO_CODE_APK"
+            "MALFORMED_IPA",
+            "NO_CODE_APK",
+            "INVALID_INPUT_APK"
           ],
           "enumDescriptions": [
             "Do not use. For proto versioning only.",
@@ -1305,7 +1307,9 @@
             "The request contains a scenario number that was not declared in the\nmanifest.",
             "Device administrator applications are not allowed.",
             "The APK is marked as \"testOnly\".\nNOT USED",
-            "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code"
+            "The input IPA could not be parsed.\nNOT USED",
+            "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code",
+            "Either the provided input APK path was malformed,\nthe APK file does not exist, or the user does not have permission to\naccess the APK file."
           ],
           "type": "string"
         },

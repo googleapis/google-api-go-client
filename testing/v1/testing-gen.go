@@ -2103,11 +2103,18 @@ type TestMatrix struct {
 	// allowed.
 	//   "TEST_ONLY_APK" - The APK is marked as "testOnly".
 	// NOT USED
+	//   "MALFORMED_IPA" - The input IPA could not be parsed.
+	// NOT USED
 	//   "NO_CODE_APK" - APK contains no code.
 	// See
 	// also
 	// https://developer.android.com/guide/topics/manifest/application-e
 	// lement.html#code
+	//   "INVALID_INPUT_APK" - Either the provided input APK path was
+	// malformed,
+	// the APK file does not exist, or the user does not have permission
+	// to
+	// access the APK file.
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// ProjectId: The cloud project that owns the test matrix.

@@ -1956,7 +1956,8 @@ type JobReference struct {
 	JobId string `json:"jobId,omitempty"`
 
 	// Location: [Experimental] The geographic location of the job. Required
-	// except for US and EU.
+	// except for US and EU. See details at
+	// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 	Location string `json:"location,omitempty"`
 
 	// ProjectId: [Required] The ID of the project containing this job.
@@ -3393,13 +3394,16 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 
 type TimePartitioning struct {
 	// ExpirationMs: [Optional] Number of milliseconds for which to keep the
-	// storage for a partition.
+	// storage for partitions in the table. The storage in a partition will
+	// have an expiration time of its partition time plus this value.
 	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
 
 	// Field: [Experimental] [Optional] If not set, the table is partitioned
-	// by pseudo column '_PARTITIONTIME'; if set, the table is partitioned
-	// by this field. The field must be a top-level TIMESTAMP or DATE field.
-	// Its mode must be NULLABLE or REQUIRED.
+	// by pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP
+	// type, or '_PARTITIONDATE' as DATE type. If field is specified, the
+	// table is instead partitioned by this field. The field must be a
+	// top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or
+	// REQUIRED.
 	Field string `json:"field,omitempty"`
 
 	// RequirePartitionFilter: [Experimental] [Optional] If set to true,

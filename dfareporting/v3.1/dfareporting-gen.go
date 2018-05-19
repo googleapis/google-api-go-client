@@ -4,10 +4,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/dfareporting/v2.8"
+//   import "google.golang.org/api/dfareporting/v3.1"
 //   ...
 //   dfareportingService, err := dfareporting.New(oauthHttpClient)
-package dfareporting // import "google.golang.org/api/dfareporting/v2.8"
+package dfareporting // import "google.golang.org/api/dfareporting/v3.1"
 
 import (
 	"bytes"
@@ -40,10 +40,10 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "dfareporting:v2.8"
+const apiId = "dfareporting:v3.1"
 const apiName = "dfareporting"
-const apiVersion = "v2.8"
-const basePath = "https://www.googleapis.com/dfareporting/v2.8/"
+const apiVersion = "v3.1"
+const basePath = "https://www.googleapis.com/dfareporting/v3.1/"
 
 // OAuth2 scopes used by this API.
 const (
@@ -70,6 +70,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Accounts = NewAccountsService(s)
 	s.Ads = NewAdsService(s)
 	s.AdvertiserGroups = NewAdvertiserGroupsService(s)
+	s.AdvertiserLandingPages = NewAdvertiserLandingPagesService(s)
 	s.Advertisers = NewAdvertisersService(s)
 	s.Browsers = NewBrowsersService(s)
 	s.CampaignCreativeAssociations = NewCampaignCreativeAssociationsService(s)
@@ -95,9 +96,9 @@ func New(client *http.Client) (*Service, error) {
 	s.FloodlightActivityGroups = NewFloodlightActivityGroupsService(s)
 	s.FloodlightConfigurations = NewFloodlightConfigurationsService(s)
 	s.InventoryItems = NewInventoryItemsService(s)
-	s.LandingPages = NewLandingPagesService(s)
 	s.Languages = NewLanguagesService(s)
 	s.Metros = NewMetrosService(s)
+	s.MobileApps = NewMobileAppsService(s)
 	s.MobileCarriers = NewMobileCarriersService(s)
 	s.OperatingSystemVersions = NewOperatingSystemVersionsService(s)
 	s.OperatingSystems = NewOperatingSystemsService(s)
@@ -144,6 +145,8 @@ type Service struct {
 	Ads *AdsService
 
 	AdvertiserGroups *AdvertiserGroupsService
+
+	AdvertiserLandingPages *AdvertiserLandingPagesService
 
 	Advertisers *AdvertisersService
 
@@ -195,11 +198,11 @@ type Service struct {
 
 	InventoryItems *InventoryItemsService
 
-	LandingPages *LandingPagesService
-
 	Languages *LanguagesService
 
 	Metros *MetrosService
+
+	MobileApps *MobileAppsService
 
 	MobileCarriers *MobileCarriersService
 
@@ -319,6 +322,15 @@ func NewAdvertiserGroupsService(s *Service) *AdvertiserGroupsService {
 }
 
 type AdvertiserGroupsService struct {
+	s *Service
+}
+
+func NewAdvertiserLandingPagesService(s *Service) *AdvertiserLandingPagesService {
+	rs := &AdvertiserLandingPagesService{s: s}
+	return rs
+}
+
+type AdvertiserLandingPagesService struct {
 	s *Service
 }
 
@@ -547,15 +559,6 @@ type InventoryItemsService struct {
 	s *Service
 }
 
-func NewLandingPagesService(s *Service) *LandingPagesService {
-	rs := &LandingPagesService{s: s}
-	return rs
-}
-
-type LandingPagesService struct {
-	s *Service
-}
-
 func NewLanguagesService(s *Service) *LanguagesService {
 	rs := &LanguagesService{s: s}
 	return rs
@@ -571,6 +574,15 @@ func NewMetrosService(s *Service) *MetrosService {
 }
 
 type MetrosService struct {
+	s *Service
+}
+
+func NewMobileAppsService(s *Service) *MobileAppsService {
+	rs := &MobileAppsService{s: s}
+	return rs
+}
+
+type MobileAppsService struct {
 	s *Service
 }
 
@@ -2054,6 +2066,46 @@ func (s *AdvertiserGroupsListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdvertiserLandingPagesListResponse: Landing Page List Response
+type AdvertiserLandingPagesListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#advertiserLandingPagesListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// LandingPages: Landing page collection
+	LandingPages []*LandingPage `json:"landingPages,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdvertiserLandingPagesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AdvertiserLandingPagesListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdvertisersListResponse: Advertiser List Response
 type AdvertisersListResponse struct {
 	// Advertisers: Advertiser collection.
@@ -2329,6 +2381,9 @@ type Campaign struct {
 	// DefaultClickThroughEventTagProperties: Click-through event tag ID
 	// override properties for this campaign.
 	DefaultClickThroughEventTagProperties *DefaultClickThroughEventTagProperties `json:"defaultClickThroughEventTagProperties,omitempty"`
+
+	// DefaultLandingPageId: The default landing page ID for this campaign.
+	DefaultLandingPageId int64 `json:"defaultLandingPageId,omitempty,string"`
 
 	// EndDate: Date on which the campaign will stop running. On insert, the
 	// end date must be today or a future date. The end date must be later
@@ -2744,6 +2799,10 @@ func (s *City) MarshalJSON() ([]byte, error) {
 
 // ClickTag: Creative Click Tag.
 type ClickTag struct {
+	// ClickThroughUrl: Parameter value for the specified click tag. This
+	// field contains a click-through url.
+	ClickThroughUrl *CreativeClickThroughUrl `json:"clickThroughUrl,omitempty"`
+
 	// EventName: Advertiser event name associated with the click tag. This
 	// field is used by DISPLAY_IMAGE_GALLERY and HTML5_BANNER creatives.
 	// Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.
@@ -2754,11 +2813,7 @@ type ClickTag struct {
 	// value of the creative asset's creativeAssetId.name field.
 	Name string `json:"name,omitempty"`
 
-	// Value: Parameter value for the specified click tag. This field
-	// contains a click-through url.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EventName") to
+	// ForceSendFields is a list of field names (e.g. "ClickThroughUrl") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2766,12 +2821,13 @@ type ClickTag struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EventName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClickThroughUrl") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3673,10 +3729,9 @@ type Creative struct {
 	BackgroundColor string `json:"backgroundColor,omitempty"`
 
 	// BackupImageClickThroughUrl: Click-through URL for backup image.
-	// Applicable to the following creative types: FLASH_INPAGE, and
-	// HTML5_BANNER. Applicable to DISPLAY when the primary asset type is
-	// not HTML_IMAGE.
-	BackupImageClickThroughUrl string `json:"backupImageClickThroughUrl,omitempty"`
+	// Applicable to ENHANCED_BANNER when the primary asset type is not
+	// HTML_IMAGE.
+	BackupImageClickThroughUrl *CreativeClickThroughUrl `json:"backupImageClickThroughUrl,omitempty"`
 
 	// BackupImageFeatures: List of feature dependencies that will cause a
 	// backup image to be served if the browser that serves the ad does not
@@ -3790,8 +3845,8 @@ type Creative struct {
 	// CompanionCreatives: List of companion creatives assigned to an
 	// in-Stream video creative. Acceptable values include IDs of existing
 	// flash and image creatives. Applicable to the following creative
-	// types: all VPAID and all INSTREAM_VIDEO with dynamicAssetSelection
-	// set to false.
+	// types: all VPAID, all INSTREAM_AUDIO and all INSTREAM_VIDEO with
+	// dynamicAssetSelection set to false.
 	CompanionCreatives googleapi.Int64s `json:"companionCreatives,omitempty"`
 
 	// Compatibility: Compatibilities associated with this creative. This is
@@ -3802,12 +3857,15 @@ type Creative struct {
 	// creatives may have these compatibilities since new creatives will
 	// either be assigned DISPLAY or DISPLAY_INTERSTITIAL instead.
 	// IN_STREAM_VIDEO refers to rendering in in-stream video ads developed
-	// with the VAST standard. Applicable to all creative types.
+	// with the VAST standard. IN_STREAM_AUDIO refers to rendering in
+	// in-stream audio ads developed with the VAST standard. Applicable to
+	// all creative types.
 	//
 	// Acceptable values are:
 	// - "APP"
 	// - "APP_INTERSTITIAL"
 	// - "IN_STREAM_VIDEO"
+	// - "IN_STREAM_AUDIO"
 	// - "DISPLAY"
 	// - "DISPLAY_INTERSTITIAL"
 	//
@@ -3911,6 +3969,16 @@ type Creative struct {
 	// and all VPAID.
 	LatestTraffickedCreativeId int64 `json:"latestTraffickedCreativeId,omitempty,string"`
 
+	// MediaDescription: Description of the audio or video ad. Applicable to
+	// the following creative types: all INSTREAM_VIDEO, INSTREAM_AUDIO, and
+	// all VPAID.
+	MediaDescription string `json:"mediaDescription,omitempty"`
+
+	// MediaDuration: Creative audio or video duration in seconds. This is a
+	// read-only field. Applicable to the following creative types:
+	// INSTREAM_VIDEO, INSTREAM_AUDIO, all RICH_MEDIA, and all VPAID.
+	MediaDuration float64 `json:"mediaDuration,omitempty"`
+
 	// Name: Name of the creative. This is a required field and must be less
 	// than 256 characters long. Applicable to all creative types.
 	Name string `json:"name,omitempty"`
@@ -3918,6 +3986,10 @@ type Creative struct {
 	// OverrideCss: Override CSS value for rich media creatives. Applicable
 	// to the following creative types: all RICH_MEDIA.
 	OverrideCss string `json:"overrideCss,omitempty"`
+
+	// PoliteLoadAssetId: The asset ID of the polite load image asset.
+	// Applicable to the creative type: DISPLAY.
+	PoliteLoadAssetId int64 `json:"politeLoadAssetId,omitempty,string"`
 
 	// ProgressOffset: Amount of time to play the video before counting a
 	// view. Applicable to the following creative types: all INSTREAM_VIDEO.
@@ -4014,9 +4086,9 @@ type Creative struct {
 	// all RICH_MEDIA.
 	ThirdPartyRichMediaImpressionsUrl string `json:"thirdPartyRichMediaImpressionsUrl,omitempty"`
 
-	// ThirdPartyUrls: Third-party URLs for tracking in-stream video
-	// creative events. Applicable to the following creative types: all
-	// INSTREAM_VIDEO and all VPAID.
+	// ThirdPartyUrls: Third-party URLs for tracking in-stream creative
+	// events. Applicable to the following creative types: all
+	// INSTREAM_VIDEO, all INSTREAM_AUDIO, and all VPAID.
 	ThirdPartyUrls []*ThirdPartyTrackingUrl `json:"thirdPartyUrls,omitempty"`
 
 	// TimerCustomEvents: List of timer events configured for the creative.
@@ -4067,7 +4139,8 @@ type Creative struct {
 	Type string `json:"type,omitempty"`
 
 	// UniversalAdId: A Universal Ad ID as per the VAST 4.0 spec. Applicable
-	// to the following creative types: INSTREAM_VIDEO and VPAID.
+	// to the following creative types: INSTREAM_AUDIO and INSTREAM_VIDEO
+	// and VPAID.
 	UniversalAdId *UniversalAdId `json:"universalAdId,omitempty"`
 
 	// Version: The version number helps you keep track of multiple versions
@@ -4079,15 +4152,6 @@ type Creative struct {
 	// automatically incremented by 1 when undergoing Rich Media creative
 	// merging. Applicable to all creative types.
 	Version int64 `json:"version,omitempty"`
-
-	// VideoDescription: Description of the video ad. Applicable to the
-	// following creative types: all INSTREAM_VIDEO and all VPAID.
-	VideoDescription string `json:"videoDescription,omitempty"`
-
-	// VideoDuration: Creative video duration in seconds. This is a
-	// read-only field. Applicable to the following creative types:
-	// INSTREAM_VIDEO, all RICH_MEDIA, and all VPAID.
-	VideoDuration float64 `json:"videoDuration,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4119,14 +4183,14 @@ func (s *Creative) MarshalJSON() ([]byte, error) {
 func (s *Creative) UnmarshalJSON(data []byte) error {
 	type NoMethod Creative
 	var s1 struct {
-		VideoDuration gensupport.JSONFloat64 `json:"videoDuration"`
+		MediaDuration gensupport.JSONFloat64 `json:"mediaDuration"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
-	s.VideoDuration = float64(s1.VideoDuration)
+	s.MediaDuration = float64(s1.MediaDuration)
 	return nil
 }
 
@@ -4138,9 +4202,10 @@ type CreativeAsset struct {
 	// not HTML_IMAGE.
 	ActionScript3 bool `json:"actionScript3,omitempty"`
 
-	// Active: Whether the video asset is active. This is a read-only field
-	// for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following
-	// creative types: INSTREAM_VIDEO and all VPAID.
+	// Active: Whether the video or audio asset is active. This is a
+	// read-only field for VPAID_NON_LINEAR_VIDEO assets. Applicable to the
+	// following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all
+	// VPAID.
 	Active bool `json:"active,omitempty"`
 
 	// Alignment: Possible alignments for an asset. This is a read-only
@@ -4174,9 +4239,9 @@ type CreativeAsset struct {
 	// Applicable to the following creative types: all RICH_MEDIA.
 	BackupImageExit *CreativeCustomEvent `json:"backupImageExit,omitempty"`
 
-	// BitRate: Detected bit-rate for video asset. This is a read-only
-	// field. Applicable to the following creative types: INSTREAM_VIDEO and
-	// all VPAID.
+	// BitRate: Detected bit-rate for audio or video asset. This is a
+	// read-only field. Applicable to the following creative types:
+	// INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.
 	BitRate int64 `json:"bitRate,omitempty"`
 
 	// ChildAssetType: Rich media child asset type. This is a read-only
@@ -4299,8 +4364,9 @@ type CreativeAsset struct {
 	DisplayType string `json:"displayType,omitempty"`
 
 	// Duration: Duration in seconds for which an asset will be displayed.
-	// Applicable to the following creative types: INSTREAM_VIDEO and
-	// VPAID_LINEAR_VIDEO. Value must be greater than or equal to 1.
+	// Applicable to the following creative types: INSTREAM_AUDIO,
+	// INSTREAM_VIDEO and VPAID_LINEAR_VIDEO. Value must be greater than or
+	// equal to 1.
 	Duration int64 `json:"duration,omitempty"`
 
 	// DurationType: Duration type for which an asset will be displayed.
@@ -4350,9 +4416,14 @@ type CreativeAsset struct {
 	// read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
 
-	// MimeType: Detected MIME type for video asset. This is a read-only
-	// field. Applicable to the following creative types: INSTREAM_VIDEO and
-	// all VPAID.
+	// MediaDuration: Detected duration for audio or video asset. This is a
+	// read-only field. Applicable to the following creative types:
+	// INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.
+	MediaDuration float64 `json:"mediaDuration,omitempty"`
+
+	// MimeType: Detected MIME type for audio or video asset. This is a
+	// read-only field. Applicable to the following creative types:
+	// INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// Offset: Offset position for an asset in collapsed mode. This is a
@@ -4361,6 +4432,15 @@ type CreativeAsset struct {
 	// whose displayType is ASSET_DISPLAY_TYPE_EXPANDING or
 	// ASSET_DISPLAY_TYPE_PEEL_DOWN.
 	Offset *OffsetPosition `json:"offset,omitempty"`
+
+	// Orientation: Orientation of video asset. This is a read-only,
+	// auto-generated field.
+	//
+	// Possible values:
+	//   "LANDSCAPE"
+	//   "PORTRAIT"
+	//   "SQUARE"
+	Orientation string `json:"orientation,omitempty"`
 
 	// OriginalBackup: Whether the backup asset is original or changed by
 	// the user in DCM. Applicable to the following creative types: all
@@ -4438,6 +4518,10 @@ type CreativeAsset struct {
 	// the VPAID creative cannot be served. Only PARENT_VIDEO assets can be
 	// added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO
 	// creative.
+	// PARENT_AUDIO refers to audios uploaded by the user in DCM and is
+	// applicable to INSTREAM_AUDIO creatives.
+	// TRANSCODED_AUDIO refers to audios transcoded by DCM from PARENT_AUDIO
+	// assets and is applicable to INSTREAM_AUDIO creatives.
 	//
 	// Possible values:
 	//   "ADDITIONAL_FLASH"
@@ -4445,8 +4529,10 @@ type CreativeAsset struct {
 	//   "ALTERNATE_VIDEO"
 	//   "BACKUP_IMAGE"
 	//   "OTHER"
+	//   "PARENT_AUDIO"
 	//   "PARENT_VIDEO"
 	//   "PRIMARY"
+	//   "TRANSCODED_AUDIO"
 	//   "TRANSCODED_VIDEO"
 	Role string `json:"role,omitempty"`
 
@@ -4486,11 +4572,6 @@ type CreativeAsset struct {
 	// read-only field. Applicable to the following creative types: all
 	// RICH_MEDIA.
 	VerticallyLocked bool `json:"verticallyLocked,omitempty"`
-
-	// VideoDuration: Detected video duration for video asset. This is a
-	// read-only field. Applicable to the following creative types:
-	// INSTREAM_VIDEO and all VPAID.
-	VideoDuration float64 `json:"videoDuration,omitempty"`
 
 	// WindowMode: Window mode options for flash assets. Applicable to the
 	// following creative types: FLASH_INPAGE, RICH_MEDIA_DISPLAY_EXPANDING,
@@ -4544,16 +4625,16 @@ func (s *CreativeAsset) MarshalJSON() ([]byte, error) {
 func (s *CreativeAsset) UnmarshalJSON(data []byte) error {
 	type NoMethod CreativeAsset
 	var s1 struct {
+		MediaDuration    gensupport.JSONFloat64 `json:"mediaDuration"`
 		PushdownDuration gensupport.JSONFloat64 `json:"pushdownDuration"`
-		VideoDuration    gensupport.JSONFloat64 `json:"videoDuration"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.MediaDuration = float64(s1.MediaDuration)
 	s.PushdownDuration = float64(s1.PushdownDuration)
-	s.VideoDuration = float64(s1.VideoDuration)
 	return nil
 }
 
@@ -4570,6 +4651,7 @@ type CreativeAssetId struct {
 	// should use HTML_IMAGE.
 	//
 	// Possible values:
+	//   "AUDIO"
 	//   "FLASH"
 	//   "HTML"
 	//   "HTML_IMAGE"
@@ -4917,6 +4999,48 @@ func (s *CreativeAssignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreativeClickThroughUrl: Click-through URL
+type CreativeClickThroughUrl struct {
+	// ComputedClickThroughUrl: Read-only convenience field representing the
+	// actual URL that will be used for this click-through. The URL is
+	// computed as follows:
+	// - If landingPageId is specified then that landing page's URL is
+	// assigned to this field.
+	// - Otherwise, the customClickThroughUrl is assigned to this field.
+	ComputedClickThroughUrl string `json:"computedClickThroughUrl,omitempty"`
+
+	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
+	// landingPageId field is left unset.
+	CustomClickThroughUrl string `json:"customClickThroughUrl,omitempty"`
+
+	// LandingPageId: ID of the landing page for the click-through URL.
+	LandingPageId int64 `json:"landingPageId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ComputedClickThroughUrl") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComputedClickThroughUrl")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreativeClickThroughUrl) MarshalJSON() ([]byte, error) {
+	type NoMethod CreativeClickThroughUrl
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreativeCustomEvent: Creative Custom Event.
 type CreativeCustomEvent struct {
 	// AdvertiserCustomEventId: Unique ID of this event used by DDM
@@ -4950,9 +5074,9 @@ type CreativeCustomEvent struct {
 	//   "ARTWORK_TYPE_MIXED"
 	ArtworkType string `json:"artworkType,omitempty"`
 
-	// ExitUrl: Exit URL of the event. This field is used only for exit
-	// events.
-	ExitUrl string `json:"exitUrl,omitempty"`
+	// ExitClickThroughUrl: Exit click-through URL for the event. This field
+	// is used only for exit events.
+	ExitClickThroughUrl *CreativeClickThroughUrl `json:"exitClickThroughUrl,omitempty"`
 
 	// Id: ID of this event. This is a required field and should not be
 	// modified after insertion.
@@ -5864,6 +5988,50 @@ type DayPartTargeting struct {
 
 func (s *DayPartTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod DayPartTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeepLink: Contains information about a landing page deep link.
+type DeepLink struct {
+	// AppUrl: The URL of the mobile app being linked to.
+	AppUrl string `json:"appUrl,omitempty"`
+
+	// FallbackUrl: The fallback URL. This URL will be served to users who
+	// do not have the mobile app installed.
+	FallbackUrl string `json:"fallbackUrl,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#deepLink".
+	Kind string `json:"kind,omitempty"`
+
+	// MobileApp: The mobile app targeted by this deep link.
+	MobileApp *MobileApp `json:"mobileApp,omitempty"`
+
+	// RemarketingListIds: Ads served to users on these remarketing lists
+	// will use this deep link. Applicable when mobileApp.directory is
+	// APPLE_APP_STORE.
+	RemarketingListIds googleapi.Int64s `json:"remarketingListIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeepLink) MarshalJSON() ([]byte, error) {
+	type NoMethod DeepLink
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7163,6 +7331,12 @@ type FloodlightActivitiesGenerateTagResponse struct {
 	// For global site tags, this is the event snippet.
 	FloodlightActivityTag string `json:"floodlightActivityTag,omitempty"`
 
+	// GlobalSiteTagGlobalSnippet: The global snippet section of a global
+	// site tag. The global site tag sets new cookies on your domain, which
+	// will store a unique identifier for a user or the ad click that
+	// brought the user to your site. Learn more.
+	GlobalSiteTagGlobalSnippet string `json:"globalSiteTagGlobalSnippet,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#floodlightActivitiesGenerateTagResponse".
 	Kind string `json:"kind,omitempty"`
@@ -7314,6 +7488,15 @@ type FloodlightActivity struct {
 	// field.
 	FloodlightConfigurationIdDimensionValue *DimensionValue `json:"floodlightConfigurationIdDimensionValue,omitempty"`
 
+	// FloodlightTagType: The type of Floodlight tag this activity will
+	// generate. This is a required field.
+	//
+	// Possible values:
+	//   "GLOBAL_SITE_TAG"
+	//   "IFRAME"
+	//   "IMAGE"
+	FloodlightTagType string `json:"floodlightTagType,omitempty"`
+
 	// Hidden: Whether this activity is archived.
 	Hidden bool `json:"hidden,omitempty"`
 
@@ -7324,9 +7507,6 @@ type FloodlightActivity struct {
 	// IdDimensionValue: Dimension value for the ID of this floodlight
 	// activity. This is a read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
-
-	// ImageTagEnabled: Whether the image tag is enabled for this activity.
-	ImageTagEnabled bool `json:"imageTagEnabled,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#floodlightActivity".
@@ -8235,10 +8415,16 @@ func (s *KeyValueTargetingExpression) MarshalJSON() ([]byte, error) {
 // LandingPage: Contains information about where a user's browser is
 // taken after the user clicks an ad.
 type LandingPage struct {
-	// Default: Whether or not this landing page will be assigned to any ads
-	// or creatives that do not have a landing page assigned explicitly.
-	// Only one default landing page is allowed per campaign.
-	Default bool `json:"default,omitempty"`
+	// AdvertiserId: Advertiser ID of this landing page. This is a required
+	// field.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// Archived: Whether this landing page has been archived.
+	Archived bool `json:"archived,omitempty"`
+
+	// DeepLinks: Links that will direct the user to a mobile app, if
+	// installed.
+	DeepLinks []*DeepLink `json:"deepLinks,omitempty"`
 
 	// Id: ID of this landing page. This is a read-only, auto-generated
 	// field.
@@ -8249,8 +8435,7 @@ type LandingPage struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Name: Name of this landing page. This is a required field. It must be
-	// less than 256 characters long, and must be unique among landing pages
-	// of the same campaign.
+	// less than 256 characters long.
 	Name string `json:"name,omitempty"`
 
 	// Url: URL of this landing page. This is a required field.
@@ -8260,7 +8445,7 @@ type LandingPage struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Default") to
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -8268,10 +8453,10 @@ type LandingPage struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Default") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -8279,42 +8464,6 @@ type LandingPage struct {
 
 func (s *LandingPage) MarshalJSON() ([]byte, error) {
 	type NoMethod LandingPage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// LandingPagesListResponse: Landing Page List Response
-type LandingPagesListResponse struct {
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "dfareporting#landingPagesListResponse".
-	Kind string `json:"kind,omitempty"`
-
-	// LandingPages: Landing page collection
-	LandingPages []*LandingPage `json:"landingPages,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LandingPagesListResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod LandingPagesListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8793,6 +8942,97 @@ type MetrosListResponse struct {
 
 func (s *MetrosListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod MetrosListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MobileApp: Contains information about a mobile app. Used as a landing
+// page deep link.
+type MobileApp struct {
+	// Directory: Mobile app directory.
+	//
+	// Possible values:
+	//   "APPLE_APP_STORE"
+	//   "GOOGLE_PLAY_STORE"
+	//   "UNKNOWN"
+	Directory string `json:"directory,omitempty"`
+
+	// Id: ID of this mobile app.
+	Id string `json:"id,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#mobileApp".
+	Kind string `json:"kind,omitempty"`
+
+	// PublisherName: Publisher name.
+	PublisherName string `json:"publisherName,omitempty"`
+
+	// Title: Title of this mobile app.
+	Title string `json:"title,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Directory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Directory") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MobileApp) MarshalJSON() ([]byte, error) {
+	type NoMethod MobileApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MobileAppsListResponse: Mobile app List Response
+type MobileAppsListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dfareporting#mobileAppsListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// MobileApps: Mobile apps collection.
+	MobileApps []*MobileApp `json:"mobileApps,omitempty"`
+
+	// NextPageToken: Pagination token to be used for the next list
+	// operation.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MobileAppsListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod MobileAppsListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13080,8 +13320,8 @@ func (s *ThirdPartyAuthenticationToken) MarshalJSON() ([]byte, error) {
 
 // ThirdPartyTrackingUrl: Third-party Tracking URL.
 type ThirdPartyTrackingUrl struct {
-	// ThirdPartyUrlType: Third-party URL type for in-stream video
-	// creatives.
+	// ThirdPartyUrlType: Third-party URL type for in-stream video and
+	// in-stream audio creatives.
 	//
 	// Possible values:
 	//   "CLICK_TRACKING"
@@ -13167,7 +13407,8 @@ func (s *TranscodeSetting) MarshalJSON() ([]byte, error) {
 }
 
 // UniversalAdId: A Universal Ad ID as per the VAST 4.0 spec. Applicable
-// to the following creative types: INSTREAM_VIDEO and VPAID.
+// to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and
+// VPAID.
 type UniversalAdId struct {
 	// Registry: Registry used for the Ad ID value.
 	//
@@ -13847,6 +14088,15 @@ type VideoSettings struct {
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "dfareporting#videoSettings".
 	Kind string `json:"kind,omitempty"`
+
+	// Orientation: Orientation of a video placement. If this value is set,
+	// placement will return assets matching the specified orientation.
+	//
+	// Possible values:
+	//   "ANY"
+	//   "LANDSCAPE"
+	//   "PORTRAIT"
+	Orientation string `json:"orientation,omitempty"`
 
 	// SkippableSettings: Settings for the skippability of video creatives
 	// served to this placement. If this object is provided, the
@@ -18277,6 +18527,885 @@ func (c *AdvertiserGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*Advertis
 
 }
 
+// method id "dfareporting.advertiserLandingPages.get":
+
+type AdvertiserLandingPagesGetCall struct {
+	s            *Service
+	profileId    int64
+	id           int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets one landing page by ID.
+func (r *AdvertiserLandingPagesService) Get(profileId int64, id int64) *AdvertiserLandingPagesGetCall {
+	c := &AdvertiserLandingPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserLandingPagesGetCall) Fields(s ...googleapi.Field) *AdvertiserLandingPagesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertiserLandingPagesGetCall) IfNoneMatch(entityTag string) *AdvertiserLandingPagesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserLandingPagesGetCall) Context(ctx context.Context) *AdvertiserLandingPagesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserLandingPagesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserLandingPagesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/advertiserLandingPages/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"id":        strconv.FormatInt(c.id, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserLandingPages.get" call.
+// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LandingPage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertiserLandingPagesGetCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LandingPage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one landing page by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.advertiserLandingPages.get",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Landing page ID.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/advertiserLandingPages/{id}",
+	//   "response": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.advertiserLandingPages.insert":
+
+type AdvertiserLandingPagesInsertCall struct {
+	s           *Service
+	profileId   int64
+	landingpage *LandingPage
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Insert: Inserts a new landing page.
+func (r *AdvertiserLandingPagesService) Insert(profileId int64, landingpage *LandingPage) *AdvertiserLandingPagesInsertCall {
+	c := &AdvertiserLandingPagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.landingpage = landingpage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserLandingPagesInsertCall) Fields(s ...googleapi.Field) *AdvertiserLandingPagesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserLandingPagesInsertCall) Context(ctx context.Context) *AdvertiserLandingPagesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserLandingPagesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserLandingPagesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/advertiserLandingPages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserLandingPages.insert" call.
+// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LandingPage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertiserLandingPagesInsertCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LandingPage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Inserts a new landing page.",
+	//   "httpMethod": "POST",
+	//   "id": "dfareporting.advertiserLandingPages.insert",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/advertiserLandingPages",
+	//   "request": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "response": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.advertiserLandingPages.list":
+
+type AdvertiserLandingPagesListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of landing pages.
+func (r *AdvertiserLandingPagesService) List(profileId int64) *AdvertiserLandingPagesListCall {
+	c := &AdvertiserLandingPagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// AdvertiserIds sets the optional parameter "advertiserIds": Select
+// only landing pages that belong to these advertisers.
+func (c *AdvertiserLandingPagesListCall) AdvertiserIds(advertiserIds ...int64) *AdvertiserLandingPagesListCall {
+	var advertiserIds_ []string
+	for _, v := range advertiserIds {
+		advertiserIds_ = append(advertiserIds_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("advertiserIds", advertiserIds_)
+	return c
+}
+
+// Archived sets the optional parameter "archived": Select only archived
+// landing pages. Don't set this field to select both archived and
+// non-archived landing pages.
+func (c *AdvertiserLandingPagesListCall) Archived(archived bool) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("archived", fmt.Sprint(archived))
+	return c
+}
+
+// Ids sets the optional parameter "ids": Select only landing pages with
+// these IDs.
+func (c *AdvertiserLandingPagesListCall) Ids(ids ...int64) *AdvertiserLandingPagesListCall {
+	var ids_ []string
+	for _, v := range ids {
+		ids_ = append(ids_, fmt.Sprint(v))
+	}
+	c.urlParams_.SetMulti("ids", ids_)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *AdvertiserLandingPagesListCall) MaxResults(maxResults int64) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Value of the
+// nextPageToken from the previous result page.
+func (c *AdvertiserLandingPagesListCall) PageToken(pageToken string) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SearchString sets the optional parameter "searchString": Allows
+// searching for landing pages by name or ID. Wildcards (*) are allowed.
+// For example, "landingpage*2017" will return landing pages with names
+// like "landingpage July 2017", "landingpage March 2017", or simply
+// "landingpage 2017". Most of the searches also add wildcards
+// implicitly at the start and the end of the search string. For
+// example, a search string of "landingpage" will match campaigns with
+// name "my landingpage", "landingpage 2015", or simply "landingpage".
+func (c *AdvertiserLandingPagesListCall) SearchString(searchString string) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("searchString", searchString)
+	return c
+}
+
+// SortField sets the optional parameter "sortField": Field by which to
+// sort the list.
+//
+// Possible values:
+//   "ID" (default)
+//   "NAME"
+func (c *AdvertiserLandingPagesListCall) SortField(sortField string) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("sortField", sortField)
+	return c
+}
+
+// SortOrder sets the optional parameter "sortOrder": Order of sorted
+// results.
+//
+// Possible values:
+//   "ASCENDING" (default)
+//   "DESCENDING"
+func (c *AdvertiserLandingPagesListCall) SortOrder(sortOrder string) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("sortOrder", sortOrder)
+	return c
+}
+
+// SubaccountId sets the optional parameter "subaccountId": Select only
+// landing pages that belong to this subaccount.
+func (c *AdvertiserLandingPagesListCall) SubaccountId(subaccountId int64) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("subaccountId", fmt.Sprint(subaccountId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserLandingPagesListCall) Fields(s ...googleapi.Field) *AdvertiserLandingPagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AdvertiserLandingPagesListCall) IfNoneMatch(entityTag string) *AdvertiserLandingPagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserLandingPagesListCall) Context(ctx context.Context) *AdvertiserLandingPagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserLandingPagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserLandingPagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/advertiserLandingPages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserLandingPages.list" call.
+// Exactly one of *AdvertiserLandingPagesListResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *AdvertiserLandingPagesListResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AdvertiserLandingPagesListCall) Do(opts ...googleapi.CallOption) (*AdvertiserLandingPagesListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &AdvertiserLandingPagesListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves a list of landing pages.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.advertiserLandingPages.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "advertiserIds": {
+	//       "description": "Select only landing pages that belong to these advertisers.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "archived": {
+	//       "description": "Select only archived landing pages. Don't set this field to select both archived and non-archived landing pages.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "ids": {
+	//       "description": "Select only landing pages with these IDs.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "1000",
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Value of the nextPageToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "searchString": {
+	//       "description": "Allows searching for landing pages by name or ID. Wildcards (*) are allowed. For example, \"landingpage*2017\" will return landing pages with names like \"landingpage July 2017\", \"landingpage March 2017\", or simply \"landingpage 2017\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"landingpage\" will match campaigns with name \"my landingpage\", \"landingpage 2015\", or simply \"landingpage\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortField": {
+	//       "default": "ID",
+	//       "description": "Field by which to sort the list.",
+	//       "enum": [
+	//         "ID",
+	//         "NAME"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sortOrder": {
+	//       "default": "ASCENDING",
+	//       "description": "Order of sorted results.",
+	//       "enum": [
+	//         "ASCENDING",
+	//         "DESCENDING"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "subaccountId": {
+	//       "description": "Select only landing pages that belong to this subaccount.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/advertiserLandingPages",
+	//   "response": {
+	//     "$ref": "AdvertiserLandingPagesListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AdvertiserLandingPagesListCall) Pages(ctx context.Context, f func(*AdvertiserLandingPagesListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dfareporting.advertiserLandingPages.patch":
+
+type AdvertiserLandingPagesPatchCall struct {
+	s           *Service
+	profileId   int64
+	landingpage *LandingPage
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Patch: Updates an existing landing page. This method supports patch
+// semantics.
+func (r *AdvertiserLandingPagesService) Patch(profileId int64, id int64, landingpage *LandingPage) *AdvertiserLandingPagesPatchCall {
+	c := &AdvertiserLandingPagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.urlParams_.Set("id", fmt.Sprint(id))
+	c.landingpage = landingpage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserLandingPagesPatchCall) Fields(s ...googleapi.Field) *AdvertiserLandingPagesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserLandingPagesPatchCall) Context(ctx context.Context) *AdvertiserLandingPagesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserLandingPagesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserLandingPagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/advertiserLandingPages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserLandingPages.patch" call.
+// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LandingPage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertiserLandingPagesPatchCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LandingPage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing landing page. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "dfareporting.advertiserLandingPages.patch",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Landing page ID.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/advertiserLandingPages",
+	//   "request": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "response": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.advertiserLandingPages.update":
+
+type AdvertiserLandingPagesUpdateCall struct {
+	s           *Service
+	profileId   int64
+	landingpage *LandingPage
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Update: Updates an existing landing page.
+func (r *AdvertiserLandingPagesService) Update(profileId int64, landingpage *LandingPage) *AdvertiserLandingPagesUpdateCall {
+	c := &AdvertiserLandingPagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.landingpage = landingpage
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AdvertiserLandingPagesUpdateCall) Fields(s ...googleapi.Field) *AdvertiserLandingPagesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AdvertiserLandingPagesUpdateCall) Context(ctx context.Context) *AdvertiserLandingPagesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AdvertiserLandingPagesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertiserLandingPagesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/advertiserLandingPages")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PUT", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.advertiserLandingPages.update" call.
+// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *LandingPage.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdvertiserLandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &LandingPage{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing landing page.",
+	//   "httpMethod": "PUT",
+	//   "id": "dfareporting.advertiserLandingPages.update",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/advertiserLandingPages",
+	//   "request": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "response": {
+	//     "$ref": "LandingPage"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
 // method id "dfareporting.advertisers.get":
 
 type AdvertisersGetCall struct {
@@ -19883,11 +21012,9 @@ type CampaignsInsertCall struct {
 }
 
 // Insert: Inserts a new campaign.
-func (r *CampaignsService) Insert(profileId int64, defaultLandingPageName string, defaultLandingPageUrl string, campaign *Campaign) *CampaignsInsertCall {
+func (r *CampaignsService) Insert(profileId int64, campaign *Campaign) *CampaignsInsertCall {
 	c := &CampaignsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
-	c.urlParams_.Set("defaultLandingPageName", defaultLandingPageName)
-	c.urlParams_.Set("defaultLandingPageUrl", defaultLandingPageUrl)
 	c.campaign = campaign
 	return c
 }
@@ -19982,23 +21109,9 @@ func (c *CampaignsInsertCall) Do(opts ...googleapi.CallOption) (*Campaign, error
 	//   "httpMethod": "POST",
 	//   "id": "dfareporting.campaigns.insert",
 	//   "parameterOrder": [
-	//     "profileId",
-	//     "defaultLandingPageName",
-	//     "defaultLandingPageUrl"
+	//     "profileId"
 	//   ],
 	//   "parameters": {
-	//     "defaultLandingPageName": {
-	//       "description": "Default landing page name for this new campaign. Must be less than 256 characters long.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "defaultLandingPageUrl": {
-	//       "description": "Default landing page URL for this new campaign.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
 	//     "profileId": {
 	//       "description": "User profile ID associated with this request.",
 	//       "format": "int64",
@@ -23500,11 +24613,11 @@ func (c *CreativeAssetsInsertCall) Do(opts ...googleapi.CallOption) (*CreativeAs
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/dfareporting/v2.8/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/resumable/upload/dfareporting/v3.1/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/dfareporting/v2.8/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+	//         "path": "/upload/dfareporting/v3.1/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
 	//       }
 	//     }
 	//   },
@@ -33801,878 +34914,6 @@ func (c *InventoryItemsListCall) Pages(ctx context.Context, f func(*InventoryIte
 	}
 }
 
-// method id "dfareporting.landingPages.delete":
-
-type LandingPagesDeleteCall struct {
-	s          *Service
-	profileId  int64
-	campaignId int64
-	id         int64
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes an existing campaign landing page.
-func (r *LandingPagesService) Delete(profileId int64, campaignId int64, id int64) *LandingPagesDeleteCall {
-	c := &LandingPagesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesDeleteCall) Fields(s ...googleapi.Field) *LandingPagesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesDeleteCall) Context(ctx context.Context) *LandingPagesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("DELETE", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-		"id":         strconv.FormatInt(c.id, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.delete" call.
-func (c *LandingPagesDeleteCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes an existing campaign landing page.",
-	//   "httpMethod": "DELETE",
-	//   "id": "dfareporting.landingPages.delete",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Landing page ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
-// method id "dfareporting.landingPages.get":
-
-type LandingPagesGetCall struct {
-	s            *Service
-	profileId    int64
-	campaignId   int64
-	id           int64
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets one campaign landing page by ID.
-func (r *LandingPagesService) Get(profileId int64, campaignId int64, id int64) *LandingPagesGetCall {
-	c := &LandingPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	c.id = id
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesGetCall) Fields(s ...googleapi.Field) *LandingPagesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *LandingPagesGetCall) IfNoneMatch(entityTag string) *LandingPagesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesGetCall) Context(ctx context.Context) *LandingPagesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-		"id":         strconv.FormatInt(c.id, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.get" call.
-// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *LandingPage.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *LandingPagesGetCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LandingPage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets one campaign landing page by ID.",
-	//   "httpMethod": "GET",
-	//   "id": "dfareporting.landingPages.get",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Landing page ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}",
-	//   "response": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
-// method id "dfareporting.landingPages.insert":
-
-type LandingPagesInsertCall struct {
-	s           *Service
-	profileId   int64
-	campaignId  int64
-	landingpage *LandingPage
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Insert: Inserts a new landing page for the specified campaign.
-func (r *LandingPagesService) Insert(profileId int64, campaignId int64, landingpage *LandingPage) *LandingPagesInsertCall {
-	c := &LandingPagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	c.landingpage = landingpage
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesInsertCall) Fields(s ...googleapi.Field) *LandingPagesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesInsertCall) Context(ctx context.Context) *LandingPagesInsertCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesInsertCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.insert" call.
-// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *LandingPage.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *LandingPagesInsertCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LandingPage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Inserts a new landing page for the specified campaign.",
-	//   "httpMethod": "POST",
-	//   "id": "dfareporting.landingPages.insert",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-	//   "request": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "response": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
-// method id "dfareporting.landingPages.list":
-
-type LandingPagesListCall struct {
-	s            *Service
-	profileId    int64
-	campaignId   int64
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Retrieves the list of landing pages for the specified campaign.
-func (r *LandingPagesService) List(profileId int64, campaignId int64) *LandingPagesListCall {
-	c := &LandingPagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesListCall) Fields(s ...googleapi.Field) *LandingPagesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *LandingPagesListCall) IfNoneMatch(entityTag string) *LandingPagesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesListCall) Context(ctx context.Context) *LandingPagesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.list" call.
-// Exactly one of *LandingPagesListResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *LandingPagesListResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *LandingPagesListCall) Do(opts ...googleapi.CallOption) (*LandingPagesListResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LandingPagesListResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Retrieves the list of landing pages for the specified campaign.",
-	//   "httpMethod": "GET",
-	//   "id": "dfareporting.landingPages.list",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-	//   "response": {
-	//     "$ref": "LandingPagesListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
-// method id "dfareporting.landingPages.patch":
-
-type LandingPagesPatchCall struct {
-	s           *Service
-	profileId   int64
-	campaignId  int64
-	landingpage *LandingPage
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Patch: Updates an existing campaign landing page. This method
-// supports patch semantics.
-func (r *LandingPagesService) Patch(profileId int64, campaignId int64, id int64, landingpage *LandingPage) *LandingPagesPatchCall {
-	c := &LandingPagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	c.urlParams_.Set("id", fmt.Sprint(id))
-	c.landingpage = landingpage
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesPatchCall) Fields(s ...googleapi.Field) *LandingPagesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesPatchCall) Context(ctx context.Context) *LandingPagesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PATCH", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.patch" call.
-// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *LandingPage.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *LandingPagesPatchCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LandingPage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing campaign landing page. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "dfareporting.landingPages.patch",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId",
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "id": {
-	//       "description": "Landing page ID.",
-	//       "format": "int64",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-	//   "request": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "response": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
-// method id "dfareporting.landingPages.update":
-
-type LandingPagesUpdateCall struct {
-	s           *Service
-	profileId   int64
-	campaignId  int64
-	landingpage *LandingPage
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Update: Updates an existing campaign landing page.
-func (r *LandingPagesService) Update(profileId int64, campaignId int64, landingpage *LandingPage) *LandingPagesUpdateCall {
-	c := &LandingPagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.profileId = profileId
-	c.campaignId = campaignId
-	c.landingpage = landingpage
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *LandingPagesUpdateCall) Fields(s ...googleapi.Field) *LandingPagesUpdateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *LandingPagesUpdateCall) Context(ctx context.Context) *LandingPagesUpdateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *LandingPagesUpdateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *LandingPagesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.landingpage)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/campaigns/{campaignId}/landingPages")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("PUT", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"profileId":  strconv.FormatInt(c.profileId, 10),
-		"campaignId": strconv.FormatInt(c.campaignId, 10),
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "dfareporting.landingPages.update" call.
-// Exactly one of *LandingPage or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *LandingPage.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *LandingPagesUpdateCall) Do(opts ...googleapi.CallOption) (*LandingPage, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &LandingPage{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates an existing campaign landing page.",
-	//   "httpMethod": "PUT",
-	//   "id": "dfareporting.landingPages.update",
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "campaignId"
-	//   ],
-	//   "parameters": {
-	//     "campaignId": {
-	//       "description": "Landing page campaign ID.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-	//   "request": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "response": {
-	//     "$ref": "LandingPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ]
-	// }
-
-}
-
 // method id "dfareporting.languages.list":
 
 type LanguagesListCall struct {
@@ -34947,6 +35188,399 @@ func (c *MetrosListCall) Do(opts ...googleapi.CallOption) (*MetrosListResponse, 
 	//   ]
 	// }
 
+}
+
+// method id "dfareporting.mobileApps.get":
+
+type MobileAppsGetCall struct {
+	s            *Service
+	profileId    int64
+	id           string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets one mobile app by ID.
+func (r *MobileAppsService) Get(profileId int64, id string) *MobileAppsGetCall {
+	c := &MobileAppsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	c.id = id
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobileAppsGetCall) Fields(s ...googleapi.Field) *MobileAppsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *MobileAppsGetCall) IfNoneMatch(entityTag string) *MobileAppsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MobileAppsGetCall) Context(ctx context.Context) *MobileAppsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MobileAppsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MobileAppsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/mobileApps/{id}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+		"id":        c.id,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.mobileApps.get" call.
+// Exactly one of *MobileApp or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *MobileApp.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *MobileAppsGetCall) Do(opts ...googleapi.CallOption) (*MobileApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &MobileApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets one mobile app by ID.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.mobileApps.get",
+	//   "parameterOrder": [
+	//     "profileId",
+	//     "id"
+	//   ],
+	//   "parameters": {
+	//     "id": {
+	//       "description": "Mobile app ID.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/mobileApps/{id}",
+	//   "response": {
+	//     "$ref": "MobileApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// method id "dfareporting.mobileApps.list":
+
+type MobileAppsListCall struct {
+	s            *Service
+	profileId    int64
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves list of available mobile apps.
+func (r *MobileAppsService) List(profileId int64) *MobileAppsListCall {
+	c := &MobileAppsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.profileId = profileId
+	return c
+}
+
+// Directories sets the optional parameter "directories": Select only
+// apps from these directories.
+//
+// Possible values:
+//   "APPLE_APP_STORE"
+//   "GOOGLE_PLAY_STORE"
+//   "UNKNOWN"
+func (c *MobileAppsListCall) Directories(directories ...string) *MobileAppsListCall {
+	c.urlParams_.SetMulti("directories", append([]string{}, directories...))
+	return c
+}
+
+// Ids sets the optional parameter "ids": Select only apps with these
+// IDs.
+func (c *MobileAppsListCall) Ids(ids ...string) *MobileAppsListCall {
+	c.urlParams_.SetMulti("ids", append([]string{}, ids...))
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Maximum number
+// of results to return.
+func (c *MobileAppsListCall) MaxResults(maxResults int64) *MobileAppsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Value of the
+// nextPageToken from the previous result page.
+func (c *MobileAppsListCall) PageToken(pageToken string) *MobileAppsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// SearchString sets the optional parameter "searchString": Allows
+// searching for objects by name or ID. Wildcards (*) are allowed. For
+// example, "app*2015" will return objects with names like "app Jan
+// 2018", "app Jan 2018", or simply "app 2018". Most of the searches
+// also add wildcards implicitly at the start and the end of the search
+// string. For example, a search string of "app" will match objects with
+// name "my app", "app 2018", or simply "app".
+func (c *MobileAppsListCall) SearchString(searchString string) *MobileAppsListCall {
+	c.urlParams_.Set("searchString", searchString)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MobileAppsListCall) Fields(s ...googleapi.Field) *MobileAppsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *MobileAppsListCall) IfNoneMatch(entityTag string) *MobileAppsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MobileAppsListCall) Context(ctx context.Context) *MobileAppsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MobileAppsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MobileAppsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{profileId}/mobileApps")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"profileId": strconv.FormatInt(c.profileId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dfareporting.mobileApps.list" call.
+// Exactly one of *MobileAppsListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *MobileAppsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MobileAppsListCall) Do(opts ...googleapi.CallOption) (*MobileAppsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &MobileAppsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves list of available mobile apps.",
+	//   "httpMethod": "GET",
+	//   "id": "dfareporting.mobileApps.list",
+	//   "parameterOrder": [
+	//     "profileId"
+	//   ],
+	//   "parameters": {
+	//     "directories": {
+	//       "description": "Select only apps from these directories.",
+	//       "enum": [
+	//         "APPLE_APP_STORE",
+	//         "GOOGLE_PLAY_STORE",
+	//         "UNKNOWN"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "ids": {
+	//       "description": "Select only apps with these IDs.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "1000",
+	//       "description": "Maximum number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "maximum": "1000",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Value of the nextPageToken from the previous result page.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "profileId": {
+	//       "description": "User profile ID associated with this request.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "searchString": {
+	//       "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"app*2015\" will return objects with names like \"app Jan 2018\", \"app Jan 2018\", or simply \"app 2018\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"app\" will match objects with name \"my app\", \"app 2018\", or simply \"app\".",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "userprofiles/{profileId}/mobileApps",
+	//   "response": {
+	//     "$ref": "MobileAppsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dfatrafficking"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *MobileAppsListCall) Pages(ctx context.Context, f func(*MobileAppsListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "dfareporting.mobileCarriers.get":

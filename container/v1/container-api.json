@@ -330,7 +330,7 @@
                   ]
                 },
                 "setAddons": {
-                  "description": "Sets the addons for a specific cluster.",
+                  "description": "Sets the addons of a specific cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setAddons",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setAddons",
@@ -386,7 +386,7 @@
                   ]
                 },
                 "setLocations": {
-                  "description": "Sets the locations for a specific cluster.",
+                  "description": "Sets the locations of a specific cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLocations",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setLocations",
@@ -414,7 +414,7 @@
                   ]
                 },
                 "setLogging": {
-                  "description": "Sets the logging service for a specific cluster.",
+                  "description": "Sets the logging service of a specific cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLogging",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setLogging",
@@ -470,7 +470,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set the password.",
+                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password of a specific cluster.\nThis can be either via password generation or explicitly set the password.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setMasterAuth",
@@ -498,7 +498,7 @@
                   ]
                 },
                 "setMonitoring": {
-                  "description": "Sets the monitoring service for a specific cluster.",
+                  "description": "Sets the monitoring service of a specific cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMonitoring",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setMonitoring",
@@ -638,7 +638,7 @@
                   ]
                 },
                 "updateMaster": {
-                  "description": "Updates the master for a specific cluster.",
+                  "description": "Updates the master of a specific cluster.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:updateMaster",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.updateMaster",
@@ -856,7 +856,7 @@
                       ]
                     },
                     "setAutoscaling": {
-                      "description": "Sets the autoscaling settings for a specific node pool.",
+                      "description": "Sets the autoscaling settings of a specific node pool.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:setAutoscaling",
                       "httpMethod": "POST",
                       "id": "container.projects.locations.clusters.nodePools.setAutoscaling",
@@ -912,7 +912,7 @@
                       ]
                     },
                     "setSize": {
-                      "description": "Sets the size for a specific node pool.",
+                      "description": "Sets the size of a specific node pool.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:setSize",
                       "httpMethod": "POST",
                       "id": "container.projects.locations.clusters.nodePools.setSize",
@@ -940,7 +940,7 @@
                       ]
                     },
                     "update": {
-                      "description": "Updates the version and/or image type for a specific node pool.",
+                      "description": "Updates the version and/or image type of a specific node pool.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}",
                       "httpMethod": "PUT",
                       "id": "container.projects.locations.clusters.nodePools.update",
@@ -1123,7 +1123,7 @@
             "clusters": {
               "methods": {
                 "addons": {
-                  "description": "Sets the addons for a specific cluster.",
+                  "description": "Sets the addons of a specific cluster.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/addons",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.addons",
@@ -1402,7 +1402,7 @@
                   ]
                 },
                 "locations": {
-                  "description": "Sets the locations for a specific cluster.",
+                  "description": "Sets the locations of a specific cluster.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/locations",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.locations",
@@ -1443,7 +1443,7 @@
                   ]
                 },
                 "logging": {
-                  "description": "Sets the logging service for a specific cluster.",
+                  "description": "Sets the logging service of a specific cluster.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/logging",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.logging",
@@ -1484,7 +1484,7 @@
                   ]
                 },
                 "master": {
-                  "description": "Updates the master for a specific cluster.",
+                  "description": "Updates the master of a specific cluster.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/master",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.master",
@@ -1525,7 +1525,7 @@
                   ]
                 },
                 "monitoring": {
-                  "description": "Sets the monitoring service for a specific cluster.",
+                  "description": "Sets the monitoring service of a specific cluster.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/monitoring",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.monitoring",
@@ -1648,7 +1648,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set the password.",
+                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password of a specific cluster.\nThis can be either via password generation or explicitly set the password.",
                   "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.setMasterAuth",
@@ -1816,7 +1816,7 @@
                 "nodePools": {
                   "methods": {
                     "autoscaling": {
-                      "description": "Sets the autoscaling settings for a specific node pool.",
+                      "description": "Sets the autoscaling settings of a specific node pool.",
                       "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/autoscaling",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.autoscaling",
@@ -2144,7 +2144,7 @@
                       ]
                     },
                     "setSize": {
-                      "description": "Sets the size for a specific node pool.",
+                      "description": "Sets the size of a specific node pool.",
                       "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/setSize",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.setSize",
@@ -2192,7 +2192,7 @@
                       ]
                     },
                     "update": {
-                      "description": "Updates the version and/or image type for a specific node pool.",
+                      "description": "Updates the version and/or image type of a specific node pool.",
                       "flatPath": "v1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/update",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.update",
@@ -2372,7 +2372,7 @@
       }
     }
   },
-  "revision": "20180504",
+  "revision": "20180427",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {

@@ -329,7 +329,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets the details of a specific cluster.",
+                  "description": "Gets the details for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}",
                   "httpMethod": "GET",
                   "id": "container.projects.locations.clusters.get",
@@ -404,7 +404,7 @@
                   ]
                 },
                 "setAddons": {
-                  "description": "Sets the addons of a specific cluster.",
+                  "description": "Sets the addons for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setAddons",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setAddons",
@@ -460,7 +460,7 @@
                   ]
                 },
                 "setLocations": {
-                  "description": "Sets the locations of a specific cluster.",
+                  "description": "Sets the locations for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLocations",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setLocations",
@@ -488,7 +488,7 @@
                   ]
                 },
                 "setLogging": {
-                  "description": "Sets the logging service of a specific cluster.",
+                  "description": "Sets the logging service for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setLogging",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setLogging",
@@ -544,7 +544,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password of a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setMasterAuth",
@@ -572,7 +572,7 @@
                   ]
                 },
                 "setMonitoring": {
-                  "description": "Sets the monitoring service of a specific cluster.",
+                  "description": "Sets the monitoring service for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMonitoring",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setMonitoring",
@@ -684,7 +684,7 @@
                   ]
                 },
                 "update": {
-                  "description": "Updates the settings of a specific cluster.",
+                  "description": "Updates the settings for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}",
                   "httpMethod": "PUT",
                   "id": "container.projects.locations.clusters.update",
@@ -712,7 +712,7 @@
                   ]
                 },
                 "updateMaster": {
-                  "description": "Updates the master of a specific cluster.",
+                  "description": "Updates the master for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:updateMaster",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.updateMaster",
@@ -986,7 +986,7 @@
                       ]
                     },
                     "setSize": {
-                      "description": "Sets the size of a specific node pool.",
+                      "description": "Sets the size for a specific node pool.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:setSize",
                       "httpMethod": "POST",
                       "id": "container.projects.locations.clusters.nodePools.setSize",
@@ -1197,7 +1197,7 @@
             "clusters": {
               "methods": {
                 "addons": {
-                  "description": "Sets the addons of a specific cluster.",
+                  "description": "Sets the addons for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/addons",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.addons",
@@ -1356,7 +1356,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Gets the details of a specific cluster.",
+                  "description": "Gets the details for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}",
                   "httpMethod": "GET",
                   "id": "container.projects.zones.clusters.get",
@@ -1476,7 +1476,7 @@
                   ]
                 },
                 "locations": {
-                  "description": "Sets the locations of a specific cluster.",
+                  "description": "Sets the locations for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/locations",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.locations",
@@ -1517,7 +1517,7 @@
                   ]
                 },
                 "logging": {
-                  "description": "Sets the logging service of a specific cluster.",
+                  "description": "Sets the logging service for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/logging",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.logging",
@@ -1558,7 +1558,7 @@
                   ]
                 },
                 "master": {
-                  "description": "Updates the master of a specific cluster.",
+                  "description": "Updates the master for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/master",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.master",
@@ -1599,7 +1599,7 @@
                   ]
                 },
                 "monitoring": {
-                  "description": "Sets the monitoring service of a specific cluster.",
+                  "description": "Sets the monitoring service for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/monitoring",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.monitoring",
@@ -1722,7 +1722,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password of a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.setMasterAuth",
@@ -1845,7 +1845,7 @@
                   ]
                 },
                 "update": {
-                  "description": "Updates the settings of a specific cluster.",
+                  "description": "Updates the settings for a specific cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}",
                   "httpMethod": "PUT",
                   "id": "container.projects.zones.clusters.update",
@@ -2218,7 +2218,7 @@
                       ]
                     },
                     "setSize": {
-                      "description": "Sets the size of a specific node pool.",
+                      "description": "Sets the size for a specific node pool.",
                       "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}/setSize",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.setSize",
@@ -2446,7 +2446,7 @@
       }
     }
   },
-  "revision": "20180427",
+  "revision": "20180504",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3251,6 +3251,10 @@
           "description": "Size of the disk attached to each node, specified in GB.\nThe smallest allowed disk size is 10GB.\n\nIf unspecified, the default disk size is 100GB.",
           "format": "int32",
           "type": "integer"
+        },
+        "diskType": {
+          "description": "Type of the disk attached to each node (e.g. 'pd-standard' or 'pd-ssd')\n\nIf unspecified, the default disk type is 'pd-standard'",
+          "type": "string"
         },
         "imageType": {
           "description": "The image type to use for this node. Note that for a given image type,\nthe latest version of it will be used.",

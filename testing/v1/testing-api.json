@@ -257,7 +257,8 @@
               "enum": [
                 "ENVIRONMENT_TYPE_UNSPECIFIED",
                 "ANDROID",
-                "NETWORK_CONFIGURATION"
+                "NETWORK_CONFIGURATION",
+                "PROVIDED_SOFTWARE"
               ],
               "location": "path",
               "required": true,
@@ -281,7 +282,7 @@
       }
     }
   },
-  "revision": "20180518",
+  "revision": "20180522",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1042,6 +1043,17 @@
       },
       "type": "object"
     },
+    "ProvidedSoftwareCatalog": {
+      "description": "The currently provided software environment on the devices under test.",
+      "id": "ProvidedSoftwareCatalog",
+      "properties": {
+        "orchestratorVersion": {
+          "description": "A string representing the current version of Android Test Orchestrator that\nis provided by TestExecutionService. Example: \"1.0.2 beta\"",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RegularFile": {
       "description": "A file or directory to install on the device before the test starts",
       "id": "RegularFile",
@@ -1173,6 +1185,10 @@
         "networkConfigurationCatalog": {
           "$ref": "NetworkConfigurationCatalog",
           "description": "Supported network configurations"
+        },
+        "softwareCatalog": {
+          "$ref": "ProvidedSoftwareCatalog",
+          "description": "The software test environment provided by TestExecutionService."
         }
       },
       "type": "object"

@@ -787,7 +787,7 @@
       }
     }
   },
-  "revision": "20180427",
+  "revision": "20180521",
   "rootUrl": "https://servicebroker.googleapis.com/",
   "schemas": {
     "GoogleCloudServicebrokerV1alpha1__Binding": {
@@ -1174,6 +1174,10 @@
         "createTime": {
           "description": "Output only.\nTimestamp for when the instance was created.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "deploymentName": {
+          "description": "Output only.\nName of the Deployment Manager deployment used for provisioning of this\nservice instance.",
           "type": "string"
         },
         "instance_id": {

@@ -5471,11 +5471,13 @@ func (s *Size) MarshalJSON() ([]byte, error) {
 // relevant for pages with page_type SLIDE.
 type SlideProperties struct {
 	// LayoutObjectId: The object ID of the layout that this slide is based
-	// on.
+	// on. This property is
+	// read-only.
 	LayoutObjectId string `json:"layoutObjectId,omitempty"`
 
 	// MasterObjectId: The object ID of the master that this slide is based
-	// on.
+	// on. This property is
+	// read-only.
 	MasterObjectId string `json:"masterObjectId,omitempty"`
 
 	// NotesPage: The notes page that this slide is associated with. It
@@ -5491,7 +5493,7 @@ type SlideProperties struct {
 	// speakerNotesObjectId field.
 	// The notes page is read-only except for the text content and styles of
 	// the
-	// speaker notes shape.
+	// speaker notes shape. This property is read-only.
 	NotesPage *Page `json:"notesPage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LayoutObjectId") to

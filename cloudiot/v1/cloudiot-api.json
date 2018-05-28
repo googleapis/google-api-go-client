@@ -122,70 +122,6 @@
       "resources": {
         "locations": {
           "resources": {
-            "groups": {
-              "resources": {
-                "devices": {
-                  "methods": {
-                    "list": {
-                      "description": "List devices in a device registry.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/groups/{groupsId}/devices",
-                      "httpMethod": "GET",
-                      "id": "cloudiot.projects.locations.groups.devices.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "deviceIds": {
-                          "description": "A list of device string identifiers. If empty, it will ignore this field.\nFor example, `['device0', 'device12']`. This field cannot hold more than\n10,000 entries.",
-                          "location": "query",
-                          "repeated": true,
-                          "type": "string"
-                        },
-                        "deviceNumIds": {
-                          "description": "A list of device numerical ids. If empty, it will ignore this field. This\nfield cannot hold more than 10,000 entries.",
-                          "format": "uint64",
-                          "location": "query",
-                          "repeated": true,
-                          "type": "string"
-                        },
-                        "fieldMask": {
-                          "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
-                          "format": "google-fieldmask",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "pageSize": {
-                          "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested, but if there is a non-empty `page_token`, it\nindicates that more entries are available.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call, and\nthat the system should return the next page of data.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "The device registry path. Required. For example,\n`projects/my-project/locations/us-central1/registries/my-registry`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/groups/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+parent}/devices",
-                      "response": {
-                        "$ref": "ListDevicesResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/cloudiot"
-                      ]
-                    }
-                  }
-                }
-              }
-            },
             "registries": {
               "methods": {
                 "create": {
@@ -1015,7 +951,7 @@
       }
     }
   },
-  "revision": "20180508",
+  "revision": "20180516",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
     "Binding": {

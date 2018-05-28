@@ -817,7 +817,7 @@
                           ]
                         },
                         "restore": {
-                          "description": "Restore a CryptoKeyVersion in the\nDESTROY_SCHEDULED,\nstate.\n\nUpon restoration of the CryptoKeyVersion, state\nwill be set to DISABLED,\nand destroy_time will be cleared.",
+                          "description": "Restore a CryptoKeyVersion in the\nDESTROY_SCHEDULED\nstate.\n\nUpon restoration of the CryptoKeyVersion, state\nwill be set to DISABLED,\nand destroy_time will be cleared.",
                           "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}/cryptoKeyVersions/{cryptoKeyVersionsId}:restore",
                           "httpMethod": "POST",
                           "id": "cloudkms.projects.locations.keyRings.cryptoKeys.cryptoKeyVersions.restore",
@@ -855,7 +855,7 @@
       }
     }
   },
-  "revision": "20180425",
+  "revision": "20180518",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -951,7 +951,7 @@
         },
         "primary": {
           "$ref": "CryptoKeyVersion",
-          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion."
+          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.\n"
         },
         "purpose": {
           "description": "The immutable purpose of this CryptoKey. Currently, the only acceptable\npurpose is ENCRYPT_DECRYPT.",

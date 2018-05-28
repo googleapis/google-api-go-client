@@ -311,7 +311,7 @@
       }
     }
   },
-  "revision": "20180409",
+  "revision": "20180523",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -3342,16 +3342,16 @@
       "id": "SlideProperties",
       "properties": {
         "layoutObjectId": {
-          "description": "The object ID of the layout that this slide is based on.",
+          "description": "The object ID of the layout that this slide is based on. This property is\nread-only.",
           "type": "string"
         },
         "masterObjectId": {
-          "description": "The object ID of the master that this slide is based on.",
+          "description": "The object ID of the master that this slide is based on. This property is\nread-only.",
           "type": "string"
         },
         "notesPage": {
           "$ref": "Page",
-          "description": "The notes page that this slide is associated with. It defines the visual\nappearance of a notes page when printing or exporting slides with speaker\nnotes. A notes page inherits properties from the\nnotes master.\nThe placeholder shape with type BODY on the notes page contains the speaker\nnotes for this slide. The ID of this shape is identified by the\nspeakerNotesObjectId field.\nThe notes page is read-only except for the text content and styles of the\nspeaker notes shape."
+          "description": "The notes page that this slide is associated with. It defines the visual\nappearance of a notes page when printing or exporting slides with speaker\nnotes. A notes page inherits properties from the\nnotes master.\nThe placeholder shape with type BODY on the notes page contains the speaker\nnotes for this slide. The ID of this shape is identified by the\nspeakerNotesObjectId field.\nThe notes page is read-only except for the text content and styles of the\nspeaker notes shape. This property is read-only."
         }
       },
       "type": "object"

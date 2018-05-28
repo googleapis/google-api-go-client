@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/H-o8b_fFcJw8NU8kyQ0bDCyTZEI\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/zJKEi9IzuIBjiuIURgbNxnm6zbw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -1792,6 +1792,42 @@
         }
       }
     },
+    "orders": {
+      "methods": {
+        "refund": {
+          "description": "Refund a user's subscription or in-app purchase order.",
+          "httpMethod": "POST",
+          "id": "androidpublisher.orders.refund",
+          "parameterOrder": [
+            "packageName",
+            "orderId"
+          ],
+          "parameters": {
+            "orderId": {
+              "description": "The order ID provided to the user when the subscription or in-app order was purchased.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "packageName": {
+              "description": "The package name of the application for which this subscription or in-app item was purchased (for example, 'com.some.thing').",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "revoke": {
+              "description": "Whether to revoke the purchased item. If set to true, access to the subscription or in-app item will be terminated immediately. If the item is a recurring subscription, all future payments will also be terminated. Consumed in-app items need to be handled by developer's app. (optional)",
+              "location": "query",
+              "type": "boolean"
+            }
+          },
+          "path": "{packageName}/orders/{orderId}:refund",
+          "scopes": [
+            "https://www.googleapis.com/auth/androidpublisher"
+          ]
+        }
+      }
+    },
     "purchases": {
       "resources": {
         "products": {
@@ -2184,7 +2220,7 @@
       }
     }
   },
-  "revision": "20180504",
+  "revision": "20180516",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {

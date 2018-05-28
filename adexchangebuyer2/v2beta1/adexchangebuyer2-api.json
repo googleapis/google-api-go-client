@@ -612,7 +612,7 @@
                   "type": "string"
                 },
                 "query": {
-                  "description": "An optional query string to filter creatives. If no filter is specified,\nall active creatives will be returned.\nSupported queries are:\n\u003cul\u003e\n\u003cli\u003eaccountId=\u003ci\u003eaccount_id_string\u003c/i\u003e\n\u003cli\u003ecreativeId=\u003ci\u003ecreative_id_string\u003c/i\u003e\n\u003cli\u003edealsStatus: {approved, conditionally_approved, disapproved,\n                   not_checked}\n\u003cli\u003eopenAuctionStatus: {approved, conditionally_approved, disapproved,\n                          not_checked}\n\u003cli\u003eattribute: {a numeric attribute from the list of attributes}\n\u003cli\u003edisapprovalReason: {a reason from\nDisapprovalReason}\n\u003c/ul\u003e\nExample: 'accountId=12345 AND (dealsStatus:disapproved AND\ndisapprovalReason:unacceptable_content) OR attribute:47'",
+                  "description": "An optional query string to filter creatives. If no filter is specified,\nall active creatives will be returned.\n\u003cp\u003eSupported queries are:\n\u003cul\u003e\n\u003cli\u003eaccountId=\u003ci\u003eaccount_id_string\u003c/i\u003e\n\u003cli\u003ecreativeId=\u003ci\u003ecreative_id_string\u003c/i\u003e\n\u003cli\u003edealsStatus: {approved, conditionally_approved, disapproved,\n                   not_checked}\n\u003cli\u003eopenAuctionStatus: {approved, conditionally_approved, disapproved,\n                          not_checked}\n\u003cli\u003eattribute: {a numeric attribute from the list of attributes}\n\u003cli\u003edisapprovalReason: {a reason from\nDisapprovalReason}\n\u003c/ul\u003e\nExample: 'accountId=12345 AND (dealsStatus:disapproved AND\ndisapprovalReason:unacceptable_content) OR attribute:47'",
                   "location": "query",
                   "type": "string"
                 }
@@ -1947,7 +1947,7 @@
       }
     }
   },
-  "revision": "20180509",
+  "revision": "20180524",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2705,7 +2705,9 @@
             "UNSUPPORTED_FLASH_CONTENT",
             "MISUSE_BY_OMID_SCRIPT",
             "NON_WHITELISTED_OMID_VENDOR",
-            "DESTINATION_EXPERIENCE"
+            "DESTINATION_EXPERIENCE",
+            "UNSUPPORTED_LANGUAGE",
+            "NON_SSL_COMPLIANT"
           ],
           "enumDescriptions": [
             "The length of the image animation is longer than allowed.",
@@ -2804,7 +2806,9 @@
             "Flash content was found in an unsupported context.",
             "Misuse by an Open Measurement SDK script.",
             "Use of an Open Measurement SDK vendor not on approved whitelist.",
-            "Unacceptable landing page."
+            "Unacceptable landing page.",
+            "Unsupported language.",
+            "Non-SSL compliant."
           ],
           "type": "string"
         }

@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/g6v3916IY0fUnA_DercnjfZ1FVw\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/8jEn866sPoaPUUPCxgWGHadHMUQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -317,7 +317,7 @@
               "type": "string"
             },
             "location": {
-              "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+              "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
               "location": "query",
               "type": "string"
             },
@@ -353,7 +353,7 @@
               "type": "string"
             },
             "location": {
-              "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+              "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
               "location": "query",
               "type": "string"
             },
@@ -390,7 +390,7 @@
               "type": "string"
             },
             "location": {
-              "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+              "description": "[Experimental] The geographic location where the job should run. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
               "location": "query",
               "type": "string"
             },
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20180510",
+  "revision": "20180517",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -2230,6 +2230,24 @@
           "description": "[Output-only] Referenced tables for the job. Queries that reference more than 50 tables will not have a complete list.",
           "items": {
             "$ref": "TableReference"
+          },
+          "type": "array"
+        },
+        "reservationUsage": {
+          "description": "[Output-only] Job resource usage breakdown by reservation.",
+          "items": {
+            "properties": {
+              "name": {
+                "description": "[Output-only] Reservation name or \"unreserved\" for on-demand resources usage.",
+                "type": "string"
+              },
+              "slotMs": {
+                "description": "[Output-only] Slot-milliseconds the job spent in the given reservation.",
+                "format": "int64",
+                "type": "string"
+              }
+            },
+            "type": "object"
           },
           "type": "array"
         },

@@ -2096,6 +2096,10 @@ type JobStatistics2 struct {
 	// list.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 
+	// ReservationUsage: [Output-only] Job resource usage breakdown by
+	// reservation.
+	ReservationUsage []*JobStatistics2ReservationUsage `json:"reservationUsage,omitempty"`
+
 	// Schema: [Output-only] The schema of the results. Present only for
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
@@ -2148,6 +2152,38 @@ type JobStatistics2 struct {
 
 func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
 	type NoMethod JobStatistics2
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type JobStatistics2ReservationUsage struct {
+	// Name: [Output-only] Reservation name or "unreserved" for on-demand
+	// resources usage.
+	Name string `json:"name,omitempty"`
+
+	// SlotMs: [Output-only] Slot-milliseconds the job spent in the given
+	// reservation.
+	SlotMs int64 `json:"slotMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobStatistics2ReservationUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod JobStatistics2ReservationUsage
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4444,7 +4480,9 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 }
 
 // Location sets the optional parameter "location": [Experimental] The
-// geographic location of the job. Required except for US and EU.
+// geographic location of the job. Required except for US and EU. See
+// details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -4547,7 +4585,7 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4593,7 +4631,9 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 }
 
 // Location sets the optional parameter "location": [Experimental] The
-// geographic location of the job. Required except for US and EU.
+// geographic location of the job. Required except for US and EU. See
+// details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -4709,7 +4749,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU.",
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4755,7 +4795,8 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 
 // Location sets the optional parameter "location": [Experimental] The
 // geographic location where the job should run. Required except for US
-// and EU.
+// and EU. See details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -4901,7 +4942,7 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+	//       "description": "[Experimental] The geographic location where the job should run. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

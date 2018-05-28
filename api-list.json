@@ -2276,44 +2276,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "resourceviews:v1beta1",
-   "name": "resourceviews",
-   "version": "v1beta1",
-   "title": "Resource Views API",
-   "description": "The Resource View API allows users to create and manage logical sets of Google Compute Engine instances.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/resourceviews/v1beta1/rest",
-   "discoveryLink": "./apis/resourceviews/v1beta1/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/compute/",
-   "labels": [
-    "limited_availability"
-   ],
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "resourceviews:v1beta2",
-   "name": "resourceviews",
-   "version": "v1beta2",
-   "title": "Google Compute Engine Instance Groups API",
-   "description": "The Resource View API allows users to create and manage logical sets of Google Compute Engine instances.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/resourceviews/v1beta2/rest",
-   "discoveryLink": "./apis/resourceviews/v1beta2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/compute/",
-   "labels": [
-    "limited_availability"
-   ],
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "runtimeconfig:v1",
    "name": "runtimeconfig",
    "version": "v1",
@@ -2723,7 +2685,7 @@
    "id": "storagetransfer:v1",
    "name": "storagetransfer",
    "version": "v1",
-   "title": "Google Storage Transfer API",
+   "title": "Storage Transfer API",
    "description": "Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.",
    "discoveryRestUrl": "https://storagetransfer.googleapis.com/$discovery/rest?version=v1",
    "icons": {

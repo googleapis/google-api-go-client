@@ -277,6 +277,50 @@ func (s *Application) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplicationEvent: An app-related event.
+type ApplicationEvent struct {
+	// CreateTime: The creation time of the event.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EventType: App event type.
+	//
+	// Possible values:
+	//   "APPLICATION_EVENT_TYPE_UNSPECIFIED" - This value is disallowed.
+	//   "INSTALLED" - The app was installed.
+	//   "CHANGED" - The app was changed, for example, a component was
+	// enabled or disabled.
+	//   "DATA_CLEARED" - The app data was cleared.
+	//   "REMOVED" - The app was removed.
+	//   "REPLACED" - A new version of the app has been installed, replacing
+	// the old version.
+	//   "RESTARTED" - The app was restarted.
+	//   "PINNED" - The app was pinned to the foreground.
+	//   "UNPINNED" - The app was unpinned.
+	EventType string `json:"eventType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplicationEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ApplicationPermission: A permission required by the app.
 type ApplicationPermission struct {
 	// Description: A longer description of the permission, providing more
@@ -344,6 +388,10 @@ type ApplicationPolicy struct {
 	//   "PACKAGE_ACCESS" - Grants access to package access state.
 	//   "ENABLE_SYSTEM_APP" - Grants access for enabling system apps.
 	DelegatedScopes []string `json:"delegatedScopes,omitempty"`
+
+	// Disabled: Whether the app should be disabled, but app data is
+	// preserved.
+	Disabled bool `json:"disabled,omitempty"`
 
 	// InstallType: The type of installation to perform.
 	//
@@ -415,6 +463,126 @@ type ApplicationPolicy struct {
 
 func (s *ApplicationPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationReport: Information reported about an installed app.
+type ApplicationReport struct {
+	// ApplicationSource: The source of the package.
+	//
+	// Possible values:
+	//   "APPLICATION_SOURCE_UNSPECIFIED" - The app was sideloaded from an
+	// unspecified source.
+	//   "SYSTEM_APP_FACTORY_VERSION" - This is a system app from the
+	// device's factory image.
+	//   "SYSTEM_APP_UPDATED_VERSION" - This is an updated system app.
+	//   "INSTALLED_FROM_PLAY_STORE" - The app was installed from the Google
+	// Play Store.
+	ApplicationSource string `json:"applicationSource,omitempty"`
+
+	// DisplayName: The display name of the app.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Events: List of app events. The most recent 20 events are stored in
+	// the list.
+	Events []*ApplicationEvent `json:"events,omitempty"`
+
+	// InstallerPackageName: The package name of the app that installed this
+	// app.
+	InstallerPackageName string `json:"installerPackageName,omitempty"`
+
+	// PackageName: Package name of the app.
+	PackageName string `json:"packageName,omitempty"`
+
+	// PackageSha256Hash: The SHA-256 hash of the app's APK file, which can
+	// be used to verify the app hasn't been modified. Each byte of the hash
+	// value is represented as a two-digit hexadecimal number.
+	PackageSha256Hash string `json:"packageSha256Hash,omitempty"`
+
+	// SigningKeyCertFingerprints: The SHA-1 hash of each
+	// android.content.pm.Signature
+	// (https://developer.android.com/reference/android/content/pm/Signature.
+	// html) associated with the app package. Each byte of each hash value
+	// is represented as a two-digit hexadecimal number.
+	SigningKeyCertFingerprints []string `json:"signingKeyCertFingerprints,omitempty"`
+
+	// State: Application state.
+	//
+	// Possible values:
+	//   "INSTALLED" - App is installed on the device
+	//   "REMOVED" - App was removed from the device
+	State string `json:"state,omitempty"`
+
+	// VersionCode: The app version code, which can be used to determine
+	// whether one version is more recent than another.
+	VersionCode int64 `json:"versionCode,omitempty"`
+
+	// VersionName: The app version as displayed to the user.
+	VersionName string `json:"versionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationSource")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationSource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplicationReport) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ChoosePrivateKeyRule: A rule for automatically choosing a private key
+// and certificate to authenticate the device to a server.
+type ChoosePrivateKeyRule struct {
+	// PackageNames: The package names for which outgoing requests are
+	// subject to this rule. If no package names are specified, then the
+	// rule applies to all packages. For each package name listed, the rule
+	// applies to that package and all other packages that shared the same
+	// Android UID. The SHA256 hash of the signing key signatures of each
+	// package_name will be verified against those provided by Play
+	PackageNames []string `json:"packageNames,omitempty"`
+
+	// PrivateKeyAlias: The alias of the private key to be used.
+	PrivateKeyAlias string `json:"privateKeyAlias,omitempty"`
+
+	// UrlPattern: The URL pattern to match against the URL of the outgoing
+	// request. The pattern may contain asterisk (*) wildcards. Any URL is
+	// matched if unspecified.
+	UrlPattern string `json:"urlPattern,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PackageNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PackageNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChoosePrivateKeyRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ChoosePrivateKeyRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -554,6 +722,11 @@ type Device struct {
 	// ApiLevel: The API level of the Android platform version running on
 	// the device.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
+
+	// ApplicationReports: Reports for apps installed on the device. This
+	// information is only available when application_reports_enabled is
+	// true in the device's policy.
+	ApplicationReports []*ApplicationReport `json:"applicationReports,omitempty"`
 
 	// AppliedPolicyName: The name of the policy currently applied to the
 	// device.
@@ -2023,6 +2196,12 @@ type Policy struct {
 	// disabled.
 	CellBroadcastsConfigDisabled bool `json:"cellBroadcastsConfigDisabled,omitempty"`
 
+	// ChoosePrivateKeyRules: Rules for automatically choosing a private key
+	// and certificate to authenticate the device to a server. The rules are
+	// ordered by increasing precedence, so if an outgoing request matches
+	// more than one rule, the last rule defines which private key to use.
+	ChoosePrivateKeyRules []*ChoosePrivateKeyRule `json:"choosePrivateKeyRules,omitempty"`
+
 	// ComplianceRules: Rules declaring which mitigating actions to take
 	// when a device is not compliant with its policy. When the conditions
 	// for multiple rules are satisfied, all of the mitigating actions for
@@ -2202,6 +2381,12 @@ type Policy struct {
 
 	// PersistentPreferredActivities: Default intent handler activities.
 	PersistentPreferredActivities []*PersistentPreferredActivity `json:"persistentPreferredActivities,omitempty"`
+
+	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
+	// to choose a private key alias if there are no matching rules in
+	// ChoosePrivateKeyRules. For devices below Android P, setting this may
+	// leave enterprise keys vulnerable.
+	PrivateKeySelectionEnabled bool `json:"privateKeySelectionEnabled,omitempty"`
 
 	// RecommendedGlobalProxy: The network-independent global HTTP proxy.
 	// Typically proxies should be configured per-network in
@@ -2609,6 +2794,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StatusReportingSettings: Settings controlling the behavior of status
 // reports.
 type StatusReportingSettings struct {
+	// ApplicationReportsEnabled: Whether app reports are enabled.
+	ApplicationReportsEnabled bool `json:"applicationReportsEnabled,omitempty"`
+
 	// DeviceSettingsEnabled: Whether device settings reporting is enabled.
 	DeviceSettingsEnabled bool `json:"deviceSettingsEnabled,omitempty"`
 
@@ -2632,21 +2820,21 @@ type StatusReportingSettings struct {
 	SoftwareInfoEnabled bool `json:"softwareInfoEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "DeviceSettingsEnabled") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "ApplicationReportsEnabled") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeviceSettingsEnabled") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ApplicationReportsEnabled") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

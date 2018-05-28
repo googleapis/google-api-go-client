@@ -284,6 +284,18 @@ func (s *GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2AuxiliaryTable: An auxiliary table contains
+// statistical information on the relative
+// frequency of different quasi-identifiers values. It has one or
+// several
+// quasi-identifiers columns, and one column that indicates the
+// relative
+// frequency of each quasi-identifier tuple.
+// If a tuple is present in the data but not in the auxiliary table,
+// the
+// corresponding relative frequency is assumed to be zero (and thus,
+// the
+// tuple is highly reidentifiable).
 type GooglePrivacyDlpV2AuxiliaryTable struct {
 	// QuasiIds: Quasi-identifier columns. [required]
 	QuasiIds []*GooglePrivacyDlpV2QuasiIdField `json:"quasiIds,omitempty"`
@@ -1539,30 +1551,28 @@ func (s *GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig) MarshalJSON() ([]byte, err
 // sensitive information configurable to the data in question.
 type GooglePrivacyDlpV2CustomInfoType struct {
 	// DetectionRules: Set of detection rules to apply to all findings of
-	// this custom info type.
+	// this CustomInfoType.
 	// Rules are applied in order that they are specified. Not supported for
 	// the
-	// `surrogate_type` custom info type.
+	// `surrogate_type` CustomInfoType.
 	DetectionRules []*GooglePrivacyDlpV2DetectionRule `json:"detectionRules,omitempty"`
 
-	// Dictionary: Dictionary-based custom info type.
+	// Dictionary: A list of phrases to detect as a CustomInfoType.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
 
-	// InfoType: Info type configuration. All custom info types must have
-	// configurations
-	// that do not conflict with built-in info types or other custom info
-	// types.
+	// InfoType: All CustomInfoTypes must have a name
+	// that does not conflict with built-in InfoTypes or other
+	// CustomInfoTypes.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
-	// Likelihood: Likelihood to return for this custom info type. This base
+	// Likelihood: Likelihood to return for this CustomInfoType. This base
 	// value can be
 	// altered by a detection rule if the finding meets the criteria
 	// specified by
 	// the rule. Defaults to `VERY_LIKELY` if not specified.
 	//
 	// Possible values:
-	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods is included.
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -1570,10 +1580,12 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	//   "VERY_LIKELY" - Many matching elements.
 	Likelihood string `json:"likelihood,omitempty"`
 
-	// Regex: Regex-based custom info type.
+	// Regex: Regular expression based CustomInfoType.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
 
-	// SurrogateType: Surrogate info type.
+	// SurrogateType: Message for detecting output from deidentification
+	// transformations that
+	// support reversing.
 	SurrogateType *GooglePrivacyDlpV2SurrogateType `json:"surrogateType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DetectionRules") to
@@ -1960,8 +1972,8 @@ func (s *GooglePrivacyDlpV2DeidentifyTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2DetectionRule: Rule for modifying a custom info
-// type to alter behavior under certain
+// GooglePrivacyDlpV2DetectionRule: Rule for modifying a CustomInfoType
+// to alter behavior under certain
 // circumstances, depending on the specific details of the rule. Not
 // supported
 // for the `surrogate_type` custom info type.
@@ -2396,8 +2408,7 @@ type GooglePrivacyDlpV2Finding struct {
 	// correct.
 	//
 	// Possible values:
-	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods is included.
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -2580,7 +2591,8 @@ func (s *GooglePrivacyDlpV2FixedSizeBucketingConfig) UnmarshalJSON(data []byte) 
 // likelihood of findings within a certain
 // proximity of hotwords.
 type GooglePrivacyDlpV2HotwordRule struct {
-	// HotwordRegex: Regex pattern defining what qualifies as a hotword.
+	// HotwordRegex: Regular expression pattern defining what qualifies as a
+	// hotword.
 	HotwordRegex *GooglePrivacyDlpV2Regex `json:"hotwordRegex,omitempty"`
 
 	// LikelihoodAdjustment: Likelihood adjustment to apply to all matching
@@ -2703,7 +2715,12 @@ func (s *GooglePrivacyDlpV2ImageRedactionConfig) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2InfoType: Type of information detected by the API.
 type GooglePrivacyDlpV2InfoType struct {
-	// Name: Name of the information type.
+	// Name: Name of the information type. Either a name of your choosing
+	// when
+	// creating a CustomInfoType, or one of the names listed
+	// at https://cloud.google.com/dlp/docs/infotypes-reference when
+	// specifying
+	// a built-in type.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2943,7 +2960,9 @@ type GooglePrivacyDlpV2InspectConfig struct {
 
 	// InfoTypes: Restricts what info_types to look for. The values must
 	// correspond to
-	// InfoType values returned by ListInfoTypes or found in documentation.
+	// InfoType values returned by ListInfoTypes or listed
+	// at
+	// https://cloud.google.com/dlp/docs/infotypes-reference.
 	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
 
 	Limits *GooglePrivacyDlpV2FindingLimits `json:"limits,omitempty"`
@@ -2953,8 +2972,7 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// POSSIBLE.
 	//
 	// Possible values:
-	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods is included.
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -3962,8 +3980,7 @@ type GooglePrivacyDlpV2LikelihoodAdjustment struct {
 	// FixedLikelihood: Set the likelihood of a finding to a fixed value.
 	//
 	// Possible values:
-	//   "LIKELIHOOD_UNSPECIFIED" - Default value; information with all
-	// likelihoods is included.
+	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
 	//   "VERY_UNLIKELY" - Few matching elements.
 	//   "UNLIKELY"
 	//   "POSSIBLE" - Some matching elements.
@@ -5434,7 +5451,7 @@ func (s *GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 // as
 // output. This should be used in conjunction with a field on
 // the
-// transformation such as `surrogate_info_type`. This custom info type
+// transformation such as `surrogate_info_type`. This CustomInfoType
 // does
 // not support the use of `detection_rules`.
 type GooglePrivacyDlpV2SurrogateType struct {

@@ -1068,6 +1068,11 @@ type Distribution struct {
 	// histogram is provided.
 	Count int64 `json:"count,omitempty,string"`
 
+	// Exemplars: Must be in increasing order of |value| field. The current
+	// requirement enforced by the backend is that at most one Exemplar will
+	// fall into any bucket.
+	Exemplars []*Exemplar `json:"exemplars,omitempty"`
+
 	// Mean: The arithmetic mean of the values in the population. If count
 	// is zero then this field must be zero.
 	Mean float64 `json:"mean,omitempty"`
@@ -1175,6 +1180,67 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Exemplar: Exemplars are example points that may be used to annotate
+// aggregated distribution values. They are metadata that gives
+// information about a particular value added to a Distribution bucket,
+// such as a trace ID that was active when a value was added. They may
+// contain further information, such as a example values and timestamps,
+// origin, etc.
+type Exemplar struct {
+	// Attachments: Contextual information about the example value. Examples
+	// are:Trace ID:
+	// type.googleapis.com/google.devtools.cloudtrace.v1.TraceLiteral
+	// string: type.googleapis.com/google.protobuf.StringValueLabels dropped
+	// during aggregation:
+	// type.googleapis.com/google.monitoring.v3.DroppedLabelsThere may be
+	// only a single attachment of any given message type in a single
+	// exemplar, and this is enforced by the system.
+	Attachments []googleapi.RawMessage `json:"attachments,omitempty"`
+
+	// Timestamp: The observation (sampling) time of the above value.
+	Timestamp string `json:"timestamp,omitempty"`
+
+	// Value: Value of the exemplar point. This value determines to which
+	// bucket the exemplar belongs.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attachments") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attachments") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Exemplar) MarshalJSON() ([]byte, error) {
+	type NoMethod Exemplar
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Exemplar) UnmarshalJSON(data []byte) error {
+	type NoMethod Exemplar
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
 }
 
 // Explicit: Specifies a set of buckets with arbitrary widths.There are

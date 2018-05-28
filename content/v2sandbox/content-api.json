@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/LI6UdBai7-kwhskTkR_vgy6vg2U\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/s90n6728dFH_0KALoBMTlH05FXc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -792,7 +792,7 @@
       }
     }
   },
-  "revision": "20180410",
+  "revision": "20180523",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Error": {
@@ -997,7 +997,7 @@
           "type": "integer"
         },
         "reason": {
-          "description": "The reason for the cancellation. Orders that are cancelled with a noInventory reason will lead to the removal of the product from POG until you make an update to that product. This will not affect your Shopping ads.",
+          "description": "The reason for the cancellation. Orders that are cancelled with a noInventory reason will lead to the removal of the product from Shopping Actions until you make an update to that product. This will not affect your Shopping ads.",
           "type": "string"
         },
         "reasonText": {

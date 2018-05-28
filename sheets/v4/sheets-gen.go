@@ -291,14 +291,14 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 //
 // If the requested range is a superset of the range of an existing
 // group G,
-// then the depth of G will be incremented and this new group G' will
-// have the
+// then the depth of G is incremented and this new group G' has
+// the
 // depth of that group. For example, a group [C:D, depth 1] + [B:E]
 // results in
 // groups [B:E, depth 1] and [C:D, depth 2].
 // If the requested range is a subset of the range of an existing group
 // G,
-// then the depth of the new group G' will be one greater than the depth
+// then the depth of the new group G' becomes one greater than the depth
 // of G.
 // For example, a group [B:E, depth 1] + [C:D] results in groups [B:E,
 // depth 1]
@@ -307,8 +307,8 @@ func (s *AddConditionalFormatRuleRequest) MarshalJSON() ([]byte, error) {
 // within and
 // ends after, the range of an existing group G, then the range of the
 // existing
-// group G will become the union of the ranges, and the new group G'
-// will have
+// group G becomes the union of the ranges, and the new group G'
+// has
 // depth one greater than the depth of G and range as the intersection
 // of the
 // ranges. For example, a group [B:D, depth 1] + [C:E] results in groups
@@ -817,8 +817,8 @@ type BandedRange struct {
 	// BandedRangeId: The id of the banded range.
 	BandedRangeId int64 `json:"bandedRangeId,omitempty"`
 
-	// ColumnProperties: Properties for column bands. These properties will
-	// be applied on a column-
+	// ColumnProperties: Properties for column bands. These properties are
+	// applied on a column-
 	// by-column basis throughout all the columns in the range. At least one
 	// of
 	// row_properties or column_properties must be specified.
@@ -827,8 +827,8 @@ type BandedRange struct {
 	// Range: The range over which these properties are applied.
 	Range *GridRange `json:"range,omitempty"`
 
-	// RowProperties: Properties for row bands. These properties will be
-	// applied on a row-by-row
+	// RowProperties: Properties for row bands. These properties are applied
+	// on a row-by-row
 	// basis throughout all the rows in the range. At least one
 	// of
 	// row_properties or column_properties must be specified.
@@ -1028,7 +1028,7 @@ func (s *BasicChartDomain) MarshalJSON() ([]byte, error) {
 type BasicChartSeries struct {
 	// Color: The color for elements (i.e. bars, lines, points) associated
 	// with this
-	// series.  If empty, a default color will be used.
+	// series.  If empty, a default color is used.
 	Color *Color `json:"color,omitempty"`
 
 	// LineStyle: The line style of this series. Valid only if the
@@ -2186,7 +2186,7 @@ type BooleanCondition struct {
 	// condition values.
 	// Supported by data validation.
 	// Renders as a cell checkbox.
-	// Supports zero, one or two ConditionValue.  No
+	// Supports zero, one or two ConditionValues.  No
 	// values indicates the cell must be TRUE or FALSE, where TRUE renders
 	// as
 	// checked and FALSE renders as unchecked.  One value indicates the
@@ -2197,8 +2197,8 @@ type BooleanCondition struct {
 	// when
 	// it contains the first value and unchecked when it contains the
 	// second
-	// value.  For example, ["Yes",""No"] indicates that the cell will
-	// render a
+	// value.  For example, ["Yes","No"] indicates that the cell will render
+	// a
 	// checked box when it has the value "Yes" and an unchecked box when it
 	// has
 	// the value "No".
@@ -2239,7 +2239,7 @@ func (s *BooleanCondition) MarshalJSON() ([]byte, error) {
 type BooleanRule struct {
 	// Condition: The condition of the rule. If the condition evaluates to
 	// true,
-	// the format will be applied.
+	// the format is applied.
 	Condition *BooleanCondition `json:"condition,omitempty"`
 
 	// Format: The format to apply.
@@ -2399,7 +2399,7 @@ type BubbleChartSpec struct {
 
 	// GroupIds: The data containing the bubble group IDs. All bubbles with
 	// the same group
-	// ID will be drawn in the same color. If bubble_sizes is specified
+	// ID are drawn in the same color. If bubble_sizes is specified
 	// then
 	// this field must also be specified but may contain blank values.
 	// This field is optional.
@@ -2631,8 +2631,8 @@ type CellData struct {
 	EffectiveFormat *CellFormat `json:"effectiveFormat,omitempty"`
 
 	// EffectiveValue: The effective value of the cell. For cells with
-	// formulas, this will be
-	// the calculated value.  For cells with literals, this will be
+	// formulas, this is
+	// the calculated value.  For cells with literals, this is
 	// the same as the user_entered_value.
 	// This field is read-only.
 	EffectiveValue *ExtendedValue `json:"effectiveValue,omitempty"`
@@ -2674,7 +2674,7 @@ type CellData struct {
 	//
 	// When writing, the new runs will overwrite any prior runs.  When
 	// writing a
-	// new user_entered_value, previous runs will be erased.
+	// new user_entered_value, previous runs are erased.
 	TextFormatRuns []*TextFormatRun `json:"textFormatRuns,omitempty"`
 
 	// UserEnteredFormat: The format the user entered for the cell.
@@ -3331,7 +3331,7 @@ type ConditionValue struct {
 	RelativeDate string `json:"relativeDate,omitempty"`
 
 	// UserEnteredValue: A value the condition is based on.
-	// The value will be parsed as if the user typed into a cell.
+	// The value is parsed as if the user typed into a cell.
 	// Formulas are supported (and must begin with an `=` or a '+').
 	UserEnteredValue string `json:"userEnteredValue,omitempty"`
 
@@ -3368,8 +3368,7 @@ type ConditionalFormatRule struct {
 	// rule.
 	GradientRule *GradientRule `json:"gradientRule,omitempty"`
 
-	// Ranges: The ranges that will be formatted if the condition is
-	// true.
+	// Ranges: The ranges that are formatted if the condition is true.
 	// All the ranges must be on the same grid.
 	Ranges []*GridRange `json:"ranges,omitempty"`
 
@@ -3752,36 +3751,39 @@ type DateTimeRule struct {
 	//
 	// Possible values:
 	//   "DATE_TIME_RULE_TYPE_UNSPECIFIED" - The default type, do not use.
-	//   "SECOND" - Group dates by second, from 0 to 59
-	//   "MINUTE" - Group dates by minute, from 0 to 59
-	//   "HOUR" - Group dates by hour using a 24-hour system, from 0 to 23
+	//   "SECOND" - Group dates by second, from 0 to 59.
+	//   "MINUTE" - Group dates by minute, from 0 to 59.
+	//   "HOUR" - Group dates by hour using a 24-hour system, from 0 to 23.
 	//   "HOUR_MINUTE" - Group dates by hour and minute using a 24-hour
-	// system, e.g. 19:45
+	// system, for example 19:45.
 	//   "HOUR_MINUTE_AMPM" - Group dates by hour and minute using a 12-hour
-	// system, e.g. 7:45 PM. The
-	// AM/PM designation will be translated based on the spreadsheet locale.
-	//   "DAY_OF_WEEK" - Group dates by day of week, e.g. Sunday. The days
-	// of the week will be
-	// translated based on the spreadsheet locale.
+	// system, for example 7:45
+	// PM. The AM/PM designation is translated based on the
+	// spreadsheet
+	// locale.
+	//   "DAY_OF_WEEK" - Group dates by day of week, for example Sunday. The
+	// days of the week will
+	// be translated based on the spreadsheet locale.
 	//   "DAY_OF_YEAR" - Group dates by day of year, from 1 to 366. Note
 	// that dates after Feb. 29
 	// fall in different buckets in leap years than in non-leap years.
-	//   "DAY_OF_MONTH" - Group dates by day of month, from 1 to 31
-	//   "DAY_MONTH" - Group dates by day and month, e.g. 22-Nov. The month
-	// will be translated
-	// based on the spreadsheet locale.
-	//   "MONTH" - Group dates by month, e.g. Nov. The month will be
-	// translated based on the
-	// spreadsheet locale.
-	//   "QUARTER" - Group dates by quarter, e.g. Q1 (which represents
-	// Jan-Mar)
-	//   "YEAR" - Group dates by year, e.g. 2008
-	//   "YEAR_MONTH" - Group dates by year and month, e.g. 2008-Nov. The
-	// month will be
+	//   "DAY_OF_MONTH" - Group dates by day of month, from 1 to 31.
+	//   "DAY_MONTH" - Group dates by day and month, for example 22-Nov. The
+	// month is
 	// translated based on the spreadsheet locale.
-	//   "YEAR_QUARTER" - Group dates by year and quarter, e.g. 2008 Q4
-	//   "YEAR_MONTH_DAY" - Group dates by year, month, and day, e.g.
-	// 2008-11-22
+	//   "MONTH" - Group dates by month, for example Nov. The month is
+	// translated based
+	// on the spreadsheet locale.
+	//   "QUARTER" - Group dates by quarter, for example Q1 (which
+	// represents Jan-Mar).
+	//   "YEAR" - Group dates by year, for example 2008.
+	//   "YEAR_MONTH" - Group dates by year and month, for example 2008-Nov.
+	// The month is
+	// translated based on the spreadsheet locale.
+	//   "YEAR_QUARTER" - Group dates by year and quarter, for example 2008
+	// Q4.
+	//   "YEAR_MONTH_DAY" - Group dates by year, month, and day, for example
+	// 2008-11-22.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -3966,7 +3968,7 @@ func (s *DeleteDeveloperMetadataResponse) MarshalJSON() ([]byte, error) {
 //
 // For example, assume the sheet has a depth-1 group over B:E and a
 // depth-2
-// group over C:D. Deleting a group over D:E would leave the sheet with
+// group over C:D. Deleting a group over D:E leaves the sheet with
 // a
 // depth-1 group over B:D and a depth-2 group over C:C.
 type DeleteDimensionGroupRequest struct {
@@ -4253,7 +4255,7 @@ func (s *DeleteSheetRequest) MarshalJSON() ([]byte, error) {
 // with
 // the row it was first associated with (what is now row 6). If the
 // associated
-// object is deleted its metadata will be deleted too.
+// object is deleted its metadata is deleted too.
 type DeveloperMetadata struct {
 	// Location: The location where the metadata is associated.
 	Location *DeveloperMetadataLocation `json:"location,omitempty"`
@@ -4527,19 +4529,20 @@ func (s *DeveloperMetadataLookup) MarshalJSON() ([]byte, error) {
 // expanded as a
 // unit on the sheet.
 type DimensionGroup struct {
-	// Collapsed: True if this group is collapsed. A collapsed group will
-	// remain collapsed if
-	// an overlapping group at a shallower depth is expanded.
+	// Collapsed: This field is true if this group is collapsed. A collapsed
+	// group remains
+	// collapsed if an overlapping group at a shallower depth is
+	// expanded.
 	//
-	// collapsed == true does not imply that all dimensions within the group
+	// A true value does not imply that all dimensions within the group
 	// are
 	// hidden, since a dimension's visibility can change independently from
 	// this
 	// group property. However, when this property is updated, all
 	// dimensions
-	// within it will be set to hidden if collapsed == true, or set to
-	// visible if
-	// collapsed == false.
+	// within it are set to hidden if this field is true, or set to visible
+	// if
+	// this field is false.
 	Collapsed bool `json:"collapsed,omitempty"`
 
 	// Depth: The depth of the group, representing how many groups have a
@@ -4867,8 +4870,8 @@ func (s *EmbeddedChart) MarshalJSON() ([]byte, error) {
 // EmbeddedObjectPosition: The position of an embedded object such as a
 // chart.
 type EmbeddedObjectPosition struct {
-	// NewSheet: If true, the embedded object will be put on a new sheet
-	// whose ID
+	// NewSheet: If true, the embedded object is put on a new sheet whose
+	// ID
 	// is chosen for you. Used only when writing.
 	NewSheet bool `json:"newSheet,omitempty"`
 
@@ -5597,14 +5600,13 @@ func (s *HistogramChartSpec) UnmarshalJSON(data []byte) error {
 // data column into
 // buckets of a constant size. All values from HistogramRule.start
 // to
-// HistogramRule.end will be placed into groups of
+// HistogramRule.end are placed into groups of
 // size
 // HistogramRule.interval. In addition, all values
 // below
-// HistogramRule.start will be placed in one group, and all values
+// HistogramRule.start are placed in one group, and all values
 // above
-// HistogramRule.end will be placed in another.
-// Only
+// HistogramRule.end are placed in another. Only
 // HistogramRule.interval is required, though if HistogramRule.start
 // and HistogramRule.end are both provided, HistogramRule.start must
 // be less than HistogramRule.end. For example, a pivot table
@@ -5636,19 +5638,17 @@ func (s *HistogramChartSpec) UnmarshalJSON(data []byte) error {
 //     | Grand Total |            $29.12 |
 //     +-------------+-------------------+
 type HistogramRule struct {
-	// End: The maximum value at which items will be placed into buckets
-	// of constant size. Values above end will be lumped into a single
+	// End: The maximum value at which items are placed into buckets
+	// of constant size. Values above end are lumped into a single
 	// bucket.
 	// This field is optional.
 	End float64 `json:"end,omitempty"`
 
-	// Interval: The size of the buckets that will be created. Must be
-	// positive.
+	// Interval: The size of the buckets that are created. Must be positive.
 	Interval float64 `json:"interval,omitempty"`
 
-	// Start: The minimum value at which items will be placed into
-	// buckets
-	// of constant size. Values below start will be lumped into a single
+	// Start: The minimum value at which items are placed into buckets
+	// of constant size. Values below start are lumped into a single
 	// bucket.
 	// This field is optional.
 	Start float64 `json:"start,omitempty"`
@@ -5833,24 +5833,21 @@ type InterpolationPoint struct {
 	// Possible values:
 	//   "INTERPOLATION_POINT_TYPE_UNSPECIFIED" - The default value, do not
 	// use.
-	//   "MIN" - The interpolation point will use the minimum value in
-	// the
+	//   "MIN" - The interpolation point uses the minimum value in the
 	// cells over the range of the conditional format.
-	//   "MAX" - The interpolation point will use the maximum value in
-	// the
+	//   "MAX" - The interpolation point uses the maximum value in the
 	// cells over the range of the conditional format.
-	//   "NUMBER" - The interpolation point will use exactly the value
+	//   "NUMBER" - The interpolation point uses exactly the value
 	// in
 	// InterpolationPoint.value.
-	//   "PERCENT" - The interpolation point will be the given percentage
+	//   "PERCENT" - The interpolation point is the given percentage
 	// over
 	// all the cells in the range of the conditional format.
 	// This is equivalent to NUMBER if the value was:
 	// `=(MAX(FLATTEN(range)) * (value / 100))
 	//   + (MIN(FLATTEN(range)) * (1 - (value / 100)))`
 	// (where errors in the range are ignored when flattening).
-	//   "PERCENTILE" - The interpolation point will be the given
-	// percentile
+	//   "PERCENTILE" - The interpolation point is the given percentile
 	// over all the cells in the range of the conditional format.
 	// This is equivalent to NUMBER if the value
 	// was:
@@ -6004,7 +6001,8 @@ func (s *LineStyle) MarshalJSON() ([]byte, error) {
 //     +-------+-------------------+
 // could be turned into a pivot table that aggregates population by time
 // zone
-// by providing a list of groups (e.g. groupName = 'Central',
+// by providing a list of groups (for example, groupName =
+// 'Central',
 // items = ['AL', 'AR', 'IA', ...]) to a manual group rule.
 // Note that a similar effect could be achieved by adding a time zone
 // column
@@ -6665,8 +6663,7 @@ type PivotGroup struct {
 
 	// RepeatHeadings: True if the headings in this pivot group should be
 	// repeated.
-	// This is only valid for row groupings and will be ignored by
-	// columns.
+	// This is only valid for row groupings and is ignored by columns.
 	//
 	// By default, we minimize repitition of headings by not showing
 	// higher
@@ -6869,7 +6866,7 @@ type PivotTable struct {
 	// Criteria: An optional mapping of filters per source column
 	// offset.
 	//
-	// The filters will be applied before aggregating data into the pivot
+	// The filters are applied before aggregating data into the pivot
 	// table.
 	// The map's key is the column offset of the source range that you want
 	// to
@@ -6930,7 +6927,7 @@ type PivotValue struct {
 	// if
 	// calculated_display_type is specified as PERCENT_OF_GRAND_TOTAL, all
 	// the
-	// pivot values will be displayed as the percentage of the grand total.
+	// pivot values are displayed as the percentage of the grand total.
 	// In
 	// the Sheets UI, this is referred to as "Show As" in the value section
 	// of a
@@ -7627,8 +7624,7 @@ func (s *SetDataValidationRequest) MarshalJSON() ([]byte, error) {
 
 // Sheet: A sheet in a spreadsheet.
 type Sheet struct {
-	// BandedRanges: The banded (i.e. alternating colors) ranges on this
-	// sheet.
+	// BandedRanges: The banded (alternating colors) ranges on this sheet.
 	BandedRanges []*BandedRange `json:"bandedRanges,omitempty"`
 
 	// BasicFilter: The filter on this sheet, if any.
@@ -7718,14 +7714,13 @@ type SheetProperties struct {
 
 	// Index: The index of the sheet within the spreadsheet.
 	// When adding or updating sheet properties, if this field
-	// is excluded then the sheet will be added or moved to the end
+	// is excluded then the sheet is added or moved to the end
 	// of the sheet list. When updating sheet indices or inserting
 	// sheets, movement is considered in "before the move" indexes.
 	// For example, if there were 3 sheets (S1, S2, S3) in order to
 	// move S1 ahead of S2 the index would have to be set to 2. A
 	// sheet
-	// index update request will be ignored if the requested index
-	// is
+	// index update request is ignored if the requested index is
 	// identical to the sheets current index or if the requested new
 	// index is equal to the current sheet index + 1.
 	Index int64 `json:"index,omitempty"`
@@ -8297,7 +8292,7 @@ func (s *TreemapChartColorScale) MarshalJSON() ([]byte, error) {
 type TreemapChartSpec struct {
 	// ColorData: The data that determines the background color of each
 	// treemap data cell.
-	// This field is optional. If not specified, size_data will be used
+	// This field is optional. If not specified, size_data is used
 	// to
 	// determine background colors. If specified, the data is expected to
 	// be
@@ -8378,7 +8373,7 @@ type TreemapChartSpec struct {
 	// missing
 	// data will not be rendered. If color_data is not specified, this
 	// data
-	// will be used to determine data cell background colors as well.
+	// is used to determine data cell background colors as well.
 	SizeData *ChartData `json:"sizeData,omitempty"`
 
 	// TextFormat: The text format for all labels on the chart.

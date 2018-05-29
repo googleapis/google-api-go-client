@@ -333,6 +333,36 @@ func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BinaryAuthorization: Configuration for Binary Authorization.
+type BinaryAuthorization struct {
+	// Enabled: Enable Binary Authorization for this cluster. If enabled,
+	// all container
+	// images will be validated by Google Binauthz.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BinaryAuthorization) MarshalJSON() ([]byte, error) {
+	type NoMethod BinaryAuthorization
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: CancelOperationRequest cancels a single
 // operation.
 type CancelOperationRequest struct {
@@ -451,6 +481,9 @@ type Cluster struct {
 	// AddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
 	AddonsConfig *AddonsConfig `json:"addonsConfig,omitempty"`
+
+	// BinaryAuthorization: Configuration for Binary Authorization.
+	BinaryAuthorization *BinaryAuthorization `json:"binaryAuthorization,omitempty"`
 
 	// ClusterIpv4Cidr: The IP address range of the container pods in this
 	// cluster,
@@ -781,6 +814,10 @@ type ClusterUpdate struct {
 	// DesiredAddonsConfig: Configurations for the various addons available
 	// to run in the cluster.
 	DesiredAddonsConfig *AddonsConfig `json:"desiredAddonsConfig,omitempty"`
+
+	// DesiredBinaryAuthorization: The desired configuration options for the
+	// Binary Authorization feature.
+	DesiredBinaryAuthorization *BinaryAuthorization `json:"desiredBinaryAuthorization,omitempty"`
 
 	// DesiredImageType: The desired image type for the node pool.
 	// NOTE: Set the "desired_node_pool" field as well.

@@ -2446,7 +2446,7 @@
       }
     }
   },
-  "revision": "20180504",
+  "revision": "20180518",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2499,6 +2499,17 @@
         "description": {
           "description": "[Output only] This field is set when upgrades are about to commence\nwith the description of the upgrade.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BinaryAuthorization": {
+      "description": "Configuration for Binary Authorization.",
+      "id": "BinaryAuthorization",
+      "properties": {
+        "enabled": {
+          "description": "Enable Binary Authorization for this cluster. If enabled, all container\nimages will be validated by Google Binauthz.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2559,6 +2570,10 @@
         "addonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
+        },
+        "binaryAuthorization": {
+          "$ref": "BinaryAuthorization",
+          "description": "Configuration for Binary Authorization."
         },
         "clusterIpv4Cidr": {
           "description": "The IP address range of the container pods in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`). Leave blank to have\none automatically chosen or specify a `/14` block in `10.0.0.0/8`.",
@@ -2759,6 +2774,10 @@
         "desiredAddonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
+        },
+        "desiredBinaryAuthorization": {
+          "$ref": "BinaryAuthorization",
+          "description": "The desired configuration options for the Binary Authorization feature."
         },
         "desiredImageType": {
           "description": "The desired image type for the node pool.\nNOTE: Set the \"desired_node_pool\" field as well.",

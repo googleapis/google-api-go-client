@@ -1303,14 +1303,13 @@ func (s *MetricsValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Operation: A representation of a execution of an Apps Script function
-// that is started using run. The execution response does not arrive
+// Operation: A representation of an execution of an Apps Script
+// function started with run. The execution response does not arrive
 // until the function finishes executing. The maximum execution runtime
 // is listed in the [Apps Script quotas
 // guide](/apps-script/guides/services/quotas#current_limitations).
-// <p>After the execution is started, it can have one of four
-// outcomes:</p> <ul> <li> If the script function returns successfully,
-// the
+// <p>After execution has started, it can have one of four outcomes:</p>
+// <ul> <li> If the script function returns successfully, the
 //   response field contains an
 //   ExecutionResponse object
 //   with the function's return value in the object's `result`
@@ -1481,9 +1480,8 @@ type Status struct {
 	Details []googleapi.RawMessage `json:"details,omitempty"`
 
 	// Message: A developer-facing error message, which is in English. Any
-	// user-facing error message is localized and sent in the
-	// [google.rpc.Status.details](google.rpc.Status.details) field, or
-	// localized by the client.
+	// user-facing error message is localized and sent in the details field,
+	// or localized by the client.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to

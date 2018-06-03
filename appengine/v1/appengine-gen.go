@@ -449,6 +449,13 @@ type AuthorizedCertificate struct {
 	// 12345.@OutputOnly
 	Id string `json:"id,omitempty"`
 
+	// ManagedCertificate: Only applicable if this certificate is managed by
+	// App Engine. Managed certificates are tied to the lifecycle of a
+	// DomainMapping and cannot be updated or deleted via the
+	// AuthorizedCertificates API. If this certificate is manually
+	// administered by the user, this field will be empty.@OutputOnly
+	ManagedCertificate *ManagedCertificate `json:"managedCertificate,omitempty"`
+
 	// Name: Full path to the AuthorizedCertificate resource in the API.
 	// Example: apps/myapp/authorizedCertificates/12345.@OutputOnly
 	Name string `json:"name,omitempty"`
@@ -2085,6 +2092,68 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ManagedCertificate: A certificate managed by App Engine.
+type ManagedCertificate struct {
+	// LastRenewalTime: Time at which the certificate was last renewed. The
+	// renewal process is fully managed. Certificate renewal will
+	// automatically occur before the certificate expires. Renewal errors
+	// can be tracked via ManagementStatus.@OutputOnly
+	LastRenewalTime string `json:"lastRenewalTime,omitempty"`
+
+	// Status: Status of certificate management. Refers to the most recent
+	// certificate acquisition or renewal attempt.@OutputOnly
+	//
+	// Possible values:
+	//   "MANAGEMENT_STATUS_UNSPECIFIED"
+	//   "OK" - Certificate was successfully obtained and inserted into the
+	// serving system.
+	//   "PENDING" - Certificate is under active attempts to acquire or
+	// renew.
+	//   "FAILED_RETRYING_NOT_VISIBLE" - Most recent renewal failed due to
+	// an invalid DNS setup and will be retried. Renewal attempts will
+	// continue to fail until the certificate domain's DNS configuration is
+	// fixed. The last successfully provisioned certificate may still be
+	// serving.
+	//   "FAILED_PERMANENT" - All renewal attempts have been exhausted,
+	// likely due to an invalid DNS setup.
+	//   "FAILED_RETRYING_CAA_FORBIDDEN" - Most recent renewal failed due to
+	// an explicit CAA record that does not include the in-use CA, Let's
+	// Encrypt. Renewals will continue to fail until the CAA is
+	// reconfigured. The last successfully provisioned certificate may still
+	// be serving.
+	//   "FAILED_RETRYING_CAA_CHECKING" - Most recent renewal failed due to
+	// a CAA retrieval failure. This means that the domain's DNS provider
+	// does not properly handle CAA records, failing requests for CAA
+	// records when no CAA records are defined. Renewals will continue to
+	// fail until the DNS provider is changed or a CAA record is added for
+	// the given domain. The last successfully provisioned certificate may
+	// still be serving.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastRenewalTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastRenewalTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedCertificate) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedCertificate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ManualScaling: A service with manual scaling runs continuously,
 // allowing you to perform complex initialization and rely on the state
 // of its memory over time.
@@ -2802,9 +2871,39 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 // SslSettings: SSL configuration for a DomainMapping resource.
 type SslSettings struct {
 	// CertificateId: ID of the AuthorizedCertificate resource configuring
-	// SSL for the application. Clearing this field will remove SSL support.
-	// Example: 12345.
+	// SSL for the application. Clearing this field will remove SSL
+	// support.By default, a managed certificate is automatically created
+	// for every domain mapping. To omit SSL support or to configure SSL
+	// manually, specify SslManagementType.MANUAL on a CREATE or UPDATE
+	// request. You must be authorized to administer the
+	// AuthorizedCertificate resource to manually map it to a DomainMapping
+	// resource. Example: 12345.
 	CertificateId string `json:"certificateId,omitempty"`
+
+	// PendingManagedCertificateId: ID of the managed AuthorizedCertificate
+	// resource currently being provisioned, if applicable. Until the new
+	// managed certificate has been successfully provisioned, the previous
+	// SSL state will be preserved. Once the provisioning process completes,
+	// the certificate_id field will reflect the new managed certificate and
+	// this field will be left empty. To remove SSL support while there is
+	// still a pending managed certificate, clear the certificate_id field
+	// with an UpdateDomainMappingRequest.@OutputOnly
+	PendingManagedCertificateId string `json:"pendingManagedCertificateId,omitempty"`
+
+	// SslManagementType: SSL management type for this domain. If AUTOMATIC,
+	// a managed certificate is automatically provisioned. If MANUAL,
+	// certificate_id must be manually specified in order to configure SSL
+	// for this domain.
+	//
+	// Possible values:
+	//   "SSL_MANAGEMENT_TYPE_UNSPECIFIED" - Defaults to AUTOMATIC.
+	//   "AUTOMATIC" - SSL support for this domain is configured
+	// automatically. The mapped SSL certificate will be automatically
+	// renewed.
+	//   "MANUAL" - SSL support for this domain is configured manually by
+	// the user. Either the domain has no SSL support or a user-obtained SSL
+	// certificate has been explictly mapped to this domain.
+	SslManagementType string `json:"sslManagementType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CertificateId") to
 	// unconditionally include in API requests. By default, fields with

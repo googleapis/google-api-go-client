@@ -2053,6 +2053,10 @@ func (s *ListNotificationChannelsResponse) MarshalJSON() ([]byte, error) {
 
 // ListTimeSeriesResponse: The ListTimeSeries response.
 type ListTimeSeriesResponse struct {
+	// ExecutionErrors: Query execution errors that may have caused the time
+	// series data returned to be incomplete.
+	ExecutionErrors []*Status `json:"executionErrors,omitempty"`
+
 	// NextPageToken: If there are more results than have been returned,
 	// then this field is set to a non-empty value. To see the additional
 	// results, use that value as pageToken in the next call to this method.
@@ -2066,7 +2070,7 @@ type ListTimeSeriesResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// ForceSendFields is a list of field names (e.g. "ExecutionErrors") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2074,12 +2078,13 @@ type ListTimeSeriesResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExecutionErrors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8448,10 +8453,11 @@ func (c *ProjectsTimeSeriesListCall) OrderBy(orderBy string) *ProjectsTimeSeries
 }
 
 // PageSize sets the optional parameter "pageSize": A positive number
-// that is the maximum number of results to return. When view field sets
-// to FULL, it limits the number of Points server will return; if view
-// field is HEADERS, it limits the number of TimeSeries server will
-// return.
+// that is the maximum number of results to return. If page_size is
+// empty or more than 100,000 results, the effective page_size is
+// 100,000 results. If view is set to FULL, this is the maximum number
+// of Points returned. If view is set to HEADERS, this is the maximum
+// number of TimeSeries returned.
 func (c *ProjectsTimeSeriesListCall) PageSize(pageSize int64) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8668,7 +8674,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "A positive number that is the maximum number of results to return. When view field sets to FULL, it limits the number of Points server will return; if view field is HEADERS, it limits the number of TimeSeries server will return.",
+	//       "description": "A positive number that is the maximum number of results to return. If page_size is empty or more than 100,000 results, the effective page_size is 100,000 results. If view is set to FULL, this is the maximum number of Points returned. If view is set to HEADERS, this is the maximum number of TimeSeries returned.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

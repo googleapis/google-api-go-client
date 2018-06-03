@@ -686,7 +686,7 @@
       }
     }
   },
-  "revision": "20180525",
+  "revision": "20180601",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
@@ -921,6 +921,9 @@
           "description": "Output only.\nDEPRECATED! Use network_endpoints instead.\nThe network port for the TPU Node as visible to Compute Engine instances.",
           "type": "string"
         },
+        "schedulingConfig": {
+          "$ref": "SchedulingConfig"
+        },
         "serviceAccount": {
           "description": "Output only.\nThe service account used to run the tensor flow services within the node.\nTo share resources, including Google Cloud Storage data, with the\nTensorflow job running in the Node, this account must have permissions to\nthat data.",
           "type": "string"
@@ -1047,6 +1050,15 @@
       "description": "Request for ResetNode.",
       "id": "ResetNodeRequest",
       "properties": {},
+      "type": "object"
+    },
+    "SchedulingConfig": {
+      "id": "SchedulingConfig",
+      "properties": {
+        "preemptible": {
+          "type": "boolean"
+        }
+      },
       "type": "object"
     },
     "StartNodeRequest": {

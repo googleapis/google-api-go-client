@@ -2132,8 +2132,7 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 }
 
 type Track struct {
-	// Track: Identifier for this track. One of "alpha", "beta",
-	// "production", "rollout" or "internal".
+	// Track: Identifier for this track.
 	Track string `json:"track,omitempty"`
 
 	UserFraction float64 `json:"userFraction,omitempty"`

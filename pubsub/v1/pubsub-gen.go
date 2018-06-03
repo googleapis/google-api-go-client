@@ -308,7 +308,6 @@ type Empty struct {
 
 // ListSnapshotsResponse: Response for the `ListSnapshots`
 // method.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -392,7 +391,6 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 
 // ListTopicSnapshotsResponse: Response for the `ListTopicSnapshots`
 // method.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -985,7 +983,6 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 }
 
 // SeekRequest: Request for the `Seek` method.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1082,7 +1079,6 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Snapshot: A snapshot resource.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1187,7 +1183,6 @@ type Subscription struct {
 	// can be done. Defaults to 7 days. Cannot be more than 7 days or less
 	// than 10
 	// minutes.<br><br>
-	// Lists the names of the snapshots on this topic.<br><br>
 	// <b>ALPHA:</b> This feature is part of an alpha release. This API
 	// might be
 	// changed in backward-incompatible ways and is not recommended for
@@ -1222,7 +1217,6 @@ type Subscription struct {
 	// acknowledged, until they fall out of the
 	// `message_retention_duration`
 	// window.<br><br>
-	// Lists the names of the snapshots on this topic.<br><br>
 	// <b>ALPHA:</b> This feature is part of an alpha release. This API
 	// might be
 	// changed in backward-incompatible ways and is not recommended for
@@ -1380,7 +1374,6 @@ func (s *Topic) MarshalJSON() ([]byte, error) {
 
 // UpdateSnapshotRequest: Request for the UpdateSnapshot
 // method.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1464,7 +1457,6 @@ type ProjectsSnapshotsCreateCall struct {
 
 // Create: Creates a snapshot from the requested
 // subscription.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1580,7 +1572,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription.\u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the [resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated\nname is populated in the returned Snapshot object. Note that for REST API\nrequests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the [resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated\nname is populated in the returned Snapshot object. Note that for REST API\nrequests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -1622,7 +1614,6 @@ type ProjectsSnapshotsDeleteCall struct {
 }
 
 // Delete: Removes an existing snapshot. <br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1723,7 +1714,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an existing snapshot. \u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
+	//   "description": "Removes an existing snapshot. \u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.snapshots.delete",
@@ -1762,8 +1753,8 @@ type ProjectsSnapshotsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the configuration details of a snapshot.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
+// Get: Gets the configuration details of a
+// snapshot.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -1869,7 +1860,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot.\u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Gets the configuration details of a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -2052,7 +2043,6 @@ type ProjectsSnapshotsListCall struct {
 }
 
 // List: Lists the existing snapshots.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -2175,7 +2165,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing snapshots.\u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Lists the existing snapshots.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.list",
@@ -2247,7 +2237,6 @@ type ProjectsSnapshotsPatchCall struct {
 }
 
 // Patch: Updates an existing snapshot.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -2347,7 +2336,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot.\u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nNote that certain properties of a snapshot are not modifiable.",
+	//   "description": "Updates an existing snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nNote that certain properties of a snapshot are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -2819,7 +2808,9 @@ type ProjectsSubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a subscription to a given topic.
+// Create: Creates a subscription to a given topic. See the
+// <a href="/pubsub/docs/admin#resource_names"> resource name
+// rules</a>.
 // If the subscription already exists, returns `ALREADY_EXISTS`.
 // If the corresponding topic doesn't exist, returns `NOT_FOUND`.
 //
@@ -2927,7 +2918,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic.\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated name is populated in the returned Subscription object.\nNote that for REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a subscription to a given topic. See the\n\u003ca href=\"/pubsub/docs/admin#resource_names\"\u003e resource name rules\u003c/a\u003e.\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated name is populated in the returned Subscription object.\nNote that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
@@ -4148,7 +4139,6 @@ type ProjectsSubscriptionsSeekCall struct {
 // Seek: Seeks an existing subscription to a point in time or to a given
 // snapshot,
 // whichever is provided in the request.<br><br>
-// Lists the names of the snapshots on this topic.<br><br>
 // <b>ALPHA:</b> This feature is part of an alpha release. This API
 // might be
 // changed in backward-incompatible ways and is not recommended for
@@ -4247,7 +4237,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	}
 	return ret, nil
 	// {
-	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request.\u003cbr\u003e\u003cbr\u003e\nLists the names of the snapshots on this topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eALPHA:\u003c/b\u003e This feature is part of an alpha release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:seek",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.seek",
@@ -4573,7 +4563,8 @@ type ProjectsTopicsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates the given topic with the given name.
+// Create: Creates the given topic with the given name. See the
+// <a href="/pubsub/docs/admin#resource_names"> resource name rules</a>.
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4667,7 +4658,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the given topic with the given name.",
+	//   "description": "Creates the given topic with the given name. See the\n\u003ca href=\"/pubsub/docs/admin#resource_names\"\u003e resource name rules\u003c/a\u003e.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.topics.create",

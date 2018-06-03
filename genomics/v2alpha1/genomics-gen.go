@@ -179,11 +179,11 @@ type Action struct {
 	// inside the container.
 	Commands []string `json:"commands,omitempty"`
 
-	// Credentials: If the specified image is hosted on a private repository
+	// Credentials: If the specified image is hosted on a private registry
 	// other than Google
 	// Container Registry, the credentials required to pull the image must
 	// be
-	// specified here as a encrypted secret.
+	// specified here as an encrypted secret.
 	//
 	// The secret must decrypt to a JSON encoded dictionary containing
 	// both

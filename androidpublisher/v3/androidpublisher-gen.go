@@ -2086,8 +2086,7 @@ type Track struct {
 	// request. On an update request, it represents desired changes.
 	Releases []*TrackRelease `json:"releases,omitempty"`
 
-	// Track: Identifier for this track. One of "alpha", "beta",
-	// "production", "rollout" or "internal".
+	// Track: Identifier for this track.
 	Track string `json:"track,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2131,7 +2130,7 @@ type TrackRelease struct {
 	Status string `json:"status,omitempty"`
 
 	// UserFraction: Fraction of users who are eligible to receive the
-	// release. 0 <= fraction < 1. To be set, release status must be
+	// release. 0 < fraction < 1. To be set, release status must be
 	// "inProgress" or "halted".
 	UserFraction float64 `json:"userFraction,omitempty"`
 

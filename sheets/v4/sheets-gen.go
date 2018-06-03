@@ -12251,8 +12251,9 @@ func (c *SpreadsheetsValuesUpdateCall) IncludeValuesInResponse(includeValuesInRe
 // rendered. This is ignored if response_value_render_option
 // is
 // FORMATTED_VALUE.
-// The default dateTime render option is
-// [DateTimeRenderOption.SERIAL_NUMBER].
+// The default dateTime render option
+// is
+// DateTimeRenderOption.SERIAL_NUMBER.
 //
 // Possible values:
 //   "SERIAL_NUMBER"
@@ -12396,7 +12397,7 @@ func (c *SpreadsheetsValuesUpdateCall) Do(opts ...googleapi.CallOption) (*Update
 	//       "type": "string"
 	//     },
 	//     "responseDateTimeRenderOption": {
-	//       "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is [DateTimeRenderOption.SERIAL_NUMBER].",
+	//       "description": "Determines how dates, times, and durations in the response should be\nrendered. This is ignored if response_value_render_option is\nFORMATTED_VALUE.\nThe default dateTime render option is\nDateTimeRenderOption.SERIAL_NUMBER.",
 	//       "enum": [
 	//         "SERIAL_NUMBER",
 	//         "FORMATTED_STRING"

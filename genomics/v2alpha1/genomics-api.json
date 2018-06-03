@@ -310,7 +310,7 @@
         },
         "credentials": {
           "$ref": "Secret",
-          "description": "If the specified image is hosted on a private repository other than Google\nContainer Registry, the credentials required to pull the image must be\nspecified here as a encrypted secret.\n\nThe secret must decrypt to a JSON encoded dictionary containing both\n`username` and `password` keys."
+          "description": "If the specified image is hosted on a private registry other than Google\nContainer Registry, the credentials required to pull the image must be\nspecified here as an encrypted secret.\n\nThe secret must decrypt to a JSON encoded dictionary containing both\n`username` and `password` keys."
         },
         "entrypoint": {
           "description": "If specified, overrides the ENTRYPOINT specified in the container.",

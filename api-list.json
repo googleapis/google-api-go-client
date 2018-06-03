@@ -2047,21 +2047,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "photoslibrary:v1",
-   "name": "photoslibrary",
-   "version": "v1",
-   "title": "Photos Library API",
-   "description": "Manage photos, videos, and albums in Google Photos",
-   "discoveryRestUrl": "https://photoslibrary.googleapis.com/$discovery/rest?version=v1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/photos/",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "playcustomapp:v1",
    "name": "playcustomapp",
    "version": "v1",
@@ -2279,7 +2264,7 @@
    "id": "runtimeconfig:v1",
    "name": "runtimeconfig",
    "version": "v1",
-   "title": "Google Cloud Runtime Configuration API",
+   "title": "Cloud Runtime Configuration API",
    "description": "The Runtime Configurator allows you to dynamically configure and expose variables through Google Cloud Platform. In addition, you can also set Watchers and Waiters that will watch for changes to your data and return based on certain conditions.",
    "discoveryRestUrl": "https://runtimeconfig.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -2294,7 +2279,7 @@
    "id": "runtimeconfig:v1beta1",
    "name": "runtimeconfig",
    "version": "v1beta1",
-   "title": "Google Cloud Runtime Configuration API",
+   "title": "Cloud Runtime Configuration API",
    "description": "The Runtime Configurator allows you to dynamically configure and expose variables through Google Cloud Platform. In addition, you can also set Watchers and Waiters that will watch for changes to your data and return based on certain conditions.",
    "discoveryRestUrl": "https://runtimeconfig.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -2827,6 +2812,21 @@
    "title": "Cloud TPU API",
    "description": "TPU API provides customers with access to Google TPU technology.",
    "discoveryRestUrl": "https://tpu.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/tpu/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "tpu:v1",
+   "name": "tpu",
+   "version": "v1",
+   "title": "Cloud TPU API",
+   "description": "TPU API provides customers with access to Google TPU technology.",
+   "discoveryRestUrl": "https://tpu.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

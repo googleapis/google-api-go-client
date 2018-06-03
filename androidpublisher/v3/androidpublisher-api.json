@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/zJKEi9IzuIBjiuIURgbNxnm6zbw\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/h4JmpXMh73FmfSUpEjv6ylfh6sM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2220,7 +2220,7 @@
       }
     }
   },
-  "revision": "20180516",
+  "revision": "20180530",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3189,7 +3189,7 @@
           "type": "array"
         },
         "track": {
-          "description": "Identifier for this track. One of \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+          "description": "Identifier for this track.",
           "type": "string"
         }
       },
@@ -3214,7 +3214,7 @@
           "type": "string"
         },
         "userFraction": {
-          "description": "Fraction of users who are eligible to receive the release. 0 \u003c= fraction \u003c 1. To be set, release status must be \"inProgress\" or \"halted\".",
+          "description": "Fraction of users who are eligible to receive the release. 0 \u003c fraction \u003c 1. To be set, release status must be \"inProgress\" or \"halted\".",
           "format": "double",
           "type": "number"
         },

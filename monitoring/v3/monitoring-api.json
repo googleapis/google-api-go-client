@@ -1236,7 +1236,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "A positive number that is the maximum number of results to return. When view field sets to FULL, it limits the number of Points server will return; if view field is HEADERS, it limits the number of TimeSeries server will return.",
+                  "description": "A positive number that is the maximum number of results to return. If page_size is empty or more than 100,000 results, the effective page_size is 100,000 results. If view is set to FULL, this is the maximum number of Points returned. If view is set to HEADERS, this is the maximum number of TimeSeries returned.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -1463,7 +1463,7 @@
       }
     }
   },
-  "revision": "20180521",
+  "revision": "20180529",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2412,6 +2412,13 @@
       "description": "The ListTimeSeries response.",
       "id": "ListTimeSeriesResponse",
       "properties": {
+        "executionErrors": {
+          "description": "Query execution errors that may have caused the time series data returned to be incomplete.",
+          "items": {
+            "$ref": "Status"
+          },
+          "type": "array"
+        },
         "nextPageToken": {
           "description": "If there are more results than have been returned, then this field is set to a non-empty value. To see the additional results, use that value as pageToken in the next call to this method.",
           "type": "string"

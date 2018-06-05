@@ -326,7 +326,7 @@
       }
     }
   },
-  "revision": "20180515",
+  "revision": "20180601",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -2138,7 +2138,7 @@
       "id": "GoogleCloudVisionV1p2beta1WebDetection",
       "properties": {
         "bestGuessLabels": {
-          "description": "Best guess text labels for the request image.",
+          "description": "The service's best guess as to the topic of the request image.\nInferred from similar images on the open web.",
           "items": {
             "$ref": "GoogleCloudVisionV1p2beta1WebDetectionWebLabel"
           },
@@ -3097,7 +3097,7 @@
       "id": "WebDetection",
       "properties": {
         "bestGuessLabels": {
-          "description": "Best guess text labels for the request image.",
+          "description": "The service's best guess as to the topic of the request image.\nInferred from similar images on the open web.",
           "items": {
             "$ref": "WebLabel"
           },

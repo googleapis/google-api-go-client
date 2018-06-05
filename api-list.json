@@ -2200,25 +2200,6 @@
    "labels": [
     "limited_availability"
    ],
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "replicapool:v1beta2",
-   "name": "replicapool",
-   "version": "v1beta2",
-   "title": "Google Compute Engine Instance Group Manager API",
-   "description": "[Deprecated. Please use Instance Group Manager in Compute API] Provides groups of homogenous Compute Engine instances.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/replicapool/v1beta2/rest",
-   "discoveryLink": "./apis/replicapool/v1beta2/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/compute/docs/instance-groups/manager/v1beta2",
-   "labels": [
-    "limited_availability"
-   ],
    "preferred": true
   },
   {

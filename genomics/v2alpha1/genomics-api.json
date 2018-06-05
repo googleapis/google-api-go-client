@@ -278,7 +278,7 @@
       }
     }
   },
-  "revision": "20180528",
+  "revision": "20180601",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -743,6 +743,10 @@
       "properties": {
         "name": {
           "description": "The network name to attach the VM's network interface to.  If unspecified,\nthe global default network is used.",
+          "type": "string"
+        },
+        "subnetwork": {
+          "description": "If the specified network is configured for custom subnet creation, the\nname of the subnetwork to attach the instance to must be specified here.",
           "type": "string"
         },
         "usePrivateAddress": {

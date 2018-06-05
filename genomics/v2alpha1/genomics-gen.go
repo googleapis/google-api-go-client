@@ -1108,6 +1108,12 @@ type Network struct {
 	// the global default network is used.
 	Name string `json:"name,omitempty"`
 
+	// Subnetwork: If the specified network is configured for custom subnet
+	// creation, the
+	// name of the subnetwork to attach the instance to must be specified
+	// here.
+	Subnetwork string `json:"subnetwork,omitempty"`
+
 	// UsePrivateAddress: If set to true, do not attach a public IP address
 	// to the VM.  Note that
 	// without an public IP address, additional configuration is required

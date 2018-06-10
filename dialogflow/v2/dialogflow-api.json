@@ -60,11 +60,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -84,12 +79,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -1275,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180508",
+  "revision": "20180604",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1771,7 +1760,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2Intent": {
-      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.",
+      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.\nNext available field number: 22.",
       "id": "GoogleCloudDialogflowV2Intent",
       "properties": {
         "action": {
@@ -2974,7 +2963,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1Intent": {
-      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.",
+      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.\nNext available field number: 22.",
       "id": "GoogleCloudDialogflowV2beta1Intent",
       "properties": {
         "action": {

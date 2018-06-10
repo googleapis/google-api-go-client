@@ -1413,6 +1413,7 @@ type Address struct {
 	// Possible values:
 	//   "IN_USE"
 	//   "RESERVED"
+	//   "RESERVING"
 	Status string `json:"status,omitempty"`
 
 	// Subnetwork: The URL of the subnetwork in which to reserve the
@@ -5228,6 +5229,71 @@ type DiskAggregatedListWarningData struct {
 
 func (s *DiskAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskAggregatedListWarningData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskInstantiationConfig: A specification of the desired way to
+// instantiate a disk in the instance template when its created from a
+// source instance.
+type DiskInstantiationConfig struct {
+	// AutoDelete: Specifies whether the disk will be auto-deleted when the
+	// instance is deleted (but not when the disk is detached from the
+	// instance).
+	AutoDelete bool `json:"autoDelete,omitempty"`
+
+	// CustomImage: The custom source image to be used to restore this disk
+	// when instantiating this instance template.
+	CustomImage string `json:"customImage,omitempty"`
+
+	// DeviceName: Specifies the device name of the disk to which the
+	// configurations apply to.
+	DeviceName string `json:"deviceName,omitempty"`
+
+	// InstantiateFrom: Specifies whether to include the disk and what image
+	// to use. Possible values are:
+	// - source-image: to use the same image that was used to create the
+	// source instance's corresponding disk. Applicable to the boot disk and
+	// additional read-write disks.
+	// - source-image-family: to use the same image family that was used to
+	// create the source instance's corresponding disk. Applicable to the
+	// boot disk and additional read-write disks.
+	// - custom-image: to use a user-provided image url for disk creation.
+	// Applicable to the boot disk and additional read-write disks.
+	// - attach-read-only: to attach a read-only disk. Applicable to
+	// read-only disks.
+	// - do-not-include: to exclude a disk from the template. Applicable to
+	// additional read-write disks, local SSDs, and read-only disks.
+	//
+	// Possible values:
+	//   "ATTACH_READ_ONLY"
+	//   "BLANK"
+	//   "CUSTOM_IMAGE"
+	//   "DEFAULT"
+	//   "DO_NOT_INCLUDE"
+	//   "SOURCE_IMAGE"
+	//   "SOURCE_IMAGE_FAMILY"
+	InstantiateFrom string `json:"instantiateFrom,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoDelete") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoDelete") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskInstantiationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskInstantiationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -11055,6 +11121,18 @@ type InstanceTemplate struct {
 	// server defines this URL.
 	SelfLink string `json:"selfLink,omitempty"`
 
+	// SourceInstance: The source instance used to create the template. You
+	// can provide this as a partial or full URL to the resource. For
+	// example, the following are valid values:
+	// -
+	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance
+	// - projects/project/zones/zone/instances/instance
+	SourceInstance string `json:"sourceInstance,omitempty"`
+
+	// SourceInstanceParams: The source instance params to use to create
+	// this instance template.
+	SourceInstanceParams *SourceInstanceParams `json:"sourceInstanceParams,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -13951,7 +14029,7 @@ func (s *MachineTypesScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ManagedInstance: Next available tag: 12
+// ManagedInstance: A Managed Instance resource.
 type ManagedInstance struct {
 	// CurrentAction: [Output Only] The current action that the managed
 	// instance group has scheduled for the instance. Possible values:
@@ -19091,6 +19169,39 @@ type SnapshotListWarningData struct {
 
 func (s *SnapshotListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod SnapshotListWarningData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SourceInstanceParams: A specification of the parameters to use when
+// creating the instance template from a source instance.
+type SourceInstanceParams struct {
+	// DiskConfigs: Attached disks configuration. If not provided, defaults
+	// are applied: For boot disk and any other R/W disks, new custom images
+	// will be created from each disk. For read-only disks, they will be
+	// attached in read-only mode. Local SSD disks will be created as blank
+	// volumes.
+	DiskConfigs []*DiskInstantiationConfig `json:"diskConfigs,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskConfigs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskConfigs") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SourceInstanceParams) MarshalJSON() ([]byte, error) {
+	type NoMethod SourceInstanceParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

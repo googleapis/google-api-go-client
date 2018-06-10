@@ -559,6 +559,7 @@ func (s *GoogleCloudDialogflowV2ExportAgentResponse) MarshalJSON() ([]byte, erro
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
+// Next available field number: 22.
 type GoogleCloudDialogflowV2Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`
@@ -3124,6 +3125,7 @@ func (s *GoogleCloudDialogflowV2beta1InputAudioConfig) MarshalJSON() ([]byte, er
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
+// Next available field number: 22.
 type GoogleCloudDialogflowV2beta1Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`
@@ -8116,7 +8118,7 @@ func (c *ProjectsAgentEnvironmentsUsersSessionsDetectIntentCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e. and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
+	//       "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
 	//       "required": true,
@@ -11037,7 +11039,7 @@ func (c *ProjectsAgentSessionsDetectIntentCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "session": {
-	//       "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e. and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
+	//       "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
 	//       "required": true,

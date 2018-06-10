@@ -60,11 +60,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -84,12 +79,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -655,7 +644,7 @@
                           ],
                           "parameters": {
                             "session": {
-                              "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e. and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
+                              "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/agent/environments/[^/]+/users/[^/]+/sessions/[^/]+$",
                               "required": true,
@@ -1286,7 +1275,7 @@
                   ],
                   "parameters": {
                     "session": {
-                      "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e. and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
+                      "description": "Required. The name of the session this query is sent to. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. Note: Environments and users are under\nconstruction and will be available soon. If \u003cEnvironment ID\u003e is not\nspecified, we assume default 'draft' environment. If \u003cUser ID\u003e is not\nspecified, we are using \"-\". It’s up to the API caller to choose an\nappropriate \u003cSession ID\u003e and \u003cUser Id\u003e. They can be a random numbers or\nsome type of user and session identifiers (preferably hashed). The length\nof the \u003cSession ID\u003e and \u003cUser ID\u003e must not exceed 36 characters.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/sessions/[^/]+$",
                       "required": true,
@@ -1646,7 +1635,7 @@
       }
     }
   },
-  "revision": "20180508",
+  "revision": "20180604",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -1807,7 +1796,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2Intent": {
-      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.",
+      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.\nNext available field number: 22.",
       "id": "GoogleCloudDialogflowV2Intent",
       "properties": {
         "action": {
@@ -3112,7 +3101,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1Intent": {
-      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.",
+      "description": "Represents an intent.\nIntents convert a number of user expressions or patterns into an action. An\naction is an extraction of a user command or sentence semantics.\nNext available field number: 22.",
       "id": "GoogleCloudDialogflowV2beta1Intent",
       "properties": {
         "action": {

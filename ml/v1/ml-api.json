@@ -60,11 +60,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -84,12 +79,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -992,7 +981,7 @@
       }
     }
   },
-  "revision": "20180521",
+  "revision": "20180605",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1815,10 +1804,10 @@
             "XGBOOST"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
+            "Unspecified framework. Defaults to TensorFlow.",
+            "Tensorflow framework.",
+            "Scikit-learn framework.",
+            "XGBoost framework."
           ],
           "type": "string"
         },

@@ -1241,6 +1241,7 @@ func (s *GoogleCloudDialogflowV2InputAudioConfig) MarshalJSON() ([]byte, error) 
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
+// Next available field number: 22.
 type GoogleCloudDialogflowV2Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`
@@ -3568,6 +3569,7 @@ func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte,
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
+// Next available field number: 22.
 type GoogleCloudDialogflowV2beta1Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`

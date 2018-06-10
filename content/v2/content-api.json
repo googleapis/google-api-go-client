@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/nGBPpDDGWhw4dV_gNaRiVjVo800\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/wiyDnrFrT6qjh94QCZMqk0SOkLg\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1201,6 +1201,18 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
+        "listposdataproviders": {
+          "description": "Retrieves the list of POS data providers that have active settings for the all eiligible countries.",
+          "httpMethod": "GET",
+          "id": "content.liasettings.listposdataproviders",
+          "path": "liasettings/posdataproviders",
+          "response": {
+            "$ref": "LiasettingsListPosDataProvidersResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
         "patch": {
           "description": "Updates the LIA settings of the account. This method supports patch semantics.",
           "httpMethod": "PATCH",
@@ -1364,6 +1376,54 @@
           "path": "{merchantId}/liasettings/{accountId}/setinventoryverificationcontact",
           "response": {
             "$ref": "LiasettingsSetInventoryVerificationContactResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "setposdataprovider": {
+          "description": "Sets the POS data provider for the specified country.",
+          "httpMethod": "POST",
+          "id": "content.liasettings.setposdataprovider",
+          "parameterOrder": [
+            "merchantId",
+            "accountId"
+          ],
+          "parameters": {
+            "accountId": {
+              "description": "The ID of the account for which to retrieve accessible Google My Business accounts.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "country": {
+              "description": "The country for which the POS data provider is selected.",
+              "location": "query",
+              "type": "string"
+            },
+            "merchantId": {
+              "description": "The ID of the managing account. If this parameter is not the same as accountId, then this account must be a multi-client account and accountId must be the ID of a sub-account of this account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "posDataProviderId": {
+              "description": "The ID of POS data provider.",
+              "format": "uint64",
+              "location": "query",
+              "type": "string"
+            },
+            "posExternalAccountId": {
+              "description": "The account ID by which this merchant is known to the POS data provider.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/liasettings/{accountId}/setposdataprovider",
+          "response": {
+            "$ref": "LiasettingsSetPosDataProviderResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -3103,7 +3163,6 @@
       }
     }
   },
-  "revision": "20180529",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3878,6 +3937,26 @@
       },
       "type": "object"
     },
+    "CutoffTime": {
+      "id": "CutoffTime",
+      "properties": {
+        "hour": {
+          "description": "Hour of the cutoff time until which an order has to be placed to be processed in the same day. Required.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minute": {
+          "description": "Minute of the cutoff time until which an order has to be placed to be processed in the same day. Required.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "timezone": {
+          "description": "Timezone identifier for the cutoff time. A list of identifiers can be found in  the AdWords API documentation. E.g. \"Europe/Zurich\". Required.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Datafeed": {
       "description": "Datafeed configuration data.",
       "id": "Datafeed",
@@ -4379,6 +4458,10 @@
     "DeliveryTime": {
       "id": "DeliveryTime",
       "properties": {
+        "cutoffTime": {
+          "$ref": "CutoffTime",
+          "description": "Business days cutoff time definition. If not configured the cutoff time will be defaulted to 8AM PST."
+        },
         "holidayCutoffs": {
           "description": "Holiday cutoff definitions. If configured, they specify order cutoff times for holiday-specific shipping.",
           "items": {
@@ -4386,8 +4469,18 @@
           },
           "type": "array"
         },
+        "maxHandlingTimeInDays": {
+          "description": "Maximum number of business days spent before an order is shipped. 0 means same day shipped, 1 means next day shipped. Must be greater than or equal to minHandlingTimeInDays.",
+          "format": "uint32",
+          "type": "integer"
+        },
         "maxTransitTimeInDays": {
           "description": "Maximum number of business days that is spent in transit. 0 means same day delivery, 1 means next day delivery. Must be greater than or equal to minTransitTimeInDays. Required.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minHandlingTimeInDays": {
+          "description": "Minimum number of business days spent before an order is shipped. 0 means same day shipped, 1 means next day shipped.",
           "format": "uint32",
           "type": "integer"
         },
@@ -4888,6 +4981,10 @@
           "$ref": "LiaOnDisplayToOrderSettings",
           "description": "LIA \"On Display To Order\" settings."
         },
+        "posDataProvider": {
+          "$ref": "LiaPosDataProvider",
+          "description": "The POS data provider linked with this country."
+        },
         "storePickupActive": {
           "description": "The status of the \"Store pickup\" feature.",
           "type": "boolean"
@@ -4926,6 +5023,21 @@
         },
         "status": {
           "description": "The status of the ?On display to order? feature.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LiaPosDataProvider": {
+      "id": "LiaPosDataProvider",
+      "properties": {
+        "posDataProviderId": {
+          "description": "The ID of the POS data provider.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "posExternalAccountId": {
+          "description": "The account ID by which this merchant is known to the POS data provider.",
           "type": "string"
         }
       },
@@ -5096,6 +5208,24 @@
       },
       "type": "object"
     },
+    "LiasettingsListPosDataProvidersResponse": {
+      "id": "LiasettingsListPosDataProvidersResponse",
+      "properties": {
+        "kind": {
+          "default": "content#liasettingsListPosDataProvidersResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsListPosDataProvidersResponse\".",
+          "type": "string"
+        },
+        "posDataProviders": {
+          "description": "The list of POS data providers for each eligible country",
+          "items": {
+            "$ref": "PosDataProviders"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "LiasettingsListResponse": {
       "id": "LiasettingsListResponse",
       "properties": {
@@ -5145,6 +5275,17 @@
         "kind": {
           "default": "content#liasettingsSetInventoryVerificationContactResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsSetInventoryVerificationContactResponse\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LiasettingsSetPosDataProviderResponse": {
+      "id": "LiasettingsSetPosDataProviderResponse",
+      "properties": {
+        "kind": {
+          "default": "content#liasettingsSetPosDataProviderResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#liasettingsSetPosDataProviderResponse\".",
           "type": "string"
         }
       },
@@ -8936,6 +9077,10 @@
         "mainTable": {
           "$ref": "Table",
           "description": "A table defining the rate group, when singleValue is not expressive enough. Can only be set if singleValue is not set."
+        },
+        "name": {
+          "description": "Name of the rate group. Optional. If set has to be unique within shipping service.",
+          "type": "string"
         },
         "singleValue": {
           "$ref": "Value",

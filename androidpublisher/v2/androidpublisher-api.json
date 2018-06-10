@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/r2WLPVRIIuO-Zkq6LCqo2JQITH4\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/ZrsxTobK37cM8ngcCgqOfF8QXOo\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2480,7 +2480,7 @@
       }
     }
   },
-  "revision": "20180530",
+  "revision": "20180605",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2942,6 +2942,10 @@
         "defaultPrice": {
           "$ref": "Price",
           "description": "Default price cannot be zero. In-app products can never be free. Default price is always in the developer's Checkout merchant currency."
+        },
+        "gracePeriod": {
+          "description": "Grace period of the subscription, specified in ISO 8601 format. It will allow developers to give their subscribers a grace period when the payment for the new recurrence period is declined. Acceptable values = \"P3D\" (three days) and \"P7D\" (seven days)",
+          "type": "string"
         },
         "listings": {
           "additionalProperties": {

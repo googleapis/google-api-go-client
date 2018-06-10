@@ -63,11 +63,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -87,12 +82,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -291,7 +280,7 @@
       }
     }
   },
-  "revision": "20180410",
+  "revision": "20180601",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -398,6 +387,10 @@
         "requestMetadata": {
           "$ref": "RequestMetadata",
           "description": "Metadata about the operation."
+        },
+        "resourceLocation": {
+          "$ref": "ResourceLocation",
+          "description": "The resource location information."
         },
         "resourceName": {
           "description": "The resource or collection that is the target of the operation.\nThe name is a scheme-less URI, not including the API service name.\nFor example:\n\n    \"shelves/SHELF_ID/books\"\n    \"shelves/SHELF_ID/books/BOOK_ID\"",
@@ -1346,6 +1339,20 @@
         "resourceName": {
           "description": "Name of the resource. This is used for auditing purposes.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourceLocation": {
+      "description": "Location information about a resource.",
+      "id": "ResourceLocation",
+      "properties": {
+        "currentLocations": {
+          "description": "The locations of a resource after the execution of the operation.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

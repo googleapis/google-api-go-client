@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/8jEn866sPoaPUUPCxgWGHadHMUQ\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/F-icUrqc7COP2F5FibwkaYei6ww\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,6 @@
       }
     }
   },
-  "revision": "20180517",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigtableColumn": {
@@ -2256,7 +2255,7 @@
           "description": "[Output-only] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
         },
         "statementType": {
-          "description": "[Output-only, Experimental] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query.",
+          "description": "[Output-only, Experimental] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"MERGE\": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query.",
           "type": "string"
         },
         "timeline": {

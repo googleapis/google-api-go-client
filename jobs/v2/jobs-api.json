@@ -290,7 +290,7 @@
                   "type": "boolean"
                 },
                 "jobRequisitionId": {
-                  "description": "Optional.\n\nThe requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe number of allowable characters is 225.",
+                  "description": "Optional.\n\nThe requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe maximum number of allowable characters is 225.",
                   "location": "query",
                   "type": "string"
                 },
@@ -625,7 +625,7 @@
       }
     }
   },
-  "revision": "20180514",
+  "revision": "20180606",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -793,7 +793,7 @@
           "type": "string"
         },
         "distributorCompanyId": {
-          "description": "Required.\n\nA client's company identifier, used to uniquely identify the\ncompany. If an employer has a subsidiary or sub-brand, such as \"Alphabet\"\nand \"Google\", which the client wishes to use as the company displayed on\nthe job. Best practice is to create a distinct company identifier for each\ndistinct brand displayed.",
+          "description": "Required.\n\nA client's company identifier, used to uniquely identify the\ncompany. If an employer has a subsidiary or sub-brand, such as \"Alphabet\"\nand \"Google\", which the client wishes to use as the company displayed on\nthe job. Best practice is to create a distinct company identifier for each\ndistinct brand displayed.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "eeoText": {
@@ -970,15 +970,15 @@
           ],
           "enumDescriptions": [
             "Filter type unspecified. Position holder, INVALID, should never be used.",
-            "Filter by ** base compensation entry's ** unit. A job is a match if and\nonly if the job contains a base CompensationEntry and the base\nCompensationEntry's unit matches provided units.\nPopulate one or more units.\n\nSee CompensationInfo.CompensationEntry for definition of\nbase compensation entry.",
-            "Filter by ** base compensation entry's ** unit and amount / range. A job\nis a match if and only if the job contains a base CompensationEntry, and\nthe base entry's unit matches provided compensation_units and amount\nor range overlaps with provided compensation_range.\n\nSee CompensationInfo.CompensationEntry for definition of\nbase compensation entry.\n\nSet exactly one units and populate range.",
-            "Filter by annualized base compensation amount and  ** base compensation\nentry's ** unit. Populate range and zero or more units.",
-            "Filter by annualized total compensation amount and ** base compensation\nentry's ** unit . Populate range and zero or more units."
+            "Filter by `base compensation entry's` unit. A job is a match if and\nonly if the job contains a base CompensationEntry and the base\nCompensationEntry's unit matches provided units.\nPopulate one or more units.\n\nSee CompensationInfo.CompensationEntry for definition of\nbase compensation entry.",
+            "Filter by `base compensation entry's` unit and amount / range. A job\nis a match if and only if the job contains a base CompensationEntry, and\nthe base entry's unit matches provided compensation_units and amount\nor range overlaps with provided compensation_range.\n\nSee CompensationInfo.CompensationEntry for definition of\nbase compensation entry.\n\nSet exactly one units and populate range.",
+            "Filter by annualized base compensation amount and `base compensation\nentry's` unit. Populate range and zero or more units.",
+            "Filter by annualized total compensation amount and `base compensation\nentry's` unit . Populate range and zero or more units."
           ],
           "type": "string"
         },
         "units": {
-          "description": "Required.\n\nSpecify desired ** base compensation entry's **\nCompensationInfo.CompensationUnit.",
+          "description": "Required.\n\nSpecify desired `base compensation entry's`\nCompensationInfo.CompensationUnit.",
           "enumDescriptions": [
             "Default value. Equivalent to OTHER_COMPENSATION_UNIT.",
             "Hourly.",
@@ -1383,7 +1383,7 @@
           "description": "Optional.\n\nCompensation range."
         },
         "compensationUnits": {
-          "description": "Required.\n\nSpecify desired ** base compensation entry's **\nExtendedCompensationInfo.CompensationUnit.",
+          "description": "Required.\n\nSpecify desired `base compensation entry's`\nExtendedCompensationInfo.CompensationUnit.",
           "enumDescriptions": [
             "Default value. Equivalent to OTHER_COMPENSATION_UNIT.",
             "Hourly.",
@@ -1428,10 +1428,10 @@
           ],
           "enumDescriptions": [
             "Filter type unspecified. Position holder, INVALID, should never be used.",
-            "Filter by ** base compensation entry's ** unit. A job is a match if and\nonly if the job contains a base CompensationEntry and the base\nCompensationEntry's unit matches provided compensation_units.\nPopulate one or more compensation_units.\n\nSee ExtendedCompensationInfo.CompensationEntry for definition of\nbase compensation entry.",
-            "Filter by ** base compensation entry's ** unit and amount / range. A job\nis a match if and only if the job contains a base CompensationEntry, and\nthe base entry's unit matches provided compensation_units and amount\nor range overlaps with provided compensation_range.\n\nSee ExtendedCompensationInfo.CompensationEntry for definition of\nbase compensation entry.\n\nSet exactly one\ncompensation_units and populate\ncompensation_range.",
-            "Filter by annualized base compensation amount and  ** base compensation\nentry's ** unit. Populate compensation_range and zero or more\ncompensation_units.",
-            "Filter by annualized total compensation amount and ** base compensation\nentry's ** unit . Populate compensation_range and zero or more\ncompensation_units."
+            "Filter by `base compensation entry's` unit. A job is a match if and\nonly if the job contains a base CompensationEntry and the base\nCompensationEntry's unit matches provided compensation_units.\nPopulate one or more compensation_units.\n\nSee ExtendedCompensationInfo.CompensationEntry for definition of\nbase compensation entry.",
+            "Filter by `base compensation entry's` unit and amount / range. A job\nis a match if and only if the job contains a base CompensationEntry, and\nthe base entry's unit matches provided compensation_units and amount\nor range overlaps with provided compensation_range.\n\nSee ExtendedCompensationInfo.CompensationEntry for definition of\nbase compensation entry.\n\nSet exactly one\ncompensation_units and populate\ncompensation_range.",
+            "Filter by annualized base compensation amount and `base compensation\nentry's` unit. Populate compensation_range and zero or more\ncompensation_units.",
+            "Filter by annualized total compensation amount and `base compensation\nentry's` unit . Populate compensation_range and zero or more\ncompensation_units."
           ],
           "type": "string"
         }
@@ -2218,7 +2218,7 @@
           "type": "string"
         },
         "requisitionId": {
-          "description": "Required.\n\nThe requisition ID, also referred to as the posting ID, assigned by the\nclient to identify a job. This field is intended to be used by clients\nfor client identification and tracking of listings. A job is not allowed\nto be created if there is another job with the same requisition_id,\ncompany_name and language_code.\n\nThe maximum number of allowed characters is 225.",
+          "description": "Required.\n\nThe requisition ID, also referred to as the posting ID, assigned by the\nclient to identify a job. This field is intended to be used by clients\nfor client identification and tracking of listings. A job is not allowed\nto be created if there is another job with the same requisition_id,\ncompany_name and language_code.\n\nThe maximum number of allowed characters is 255.",
           "type": "string"
         },
         "responsibilities": {
@@ -2444,7 +2444,7 @@
           "type": "string"
         },
         "query": {
-          "description": "Optional.\n\nThe query filter contains the keywords that match against the job\ntitle, description, and location fields.\n\nThe maximum query size is 255 bytes.",
+          "description": "Optional.\n\nThe query filter contains the keywords that match against the job\ntitle, description, and location fields.\n\nThe maximum query size is 255 bytes/characters.",
           "type": "string"
         },
         "tenantJobOnly": {

@@ -441,6 +441,8 @@ type Company struct {
 	// the job. Best practice is to create a distinct company identifier for
 	// each
 	// distinct brand displayed.
+	//
+	// The maximum number of allowed characters is 255.
 	DistributorCompanyId string `json:"distributorCompanyId,omitempty"`
 
 	// EeoText: Optional.
@@ -763,8 +765,8 @@ type CompensationFilter struct {
 	// Possible values:
 	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
 	// holder, INVALID, should never be used.
-	//   "UNIT_ONLY" - Filter by ** base compensation entry's ** unit. A job
-	// is a match if and
+	//   "UNIT_ONLY" - Filter by `base compensation entry's` unit. A job is
+	// a match if and
 	// only if the job contains a base CompensationEntry and the
 	// base
 	// CompensationEntry's unit matches provided units.
@@ -772,8 +774,8 @@ type CompensationFilter struct {
 	//
 	// See CompensationInfo.CompensationEntry for definition of
 	// base compensation entry.
-	//   "UNIT_AND_AMOUNT" - Filter by ** base compensation entry's ** unit
-	// and amount / range. A job
+	//   "UNIT_AND_AMOUNT" - Filter by `base compensation entry's` unit and
+	// amount / range. A job
 	// is a match if and only if the job contains a base CompensationEntry,
 	// and
 	// the base entry's unit matches provided compensation_units and
@@ -785,17 +787,17 @@ type CompensationFilter struct {
 	//
 	// Set exactly one units and populate range.
 	//   "ANNUALIZED_BASE_AMOUNT" - Filter by annualized base compensation
-	// amount and  ** base compensation
-	// entry's ** unit. Populate range and zero or more units.
+	// amount and `base compensation
+	// entry's` unit. Populate range and zero or more units.
 	//   "ANNUALIZED_TOTAL_AMOUNT" - Filter by annualized total compensation
-	// amount and ** base compensation
-	// entry's ** unit . Populate range and zero or more units.
+	// amount and `base compensation
+	// entry's` unit . Populate range and zero or more units.
 	Type string `json:"type,omitempty"`
 
 	// Units: Required.
 	//
-	// Specify desired ** base compensation entry's
-	// **
+	// Specify desired `base compensation
+	// entry's`
 	// CompensationInfo.CompensationUnit.
 	//
 	// Possible values:
@@ -1618,8 +1620,8 @@ type ExtendedCompensationFilter struct {
 
 	// CompensationUnits: Required.
 	//
-	// Specify desired ** base compensation entry's
-	// **
+	// Specify desired `base compensation
+	// entry's`
 	// ExtendedCompensationInfo.CompensationUnit.
 	//
 	// Possible values:
@@ -1654,8 +1656,8 @@ type ExtendedCompensationFilter struct {
 	// Possible values:
 	//   "FILTER_TYPE_UNSPECIFIED" - Filter type unspecified. Position
 	// holder, INVALID, should never be used.
-	//   "UNIT_ONLY" - Filter by ** base compensation entry's ** unit. A job
-	// is a match if and
+	//   "UNIT_ONLY" - Filter by `base compensation entry's` unit. A job is
+	// a match if and
 	// only if the job contains a base CompensationEntry and the
 	// base
 	// CompensationEntry's unit matches provided
@@ -1664,8 +1666,8 @@ type ExtendedCompensationFilter struct {
 	//
 	// See ExtendedCompensationInfo.CompensationEntry for definition of
 	// base compensation entry.
-	//   "UNIT_AND_AMOUNT" - Filter by ** base compensation entry's ** unit
-	// and amount / range. A job
+	//   "UNIT_AND_AMOUNT" - Filter by `base compensation entry's` unit and
+	// amount / range. A job
 	// is a match if and only if the job contains a base CompensationEntry,
 	// and
 	// the base entry's unit matches provided compensation_units and
@@ -1679,13 +1681,13 @@ type ExtendedCompensationFilter struct {
 	// compensation_units and populate
 	// compensation_range.
 	//   "ANNUALIZED_BASE_AMOUNT" - Filter by annualized base compensation
-	// amount and  ** base compensation
-	// entry's ** unit. Populate compensation_range and zero or
+	// amount and `base compensation
+	// entry's` unit. Populate compensation_range and zero or
 	// more
 	// compensation_units.
 	//   "ANNUALIZED_TOTAL_AMOUNT" - Filter by annualized total compensation
-	// amount and ** base compensation
-	// entry's ** unit . Populate compensation_range and zero or
+	// amount and `base compensation
+	// entry's` unit . Populate compensation_range and zero or
 	// more
 	// compensation_units.
 	Type string `json:"type,omitempty"`
@@ -3075,7 +3077,7 @@ type Job struct {
 	// requisition_id,
 	// company_name and language_code.
 	//
-	// The maximum number of allowed characters is 225.
+	// The maximum number of allowed characters is 255.
 	RequisitionId string `json:"requisitionId,omitempty"`
 
 	// Responsibilities: Optional.
@@ -3487,7 +3489,7 @@ type JobFilters struct {
 	// job
 	// title, description, and location fields.
 	//
-	// The maximum query size is 255 bytes.
+	// The maximum query size is 255 bytes/characters.
 	Query string `json:"query,omitempty"`
 
 	// TenantJobOnly: Optional.
@@ -6125,7 +6127,7 @@ func (c *CompaniesJobsListCall) IncludeJobsCount(includeJobsCount bool) *Compani
 // requisition ID, also known as posting ID, assigned by the company
 // to the job.
 //
-// The number of allowable characters is 225.
+// The maximum number of allowable characters is 225.
 func (c *CompaniesJobsListCall) JobRequisitionId(jobRequisitionId string) *CompaniesJobsListCall {
 	c.urlParams_.Set("jobRequisitionId", jobRequisitionId)
 	return c
@@ -6270,7 +6272,7 @@ func (c *CompaniesJobsListCall) Do(opts ...googleapi.CallOption) (*ListCompanyJo
 	//       "type": "boolean"
 	//     },
 	//     "jobRequisitionId": {
-	//       "description": "Optional.\n\nThe requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe number of allowable characters is 225.",
+	//       "description": "Optional.\n\nThe requisition ID, also known as posting ID, assigned by the company\nto the job.\n\nThe maximum number of allowable characters is 225.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

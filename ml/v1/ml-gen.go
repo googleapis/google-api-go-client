@@ -1754,10 +1754,11 @@ type GoogleCloudMlV1__Version struct {
 	// the runtime version of the model to 1.4 or greater.
 	//
 	// Possible values:
-	//   "FRAMEWORK_UNSPECIFIED"
-	//   "TENSORFLOW"
-	//   "SCIKIT_LEARN"
-	//   "XGBOOST"
+	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Defaults to
+	// TensorFlow.
+	//   "TENSORFLOW" - Tensorflow framework.
+	//   "SCIKIT_LEARN" - Scikit-learn framework.
+	//   "XGBOOST" - XGBoost framework.
 	Framework string `json:"framework,omitempty"`
 
 	// IsDefault: Output only. If true, this version will be used to handle

@@ -264,6 +264,9 @@ type AuditLog struct {
 	// RequestMetadata: Metadata about the operation.
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
 
+	// ResourceLocation: The resource location information.
+	ResourceLocation *ResourceLocation `json:"resourceLocation,omitempty"`
+
 	// ResourceName: The resource or collection that is the target of the
 	// operation.
 	// The name is a scheme-less URI, not including the API service
@@ -2152,6 +2155,41 @@ type ResourceInfo struct {
 
 func (s *ResourceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResourceLocation: Location information about a resource.
+type ResourceLocation struct {
+	// CurrentLocations: The locations of a resource after the execution of
+	// the operation.
+	// For example:
+	//
+	//     "europe-west1-a"
+	//     "us-east1"
+	//     "nam3"
+	CurrentLocations []string `json:"currentLocations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentLocations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentLocations") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResourceLocation) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceLocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

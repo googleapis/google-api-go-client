@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/rcMTQpIOHgWYetp22aQ7_LoqIH4\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/iIle7JnS-3QsRu7zF_GBvrXnSz4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -14944,7 +14944,7 @@
       }
     }
   },
-  "revision": "20180518",
+  "revision": "20180525",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -15443,9 +15443,11 @@
           "description": "[Output Only] The status of the address, which can be one of RESERVING, RESERVED, or IN_USE. An address that is RESERVING is currently in the process of being reserved. A RESERVED address is currently reserved and available to use. An IN_USE address is currently being used by another resource and is not available.",
           "enum": [
             "IN_USE",
-            "RESERVED"
+            "RESERVED",
+            "RESERVING"
           ],
           "enumDescriptions": [
+            "",
             "",
             ""
           ],
@@ -17976,6 +17978,47 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "DiskInstantiationConfig": {
+      "description": "A specification of the desired way to instantiate a disk in the instance template when its created from a source instance.",
+      "id": "DiskInstantiationConfig",
+      "properties": {
+        "autoDelete": {
+          "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance).",
+          "type": "boolean"
+        },
+        "customImage": {
+          "description": "The custom source image to be used to restore this disk when instantiating this instance template.",
+          "type": "string"
+        },
+        "deviceName": {
+          "description": "Specifies the device name of the disk to which the configurations apply to.",
+          "type": "string"
+        },
+        "instantiateFrom": {
+          "description": "Specifies whether to include the disk and what image to use. Possible values are:  \n- source-image: to use the same image that was used to create the source instance's corresponding disk. Applicable to the boot disk and additional read-write disks. \n- source-image-family: to use the same image family that was used to create the source instance's corresponding disk. Applicable to the boot disk and additional read-write disks. \n- custom-image: to use a user-provided image url for disk creation. Applicable to the boot disk and additional read-write disks. \n- attach-read-only: to attach a read-only disk. Applicable to read-only disks. \n- do-not-include: to exclude a disk from the template. Applicable to additional read-write disks, local SSDs, and read-only disks.",
+          "enum": [
+            "ATTACH_READ_ONLY",
+            "BLANK",
+            "CUSTOM_IMAGE",
+            "DEFAULT",
+            "DO_NOT_INCLUDE",
+            "SOURCE_IMAGE",
+            "SOURCE_IMAGE_FAMILY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -22037,6 +22080,14 @@
         "selfLink": {
           "description": "[Output Only] The URL for this instance template. The server defines this URL.",
           "type": "string"
+        },
+        "sourceInstance": {
+          "description": "The source instance used to create the template. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance \n- projects/project/zones/zone/instances/instance",
+          "type": "string"
+        },
+        "sourceInstanceParams": {
+          "$ref": "SourceInstanceParams",
+          "description": "The source instance params to use to create this instance template."
         }
       },
       "type": "object"
@@ -24148,7 +24199,7 @@
       "type": "object"
     },
     "ManagedInstance": {
-      "description": "Next available tag: 12",
+      "description": "A Managed Instance resource.",
       "id": "ManagedInstance",
       "properties": {
         "currentAction": {
@@ -27705,6 +27756,20 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "SourceInstanceParams": {
+      "description": "A specification of the parameters to use when creating the instance template from a source instance.",
+      "id": "SourceInstanceParams",
+      "properties": {
+        "diskConfigs": {
+          "description": "Attached disks configuration. If not provided, defaults are applied: For boot disk and any other R/W disks, new custom images will be created from each disk. For read-only disks, they will be attached in read-only mode. Local SSD disks will be created as blank volumes.",
+          "items": {
+            "$ref": "DiskInstantiationConfig"
+          },
+          "type": "array"
         }
       },
       "type": "object"

@@ -1087,6 +1087,12 @@ type InAppProduct struct {
 	// currency.
 	DefaultPrice *Price `json:"defaultPrice,omitempty"`
 
+	// GracePeriod: Grace period of the subscription, specified in ISO 8601
+	// format. It will allow developers to give their subscribers a grace
+	// period when the payment for the new recurrence period is declined.
+	// Acceptable values = "P3D" (three days) and "P7D" (seven days)
+	GracePeriod string `json:"gracePeriod,omitempty"`
+
 	// Listings: List of localized title and description data.
 	Listings map[string]InAppProductListing `json:"listings,omitempty"`
 

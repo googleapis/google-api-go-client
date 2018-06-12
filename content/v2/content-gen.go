@@ -9773,6 +9773,10 @@ type TestOrder struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *TestOrderCustomer `json:"customer,omitempty"`
 
+	// EnableOrderinvoices: Whether the orderinvoices service should support
+	// this order.
+	EnableOrderinvoices bool `json:"enableOrderinvoices,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#testOrder".
 	Kind string `json:"kind,omitempty"`
@@ -11691,7 +11695,8 @@ type AccountstatusesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves the status of a Merchant Center account.
+// Get: Retrieves the status of a Merchant Center account. Multi-client
+// accounts can only call this method for sub-accounts.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
 	c := &AccountstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -11802,7 +11807,7 @@ func (c *AccountstatusesGetCall) Do(opts ...googleapi.CallOption) (*AccountStatu
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the status of a Merchant Center account.",
+	//   "description": "Retrieves the status of a Merchant Center account. Multi-client accounts can only call this method for sub-accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accountstatuses.get",
 	//   "parameterOrder": [

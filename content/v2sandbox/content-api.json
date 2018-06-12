@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/PbOl5zh9XyiHW1B4ZXQHhUQtpkA\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/pFaM3H-6MDZTscx-Zs9_WtetVj4\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1004,7 +1004,7 @@
       }
     }
   },
-  "revision": "20180529",
+  "revision": "20180608",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Amount": {
@@ -3256,6 +3256,10 @@
             ]
           },
           "description": "The details of the customer who placed the order."
+        },
+        "enableOrderinvoices": {
+          "description": "Whether the orderinvoices service should support this order.",
+          "type": "boolean"
         },
         "kind": {
           "default": "content#testOrder",

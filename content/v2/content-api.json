@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/wiyDnrFrT6qjh94QCZMqk0SOkLg\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/Fc4kLfr9_tXQSGQnAzGPvkNOJwI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -383,7 +383,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves the status of a Merchant Center account.",
+          "description": "Retrieves the status of a Merchant Center account. Multi-client accounts can only call this method for sub-accounts.",
           "httpMethod": "GET",
           "id": "content.accountstatuses.get",
           "parameterOrder": [
@@ -9400,6 +9400,10 @@
             ]
           },
           "description": "The details of the customer who placed the order."
+        },
+        "enableOrderinvoices": {
+          "description": "Whether the orderinvoices service should support this order.",
+          "type": "boolean"
         },
         "kind": {
           "default": "content#testOrder",

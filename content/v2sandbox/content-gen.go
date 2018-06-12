@@ -3787,6 +3787,10 @@ type TestOrder struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *TestOrderCustomer `json:"customer,omitempty"`
 
+	// EnableOrderinvoices: Whether the orderinvoices service should support
+	// this order.
+	EnableOrderinvoices bool `json:"enableOrderinvoices,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#testOrder".
 	Kind string `json:"kind,omitempty"`

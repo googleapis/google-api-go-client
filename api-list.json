@@ -883,7 +883,7 @@
    "name": "cloudtasks",
    "version": "v2beta2",
    "title": "Cloud Tasks API",
-   "description": "Manages the execution of large numbers of distributed requests. Cloud Tasks is in Alpha.",
+   "description": "Manages the execution of large numbers of distributed requests.",
    "discoveryRestUrl": "https://cloudtasks.googleapis.com/$discovery/rest?version=v2beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

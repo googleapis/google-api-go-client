@@ -3696,7 +3696,12 @@ type EditsBundlesUploadCall struct {
 	header_       http.Header
 }
 
-// Upload:
+// Upload: Uploads a new Android App Bundle to this edit. If you are
+// using the Google API client libraries, please increase the timeout of
+// the http request before calling this endpoint (a timeout of 2 minutes
+// is recommended). See:
+// https://developers.google.com/api-client-library/java/google-api-java-client/errors for an example in
+// java.
 func (r *EditsBundlesService) Upload(packageNameid string, editId string) *EditsBundlesUploadCall {
 	c := &EditsBundlesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -3853,6 +3858,7 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 	}
 	return ret, nil
 	// {
+	//   "description": "Uploads a new Android App Bundle to this edit. If you are using the Google API client libraries, please increase the timeout of the http request before calling this endpoint (a timeout of 2 minutes is recommended). See: https://developers.google.com/api-client-library/java/google-api-java-client/errors for an example in java.",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.edits.bundles.upload",
 	//   "mediaUpload": {

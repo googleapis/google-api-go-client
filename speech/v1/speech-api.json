@@ -60,11 +60,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -84,12 +79,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -185,7 +174,7 @@
       }
     }
   },
-  "revision": "20180601",
+  "revision": "20180620",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "LongRunningRecognizeRequest": {
@@ -347,22 +336,6 @@
       "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
       "id": "SpeechContext",
       "properties": {
-        "biasingStrength": {
-          "description": "Strength of biasing to use (strong, medium or weak). If you use strong\nbiasing option then more likely to see those phrases in the results. If\nbiasing streangth is not specified then by default medium biasing would be\nused.",
-          "enum": [
-            "BIASING_STRENGTH_UNSPECIFIED",
-            "LOW",
-            "MEDIUM",
-            "HIGH"
-          ],
-          "enumDescriptions": [
-            "",
-            "Low bias",
-            "Medium bias",
-            "High bias"
-          ],
-          "type": "string"
-        },
         "phrases": {
           "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
           "items": {

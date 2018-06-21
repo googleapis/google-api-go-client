@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/xG9nGjSfyUXvfFJjs4n9t6tUrPE\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/XxPbeTDXrLPRv1hWo1J5w2hfNX8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -19506,7 +19506,6 @@
       }
     }
   },
-  "revision": "20180525",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -29963,16 +29962,6 @@
           "description": "[Output only] Number of network endpoints in the network endpoint group.",
           "format": "int32",
           "type": "integer"
-        },
-        "type": {
-          "description": "Specify the type of this network endpoint group. Only LOAD_BALANCING is valid for now.",
-          "enum": [
-            "LOAD_BALANCING"
-          ],
-          "enumDescriptions": [
-            ""
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -31035,6 +31024,21 @@
         },
         "nodeType": {
           "description": "The type of this node.",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },

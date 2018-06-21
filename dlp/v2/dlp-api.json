@@ -435,7 +435,7 @@
         "content": {
           "methods": {
             "deidentify": {
-              "description": "De-identifies potentially sensitive info from a ContentItem.\nThis method has limits on input size and output size.\nSee https://cloud.google.com/dlp/docs/deidentify-sensitive-data to\nlearn more.",
+              "description": "De-identifies potentially sensitive info from a ContentItem.\nThis method has limits on input size and output size.\nSee https://cloud.google.com/dlp/docs/deidentify-sensitive-data to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
               "flatPath": "v2/projects/{projectsId}/content:deidentify",
               "httpMethod": "POST",
               "id": "dlp.projects.content.deidentify",
@@ -463,7 +463,7 @@
               ]
             },
             "inspect": {
-              "description": "Finds potentially sensitive info in content.\nThis method has limits on input size, processing time, and output size.\n\nFor how to guides, see https://cloud.google.com/dlp/docs/inspecting-images\nand https://cloud.google.com/dlp/docs/inspecting-text,",
+              "description": "Finds potentially sensitive info in content.\nThis method has limits on input size, processing time, and output size.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nFor how to guides, see https://cloud.google.com/dlp/docs/inspecting-images\nand https://cloud.google.com/dlp/docs/inspecting-text,",
               "flatPath": "v2/projects/{projectsId}/content:inspect",
               "httpMethod": "POST",
               "id": "dlp.projects.content.inspect",
@@ -697,7 +697,7 @@
               ]
             },
             "create": {
-              "description": "Creates a new job to inspect storage or calculate risk metrics.\nSee https://cloud.google.com/dlp/docs/inspecting-storage and\nhttps://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.",
+              "description": "Creates a new job to inspect storage or calculate risk metrics.\nSee https://cloud.google.com/dlp/docs/inspecting-storage and\nhttps://cloud.google.com/dlp/docs/compute-risk-analysis to learn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in inspect jobs, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
               "flatPath": "v2/projects/{projectsId}/dlpJobs",
               "httpMethod": "POST",
               "id": "dlp.projects.dlpJobs.create",
@@ -830,7 +830,7 @@
         "image": {
           "methods": {
             "redact": {
-              "description": "Redacts potentially sensitive info from an image.\nThis method has limits on input size, processing time, and output size.\nSee https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to\nlearn more.",
+              "description": "Redacts potentially sensitive info from an image.\nThis method has limits on input size, processing time, and output size.\nSee https://cloud.google.com/dlp/docs/redacting-sensitive-data-images to\nlearn more.\n\nWhen no InfoTypes or CustomInfoTypes are specified in this request, the\nsystem will automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
               "flatPath": "v2/projects/{projectsId}/image:redact",
               "httpMethod": "POST",
               "id": "dlp.projects.image.redact",
@@ -1159,7 +1159,7 @@
       }
     }
   },
-  "revision": "20180612",
+  "revision": "20180619",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2391,10 +2391,10 @@
         },
         "infoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
-          "description": "The type of content that might have been found.\nProvided if requested by the `InspectConfig`."
+          "description": "The type of content that might have been found.\nProvided if `excluded_types` is false."
         },
         "likelihood": {
-          "description": "Estimate of how likely it is that the `info_type` is correct.",
+          "description": "Confidence of how likely it is that the `info_type` is correct.",
           "enum": [
             "LIKELIHOOD_UNSPECIFIED",
             "VERY_UNLIKELY",
@@ -2418,7 +2418,7 @@
           "description": "Where the content was found."
         },
         "quote": {
-          "description": "The content that was found. Even if the content is not textual, it\nmay be converted to a textual representation here.\nProvided if requested by the `InspectConfig` and the finding is\nless than or equal to 4096 bytes long. If the finding exceeds 4096 bytes\nin length, the quote may be omitted.",
+          "description": "The content that was found. Even if the content is not textual, it\nmay be converted to a textual representation here.\nProvided if `include_quote` is true and the finding is\nless than or equal to 4096 bytes long. If the finding exceeds 4096 bytes\nin length, the quote may be omitted.",
           "type": "string"
         },
         "quoteInfo": {
@@ -2667,7 +2667,7 @@
           "type": "boolean"
         },
         "infoTypes": {
-          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.",
+          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.\n\nWhen no InfoTypes or CustomInfoTypes are specified in a request, the\nsystem may automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoType"
           },
@@ -3711,6 +3711,10 @@
           },
           "type": "array"
         },
+        "includeFindings": {
+          "description": "Whether the response should include findings along with the redacted\nimage.",
+          "type": "boolean"
+        },
         "inspectConfig": {
           "$ref": "GooglePrivacyDlpV2InspectConfig",
           "description": "Configuration for the inspector."
@@ -3725,6 +3729,10 @@
         "extractedText": {
           "description": "If an image was being inspected and the InspectConfig's include_quote was\nset to true, then this field will include all text, if any, that was found\nin the image.",
           "type": "string"
+        },
+        "inspectResult": {
+          "$ref": "GooglePrivacyDlpV2InspectResult",
+          "description": "The findings. Populated when include_findings in the request is true."
         },
         "redactedImage": {
           "description": "The redacted image. The type will be the same as the original image.",

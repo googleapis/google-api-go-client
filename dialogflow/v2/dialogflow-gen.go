@@ -1033,11 +1033,10 @@ type GoogleCloudDialogflowV2ExportAgentResponse struct {
 	//
 	// Example for how to export an agent to a zip file via a command
 	// line:
+	// <pre>curl \
 	//
-	// curl \
-	//
-	// 'https://dialogflow.googleapis.com/v2/projects/<project_name>/agent:ex
-	// port'\
+	// 'https://dialogflow.googleapis.com/v2/projects/&lt;project_name&gt;/ag
+	// ent:export'\
 	//   -X POST \
 	//   -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
 	//   -H 'Accept: application/json' \
@@ -1046,7 +1045,7 @@ type GoogleCloudDialogflowV2ExportAgentResponse struct {
 	//   --data-binary '{}' \
 	// | grep agentContent | sed -e 's/.*"agentContent": "\([^"]*\)".*/\1/'
 	// \
-	// | base64 --decode > <agent zip file>
+	// | base64 --decode > &lt;agent zip file&gt;</pre>
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
@@ -1083,19 +1082,18 @@ type GoogleCloudDialogflowV2ImportAgentRequest struct {
 	// AgentContent: The agent to import.
 	//
 	// Example for how to import an agent via the command line:
+	// <pre>curl \
 	//
-	// curl \
-	//
-	// 'https://dialogflow.googleapis.com/v2/projects/<project_name>/agent:im
-	// port\
+	// 'https://dialogflow.googleapis.com/v2/projects/&lt;project_name&gt;/ag
+	// ent:import\
 	//    -X POST \
 	//    -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
 	//    -H 'Accept: application/json' \
 	//    -H 'Content-Type: application/json' \
 	//    --compressed \
 	//    --data-binary "{
-	//       'agentContent': '$(cat <agent zip file> | base64 -w 0)'
-	//    }"
+	//       'agentContent': '$(cat &lt;agent zip file&gt; | base64 -w 0)'
+	//    }"</pre>
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a Google Cloud Storage file containing the agent
@@ -1241,7 +1239,6 @@ func (s *GoogleCloudDialogflowV2InputAudioConfig) MarshalJSON() ([]byte, error) 
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
-// Next available field number: 22.
 type GoogleCloudDialogflowV2Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`
@@ -2906,19 +2903,18 @@ type GoogleCloudDialogflowV2RestoreAgentRequest struct {
 	// AgentContent: The agent to restore.
 	//
 	// Example for how to restore an agent via the command line:
+	// <pre>curl \
 	//
-	// curl \
-	//
-	// 'https://dialogflow.googleapis.com/v2/projects/<project_name>/agent:re
-	// store\
+	// 'https://dialogflow.googleapis.com/v2/projects/&lt;project_name&gt;/ag
+	// ent:restore\
 	//    -X POST \
 	//    -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
 	//    -H 'Accept: application/json' \
 	//    -H 'Content-Type: application/json' \
 	//    --compressed \
 	//    --data-binary "{
-	//        'agentContent': '$(cat <agent zip file> | base64 -w 0)'
-	//    }" \
+	//        'agentContent': '$(cat &lt;agent zip file&gt; | base64 -w 0)'
+	//    }"</pre>
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a Google Cloud Storage file containing the agent
@@ -3315,11 +3311,11 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// ID>/users/<User
 	// ID>/sessions/<Session ID>/contexts/<Context ID>`. Note: Environments
 	// and
-	// users are under construction and will be available soon. The Context
-	// ID is
-	// always converted to lowercase. If <Environment ID> is not specified,
-	// we
-	// assume default 'draft' environment. If <User ID> is not specified,
+	// users are under construction and will be available soon. The `Context
+	// ID`
+	// is always converted to lowercase. If `Environment ID` is not
+	// specified, we
+	// assume default 'draft' environment. If `User ID` is not specified,
 	// we
 	// assume default '-' user.
 	Name string `json:"name,omitempty"`
@@ -3521,11 +3517,10 @@ type GoogleCloudDialogflowV2beta1ExportAgentResponse struct {
 	//
 	// Example for how to export an agent to a zip file via a command
 	// line:
+	// <pre>curl \
 	//
-	// curl \
-	//
-	// 'https://dialogflow.googleapis.com/v2beta1/projects/<project_name>/age
-	// nt:export'\
+	// 'https://dialogflow.googleapis.com/v2beta1/projects/&lt;project_name&g
+	// t;/agent:export'\
 	//   -X POST \
 	//   -H 'Authorization: Bearer '$(gcloud auth print-access-token) \
 	//   -H 'Accept: application/json' \
@@ -3534,7 +3529,7 @@ type GoogleCloudDialogflowV2beta1ExportAgentResponse struct {
 	//   --data-binary '{}' \
 	// | grep agentContent | sed -e 's/.*"agentContent": "\([^"]*\)".*/\1/'
 	// \
-	// | base64 --decode > <agent zip file>
+	// | base64 --decode > &lt;agent zip file&gt;</pre>
 	AgentContent string `json:"agentContent,omitempty"`
 
 	// AgentUri: The URI to a file containing the exported agent. This field
@@ -3569,7 +3564,6 @@ func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte,
 // Intents convert a number of user expressions or patterns into an
 // action. An
 // action is an extraction of a user command or sentence semantics.
-// Next available field number: 22.
 type GoogleCloudDialogflowV2beta1Intent struct {
 	// Action: Optional. The name of the action associated with the intent.
 	Action string `json:"action,omitempty"`

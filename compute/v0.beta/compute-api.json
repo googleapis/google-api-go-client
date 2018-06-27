@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/XxPbeTDXrLPRv1hWo1J5w2hfNX8\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/KbpqxW9ZSFnxsSbWSZPD-MbpqCQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -21473,7 +21473,7 @@
           "type": "boolean"
         },
         "fingerprint": {
-          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a BackendService. An up-to-date fingerprint must be provided in order to update the BackendService.",
+          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a BackendService. An up-to-date fingerprint must be provided in order to update the BackendService.\n\nTo see the latest fingerprint, make a get() request to retrieve a BackendService.",
           "format": "byte",
           "type": "string"
         },
@@ -23545,6 +23545,7 @@
       "id": "DistributionPolicy",
       "properties": {
         "zones": {
+          "description": "Zones where the regional managed instance group will create and manage instances.",
           "items": {
             "$ref": "DistributionPolicyZoneConfiguration"
           },
@@ -23563,7 +23564,7 @@
               "compute.regionInstanceGroupManagers.update"
             ]
           },
-          "description": "URL of the zone where managed instance group is spawning instances (for regional resources). Zone has to belong to the region where managed instance group is located.",
+          "description": "The URL of the zone. The zone must exist in the region where the managed instance group is located.",
           "type": "string"
         }
       },
@@ -23882,11 +23883,11 @@
       "id": "ForwardingRule",
       "properties": {
         "IPAddress": {
-          "description": "The IP address that this forwarding rule is serving on behalf of.\n\nAddresses are restricted based on the forwarding rule's load balancing scheme (EXTERNAL or INTERNAL) and scope (global or regional).\n\nWhen the load balancing scheme is EXTERNAL, for global forwarding rules, the address must be a global IP, and for regional forwarding rules, the address must live in the same region as the forwarding rule. If this field is empty, an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnet configured for the forwarding rule. By default, if this field is empty, an ephemeral internal IP address will be automatically allocated from the IP range of the subnet or network configured for this forwarding rule.\n\nAn address can be specified either by a literal IP address or a URL reference to an existing Address resource. The following examples are all valid:  \n- 100.1.2.3 \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address \n- projects/project/regions/region/addresses/address \n- regions/region/addresses/address \n- global/addresses/address \n- address",
+          "description": "The IP address that this forwarding rule is serving on behalf of.\n\nAddresses are restricted based on the forwarding rule's load balancing scheme (EXTERNAL or INTERNAL) and scope (global or regional).\n\nWhen the load balancing scheme is EXTERNAL, for global forwarding rules, the address must be a global IP, and for regional forwarding rules, the address must live in the same region as the forwarding rule. If this field is empty, an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL_SELF_MANAGED, this must be a URL reference to an existing Address resource ( internal regional static IP address).\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnet configured for the forwarding rule. By default, if this field is empty, an ephemeral internal IP address will be automatically allocated from the IP range of the subnet or network configured for this forwarding rule.\n\nAn address can be specified either by a literal IP address or a URL reference to an existing Address resource. The following examples are all valid:  \n- 100.1.2.3 \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address \n- projects/project/regions/region/addresses/address \n- regions/region/addresses/address \n- global/addresses/address \n- address",
           "type": "string"
         },
         "IPProtocol": {
-          "description": "The IP protocol to which this rule applies. Valid options are TCP, UDP, ESP, AH, SCTP or ICMP.\n\nWhen the load balancing scheme is INTERNAL, only TCP and UDP are valid.",
+          "description": "The IP protocol to which this rule applies. Valid options are TCP, UDP, ESP, AH, SCTP or ICMP.\n\nWhen the load balancing scheme is INTERNAL, only TCP and UDP are valid. When the load balancing scheme is INTERNAL_SELF_MANAGED, only TCPis valid.",
           "enum": [
             "AH",
             "ESP",
@@ -23906,7 +23907,7 @@
           "type": "string"
         },
         "backendService": {
-          "description": "This field is not used for external load balancing.\n\nFor internal load balancing, this field identifies the BackendService resource to receive the matched traffic.",
+          "description": "This field is only used for INTERNAL load balancing.\n\nFor internal load balancing, this field identifies the BackendService resource to receive the matched traffic.",
           "type": "string"
         },
         "creationTimestamp": {
@@ -23923,7 +23924,7 @@
           "type": "string"
         },
         "ipVersion": {
-          "description": "The IP Version that will be used by this forwarding rule. Valid options are IPV4 or IPV6. This can only be specified for a global forwarding rule.",
+          "description": "The IP Version that will be used by this forwarding rule. Valid options are IPV4 or IPV6. This can only be specified for an external global forwarding rule.",
           "enum": [
             "IPV4",
             "IPV6",
@@ -23954,7 +23955,7 @@
           "type": "object"
         },
         "loadBalancingScheme": {
-          "description": "This signifies what the ForwardingRule will be used for and can only take the following values: INTERNAL, EXTERNAL The value of INTERNAL means that this will be used for Internal Network Load Balancing (TCP, UDP). The value of EXTERNAL means that this will be used for External Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)",
+          "description": "This signifies what the ForwardingRule will be used for and can only take the following values: INTERNAL, INTERNAL_SELF_MANAGED, EXTERNAL. The value of INTERNAL means that this will be used for Internal Network Load Balancing (TCP, UDP). The value of INTERNAL_SELF_MANAGED means that this will be used for Internal Global HTTP(S) LB. The value of EXTERNAL means that this will be used for External Load Balancing (HTTP(S) LB, External TCP/UDP LB, SSL Proxy)",
           "enum": [
             "EXTERNAL",
             "INTERNAL",
@@ -23973,7 +23974,7 @@
           "type": "string"
         },
         "network": {
-          "description": "This field is not used for external load balancing.\n\nFor internal load balancing, this field identifies the network that the load balanced IP should belong to for this Forwarding Rule. If this field is not specified, the default network will be used.",
+          "description": "This field is not used for external load balancing.\n\nFor INTERNAL and INTERNAL_SELF_MANAGED load balancing, this field identifies the network that the load balanced IP should belong to for this Forwarding Rule. If this field is not specified, the default network will be used.",
           "type": "string"
         },
         "networkTier": {
@@ -24017,11 +24018,11 @@
           "type": "string"
         },
         "subnetwork": {
-          "description": "This field is not used for external load balancing.\n\nFor internal load balancing, this field identifies the subnetwork that the load balanced IP should belong to for this Forwarding Rule.\n\nIf the network specified is in auto subnet mode, this field is optional. However, if the network is in custom subnet mode, a subnetwork must be specified.",
+          "description": "This field is only used for INTERNAL load balancing.\n\nFor internal load balancing, this field identifies the subnetwork that the load balanced IP should belong to for this Forwarding Rule.\n\nIf the network specified is in auto subnet mode, this field is optional. However, if the network is in custom subnet mode, a subnetwork must be specified.",
           "type": "string"
         },
         "target": {
-          "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object.",
+          "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object. For INTERNAL_SELF_MANAGED\" load balancing, only HTTP and HTTPS targets are valid.",
           "type": "string"
         }
       },
@@ -25350,7 +25351,7 @@
           "description": "The customer-supplied encryption key of the source disk. Required if the source disk is protected by a customer-supplied encryption key."
         },
         "sourceDiskId": {
-          "description": "The ID value of the disk used to create this image. This value may be used to determine whether the image was taken from the current or a previous instance of a given disk name.",
+          "description": "[Output Only] The ID value of the disk used to create this image. This value may be used to determine whether the image was taken from the current or a previous instance of a given disk name.",
           "type": "string"
         },
         "sourceImage": {
@@ -26118,7 +26119,7 @@
         },
         "distributionPolicy": {
           "$ref": "DistributionPolicy",
-          "description": "Policy valid only for regional managed instance groups."
+          "description": "Policy specifying intended distribution of instances in regional managed instance group."
         },
         "failoverAction": {
           "description": "The action to perform in case of zone failure. Only one value is supported, NO_FAILOVER. The default is NO_FAILOVER.",
@@ -26133,7 +26134,7 @@
           "type": "string"
         },
         "fingerprint": {
-          "description": "Fingerprint of this resource. This field may be used in optimistic locking. It will be ignored when inserting an InstanceGroupManager. An up-to-date fingerprint must be provided in order to update the InstanceGroupManager.",
+          "description": "Fingerprint of this resource. This field may be used in optimistic locking. It will be ignored when inserting an InstanceGroupManager. An up-to-date fingerprint must be provided in order to update the InstanceGroupManager.\n\nTo see the latest fingerprint, make a get() request to retrieve an InstanceGroupManager.",
           "format": "byte",
           "type": "string"
         },
@@ -29765,7 +29766,7 @@
       "id": "Metadata",
       "properties": {
         "fingerprint": {
-          "description": "Specifies a fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.",
+          "description": "Specifies a fingerprint for this request, which is essentially a hash of the metadata's contents and used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update metadata. You must always provide an up-to-date fingerprint hash in order to update or change metadata.\n\nTo see the latest fingerprint, make a get() request to retrieve the resource.",
           "format": "byte",
           "type": "string"
         },
@@ -35904,7 +35905,7 @@
           "type": "array"
         },
         "fingerprint": {
-          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a SslPolicy. An up-to-date fingerprint must be provided in order to update the SslPolicy.",
+          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a SslPolicy. An up-to-date fingerprint must be provided in order to update the SslPolicy.\n\nTo see the latest fingerprint, make a get() request to retrieve an SslPolicy.",
           "format": "byte",
           "type": "string"
         },
@@ -36075,7 +36076,7 @@
           "type": "boolean"
         },
         "fingerprint": {
-          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a Subnetwork. An up-to-date fingerprint must be provided in order to update the Subnetwork.",
+          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a Subnetwork. An up-to-date fingerprint must be provided in order to update the Subnetwork.\n\nTo see the latest fingerprint, make a get() request to retrieve a Subnetwork.",
           "format": "byte",
           "type": "string"
         },
@@ -38171,7 +38172,7 @@
           "type": "string"
         },
         "labelFingerprint": {
-          "description": "A fingerprint for the labels being applied to this TargetVpnGateway, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels.\n\nTo see the latest fingerprint, make a get() request to retrieve an TargetVpnGateway.",
+          "description": "A fingerprint for the labels being applied to this TargetVpnGateway, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels.\n\nTo see the latest fingerprint, make a get() request to retrieve a TargetVpnGateway.",
           "format": "byte",
           "type": "string"
         },
@@ -38637,7 +38638,7 @@
           "type": "string"
         },
         "fingerprint": {
-          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a UrlMap. An up-to-date fingerprint must be provided in order to update the UrlMap.",
+          "description": "Fingerprint of this resource. A hash of the contents stored in this object. This field is used in optimistic locking. This field will be ignored when inserting a UrlMap. An up-to-date fingerprint must be provided in order to update the UrlMap.\n\nTo see the latest fingerprint, make a get() request to retrieve a UrlMap.",
           "format": "byte",
           "type": "string"
         },

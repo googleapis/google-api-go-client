@@ -4249,7 +4249,7 @@ func (c *ProjectsServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operati
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:disable",
+	//       "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- projects/my-project/services/servicemanagement.googleapis.com",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4390,7 +4390,7 @@ func (c *ProjectsServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operatio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:enable",
+	//       "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- projects/my-project/services/servicemanagement.googleapis.com",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,

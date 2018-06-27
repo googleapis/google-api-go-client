@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/aK7KnkdoC5vOxuh4hK2ha_8qEOE\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/IOLAJDc4w9b5KIvdf4-u_LmxvA0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -8284,6 +8284,10 @@
           "description": "The two-letter ISO 639-1 language code for the item.",
           "type": "string"
         },
+        "costOfGoodsSold": {
+          "$ref": "Price",
+          "description": "Cost of goods sold. Used for gross profit reporting."
+        },
         "customAttributes": {
           "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"type\": \"text\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
           "items": {
@@ -8414,9 +8418,17 @@
           "description": "The material of which the item is made.",
           "type": "string"
         },
+        "maxEnergyEfficiencyClass": {
+          "description": "The energy efficiency class as defined in EU directive 2010/30/EU.",
+          "type": "string"
+        },
         "maxHandlingTime": {
           "description": "Maximal product handling time (in business days).",
           "format": "int64",
+          "type": "string"
+        },
+        "minEnergyEfficiencyClass": {
+          "description": "The energy efficiency class as defined in EU directive 2010/30/EU.",
           "type": "string"
         },
         "minHandlingTime": {

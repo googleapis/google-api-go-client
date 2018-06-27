@@ -8057,6 +8057,9 @@ type Product struct {
 	// ContentLanguage: The two-letter ISO 639-1 language code for the item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 
+	// CostOfGoodsSold: Cost of goods sold. Used for gross profit reporting.
+	CostOfGoodsSold *Price `json:"costOfGoodsSold,omitempty"`
+
 	// CustomAttributes: A list of custom (merchant-provided) attributes. It
 	// can also be used for submitting any attribute of the feed
 	// specification in its generic form (e.g., { "name": "size type",
@@ -8172,8 +8175,16 @@ type Product struct {
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
 
+	// MaxEnergyEfficiencyClass: The energy efficiency class as defined in
+	// EU directive 2010/30/EU.
+	MaxEnergyEfficiencyClass string `json:"maxEnergyEfficiencyClass,omitempty"`
+
 	// MaxHandlingTime: Maximal product handling time (in business days).
 	MaxHandlingTime int64 `json:"maxHandlingTime,omitempty,string"`
+
+	// MinEnergyEfficiencyClass: The energy efficiency class as defined in
+	// EU directive 2010/30/EU.
+	MinEnergyEfficiencyClass string `json:"minEnergyEfficiencyClass,omitempty"`
 
 	// MinHandlingTime: Minimal product handling time (in business days).
 	MinHandlingTime int64 `json:"minHandlingTime,omitempty,string"`

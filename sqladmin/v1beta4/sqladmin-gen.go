@@ -404,10 +404,10 @@ func (s *BinLogCoordinates) MarshalJSON() ([]byte, error) {
 
 // CloneContext: Database instance clone context.
 type CloneContext struct {
-	// BinLogCoordinates: Binary log coordinates, if specified, indentify
-	// the the position up to which the source instance should be cloned. If
-	// not specified, the source instance is cloned up to the most recent
-	// binary log coordintes.
+	// BinLogCoordinates: Binary log coordinates, if specified, identify the
+	// position up to which the source instance should be cloned. If not
+	// specified, the source instance is cloned up to the most recent binary
+	// log coordinates.
 	BinLogCoordinates *BinLogCoordinates `json:"binLogCoordinates,omitempty"`
 
 	// DestinationInstanceName: Name of the Cloud SQL instance to be created
@@ -1543,6 +1543,9 @@ type IpConfiguration struct {
 	// not.
 	Ipv4Enabled bool `json:"ipv4Enabled,omitempty"`
 
+	// PrivateNetwork: Reserved for future use.
+	PrivateNetwork string `json:"privateNetwork,omitempty"`
+
 	// RequireSsl: Whether SSL connections over IP should be enforced or
 	// not.
 	RequireSsl bool `json:"requireSsl,omitempty"`
@@ -1796,10 +1799,9 @@ func (s *OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Operation: An Operations resource contains information about database
-// instance operations such as create, delete, and restart. Operations
-// resources are created in response to operations that were initiated;
-// you never create them directly.
+// Operation: An Operation resource. For successful operations that
+// return an Operation resource, only the fields relevant to the
+// operation are populated in the resource.
 type Operation struct {
 	// EndTime: The time this operation finished in UTC timezone in RFC 3339
 	// format, for example 2012-11-15T16:19:00.094Z.
@@ -2361,8 +2363,7 @@ func (s *SslCertsCreateEphemeralRequest) MarshalJSON() ([]byte, error) {
 // SslCertsInsertRequest: SslCerts insert request.
 type SslCertsInsertRequest struct {
 	// CommonName: User supplied name. Must be a distinct name from the
-	// other certificates for this instance. New certificates will not be
-	// usable until the instance is restarted.
+	// other certificates for this instance.
 	CommonName string `json:"commonName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommonName") to
@@ -2482,8 +2483,8 @@ type Tier struct {
 	// Region: The applicable regions for this tier.
 	Region []string `json:"region,omitempty"`
 
-	// Tier: An identifier for the service tier, for example D1, D2 etc. For
-	// related information, see Pricing.
+	// Tier: An identifier for the machine type, for example,
+	// db-n1-standard-1. For related information, see Pricing.
 	Tier string `json:"tier,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskQuota") to
@@ -3894,7 +3895,7 @@ func (c *DatabasesListCall) Do(opts ...googleapi.CallOption) (*DatabasesListResp
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project for which to list Cloud SQL instances.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -4374,8 +4375,8 @@ type InstancesAddServerCaCall struct {
 // AddServerCa: Add a new trusted Certificate Authority (CA) version for
 // the specified instance. Required to prepare for a certificate
 // rotation. If a CA version was previously added but never used in a
-// certificate rotation, this operation replaces that version. There can
-// not be more than one CA version waiting to be rotated in.
+// certificate rotation, this operation replaces that version. There
+// cannot be more than one CA version waiting to be rotated in.
 func (r *InstancesService) AddServerCa(project string, instance string) *InstancesAddServerCaCall {
 	c := &InstancesAddServerCaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4465,7 +4466,7 @@ func (c *InstancesAddServerCaCall) Do(opts ...googleapi.CallOption) (*Operation,
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There can not be more than one CA version waiting to be rotated in.",
+	//   "description": "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.addServerCa",
 	//   "parameterOrder": [
@@ -4511,7 +4512,7 @@ type InstancesCloneCall struct {
 }
 
 // Clone: Creates a Cloud SQL instance as a clone of the source
-// instance. The API is not ready for Second Generation instances yet.
+// instance.
 func (r *InstancesService) Clone(project string, instance string, instancesclonerequest *InstancesCloneRequest) *InstancesCloneCall {
 	c := &InstancesCloneCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4607,7 +4608,7 @@ func (c *InstancesCloneCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a Cloud SQL instance as a clone of the source instance. The API is not ready for Second Generation instances yet.",
+	//   "description": "Creates a Cloud SQL instance as a clone of the source instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.clone",
 	//   "parameterOrder": [
@@ -4789,7 +4790,8 @@ type InstancesDemoteMasterCall struct {
 	header_                      http.Header
 }
 
-// DemoteMaster: Reserved for future use.
+// DemoteMaster: Demotes the stand-alone instance to be a Cloud SQL read
+// replica for an external database server.
 func (r *InstancesService) DemoteMaster(project string, instance string, instancesdemotemasterrequest *InstancesDemoteMasterRequest) *InstancesDemoteMasterCall {
 	c := &InstancesDemoteMasterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -4885,7 +4887,7 @@ func (c *InstancesDemoteMasterCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Reserved for future use.",
+	//   "description": "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.demoteMaster",
 	//   "parameterOrder": [
@@ -6280,10 +6282,7 @@ type InstancesResetSslConfigCall struct {
 }
 
 // ResetSslConfig: Deletes all client certificates and generates a new
-// server SSL certificate for the instance. The changes will not take
-// effect until the instance is restarted. Existing instances without a
-// server certificate will need to call this once to set a server
-// certificate.
+// server SSL certificate for the instance.
 func (r *InstancesService) ResetSslConfig(project string, instance string) *InstancesResetSslConfigCall {
 	c := &InstancesResetSslConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -6373,7 +6372,7 @@ func (c *InstancesResetSslConfigCall) Do(opts ...googleapi.CallOption) (*Operati
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes all client certificates and generates a new server SSL certificate for the instance. The changes will not take effect until the instance is restarted. Existing instances without a server certificate will need to call this once to set a server certificate.",
+	//   "description": "Deletes all client certificates and generates a new server SSL certificate for the instance.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.resetSslConfig",
 	//   "parameterOrder": [
@@ -7892,8 +7891,8 @@ type SslCertsDeleteCall struct {
 	header_         http.Header
 }
 
-// Delete: Deletes the SSL certificate. The change will not take effect
-// until the instance is restarted.
+// Delete: Deletes the SSL certificate. For First Generation instances,
+// the certificate remains valid until the instance is restarted.
 func (r *SslCertsService) Delete(project string, instance string, sha1Fingerprint string) *SslCertsDeleteCall {
 	c := &SslCertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -7985,7 +7984,7 @@ func (c *SslCertsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the SSL certificate. The change will not take effect until the instance is restarted.",
+	//   "description": "Deletes the SSL certificate. For First Generation instances, the certificate remains valid until the instance is restarted.",
 	//   "httpMethod": "DELETE",
 	//   "id": "sql.sslCerts.delete",
 	//   "parameterOrder": [
@@ -8001,7 +8000,7 @@ func (c *SslCertsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project that contains the instance to be deleted.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8310,7 +8309,7 @@ func (c *SslCertsInsertCall) Do(opts ...googleapi.CallOption) (*SslCertsInsertRe
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project to which the newly created Cloud SQL instances should belong.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8461,7 +8460,7 @@ func (c *SslCertsListCall) Do(opts ...googleapi.CallOption) (*SslCertsListRespon
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "Project ID of the project for which to list Cloud SQL instances.",
+	//       "description": "Project ID of the project that contains the instance.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -8490,8 +8489,8 @@ type TiersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all available service tiers for Google Cloud SQL, for
-// example D1, D2. For related information, see Pricing.
+// List: Lists all available machine types (tiers) for Cloud SQL, for
+// example, db-n1-standard-1. For related information, see Pricing.
 func (r *TiersService) List(project string) *TiersListCall {
 	c := &TiersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -8592,7 +8591,7 @@ func (c *TiersListCall) Do(opts ...googleapi.CallOption) (*TiersListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all available service tiers for Google Cloud SQL, for example D1, D2. For related information, see Pricing.",
+	//   "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-n1-standard-1. For related information, see Pricing.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.tiers.list",
 	//   "parameterOrder": [

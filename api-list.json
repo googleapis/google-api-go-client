@@ -1722,6 +1722,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "indexing:v3",
+   "name": "indexing",
+   "version": "v3",
+   "title": "Indexing API",
+   "description": "The Indexing API allows developers to share the life cycle of a Web Document with Google.",
+   "discoveryRestUrl": "https://indexing.googleapis.com/$discovery/rest?version=v3",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/search/apis/indexing-api/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "jobs:v2",
    "name": "jobs",
    "version": "v2",

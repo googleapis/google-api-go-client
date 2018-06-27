@@ -471,12 +471,6 @@ type AppEngineRouting struct {
 	// is
 	// attempted.
 	//
-	// When service is "default",
-	// version is "default", and
-	// instance is empty,
-	// host is shortened to just the
-	// `application_domain_name`.
-	//
 	// If service,
 	// version, or
 	// instance is invalid, then the task
@@ -506,7 +500,7 @@ type AppEngineRouting struct {
 	//
 	// By default, the task is sent to the service which is the
 	// default
-	// service when the task is attempted ("default").
+	// service when the task is attempted.
 	//
 	// For some queues or tasks which were created using the App Engine
 	// Task Queue API, host is not parsable
@@ -525,7 +519,7 @@ type AppEngineRouting struct {
 	//
 	// By default, the task is sent to the version which is the
 	// default
-	// version when the task is attempted ("default").
+	// version when the task is attempted.
 	//
 	// For some queues or tasks which were created using the App Engine
 	// Task Queue API, host is not parsable
@@ -5342,18 +5336,6 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort order used for
-// the query. The only fields supported for sorting
-// are `schedule_time` and `pull_message.tag`. All results will
-// be
-// returned in approximately ascending order. The default ordering is
-// by
-// `schedule_time`.
-func (c *ProjectsLocationsQueuesTasksListCall) OrderBy(orderBy string) *ProjectsLocationsQueuesTasksListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // Fewer tasks than requested might be returned.
 //
@@ -5513,11 +5495,6 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//     "parent"
 	//   ],
 	//   "parameters": {
-	//     "orderBy": {
-	//       "description": "Sort order used for the query. The only fields supported for sorting\nare `schedule_time` and `pull_message.tag`. All results will be\nreturned in approximately ascending order. The default ordering is by\n`schedule_time`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
 	//     "pageSize": {
 	//       "description": "Requested page size. Fewer tasks than requested might be returned.\n\nThe maximum page size is 1000. If unspecified, the page size will\nbe the maximum. Fewer tasks than requested might be returned,\neven if more tasks exist; use\nnext_page_token in the\nresponse to determine if more tasks exist.",
 	//       "format": "int32",

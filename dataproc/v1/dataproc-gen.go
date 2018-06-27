@@ -880,7 +880,7 @@ type InstanceGroupConfig struct {
 	// DiskConfig: Optional. Disk option config settings.
 	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 
-	// ImageUri: Output only. The Compute Engine image resource used for
+	// ImageUri: Optional. The Compute Engine image resource used for
 	// cluster instances. Inferred from SoftwareConfig.image_version.
 	ImageUri string `json:"imageUri,omitempty"`
 

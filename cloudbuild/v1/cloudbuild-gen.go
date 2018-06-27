@@ -288,8 +288,8 @@ type Build struct {
 	Artifacts *Artifacts `json:"artifacts,omitempty"`
 
 	// BuildTriggerId: Output only. The ID of the `BuildTrigger` that
-	// triggered this build, if it was
-	// triggered automatically.
+	// triggered this build, if it
+	// was triggered automatically.
 	BuildTriggerId string `json:"buildTriggerId,omitempty"`
 
 	// CreateTime: Output only. Time at which the request to create the

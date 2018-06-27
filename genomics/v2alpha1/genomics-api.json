@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20180607",
+  "revision": "20180623",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -532,7 +532,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The Compute Engine disk type.  If unspecified, 'standard-pd' is used.",
+          "description": "The Compute Engine disk type.  If unspecified, 'pd-standard' is used.",
           "type": "string"
         }
       },

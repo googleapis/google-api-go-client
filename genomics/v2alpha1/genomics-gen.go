@@ -648,7 +648,7 @@ type Disk struct {
 	// to the VM.
 	SourceImage string `json:"sourceImage,omitempty"`
 
-	// Type: The Compute Engine disk type.  If unspecified, 'standard-pd' is
+	// Type: The Compute Engine disk type.  If unspecified, 'pd-standard' is
 	// used.
 	Type string `json:"type,omitempty"`
 

@@ -18,7 +18,7 @@
   "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/dydRcA1ZbC7nkSRFII_LV6ikPbg\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/7uNaI_MZ5Mv7LQb3XtDSj55cbCM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -361,7 +361,7 @@
               "type": "string"
             },
             "project": {
-              "description": "Project ID of the project for which to list Cloud SQL instances.",
+              "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -487,7 +487,7 @@
     "instances": {
       "methods": {
         "addServerCa": {
-          "description": "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There can not be more than one CA version waiting to be rotated in.",
+          "description": "Add a new trusted Certificate Authority (CA) version for the specified instance. Required to prepare for a certificate rotation. If a CA version was previously added but never used in a certificate rotation, this operation replaces that version. There cannot be more than one CA version waiting to be rotated in.",
           "httpMethod": "POST",
           "id": "sql.instances.addServerCa",
           "parameterOrder": [
@@ -518,7 +518,7 @@
           ]
         },
         "clone": {
-          "description": "Creates a Cloud SQL instance as a clone of the source instance. The API is not ready for Second Generation instances yet.",
+          "description": "Creates a Cloud SQL instance as a clone of the source instance.",
           "httpMethod": "POST",
           "id": "sql.instances.clone",
           "parameterOrder": [
@@ -583,7 +583,7 @@
           ]
         },
         "demoteMaster": {
-          "description": "Reserved for future use.",
+          "description": "Demotes the stand-alone instance to be a Cloud SQL read replica for an external database server.",
           "httpMethod": "POST",
           "id": "sql.instances.demoteMaster",
           "parameterOrder": [
@@ -911,7 +911,7 @@
           ]
         },
         "resetSslConfig": {
-          "description": "Deletes all client certificates and generates a new server SSL certificate for the instance. The changes will not take effect until the instance is restarted. Existing instances without a server certificate will need to call this once to set a server certificate.",
+          "description": "Deletes all client certificates and generates a new server SSL certificate for the instance.",
           "httpMethod": "POST",
           "id": "sql.instances.resetSslConfig",
           "parameterOrder": [
@@ -1287,7 +1287,7 @@
           ]
         },
         "delete": {
-          "description": "Deletes the SSL certificate. The change will not take effect until the instance is restarted.",
+          "description": "Deletes the SSL certificate. For First Generation instances, the certificate remains valid until the instance is restarted.",
           "httpMethod": "DELETE",
           "id": "sql.sslCerts.delete",
           "parameterOrder": [
@@ -1303,7 +1303,7 @@
               "type": "string"
             },
             "project": {
-              "description": "Project ID of the project that contains the instance to be deleted.",
+              "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1378,7 +1378,7 @@
               "type": "string"
             },
             "project": {
-              "description": "Project ID of the project to which the newly created Cloud SQL instances should belong.",
+              "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1412,7 +1412,7 @@
               "type": "string"
             },
             "project": {
-              "description": "Project ID of the project for which to list Cloud SQL instances.",
+              "description": "Project ID of the project that contains the instance.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -1432,7 +1432,7 @@
     "tiers": {
       "methods": {
         "list": {
-          "description": "Lists all available service tiers for Google Cloud SQL, for example D1, D2. For related information, see Pricing.",
+          "description": "Lists all available machine types (tiers) for Cloud SQL, for example, db-n1-standard-1. For related information, see Pricing.",
           "httpMethod": "GET",
           "id": "sql.tiers.list",
           "parameterOrder": [
@@ -1620,7 +1620,6 @@
       }
     }
   },
-  "revision": "20180507",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1787,7 +1786,7 @@
       "properties": {
         "binLogCoordinates": {
           "$ref": "BinLogCoordinates",
-          "description": "Binary log coordinates, if specified, indentify the the position up to which the source instance should be cloned. If not specified, the source instance is cloned up to the most recent binary log coordintes."
+          "description": "Binary log coordinates, if specified, identify the position up to which the source instance should be cloned. If not specified, the source instance is cloned up to the most recent binary log coordinates."
         },
         "destinationInstanceName": {
           "description": "Name of the Cloud SQL instance to be created as a clone.",
@@ -2438,6 +2437,10 @@
           "description": "Whether the instance should be assigned an IP address or not.",
           "type": "boolean"
         },
+        "privateNetwork": {
+          "description": "Reserved for future use.",
+          "type": "string"
+        },
         "requireSsl": {
           "description": "Whether SSL connections over IP should be enforced or not.",
           "type": "boolean"
@@ -2582,7 +2585,7 @@
       "type": "object"
     },
     "Operation": {
-      "description": "An Operations resource contains information about database instance operations such as create, delete, and restart. Operations resources are created in response to operations that were initiated; you never create them directly.",
+      "description": "An Operation resource. For successful operations that return an Operation resource, only the fields relevant to the operation are populated in the resource.",
       "id": "Operation",
       "properties": {
         "endTime": {
@@ -2964,7 +2967,7 @@
       "id": "SslCertsInsertRequest",
       "properties": {
         "commonName": {
-          "description": "User supplied name. Must be a distinct name from the other certificates for this instance. New certificates will not be usable until the instance is restarted.",
+          "description": "User supplied name. Must be a distinct name from the other certificates for this instance.",
           "type": "string"
         }
       },
@@ -3040,7 +3043,7 @@
           "type": "array"
         },
         "tier": {
-          "description": "An identifier for the service tier, for example D1, D2 etc. For related information, see Pricing.",
+          "description": "An identifier for the machine type, for example, db-n1-standard-1. For related information, see Pricing.",
           "type": "string"
         }
       },

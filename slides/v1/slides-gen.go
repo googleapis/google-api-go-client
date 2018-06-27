@@ -3635,7 +3635,7 @@ type ParagraphStyle struct {
 	// inherited from the parent.
 	SpaceAbove *Dimension `json:"spaceAbove,omitempty"`
 
-	// SpaceBelow: The amount of extra space above the paragraph. If unset,
+	// SpaceBelow: The amount of extra space below the paragraph. If unset,
 	// the value is
 	// inherited from the parent.
 	SpaceBelow *Dimension `json:"spaceBelow,omitempty"`

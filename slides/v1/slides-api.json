@@ -300,7 +300,7 @@
       }
     }
   },
-  "revision": "20180613",
+  "revision": "20180621",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -2154,7 +2154,7 @@
         },
         "spaceBelow": {
           "$ref": "Dimension",
-          "description": "The amount of extra space above the paragraph. If unset, the value is\ninherited from the parent."
+          "description": "The amount of extra space below the paragraph. If unset, the value is\ninherited from the parent."
         },
         "spacingMode": {
           "description": "The spacing mode for the paragraph.",

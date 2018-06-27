@@ -772,7 +772,7 @@
       }
     }
   },
-  "revision": "20180612",
+  "revision": "20180619",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1258,7 +1258,7 @@
           "description": "Optional. Disk option config settings."
         },
         "imageUri": {
-          "description": "Output only. The Compute Engine image resource used for cluster instances. Inferred from SoftwareConfig.image_version.",
+          "description": "Optional. The Compute Engine image resource used for cluster instances. Inferred from SoftwareConfig.image_version.",
           "type": "string"
         },
         "instanceNames": {

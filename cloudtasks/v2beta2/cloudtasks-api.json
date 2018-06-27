@@ -684,11 +684,6 @@
                         "parent"
                       ],
                       "parameters": {
-                        "orderBy": {
-                          "description": "Sort order used for the query. The only fields supported for sorting\nare `schedule_time` and `pull_message.tag`. All results will be\nreturned in approximately ascending order. The default ordering is by\n`schedule_time`.",
-                          "location": "query",
-                          "type": "string"
-                        },
                         "pageSize": {
                           "description": "Requested page size. Fewer tasks than requested might be returned.\n\nThe maximum page size is 1000. If unspecified, the page size will\nbe the maximum. Fewer tasks than requested might be returned,\neven if more tasks exist; use\nnext_page_token in the\nresponse to determine if more tasks exist.",
                           "format": "int32",
@@ -791,7 +786,7 @@
       }
     }
   },
-  "revision": "20180618",
+  "revision": "20180622",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {
@@ -869,7 +864,7 @@
       "id": "AppEngineRouting",
       "properties": {
         "host": {
-          "description": "Output only. The host that the task is sent to.\n\nFor more information, see\n[How Requests are Routed](/appengine/docs/standard/python/how-requests-are-routed).\n\nThe host is constructed as:\n\n\n* `host = [application_domain_name]`\u003c/br\u003e\n  `| [service] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [version] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [version_dot_service]+ '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_service] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_version] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_version_dot_service] + '.' + [application_domain_name]`\n\n* `application_domain_name` = The domain name of the app, for\n  example \u003capp-id\u003e.appspot.com, which is associated with the\n  queue's project ID. Some tasks which were created using the App Engine\n  SDK use a custom domain name.\n\n* `service =` service\n\n* `version =` version\n\n* `version_dot_service =`\n  version `+ '.' +`\n  service\n\n* `instance =` instance\n\n* `instance_dot_service =`\n  instance `+ '.' +`\n  service\n\n* `instance_dot_version =`\n  instance `+ '.' +`\n  version\n\n* `instance_dot_version_dot_service =`\n  instance `+ '.' +`\n  version `+ '.' +`\n  service\n\nIf service is empty, then the task will be sent\nto the service which is the default service when the task is attempted.\n\nIf version is empty, then the task will be sent\nto the version which is the default version when the task is attempted.\n\nIf instance is empty, then the task\nwill be sent to an instance which is available when the task is\nattempted.\n\nWhen service is \"default\",\nversion is \"default\", and\ninstance is empty,\nhost is shortened to just the\n`application_domain_name`.\n\nIf service,\nversion, or\ninstance is invalid, then the task\nwill be sent to the default version of the default service when\nthe task is attempted.",
+          "description": "Output only. The host that the task is sent to.\n\nFor more information, see\n[How Requests are Routed](/appengine/docs/standard/python/how-requests-are-routed).\n\nThe host is constructed as:\n\n\n* `host = [application_domain_name]`\u003c/br\u003e\n  `| [service] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [version] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [version_dot_service]+ '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_service] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_version] + '.' + [application_domain_name]`\u003c/br\u003e\n  `| [instance_dot_version_dot_service] + '.' + [application_domain_name]`\n\n* `application_domain_name` = The domain name of the app, for\n  example \u003capp-id\u003e.appspot.com, which is associated with the\n  queue's project ID. Some tasks which were created using the App Engine\n  SDK use a custom domain name.\n\n* `service =` service\n\n* `version =` version\n\n* `version_dot_service =`\n  version `+ '.' +`\n  service\n\n* `instance =` instance\n\n* `instance_dot_service =`\n  instance `+ '.' +`\n  service\n\n* `instance_dot_version =`\n  instance `+ '.' +`\n  version\n\n* `instance_dot_version_dot_service =`\n  instance `+ '.' +`\n  version `+ '.' +`\n  service\n\nIf service is empty, then the task will be sent\nto the service which is the default service when the task is attempted.\n\nIf version is empty, then the task will be sent\nto the version which is the default version when the task is attempted.\n\nIf instance is empty, then the task\nwill be sent to an instance which is available when the task is\nattempted.\n\nIf service,\nversion, or\ninstance is invalid, then the task\nwill be sent to the default version of the default service when\nthe task is attempted.",
           "type": "string"
         },
         "instance": {
@@ -877,11 +872,11 @@
           "type": "string"
         },
         "service": {
-          "description": "App service.\n\nBy default, the task is sent to the service which is the default\nservice when the task is attempted (\"default\").\n\nFor some queues or tasks which were created using the App Engine\nTask Queue API, host is not parsable\ninto service,\nversion, and\ninstance. For example, some tasks\nwhich were created using the App Engine SDK use a custom domain\nname; custom domains are not parsed by Cloud Tasks. If\nhost is not parsable, then\nservice,\nversion, and\ninstance are the empty string.",
+          "description": "App service.\n\nBy default, the task is sent to the service which is the default\nservice when the task is attempted.\n\nFor some queues or tasks which were created using the App Engine\nTask Queue API, host is not parsable\ninto service,\nversion, and\ninstance. For example, some tasks\nwhich were created using the App Engine SDK use a custom domain\nname; custom domains are not parsed by Cloud Tasks. If\nhost is not parsable, then\nservice,\nversion, and\ninstance are the empty string.",
           "type": "string"
         },
         "version": {
-          "description": "App version.\n\nBy default, the task is sent to the version which is the default\nversion when the task is attempted (\"default\").\n\nFor some queues or tasks which were created using the App Engine\nTask Queue API, host is not parsable\ninto service,\nversion, and\ninstance. For example, some tasks\nwhich were created using the App Engine SDK use a custom domain\nname; custom domains are not parsed by Cloud Tasks. If\nhost is not parsable, then\nservice,\nversion, and\ninstance are the empty string.",
+          "description": "App version.\n\nBy default, the task is sent to the version which is the default\nversion when the task is attempted.\n\nFor some queues or tasks which were created using the App Engine\nTask Queue API, host is not parsable\ninto service,\nversion, and\ninstance. For example, some tasks\nwhich were created using the App Engine SDK use a custom domain\nname; custom domains are not parsed by Cloud Tasks. If\nhost is not parsable, then\nservice,\nversion, and\ninstance are the empty string.",
           "type": "string"
         }
       },

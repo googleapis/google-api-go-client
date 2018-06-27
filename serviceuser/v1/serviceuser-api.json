@@ -123,7 +123,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:disable",
+                  "description": "Name of the consumer and the service to disable for that consumer.\n\nThe Service User implementation accepts the following forms for consumer:\n- \"project:\u003cproject_id\u003e\"\n\nA valid path would be:\n- projects/my-project/services/servicemanagement.googleapis.com",
                   "location": "path",
                   "pattern": "^projects/[^/]+/services/[^/]+$",
                   "required": true,
@@ -152,7 +152,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- /v1/projects/my-project/services/servicemanagement.googleapis.com:enable",
+                  "description": "Name of the consumer and the service to enable for that consumer.\n\nA valid path would be:\n- projects/my-project/services/servicemanagement.googleapis.com",
                   "location": "path",
                   "pattern": "^projects/[^/]+/services/[^/]+$",
                   "required": true,
@@ -245,7 +245,7 @@
       }
     }
   },
-  "revision": "20180612",
+  "revision": "20180621",
   "rootUrl": "https://serviceuser.googleapis.com/",
   "schemas": {
     "Api": {

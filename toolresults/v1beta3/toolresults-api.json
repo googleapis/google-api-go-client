@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/rwmy1ohqnGfwsc8yKZC_Tiog9tA\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/fKBxyfgBLz59NlDMfNbE_2Xyy5A\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1161,7 +1161,6 @@
       }
     }
   },
-  "revision": "20180426",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -2260,6 +2259,20 @@
       "description": "An issue detected occurring during a test execution.",
       "id": "TestIssue",
       "properties": {
+        "category": {
+          "description": "Category of issue. Required.",
+          "enum": [
+            "common",
+            "robo",
+            "unspecifiedCategory"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "errorMessage": {
           "description": "A brief human-readable message describing the issue. Required.",
           "type": "string"
@@ -2269,10 +2282,12 @@
           "enum": [
             "info",
             "severe",
+            "suggestion",
             "unspecifiedSeverity",
             "warning"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

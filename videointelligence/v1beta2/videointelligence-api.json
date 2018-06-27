@@ -127,7 +127,7 @@
       }
     }
   },
-  "revision": "20180604",
+  "revision": "20180619",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -293,21 +293,21 @@
       "id": "GoogleCloudVideointelligenceV1_VideoAnnotationProgress",
       "properties": {
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
-          "description": "Output only. Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
+          "description": "Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
           "format": "int32",
           "type": "integer"
         },
         "startTime": {
-          "description": "Output only. Time when the request was received.",
+          "description": "Time when the request was received.",
           "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. Time of the most recent update.",
+          "description": "Time of the most recent update.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -320,7 +320,7 @@
       "properties": {
         "error": {
           "$ref": "GoogleRpc_Status",
-          "description": "Output only. Non-streaming error only. If set, indicates an error. Note\nthat for a single `AnnotateVideoRequest` some videos may succeed and some\nmay fail."
+          "description": "If set, indicates an error. Note that for a single `AnnotateVideoRequest`\nsome videos may succeed and some may fail."
         },
         "explicitAnnotation": {
           "$ref": "GoogleCloudVideointelligenceV1_ExplicitContentAnnotation",
@@ -334,7 +334,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "segmentLabelAnnotations": {
@@ -641,21 +641,21 @@
       "id": "GoogleCloudVideointelligenceV1beta2_VideoAnnotationProgress",
       "properties": {
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
-          "description": "Output only. Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
+          "description": "Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
           "format": "int32",
           "type": "integer"
         },
         "startTime": {
-          "description": "Output only. Time when the request was received.",
+          "description": "Time when the request was received.",
           "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. Time of the most recent update.",
+          "description": "Time of the most recent update.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -668,7 +668,7 @@
       "properties": {
         "error": {
           "$ref": "GoogleRpc_Status",
-          "description": "Output only. Non-streaming error only. If set, indicates an error. Note\nthat for a single `AnnotateVideoRequest` some videos may succeed and some\nmay fail."
+          "description": "If set, indicates an error. Note that for a single `AnnotateVideoRequest`\nsome videos may succeed and some may fail."
         },
         "explicitAnnotation": {
           "$ref": "GoogleCloudVideointelligenceV1beta2_ExplicitContentAnnotation",
@@ -682,7 +682,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "segmentLabelAnnotations": {
@@ -722,7 +722,7 @@
           "description": "Config for LABEL_DETECTION."
         },
         "segments": {
-          "description": "Non-streaming request only. Video segments to annotate. The segments may\noverlap and are not required to be contiguous or span the whole video. If\nunspecified, each video is treated as a single segment.",
+          "description": "Video segments to annotate. The segments may overlap and are not required\nto be contiguous or span the whole video. If unspecified, each video is\ntreated as a single segment.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1beta2_VideoSegment"
           },
@@ -915,16 +915,16 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_SpeechRecognitionAlternative",
       "properties": {
         "confidence": {
-          "description": "Output only. The confidence estimate between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. This field is typically provided only for the top hypothesis, and\nonly for `is_final=true` results. Clients should not rely on the\n`confidence` field as it is not guaranteed to be accurate or consistent.\nThe default of 0.0 is a sentinel value indicating `confidence` was not set.",
+          "description": "The confidence estimate between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. This field is typically provided only for the top hypothesis, and\nonly for `is_final=true` results. Clients should not rely on the\n`confidence` field as it is not guaranteed to be accurate or consistent.\nThe default of 0.0 is a sentinel value indicating `confidence` was not set.",
           "format": "float",
           "type": "number"
         },
         "transcript": {
-          "description": "Output only. Transcript text representing the words that the user spoke.",
+          "description": "Transcript text representing the words that the user spoke.",
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.",
+          "description": "A list of word-specific information for each recognized word.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_WordInfo"
           },
@@ -938,7 +938,7 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_SpeechTranscription",
       "properties": {
         "alternatives": {
-          "description": "Output only. May contain one or more recognition hypotheses (up to the\nmaximum specified in `max_alternatives`).\nThese alternatives are ordered in terms of accuracy, with the top (first)\nalternative being the most probable, as ranked by the recognizer.",
+          "description": "May contain one or more recognition hypotheses (up to the maximum specified\nin `max_alternatives`).  These alternatives are ordered in terms of\naccuracy, with the top (first) alternative being the most probable, as\nranked by the recognizer.",
           "items": {
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_SpeechRecognitionAlternative"
           },
@@ -952,21 +952,21 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_VideoAnnotationProgress",
       "properties": {
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "progressPercent": {
-          "description": "Output only. Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
+          "description": "Approximate percentage processed thus far. Guaranteed to be\n100 when fully processed.",
           "format": "int32",
           "type": "integer"
         },
         "startTime": {
-          "description": "Output only. Time when the request was received.",
+          "description": "Time when the request was received.",
           "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. Time of the most recent update.",
+          "description": "Time of the most recent update.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -979,7 +979,7 @@
       "properties": {
         "error": {
           "$ref": "GoogleRpc_Status",
-          "description": "Output only. Non-streaming error only. If set, indicates an error. Note\nthat for a single `AnnotateVideoRequest` some videos may succeed and some\nmay fail."
+          "description": "If set, indicates an error. Note that for a single `AnnotateVideoRequest`\nsome videos may succeed and some may fail."
         },
         "explicitAnnotation": {
           "$ref": "GoogleCloudVideointelligenceV1p1beta1_ExplicitContentAnnotation",
@@ -993,7 +993,7 @@
           "type": "array"
         },
         "inputUri": {
-          "description": "Output only. Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
+          "description": "Video file location in\n[Google Cloud Storage](https://cloud.google.com/storage/).",
           "type": "string"
         },
         "segmentLabelAnnotations": {
@@ -1049,17 +1049,17 @@
       "id": "GoogleCloudVideointelligenceV1p1beta1_WordInfo",
       "properties": {
         "endTime": {
-          "description": "Output only. Time offset relative to the beginning of the audio, and\ncorresponding to the end of the spoken word. This field is only set if\n`enable_word_time_offsets=true` and only in the top hypothesis. This is an\nexperimental feature and the accuracy of the time offset can vary.",
+          "description": "Time offset relative to the beginning of the audio, and\ncorresponding to the end of the spoken word. This field is only set if\n`enable_word_time_offsets=true` and only in the top hypothesis. This is an\nexperimental feature and the accuracy of the time offset can vary.",
           "format": "google-duration",
           "type": "string"
         },
         "startTime": {
-          "description": "Output only. Time offset relative to the beginning of the audio, and\ncorresponding to the start of the spoken word. This field is only set if\n`enable_word_time_offsets=true` and only in the top hypothesis. This is an\nexperimental feature and the accuracy of the time offset can vary.",
+          "description": "Time offset relative to the beginning of the audio, and\ncorresponding to the start of the spoken word. This field is only set if\n`enable_word_time_offsets=true` and only in the top hypothesis. This is an\nexperimental feature and the accuracy of the time offset can vary.",
           "format": "google-duration",
           "type": "string"
         },
         "word": {
-          "description": "Output only. The word corresponding to this set of information.",
+          "description": "The word corresponding to this set of information.",
           "type": "string"
         }
       },

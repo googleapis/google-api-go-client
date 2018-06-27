@@ -3425,7 +3425,11 @@ type BackendService struct {
 	// Fingerprint: Fingerprint of this resource. A hash of the contents
 	// stored in this object. This field is used in optimistic locking. This
 	// field will be ignored when inserting a BackendService. An up-to-date
-	// fingerprint must be provided in order to update the BackendService.
+	// fingerprint must be provided in order to update the
+	// BackendService.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve a
+	// BackendService.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// HealthChecks: The list of URLs to the HttpHealthCheck or
@@ -6235,6 +6239,62 @@ func (s *DisksScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type DistributionPolicy struct {
+	// Zones: Zones where the regional managed instance group will create
+	// and manage instances.
+	Zones []*DistributionPolicyZoneConfiguration `json:"zones,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zones") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zones") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DistributionPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type DistributionPolicyZoneConfiguration struct {
+	// Zone: The URL of the zone. The zone must exist in the region where
+	// the managed instance group is located.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Zone") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zone") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DistributionPolicyZoneConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod DistributionPolicyZoneConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Firewall: Represents a Firewall resource.
 type Firewall struct {
 	// Allowed: The list of ALLOW rules specified by this firewall. Each
@@ -6647,6 +6707,10 @@ type ForwardingRule struct {
 	// rule supports IPv4 only. A global forwarding rule supports either
 	// IPv4 or IPv6.
 	//
+	// When the load balancing scheme is INTERNAL_SELF_MANAGED, this must be
+	// a URL reference to an existing Address resource ( internal regional
+	// static IP address).
+	//
 	// When the load balancing scheme is INTERNAL, this can only be an RFC
 	// 1918 IP address belonging to the network/subnet configured for the
 	// forwarding rule. By default, if this field is empty, an ephemeral
@@ -6669,7 +6733,8 @@ type ForwardingRule struct {
 	// are TCP, UDP, ESP, AH, SCTP or ICMP.
 	//
 	// When the load balancing scheme is INTERNAL, only TCP and UDP are
-	// valid.
+	// valid. When the load balancing scheme is INTERNAL_SELF_MANAGED, only
+	// TCPis valid.
 	//
 	// Possible values:
 	//   "AH"
@@ -6680,7 +6745,7 @@ type ForwardingRule struct {
 	//   "UDP"
 	IPProtocol string `json:"IPProtocol,omitempty"`
 
-	// BackendService: This field is not used for external load
+	// BackendService: This field is only used for INTERNAL load
 	// balancing.
 	//
 	// For internal load balancing, this field identifies the BackendService
@@ -6700,8 +6765,8 @@ type ForwardingRule struct {
 	Id uint64 `json:"id,omitempty,string"`
 
 	// IpVersion: The IP Version that will be used by this forwarding rule.
-	// Valid options are IPV4 or IPV6. This can only be specified for a
-	// global forwarding rule.
+	// Valid options are IPV4 or IPV6. This can only be specified for an
+	// external global forwarding rule.
 	//
 	// Possible values:
 	//   "IPV4"
@@ -6714,10 +6779,12 @@ type ForwardingRule struct {
 	Kind string `json:"kind,omitempty"`
 
 	// LoadBalancingScheme: This signifies what the ForwardingRule will be
-	// used for and can only take the following values: INTERNAL, EXTERNAL
-	// The value of INTERNAL means that this will be used for Internal
-	// Network Load Balancing (TCP, UDP). The value of EXTERNAL means that
-	// this will be used for External Load Balancing (HTTP(S) LB, External
+	// used for and can only take the following values: INTERNAL,
+	// INTERNAL_SELF_MANAGED, EXTERNAL. The value of INTERNAL means that
+	// this will be used for Internal Network Load Balancing (TCP, UDP). The
+	// value of INTERNAL_SELF_MANAGED means that this will be used for
+	// Internal Global HTTP(S) LB. The value of EXTERNAL means that this
+	// will be used for External Load Balancing (HTTP(S) LB, External
 	// TCP/UDP LB, SSL Proxy)
 	//
 	// Possible values:
@@ -6737,9 +6804,10 @@ type ForwardingRule struct {
 
 	// Network: This field is not used for external load balancing.
 	//
-	// For internal load balancing, this field identifies the network that
-	// the load balanced IP should belong to for this Forwarding Rule. If
-	// this field is not specified, the default network will be used.
+	// For INTERNAL and INTERNAL_SELF_MANAGED load balancing, this field
+	// identifies the network that the load balanced IP should belong to for
+	// this Forwarding Rule. If this field is not specified, the default
+	// network will be used.
 	Network string `json:"network,omitempty"`
 
 	// PortRange: This field is used along with the target field for
@@ -6782,7 +6850,7 @@ type ForwardingRule struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Subnetwork: This field is not used for external load balancing.
+	// Subnetwork: This field is only used for INTERNAL load balancing.
 	//
 	// For internal load balancing, this field identifies the subnetwork
 	// that the load balanced IP should belong to for this Forwarding
@@ -6797,7 +6865,9 @@ type ForwardingRule struct {
 	// traffic. For regional forwarding rules, this target must live in the
 	// same region as the forwarding rule. For global forwarding rules, this
 	// target must be a global load balancing resource. The forwarded
-	// traffic must be of a type appropriate to the target object.
+	// traffic must be of a type appropriate to the target object. For
+	// INTERNAL_SELF_MANAGED" load balancing, only HTTP and HTTPS targets
+	// are valid.
 	Target string `json:"target,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8415,9 +8485,9 @@ type Image struct {
 	// customer-supplied encryption key.
 	SourceDiskEncryptionKey *CustomerEncryptionKey `json:"sourceDiskEncryptionKey,omitempty"`
 
-	// SourceDiskId: The ID value of the disk used to create this image.
-	// This value may be used to determine whether the image was taken from
-	// the current or a previous instance of a given disk name.
+	// SourceDiskId: [Output Only] The ID value of the disk used to create
+	// this image. This value may be used to determine whether the image was
+	// taken from the current or a previous instance of a given disk name.
 	SourceDiskId string `json:"sourceDiskId,omitempty"`
 
 	// SourceImage: URL of the source image used to create this image. This
@@ -9468,10 +9538,17 @@ type InstanceGroupManager struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
+	// DistributionPolicy: Policy specifying intended distribution of
+	// instances in regional managed instance group.
+	DistributionPolicy *DistributionPolicy `json:"distributionPolicy,omitempty"`
+
 	// Fingerprint: Fingerprint of this resource. This field may be used in
 	// optimistic locking. It will be ignored when inserting an
 	// InstanceGroupManager. An up-to-date fingerprint must be provided in
 	// order to update the InstanceGroupManager.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve an
+	// InstanceGroupManager.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Id: [Output Only] A unique identifier for this resource type. The
@@ -14277,6 +14354,9 @@ type Metadata struct {
 	// changes after every request to modify or update metadata. You must
 	// always provide an up-to-date fingerprint hash in order to update or
 	// change metadata.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve the
+	// resource.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Items: Array of key/value pairs. The total size of all keys and
@@ -19739,6 +19819,9 @@ type SslPolicy struct {
 	// stored in this object. This field is used in optimistic locking. This
 	// field will be ignored when inserting a SslPolicy. An up-to-date
 	// fingerprint must be provided in order to update the SslPolicy.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve an
+	// SslPolicy.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// Id: [Output Only] The unique identifier for the resource. This
@@ -19965,6 +20048,9 @@ type Subnetwork struct {
 	// stored in this object. This field is used in optimistic locking. This
 	// field will be ignored when inserting a Subnetwork. An up-to-date
 	// fingerprint must be provided in order to update the Subnetwork.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve a
+	// Subnetwork.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// GatewayAddress: [Output Only] The gateway address for default routes
@@ -23767,6 +23853,9 @@ type UrlMap struct {
 	// stored in this object. This field is used in optimistic locking. This
 	// field will be ignored when inserting a UrlMap. An up-to-date
 	// fingerprint must be provided in order to update the UrlMap.
+	//
+	// To see the latest fingerprint, make a get() request to retrieve a
+	// UrlMap.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
 	// HostRules: The list of HostRules to use against the URL.

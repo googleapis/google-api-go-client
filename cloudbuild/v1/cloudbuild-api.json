@@ -561,7 +561,7 @@
       }
     }
   },
-  "revision": "20180620",
+  "revision": "20180626",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -631,7 +631,7 @@
           "description": "Artifacts produced by the build that should be uploaded upon\nsuccessful completion of all build steps."
         },
         "buildTriggerId": {
-          "description": "Output only. The ID of the `BuildTrigger` that triggered this build, if it was\ntriggered automatically.",
+          "description": "Output only. The ID of the `BuildTrigger` that triggered this build, if it\nwas triggered automatically.",
           "type": "string"
         },
         "createTime": {

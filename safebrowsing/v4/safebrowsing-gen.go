@@ -610,6 +610,7 @@ type ListUpdateRequest struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -729,6 +730,7 @@ type ListUpdateResponse struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1098,6 +1100,7 @@ type ThreatHit struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1185,6 +1188,7 @@ type ThreatInfo struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1268,6 +1272,7 @@ type ThreatListDescriptor struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1359,6 +1364,7 @@ type ThreatMatch struct {
 	// subresource filter. Interstitial
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
+	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to

@@ -623,7 +623,7 @@
                       ]
                     },
                     "updatePrimaryVersion": {
-                      "description": "Update the version of a CryptoKey that will be used in Encrypt",
+                      "description": "Update the version of a CryptoKey that will be used in Encrypt.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:updatePrimaryVersion",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.updatePrimaryVersion",
@@ -844,7 +844,7 @@
       }
     }
   },
-  "revision": "20180611",
+  "revision": "20180622",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {

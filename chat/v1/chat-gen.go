@@ -423,7 +423,7 @@ type DeprecatedEvent struct {
 	// EventTime: The timestamp indicating when the event was dispatched.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// Message: The message that triggered the event.
+	// Message: The message that triggered the event, if applicable.
 	Message *Message `json:"message,omitempty"`
 
 	// Space: The room or DM in which the event occurred.

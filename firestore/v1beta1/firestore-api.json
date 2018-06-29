@@ -620,10 +620,10 @@
                   },
                   "path": "v1beta1/{+parent}/indexes",
                   "request": {
-                    "$ref": "Index"
+                    "$ref": "GoogleFirestoreAdminV1beta1Index"
                   },
                   "response": {
-                    "$ref": "Operation"
+                    "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -675,7 +675,7 @@
                   },
                   "path": "v1beta1/{+name}",
                   "response": {
-                    "$ref": "Index"
+                    "$ref": "GoogleFirestoreAdminV1beta1Index"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -716,7 +716,7 @@
                   },
                   "path": "v1beta1/{+parent}/indexes",
                   "response": {
-                    "$ref": "ListIndexesResponse"
+                    "$ref": "GoogleFirestoreAdminV1beta1ListIndexesResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform",
@@ -730,7 +730,7 @@
       }
     }
   },
-  "revision": "20180605",
+  "revision": "20180626",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "ArrayValue": {
@@ -1112,7 +1112,8 @@
             "LESS_THAN_OR_EQUAL",
             "GREATER_THAN",
             "GREATER_THAN_OR_EQUAL",
-            "EQUAL"
+            "EQUAL",
+            "ARRAY_CONTAINS"
           ],
           "enumDescriptions": [
             "Unspecified. This value must not be used.",
@@ -1120,7 +1121,8 @@
             "Less than or equal. Requires that the field come first in `order_by`.",
             "Greater than. Requires that the field come first in `order_by`.",
             "Greater than or equal. Requires that the field come first in\n`order_by`.",
-            "Equal."
+            "Equal.",
+            "Contains. Requires that the field is an array."
           ],
           "type": "string"
         },
@@ -1145,9 +1147,17 @@
       "description": "A transformation of a field of the document.",
       "id": "FieldTransform",
       "properties": {
+        "appendMissingElements": {
+          "$ref": "ArrayValue",
+          "description": "Append the given elements in order if they are not already present in\nthe current field value.\nIf the field is not an array, or if the field does not yet exist, it is\nfirst set to the empty array.\n\nEquivalent numbers of different types (e.g. 3L and 3.0) are\nconsidered equal when checking if a value is missing.\nNaN is equal to NaN, and Null is equal to Null.\nIf the input contains multiple equivalent values, only the first will\nbe considered.\n\nThe corresponding transform_result will be the null value."
+        },
         "fieldPath": {
           "description": "The path of the field. See Document.fields for the field path syntax\nreference.",
           "type": "string"
+        },
+        "removeAllFromArray": {
+          "$ref": "ArrayValue",
+          "description": "Remove all of the given elements from the array in the field.\nIf the field is not an array, or if the field does not yet exist, it is\nset to the empty array.\n\nEquivalent numbers of the different types (e.g. 3L and 3.0) are\nconsidered equal when deciding whether an element should be removed.\nNaN is equal to NaN, and Null is equal to Null.\nThis will remove all equivalent values if there are duplicates.\n\nThe corresponding transform_result will be the null value."
         },
         "setToServerValue": {
           "description": "Sets the field to the given server value.",
@@ -1183,9 +1193,9 @@
       },
       "type": "object"
     },
-    "Index": {
+    "GoogleFirestoreAdminV1beta1Index": {
       "description": "An index definition.",
-      "id": "Index",
+      "id": "GoogleFirestoreAdminV1beta1Index",
       "properties": {
         "collectionId": {
           "description": "The collection ID to which this index applies. Required.",
@@ -1194,7 +1204,7 @@
         "fields": {
           "description": "The fields to index.",
           "items": {
-            "$ref": "IndexField"
+            "$ref": "GoogleFirestoreAdminV1beta1IndexField"
           },
           "type": "array"
         },
@@ -1221,9 +1231,9 @@
       },
       "type": "object"
     },
-    "IndexField": {
+    "GoogleFirestoreAdminV1beta1IndexField": {
       "description": "A field of an index.",
-      "id": "IndexField",
+      "id": "GoogleFirestoreAdminV1beta1IndexField",
       "properties": {
         "fieldPath": {
           "description": "The path of the field. Must match the field path specification described\nby google.firestore.v1beta1.Document.fields.\nSpecial field path `__name__` may be used by itself or at the end of a\npath. `__type__` may be used only at the end of path.",
@@ -1244,6 +1254,59 @@
             "The field's array values are indexed so as to support membership using\nARRAY_CONTAINS queries."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleFirestoreAdminV1beta1ListIndexesResponse": {
+      "description": "The response for FirestoreAdmin.ListIndexes.",
+      "id": "GoogleFirestoreAdminV1beta1ListIndexesResponse",
+      "properties": {
+        "indexes": {
+          "description": "The indexes.",
+          "items": {
+            "$ref": "GoogleFirestoreAdminV1beta1Index"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "The standard List next-page token.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleLongrunningOperation": {
+      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
+      "id": "GoogleLongrunningOperation",
+      "properties": {
+        "done": {
+          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
+          "type": "boolean"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error result of the operation in case of failure or cancellation."
+        },
+        "metadata": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
+          "type": "object"
+        },
+        "name": {
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "type": "string"
+        },
+        "response": {
+          "additionalProperties": {
+            "description": "Properties of the object. Contains field @type with type URL.",
+            "type": "any"
+          },
+          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -1317,24 +1380,6 @@
       },
       "type": "object"
     },
-    "ListIndexesResponse": {
-      "description": "The response for FirestoreAdmin.ListIndexes.",
-      "id": "ListIndexesResponse",
-      "properties": {
-        "indexes": {
-          "description": "The indexes.",
-          "items": {
-            "$ref": "Index"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ListenRequest": {
       "description": "A request for Firestore.Listen",
       "id": "ListenRequest",
@@ -1394,41 +1439,6 @@
             "$ref": "Value"
           },
           "description": "The map's fields.\n\nThe map keys represent field names. Field names matching the regular\nexpression `__.*__` are reserved. Reserved field names are forbidden except\nin certain documented contexts. The map keys, represented as UTF-8, must\nnot exceed 1,500 bytes and cannot be empty.",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "Operation": {
-      "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
-      "id": "Operation",
-      "properties": {
-        "done": {
-          "description": "If the value is `false`, it means the operation is still in progress.\nIf `true`, the operation is completed, and either `error` or `response` is\navailable.",
-          "type": "boolean"
-        },
-        "error": {
-          "$ref": "Status",
-          "description": "The error result of the operation in case of failure or cancellation."
-        },
-        "metadata": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "Service-specific metadata associated with the operation.  It typically\ncontains progress information and common metadata such as create time.\nSome services might not provide such metadata.  Any method that returns a\nlong-running operation should document the metadata type, if any.",
-          "type": "object"
-        },
-        "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
-          "type": "string"
-        },
-        "response": {
-          "additionalProperties": {
-            "description": "Properties of the object. Contains field @type with type URL.",
-            "type": "any"
-          },
-          "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "type": "object"
         }
       },

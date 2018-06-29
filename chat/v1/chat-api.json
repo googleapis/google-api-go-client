@@ -316,7 +316,7 @@
       }
     }
   },
-  "revision": "20180606",
+  "revision": "20180623",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -504,7 +504,7 @@
         },
         "message": {
           "$ref": "Message",
-          "description": "The message that triggered the event."
+          "description": "The message that triggered the event, if applicable."
         },
         "space": {
           "$ref": "Space",

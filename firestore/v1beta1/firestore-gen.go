@@ -922,6 +922,7 @@ type FieldFilter struct {
 	// field come first in
 	// `order_by`.
 	//   "EQUAL" - Equal.
+	//   "ARRAY_CONTAINS" - Contains. Requires that the field is an array.
 	Op string `json:"op,omitempty"`
 
 	// Value: The value to compare to.
@@ -980,10 +981,44 @@ func (s *FieldReference) MarshalJSON() ([]byte, error) {
 
 // FieldTransform: A transformation of a field of the document.
 type FieldTransform struct {
+	// AppendMissingElements: Append the given elements in order if they are
+	// not already present in
+	// the current field value.
+	// If the field is not an array, or if the field does not yet exist, it
+	// is
+	// first set to the empty array.
+	//
+	// Equivalent numbers of different types (e.g. 3L and 3.0)
+	// are
+	// considered equal when checking if a value is missing.
+	// NaN is equal to NaN, and Null is equal to Null.
+	// If the input contains multiple equivalent values, only the first
+	// will
+	// be considered.
+	//
+	// The corresponding transform_result will be the null value.
+	AppendMissingElements *ArrayValue `json:"appendMissingElements,omitempty"`
+
 	// FieldPath: The path of the field. See Document.fields for the field
 	// path syntax
 	// reference.
 	FieldPath string `json:"fieldPath,omitempty"`
+
+	// RemoveAllFromArray: Remove all of the given elements from the array
+	// in the field.
+	// If the field is not an array, or if the field does not yet exist, it
+	// is
+	// set to the empty array.
+	//
+	// Equivalent numbers of the different types (e.g. 3L and 3.0)
+	// are
+	// considered equal when deciding whether an element should be
+	// removed.
+	// NaN is equal to NaN, and Null is equal to Null.
+	// This will remove all equivalent values if there are duplicates.
+	//
+	// The corresponding transform_result will be the null value.
+	RemoveAllFromArray *ArrayValue `json:"removeAllFromArray,omitempty"`
 
 	// SetToServerValue: Sets the field to the given server value.
 	//
@@ -995,20 +1030,22 @@ type FieldTransform struct {
 	// precision.
 	SetToServerValue string `json:"setToServerValue,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FieldPath") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AppendMissingElements") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FieldPath") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AppendMissingElements") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1053,14 +1090,14 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Index: An index definition.
-type Index struct {
+// GoogleFirestoreAdminV1beta1Index: An index definition.
+type GoogleFirestoreAdminV1beta1Index struct {
 	// CollectionId: The collection ID to which this index applies.
 	// Required.
 	CollectionId string `json:"collectionId,omitempty"`
 
 	// Fields: The fields to index.
-	Fields []*IndexField `json:"fields,omitempty"`
+	Fields []*GoogleFirestoreAdminV1beta1IndexField `json:"fields,omitempty"`
 
 	// Name: The resource name of the index.
 	// Output only.
@@ -1107,14 +1144,14 @@ type Index struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Index) MarshalJSON() ([]byte, error) {
-	type NoMethod Index
+func (s *GoogleFirestoreAdminV1beta1Index) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta1Index
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IndexField: A field of an index.
-type IndexField struct {
+// GoogleFirestoreAdminV1beta1IndexField: A field of an index.
+type GoogleFirestoreAdminV1beta1IndexField struct {
 	// FieldPath: The path of the field. Must match the field path
 	// specification described
 	// by google.firestore.v1beta1.Document.fields.
@@ -1155,8 +1192,119 @@ type IndexField struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *IndexField) MarshalJSON() ([]byte, error) {
-	type NoMethod IndexField
+func (s *GoogleFirestoreAdminV1beta1IndexField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta1IndexField
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1beta1ListIndexesResponse: The response for
+// FirestoreAdmin.ListIndexes.
+type GoogleFirestoreAdminV1beta1ListIndexesResponse struct {
+	// Indexes: The indexes.
+	Indexes []*GoogleFirestoreAdminV1beta1Index `json:"indexes,omitempty"`
+
+	// NextPageToken: The standard List next-page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Indexes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Indexes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta1ListIndexesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta1ListIndexesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleLongrunningOperation: This resource represents a long-running
+// operation that is the result of a
+// network API call.
+type GoogleLongrunningOperation struct {
+	// Done: If the value is `false`, it means the operation is still in
+	// progress.
+	// If `true`, the operation is completed, and either `error` or
+	// `response` is
+	// available.
+	Done bool `json:"done,omitempty"`
+
+	// Error: The error result of the operation in case of failure or
+	// cancellation.
+	Error *Status `json:"error,omitempty"`
+
+	// Metadata: Service-specific metadata associated with the operation.
+	// It typically
+	// contains progress information and common metadata such as create
+	// time.
+	// Some services might not provide such metadata.  Any method that
+	// returns a
+	// long-running operation should document the metadata type, if any.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+
+	// Name: The server-assigned name, which is only unique within the same
+	// service that
+	// originally returns it. If you use the default HTTP mapping,
+	// the
+	// `name` should have the format of `operations/some/unique/name`.
+	Name string `json:"name,omitempty"`
+
+	// Response: The normal response of the operation in case of success.
+	// If the original
+	// method returns no data on success, such as `Delete`, the response
+	// is
+	// `google.protobuf.Empty`.  If the original method is
+	// standard
+	// `Get`/`Create`/`Update`, the response should be the resource.  For
+	// other
+	// methods, the response should have the type `XxxResponse`, where
+	// `Xxx`
+	// is the original method name.  For example, if the original method
+	// name
+	// is `TakeSnapshot()`, the inferred response type
+	// is
+	// `TakeSnapshotResponse`.
+	Response googleapi.RawMessage `json:"response,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Done") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Done") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleLongrunningOperation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1323,41 +1471,6 @@ func (s *ListDocumentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListIndexesResponse: The response for FirestoreAdmin.ListIndexes.
-type ListIndexesResponse struct {
-	// Indexes: The indexes.
-	Indexes []*Index `json:"indexes,omitempty"`
-
-	// NextPageToken: The standard List next-page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Indexes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Indexes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ListIndexesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListIndexesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListenRequest: A request for Firestore.Listen
 type ListenRequest struct {
 	// AddTarget: A target to add to this stream.
@@ -1477,81 +1590,6 @@ type MapValue struct {
 
 func (s *MapValue) MarshalJSON() ([]byte, error) {
 	type NoMethod MapValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Operation: This resource represents a long-running operation that is
-// the result of a
-// network API call.
-type Operation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress.
-	// If `true`, the operation is completed, and either `error` or
-	// `response` is
-	// available.
-	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
-	Error *Status `json:"error,omitempty"`
-
-	// Metadata: Service-specific metadata associated with the operation.
-	// It typically
-	// contains progress information and common metadata such as create
-	// time.
-	// Some services might not provide such metadata.  Any method that
-	// returns a
-	// long-running operation should document the metadata type, if any.
-	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that
-	// originally returns it. If you use the default HTTP mapping,
-	// the
-	// `name` should have the format of `operations/some/unique/name`.
-	Name string `json:"name,omitempty"`
-
-	// Response: The normal response of the operation in case of success.
-	// If the original
-	// method returns no data on success, such as `Delete`, the response
-	// is
-	// `google.protobuf.Empty`.  If the original method is
-	// standard
-	// `Get`/`Create`/`Update`, the response should be the resource.  For
-	// other
-	// methods, the response should have the type `XxxResponse`, where
-	// `Xxx`
-	// is the original method name.  For example, if the original method
-	// name
-	// is `TakeSnapshot()`, the inferred response type
-	// is
-	// `TakeSnapshotResponse`.
-	Response googleapi.RawMessage `json:"response,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Operation) MarshalJSON() ([]byte, error) {
-	type NoMethod Operation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4724,12 +4762,12 @@ func (c *ProjectsDatabasesDocumentsWriteCall) Do(opts ...googleapi.CallOption) (
 // method id "firestore.projects.databases.indexes.create":
 
 type ProjectsDatabasesIndexesCreateCall struct {
-	s          *Service
-	parent     string
-	index      *Index
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
+	s                                *Service
+	parent                           string
+	googlefirestoreadminv1beta1index *GoogleFirestoreAdminV1beta1Index
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
 }
 
 // Create: Creates the specified index.
@@ -4750,10 +4788,10 @@ type ProjectsDatabasesIndexesCreateCall struct {
 // create.
 //
 // Indexes with a single field cannot be created.
-func (r *ProjectsDatabasesIndexesService) Create(parent string, index *Index) *ProjectsDatabasesIndexesCreateCall {
+func (r *ProjectsDatabasesIndexesService) Create(parent string, googlefirestoreadminv1beta1index *GoogleFirestoreAdminV1beta1Index) *ProjectsDatabasesIndexesCreateCall {
 	c := &ProjectsDatabasesIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
-	c.index = index
+	c.googlefirestoreadminv1beta1index = googlefirestoreadminv1beta1index
 	return c
 }
 
@@ -4789,7 +4827,7 @@ func (c *ProjectsDatabasesIndexesCreateCall) doRequest(alt string) (*http.Respon
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.index)
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta1index)
 	if err != nil {
 		return nil, err
 	}
@@ -4806,13 +4844,13 @@ func (c *ProjectsDatabasesIndexesCreateCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "firestore.projects.databases.indexes.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsDatabasesIndexesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesIndexesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4831,7 +4869,7 @@ func (c *ProjectsDatabasesIndexesCreateCall) Do(opts ...googleapi.CallOption) (*
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Operation{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -4861,10 +4899,10 @@ func (c *ProjectsDatabasesIndexesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "path": "v1beta1/{+parent}/indexes",
 	//   "request": {
-	//     "$ref": "Index"
+	//     "$ref": "GoogleFirestoreAdminV1beta1Index"
 	//   },
 	//   "response": {
-	//     "$ref": "Operation"
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5075,13 +5113,13 @@ func (c *ProjectsDatabasesIndexesGetCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "firestore.projects.databases.indexes.get" call.
-// Exactly one of *Index or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Index.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *ProjectsDatabasesIndexesGetCall) Do(opts ...googleapi.CallOption) (*Index, error) {
+// Exactly one of *GoogleFirestoreAdminV1beta1Index or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleFirestoreAdminV1beta1Index.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesIndexesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta1Index, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5100,7 +5138,7 @@ func (c *ProjectsDatabasesIndexesGetCall) Do(opts ...googleapi.CallOption) (*Ind
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &Index{
+	ret := &GoogleFirestoreAdminV1beta1Index{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5130,7 +5168,7 @@ func (c *ProjectsDatabasesIndexesGetCall) Do(opts ...googleapi.CallOption) (*Ind
 	//   },
 	//   "path": "v1beta1/{+name}",
 	//   "response": {
-	//     "$ref": "Index"
+	//     "$ref": "GoogleFirestoreAdminV1beta1Index"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5235,13 +5273,15 @@ func (c *ProjectsDatabasesIndexesListCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "firestore.projects.databases.indexes.list" call.
-// Exactly one of *ListIndexesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListIndexesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*ListIndexesResponse, error) {
+// Exactly one of *GoogleFirestoreAdminV1beta1ListIndexesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirestoreAdminV1beta1ListIndexesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta1ListIndexesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -5260,7 +5300,7 @@ func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*Li
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, err
 	}
-	ret := &ListIndexesResponse{
+	ret := &GoogleFirestoreAdminV1beta1ListIndexesResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -5305,7 +5345,7 @@ func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*Li
 	//   },
 	//   "path": "v1beta1/{+parent}/indexes",
 	//   "response": {
-	//     "$ref": "ListIndexesResponse"
+	//     "$ref": "GoogleFirestoreAdminV1beta1ListIndexesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
@@ -5318,7 +5358,7 @@ func (c *ProjectsDatabasesIndexesListCall) Do(opts ...googleapi.CallOption) (*Li
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *ProjectsDatabasesIndexesListCall) Pages(ctx context.Context, f func(*ListIndexesResponse) error) error {
+func (c *ProjectsDatabasesIndexesListCall) Pages(ctx context.Context, f func(*GoogleFirestoreAdminV1beta1ListIndexesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

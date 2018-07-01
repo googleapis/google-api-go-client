@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/OJEZsaGP8GBewSBPbh4wkE5Ar8I\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/3Atyu5ZACYC6Eyn9KxAhjyNVRb0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -1666,6 +1666,37 @@
       },
       "type": "object"
     },
+    "IterationResult": {
+      "id": "IterationResult",
+      "properties": {
+        "durationMs": {
+          "description": "[Output-only, Beta] Time taken to run the training iteration in milliseconds.",
+          "format": "int64",
+          "type": "string"
+        },
+        "evalLoss": {
+          "description": "[Output-only, Beta] Eval loss computed on the eval data at the end of the iteration. The eval loss is used for early stopping to avoid overfitting. No eval loss if eval_split_method option is specified as no_split or auto_split with input data size less than 500 rows.",
+          "format": "double",
+          "type": "number"
+        },
+        "index": {
+          "description": "[Output-only, Beta] Index of the ML training iteration, starting from zero for each training run.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "learnRate": {
+          "description": "[Output-only, Beta] Learning rate used for this iteration, it varies for different training iterations if learn_rate_strategy option is not constant.",
+          "format": "double",
+          "type": "number"
+        },
+        "trainingLoss": {
+          "description": "[Output-only, Beta] Training loss computed on the training data at the end of the iteration. The training loss function is defined by model type.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "Job": {
       "id": "Job",
       "properties": {
@@ -2218,6 +2249,16 @@
           "format": "int64",
           "type": "string"
         },
+        "modelTrainingCurrentIteration": {
+          "description": "[Output-only, Beta] Index of current ML training iteration. Updated during create model query job to show job progress.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "modelTrainingExpectedTotalIteration": {
+          "description": "[Output-only, Beta] Expected number of iterations for the create model query job specified as num_iterations in the input query. The actual total number of iterations may be less than this number due to early stop.",
+          "format": "int64",
+          "type": "string"
+        },
         "numDmlAffectedRows": {
           "description": "[Output-only] The number of rows affected by a DML statement. Present only for DML statements INSERT, UPDATE or DELETE.",
           "format": "int64",
@@ -2377,6 +2418,37 @@
     "JsonValue": {
       "id": "JsonValue",
       "type": "any"
+    },
+    "ModelDefinition": {
+      "id": "ModelDefinition",
+      "properties": {
+        "modelOptions": {
+          "description": "[Output-only, Beta] Model options used for the first training run. These options are immutable for subsequent training runs. Default values are used for any options not specified in the input query.",
+          "properties": {
+            "labels": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "lossType": {
+              "type": "string"
+            },
+            "modelType": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        },
+        "trainingRuns": {
+          "description": "[Output-only, Beta] Information about ml training runs, each training run comprises of multiple iterations and there may be multiple training runs for the model if warm start is used or if a user decides to continue a previously cancelled query.",
+          "items": {
+            "$ref": "TrainingRun"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
     },
     "ProjectList": {
       "id": "ProjectList",
@@ -2761,6 +2833,10 @@
           "description": "[Output-only] The geographic location where the table resides. This value is inherited from the dataset.",
           "type": "string"
         },
+        "model": {
+          "$ref": "ModelDefinition",
+          "description": "[Output-only, Beta] Present iff this table represents a ML model. Describes the training information for the model, and it is required to run 'PREDICT' queries."
+        },
         "numBytes": {
           "description": "[Output-only] The size of this table in bytes, excluding any data in the streaming buffer.",
           "format": "int64",
@@ -3116,6 +3192,67 @@
         "type": {
           "description": "[Required] The only type supported is DAY, which will generate one partition per day.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TrainingRun": {
+      "id": "TrainingRun",
+      "properties": {
+        "iterationResults": {
+          "description": "[Output-only, Beta] List of each iteration results.",
+          "items": {
+            "$ref": "IterationResult"
+          },
+          "type": "array"
+        },
+        "startTime": {
+          "description": "[Output-only, Beta] Training run start time in milliseconds since the epoch.",
+          "format": "date-time",
+          "type": "string"
+        },
+        "state": {
+          "description": "[Output-only, Beta] Different state applicable for a training run. IN PROGRESS: Training run is in progress. FAILED: Training run ended due to a non-retryable failure. SUCCEEDED: Training run successfully completed. CANCELLED: Training run cancelled by the user.",
+          "type": "string"
+        },
+        "trainingOptions": {
+          "description": "[Output-only, Beta] Training options used by this training run. These options are mutable for subsequent training runs. Default values are explicitly stored for options not specified in the input query of the first training run. For subsequent training runs, any option not explicitly specified in the input query will be copied from the previous training run.",
+          "properties": {
+            "earlyStop": {
+              "type": "boolean"
+            },
+            "l1Reg": {
+              "format": "double",
+              "type": "number"
+            },
+            "l2Reg": {
+              "format": "double",
+              "type": "number"
+            },
+            "learnRate": {
+              "format": "double",
+              "type": "number"
+            },
+            "learnRateStrategy": {
+              "type": "string"
+            },
+            "lineSearchInitLearnRate": {
+              "format": "double",
+              "type": "number"
+            },
+            "maxIteration": {
+              "format": "int64",
+              "type": "string"
+            },
+            "minRelProgress": {
+              "format": "double",
+              "type": "number"
+            },
+            "warmStart": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"

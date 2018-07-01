@@ -1280,12 +1280,13 @@ func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
 type CustomAttributeHistogramRequest struct {
 	// Key: Required.
 	//
-	// Specifies the custom field key to perform a histogram on.
-	// If
-	// specified without `long_value_buckets` or `long_value_min_max`,
-	// a
-	// histogram on string values of the given `key` is triggered,
-	// otherwise histogram is performed on long values.
+	// Specifies the custom field key to perform a histogram on. If
+	// specified
+	// without `long_value_histogram_bucketing_option`, histogram on string
+	// values
+	// of the given `key` is triggered, otherwise histogram is performed on
+	// long
+	// values.
 	Key string `json:"key,omitempty"`
 
 	// LongValueHistogramBucketingOption: Optional.
@@ -1562,6 +1563,8 @@ type DeviceInfo struct {
 	// browser.
 	//   "ANDROID" - An Android device native application.
 	//   "IOS" - An iOS device native application.
+	//   "BOT" - A bot, as opposed to a device operated by human beings,
+	// such as a web crawler.
 	//   "OTHER" - Other devices types.
 	DeviceType string `json:"deviceType,omitempty"`
 
@@ -3807,7 +3810,7 @@ type JobQuery struct {
 	// to
 	// search against, such as EmploymentType.FULL_TIME.
 	//
-	// If a value is not specified, jobs in the search results includes
+	// If a value is not specified, jobs in the search results include
 	// any
 	// employment type.
 	//
@@ -3875,7 +3878,7 @@ type JobQuery struct {
 	// to
 	// search against. See LocationFilter for more information.
 	//
-	// If a location value isn'tt specified, jobs fitting the other
+	// If a location value isn't specified, jobs fitting the other
 	// search
 	// criteria are retrieved regardless of where they're located.
 	//
@@ -4146,8 +4149,12 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 type LocationFilter struct {
 	// DistanceInMiles: Optional.
 	//
-	// The distance from the address in miles to search.
-	// The default distance is 20 miles and maximum distance is 5,000 miles.
+	//
+	// The distance_in_miles is applied when the location being searched for
+	// is
+	// identified as a city or smaller. When the location being searched for
+	// is a
+	// state or larger, this field is ignored.
 	DistanceInMiles float64 `json:"distanceInMiles,omitempty"`
 
 	// IsTelecommute: Optional.
@@ -4651,8 +4658,10 @@ type RequestMetadata struct {
 	// career site.
 	//
 	// If this field is not available for some reason, send "UNKNOWN". Note
-	// that any improvements to the {{ api_name }} model for a particular
-	// tenant site, rely on this field being set correctly to some domain.
+	// that
+	// any improvements to the service model for a particular tenant site
+	// rely on
+	// this field being set correctly to some domain.
 	Domain string `json:"domain,omitempty"`
 
 	// SessionId: Required.
@@ -4665,9 +4674,10 @@ type RequestMetadata struct {
 	// providing it to the API.
 	//
 	// If this field is not available for some reason, please send
-	// "UNKNOWN". Note that any improvements to the {{ api_name }} model for
-	// a particular tenant site, rely on this field being set correctly to
-	// some unique session_id.
+	// "UNKNOWN". Note
+	// that any improvements to the service model for a particular tenant
+	// site,
+	// rely on this field being set correctly to some unique session_id.
 	SessionId string `json:"sessionId,omitempty"`
 
 	// UserId: Required.
@@ -4682,9 +4692,10 @@ type RequestMetadata struct {
 	// providing it to the service.
 	//
 	// If this field is not available for some reason, please send
-	// "UNKNOWN". Note that any improvements to the {{ api_name }} model for
-	// a particular tenant site, rely on this field being set correctly to
-	// some unique user_id.
+	// "UNKNOWN". Note
+	// that any improvements to the service model for a particular tenant
+	// site,
+	// rely on this field being set correctly to some unique user_id.
 	UserId string `json:"userId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceInfo") to

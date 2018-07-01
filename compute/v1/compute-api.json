@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/qE9lA35aPbhK6TYbAMlJI4vLJr0\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/qRu8pEw6R6gBzkzsy0bHzteULd4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -16063,7 +16063,7 @@
       "id": "AttachedDiskInitializeParams",
       "properties": {
         "diskName": {
-          "description": "Specifies the disk name. If not specified, the default is to use the name of the instance.",
+          "description": "Specifies the disk name. If not specified, the default is to use the name of the instance. If the disk with the instance name exists already in the given zone/region, a new name will be automatically generated.",
           "type": "string"
         },
         "diskSizeGb": {

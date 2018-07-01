@@ -216,6 +216,12 @@ type CloudFunction struct {
 	// in `source_location`.
 	EntryPoint string `json:"entryPoint,omitempty"`
 
+	// EnvironmentVariables: **Beta Feature**
+	//
+	// Environment variables that shall be available during function
+	// execution.
+	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
+
 	// EventTrigger: A source that fires events in response to a condition
 	// in another service.
 	EventTrigger *EventTrigger `json:"eventTrigger,omitempty"`
@@ -227,10 +233,37 @@ type CloudFunction struct {
 	// Labels: Labels associated with this Cloud Function.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// MaxInstances: The limit on the maximum number of function instances
+	// that may coexist at a
+	// given time. This feature is currently in alpha, available only
+	// for
+	// whitelisted users.
+	MaxInstances int64 `json:"maxInstances,omitempty"`
+
 	// Name: A user-defined name of the function. Function names must be
 	// unique
 	// globally and match pattern `projects/*/locations/*/functions/*`
 	Name string `json:"name,omitempty"`
+
+	// Network: The Google Compute Engine network that this function can
+	// connect to.
+	// Either the fully-qualified URI of the network resource, or
+	// the short name of the network must be specified. If the network
+	// belongs to
+	// another project, the URI of the resource must be
+	// specified
+	// e.g.,
+	// `https://www.googleapis.com/compute/v1/projects/{proje
+	// ct}/global/networks/{network}`
+	//  or `my-network`.
+	//
+	// See [the VPC
+	// documentation](https://cloud.google.com/compute/docs/vpc) for
+	// more information on connecting Cloud projects.
+	//
+	// This feature is currently in alpha, available only for whitelisted
+	// users.
+	Network string `json:"network,omitempty"`
 
 	// Runtime: The runtime in which the function is going to run. If empty,
 	// defaults to

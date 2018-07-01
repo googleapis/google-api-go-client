@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180612",
+  "revision": "20180627",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1208,7 +1208,7 @@
       "id": "CustomAttributeHistogramRequest",
       "properties": {
         "key": {
-          "description": "Required.\n\nSpecifies the custom field key to perform a histogram on. If\nspecified without `long_value_buckets` or `long_value_min_max`, a\nhistogram on string values of the given `key` is triggered,\notherwise histogram is performed on long values.",
+          "description": "Required.\n\nSpecifies the custom field key to perform a histogram on. If specified\nwithout `long_value_histogram_bucketing_option`, histogram on string values\nof the given `key` is triggered, otherwise histogram is performed on long\nvalues.",
           "type": "string"
         },
         "longValueHistogramBucketingOption": {
@@ -1338,6 +1338,7 @@
             "MOBILE_WEB",
             "ANDROID",
             "IOS",
+            "BOT",
             "OTHER"
           ],
           "enumDescriptions": [
@@ -1346,6 +1347,7 @@
             "A mobile device web browser, such as a phone or tablet with a Chrome\nbrowser.",
             "An Android device native application.",
             "An iOS device native application.",
+            "A bot, as opposed to a device operated by human beings, such as a web crawler.",
             "Other devices types."
           ],
           "type": "string"
@@ -2601,7 +2603,7 @@
           "type": "boolean"
         },
         "employmentTypes": {
-          "description": "Optional.\n\nThe employment type filter specifies the employment type of jobs to\nsearch against, such as EmploymentType.FULL_TIME.\n\nIf a value is not specified, jobs in the search results includes any\nemployment type.\n\nIf multiple values are specified, jobs in the search results include\nany of the specified employment types.",
+          "description": "Optional.\n\nThe employment type filter specifies the employment type of jobs to\nsearch against, such as EmploymentType.FULL_TIME.\n\nIf a value is not specified, jobs in the search results include any\nemployment type.\n\nIf multiple values are specified, jobs in the search results include\nany of the specified employment types.",
           "enumDescriptions": [
             "The default value if the employment type is not specified.",
             "The job requires working a number of hours that constitute full\ntime employment, typically 40 or more hours per week.",
@@ -2639,7 +2641,7 @@
           "type": "array"
         },
         "locationFilters": {
-          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn'tt specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations, and, if different values are specified\nfor the LocationFilter.distance_in_miles parameter, the maximum\nprovided distance is used for all locations.\n\nAt most 5 location filters are allowed.",
+          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn't specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations, and, if different values are specified\nfor the LocationFilter.distance_in_miles parameter, the maximum\nprovided distance is used for all locations.\n\nAt most 5 location filters are allowed.",
           "items": {
             "$ref": "LocationFilter"
           },
@@ -2765,7 +2767,7 @@
       "id": "LocationFilter",
       "properties": {
         "distanceInMiles": {
-          "description": "Optional.\n\nThe distance from the address in miles to search.\nThe default distance is 20 miles and maximum distance is 5,000 miles.",
+          "description": "Optional.\n\n\nThe distance_in_miles is applied when the location being searched for is\nidentified as a city or smaller. When the location being searched for is a\nstate or larger, this field is ignored.",
           "format": "double",
           "type": "number"
         },
@@ -2946,15 +2948,15 @@
           "description": "Optional.\n\nThe type of device used by the job seeker at the time of the call to the\nservice."
         },
         "domain": {
-          "description": "Required.\n\nThe client-defined scope or source of the service call, which typically\nis the domain on\nwhich the service has been implemented and is currently being run.\n\nFor example, if the service is being run by client \u003cem\u003eFoo, Inc.\u003c/em\u003e, on\njob board www.foo.com and career site www.bar.com, then this field is\nset to \"foo.com\" for use on the job board, and \"bar.com\" for use on the\ncareer site.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note that any improvements to the {{ api_name }} model for a particular tenant site, rely on this field being set correctly to some domain.",
+          "description": "Required.\n\nThe client-defined scope or source of the service call, which typically\nis the domain on\nwhich the service has been implemented and is currently being run.\n\nFor example, if the service is being run by client \u003cem\u003eFoo, Inc.\u003c/em\u003e, on\njob board www.foo.com and career site www.bar.com, then this field is\nset to \"foo.com\" for use on the job board, and \"bar.com\" for use on the\ncareer site.\n\nIf this field is not available for some reason, send \"UNKNOWN\". Note that\nany improvements to the service model for a particular tenant site rely on\nthis field being set correctly to some domain.",
           "type": "string"
         },
         "sessionId": {
-          "description": "Required.\n\nA unique session identification string. A session is defined as the\nduration of an end user's interaction with the service over a period.\nObfuscate this field for privacy concerns before\nproviding it to the API.\n\nIf this field is not available for some reason, please send \"UNKNOWN\". Note that any improvements to the {{ api_name }} model for a particular tenant site, rely on this field being set correctly to some unique session_id.",
+          "description": "Required.\n\nA unique session identification string. A session is defined as the\nduration of an end user's interaction with the service over a period.\nObfuscate this field for privacy concerns before\nproviding it to the API.\n\nIf this field is not available for some reason, please send \"UNKNOWN\". Note\nthat any improvements to the service model for a particular tenant site,\nrely on this field being set correctly to some unique session_id.",
           "type": "string"
         },
         "userId": {
-          "description": "Required.\n\nA unique user identification string, as determined by the client. The\nclient is responsible for ensuring client-level uniqueness of this value\nin order to have the strongest positive impact on search quality.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, please send \"UNKNOWN\". Note that any improvements to the {{ api_name }} model for a particular tenant site, rely on this field being set correctly to some unique user_id.",
+          "description": "Required.\n\nA unique user identification string, as determined by the client. The\nclient is responsible for ensuring client-level uniqueness of this value\nin order to have the strongest positive impact on search quality.\nObfuscate this field for privacy concerns before\nproviding it to the service.\n\nIf this field is not available for some reason, please send \"UNKNOWN\". Note\nthat any improvements to the service model for a particular tenant site,\nrely on this field being set correctly to some unique user_id.",
           "type": "string"
         }
       },

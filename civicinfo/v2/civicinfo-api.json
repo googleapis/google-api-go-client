@@ -6,7 +6,7 @@
   "description": "Provides polling places, early vote locations, contest data, election officials, and government representatives for U.S. residential addresses.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/civic-information",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/Chz1tptRKy3Kr6B7d11ePJwUj1A\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/So7gpW6g9SveCLcYVMw7F1my31s\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -490,6 +490,10 @@
         "ballotPlacement": {
           "description": "A number specifying the position of this contest on the voter's ballot.",
           "format": "int64",
+          "type": "string"
+        },
+        "ballotTitle": {
+          "description": "The official title on the ballot for this contest, only where available.",
           "type": "string"
         },
         "candidates": {

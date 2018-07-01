@@ -114,6 +114,10 @@ type Groups struct {
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
 
+	// FavoriteRepliesOnTop: If favorite replies should be displayed above
+	// other replies.
+	FavoriteRepliesOnTop string `json:"favoriteRepliesOnTop,omitempty"`
+
 	// IncludeCustomFooter: Whether to include custom footer.
 	IncludeCustomFooter string `json:"includeCustomFooter,omitempty"`
 
@@ -170,10 +174,25 @@ type Groups struct {
 	// NONE_CAN_ADD
 	WhoCanAdd string `json:"whoCanAdd,omitempty"`
 
+	// WhoCanAddReferences: Permission to add references to a topic.
+	// Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanAddReferences string `json:"whoCanAddReferences,omitempty"`
+
+	// WhoCanAssignTopics: Permission to assign topics in a forum to another
+	// user. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanAssignTopics string `json:"whoCanAssignTopics,omitempty"`
+
 	// WhoCanContactOwner: Permission to contact owner of the group via web
 	// UI. Possible values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT
 	// ALL_MEMBERS_CAN_CONTACT ALL_MANAGERS_CAN_CONTACT
 	WhoCanContactOwner string `json:"whoCanContactOwner,omitempty"`
+
+	// WhoCanEnterFreeFormTags: Permission to enter free form tags for
+	// topics in a forum. Possible values are: NONE OWNERS_ONLY
+	// MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanEnterFreeFormTags string `json:"whoCanEnterFreeFormTags,omitempty"`
 
 	// WhoCanInvite: Permissions to invite members. Possible values are:
 	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE ALL_OWNERS_CAN_INVITE
@@ -190,11 +209,51 @@ type Groups struct {
 	// NONE_CAN_LEAVE
 	WhoCanLeaveGroup string `json:"whoCanLeaveGroup,omitempty"`
 
+	// WhoCanMarkDuplicate: Permission to mark a topic as a duplicate of
+	// another topic. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanMarkDuplicate string `json:"whoCanMarkDuplicate,omitempty"`
+
+	// WhoCanMarkFavoriteReplyOnAnyTopic: Permission to mark any other
+	// user's post as a favorite reply. Possible values are: NONE
+	// OWNERS_ONLY MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanMarkFavoriteReplyOnAnyTopic string `json:"whoCanMarkFavoriteReplyOnAnyTopic,omitempty"`
+
+	// WhoCanMarkFavoriteReplyOnOwnTopic: Permission to mark a post for a
+	// topic they started as a favorite reply. Possible values are: NONE
+	// OWNERS_ONLY MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanMarkFavoriteReplyOnOwnTopic string `json:"whoCanMarkFavoriteReplyOnOwnTopic,omitempty"`
+
+	// WhoCanMarkNoResponseNeeded: Permission to mark a topic as not needing
+	// a response. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanMarkNoResponseNeeded string `json:"whoCanMarkNoResponseNeeded,omitempty"`
+
+	// WhoCanModifyTagsAndCategories: Permission to change tags and
+	// categories. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanModifyTagsAndCategories string `json:"whoCanModifyTagsAndCategories,omitempty"`
+
 	// WhoCanPostMessage: Permissions to post messages to the group.
 	// Possible values are: NONE_CAN_POST ALL_MANAGERS_CAN_POST
 	// ALL_MEMBERS_CAN_POST ALL_OWNERS_CAN_POST ALL_IN_DOMAIN_CAN_POST
 	// ANYONE_CAN_POST
 	WhoCanPostMessage string `json:"whoCanPostMessage,omitempty"`
+
+	// WhoCanTakeTopics: Permission to take topics in a forum. Possible
+	// values are: NONE OWNERS_ONLY MANAGERS_ONLY OWNERS_AND_MANAGERS
+	// ALL_MEMBERS
+	WhoCanTakeTopics string `json:"whoCanTakeTopics,omitempty"`
+
+	// WhoCanUnassignTopic: Permission to unassign any topic in a forum.
+	// Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanUnassignTopic string `json:"whoCanUnassignTopic,omitempty"`
+
+	// WhoCanUnmarkFavoriteReplyOnAnyTopic: Permission to unmark any post
+	// from a favorite reply. Possible values are: NONE OWNERS_ONLY
+	// MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanUnmarkFavoriteReplyOnAnyTopic string `json:"whoCanUnmarkFavoriteReplyOnAnyTopic,omitempty"`
 
 	// WhoCanViewGroup: Permissions to view group. Possible values are:
 	// ANYONE_CAN_VIEW ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW

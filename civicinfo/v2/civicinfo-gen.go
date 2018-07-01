@@ -325,6 +325,10 @@ type Contest struct {
 	// the voter's ballot.
 	BallotPlacement int64 `json:"ballotPlacement,omitempty,string"`
 
+	// BallotTitle: The official title on the ballot for this contest, only
+	// where available.
+	BallotTitle string `json:"ballotTitle,omitempty"`
+
 	// Candidates: The candidate choices for this contest.
 	Candidates []*Candidate `json:"candidates,omitempty"`
 

@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/KbpqxW9ZSFnxsSbWSZPD-MbpqCQ\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/Ou-9Y-KsGh7vee7ihsnd0ijwU5E\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -10015,48 +10015,6 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
-        "getIamPolicy": {
-          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
-          "httpMethod": "GET",
-          "id": "compute.nodeGroups.getIamPolicy",
-          "parameterOrder": [
-            "project",
-            "zone",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/nodeGroups/{resource}/getIamPolicy",
-          "response": {
-            "$ref": "Policy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        },
         "insert": {
           "description": "Creates a NodeGroup resource in the specified project using the data included in the request.",
           "httpMethod": "POST",
@@ -10163,50 +10121,6 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
-        "setIamPolicy": {
-          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
-          "httpMethod": "POST",
-          "id": "compute.nodeGroups.setIamPolicy",
-          "parameterOrder": [
-            "project",
-            "zone",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/nodeGroups/{resource}/setIamPolicy",
-          "request": {
-            "$ref": "ZoneSetPolicyRequest"
-          },
-          "response": {
-            "$ref": "Policy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute"
-          ]
-        },
         "setNodeTemplate": {
           "description": "Updates the node template of the node group.",
           "httpMethod": "POST",
@@ -10254,51 +10168,6 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute"
-          ]
-        },
-        "testIamPermissions": {
-          "description": "Returns permissions that a caller has on the specified resource.",
-          "httpMethod": "POST",
-          "id": "compute.nodeGroups.testIamPermissions",
-          "parameterOrder": [
-            "project",
-            "zone",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/nodeGroups/{resource}/testIamPermissions",
-          "request": {
-            "$ref": "TestPermissionsRequest"
-          },
-          "response": {
-            "$ref": "TestPermissionsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
           ]
         }
       }
@@ -10442,48 +10311,6 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
-        "getIamPolicy": {
-          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
-          "httpMethod": "GET",
-          "id": "compute.nodeTemplates.getIamPolicy",
-          "parameterOrder": [
-            "project",
-            "region",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "region": {
-              "description": "The name of the region for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/regions/{region}/nodeTemplates/{resource}/getIamPolicy",
-          "response": {
-            "$ref": "Policy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        },
         "insert": {
           "description": "Creates a NodeTemplate resource in the specified project using the data included in the request.",
           "httpMethod": "POST",
@@ -10575,95 +10402,6 @@
           "path": "{project}/regions/{region}/nodeTemplates",
           "response": {
             "$ref": "NodeTemplateList"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        },
-        "setIamPolicy": {
-          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
-          "httpMethod": "POST",
-          "id": "compute.nodeTemplates.setIamPolicy",
-          "parameterOrder": [
-            "project",
-            "region",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "region": {
-              "description": "The name of the region for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/regions/{region}/nodeTemplates/{resource}/setIamPolicy",
-          "request": {
-            "$ref": "RegionSetPolicyRequest"
-          },
-          "response": {
-            "$ref": "Policy"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute"
-          ]
-        },
-        "testIamPermissions": {
-          "description": "Returns permissions that a caller has on the specified resource.",
-          "httpMethod": "POST",
-          "id": "compute.nodeTemplates.testIamPermissions",
-          "parameterOrder": [
-            "project",
-            "region",
-            "resource"
-          ],
-          "parameters": {
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "region": {
-              "description": "The name of the region for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "resource": {
-              "description": "Name of the resource for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/regions/{region}/nodeTemplates/{resource}/testIamPermissions",
-          "request": {
-            "$ref": "TestPermissionsRequest"
-          },
-          "response": {
-            "$ref": "TestPermissionsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -20518,7 +20256,7 @@
       "id": "AttachedDiskInitializeParams",
       "properties": {
         "diskName": {
-          "description": "Specifies the disk name. If not specified, the default is to use the name of the instance.",
+          "description": "Specifies the disk name. If not specified, the default is to use the name of the instance. If the disk with the instance name exists already in the given zone/region, a new name will be automatically generated.",
           "type": "string"
         },
         "diskSizeGb": {
@@ -26390,6 +26128,7 @@
       "type": "object"
     },
     "InstanceGroupManagerAutoHealingPolicy": {
+      "description": "",
       "id": "InstanceGroupManagerAutoHealingPolicy",
       "properties": {
         "healthCheck": {
@@ -29900,7 +29639,7 @@
       "id": "NetworkEndpoint",
       "properties": {
         "instance": {
-          "description": "The name for a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP and GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group.\n\nThe name must be 1-63 characters long, and comply with RFC1035.",
+          "description": "The name for a specific VM instance that the IP address belongs to. This is required for network endpoints of type GCE_VM_IP_PORT. The instance must be in the same zone of network endpoint group.\n\nThe name must be 1-63 characters long, and comply with RFC1035.",
           "type": "string"
         },
         "ipAddress": {
@@ -29939,14 +29678,14 @@
         },
         "loadBalancer": {
           "$ref": "NetworkEndpointGroupLbNetworkEndpointGroup",
-          "description": "This field is only valid when the network endpoint group type is LOAD_BALANCING."
+          "description": "This field is only valid when the network endpoint group is used for load balancing."
         },
         "name": {
           "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "type": "string"
         },
         "networkEndpointType": {
-          "description": "Type of network endpoints in this network endpoint group. Only supported values for LOAD_BALANCING are GCE_VM_IP or GCE_VM_IP_PORT.",
+          "description": "Type of network endpoints in this network endpoint group. Currently the only supported value is GCE_VM_IP_PORT.",
           "enum": [
             "GCE_VM_IP_PORT"
           ],
@@ -30080,11 +29819,11 @@
       "type": "object"
     },
     "NetworkEndpointGroupLbNetworkEndpointGroup": {
-      "description": "Load balancing specific fields for network endpoint group of type LOAD_BALANCING.",
+      "description": "Load balancing specific fields for network endpoint group.",
       "id": "NetworkEndpointGroupLbNetworkEndpointGroup",
       "properties": {
         "defaultPort": {
-          "description": "The default port used if the port number is not specified in the network endpoint. If the network endpoint type is GCE_VM_IP, this field must not be specified.",
+          "description": "The default port used if the port number is not specified in the network endpoint.",
           "format": "int32",
           "type": "integer"
         },
@@ -39844,28 +39583,6 @@
           },
           "description": "The labels to set for this resource.",
           "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "ZoneSetPolicyRequest": {
-      "id": "ZoneSetPolicyRequest",
-      "properties": {
-        "bindings": {
-          "description": "Flatten Policy to create a backwacd compatible wire-format. Deprecated. Use 'policy' to specify bindings.",
-          "items": {
-            "$ref": "Binding"
-          },
-          "type": "array"
-        },
-        "etag": {
-          "description": "Flatten Policy to create a backward compatible wire-format. Deprecated. Use 'policy' to specify the etag.",
-          "format": "byte",
-          "type": "string"
-        },
-        "policy": {
-          "$ref": "Policy",
-          "description": "REQUIRED: The complete policy to be applied to the 'resource'. The size of the policy is limited to a few 10s of KB. An empty policy is in general a valid policy but certain services (like Projects) might reject them."
         }
       },
       "type": "object"

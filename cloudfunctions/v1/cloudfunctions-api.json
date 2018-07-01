@@ -458,7 +458,7 @@
       }
     }
   },
-  "revision": "20180619",
+  "revision": "20180622",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {
@@ -508,6 +508,13 @@
           "description": "The name of the function (as defined in source code) that will be\nexecuted. Defaults to the resource name suffix, if not specified. For\nbackward compatibility, if function with given name is not found, then the\nsystem will try to use function named \"function\".\nFor Node.js this is name of a function exported by the module specified\nin `source_location`.",
           "type": "string"
         },
+        "environmentVariables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "**Beta Feature**\n\nEnvironment variables that shall be available during function execution.",
+          "type": "object"
+        },
         "eventTrigger": {
           "$ref": "EventTrigger",
           "description": "A source that fires events in response to a condition in another service."
@@ -523,8 +530,17 @@
           "description": "Labels associated with this Cloud Function.",
           "type": "object"
         },
+        "maxInstances": {
+          "description": "The limit on the maximum number of function instances that may coexist at a\ngiven time. This feature is currently in alpha, available only for\nwhitelisted users.",
+          "format": "int32",
+          "type": "integer"
+        },
         "name": {
           "description": "A user-defined name of the function. Function names must be unique\nglobally and match pattern `projects/*/locations/*/functions/*`",
+          "type": "string"
+        },
+        "network": {
+          "description": "The Google Compute Engine network that this function can connect to.\nEither the fully-qualified URI of the network resource, or\nthe short name of the network must be specified. If the network belongs to\nanother project, the URI of the resource must be specified\ne.g.,\n`https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}`\n or `my-network`.\n\nSee [the VPC documentation](https://cloud.google.com/compute/docs/vpc) for\nmore information on connecting Cloud projects.\n\nThis feature is currently in alpha, available only for whitelisted users.",
           "type": "string"
         },
         "runtime": {

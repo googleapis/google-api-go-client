@@ -2437,6 +2437,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "serviceusage:v1",
+   "name": "serviceusage",
+   "version": "v1",
+   "title": "Service Usage API",
+   "description": "Enables services that service consumers want to use on Google Cloud Platform, lists the available or enabled services, or disables services that service consumers no longer use.",
+   "discoveryRestUrl": "https://serviceusage.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/service-usage/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "serviceusage:v1beta1",
    "name": "serviceusage",
    "version": "v1beta1",
@@ -2448,7 +2463,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/service-usage/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

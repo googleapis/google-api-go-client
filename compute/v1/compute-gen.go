@@ -2081,7 +2081,9 @@ func (s *AttachedDisk) MarshalJSON() ([]byte, error) {
 // only define one or the other, but not both.
 type AttachedDiskInitializeParams struct {
 	// DiskName: Specifies the disk name. If not specified, the default is
-	// to use the name of the instance.
+	// to use the name of the instance. If the disk with the instance name
+	// exists already in the given zone/region, a new name will be
+	// automatically generated.
 	DiskName string `json:"diskName,omitempty"`
 
 	// DiskSizeGb: Specifies the size of the disk in base-2 GB.

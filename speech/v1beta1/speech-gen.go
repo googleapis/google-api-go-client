@@ -1,6 +1,6 @@
 // Package speech provides access to the Cloud Speech API.
 //
-// See https://cloud.google.com/speech/
+// See https://cloud.google.com/speech-to-text/docs/quickstart-protocol
 //
 // Usage example:
 //

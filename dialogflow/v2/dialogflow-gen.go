@@ -759,8 +759,9 @@ func (s *GoogleCloudDialogflowV2DetectIntentRequest) MarshalJSON() ([]byte, erro
 // GoogleCloudDialogflowV2DetectIntentResponse: The message returned
 // from the DetectIntent method.
 type GoogleCloudDialogflowV2DetectIntentResponse struct {
-	// QueryResult: The results of the conversational query or event
-	// processing.
+	// QueryResult: The selected results of the conversational query or
+	// event processing.
+	// See `alternative_query_results` for additional potential results.
 	QueryResult *GoogleCloudDialogflowV2QueryResult `json:"queryResult,omitempty"`
 
 	// ResponseId: The unique identifier of the response. It can be used
@@ -2634,6 +2635,11 @@ type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
 	// by Dialogflow-owned servers.
 	Source string `json:"source,omitempty"`
 
+	// Version: Optional. The version of the protocol used for this
+	// request.
+	// This field is AoG-specific.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2799,6 +2805,9 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	// IntentDetectionConfidence: The intent detection confidence. Values
 	// range from 0.0
 	// (completely uncertain) to 1.0 (completely certain).
+	// If there are `multiple knowledge_answers` messages, this value is set
+	// to
+	// the greatest `knowledgeAnswers.match_confidence` value in the list.
 	IntentDetectionConfidence float64 `json:"intentDetectionConfidence,omitempty"`
 
 	// LanguageCode: The language that was triggered during intent
@@ -4820,6 +4829,11 @@ type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
 	// by Dialogflow-owned servers.
 	Source string `json:"source,omitempty"`
 
+	// Version: Optional. The version of the protocol used for this
+	// request.
+	// This field is AoG-specific.
+	Version string `json:"version,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Payload") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4881,6 +4895,9 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	// IntentDetectionConfidence: The intent detection confidence. Values
 	// range from 0.0
 	// (completely uncertain) to 1.0 (completely certain).
+	// If there are `multiple knowledge_answers` messages, this value is set
+	// to
+	// the greatest `knowledgeAnswers.match_confidence` value in the list.
 	IntentDetectionConfidence float64 `json:"intentDetectionConfidence,omitempty"`
 
 	// LanguageCode: The language that was triggered during intent

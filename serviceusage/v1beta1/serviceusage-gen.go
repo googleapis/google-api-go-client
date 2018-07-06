@@ -1334,6 +1334,7 @@ func (s *DocumentationRule) MarshalJSON() ([]byte, error) {
 type Empty struct {
 }
 
+// EnableFailure: Provides error messages for the failing services.
 type EnableFailure struct {
 	// ErrorMessage: An error message describing why the service could not
 	// be enabled.
@@ -1869,6 +1870,37 @@ func (s *GoogleApiService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleApiServiceusageV1OperationMetadata: The operation metadata
+// returned for the batchend services operation.
+type GoogleApiServiceusageV1OperationMetadata struct {
+	// ResourceNames: The full name of the resources that this operation is
+	// directly
+	// associated with.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiServiceusageV1OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV1OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleApiServiceusageV1Service: A service that is available for use
 // by the consumer.
 type GoogleApiServiceusageV1Service struct {
@@ -1987,6 +2019,37 @@ type GoogleApiServiceusageV1ServiceConfig struct {
 
 func (s *GoogleApiServiceusageV1ServiceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleApiServiceusageV1ServiceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiServiceusageV1beta1OperationMetadata: The operation metadata
+// returned for the batchend services operation.
+type GoogleApiServiceusageV1beta1OperationMetadata struct {
+	// ResourceNames: The full name of the resources that this operation is
+	// directly
+	// associated with.
+	ResourceNames []string `json:"resourceNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleApiServiceusageV1beta1OperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiServiceusageV1beta1OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

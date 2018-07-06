@@ -881,7 +881,8 @@ type InstanceGroupConfig struct {
 	DiskConfig *DiskConfig `json:"diskConfig,omitempty"`
 
 	// ImageUri: Optional. The Compute Engine image resource used for
-	// cluster instances. Inferred from SoftwareConfig.image_version.
+	// cluster instances. It can be specified or may be inferred from
+	// SoftwareConfig.image_version.
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// InstanceNames: Output only. The list of instance names. Cloud

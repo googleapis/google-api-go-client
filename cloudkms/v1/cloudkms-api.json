@@ -844,7 +844,7 @@
       }
     }
   },
-  "revision": "20180622",
+  "revision": "20180702",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -907,7 +907,7 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },

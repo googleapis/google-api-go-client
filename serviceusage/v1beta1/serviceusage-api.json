@@ -338,7 +338,7 @@
       }
     }
   },
-  "revision": "20180623",
+  "revision": "20180702",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -805,6 +805,7 @@
       "type": "object"
     },
     "EnableFailure": {
+      "description": "Provides error messages for the failing services.",
       "id": "EnableFailure",
       "properties": {
         "errorMessage": {
@@ -1193,6 +1194,20 @@
       },
       "type": "object"
     },
+    "GoogleApiServiceusageV1OperationMetadata": {
+      "description": "The operation metadata returned for the batchend services operation.",
+      "id": "GoogleApiServiceusageV1OperationMetadata",
+      "properties": {
+        "resourceNames": {
+          "description": "The full name of the resources that this operation is directly\nassociated with.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleApiServiceusageV1Service": {
       "description": "A service that is available for use by the consumer.",
       "id": "GoogleApiServiceusageV1Service",
@@ -1267,6 +1282,20 @@
         "usage": {
           "$ref": "Usage",
           "description": "Configuration controlling usage of this service."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleApiServiceusageV1beta1OperationMetadata": {
+      "description": "The operation metadata returned for the batchend services operation.",
+      "id": "GoogleApiServiceusageV1beta1OperationMetadata",
+      "properties": {
+        "resourceNames": {
+          "description": "The full name of the resources that this operation is directly\nassociated with.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

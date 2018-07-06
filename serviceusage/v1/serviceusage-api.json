@@ -5,6 +5,9 @@
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
         },
+        "https://www.googleapis.com/auth/cloud-platform.read-only": {
+          "description": "View your data across Google Cloud Platform services"
+        },
         "https://www.googleapis.com/auth/service.management": {
           "description": "Manage your Google API service configuration"
         }
@@ -229,9 +232,168 @@
           ]
         }
       }
+    },
+    "services": {
+      "methods": {
+        "batchEnable": {
+          "description": "Enable multiple services on a project. The operation is atomic: if enabling\nany service fails, then the entire batch fails, and no state changes occur.\n\nOperation\u003cresponse: BatchEnableServicesResponse\u003e",
+          "flatPath": "v1/{v1Id}/{v1Id1}/services:batchEnable",
+          "httpMethod": "POST",
+          "id": "serviceusage.services.batchEnable",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Parent to enable services on.\n\nAn example name would be:\n`projects/123`\nwhere `123` is the project number (not project ID).\n\nThe `BatchEnableServices` method currently only supports projects.",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+parent}/services:batchEnable",
+          "request": {
+            "$ref": "BatchEnableServicesRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
+        },
+        "disable": {
+          "description": "Disable a service so that it can no longer be used with a project.\nThis prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nIt is not valid to call the disable method on a service that is not\ncurrently enabled. Callers will receive a `FAILED_PRECONDITION` status if\nthe target service is not currently enabled.\n\nOperation\u003cresponse: DisableServiceResponse\u003e",
+          "flatPath": "v1/{v1Id}/{v1Id1}/services/{servicesId}:disable",
+          "httpMethod": "POST",
+          "id": "serviceusage.services.disable",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the consumer and service to disable the service on.\n\nThe enable and disable methods currently only support projects.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}:disable",
+          "request": {
+            "$ref": "DisableServiceRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
+        },
+        "enable": {
+          "description": "Enable a service so that it can be used with a project.\n\nOperation\u003cresponse: EnableServiceResponse\u003e",
+          "flatPath": "v1/{v1Id}/{v1Id1}/services/{servicesId}:enable",
+          "httpMethod": "POST",
+          "id": "serviceusage.services.enable",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the consumer and service to enable the service on.\n\nThe `EnableService` and `DisableService` methods currently only support\nprojects.\n\nEnabling a service requires that the service is public or is shared with\nthe user enabling the service.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}:enable",
+          "request": {
+            "$ref": "EnableServiceRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
+        },
+        "get": {
+          "description": "Returns the service configuration and enabled state for a given service.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/services/{servicesId}",
+          "httpMethod": "GET",
+          "id": "serviceusage.services.get",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Name of the consumer and service to get the `ConsumerState` for.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+/services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "GoogleApiServiceusageV1Service"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ]
+        },
+        "list": {
+          "description": "List all services available to the specified project, and the current\nstate of those services with respect to the project. The list includes\nall public services, all services for which the calling user has the\n`servicemanagement.services.bind` permission, and all services that have\nalready been enabled on the project. The list can be filtered to\nonly include services in a specific state, for example to only include\nservices enabled on the project.",
+          "flatPath": "v1/{v1Id}/{v1Id1}/services",
+          "httpMethod": "GET",
+          "id": "serviceusage.services.list",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "Only list services that conform to the given filter.\nThe allowed filter strings are `state:ENABLED` and `state:DISABLED`.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageSize": {
+              "description": "Requested size of the next page of data.\nRequested page size cannot exceed 200.\n If not set, the default page size is 50.",
+              "format": "int32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Token identifying which result to start with, which is returned by a\nprevious list call.",
+              "location": "query",
+              "type": "string"
+            },
+            "parent": {
+              "description": "Parent to search for services on.\n\nAn example name would be:\n`projects/123`\nwhere `123` is the project number (not project ID).",
+              "location": "path",
+              "pattern": "^[^/]+/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+parent}/services",
+          "response": {
+            "$ref": "ListServicesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ]
+        }
+      }
     }
   },
-  "revision": "20180627",
+  "revision": "20180702",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -440,6 +602,20 @@
       },
       "type": "object"
     },
+    "BatchEnableServicesRequest": {
+      "description": "Request message for the `BatchEnableServices` method.",
+      "id": "BatchEnableServicesRequest",
+      "properties": {
+        "serviceIds": {
+          "description": "The identifiers of the services to enable on the project.\n\nA valid identifier would be:\nserviceusage.googleapis.com\n\nEnabling services requires that each service is public or is shared with\nthe user enabling the service.\n\nTwo or more services must be specified. To enable a single service,\nuse the `EnableService` method instead.\n\nA single request can enable a maximum of 20 services at a time. If more\nthan 20 services are specified, the request will fail, and no state changes\nwill occur.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "BatchEnableServicesResponse": {
       "description": "Response message for the `BatchEnableServices` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
       "id": "BatchEnableServicesResponse",
@@ -614,6 +790,17 @@
       },
       "type": "object"
     },
+    "DisableServiceRequest": {
+      "description": "Request message for the `DisableService` method.",
+      "id": "DisableServiceRequest",
+      "properties": {
+        "disableDependentServices": {
+          "description": "Indicates if services that are enabled and which depend on this service\nshould also be disabled. If not set, an error will be generated if any\nenabled services depend on the service to be disabled. When set, the\nservice, and any enabled services that depend on it, will be disabled\ntogether.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "DisableServiceResponse": {
       "description": "Response message for the `DisableService` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
       "id": "DisableServiceResponse",
@@ -684,6 +871,7 @@
       "type": "object"
     },
     "EnableFailure": {
+      "description": "Provides error messages for the failing services.",
       "id": "EnableFailure",
       "properties": {
         "errorMessage": {
@@ -695,6 +883,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "EnableServiceRequest": {
+      "description": "Request message for the `EnableService` method.",
+      "id": "EnableServiceRequest",
+      "properties": {},
       "type": "object"
     },
     "EnableServiceResponse": {
@@ -1066,6 +1260,20 @@
       },
       "type": "object"
     },
+    "GoogleApiServiceusageV1OperationMetadata": {
+      "description": "The operation metadata returned for the batchend services operation.",
+      "id": "GoogleApiServiceusageV1OperationMetadata",
+      "properties": {
+        "resourceNames": {
+          "description": "The full name of the resources that this operation is directly\nassociated with.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleApiServiceusageV1Service": {
       "description": "A service that is available for use by the consumer.",
       "id": "GoogleApiServiceusageV1Service",
@@ -1140,6 +1348,20 @@
         "usage": {
           "$ref": "Usage",
           "description": "Configuration controlling usage of this service."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleApiServiceusageV1beta1OperationMetadata": {
+      "description": "The operation metadata returned for the batchend services operation.",
+      "id": "GoogleApiServiceusageV1beta1OperationMetadata",
+      "properties": {
+        "resourceNames": {
+          "description": "The full name of the resources that this operation is directly\nassociated with.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1272,6 +1494,24 @@
           "description": "A list of operations that matches the specified filter in the request.",
           "items": {
             "$ref": "Operation"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ListServicesResponse": {
+      "description": "Response message for the `ListServices` method.",
+      "id": "ListServicesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "Token that can be passed to `ListServices` to resume a paginated\nquery.",
+          "type": "string"
+        },
+        "services": {
+          "description": "The available services for the requested project.",
+          "items": {
+            "$ref": "GoogleApiServiceusageV1Service"
           },
           "type": "array"
         }

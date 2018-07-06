@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/4NHVPjgKPo266pkH5qP5nxcodtg\"",
+  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/gnDDjEACpAKukHVLbaUNFL-Vlz0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1011,11 +1011,11 @@
       "properties": {
         "pretax": {
           "$ref": "Price",
-          "description": "Value before taxes."
+          "description": "[required] Value before taxes."
         },
         "tax": {
           "$ref": "Price",
-          "description": "Tax value."
+          "description": "[required] Tax value."
         }
       },
       "type": "object"
@@ -1074,19 +1074,19 @@
         },
         "customerBalance": {
           "$ref": "Amount",
-          "description": "Customer balance on this invoice. A positive amount means the customer is paying, a negative one means the customer is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
+          "description": "[required] Customer balance on this invoice. A positive amount means the customer is paying, a negative one means the customer is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
         },
         "googleBalance": {
           "$ref": "Amount",
-          "description": "Google balance on this invoice. A positive amount means Google is paying, a negative one means Google is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
+          "description": "[required] Google balance on this invoice. A positive amount means Google is paying, a negative one means Google is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
         },
         "merchantBalance": {
           "$ref": "Amount",
-          "description": "Merchant balance on this invoice. A positive amount means the merchant is paying, a negative one means the merchant is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
+          "description": "[required] Merchant balance on this invoice. A positive amount means the merchant is paying, a negative one means the merchant is receiving money. Note that it must always be true that merchant_balance + customer_balance + google_balance = 0."
         },
         "productTotal": {
           "$ref": "Amount",
-          "description": "Total price for the product."
+          "description": "[required] Total price for the product."
         },
         "promotionSummaries": {
           "description": "Summary for each promotion.",
@@ -1103,10 +1103,10 @@
       "properties": {
         "totalAmount": {
           "$ref": "Amount",
-          "description": "Total additional charge for this type."
+          "description": "[required] Total additional charge for this type."
         },
         "type": {
-          "description": "Type of the additional charge.",
+          "description": "[required] Type of the additional charge.",
           "type": "string"
         }
       },
@@ -1830,26 +1830,26 @@
       "id": "OrderinvoicesCreateChargeInvoiceRequest",
       "properties": {
         "invoiceId": {
-          "description": "The ID of the invoice.",
+          "description": "[required] The ID of the invoice.",
           "type": "string"
         },
         "invoiceSummary": {
           "$ref": "InvoiceSummary",
-          "description": "Invoice summary."
+          "description": "[required] Invoice summary."
         },
         "lineItemInvoices": {
-          "description": "Invoice details per line item.",
+          "description": "[required] Invoice details per line item.",
           "items": {
             "$ref": "ShipmentInvoiceLineItemInvoice"
           },
           "type": "array"
         },
         "operationId": {
-          "description": "The ID of the operation, unique across all operations for a given order.",
+          "description": "[required] The ID of the operation, unique across all operations for a given order.",
           "type": "string"
         },
         "shipmentGroupId": {
-          "description": "ID of the shipment group.",
+          "description": "[required] ID of the shipment group.",
           "type": "string"
         }
       },
@@ -1874,11 +1874,11 @@
       "id": "OrderinvoicesCreateRefundInvoiceRequest",
       "properties": {
         "invoiceId": {
-          "description": "The ID of the invoice.",
+          "description": "[required] The ID of the invoice.",
           "type": "string"
         },
         "operationId": {
-          "description": "The ID of the operation, unique across all operations for a given order.",
+          "description": "[required] The ID of the operation, unique across all operations for a given order.",
           "type": "string"
         },
         "refundOnlyOption": {
@@ -1922,7 +1922,7 @@
           "type": "string"
         },
         "reason": {
-          "description": "Reason for the refund.",
+          "description": "[required] Reason for the refund.",
           "type": "string"
         }
       },
@@ -1936,7 +1936,7 @@
           "type": "string"
         },
         "reason": {
-          "description": "Reason for the return.",
+          "description": "[required] Reason for the return.",
           "type": "string"
         }
       },
@@ -3197,10 +3197,10 @@
       "properties": {
         "promotionAmount": {
           "$ref": "Amount",
-          "description": "Amount of the promotion. The values here are the promotion applied to the unit price pretax and to the total of the tax amounts."
+          "description": "[required] Amount of the promotion. The values here are the promotion applied to the unit price pretax and to the total of the tax amounts."
         },
         "promotionId": {
-          "description": "ID of the promotion.",
+          "description": "[required] ID of the promotion.",
           "type": "string"
         }
       },
@@ -3211,17 +3211,17 @@
       "properties": {
         "invoiceSummary": {
           "$ref": "InvoiceSummary",
-          "description": "Invoice summary."
+          "description": "[required] Invoice summary."
         },
         "lineItemInvoices": {
-          "description": "Invoice details per line item.",
+          "description": "[required] Invoice details per line item.",
           "items": {
             "$ref": "ShipmentInvoiceLineItemInvoice"
           },
           "type": "array"
         },
         "shipmentGroupId": {
-          "description": "ID of the shipment group.",
+          "description": "[required] ID of the shipment group.",
           "type": "string"
         }
       },
@@ -3239,7 +3239,7 @@
           "type": "string"
         },
         "shipmentUnitIds": {
-          "description": "Unit IDs to define specific units within the line item.",
+          "description": "[required] Unit IDs to define specific units within the line item.",
           "items": {
             "type": "string"
           },
@@ -3247,7 +3247,7 @@
         },
         "unitInvoice": {
           "$ref": "UnitInvoice",
-          "description": "Invoice details for a single unit."
+          "description": "[required] Invoice details for a single unit."
         }
       },
       "type": "object"
@@ -3580,7 +3580,7 @@
         },
         "unitPricePretax": {
           "$ref": "Price",
-          "description": "Price of the unit, before applying taxes."
+          "description": "[required] Price of the unit, before applying taxes."
         },
         "unitPriceTaxes": {
           "description": "Tax amounts to apply to the unit price.",
@@ -3597,7 +3597,7 @@
       "properties": {
         "additionalChargeAmount": {
           "$ref": "Amount",
-          "description": "Amount of the additional charge."
+          "description": "[required] Amount of the additional charge."
         },
         "additionalChargePromotions": {
           "description": "Promotions applied to the additional charge.",
@@ -3607,7 +3607,7 @@
           "type": "array"
         },
         "type": {
-          "description": "Type of the additional charge.",
+          "description": "[required] Type of the additional charge.",
           "type": "string"
         }
       },
@@ -3618,14 +3618,14 @@
       "properties": {
         "taxAmount": {
           "$ref": "Price",
-          "description": "Tax amount for the tax type."
+          "description": "[required] Tax amount for the tax type."
         },
         "taxName": {
-          "description": "Optional name of the tax type.",
+          "description": "Optional name of the tax type. This should only be provided if taxType is otherFeeTax.",
           "type": "string"
         },
         "taxType": {
-          "description": "Type of the tax.",
+          "description": "[required] Type of the tax.",
           "type": "string"
         }
       },

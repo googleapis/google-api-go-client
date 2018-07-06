@@ -251,6 +251,9 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // use.
 // It is not subject to any SLA or deprecation policy.
 type CreateSnapshotRequest struct {
+	// Labels: User labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Subscription: The subscription whose backlog the snapshot
 	// retains.
 	// Specifically, the created snapshot is guaranteed to retain:
@@ -265,7 +268,7 @@ type CreateSnapshotRequest struct {
 	// Format is `projects/{project}/subscriptions/{sub}`.
 	Subscription string `json:"subscription,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Subscription") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -273,10 +276,10 @@ type CreateSnapshotRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Subscription") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -850,13 +853,13 @@ func (s *PullRequest) MarshalJSON() ([]byte, error) {
 
 // PullResponse: Response for the `Pull` method.
 type PullResponse struct {
-	// ReceivedMessages: Received Pub/Sub messages. The Pub/Sub system will
-	// return zero messages if
-	// there are no more available in the backlog. The Pub/Sub system may
-	// return
-	// fewer than the `maxMessages` requested even if there are more
-	// messages
-	// available in the backlog.
+	// ReceivedMessages: Received Pub/Sub messages. The list will be empty
+	// if there are no more
+	// messages available in the backlog. For JSON, the response can be
+	// entirely
+	// empty. The Pub/Sub system may return fewer than the `maxMessages`
+	// requested
+	// even if there are more messages available in the backlog.
 	ReceivedMessages []*ReceivedMessage `json:"receivedMessages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1105,6 +1108,9 @@ type Snapshot struct {
 	// snapshot that would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
+	// Labels: User labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: The name of the snapshot.
 	Name string `json:"name,omitempty"`
 
@@ -1172,6 +1178,9 @@ type Subscription struct {
 	// If the subscriber never acknowledges the message, the Pub/Sub
 	// system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
+
+	// Labels: User labels.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageRetentionDuration: How long to retain unacknowledged messages
 	// in the subscription's backlog,
@@ -1332,6 +1341,9 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // Topic: A topic resource.
 type Topic struct {
+	// Labels: User labels.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: The name of the topic. It must have the
 	// format
 	// "projects/{project}/topics/{topic}". `{topic}` must start with a
@@ -1349,7 +1361,7 @@ type Topic struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Labels") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1357,7 +1369,7 @@ type Topic struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
+	// NullFields is a list of field names (e.g. "Labels") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1440,6 +1452,46 @@ type UpdateSubscriptionRequest struct {
 
 func (s *UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateSubscriptionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateTopicRequest: Request for the UpdateTopic method.
+type UpdateTopicRequest struct {
+	// Topic: The updated topic object.
+	Topic *Topic `json:"topic,omitempty"`
+
+	// UpdateMask: Indicates which fields in the provided topic to update.
+	// Must be specified
+	// and non-empty. Note that if `update_mask`
+	// contains
+	// "message_storage_policy" then the new value will be determined based
+	// on the
+	// policy configured at the project or organization level.
+	// The
+	// `message_storage_policy` must not be set in the `topic` provided
+	// above.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Topic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Topic") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateTopicRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateTopicRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3994,9 +4046,7 @@ type ProjectsSubscriptionsPullCall struct {
 	header_      http.Header
 }
 
-// Pull: Pulls messages from the server. Returns an empty list if there
-// are no
-// messages available in the backlog. The server may return
+// Pull: Pulls messages from the server. The server may return
 // `UNAVAILABLE` if
 // there are too many concurrent pull requests pending for the
 // given
@@ -4094,7 +4144,7 @@ func (c *ProjectsSubscriptionsPullCall) Do(opts ...googleapi.CallOption) (*PullR
 	}
 	return ret, nil
 	// {
-	//   "description": "Pulls messages from the server. Returns an empty list if there are no\nmessages available in the backlog. The server may return `UNAVAILABLE` if\nthere are too many concurrent pull requests pending for the given\nsubscription.",
+	//   "description": "Pulls messages from the server. The server may return `UNAVAILABLE` if\nthere are too many concurrent pull requests pending for the given\nsubscription.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:pull",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.pull",
@@ -5293,6 +5343,144 @@ func (c *ProjectsTopicsListCall) Pages(ctx context.Context, f func(*ListTopicsRe
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "pubsub.projects.topics.patch":
+
+type ProjectsTopicsPatchCall struct {
+	s                  *Service
+	name               string
+	updatetopicrequest *UpdateTopicRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates an existing topic. Note that certain properties of
+// a
+// topic are not modifiable.
+func (r *ProjectsTopicsService) Patch(name string, updatetopicrequest *UpdateTopicRequest) *ProjectsTopicsPatchCall {
+	c := &ProjectsTopicsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.updatetopicrequest = updatetopicrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsTopicsPatchCall) Fields(s ...googleapi.Field) *ProjectsTopicsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsTopicsPatchCall) Context(ctx context.Context) *ProjectsTopicsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsTopicsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsTopicsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updatetopicrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "pubsub.projects.topics.patch" call.
+// Exactly one of *Topic or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Topic.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsTopicsPatchCall) Do(opts ...googleapi.CallOption) (*Topic, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Topic{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing topic. Note that certain properties of a\ntopic are not modifiable.",
+	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "pubsub.projects.topics.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the topic. It must have the format\n`\"projects/{project}/topics/{topic}\"`. `{topic}` must start with a letter,\nand contain only letters (`[A-Za-z]`), numbers (`[0-9]`), dashes (`-`),\nunderscores (`_`), periods (`.`), tildes (`~`), plus (`+`) or percent\nsigns (`%`). It must be between 3 and 255 characters in length, and it\nmust not start with `\"goog\"`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/topics/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UpdateTopicRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Topic"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/pubsub"
+	//   ]
+	// }
+
 }
 
 // method id "pubsub.projects.topics.publish":

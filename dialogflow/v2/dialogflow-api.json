@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180623",
+  "revision": "20180702",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1553,7 +1553,7 @@
       "properties": {
         "queryResult": {
           "$ref": "GoogleCloudDialogflowV2QueryResult",
-          "description": "The results of the conversational query or event processing."
+          "description": "The selected results of the conversational query or event processing.\nSee `alternative_query_results` for additional potential results."
         },
         "responseId": {
           "description": "The unique identifier of the response. It can be used to\nlocate a response in the training example set or for reporting issues.",
@@ -2507,6 +2507,10 @@
         "source": {
           "description": "The source of this request, e.g., `google`, `facebook`, `slack`. It is set\nby Dialogflow-owned servers.",
           "type": "string"
+        },
+        "version": {
+          "description": "Optional. The version of the protocol used for this request.\nThis field is AoG-specific.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2607,7 +2611,7 @@
           "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
         },
         "intentDetectionConfidence": {
-          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).",
+          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
           "format": "float",
           "type": "number"
         },
@@ -3651,6 +3655,10 @@
         "source": {
           "description": "The source of this request, e.g., `google`, `facebook`, `slack`. It is set\nby Dialogflow-owned servers.",
           "type": "string"
+        },
+        "version": {
+          "description": "Optional. The version of the protocol used for this request.\nThis field is AoG-specific.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3691,7 +3699,7 @@
           "description": "The intent that matched the conversational query. Some, not\nall fields are filled in this message, including but not limited to:\n`name`, `display_name` and `webhook_state`."
         },
         "intentDetectionConfidence": {
-          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).",
+          "description": "The intent detection confidence. Values range from 0.0\n(completely uncertain) to 1.0 (completely certain).\nIf there are `multiple knowledge_answers` messages, this value is set to\nthe greatest `knowledgeAnswers.match_confidence` value in the list.",
           "format": "float",
           "type": "number"
         },

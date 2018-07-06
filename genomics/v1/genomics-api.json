@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20180607",
+  "revision": "20180702",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -1781,7 +1781,7 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },

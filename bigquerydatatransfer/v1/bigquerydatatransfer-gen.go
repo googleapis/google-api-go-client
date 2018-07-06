@@ -262,8 +262,6 @@ type DataSource struct {
 
 	// ClientId: Data source client id which should be used to receive
 	// refresh token.
-	// When not supplied, no offline credentials are populated for data
-	// transfer.
 	ClientId string `json:"clientId,omitempty"`
 
 	// DataRefreshType: Specifies whether the data source supports automatic
@@ -328,11 +326,10 @@ type DataSource struct {
 	Parameters []*DataSourceParameter `json:"parameters,omitempty"`
 
 	// Scopes: Api auth scopes for which refresh token needs to be obtained.
-	// Only valid
-	// when `client_id` is specified. Ignored otherwise. These are scopes
-	// needed
-	// by a data source to prepare data and ingest them into BigQuery,
-	// e.g., https://www.googleapis.com/auth/bigquery
+	// These are
+	// scopes needed by a data source to prepare data and ingest them
+	// into
+	// BigQuery, e.g., https://www.googleapis.com/auth/bigquery
 	Scopes []string `json:"scopes,omitempty"`
 
 	// SupportsCustomSchedule: Specifies whether the data source supports a

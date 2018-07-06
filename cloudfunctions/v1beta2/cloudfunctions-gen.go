@@ -249,17 +249,21 @@ type CloudFunction struct {
 	// globally and match pattern `projects/*/locations/*/functions/*`
 	Name string `json:"name,omitempty"`
 
-	// Network: The Google Compute Engine network that this function can
-	// connect to.
-	// Either the fully-qualified URI of the network resource, or
-	// the short name of the network must be specified. If the network
-	// belongs to
-	// another project, the URI of the resource must be
-	// specified
-	// e.g.,
-	// `https://www.googleapis.com/compute/v1/projects/{proje
-	// ct}/global/networks/{network}`
-	//  or `my-network`.
+	// Network: The VPC Network that this cloud function can connect to. It
+	// can be
+	// either the fully-qualified URI, or the short name of the network
+	// resource.
+	// If the short network name is used, the network must belong to the
+	// same
+	// project. Otherwise, it must belong to a project within the
+	// same
+	// organization. The format of this field is
+	// either
+	// `projects/{project}/global/networks/{network}` or `{network}`,
+	// where
+	// {project} is a project id where the network is defined, and {network}
+	// is
+	// the short name of the network.
 	//
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for

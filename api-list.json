@@ -2584,7 +2584,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/speech/",
+   "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
    "preferred": true
   },
   {
@@ -2599,7 +2599,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/speech/",
+   "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
    "preferred": false
   },
   {

@@ -1619,7 +1619,7 @@
       }
     }
   },
-  "revision": "20180622",
+  "revision": "20180702",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1650,7 +1650,7 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to members. For example, roles/viewer, roles/editor, or roles/owner. Required",
+          "description": "Role that is assigned to members. For example, roles/viewer, roles/editor, or roles/owner.",
           "type": "string"
         }
       },

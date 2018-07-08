@@ -2069,37 +2069,6 @@ func (s *GoogleApiServiceusageV1ServiceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleApiServiceusageV1beta1OperationMetadata: The operation metadata
-// returned for the batchend services operation.
-type GoogleApiServiceusageV1beta1OperationMetadata struct {
-	// ResourceNames: The full name of the resources that this operation is
-	// directly
-	// associated with.
-	ResourceNames []string `json:"resourceNames,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceNames") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleApiServiceusageV1beta1OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleApiServiceusageV1beta1OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Http: Defines the HTTP configuration for an API service. It contains
 // a list of
 // HttpRule, each specifying the mapping of an RPC method
@@ -3792,40 +3761,28 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: The metadata associated with a long running
-// operation resource.
+// OperationMetadata: The operation metadata returned for the batchend
+// services operation.
 type OperationMetadata struct {
-	// ProgressPercentage: Percentage of completion of this operation,
-	// ranging from 0 to 100.
-	ProgressPercentage int64 `json:"progressPercentage,omitempty"`
-
 	// ResourceNames: The full name of the resources that this operation is
 	// directly
 	// associated with.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
-	// StartTime: The start time of the operation.
-	StartTime string `json:"startTime,omitempty"`
-
-	// Steps: Detailed status information for each step. The order is
-	// undetermined.
-	Steps []*Step `json:"steps,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProgressPercentage") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ResourceNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4340,48 +4297,6 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Step: Represents the status of one operation step.
-type Step struct {
-	// Description: The short description of the step.
-	Description string `json:"description,omitempty"`
-
-	// Status: The status code.
-	//
-	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Unspecifed code.
-	//   "DONE" - The operation or step has completed without errors.
-	//   "NOT_STARTED" - The operation or step has not started yet.
-	//   "IN_PROGRESS" - The operation or step is in progress.
-	//   "FAILED" - The operation or step has completed with errors. If the
-	// operation is
-	// rollbackable, the rollback completed with errors too.
-	//   "CANCELLED" - The operation or step has completed with
-	// cancellation.
-	Status string `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Step) MarshalJSON() ([]byte, error) {
-	type NoMethod Step
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

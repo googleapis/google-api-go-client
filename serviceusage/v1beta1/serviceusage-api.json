@@ -338,7 +338,7 @@
       }
     }
   },
-  "revision": "20180702",
+  "revision": "20180705",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -1286,20 +1286,6 @@
       },
       "type": "object"
     },
-    "GoogleApiServiceusageV1beta1OperationMetadata": {
-      "description": "The operation metadata returned for the batchend services operation.",
-      "id": "GoogleApiServiceusageV1beta1OperationMetadata",
-      "properties": {
-        "resourceNames": {
-          "description": "The full name of the resources that this operation is directly\nassociated with.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "Http": {
       "description": "Defines the HTTP configuration for an API service. It contains a list of\nHttpRule, each specifying the mapping of an RPC method\nto one or more HTTP REST API methods.",
       "id": "Http",
@@ -1901,30 +1887,13 @@
       "type": "object"
     },
     "OperationMetadata": {
-      "description": "The metadata associated with a long running operation resource.",
+      "description": "The operation metadata returned for the batchend services operation.",
       "id": "OperationMetadata",
       "properties": {
-        "progressPercentage": {
-          "description": "Percentage of completion of this operation, ranging from 0 to 100.",
-          "format": "int32",
-          "type": "integer"
-        },
         "resourceNames": {
           "description": "The full name of the resources that this operation is directly\nassociated with.",
           "items": {
             "type": "string"
-          },
-          "type": "array"
-        },
-        "startTime": {
-          "description": "The start time of the operation.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "steps": {
-          "description": "Detailed status information for each step. The order is undetermined.",
-          "items": {
-            "$ref": "Step"
           },
           "type": "array"
         }
@@ -2176,37 +2145,6 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Step": {
-      "description": "Represents the status of one operation step.",
-      "id": "Step",
-      "properties": {
-        "description": {
-          "description": "The short description of the step.",
-          "type": "string"
-        },
-        "status": {
-          "description": "The status code.",
-          "enum": [
-            "STATUS_UNSPECIFIED",
-            "DONE",
-            "NOT_STARTED",
-            "IN_PROGRESS",
-            "FAILED",
-            "CANCELLED"
-          ],
-          "enumDescriptions": [
-            "Unspecifed code.",
-            "The operation or step has completed without errors.",
-            "The operation or step has not started yet.",
-            "The operation or step is in progress.",
-            "The operation or step has completed with errors. If the operation is\nrollbackable, the rollback completed with errors too.",
-            "The operation or step has completed with cancellation."
-          ],
           "type": "string"
         }
       },

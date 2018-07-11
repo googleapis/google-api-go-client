@@ -45,7 +45,7 @@
   "baseUrl": "https://script.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Script",
-  "description": "An API for managing and executing Google Apps Script projects. \u003caside class=\"note\"\u003e\u003cb\u003eNote\u003c/b\u003e: In order to use this API in your apps, you must \u003ca href=\"/apps-script/api/how-tos/enable#using_the_apps_script_api_in_your_app\"\u003e enable it for use\u003c/a\u003e. To allow other apps to manage your scripts, you must \u003ca href=\"/apps-script/api/how-tos/enable#granting_third-party_applications_access_to_your_script_projects\"\u003e grant them access\u003c/a\u003e.\u003c/aside\u003e\n",
+  "description": "An API for managing and executing Google Apps Script projects.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/apps-script/api/",
   "fullyEncodeReservedExpansion": true,
@@ -750,7 +750,7 @@
       }
     }
   },
-  "revision": "20180601",
+  "revision": "20180707",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {

@@ -1074,7 +1074,7 @@
       }
     }
   },
-  "revision": "20180626",
+  "revision": "20180702",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1103,7 +1103,7 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },
@@ -1117,7 +1117,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "User labels.",
+          "description": "See \u003ca href=\"/pubsub/docs/labels\"\u003e Creating and managing labels\u003c/a\u003e.",
           "type": "object"
         },
         "subscription": {
@@ -1441,7 +1441,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "User labels.",
+          "description": "See \u003ca href=\"/pubsub/docs/labels\"\u003e Creating and managing labels\u003c/a\u003e.",
           "type": "object"
         },
         "name": {
@@ -1468,7 +1468,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "User labels.",
+          "description": "See \u003ca href=\"/pubsub/docs/labels\"\u003e Creating and managing labels\u003c/a\u003e.",
           "type": "object"
         },
         "messageRetentionDuration": {
@@ -1531,7 +1531,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "User labels.",
+          "description": "See \u003ca href=\"/pubsub/docs/labels\"\u003e Creating and managing labels\u003c/a\u003e.",
           "type": "object"
         },
         "name": {

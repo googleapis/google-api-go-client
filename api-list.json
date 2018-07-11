@@ -789,6 +789,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudprofiler:v2",
+   "name": "cloudprofiler",
+   "version": "v2",
+   "title": "Stackdriver Profiler API",
+   "description": "Allows Google services manage the continuous profiling information.",
+   "discoveryRestUrl": "https://cloudprofiler.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudresourcemanager:v1",
    "name": "cloudresourcemanager",
    "version": "v1",
@@ -1701,7 +1716,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://developers.google.com/identity/protocols/OAuth2ServiceAccount",
+   "documentationLink": "https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials",
    "preferred": true
   },
   {
@@ -2143,7 +2158,7 @@
    "id": "proximitybeacon:v1beta1",
    "name": "proximitybeacon",
    "version": "v1beta1",
-   "title": "Google Proximity Beacon API",
+   "title": "Proximity Beacon API",
    "description": "Registers, manages, indexes, and searches beacons.",
    "discoveryRestUrl": "https://proximitybeacon.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
@@ -2321,7 +2336,7 @@
    "name": "script",
    "version": "v1",
    "title": "Apps Script API",
-   "description": "An API for managing and executing Google Apps Script projects. Note: In order to use this API in your apps, you must  enable it for use. To allow other apps to manage your scripts, you must  grant them access.",
+   "description": "An API for managing and executing Google Apps Script projects.",
    "discoveryRestUrl": "https://script.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

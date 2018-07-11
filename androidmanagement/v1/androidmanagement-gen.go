@@ -690,6 +690,10 @@ type ComplianceRule struct {
 	// exists any matching NonComplianceDetail for the device.
 	NonComplianceDetailCondition *NonComplianceDetailCondition `json:"nonComplianceDetailCondition,omitempty"`
 
+	// PackageNamesToDisable: If set, the rule includes a mitigating action
+	// to disable apps specified in the list, but app data is preserved.
+	PackageNamesToDisable []string `json:"packageNamesToDisable,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApiLevelCondition")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -794,6 +798,18 @@ type Device struct {
 
 	// LastStatusReportTime: The last time the device sent a status report.
 	LastStatusReportTime string `json:"lastStatusReportTime,omitempty"`
+
+	// ManagementMode: The type of management mode Android Device Policy
+	// takes on the device. This influences which policy settings are
+	// supported.
+	//
+	// Possible values:
+	//   "MANAGEMENT_MODE_UNSPECIFIED" - This value is disallowed.
+	//   "DEVICE_OWNER" - Device owner. Android Device Policy has full
+	// control over the device.
+	//   "PROFILE_OWNER" - Profile owner. Android Device Policy has control
+	// over a managed profile on the device.
+	ManagementMode string `json:"managementMode,omitempty"`
 
 	// MemoryEvents: Events related to memory and storage measurements in
 	// chronological order. This information is only available if
@@ -1051,6 +1067,11 @@ type EnrollmentToken struct {
 	// server during creation, in the form
 	// enterprises/{enterpriseId}/enrollmentTokens/{enrollmentTokenId}.
 	Name string `json:"name,omitempty"`
+
+	// OneTimeOnly: Whether the enrollment token is for one time use only.
+	// If the flag is set to true, only one device can use it for
+	// registration.
+	OneTimeOnly bool `json:"oneTimeOnly,omitempty"`
 
 	// PolicyName: The name of the policy initially applied to the enrolled
 	// device, in the form enterprises/{enterpriseId}/policies/{policyId}.
@@ -2378,6 +2399,10 @@ type Policy struct {
 	// PasswordRequirements: Password requirements.
 	PasswordRequirements *PasswordRequirements `json:"passwordRequirements,omitempty"`
 
+	// PermissionGrants: Explicit permission or group grants or denials for
+	// all apps. These values override the default_permission_policy.
+	PermissionGrants []*PermissionGrant `json:"permissionGrants,omitempty"`
+
 	// PermittedInputMethods: If present, only the input methods provided by
 	// packages in this list are permitted. If this field is present, but
 	// the list is empty, then only system input methods are permitted.
@@ -2690,6 +2715,10 @@ type SoftwareInfo struct {
 
 	// DeviceKernelVersion: Kernel version, for example, 2.6.32.9-g103d848.
 	DeviceKernelVersion string `json:"deviceKernelVersion,omitempty"`
+
+	// PrimaryLanguageCode: An IETF BCP 47 language code for the primary
+	// locale on the device.
+	PrimaryLanguageCode string `json:"primaryLanguageCode,omitempty"`
 
 	// SecurityPatchLevel: Security patch level, e.g. 2016-05-01.
 	SecurityPatchLevel string `json:"securityPatchLevel,omitempty"`
@@ -3643,6 +3672,18 @@ func (r *EnterprisesDevicesService) Delete(name string) *EnterprisesDevicesDelet
 	return c
 }
 
+// WipeDataFlags sets the optional parameter "wipeDataFlags": Optional
+// flags that control the device wiping behavior.
+//
+// Possible values:
+//   "WIPE_DATA_FLAG_UNSPECIFIED"
+//   "PRESERVE_RESET_PROTECTION_DATA"
+//   "WIPE_EXTERNAL_STORAGE"
+func (c *EnterprisesDevicesDeleteCall) WipeDataFlags(wipeDataFlags ...string) *EnterprisesDevicesDeleteCall {
+	c.urlParams_.SetMulti("wipeDataFlags", append([]string{}, wipeDataFlags...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3737,6 +3778,17 @@ func (c *EnterprisesDevicesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//       "location": "path",
 	//       "pattern": "^enterprises/[^/]+/devices/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "wipeDataFlags": {
+	//       "description": "Optional flags that control the device wiping behavior.",
+	//       "enum": [
+	//         "WIPE_DATA_FLAG_UNSPECIFIED",
+	//         "PRESERVE_RESET_PROTECTION_DATA",
+	//         "WIPE_EXTERNAL_STORAGE"
+	//       ],
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     }
 	//   },

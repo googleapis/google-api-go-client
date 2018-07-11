@@ -6116,14 +6116,14 @@ func (s *TableColumnProperties) MarshalJSON() ([]byte, error) {
 // like this:
 //
 //
-//   [             ]
+//      [             ]
 //
 // A table range with location = (0, 0), row span = 3 and column span =
 // 2
 // specifies the following cells:
 //
-//    x     x
-//   [      x      ]
+//       x     x
+//      [      x      ]
 type TableRange struct {
 	// ColumnSpan: The column span of the table range.
 	ColumnSpan int64 `json:"columnSpan,omitempty"`

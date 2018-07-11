@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180610",
+  "revision": "20180707",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1469,6 +1469,10 @@
       "properties": {
         "resourceContainer": {
           "description": "The identifier of the parent of this resource instance.\nMust be in one of the following formats:\n    - “projects/\u003cproject-id or project-number\u003e”\n    - “folders/\u003cfolder-id\u003e”\n    - “organizations/\u003corganization-id\u003e”",
+          "type": "string"
+        },
+        "resourceLocation": {
+          "description": "The location of the resource. If not empty, the resource will be checked\nagainst location policy. The value must be a valid zone, region or\nmultiregion. For example: \"europe-west4\" or \"northamerica-northeast1-a\"",
           "type": "string"
         },
         "resourceName": {

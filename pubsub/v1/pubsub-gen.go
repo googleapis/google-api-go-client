@@ -215,9 +215,7 @@ type Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or
-	// `roles/owner`.
-	// Required
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Members") to
@@ -251,7 +249,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // use.
 // It is not subject to any SLA or deprecation policy.
 type CreateSnapshotRequest struct {
-	// Labels: User labels.
+	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
+	// labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Subscription: The subscription whose backlog the snapshot
@@ -1108,7 +1107,8 @@ type Snapshot struct {
 	// snapshot that would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Labels: User labels.
+	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
+	// labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the snapshot.
@@ -1179,7 +1179,8 @@ type Subscription struct {
 	// system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// Labels: User labels.
+	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
+	// labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageRetentionDuration: How long to retain unacknowledged messages
@@ -1341,7 +1342,8 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // Topic: A topic resource.
 type Topic struct {
-	// Labels: User labels.
+	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
+	// labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the topic. It must have the

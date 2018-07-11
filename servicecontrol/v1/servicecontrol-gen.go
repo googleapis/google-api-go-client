@@ -2409,6 +2409,14 @@ type ResourceInfo struct {
 	//     - “organizations/<organization-id>”
 	ResourceContainer string `json:"resourceContainer,omitempty"`
 
+	// ResourceLocation: The location of the resource. If not empty, the
+	// resource will be checked
+	// against location policy. The value must be a valid zone, region
+	// or
+	// multiregion. For example: "europe-west4" or
+	// "northamerica-northeast1-a"
+	ResourceLocation string `json:"resourceLocation,omitempty"`
+
 	// ResourceName: Name of the resource. This is used for auditing
 	// purposes.
 	ResourceName string `json:"resourceName,omitempty"`

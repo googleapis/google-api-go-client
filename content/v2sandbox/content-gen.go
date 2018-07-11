@@ -213,20 +213,20 @@ type InvoiceSummary struct {
 
 	// CustomerBalance: [required] Customer balance on this invoice. A
 	// positive amount means the customer is paying, a negative one means
-	// the customer is receiving money. Note that it must always be true
-	// that merchant_balance + customer_balance + google_balance = 0.
+	// the customer is receiving money. Note: the sum of merchant_balance,
+	// customer_balance and google_balance must always be zero.
 	CustomerBalance *Amount `json:"customerBalance,omitempty"`
 
 	// GoogleBalance: [required] Google balance on this invoice. A positive
 	// amount means Google is paying, a negative one means Google is
-	// receiving money. Note that it must always be true that
-	// merchant_balance + customer_balance + google_balance = 0.
+	// receiving money. Note: the sum of merchant_balance, customer_balance
+	// and google_balance must always be zero.
 	GoogleBalance *Amount `json:"googleBalance,omitempty"`
 
 	// MerchantBalance: [required] Merchant balance on this invoice. A
 	// positive amount means the merchant is paying, a negative one means
-	// the merchant is receiving money. Note that it must always be true
-	// that merchant_balance + customer_balance + google_balance = 0.
+	// the merchant is receiving money. Note: the sum of merchant_balance,
+	// customer_balance and google_balance must always be zero.
 	MerchantBalance *Amount `json:"merchantBalance,omitempty"`
 
 	// ProductTotal: [required] Total price for the product.
@@ -2618,7 +2618,8 @@ type OrdersCustomBatchRequestEntryUpdateShipment struct {
 	Carrier string `json:"carrier,omitempty"`
 
 	// DeliveryDate: Date on which the shipment has been delivered, in ISO
-	// 8601 format. Optional and can be provided only if
+	// 8601 format. Optional and can be provided only if status is
+	// delivered.
 	DeliveryDate string `json:"deliveryDate,omitempty"`
 
 	// ShipmentId: The ID of the shipment.
@@ -3580,7 +3581,8 @@ type OrdersUpdateShipmentRequest struct {
 	Carrier string `json:"carrier,omitempty"`
 
 	// DeliveryDate: Date on which the shipment has been delivered, in ISO
-	// 8601 format. Optional and can be provided only if
+	// 8601 format. Optional and can be provided only if status is
+	// delivered.
 	DeliveryDate string `json:"deliveryDate,omitempty"`
 
 	// OperationId: The ID of the operation. Unique across all operations

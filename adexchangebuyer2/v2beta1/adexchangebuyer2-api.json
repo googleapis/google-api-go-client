@@ -1936,7 +1936,7 @@
       }
     }
   },
-  "revision": "20180614",
+  "revision": "20180709",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -3643,8 +3643,12 @@
           },
           "type": "array"
         },
+        "disapproval": {
+          "$ref": "Disapproval",
+          "description": "Disapproval bound to this restriction.\nOnly present if status=DISAPPROVED.\nCan be used to filter the response of the\ncreatives.list\nmethod."
+        },
         "disapprovalReasons": {
-          "description": "Any disapprovals bound to this restriction.\nOnly present if status=DISAPPROVED.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+          "description": "Any disapprovals bound to this restriction.\nOnly present if status=DISAPPROVED.\nCan be used to filter the response of the\ncreatives.list\nmethod.\nDeprecated; please use\ndisapproval\nfield instead.",
           "items": {
             "$ref": "Disapproval"
           },

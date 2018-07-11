@@ -1,5 +1,7 @@
 // Package logging provides access to the Stackdriver Logging API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/logging instead.
+//
 // See https://cloud.google.com/logging/docs/
 //
 // Usage example:

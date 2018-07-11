@@ -1,5 +1,7 @@
 // Package dataproc provides access to the Cloud Dataproc API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/dataproc/apiv1 instead.
+//
 // See https://cloud.google.com/dataproc/
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package cloudtasks provides access to the Cloud Tasks API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/cloudtasks/apiv2beta2 instead.
+//
 // See https://cloud.google.com/cloud-tasks/
 //
 // Usage example:

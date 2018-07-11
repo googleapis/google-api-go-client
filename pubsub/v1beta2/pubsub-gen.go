@@ -1,5 +1,7 @@
 // Package pubsub provides access to the Cloud Pub/Sub API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/pubsub instead.
+//
 // See https://cloud.google.com/pubsub/docs
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package bigquery provides access to the BigQuery API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/bigquery instead.
+//
 // See https://cloud.google.com/bigquery/
 //
 // Usage example:

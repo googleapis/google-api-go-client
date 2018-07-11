@@ -1,5 +1,7 @@
 // Package cloudkms provides access to the Cloud Key Management Service (KMS) API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/kms/apiv1 instead.
+//
 // See https://cloud.google.com/kms/
 //
 // Usage example:

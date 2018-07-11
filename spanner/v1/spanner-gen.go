@@ -1,5 +1,7 @@
 // Package spanner provides access to the Cloud Spanner API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/spanner instead.
+//
 // See https://cloud.google.com/spanner/
 //
 // Usage example:

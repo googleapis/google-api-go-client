@@ -1,5 +1,7 @@
 // Package datastore provides access to the Cloud Datastore API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/datastore instead.
+//
 // See https://cloud.google.com/datastore/
 //
 // Usage example:

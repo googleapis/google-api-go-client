@@ -1,5 +1,7 @@
 // Package vision provides access to the Cloud Vision API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/vision/apiv1 instead.
+//
 // See https://cloud.google.com/vision/
 //
 // Usage example:

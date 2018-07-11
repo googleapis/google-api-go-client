@@ -554,6 +554,10 @@ func (a *API) GenerateCode() ([]byte, error) {
 	}
 
 	pn("// Package %s provides access to the %s.", pkg, a.doc.Title)
+	if r := replacementPackage[pkg]; r != "" {
+		pn("//")
+		pn("// This package is DEPRECATED. Use package %s instead.", r)
+	}
 	docsLink = a.doc.DocumentationLink
 	if docsLink != "" {
 		pn("//")

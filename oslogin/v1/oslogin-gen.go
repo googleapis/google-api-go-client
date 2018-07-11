@@ -1,5 +1,7 @@
 // Package oslogin provides access to the Cloud OS Login API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/oslogin/apiv1 instead.
+//
 // See https://cloud.google.com/compute/docs/oslogin/rest/
 //
 // Usage example:

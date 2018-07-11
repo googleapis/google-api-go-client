@@ -1,5 +1,7 @@
 // Package texttospeech provides access to the Cloud Text-to-Speech API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/texttospeech/apiv1 instead.
+//
 // See https://cloud.google.com/text-to-speech/
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package dlp provides access to the Cloud Data Loss Prevention (DLP) API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/dlp/apiv2 instead.
+//
 // See https://cloud.google.com/dlp/docs/
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package monitoring provides access to the Stackdriver Monitoring API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/monitoring/apiv3 instead.
+//
 // See https://cloud.google.com/monitoring/api/
 //
 // Usage example:

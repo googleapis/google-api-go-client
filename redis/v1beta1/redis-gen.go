@@ -1,5 +1,7 @@
 // Package redis provides access to the Cloud Memorystore for Redis API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/redis/apiv1beta1 instead.
+//
 // See https://cloud.google.com/memorystore/docs/redis/
 //
 // Usage example:

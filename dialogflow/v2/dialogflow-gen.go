@@ -1,5 +1,7 @@
 // Package dialogflow provides access to the Dialogflow API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/dialogflow/apiv2 instead.
+//
 // See https://cloud.google.com/dialogflow-enterprise/
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package language provides access to the Cloud Natural Language API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/language/apiv1 instead.
+//
 // See https://cloud.google.com/natural-language/
 //
 // Usage example:

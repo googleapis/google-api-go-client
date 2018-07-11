@@ -1,5 +1,7 @@
 // Package firestore provides access to the Cloud Firestore API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/firestore instead.
+//
 // See https://cloud.google.com/firestore
 //
 // Usage example:

@@ -1,5 +1,7 @@
 // Package videointelligence provides access to the Cloud Video Intelligence API.
 //
+// This package is DEPRECATED. Use package cloud.google.com/go/videointelligence/apiv1 instead.
+//
 // See https://cloud.google.com/video-intelligence/docs/
 //
 // Usage example:

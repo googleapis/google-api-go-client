@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20180619",
+  "revision": "20180710",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -559,7 +559,7 @@
       "type": "object"
     },
     "AndroidRuntimeConfiguration": {
-      "description": "Configuration that can be selected at the time a test is run.",
+      "description": "Android configuration that can be selected at the time a test is run.",
       "id": "AndroidRuntimeConfiguration",
       "properties": {
         "locales": {

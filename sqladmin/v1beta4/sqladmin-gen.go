@@ -897,19 +897,25 @@ func (s *DemoteMasterMySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 // ExportContext: Database instance export context.
 type ExportContext struct {
 	// CsvExportOptions: Options for exporting data as CSV.
+	// Exporting in CSV format using the Cloud SQL Admin API is not
+	// supported for PostgreSQL instances.
 	CsvExportOptions *ExportContextCsvExportOptions `json:"csvExportOptions,omitempty"`
 
-	// Databases: Databases (for example, guestbook) from which the export
-	// is made. If fileType is SQL and no database is specified, all
-	// databases are exported. If fileType is CSV, you can optionally
-	// specify at most one database to export. If
-	// csvExportOptions.selectQuery also specifies the database, this field
-	// will be ignored.
+	// Databases: Databases to be exported.
+	// MySQL instances: If fileType is SQL and no database is specified, all
+	// databases are exported, except for the mysql system database. If
+	// fileType is CSV, you can specify one database, either by using this
+	// property or by using the csvExportOptions.selectQuery property, which
+	// takes precedence over this property.
+	// PostgreSQL instances: If fileType is SQL, you must specify one
+	// database to be exported. A fileType of CSV is not supported for
+	// PostgreSQL instances.
 	Databases []string `json:"databases,omitempty"`
 
 	// FileType: The file type for the specified uri.
 	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
+	// CSV is not supported for PostgreSQL instances.
 	FileType string `json:"fileType,omitempty"`
 
 	// Kind: This is always sql#exportContext.
@@ -949,7 +955,10 @@ func (s *ExportContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExportContextCsvExportOptions: Options for exporting data as CSV.
+// ExportContextCsvExportOptions: Options for exporting data as
+// CSV.
+// Exporting in CSV format using the Cloud SQL Admin API is not
+// supported for PostgreSQL instances.
 type ExportContextCsvExportOptions struct {
 	// SelectQuery: The select query used to extract the data.
 	SelectQuery string `json:"selectQuery,omitempty"`
@@ -985,6 +994,7 @@ type ExportContextSqlExportOptions struct {
 
 	// Tables: Tables to export, or that were exported, from the specified
 	// database. If you specify tables, specify one and only one database.
+	// For PostgreSQL instances, you can specify only one table.
 	Tables []string `json:"tables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SchemaOnly") to
@@ -1138,28 +1148,32 @@ func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
 // ImportContext: Database instance import context.
 type ImportContext struct {
 	// CsvImportOptions: Options for importing data as CSV.
+	// Importing CSV data using the Cloud SQL Admin API is not supported for
+	// PostgreSQL instances.
 	CsvImportOptions *ImportContextCsvImportOptions `json:"csvImportOptions,omitempty"`
 
-	// Database: The database (for example, guestbook) to which the import
-	// is made. If fileType is SQL and no database is specified, it is
-	// assumed that the database is specified in the file to be imported. If
-	// fileType is CSV, it must be specified.
+	// Database: The target database for the import. If fileType is SQL,
+	// this field is required only if the import file does not specify a
+	// database, and is overridden by any database specification in the
+	// import file. If fileType is CSV, one database must be specified.
 	Database string `json:"database,omitempty"`
 
 	// FileType: The file type for the specified uri.
 	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
+	// Importing CSV data using the Cloud SQL Admin API is not supported for
+	// PostgreSQL instances.
 	FileType string `json:"fileType,omitempty"`
 
 	// ImportUser: The PostgreSQL user for this import operation. Defaults
-	// to cloudsqlsuperuser. Used only for PostgreSQL instances.
+	// to cloudsqlsuperuser. PostgreSQL instances only.
 	ImportUser string `json:"importUser,omitempty"`
 
 	// Kind: This is always sql#importContext.
 	Kind string `json:"kind,omitempty"`
 
-	// Uri: A path to the file in Google Cloud Storage from which the import
-	// is made. The URI is in the form gs://bucketName/fileName. Compressed
+	// Uri: A path to the file in Cloud Storage from which the import is
+	// made. The URI is in the form gs://bucketName/fileName. Compressed
 	// gzip files (.gz) are supported when fileType is SQL.
 	Uri string `json:"uri,omitempty"`
 
@@ -1187,7 +1201,10 @@ func (s *ImportContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportContextCsvImportOptions: Options for importing data as CSV.
+// ImportContextCsvImportOptions: Options for importing data as
+// CSV.
+// Importing CSV data using the Cloud SQL Admin API is not supported for
+// PostgreSQL instances.
 type ImportContextCsvImportOptions struct {
 	// Columns: The columns to which CSV data is imported. If not specified,
 	// all columns of the database table are loaded with CSV data.
@@ -4233,8 +4250,7 @@ type FlagsListCall struct {
 	header_      http.Header
 }
 
-// List: List all available database flags for Google Cloud SQL
-// instances.
+// List: List all available database flags for Cloud SQL instances.
 func (r *FlagsService) List() *FlagsListCall {
 	c := &FlagsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -4339,7 +4355,7 @@ func (c *FlagsListCall) Do(opts ...googleapi.CallOption) (*FlagsListResponse, er
 	}
 	return ret, nil
 	// {
-	//   "description": "List all available database flags for Google Cloud SQL instances.",
+	//   "description": "List all available database flags for Cloud SQL instances.",
 	//   "httpMethod": "GET",
 	//   "id": "sql.flags.list",
 	//   "parameters": {
@@ -4935,8 +4951,8 @@ type InstancesExportCall struct {
 	header_                http.Header
 }
 
-// Export: Exports data from a Cloud SQL instance to a Google Cloud
-// Storage bucket as a MySQL dump file.
+// Export: Exports data from a Cloud SQL instance to a Cloud Storage
+// bucket as a SQL dump or CSV file.
 func (r *InstancesService) Export(project string, instance string, instancesexportrequest *InstancesExportRequest) *InstancesExportCall {
 	c := &InstancesExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5032,7 +5048,7 @@ func (c *InstancesExportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
+	//   "description": "Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.export",
 	//   "parameterOrder": [
@@ -5372,8 +5388,8 @@ type InstancesImportCall struct {
 	header_                http.Header
 }
 
-// Import: Imports data into a Cloud SQL instance from a MySQL dump file
-// in Google Cloud Storage.
+// Import: Imports data into a Cloud SQL instance from a SQL dump or CSV
+// file in Cloud Storage.
 func (r *InstancesService) Import(project string, instance string, instancesimportrequest *InstancesImportRequest) *InstancesImportCall {
 	c := &InstancesImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -5469,7 +5485,7 @@ func (c *InstancesImportCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
+	//   "description": "Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.",
 	//   "httpMethod": "POST",
 	//   "id": "sql.instances.import",
 	//   "parameterOrder": [

@@ -1009,12 +1009,11 @@ type LogEntry struct {
 	HttpRequest *HttpRequest `json:"httpRequest,omitempty"`
 
 	// InsertId: Optional. A unique identifier for the log entry. If you
-	// provide a value, then Stackdriver Logging considers other log entries
-	// in the same project, with the same timestamp, and with the same
-	// insert_id to be duplicates which can be removed. If omitted in new
-	// log entries, then Stackdriver Logging assigns its own unique
-	// identifier. The insert_id is also used to order log entries that have
-	// the same timestamp value.
+	// provide a value, then Logging considers other log entries in the same
+	// project, with the same timestamp, and with the same insert_id to be
+	// duplicates which can be removed. If omitted in new log entries, then
+	// Logging assigns its own unique identifier. The insert_id is also used
+	// to order log entries that have the same timestamp value.
 	InsertId string `json:"insertId,omitempty"`
 
 	// JsonPayload: The log entry payload, represented as a structure that
@@ -1064,7 +1063,7 @@ type LogEntry struct {
 	ProtoPayload googleapi.RawMessage `json:"protoPayload,omitempty"`
 
 	// ReceiveTimestamp: Output only. The time the log entry was received by
-	// Stackdriver Logging.
+	// Logging.
 	ReceiveTimestamp string `json:"receiveTimestamp,omitempty"`
 
 	// Resource: Required. The primary monitored resource associated with
@@ -1096,9 +1095,9 @@ type LogEntry struct {
 	SourceLocation *LogEntrySourceLocation `json:"sourceLocation,omitempty"`
 
 	// SpanId: Optional. The span ID within the trace associated with the
-	// log entry. For Stackdriver Trace spans, this is the same format that
-	// the Stackdriver Trace API v2 uses: a 16-character hexadecimal
-	// encoding of an 8-byte array, such as <code>"000000000000004a"</code>.
+	// log entry. For Trace spans, this is the same format that the Trace
+	// API v2 uses: a 16-character hexadecimal encoding of an 8-byte array,
+	// such as <code>"000000000000004a"</code>.
 	SpanId string `json:"spanId,omitempty"`
 
 	// TextPayload: The log entry payload, represented as a Unicode string
@@ -1108,14 +1107,14 @@ type LogEntry struct {
 	// Timestamp: Optional. The time the event described by the log entry
 	// occurred. This time is used to compute the log entry's age and to
 	// enforce the logs retention period. If this field is omitted in a new
-	// log entry, then Stackdriver Logging assigns it the current time.
-	// Timestamps have nanosecond accuracy, but trailing zeros in the
-	// fractional seconds might be omitted when the timestamp is
-	// displayed.Incoming log entries should have timestamps that are no
-	// more than the logs retention period in the past, and no more than 24
-	// hours in the future. Log entries outside those time boundaries will
-	// not be available when calling entries.list, but those log entries can
-	// still be exported with LogSinks.
+	// log entry, then Logging assigns it the current time. Timestamps have
+	// nanosecond accuracy, but trailing zeros in the fractional seconds
+	// might be omitted when the timestamp is displayed.Incoming log entries
+	// should have timestamps that are no more than the logs retention
+	// period in the past, and no more than 24 hours in the future. Log
+	// entries outside those time boundaries will not be available when
+	// calling entries.list, but those log entries can still be exported
+	// with LogSinks.
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// Trace: Optional. Resource name of the trace associated with the log
@@ -1233,11 +1232,11 @@ func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 }
 
 // LogExclusion: Specifies a set of log entries that are not to be
-// stored in Stackdriver Logging. If your project receives a large
-// volume of logs, you might be able to use exclusions to reduce your
-// chargeable logs. Exclusions are processed after log sinks, so you can
-// export log entries before they are excluded. Audit log entries and
-// log entries from Amazon Web Services are never excluded.
+// stored in Logging. If your project receives a large volume of logs,
+// you might be able to use exclusions to reduce your chargeable logs.
+// Exclusions are processed after log sinks, so you can export log
+// entries before they are excluded. Audit log entries and log entries
+// from Amazon Web Services are never excluded.
 type LogExclusion struct {
 	// Description: Optional. A description of this exclusion.
 	Description string `json:"description,omitempty"`
@@ -1430,8 +1429,8 @@ type LogMetric struct {
 	// metric. The v2 format is used by default and cannot be changed.
 	//
 	// Possible values:
-	//   "V2" - Stackdriver Logging API v2.
-	//   "V1" - Stackdriver Logging API v1.
+	//   "V2" - Logging API v2.
+	//   "V1" - Logging API v1.
 	Version string `json:"version,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1532,14 +1531,14 @@ type LogSink struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// WriterIdentity: Output only. An IAM identity&mdash;a service account
-	// or group&mdash;under which Stackdriver Logging writes the exported
-	// log entries to the sink's destination. This field is set by
-	// sinks.create and sinks.update, based on the setting of
-	// unique_writer_identity in those methods.Until you grant this identity
-	// write-access to the destination, log entry exports from this sink
-	// will fail. For more information, see Granting access for a resource.
-	// Consult the destination service's documentation to determine the
-	// appropriate IAM roles to assign to the identity.
+	// or group&mdash;under which Logging writes the exported log entries to
+	// the sink's destination. This field is set by sinks.create and
+	// sinks.update, based on the setting of unique_writer_identity in those
+	// methods.Until you grant this identity write-access to the
+	// destination, log entry exports from this sink will fail. For more
+	// information, see Granting access for a resource. Consult the
+	// destination service's documentation to determine the appropriate IAM
+	// roles to assign to the identity.
 	WriterIdentity string `json:"writerIdentity,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1899,17 +1898,15 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 // MonitoredResourceMetadata: Auxiliary metadata for a MonitoredResource
 // object. MonitoredResource objects contain the minimum set of
 // information to uniquely identify a monitored resource instance. There
-// is some other useful auxiliary metadata. Google Stackdriver
-// Monitoring & Logging uses an ingestion pipeline to extract metadata
-// for cloud resources of all types , and stores the metadata in this
-// message.
+// is some other useful auxiliary metadata. Monitoring and Logging use
+// an ingestion pipeline to extract metadata for cloud resources of all
+// types, and store the metadata in this message.
 type MonitoredResourceMetadata struct {
 	// SystemLabels: Output only. Values for predefined system metadata
-	// labels. System labels are a kind of metadata extracted by Google
-	// Stackdriver. Stackdriver determines what system labels are useful and
-	// how to obtain their values. Some examples: "machine_image", "vpc",
-	// "subnet_id", "security_group", "name", etc. System label values can
-	// be only strings, Boolean values, or a list of strings. For example:
+	// labels. System labels are a kind of metadata extracted by Google,
+	// including "machine_image", "vpc", "subnet_id", "security_group",
+	// "name", etc. System label values can be only strings, Boolean values,
+	// or a list of strings. For example:
 	// { "name": "my-test-instance",
 	//   "security_group": ["a", "b", "c"],
 	//   "spot_instance": false }
@@ -2185,24 +2182,23 @@ type WriteLogEntriesRequest struct {
 	// valuable data.
 	DryRun bool `json:"dryRun,omitempty"`
 
-	// Entries: Required. The log entries to send to Stackdriver Logging.
-	// The order of log entries in this list does not matter. Values
-	// supplied in this method's log_name, resource, and labels fields are
-	// copied into those log entries in this list that do not include values
-	// for their corresponding fields. For more information, see the
-	// LogEntry type.If the timestamp or insert_id fields are missing in log
-	// entries, then this method supplies the current time or a unique
-	// identifier, respectively. The supplied values are chosen so that,
-	// among the log entries that did not supply their own values, the
-	// entries earlier in the list will sort before the entries later in the
-	// list. See the entries.list method.Log entries with timestamps that
-	// are more than the logs retention period in the past or more than 24
-	// hours in the future will not be available when calling entries.list.
-	// However, those log entries can still be exported with LogSinks.To
-	// improve throughput and to avoid exceeding the quota limit for calls
-	// to entries.write, you should try to include several log entries in
-	// this list, rather than calling this method for each individual log
-	// entry.
+	// Entries: Required. The log entries to send to Logging. The order of
+	// log entries in this list does not matter. Values supplied in this
+	// method's log_name, resource, and labels fields are copied into those
+	// log entries in this list that do not include values for their
+	// corresponding fields. For more information, see the LogEntry type.If
+	// the timestamp or insert_id fields are missing in log entries, then
+	// this method supplies the current time or a unique identifier,
+	// respectively. The supplied values are chosen so that, among the log
+	// entries that did not supply their own values, the entries earlier in
+	// the list will sort before the entries later in the list. See the
+	// entries.list method.Log entries with timestamps that are more than
+	// the logs retention period in the past or more than 24 hours in the
+	// future will not be available when calling entries.list. However,
+	// those log entries can still be exported with LogSinks.To improve
+	// throughput and to avoid exceeding the quota limit for calls to
+	// entries.write, you should try to include several log entries in this
+	// list, rather than calling this method for each individual log entry.
 	Entries []*LogEntry `json:"entries,omitempty"`
 
 	// Labels: Optional. Default labels that are added to the labels field
@@ -3377,13 +3373,12 @@ func (r *BillingAccountsSinksService) Create(parent string, logsink *LogSink) *B
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
 // returned as writer_identity is the same group or service account used
-// by Stackdriver Logging before the addition of writer identities to
-// this API. The sink's destination must be in the same project as the
-// sink itself.If this field is set to true, or if the sink is owned by
-// a non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// by Logging before the addition of writer identities to this API. The
+// sink's destination must be in the same project as the sink itself.If
+// this field is set to true, or if the sink is owned by a non-project
+// resource such as an organization, then the value of writer_identity
+// will be a unique service account used only for exports from the new
+// sink. For more information, see writer_identity in LogSink.
 func (c *BillingAccountsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *BillingAccountsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -3491,7 +3486,7 @@ func (c *BillingAccountsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogS
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Stackdriver Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -4346,8 +4341,7 @@ type EntriesListCall struct {
 }
 
 // List: Lists log entries. Use this method to retrieve log entries from
-// Stackdriver Logging. For ways to export log entries, see Exporting
-// Logs.
+// Logging. For ways to export log entries, see Exporting Logs.
 func (r *EntriesService) List(listlogentriesrequest *ListLogEntriesRequest) *EntriesListCall {
 	c := &EntriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.listlogentriesrequest = listlogentriesrequest
@@ -4437,7 +4431,7 @@ func (c *EntriesListCall) Do(opts ...googleapi.CallOption) (*ListLogEntriesRespo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists log entries. Use this method to retrieve log entries from Stackdriver Logging. For ways to export log entries, see Exporting Logs.",
+	//   "description": "Lists log entries. Use this method to retrieve log entries from Logging. For ways to export log entries, see Exporting Logs.",
 	//   "flatPath": "v2/entries:list",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.list",
@@ -4491,13 +4485,12 @@ type EntriesWriteCall struct {
 	header_                http.Header
 }
 
-// Write: Writes log entries to Stackdriver Logging. This API method is
-// the only way to send log entries to Stackdriver Logging. This method
-// is used, directly or indirectly, by the Stackdriver Logging agent
-// (fluentd) and all logging libraries configured to use Stackdriver
-// Logging. A single request may contain log entries for a maximum of
-// 1000 different resources (projects, organizations, billing accounts
-// or folders)
+// Write: Writes log entries to Logging. This API method is the only way
+// to send log entries to Logging. This method is used, directly or
+// indirectly, by the Logging agent (fluentd) and all logging libraries
+// configured to use Logging. A single request may contain log entries
+// for a maximum of 1000 different resources (projects, organizations,
+// billing accounts or folders)
 func (r *EntriesService) Write(writelogentriesrequest *WriteLogEntriesRequest) *EntriesWriteCall {
 	c := &EntriesWriteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.writelogentriesrequest = writelogentriesrequest
@@ -4587,7 +4580,7 @@ func (c *EntriesWriteCall) Do(opts ...googleapi.CallOption) (*WriteLogEntriesRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Writes log entries to Stackdriver Logging. This API method is the only way to send log entries to Stackdriver Logging. This method is used, directly or indirectly, by the Stackdriver Logging agent (fluentd) and all logging libraries configured to use Stackdriver Logging. A single request may contain log entries for a maximum of 1000 different resources (projects, organizations, billing accounts or folders)",
+	//   "description": "Writes log entries to Logging. This API method is the only way to send log entries to Logging. This method is used, directly or indirectly, by the Logging agent (fluentd) and all logging libraries configured to use Logging. A single request may contain log entries for a maximum of 1000 different resources (projects, organizations, billing accounts or folders)",
 	//   "flatPath": "v2/entries:write",
 	//   "httpMethod": "POST",
 	//   "id": "logging.entries.write",
@@ -6465,13 +6458,12 @@ func (r *FoldersSinksService) Create(parent string, logsink *LogSink) *FoldersSi
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
 // returned as writer_identity is the same group or service account used
-// by Stackdriver Logging before the addition of writer identities to
-// this API. The sink's destination must be in the same project as the
-// sink itself.If this field is set to true, or if the sink is owned by
-// a non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// by Logging before the addition of writer identities to this API. The
+// sink's destination must be in the same project as the sink itself.If
+// this field is set to true, or if the sink is owned by a non-project
+// resource such as an organization, then the value of writer_identity
+// will be a unique service account used only for exports from the new
+// sink. For more information, see writer_identity in LogSink.
 func (c *FoldersSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *FoldersSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -6579,7 +6571,7 @@ func (c *FoldersSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Stackdriver Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -7756,7 +7748,7 @@ type MonitoredResourceDescriptorsListCall struct {
 }
 
 // List: Lists the descriptors for monitored resource types used by
-// Stackdriver Logging.
+// Logging.
 func (r *MonitoredResourceDescriptorsService) List() *MonitoredResourceDescriptorsListCall {
 	c := &MonitoredResourceDescriptorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7874,7 +7866,7 @@ func (c *MonitoredResourceDescriptorsListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the descriptors for monitored resource types used by Stackdriver Logging.",
+	//   "description": "Lists the descriptors for monitored resource types used by Logging.",
 	//   "flatPath": "v2/monitoredResourceDescriptors",
 	//   "httpMethod": "GET",
 	//   "id": "logging.monitoredResourceDescriptors.list",
@@ -9030,13 +9022,12 @@ func (r *OrganizationsSinksService) Create(parent string, logsink *LogSink) *Org
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
 // returned as writer_identity is the same group or service account used
-// by Stackdriver Logging before the addition of writer identities to
-// this API. The sink's destination must be in the same project as the
-// sink itself.If this field is set to true, or if the sink is owned by
-// a non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// by Logging before the addition of writer identities to this API. The
+// sink's destination must be in the same project as the sink itself.If
+// this field is set to true, or if the sink is owned by a non-project
+// resource such as an organization, then the value of writer_identity
+// will be a unique service account used only for exports from the new
+// sink. For more information, see writer_identity in LogSink.
 func (c *OrganizationsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *OrganizationsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -9144,7 +9135,7 @@ func (c *OrganizationsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Stackdriver Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -11827,13 +11818,12 @@ func (r *ProjectsSinksService) Create(parent string, logsink *LogSink) *Projects
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
 // returned as writer_identity is the same group or service account used
-// by Stackdriver Logging before the addition of writer identities to
-// this API. The sink's destination must be in the same project as the
-// sink itself.If this field is set to true, or if the sink is owned by
-// a non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// by Logging before the addition of writer identities to this API. The
+// sink's destination must be in the same project as the sink itself.If
+// this field is set to true, or if the sink is owned by a non-project
+// resource such as an organization, then the value of writer_identity
+// will be a unique service account used only for exports from the new
+// sink. For more information, see writer_identity in LogSink.
 func (c *ProjectsSinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *ProjectsSinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -11941,7 +11931,7 @@ func (c *ProjectsSinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Stackdriver Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -12813,13 +12803,12 @@ func (r *SinksService) Create(parent string, logsink *LogSink) *SinksCreateCall 
 // as writer_identity in the new sink. If this value is omitted or set
 // to false, and if the sink's parent is a project, then the value
 // returned as writer_identity is the same group or service account used
-// by Stackdriver Logging before the addition of writer identities to
-// this API. The sink's destination must be in the same project as the
-// sink itself.If this field is set to true, or if the sink is owned by
-// a non-project resource such as an organization, then the value of
-// writer_identity will be a unique service account used only for
-// exports from the new sink. For more information, see writer_identity
-// in LogSink.
+// by Logging before the addition of writer identities to this API. The
+// sink's destination must be in the same project as the sink itself.If
+// this field is set to true, or if the sink is owned by a non-project
+// resource such as an organization, then the value of writer_identity
+// will be a unique service account used only for exports from the new
+// sink. For more information, see writer_identity in LogSink.
 func (c *SinksCreateCall) UniqueWriterIdentity(uniqueWriterIdentity bool) *SinksCreateCall {
 	c.urlParams_.Set("uniqueWriterIdentity", fmt.Sprint(uniqueWriterIdentity))
 	return c
@@ -12927,7 +12916,7 @@ func (c *SinksCreateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	//       "type": "string"
 	//     },
 	//     "uniqueWriterIdentity": {
-	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Stackdriver Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
+	//       "description": "Optional. Determines the kind of IAM identity returned as writer_identity in the new sink. If this value is omitted or set to false, and if the sink's parent is a project, then the value returned as writer_identity is the same group or service account used by Logging before the addition of writer identities to this API. The sink's destination must be in the same project as the sink itself.If this field is set to true, or if the sink is owned by a non-project resource such as an organization, then the value of writer_identity will be a unique service account used only for exports from the new sink. For more information, see writer_identity in LogSink.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

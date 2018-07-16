@@ -613,8 +613,8 @@ func (s *AndroidRoboTest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AndroidRuntimeConfiguration: Configuration that can be selected at
-// the time a test is run.
+// AndroidRuntimeConfiguration: Android configuration that can be
+// selected at the time a test is run.
 type AndroidRuntimeConfiguration struct {
 	// Locales: The set of available locales.
 	// @OutputOnly

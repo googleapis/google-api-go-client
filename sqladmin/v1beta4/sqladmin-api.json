@@ -18,7 +18,7 @@
   "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/7uNaI_MZ5Mv7LQb3XtDSj55cbCM\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/gyjQXUISgXkljxOleaWUzAPLU9M\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -463,7 +463,7 @@
     "flags": {
       "methods": {
         "list": {
-          "description": "List all available database flags for Google Cloud SQL instances.",
+          "description": "List all available database flags for Cloud SQL instances.",
           "httpMethod": "GET",
           "id": "sql.flags.list",
           "parameters": {
@@ -617,7 +617,7 @@
           ]
         },
         "export": {
-          "description": "Exports data from a Cloud SQL instance to a Google Cloud Storage bucket as a MySQL dump file.",
+          "description": "Exports data from a Cloud SQL instance to a Cloud Storage bucket as a SQL dump or CSV file.",
           "httpMethod": "POST",
           "id": "sql.instances.export",
           "parameterOrder": [
@@ -715,7 +715,7 @@
           ]
         },
         "import": {
-          "description": "Imports data into a Cloud SQL instance from a MySQL dump file in Google Cloud Storage.",
+          "description": "Imports data into a Cloud SQL instance from a SQL dump or CSV file in Cloud Storage.",
           "httpMethod": "POST",
           "id": "sql.instances.import",
           "parameterOrder": [
@@ -2111,7 +2111,7 @@
       "id": "ExportContext",
       "properties": {
         "csvExportOptions": {
-          "description": "Options for exporting data as CSV.",
+          "description": "Options for exporting data as CSV.\nExporting in CSV format using the Cloud SQL Admin API is not supported for PostgreSQL instances.",
           "properties": {
             "selectQuery": {
               "description": "The select query used to extract the data.",
@@ -2121,14 +2121,14 @@
           "type": "object"
         },
         "databases": {
-          "description": "Databases (for example, guestbook) from which the export is made. If fileType is SQL and no database is specified, all databases are exported. If fileType is CSV, you can optionally specify at most one database to export. If csvExportOptions.selectQuery also specifies the database, this field will be ignored.",
+          "description": "Databases to be exported.\nMySQL instances: If fileType is SQL and no database is specified, all databases are exported, except for the mysql system database. If fileType is CSV, you can specify one database, either by using this property or by using the csvExportOptions.selectQuery property, which takes precedence over this property.\nPostgreSQL instances: If fileType is SQL, you must specify one database to be exported. A fileType of CSV is not supported for PostgreSQL instances.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "fileType": {
-          "description": "The file type for the specified uri.\nSQL: The file contains SQL statements.\nCSV: The file contains CSV data.",
+          "description": "The file type for the specified uri.\nSQL: The file contains SQL statements.\nCSV: The file contains CSV data.\nCSV is not supported for PostgreSQL instances.",
           "type": "string"
         },
         "kind": {
@@ -2144,7 +2144,7 @@
               "type": "boolean"
             },
             "tables": {
-              "description": "Tables to export, or that were exported, from the specified database. If you specify tables, specify one and only one database.",
+              "description": "Tables to export, or that were exported, from the specified database. If you specify tables, specify one and only one database. For PostgreSQL instances, you can specify only one table.",
               "items": {
                 "type": "string"
               },
@@ -2249,7 +2249,7 @@
       "id": "ImportContext",
       "properties": {
         "csvImportOptions": {
-          "description": "Options for importing data as CSV.",
+          "description": "Options for importing data as CSV.\nImporting CSV data using the Cloud SQL Admin API is not supported for PostgreSQL instances.",
           "properties": {
             "columns": {
               "description": "The columns to which CSV data is imported. If not specified, all columns of the database table are loaded with CSV data.",
@@ -2266,15 +2266,15 @@
           "type": "object"
         },
         "database": {
-          "description": "The database (for example, guestbook) to which the import is made. If fileType is SQL and no database is specified, it is assumed that the database is specified in the file to be imported. If fileType is CSV, it must be specified.",
+          "description": "The target database for the import. If fileType is SQL, this field is required only if the import file does not specify a database, and is overridden by any database specification in the import file. If fileType is CSV, one database must be specified.",
           "type": "string"
         },
         "fileType": {
-          "description": "The file type for the specified uri.\nSQL: The file contains SQL statements.\nCSV: The file contains CSV data.",
+          "description": "The file type for the specified uri.\nSQL: The file contains SQL statements.\nCSV: The file contains CSV data.\nImporting CSV data using the Cloud SQL Admin API is not supported for PostgreSQL instances.",
           "type": "string"
         },
         "importUser": {
-          "description": "The PostgreSQL user for this import operation. Defaults to cloudsqlsuperuser. Used only for PostgreSQL instances.",
+          "description": "The PostgreSQL user for this import operation. Defaults to cloudsqlsuperuser. PostgreSQL instances only.",
           "type": "string"
         },
         "kind": {
@@ -2283,7 +2283,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "A path to the file in Google Cloud Storage from which the import is made. The URI is in the form gs://bucketName/fileName. Compressed gzip files (.gz) are supported when fileType is SQL.",
+          "description": "A path to the file in Cloud Storage from which the import is made. The URI is in the form gs://bucketName/fileName. Compressed gzip files (.gz) are supported when fileType is SQL.",
           "type": "string"
         }
       },

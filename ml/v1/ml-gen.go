@@ -365,7 +365,8 @@ type GoogleCloudMlV1__Capability struct {
 	// Default to no GPU.
 	//   "NVIDIA_TESLA_K80" - Nvidia tesla k80 GPU.
 	//   "NVIDIA_TESLA_P100" - Nvidia tesla P100 GPU.
-	//   "NVIDIA_TESLA_V100" - Nvidia tesla V100 GPU.
+	//   "NVIDIA_TESLA_V100" - Nvidia tesla V100 GPU. Not supported for
+	// batch prediction.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:
@@ -630,8 +631,33 @@ type GoogleCloudMlV1__Job struct {
 	// cancellation.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
+	// Etag: `etag` is used for optimistic concurrency control as a way to
+	// help
+	// prevent simultaneous updates of a job from overwriting each other.
+	// It is strongly suggested that systems make use of the `etag` in
+	// the
+	// read-modify-write cycle to perform job updates in order to avoid
+	// race
+	// conditions: An `etag` is returned in the response to `GetJob`,
+	// and
+	// systems are expected to put that etag in the request to `UpdateJob`
+	// to
+	// ensure that their change will be applied to the same version of the
+	// job.
+	Etag string `json:"etag,omitempty"`
+
 	// JobId: Required. The user-specified id of the job.
 	JobId string `json:"jobId,omitempty"`
+
+	// Labels: Optional. One or more labels that you can add, to organize
+	// your jobs.
+	// Each label is a key-value pair, where both the key and the value
+	// are
+	// arbitrary strings that you supply.
+	// For more information, see the documentation on
+	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
+	// labels</a>.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// PredictionInput: Input parameters to create a prediction job.
 	PredictionInput *GoogleCloudMlV1__PredictionInput `json:"predictionInput,omitempty"`
@@ -932,6 +958,31 @@ type GoogleCloudMlV1__Model struct {
 	// it was created.
 	Description string `json:"description,omitempty"`
 
+	// Etag: `etag` is used for optimistic concurrency control as a way to
+	// help
+	// prevent simultaneous updates of a model from overwriting each
+	// other.
+	// It is strongly suggested that systems make use of the `etag` in
+	// the
+	// read-modify-write cycle to perform model updates in order to avoid
+	// race
+	// conditions: An `etag` is returned in the response to `GetModel`,
+	// and
+	// systems are expected to put that etag in the request to `UpdateModel`
+	// to
+	// ensure that their change will be applied to the model as intended.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. One or more labels that you can add, to organize
+	// your models.
+	// Each label is a key-value pair, where both the key and the value
+	// are
+	// arbitrary strings that you supply.
+	// For more information, see the documentation on
+	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
+	// labels</a>.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// Name: Required. The name specified for the model when it was
 	// created.
 	//
@@ -1001,6 +1052,11 @@ type GoogleCloudMlV1__OperationMetadata struct {
 	// IsCancellationRequested: Indicates whether a request to cancel this
 	// operation has been made.
 	IsCancellationRequested bool `json:"isCancellationRequested,omitempty"`
+
+	// Labels: The user labels, inherited from the model or the model
+	// version being
+	// operated on.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// ModelName: Contains the name of the model associated with the
 	// operation.
@@ -1469,9 +1525,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   </dd>
 	//   <dt>cloud_tpu</dt>
 	//   <dd>
-	//   A TPU VM including one Cloud TPU. The availability of Cloud TPU is
-	// in
-	//   <i>Beta</i> launch stage. See more about
+	//   A TPU VM including one Cloud TPU. See more about
 	//   <a href="/ml-engine/docs/tensorflow/using-tpus">using TPUs to
 	// train
 	//   your model</a>.
@@ -1553,7 +1607,6 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// GPU](/ml-engine/docs/tensorflow/using-gpus).
 	//   "BASIC_TPU" - A single worker instance with a
 	// [Cloud TPU](/ml-engine/docs/tensorflow/using-tpus).
-	// The availability of Cloud TPU is in <i>Beta</i> launch stage.
 	//   "CUSTOM" - The CUSTOM tier is not a set tier, but rather enables
 	// you to use your
 	// own cluster specification. When you use this tier, set values
@@ -1743,6 +1796,21 @@ type GoogleCloudMlV1__Version struct {
 	// cancellation.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
+	// Etag: `etag` is used for optimistic concurrency control as a way to
+	// help
+	// prevent simultaneous updates of a model from overwriting each
+	// other.
+	// It is strongly suggested that systems make use of the `etag` in
+	// the
+	// read-modify-write cycle to perform model updates in order to avoid
+	// race
+	// conditions: An `etag` is returned in the response to `GetVersion`,
+	// and
+	// systems are expected to put that etag in the request to
+	// `UpdateVersion` to
+	// ensure that their change will be applied to the model as intended.
+	Etag string `json:"etag,omitempty"`
+
 	// Framework: Optional. The machine learning framework Cloud ML Engine
 	// uses to train
 	// this version of the model. Valid values are `TENSORFLOW`,
@@ -1771,6 +1839,16 @@ type GoogleCloudMlV1__Version struct {
 	// st/v1/projects.models.versions/setDefault).
 	IsDefault bool `json:"isDefault,omitempty"`
 
+	// Labels: Optional. One or more labels that you can add, to organize
+	// your model
+	// versions. Each label is a key-value pair, where both the key and the
+	// value
+	// are arbitrary strings that you supply.
+	// For more information, see the documentation on
+	// <a href="/ml-engine/docs/tensorflow/resource-labels">using
+	// labels</a>.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// LastUseTime: Output only. The time the version was last used for
 	// prediction.
 	LastUseTime string `json:"lastUseTime,omitempty"`
@@ -1778,10 +1856,6 @@ type GoogleCloudMlV1__Version struct {
 	// MachineType: Optional. The type of machine on which to serve the
 	// model. Currently only
 	// applies to online prediction service.
-	// Naming design doc for CMLE online prediction Machine
-	// Types:
-	// https://docs.google.com/document/d/1V3tko3VJ64PcpsmNxCXiPoPGccL
-	// 9_K8gX1YjC8UofzQ/edit#heading=h.7lvy6owfx4eh.
 	// The following are currently supported and will be deprecated in
 	// Beta release.
 	//   mls1-highmem-1    1 core    2 Gb RAM
@@ -2062,9 +2136,7 @@ type GoogleIamV1__Binding struct {
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to `members`.
-	// For example, `roles/viewer`, `roles/editor`, or
-	// `roles/owner`.
-	// Required
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Members") to

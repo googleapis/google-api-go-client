@@ -1004,10 +1004,7 @@ func (c *ProjectsGetConfigCall) Do(opts ...googleapi.CallOption) (*ProjectConfig
 	//     "$ref": "ProjectConfig"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1143,10 +1140,7 @@ func (c *ProjectsUpdateConfigCall) Do(opts ...googleapi.CallOption) (*ProjectCon
 	//     "$ref": "ProjectConfig"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -1286,9 +1280,7 @@ func (c *ProjectsReposCreateCall) Do(opts ...googleapi.CallOption) (*Repo, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/source.full_control"
 	//   ]
 	// }
 
@@ -1414,9 +1406,7 @@ func (c *ProjectsReposDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/source.full_control"
 	//   ]
 	// }
 
@@ -2031,10 +2021,7 @@ func (c *ProjectsReposPatchCall) Do(opts ...googleapi.CallOption) (*Repo, error)
 	//     "$ref": "Repo"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
 
@@ -2172,9 +2159,7 @@ func (c *ProjectsReposSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Polic
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/source.full_control",
-	//     "https://www.googleapis.com/auth/source.read_only",
-	//     "https://www.googleapis.com/auth/source.read_write"
+	//     "https://www.googleapis.com/auth/source.full_control"
 	//   ]
 	// }
 

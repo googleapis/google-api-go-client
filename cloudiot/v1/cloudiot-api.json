@@ -647,7 +647,7 @@
       }
     }
   },
-  "revision": "20180606",
+  "revision": "20180703",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
     "Binding": {
@@ -662,7 +662,7 @@
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.\nRequired",
+          "description": "Role that is assigned to `members`.\nFor example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
           "type": "string"
         }
       },

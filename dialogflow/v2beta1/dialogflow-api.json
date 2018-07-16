@@ -1635,7 +1635,7 @@
       }
     }
   },
-  "revision": "20180702",
+  "revision": "20180710",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2451,7 +2451,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.",
+          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n \"caller_id\": \"+18558363987\"\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is not supported\nfor standard tier agents. When the telephony gateway is used with a\nstandard tier agent the `caller_id` field above will have a value of\n`REDACTED_IN_STANDARD_TIER_AGENT`.",
           "type": "object"
         },
         "source": {
@@ -3873,7 +3873,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.",
+          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n \"caller_id\": \"+18558363987\"\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is not supported\nfor standard tier agents. When the telephony gateway is used with a\nstandard tier agent the `caller_id` field above will have a value of\n`REDACTED_IN_STANDARD_TIER_AGENT`.",
           "type": "object"
         },
         "source": {

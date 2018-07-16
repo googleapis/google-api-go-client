@@ -573,47 +573,6 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LocationMetadata: This location metadata represents additional
-// configuration options for a
-// given location where a Redis instance may be created. All fields are
-// output
-// only. It is returned as content of
-// the
-// `google.cloud.location.Location.metadata` field.
-type LocationMetadata struct {
-	// AvailableZones: Output only. The set of available zones in the
-	// location. The map is keyed
-	// by the lowercase ID of each zone, as defined by GCE. These keys can
-	// be
-	// specified in `location_id` or `alternative_location_id` fields
-	// when
-	// creating a Redis instance.
-	AvailableZones map[string]ZoneMetadata `json:"availableZones,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AvailableZones") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AvailableZones") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod LocationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Operation: This resource represents a long-running operation that is
 // the result of a
 // network API call.
@@ -685,101 +644,6 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OperationMetadata: This operation metadata represents the state of
-// operations that may have
-// happened or are happening on the instance. All fields are output
-// only. It is
-// returned as content of the `google.longrunning.Operation.metadata`
-// field. The
-// `google.longrunning.Operation.name` field will be of the
-// form
-// `projects/{project_id}/locations/{location_id}/operations/{operat
-// ion_id}` and
-// the name for a `ListOperations` request will be of the
-// form
-// `projects/{project_id}/locations/{location_id}`
-//
-// On a ListOperations request where {location_id} is "-", all
-// regions
-// available to the {project_id} are queried and the results aggregated.
-// If a
-// location is not available, a dummy `google.longrunning.Operation`
-// entry will
-// be included in the `operations` field of the response, with the
-// `name` field
-// set to a value of the
-// form
-// `projects/{project_id}/locations/{location_id}/operations/-` and the
-// `done`
-// field will be set and the `result.error` field set with the `code`
-// field set
-// to `google.rpc.Code.DEADLINE_EXCEEDED` and the `message` field set
-// to
-// `location unavailable for ListOperations`. The Operation metadata`
-// field
-// will not be set for such a dummy operation.
-type OperationMetadata struct {
-	// CreateTime: Output only. The time the operation was created.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// Detail: Output only. Detailed operation progress, if available.
-	Detail string `json:"detail,omitempty"`
-
-	// EndTime: Output only. The time the operation was completed.
-	EndTime string `json:"endTime,omitempty"`
-
-	// OperationType: Output only. The operation type.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Not set.
-	//   "CREATE_REDIS_INSTANCE" - Redis instance is being created.
-	//   "UPDATE_REDIS_INSTANCE" - Redis instance is being updated.
-	//   "DELETE_REDIS_INSTANCE" - Redis instance is being deleted.
-	//   "REPAIR_REDIS_INSTANCE" - Redis instance is being repaired.
-	//   "MAINTENANCE_FOR_REDIS_INSTANCE" - Redis instance is being in
-	// maintenance.
-	OperationType string `json:"operationType,omitempty"`
-
-	// StartTime: Output only. The time the operation was started.
-	StartTime string `json:"startTime,omitempty"`
-
-	// State: Output only. The current state of the operation.
-	//
-	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Not set.
-	//   "PENDING" - The operation has been created.
-	//   "RUNNING" - The operation is currently running.
-	//   "FAILED" - The operation has failed or was cancelled.
-	//   "DONE" - The operation completed successfully.
-	State string `json:"state,omitempty"`
-
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
-	Target string `json:"target,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod OperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -901,12 +765,6 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ZoneMetadata: Defines specific information for a particular zone.
-// Currently empty and
-// reserved for future use only.
-type ZoneMetadata struct {
 }
 
 // method id "redis.projects.locations.get":

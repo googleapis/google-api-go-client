@@ -408,7 +408,7 @@
       }
     }
   },
-  "revision": "20180620",
+  "revision": "20180713",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "GoogleCloudCommonOperationMetadata": {
@@ -672,20 +672,6 @@
       },
       "type": "object"
     },
-    "LocationMetadata": {
-      "description": "This location metadata represents additional configuration options for a\ngiven location where a Redis instance may be created. All fields are output\nonly. It is returned as content of the\n`google.cloud.location.Location.metadata` field.",
-      "id": "LocationMetadata",
-      "properties": {
-        "availableZones": {
-          "additionalProperties": {
-            "$ref": "ZoneMetadata"
-          },
-          "description": "Output only. The set of available zones in the location. The map is keyed\nby the lowercase ID of each zone, as defined by GCE. These keys can be\nspecified in `location_id` or `alternative_location_id` fields when\ncreating a Redis instance.",
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
     "Operation": {
       "description": "This resource represents a long-running operation that is the result of a\nnetwork API call.",
       "id": "Operation",
@@ -721,74 +707,6 @@
       },
       "type": "object"
     },
-    "OperationMetadata": {
-      "description": "This operation metadata represents the state of operations that may have\nhappened or are happening on the instance. All fields are output only. It is\nreturned as content of the `google.longrunning.Operation.metadata` field. The\n`google.longrunning.Operation.name` field will be of the form\n`projects/{project_id}/locations/{location_id}/operations/{operation_id}` and\nthe name for a `ListOperations` request will be of the form\n`projects/{project_id}/locations/{location_id}`\n\nOn a ListOperations request where {location_id} is \"-\", all regions\navailable to the {project_id} are queried and the results aggregated. If a\nlocation is not available, a dummy `google.longrunning.Operation` entry will\nbe included in the `operations` field of the response, with the `name` field\nset to a value of the form\n`projects/{project_id}/locations/{location_id}/operations/-` and the `done`\nfield will be set and the `result.error` field set with the `code` field set\nto `google.rpc.Code.DEADLINE_EXCEEDED` and the `message` field set to\n`location unavailable for ListOperations`. The Operation metadata` field\nwill not be set for such a dummy operation.",
-      "id": "OperationMetadata",
-      "properties": {
-        "createTime": {
-          "description": "Output only. The time the operation was created.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "detail": {
-          "description": "Output only. Detailed operation progress, if available.",
-          "type": "string"
-        },
-        "endTime": {
-          "description": "Output only. The time the operation was completed.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "operationType": {
-          "description": "Output only. The operation type.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "CREATE_REDIS_INSTANCE",
-            "UPDATE_REDIS_INSTANCE",
-            "DELETE_REDIS_INSTANCE",
-            "REPAIR_REDIS_INSTANCE",
-            "MAINTENANCE_FOR_REDIS_INSTANCE"
-          ],
-          "enumDescriptions": [
-            "Not set.",
-            "Redis instance is being created.",
-            "Redis instance is being updated.",
-            "Redis instance is being deleted.",
-            "Redis instance is being repaired.",
-            "Redis instance is being in maintenance."
-          ],
-          "type": "string"
-        },
-        "startTime": {
-          "description": "Output only. The time the operation was started.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "Output only. The current state of the operation.",
-          "enum": [
-            "STATUS_UNSPECIFIED",
-            "PENDING",
-            "RUNNING",
-            "FAILED",
-            "DONE"
-          ],
-          "enumDescriptions": [
-            "Not set.",
-            "The operation has been created.",
-            "The operation is currently running.",
-            "The operation has failed or was cancelled.",
-            "The operation completed successfully."
-          ],
-          "type": "string"
-        },
-        "target": {
-          "description": "Output only. Server-defined resource path for the target of the operation.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
@@ -814,12 +732,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "ZoneMetadata": {
-      "description": "Defines specific information for a particular zone. Currently empty and\nreserved for future use only.",
-      "id": "ZoneMetadata",
-      "properties": {},
       "type": "object"
     }
   },

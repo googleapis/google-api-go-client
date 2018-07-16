@@ -68,11 +68,6 @@
       "location": "query",
       "type": "string"
     },
-    "bearer_token": {
-      "description": "OAuth bearer token.",
-      "location": "query",
-      "type": "string"
-    },
     "callback": {
       "description": "JSONP",
       "location": "query",
@@ -92,12 +87,6 @@
       "description": "OAuth 2.0 token for the current user.",
       "location": "query",
       "type": "string"
-    },
-    "pp": {
-      "default": "true",
-      "description": "Pretty-print response.",
-      "location": "query",
-      "type": "boolean"
     },
     "prettyPrint": {
       "default": "true",
@@ -147,10 +136,7 @@
             "$ref": "ProjectConfig"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/source.full_control",
-            "https://www.googleapis.com/auth/source.read_only",
-            "https://www.googleapis.com/auth/source.read_write"
+            "https://www.googleapis.com/auth/cloud-platform"
           ]
         },
         "updateConfig": {
@@ -178,10 +164,7 @@
             "$ref": "ProjectConfig"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/source.full_control",
-            "https://www.googleapis.com/auth/source.read_only",
-            "https://www.googleapis.com/auth/source.read_write"
+            "https://www.googleapis.com/auth/cloud-platform"
           ]
         }
       },
@@ -214,9 +197,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/source.full_control",
-                "https://www.googleapis.com/auth/source.read_only",
-                "https://www.googleapis.com/auth/source.read_write"
+                "https://www.googleapis.com/auth/source.full_control"
               ]
             },
             "delete": {
@@ -242,9 +223,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/source.full_control",
-                "https://www.googleapis.com/auth/source.read_only",
-                "https://www.googleapis.com/auth/source.read_write"
+                "https://www.googleapis.com/auth/source.full_control"
               ]
             },
             "get": {
@@ -367,10 +346,7 @@
                 "$ref": "Repo"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/source.full_control",
-                "https://www.googleapis.com/auth/source.read_only",
-                "https://www.googleapis.com/auth/source.read_write"
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
             "setIamPolicy": {
@@ -399,9 +375,7 @@
               },
               "scopes": [
                 "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/source.full_control",
-                "https://www.googleapis.com/auth/source.read_only",
-                "https://www.googleapis.com/auth/source.read_write"
+                "https://www.googleapis.com/auth/source.full_control"
               ]
             },
             "testIamPermissions": {
@@ -440,7 +414,7 @@
       }
     }
   },
-  "revision": "20180430",
+  "revision": "20180626",
   "rootUrl": "https://sourcerepo.googleapis.com/",
   "schemas": {
     "AuditConfig": {

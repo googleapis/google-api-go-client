@@ -422,7 +422,7 @@
       }
     }
   },
-  "revision": "20180604",
+  "revision": "20180712",
   "rootUrl": "https://clouddebugger.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -910,6 +910,11 @@
       "description": "Represents a location in the source code.",
       "id": "SourceLocation",
       "properties": {
+        "column": {
+          "description": "Column within a line. The first column in a line as the value `1`.\nAgents that do not support setting breakpoints on specific columns ignore\nthis field.",
+          "format": "int32",
+          "type": "integer"
+        },
         "line": {
           "description": "Line inside the file. The first line in the file has the value `1`.",
           "format": "int32",

@@ -1,6 +1,6 @@
 // Package iamcredentials provides access to the IAM Service Account Credentials API.
 //
-// See https://developers.google.com/identity/protocols/OAuth2ServiceAccount
+// See https://cloud.google.com/iam/docs/creating-short-lived-service-account-credentials
 //
 // Usage example:
 //

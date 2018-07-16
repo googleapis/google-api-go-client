@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/fKBxyfgBLz59NlDMfNbE_2Xyy5A\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/GZVFJ3j-A8g9PVROsKYf1ylrdrI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2303,6 +2303,7 @@
           "description": "Type of issue. Required.",
           "enum": [
             "anr",
+            "availableDeepLinks",
             "compatibleWithOrchestrator",
             "completeRoboScriptExecution",
             "failedToInstall",
@@ -2315,6 +2316,7 @@
             "unusedRoboDirective"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

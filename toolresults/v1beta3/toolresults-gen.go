@@ -2535,6 +2535,7 @@ type TestIssue struct {
 	//
 	// Possible values:
 	//   "anr"
+	//   "availableDeepLinks"
 	//   "compatibleWithOrchestrator"
 	//   "completeRoboScriptExecution"
 	//   "failedToInstall"

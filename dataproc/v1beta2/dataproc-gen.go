@@ -1101,18 +1101,21 @@ func (s *InstanceGroupConfig) MarshalJSON() ([]byte, error) {
 // InstantiateWorkflowTemplateRequest: A request to instantiate a
 // workflow template.
 type InstantiateWorkflowTemplateRequest struct {
-	// InstanceId: Optional. A tag that prevents multiple concurrent
-	// workflow instances with the same tag from running. This mitigates
-	// risk of concurrent instances started due to retries.It is recommended
-	// to always set this value to a UUID
-	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag
-	// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
-	// and hyphens (-). The maximum length is 40 characters.
+	// InstanceId: Deprecated. Please use request_id field instead.
 	InstanceId string `json:"instanceId,omitempty"`
 
 	// Parameters: Optional. Map from parameter names to values that should
 	// be used for those parameters.
 	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// RequestId: Optional. A tag that prevents multiple concurrent workflow
+	// instances with the same tag from running. This mitigates risk of
+	// concurrent instances started due to retries.It is recommended to
+	// always set this value to a UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag
+	// must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
+	// and hyphens (-). The maximum length is 40 characters.
+	RequestId string `json:"requestId,omitempty"`
 
 	// Version: Optional. The version of workflow template to instantiate.
 	// If specified, the workflow will be instantiated only if the current

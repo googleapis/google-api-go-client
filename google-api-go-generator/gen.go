@@ -630,7 +630,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("if client == nil { return nil, errors.New(\"client is nil\") }")
 	pn("s := &%s{client: client, BasePath: basePath}", service)
 	for _, res := range a.doc.Resources { // add top level resources.
-		pn("s.%s = New%s(s)", resourceGoField(res), resourceGoType(res))
+		pn("s.%s = New%s(s)", resourceGoField(res, nil), resourceGoType(res))
 	}
 	pn("return s, nil")
 	pn("}")
@@ -641,7 +641,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn(" UserAgent string // optional additional User-Agent fragment")
 
 	for _, res := range a.doc.Resources {
-		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
+		pn("\n\t%s\t*%s", resourceGoField(res, nil), resourceGoType(res))
 	}
 	pn("}")
 	pn("\nfunc (s *%s) userAgent() string {", service)
@@ -1366,7 +1366,7 @@ func (a *API) generateResource(r *disco.Resource) {
 	pn(fmt.Sprintf("func New%s(s *%s) *%s {", t, a.ServiceType(), t))
 	pn("rs := &%s{s : s}", t)
 	for _, res := range r.Resources {
-		pn("rs.%s = New%s(s)", resourceGoField(res), resourceGoType(res))
+		pn("rs.%s = New%s(s)", resourceGoField(res, r), resourceGoType(res))
 	}
 	pn("return rs")
 	pn("}")
@@ -1374,7 +1374,7 @@ func (a *API) generateResource(r *disco.Resource) {
 	pn("\ntype %s struct {", t)
 	pn(" s *%s", a.ServiceType())
 	for _, res := range r.Resources {
-		pn("\n\t%s\t*%s", resourceGoField(res), resourceGoType(res))
+		pn("\n\t%s\t*%s", resourceGoField(res, r), resourceGoType(res))
 	}
 	pn("}")
 
@@ -1401,8 +1401,19 @@ func (a *API) generateResourceMethods(r *disco.Resource) {
 	}
 }
 
-func resourceGoField(r *disco.Resource) string {
-	return initialCap(r.Name)
+func resourceGoField(r, parent *disco.Resource) string {
+	// Avoid conflicts with method names.
+	und := ""
+	if parent != nil {
+		for _, m := range parent.Methods {
+			if m.Name == r.Name {
+				und = "_"
+				break
+			}
+		}
+	}
+	// Note: initialCap(r.Name + "_") doesn't work because initialCap calls depunct.
+	return initialCap(r.Name) + und
 }
 
 func resourceGoType(r *disco.Resource) string {

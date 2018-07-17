@@ -750,7 +750,7 @@
       }
     }
   },
-  "revision": "20180707",
+  "revision": "20180713",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -1097,7 +1097,7 @@
       "type": "object"
     },
     "GoogleAppsScriptTypeProcess": {
-      "description": "Representation of a single script process execution that was started from\nthe script editor, a trigger, an application, or using the Apps Script API.\nThis is distinct from the `Operation`\nresource, which only represents exeuctions started via the Apps Script API.",
+      "description": "Representation of a single script process execution that was started from\nthe script editor, a trigger, an application, or using the Apps Script API.\nThis is distinct from the `Operation`\nresource, which only represents executions started via the Apps Script API.",
       "id": "GoogleAppsScriptTypeProcess",
       "properties": {
         "duration": {

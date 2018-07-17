@@ -286,9 +286,7 @@ type Company struct {
 	CompanyId int64 `json:"companyId,omitempty,string"`
 
 	// CompanyName: Required. The name of the company. For example _XYZ
-	// Corp_. Characters
-	// allowed are: Latin letters, numerals, hyphens, and spaces. Displayed
-	// to the
+	// Corp_. Displayed to the
 	// customer's employees in the zero-touch enrollment portal.
 	CompanyName string `json:"companyName,omitempty"`
 

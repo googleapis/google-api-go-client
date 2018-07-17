@@ -429,7 +429,7 @@
       }
     }
   },
-  "revision": "20180623",
+  "revision": "20180713",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2169,7 +2169,7 @@
       "properties": {
         "billingConfig": {
           "$ref": "BillingConfig",
-          "description": "Billing account properties.\nIt might be specified explicitly, or created from the specified group\nduring provisioning"
+          "description": "Billing account properties.  Billing account must be specified."
         },
         "folder": {
           "description": "Folder where project in this tenancy unit must be located\nThis folder must have been previously created with proper\npermissions for the caller to create and configure a project in it.\nValid folder resource names have the format `folders/{folder_number}`\n(for example, `folders/123456`).",

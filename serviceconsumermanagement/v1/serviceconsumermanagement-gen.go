@@ -4360,10 +4360,8 @@ func (s *TenancyUnit) MarshalJSON() ([]byte, error) {
 // project
 // removal.
 type TenantProjectConfig struct {
-	// BillingConfig: Billing account properties.
-	// It might be specified explicitly, or created from the specified
-	// group
-	// during provisioning
+	// BillingConfig: Billing account properties.  Billing account must be
+	// specified.
 	BillingConfig *BillingConfig `json:"billingConfig,omitempty"`
 
 	// Folder: Folder where project in this tenancy unit must be

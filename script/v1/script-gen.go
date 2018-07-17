@@ -814,7 +814,7 @@ func (s *GoogleAppsScriptTypeFunctionSet) MarshalJSON() ([]byte, error) {
 // the script editor, a trigger, an application, or using the Apps
 // Script API.
 // This is distinct from the `Operation`
-// resource, which only represents exeuctions started via the Apps
+// resource, which only represents executions started via the Apps
 // Script API.
 type GoogleAppsScriptTypeProcess struct {
 	// Duration: Duration the execution spent executing.

@@ -18,7 +18,7 @@
   "description": "Accesses AdSense publishers' inventory and generates performance reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/adsense/management/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/oe7LaFYPZykS7MQWKtLrY69URhY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/o_RglGcy2N8CaQvIMynX_olYd_U\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/adsense-16.png",
     "x32": "https://www.google.com/images/icons/product/adsense-32.png"
@@ -140,6 +140,37 @@
       "resources": {
         "adclients": {
           "methods": {
+            "getAdCode": {
+              "description": "Get ad code for a given ad client.",
+              "httpMethod": "GET",
+              "id": "adsense.accounts.adclients.getAdCode",
+              "parameterOrder": [
+                "accountId",
+                "adClientId"
+              ],
+              "parameters": {
+                "accountId": {
+                  "description": "Account which contains the ad client.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "adClientId": {
+                  "description": "Ad client to get the code for.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "accounts/{accountId}/adclients/{adClientId}/adcode",
+              "response": {
+                "$ref": "AdCode"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/adsense",
+                "https://www.googleapis.com/auth/adsense.readonly"
+              ]
+            },
             "list": {
               "description": "List all ad clients in the specified account.",
               "httpMethod": "GET",
@@ -1624,7 +1655,6 @@
       }
     }
   },
-  "revision": "20180429",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1749,6 +1779,14 @@
       "properties": {
         "adCode": {
           "description": "The ad code snippet.",
+          "type": "string"
+        },
+        "ampBody": {
+          "description": "The ad code snippet that goes in the body of an AMP page.",
+          "type": "string"
+        },
+        "ampHead": {
+          "description": "The ad code snippet that goes in the head of an AMP page.",
           "type": "string"
         },
         "kind": {

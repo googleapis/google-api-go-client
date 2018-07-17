@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180712",
+  "revision": "20180711",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1173,16 +1173,12 @@
       "id": "CreateJobRequest",
       "properties": {
         "disableStreetAddressResolution": {
-          "description": "Deprecated. Please use processing_options. This flag is ignored if\nprocessing_options is set.\n\nOptional.\n\nIf set to `true`, the service does not attempt to resolve a\nmore precise address for the job.",
+          "description": "If set to `true`, the service will not attempt to resolve a\nmore precise address for the job.",
           "type": "boolean"
         },
         "job": {
           "$ref": "Job",
           "description": "Required.\n\nThe Job to be created."
-        },
-        "processingOptions": {
-          "$ref": "JobProcessingOptions",
-          "description": "Optional.\n\nOptions for job processing."
         }
       },
       "type": "object"
@@ -2126,7 +2122,7 @@
           "additionalProperties": {
             "$ref": "CustomField"
           },
-          "description": "Deprecated. Use custom_attributes instead.\n\nOptional.\n\nA map of fields to hold filterable custom job attributes not captured by\nthe standard fields such as job_title, company_name, or\nlevel. These custom fields store arbitrary\nstring values, and can be used for purposes not covered by\nthe structured fields. For the best search experience, use of the\nstructured rather than custom fields is recommended.\n\nData stored in these custom fields fields are indexed and\nsearched against by keyword searches (see\nSearchJobsRequest.custom_field_filters][]).\n\nThe map key must be a number between 1-20. If an invalid key is\nprovided on job create or update, an error is returned.",
+          "description": "Deprecated. Use custom_attributes instead.\n\nOptional.\n\nA map of fields to hold filterable custom job attributes not captured by\nthe standard fields such as job_title, company_name, or\nlevel. These custom fields store arbitrary\nstring values, and can be used for purposes not covered by\nthe structured fields. For the best search experience, use of the\nstructured rather than custom fields is recommended.\n\nData stored in these custom fields fields are indexed and\nsearched against by keyword searches (see\nSearchJobsRequest.custom_field_filters][]). To list jobs by\ncustom fields, see ListCustomFieldsRequest.field_id.\n\nThe map key must be a number between 1-20. If an invalid key is\nprovided on job create or update, an error is returned.",
           "type": "object"
         },
         "incentives": {
@@ -2495,31 +2491,6 @@
           "description": "Radius in meters of the job location. This value is derived from the\nlocation bounding box in which a circle with the specified radius\ncentered from LatLng coves the area associated with the job location.\nFor example, currently, \"Mountain View, CA, USA\" has a radius of\n7885.79 meters.",
           "format": "double",
           "type": "number"
-        }
-      },
-      "type": "object"
-    },
-    "JobProcessingOptions": {
-      "description": "Input only.\n\nOptions for job processing.",
-      "id": "JobProcessingOptions",
-      "properties": {
-        "disableStreetAddressResolution": {
-          "description": "Optional.\n\nIf set to `true`, the service does not attempt to resolve a\nmore precise address for the job.",
-          "type": "boolean"
-        },
-        "htmlSanitization": {
-          "description": "Optional.\n\nOption for job HTML content sanitization. Applied fields are:\n\n* description\n* applicationInstruction\n* incentives\n* qualifications\n* responsibilities\n\nHTML tags in these fields may be stripped if sanitiazation is not disabled.\n\nDefaults to HtmlSanitization.SIMPLE_FORMATTING_ONLY.",
-          "enum": [
-            "HTML_SANITIZATION_UNSPECIFIED",
-            "HTML_SANITIZATION_DISABLED",
-            "SIMPLE_FORMATTING_ONLY"
-          ],
-          "enumDescriptions": [
-            "Default value.",
-            "Disables sanitization on HTML input.",
-            "Sanitizes HTML input, only accepts bold, italic, ordered list, and\nunordered list markup tags."
-          ],
-          "type": "string"
         }
       },
       "type": "object"
@@ -3105,7 +3076,7 @@
             "Default value.",
             "By descending relevance, as determined by the API algorithms.\n\nRelevance thresholding of query results is only available for queries if\nRELEVANCE_DESC sort ordering is specified.",
             "Sort by published date descending.",
-            "Sort by updated date descending.",
+            "Sort by updated data descending.",
             "Sort by job title ascending.",
             "Sort by job title descending.",
             "Sort by job annualized base compensation in ascending order.\nIf job's annualized base compensation is unspecified, they are put at\nthe end of search result.",
@@ -3150,7 +3121,7 @@
             "Default value.",
             "By descending relevance, as determined by the API algorithms.\n\nRelevance thresholding of query results is only available for queries if\nRELEVANCE_DESC sort ordering is specified.",
             "Sort by published date descending.",
-            "Sort by updated date descending.",
+            "Sort by updated data descending.",
             "Sort by job title ascending.",
             "Sort by job title descending.",
             "Sort by job annualized base compensation in ascending order.\nIf job's annualized base compensation is unspecified, they are put at\nthe end of search result.",
@@ -3269,16 +3240,12 @@
       "id": "UpdateJobRequest",
       "properties": {
         "disableStreetAddressResolution": {
-          "description": "Deprecated. Please use processing_options. This flag is ignored if\nprocessing_options is set.\n\nOptional.\n\nIf set to `true`, the service does not attempt resolve a more precise\naddress for the job.",
+          "description": "If set to `true`, the service will not attempt resolve a more precise\naddress for the job.",
           "type": "boolean"
         },
         "job": {
           "$ref": "Job",
           "description": "Required.\n\nThe Job to be updated."
-        },
-        "processingOptions": {
-          "$ref": "JobProcessingOptions",
-          "description": "Optional.\n\nOptions for job processing.\n\nUpdateJobRequest.disable_street_address_resolution is ignored if this\nflag is set."
         },
         "updateJobFields": {
           "description": "Optional but strongly recommended to be provided for the best service\nexperience.\n\nIf update_job_fields is provided, only the specified fields in\njob are updated. Otherwise all the fields are updated.\n\nA field mask to restrict the fields that are updated. Valid values are:\n\n* jobTitle\n* employmentTypes\n* description\n* applicationUrls\n* applicationEmailList\n* applicationInstruction\n* responsibilities\n* qualifications\n* educationLevels\n* level\n* department\n* startDate\n* endDate\n* compensationInfo\n* incentives\n* languageCode\n* benefits\n* expireTime\n* customAttributes\n* visibility\n* publishDate\n* promotionValue\n* locations\n* region\n* expiryDate (deprecated)\n* filterableCustomFields (deprecated)\n* unindexedCustomFields (deprecated)",

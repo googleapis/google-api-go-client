@@ -736,7 +736,7 @@
       }
     }
   },
-  "revision": "20180604",
+  "revision": "20180713",
   "rootUrl": "https://androiddeviceprovisioning.googleapis.com/",
   "schemas": {
     "ClaimDeviceRequest": {
@@ -814,7 +814,7 @@
           "type": "string"
         },
         "companyName": {
-          "description": "Required. The name of the company. For example _XYZ Corp_. Characters\nallowed are: Latin letters, numerals, hyphens, and spaces. Displayed to the\ncustomer's employees in the zero-touch enrollment portal.",
+          "description": "Required. The name of the company. For example _XYZ Corp_. Displayed to the\ncustomer's employees in the zero-touch enrollment portal.",
           "type": "string"
         },
         "name": {

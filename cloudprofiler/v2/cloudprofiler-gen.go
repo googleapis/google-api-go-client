@@ -1,6 +1,6 @@
 // Package cloudprofiler provides access to the Stackdriver Profiler API.
 //
-// See https://cloud.google.com/
+// See https://cloud.google.com/profiler/
 //
 // Usage example:
 //
@@ -113,17 +113,6 @@ type ProjectsProfilesService struct {
 type CreateProfileRequest struct {
 	// Deployment: Deployment details.
 	Deployment *Deployment `json:"deployment,omitempty"`
-
-	// Profile: DEPRECATED: When the profile field is set and the profile
-	// type field is not
-	// set, the creation is done in the offline mode as documented for
-	// the
-	// CreateOfflineProfile method above. This behavior is temporarily
-	// kept
-	// to smoothly migrate the clients that use the old model of when the
-	// single
-	// CreateProfile method was used for both creation modes.
-	Profile *Profile `json:"profile,omitempty"`
 
 	// ProfileType: One or more profile types that the agent is capable of
 	// providing.

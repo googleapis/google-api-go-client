@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180710",
+  "revision": "20180714",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1685,7 +1685,7 @@
       "id": "GoogleCloudDialogflowV2ExportAgentResponse",
       "properties": {
         "agentContent": {
-          "description": "The exported agent.\n\nExample for how to export an agent to a zip file via a command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:export'\\\n  -X POST \\\n  -H 'Authorization: Bearer '$(gcloud auth print-access-token) \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  --compressed \\\n  --data-binary '{}' \\\n| grep agentContent | sed -e 's/.*\"agentContent\": \"\\([^\"]*\\)\".*/\\1/' \\\n| base64 --decode \u003e \u0026lt;agent zip file\u0026gt;\u003c/pre\u003e",
+          "description": "The exported agent.\n\nExample for how to export an agent to a zip file via a command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:export'\\\n  -X POST \\\n  -H 'Authorization: Bearer '$(gcloud auth application-default\n  print-access-token) \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  --compressed \\\n  --data-binary '{}' \\\n| grep agentContent | sed -e 's/.*\"agentContent\": \"\\([^\"]*\\)\".*/\\1/' \\\n| base64 --decode \u003e \u0026lt;agent zip file\u0026gt;\u003c/pre\u003e",
           "format": "byte",
           "type": "string"
         },
@@ -1701,7 +1701,7 @@
       "id": "GoogleCloudDialogflowV2ImportAgentRequest",
       "properties": {
         "agentContent": {
-          "description": "The agent to import.\n\nExample for how to import an agent via the command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:import\\\n   -X POST \\\n   -H 'Authorization: Bearer '$(gcloud auth print-access-token) \\\n   -H 'Accept: application/json' \\\n   -H 'Content-Type: application/json' \\\n   --compressed \\\n   --data-binary \"{\n      'agentContent': '$(cat \u0026lt;agent zip file\u0026gt; | base64 -w 0)'\n   }\"\u003c/pre\u003e",
+          "description": "The agent to import.\n\nExample for how to import an agent via the command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:import\\\n   -X POST \\\n   -H 'Authorization: Bearer '$(gcloud auth application-default\n   print-access-token) \\\n   -H 'Accept: application/json' \\\n   -H 'Content-Type: application/json' \\\n   --compressed \\\n   --data-binary \"{\n      'agentContent': '$(cat \u0026lt;agent zip file\u0026gt; | base64 -w 0)'\n   }\"\u003c/pre\u003e",
           "format": "byte",
           "type": "string"
         },
@@ -1764,7 +1764,7 @@
       "id": "GoogleCloudDialogflowV2Intent",
       "properties": {
         "action": {
-          "description": "Optional. The name of the action associated with the intent.",
+          "description": "Optional. The name of the action associated with the intent.\nNote: The action name must not contain whitespaces.",
           "type": "string"
         },
         "defaultResponsePlatforms": {
@@ -2663,7 +2663,7 @@
       "id": "GoogleCloudDialogflowV2RestoreAgentRequest",
       "properties": {
         "agentContent": {
-          "description": "The agent to restore.\n\nExample for how to restore an agent via the command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:restore\\\n   -X POST \\\n   -H 'Authorization: Bearer '$(gcloud auth print-access-token) \\\n   -H 'Accept: application/json' \\\n   -H 'Content-Type: application/json' \\\n   --compressed \\\n   --data-binary \"{\n       'agentContent': '$(cat \u0026lt;agent zip file\u0026gt; | base64 -w 0)'\n   }\"\u003c/pre\u003e",
+          "description": "The agent to restore.\n\nExample for how to restore an agent via the command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2/projects/\u0026lt;project_name\u0026gt;/agent:restore\\\n   -X POST \\\n   -H 'Authorization: Bearer '$(gcloud auth application-default\n   print-access-token) \\\n   -H 'Accept: application/json' \\\n   -H 'Content-Type: application/json' \\\n   --compressed \\\n   --data-binary \"{\n       'agentContent': '$(cat \u0026lt;agent zip file\u0026gt; | base64 -w 0)'\n   }\"\u003c/pre\u003e",
           "format": "byte",
           "type": "string"
         },
@@ -2955,7 +2955,7 @@
       "id": "GoogleCloudDialogflowV2beta1ExportAgentResponse",
       "properties": {
         "agentContent": {
-          "description": "The exported agent.\n\nExample for how to export an agent to a zip file via a command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2beta1/projects/\u0026lt;project_name\u0026gt;/agent:export'\\\n  -X POST \\\n  -H 'Authorization: Bearer '$(gcloud auth print-access-token) \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  --compressed \\\n  --data-binary '{}' \\\n| grep agentContent | sed -e 's/.*\"agentContent\": \"\\([^\"]*\\)\".*/\\1/' \\\n| base64 --decode \u003e \u0026lt;agent zip file\u0026gt;\u003c/pre\u003e",
+          "description": "The exported agent.\n\nExample for how to export an agent to a zip file via a command line:\n\u003cpre\u003ecurl \\\n  'https://dialogflow.googleapis.com/v2beta1/projects/\u0026lt;project_name\u0026gt;/agent:export'\\\n  -X POST \\\n  -H 'Authorization: Bearer '$(gcloud auth application-default\n  print-access-token) \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  --compressed \\\n  --data-binary '{}' \\\n| grep agentContent | sed -e 's/.*\"agentContent\": \"\\([^\"]*\\)\".*/\\1/' \\\n| base64 --decode \u003e \u0026lt;agent zip file\u0026gt;\u003c/pre\u003e",
           "format": "byte",
           "type": "string"
         },
@@ -2971,7 +2971,7 @@
       "id": "GoogleCloudDialogflowV2beta1Intent",
       "properties": {
         "action": {
-          "description": "Optional. The name of the action associated with the intent.",
+          "description": "Optional. The name of the action associated with the intent.\nNote: The action name must not contain whitespaces.",
           "type": "string"
         },
         "defaultResponsePlatforms": {

@@ -345,6 +345,15 @@ type Action struct {
 	// the ContainerStartedEvent in the operation metadata.
 	PortMappings map[string]int64 `json:"portMappings,omitempty"`
 
+	// Timeout: The maximum amount of time to give the action to complete.
+	// If the action
+	// fails to complete before the timeout, it will be terminated and the
+	// exit
+	// status will be non-zero.  The pipeline will continue or terminate
+	// based
+	// on the rules defined by the ALWAYS_RUN and IGNORE_EXIT_STATUS flags.
+	Timeout string `json:"timeout,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Commands") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -490,6 +499,38 @@ func (s *ComputeEngine) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContainerKilledEvent: This event is generated when a container is
+// forcibly terminated by the
+// worker.  Currently, this only occurs when the container outlives the
+// user
+// specified timeout.
+type ContainerKilledEvent struct {
+	// ActionId: The numeric ID of the action that started the container.
+	ActionId int64 `json:"actionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerKilledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerKilledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContainerStartedEvent: This event is generated when a container
 // starts.
 type ContainerStartedEvent struct {
@@ -626,7 +667,12 @@ func (s *DelayedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Disk: Carries information about a disk that can be attached to a VM.
+// Disk: Carries information about a disk that can be attached to a
+// VM.
+//
+// See https://cloud.google.com/compute/docs/disks/performance for
+// more
+// information about disk type, size and performance considerations.
 type Disk struct {
 	// Name: A user supplied name for the disk, used when mounting it into
 	// actions.
@@ -635,13 +681,18 @@ type Disk struct {
 	// hypens and cannot start with a hypen.
 	Name string `json:"name,omitempty"`
 
-	// SizeGb: The size, in gigabytes, of the disk to attach.  Note that
-	// this value is
-	// not configurable for some disk types such as local-ssd.  If the size
-	// is
-	// not specified, a size of at least 500gb is used to ensure reasonable
-	// I/O
+	// SizeGb: The size, in gigabytes, of the disk to attach.  If the size
+	// is not
+	// specified, a default is chosen to ensure reasonable I/O
 	// performance.
+	//
+	// If the disk type is specified as `local-ssd`, multiple local drives
+	// are
+	// automatically combined to provide the requested size.  Note, however,
+	// that
+	// each physical SSD is 375GB in size, and no more than 8 drives can
+	// be
+	// attached to a single instance.
 	SizeGb int64 `json:"sizeGb,omitempty"`
 
 	// SourceImage: An optional image to put on the disk before attaching it

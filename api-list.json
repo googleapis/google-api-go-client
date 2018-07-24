@@ -294,7 +294,7 @@
    "name": "androiddeviceprovisioning",
    "version": "v1",
    "title": "Android Device Provisioning Partner API",
-   "description": "Automates reseller integration into zero-touch enrollment by assigning devices to customers and creating device reports.",
+   "description": "Automates Android zero-touch enrollment for device resellers, customers, and EMMs.",
    "discoveryRestUrl": "https://androiddeviceprovisioning.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -669,6 +669,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudbuild:v1alpha1",
+   "name": "cloudbuild",
+   "version": "v1alpha1",
+   "title": "Cloud Container Builder",
+   "description": "Builds container images in the cloud.",
+   "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/container-builder/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudbuild:v1",
    "name": "cloudbuild",
    "version": "v1",
@@ -793,13 +808,13 @@
    "name": "cloudprofiler",
    "version": "v2",
    "title": "Stackdriver Profiler API",
-   "description": "Allows Google services manage the continuous profiling information.",
+   "description": "Manages continuous profiling information.",
    "discoveryRestUrl": "https://cloudprofiler.googleapis.com/$discovery/rest?version=v2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/",
+   "documentationLink": "https://cloud.google.com/profiler/",
    "preferred": true
   },
   {
@@ -1487,6 +1502,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "firestore:v1",
+   "name": "firestore",
+   "version": "v1",
+   "title": "Cloud Firestore API",
+   "description": "",
+   "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/firestore",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "firestore:v1beta1",
    "name": "firestore",
    "version": "v1beta1",
@@ -1498,7 +1528,22 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/firestore",
-   "preferred": true
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "firestore:v1beta2",
+   "name": "firestore",
+   "version": "v1beta2",
+   "title": "Cloud Firestore API",
+   "description": "",
+   "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1beta2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/firestore",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

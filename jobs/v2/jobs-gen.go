@@ -1174,8 +1174,13 @@ func (s *CompletionResult) MarshalJSON() ([]byte, error) {
 //
 // Create job request.
 type CreateJobRequest struct {
-	// DisableStreetAddressResolution: If set to `true`, the service will
-	// not attempt to resolve a
+	// DisableStreetAddressResolution: Deprecated. Please use
+	// processing_options. This flag is ignored if
+	// processing_options is set.
+	//
+	// Optional.
+	//
+	// If set to `true`, the service does not attempt to resolve a
 	// more precise address for the job.
 	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
 
@@ -1183,6 +1188,11 @@ type CreateJobRequest struct {
 	//
 	// The Job to be created.
 	Job *Job `json:"job,omitempty"`
+
+	// ProcessingOptions: Optional.
+	//
+	// Options for job processing.
+	ProcessingOptions *JobProcessingOptions `json:"processingOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DisableStreetAddressResolution") to unconditionally include in API
@@ -2902,8 +2912,7 @@ type Job struct {
 	// Data stored in these custom fields fields are indexed and
 	// searched against by keyword searches
 	// (see
-	// SearchJobsRequest.custom_field_filters][]). To list jobs by
-	// custom fields, see ListCustomFieldsRequest.field_id.
+	// SearchJobsRequest.custom_field_filters][]).
 	//
 	// The map key must be a number between 1-20. If an invalid key
 	// is
@@ -3630,6 +3639,64 @@ func (s *JobLocation) UnmarshalJSON(data []byte) error {
 	}
 	s.RadiusMeters = float64(s1.RadiusMeters)
 	return nil
+}
+
+// JobProcessingOptions: Input only.
+//
+// Options for job processing.
+type JobProcessingOptions struct {
+	// DisableStreetAddressResolution: Optional.
+	//
+	// If set to `true`, the service does not attempt to resolve a
+	// more precise address for the job.
+	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
+
+	// HtmlSanitization: Optional.
+	//
+	// Option for job HTML content sanitization. Applied fields are:
+	//
+	// * description
+	// * applicationInstruction
+	// * incentives
+	// * qualifications
+	// * responsibilities
+	//
+	// HTML tags in these fields may be stripped if sanitiazation is not
+	// disabled.
+	//
+	// Defaults to HtmlSanitization.SIMPLE_FORMATTING_ONLY.
+	//
+	// Possible values:
+	//   "HTML_SANITIZATION_UNSPECIFIED" - Default value.
+	//   "HTML_SANITIZATION_DISABLED" - Disables sanitization on HTML input.
+	//   "SIMPLE_FORMATTING_ONLY" - Sanitizes HTML input, only accepts bold,
+	// italic, ordered list, and
+	// unordered list markup tags.
+	HtmlSanitization string `json:"htmlSanitization,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisableStreetAddressResolution") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DisableStreetAddressResolution") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobProcessingOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod JobProcessingOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // JobQuery: Input only.
@@ -4943,7 +5010,7 @@ type SearchJobsRequest struct {
 	// if
 	// RELEVANCE_DESC sort ordering is specified.
 	//   "PUBLISHED_DATE_DESC" - Sort by published date descending.
-	//   "UPDATED_DATE_DESC" - Sort by updated data descending.
+	//   "UPDATED_DATE_DESC" - Sort by updated date descending.
 	//   "TITLE" - Sort by job title ascending.
 	//   "TITLE_DESC" - Sort by job title descending.
 	//   "ANNUALIZED_BASE_COMPENSATION" - Sort by job annualized base
@@ -5013,7 +5080,7 @@ type SearchJobsRequest struct {
 	// if
 	// RELEVANCE_DESC sort ordering is specified.
 	//   "PUBLISHED_DATE_DESC" - Sort by published date descending.
-	//   "UPDATED_DATE_DESC" - Sort by updated data descending.
+	//   "UPDATED_DATE_DESC" - Sort by updated date descending.
 	//   "TITLE" - Sort by job title ascending.
 	//   "TITLE_DESC" - Sort by job title descending.
 	//   "ANNUALIZED_BASE_COMPENSATION" - Sort by job annualized base
@@ -5259,8 +5326,14 @@ func (s *StringValues) MarshalJSON() ([]byte, error) {
 //
 // Update job request.
 type UpdateJobRequest struct {
-	// DisableStreetAddressResolution: If set to `true`, the service will
-	// not attempt resolve a more precise
+	// DisableStreetAddressResolution: Deprecated. Please use
+	// processing_options. This flag is ignored if
+	// processing_options is set.
+	//
+	// Optional.
+	//
+	// If set to `true`, the service does not attempt resolve a more
+	// precise
 	// address for the job.
 	DisableStreetAddressResolution bool `json:"disableStreetAddressResolution,omitempty"`
 
@@ -5268,6 +5341,16 @@ type UpdateJobRequest struct {
 	//
 	// The Job to be updated.
 	Job *Job `json:"job,omitempty"`
+
+	// ProcessingOptions: Optional.
+	//
+	// Options for job
+	// processing.
+	//
+	// UpdateJobRequest.disable_street_address_resolution is ignored if
+	// this
+	// flag is set.
+	ProcessingOptions *JobProcessingOptions `json:"processingOptions,omitempty"`
 
 	// UpdateJobFields: Optional but strongly recommended to be provided for
 	// the best service

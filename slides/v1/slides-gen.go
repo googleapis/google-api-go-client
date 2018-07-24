@@ -8354,6 +8354,8 @@ func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesMimeType(thumbna
 // Possible values:
 //   "THUMBNAIL_SIZE_UNSPECIFIED"
 //   "LARGE"
+//   "MEDIUM"
+//   "SMALL"
 func (c *PresentationsPagesGetThumbnailCall) ThumbnailPropertiesThumbnailSize(thumbnailPropertiesThumbnailSize string) *PresentationsPagesGetThumbnailCall {
 	c.urlParams_.Set("thumbnailProperties.thumbnailSize", thumbnailPropertiesThumbnailSize)
 	return c
@@ -8487,7 +8489,9 @@ func (c *PresentationsPagesGetThumbnailCall) Do(opts ...googleapi.CallOption) (*
 	//       "description": "The optional thumbnail image size.\n\nIf you don't specify the size, the server chooses a default size of the\nimage.",
 	//       "enum": [
 	//         "THUMBNAIL_SIZE_UNSPECIFIED",
-	//         "LARGE"
+	//         "LARGE",
+	//         "MEDIUM",
+	//         "SMALL"
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

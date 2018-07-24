@@ -277,7 +277,9 @@
                   "description": "The optional thumbnail image size.\n\nIf you don't specify the size, the server chooses a default size of the\nimage.",
                   "enum": [
                     "THUMBNAIL_SIZE_UNSPECIFIED",
-                    "LARGE"
+                    "LARGE",
+                    "MEDIUM",
+                    "SMALL"
                   ],
                   "location": "query",
                   "type": "string"
@@ -300,7 +302,7 @@
       }
     }
   },
-  "revision": "20180703",
+  "revision": "20180716",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {

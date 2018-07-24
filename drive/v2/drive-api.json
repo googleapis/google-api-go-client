@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Y4eIZg2GvfAVWMaSdAHecXZoCtk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/bqINpDMLMF1eQrKA1o4vF2eBZIg\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -3061,7 +3061,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then all Team Drives of the domain in which the requester is an administrator are returned.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }

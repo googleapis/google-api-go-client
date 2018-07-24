@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20180607",
+  "revision": "20180718",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -419,6 +419,18 @@
         "zone": {
           "description": "The availability zone in which the instance resides.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ContainerKilledEvent": {
+      "description": "This event is generated when a container is forcibly terminated by the\nworker.  Currently, this only occurs when the container outlives the user\nspecified timeout.",
+      "id": "ContainerKilledEvent",
+      "properties": {
+        "actionId": {
+          "description": "The numeric ID of the action that started the container.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

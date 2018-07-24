@@ -147,6 +147,38 @@ func (s *ComputeEngine) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ContainerKilledEvent: This event is generated when a container is
+// forcibly terminated by the
+// worker.  Currently, this only occurs when the container outlives the
+// user
+// specified timeout.
+type ContainerKilledEvent struct {
+	// ActionId: The numeric ID of the action that started the container.
+	ActionId int64 `json:"actionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerKilledEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerKilledEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ContainerStartedEvent: This event is generated when a container
 // starts.
 type ContainerStartedEvent struct {

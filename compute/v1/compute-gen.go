@@ -20907,6 +20907,9 @@ type Scheduling struct {
 	// restarted if it is terminated by Compute Engine.
 	AutomaticRestart *bool `json:"automaticRestart,omitempty"`
 
+	// NodeAffinities: A set of node affinity and anti-affinity.
+	NodeAffinities []*SchedulingNodeAffinity `json:"nodeAffinities,omitempty"`
+
 	// OnHostMaintenance: Defines the maintenance behavior for this
 	// instance. For standard instances, the default behavior is MIGRATE.
 	// For preemptible instances, the default and only possible behavior is
@@ -20943,6 +20946,46 @@ type Scheduling struct {
 
 func (s *Scheduling) MarshalJSON() ([]byte, error) {
 	type NoMethod Scheduling
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SchedulingNodeAffinity: Node Affinity: the configuration of desired
+// nodes onto which this Instance could be scheduled.
+type SchedulingNodeAffinity struct {
+	// Key: Corresponds to the label key of Node resource.
+	Key string `json:"key,omitempty"`
+
+	// Operator: Defines the operation of node selection.
+	//
+	// Possible values:
+	//   "IN"
+	//   "NOT_IN"
+	//   "OPERATOR_UNSPECIFIED"
+	Operator string `json:"operator,omitempty"`
+
+	// Values: Corresponds to the label values of Node resource.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SchedulingNodeAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulingNodeAffinity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

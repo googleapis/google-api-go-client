@@ -18,9 +18,9 @@
   "baseUrl": "https://cloudprofiler.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud Profiler",
-  "description": "Allows Google services manage the continuous profiling information.",
+  "description": "Manages continuous profiling information.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/profiler/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -215,7 +215,7 @@
       }
     }
   },
-  "revision": "20180625",
+  "revision": "20180716",
   "rootUrl": "https://cloudprofiler.googleapis.com/",
   "schemas": {
     "CreateProfileRequest": {
@@ -225,10 +225,6 @@
         "deployment": {
           "$ref": "Deployment",
           "description": "Deployment details."
-        },
-        "profile": {
-          "$ref": "Profile",
-          "description": "DEPRECATED: When the profile field is set and the profile type field is not\nset, the creation is done in the offline mode as documented for the\nCreateOfflineProfile method above. This behavior is temporarily kept\nto smoothly migrate the clients that use the old model of when the single\nCreateProfile method was used for both creation modes."
         },
         "profileType": {
           "description": "One or more profile types that the agent is capable of providing.",

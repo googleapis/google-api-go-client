@@ -1070,8 +1070,12 @@ type Space struct {
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED"
-	//   "ROOM"
-	//   "DM"
+	//   "ROOM" - A chat space where memberships are free to change.
+	// Messages in rooms are
+	// threaded.
+	//   "DM" - 1:1 Direct Message between a human and a bot, where all
+	// messages are
+	// flat.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

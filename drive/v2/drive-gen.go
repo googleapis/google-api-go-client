@@ -14691,8 +14691,8 @@ func (r *TeamdrivesService) Update(teamDriveId string, teamdrive *TeamDrive) *Te
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then all Team Drives of the domain in which the
-// requester is an administrator are returned.
+// if set to true, then the requester will be granted access if they are
+// an administrator of the domain to which the Team Drive belongs.
 func (c *TeamdrivesUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *TeamdrivesUpdateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -14799,7 +14799,7 @@ func (c *TeamdrivesUpdateCall) Do(opts ...googleapi.CallOption) (*TeamDrive, err
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then all Team Drives of the domain in which the requester is an administrator are returned.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

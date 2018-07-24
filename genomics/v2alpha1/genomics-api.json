@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20180623",
+  "revision": "20180718",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -372,6 +372,11 @@
           },
           "description": "A map of container to host port mappings for this container.  Note that if\nthe container already specifies exposed ports, the PUBLISH_EXPOSED_PORTS\nflag should be used instead.\n\nThe host port number must be less than 65536.  If it is zero, an unused\nrandom port is assigned.  To determine the resulting port number, consult\nthe ContainerStartedEvent in the operation metadata.",
           "type": "object"
+        },
+        "timeout": {
+          "description": "The maximum amount of time to give the action to complete.  If the action\nfails to complete before the timeout, it will be terminated and the exit\nstatus will be non-zero.  The pipeline will continue or terminate based\non the rules defined by the ALWAYS_RUN and IGNORE_EXIT_STATUS flags.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"
@@ -451,6 +456,18 @@
       },
       "type": "object"
     },
+    "ContainerKilledEvent": {
+      "description": "This event is generated when a container is forcibly terminated by the\nworker.  Currently, this only occurs when the container outlives the user\nspecified timeout.",
+      "id": "ContainerKilledEvent",
+      "properties": {
+        "actionId": {
+          "description": "The numeric ID of the action that started the container.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "ContainerStartedEvent": {
       "description": "This event is generated when a container starts.",
       "id": "ContainerStartedEvent",
@@ -515,7 +532,7 @@
       "type": "object"
     },
     "Disk": {
-      "description": "Carries information about a disk that can be attached to a VM.",
+      "description": "Carries information about a disk that can be attached to a VM.\n\nSee https://cloud.google.com/compute/docs/disks/performance for more\ninformation about disk type, size and performance considerations.",
       "id": "Disk",
       "properties": {
         "name": {
@@ -523,7 +540,7 @@
           "type": "string"
         },
         "sizeGb": {
-          "description": "The size, in gigabytes, of the disk to attach.  Note that this value is\nnot configurable for some disk types such as local-ssd.  If the size is\nnot specified, a size of at least 500gb is used to ensure reasonable I/O\nperformance.",
+          "description": "The size, in gigabytes, of the disk to attach.  If the size is not\nspecified, a default is chosen to ensure reasonable I/O performance.\n\nIf the disk type is specified as `local-ssd`, multiple local drives are\nautomatically combined to provide the requested size.  Note, however, that\neach physical SSD is 375GB in size, and no more than 8 drives can be\nattached to a single instance.",
           "format": "int32",
           "type": "integer"
         },

@@ -2543,6 +2543,7 @@ type TestIssue struct {
 	//   "incompleteRoboScriptExecution"
 	//   "launcherActivityNotFound"
 	//   "nativeCrash"
+	//   "nonSdkApiUsageViolation"
 	//   "startActivityNotFound"
 	//   "unspecifiedType"
 	//   "unusedRoboDirective"

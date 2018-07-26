@@ -672,14 +672,14 @@
    "id": "cloudbuild:v1alpha1",
    "name": "cloudbuild",
    "version": "v1alpha1",
-   "title": "Cloud Container Builder",
-   "description": "Builds container images in the cloud.",
+   "title": "Cloud Build API",
+   "description": "Creates and manages builds on Google Cloud Platform.",
    "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1alpha1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/container-builder/docs/",
+   "documentationLink": "https://cloud.google.com/cloud-build/docs/",
    "preferred": false
   },
   {
@@ -687,14 +687,14 @@
    "id": "cloudbuild:v1",
    "name": "cloudbuild",
    "version": "v1",
-   "title": "Cloud Container Builder",
-   "description": "Builds container images in the cloud.",
+   "title": "Cloud Build API",
+   "description": "Creates and manages builds on Google Cloud Platform.",
    "discoveryRestUrl": "https://cloudbuild.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/container-builder/docs/",
+   "documentationLink": "https://cloud.google.com/cloud-build/docs/",
    "preferred": true
   },
   {
@@ -921,6 +921,21 @@
    },
    "documentationLink": "https://cloud.google.com/cloud-tasks/",
    "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudtrace:v2alpha1",
+   "name": "cloudtrace",
+   "version": "v2alpha1",
+   "title": "Stackdriver Trace API",
+   "description": "Sends application trace data to Stackdriver Trace for viewing. Trace data is collected for all App Engine applications by default. Trace data from other applications can be provided using this API.",
+   "discoveryRestUrl": "https://cloudtrace.googleapis.com/$discovery/rest?version=v2alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/trace",
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

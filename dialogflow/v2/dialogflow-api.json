@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180714",
+  "revision": "20180719",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2985,7 +2985,8 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e"
+            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Telephony Gateway."
           ],
           "items": {
             "enum": [
@@ -2997,7 +2998,8 @@
               "SKYPE",
               "LINE",
               "VIBER",
-              "ACTIONS_ON_GOOGLE"
+              "ACTIONS_ON_GOOGLE",
+              "TELEPHONY"
             ],
             "type": "string"
           },
@@ -3006,6 +3008,10 @@
         "displayName": {
           "description": "Required. The name of this intent.",
           "type": "string"
+        },
+        "endInteraction": {
+          "description": "Optional. Indicates that this intent ends an interaction. Some integrations\n(e.g., Actions on Google or Dialogflow phone gateway) use this information\nto close interaction with an end user. Default is false.",
+          "type": "boolean"
         },
         "events": {
           "description": "Optional. The collection of event names that trigger the intent.\nIf the collection of input contexts is not empty, all of the contexts must\nbe present in the active user session for an event to trigger this intent.",
@@ -3168,7 +3174,8 @@
             "SKYPE",
             "LINE",
             "VIBER",
-            "ACTIONS_ON_GOOGLE"
+            "ACTIONS_ON_GOOGLE",
+            "TELEPHONY"
           ],
           "enumDescriptions": [
             "Not specified.",
@@ -3179,7 +3186,8 @@
             "Skype.",
             "Line.",
             "Viber.",
-            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e"
+            "Actions on Google.\nWhen using Actions on Google, you can choose one of the specific\nIntent.Message types that mention support for Actions on Google,\nor you can use the advanced Intent.Message.payload field.\nThe payload field provides access to AoG features not available in the\nspecific message types.\nIf using the Intent.Message.payload field, it should have a structure\nsimilar to the JSON message shown here. For more information, see\n[Actions on Google Webhook\nFormat](https://developers.google.com/actions/dialogflow/webhook)\n\u003cpre\u003e{\n  \"expectUserResponse\": true,\n  \"isSsml\": false,\n  \"noInputPrompts\": [],\n  \"richResponse\": {\n    \"items\": [\n      {\n        \"simpleResponse\": {\n          \"displayText\": \"hi\",\n          \"textToSpeech\": \"hello\"\n        }\n      }\n    ],\n    \"suggestions\": [\n      {\n        \"title\": \"Say this\"\n      },\n      {\n        \"title\": \"or this\"\n      }\n    ]\n  },\n  \"systemIntent\": {\n    \"data\": {\n      \"@type\": \"type.googleapis.com/google.actions.v2.OptionValueSpec\",\n      \"listSelect\": {\n        \"items\": [\n          {\n            \"optionInfo\": {\n              \"key\": \"key1\",\n              \"synonyms\": [\n                \"key one\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          },\n          {\n            \"optionInfo\": {\n              \"key\": \"key2\",\n              \"synonyms\": [\n                \"key two\"\n              ]\n            },\n            \"title\": \"must not be empty, but unique\"\n          }\n        ]\n      }\n    },\n    \"intent\": \"actions.intent.OPTION\"\n  }\n}\u003c/pre\u003e",
+            "Telephony Gateway."
           ],
           "type": "string"
         },
@@ -3194,6 +3202,18 @@
         "suggestions": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageSuggestions",
           "description": "Displays suggestion chips for Actions on Google."
+        },
+        "telephonyPlayAudio": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio",
+          "description": "Plays audio from a file in Telephony Gateway."
+        },
+        "telephonySynthesizeSpeech": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech",
+          "description": "Synthesizes speech in Telephony Gateway."
+        },
+        "telephonyTransferCall": {
+          "$ref": "GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall",
+          "description": "Transfers the call in Telephony Gateway."
         },
         "text": {
           "$ref": "GoogleCloudDialogflowV2beta1IntentMessageText",
@@ -3501,6 +3521,43 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio": {
+      "description": "Plays audio from a file in Telephony Gateway.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageTelephonyPlayAudio",
+      "properties": {
+        "audioUri": {
+          "description": "Required. URI to a Google Cloud Storage object containing the audio to\nplay, e.g., \"gs://bucket/object\". The object must contain a single\nchannel (mono) of linear PCM audio (2 bytes / sample) at 8kHz.\n\nThis object must be readable by the `service-\u003cProject\nNumber\u003e@gcp-sa-dialogflow.iam.gserviceaccount.com` service account\nwhere \u003cProject Number\u003e is the number of the Telephony Gateway project\n(usually the same as the Dialogflow agent project). If the Google Cloud\nStorage bucket is in the Telephony Gateway project, this permission is\nadded by default when enabling the Dialogflow V2 API.\n\nFor audio from other sources, consider using the\n`TelephonySynthesizeSpeech` message with SSML.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech": {
+      "description": "Synthesizes speech and plays back the synthesized audio to the caller in\nTelephony Gateway.\n\nTelephony Gateway takes the synthesizer settings from\n`DetectIntentResponse.output_audio_config` which can either be set\nat request-level or can come from the agent-level synthesizer config.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageTelephonySynthesizeSpeech",
+      "properties": {
+        "ssml": {
+          "description": "The SSML to be synthesized. For more information, see\n[SSML](https://developers.google.com/actions/reference/ssml).",
+          "type": "string"
+        },
+        "text": {
+          "description": "The raw text to be synthesized.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall": {
+      "description": "Transfers the call in Telephony Gateway.",
+      "id": "GoogleCloudDialogflowV2beta1IntentMessageTelephonyTransferCall",
+      "properties": {
+        "phoneNumber": {
+          "description": "Required. The phone number to transfer the call to\nin [E.164 format](https://en.wikipedia.org/wiki/E.164).\n\nWe currently only allow transferring to US numbers (+1xxxyyyzzzz).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1IntentMessageText": {
       "description": "The text response message.",
       "id": "GoogleCloudDialogflowV2beta1IntentMessageText",
@@ -3617,6 +3674,60 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1KnowledgeAnswers": {
+      "description": "Represents the result of querying a Knowledge base.",
+      "id": "GoogleCloudDialogflowV2beta1KnowledgeAnswers",
+      "properties": {
+        "answers": {
+          "description": "A list of answers from Knowledge Connector.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer": {
+      "description": "An answer from Knowledge Connector.",
+      "id": "GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer",
+      "properties": {
+        "answer": {
+          "description": "The piece of text from the `source` knowledge base document that answers\nthis conversational query.",
+          "type": "string"
+        },
+        "faqQuestion": {
+          "description": "The corresponding FAQ question if the answer was extracted from a FAQ\nDocument, empty otherwise.",
+          "type": "string"
+        },
+        "matchConfidence": {
+          "description": "The system's confidence score that this Knowledge answer is a good match\nfor this converstational query, range from 0.0 (completely uncertain)\nto 1.0 (completely certain).\nNote: The confidence score is likely to vary somewhat (possibly even for\nidentical requests), as the underlying model is under constant\nimprovement, we may deprecate it in the future. We recommend using\n`match_confidence_level` which should be generally more stable.",
+          "format": "float",
+          "type": "number"
+        },
+        "matchConfidenceLevel": {
+          "description": "The system's confidence level that this knowledge answer is a good match\nfor this conversational query.\nNOTE: The confidence level for a given `\u003cquery, answer\u003e` pair may change\nwithout notice, as it depends on models that are constantly being\nimproved. However, it will change less frequently than the confidence\nscore below, and should be preferred for referencing the quality of an\nanswer.",
+          "enum": [
+            "MATCH_CONFIDENCE_LEVEL_UNSPECIFIED",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Indicates that the confidence is low.",
+            "Indicates our confidence is medium.",
+            "Indicates our confidence is high."
+          ],
+          "type": "string"
+        },
+        "source": {
+          "description": "Indicates which Knowledge Document this answer was extracted from.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata": {
       "description": "Metadata in google::longrunning::Operation for Knowledge operations.",
       "id": "GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata",
@@ -3649,7 +3760,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n \"caller_id\": \"+18558363987\"\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is not supported\nfor standard tier agents. When the telephony gateway is used with a\nstandard tier agent the `caller_id` field above will have a value of\n`REDACTED_IN_STANDARD_TIER_AGENT`.",
+          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is only supported\nfor Enterprise Edition and not for Standard Edition agents. When the",
           "type": "object"
         },
         "source": {
@@ -3703,6 +3814,10 @@
           "format": "float",
           "type": "number"
         },
+        "knowledgeAnswers": {
+          "$ref": "GoogleCloudDialogflowV2beta1KnowledgeAnswers",
+          "description": "The result from Knowledge Connector (if any), ordered by decreasing\n`KnowledgeAnswers.match_confidence`."
+        },
         "languageCode": {
           "description": "The language that was triggered during intent detection.\nSee [Language Support](https://dialogflow.com/docs/reference/language)\nfor a list of the currently supported language codes.",
           "type": "string"
@@ -3726,6 +3841,10 @@
           "description": "The original conversational query text:\n- If natural language text was provided as input, `query_text` contains\n  a copy of the input.\n- If natural language speech audio was provided as input, `query_text`\n  contains the speech recognition result. If speech recognizer produced\n  multiple alternatives, a particular one is picked.\n- If an event was provided as input, `query_text` is not set.",
           "type": "string"
         },
+        "sentimentAnalysisResult": {
+          "$ref": "GoogleCloudDialogflowV2beta1SentimentAnalysisResult",
+          "description": "The sentiment analysis result, which depends on the\n`sentiment_analysis_request_config` specified in the request."
+        },
         "speechRecognitionConfidence": {
           "description": "The Speech recognition confidence between 0.0 and 1.0. A higher number\nindicates an estimated greater likelihood that the recognized words are\ncorrect. The default of 0.0 is a sentinel value indicating that confidence\nwas not set.\n\nThis field is not guaranteed to be accurate or set. In particular this\nfield isn't set for StreamingDetectIntent since the streaming endpoint has\nseparate confidence estimates per portion of the audio in\nStreamingRecognitionResult.",
           "format": "float",
@@ -3746,10 +3865,45 @@
       },
       "type": "object"
     },
+    "GoogleCloudDialogflowV2beta1Sentiment": {
+      "description": "The sentiment, such as positive/negative feeling or association, for a unit\nof analysis, such as the query text.",
+      "id": "GoogleCloudDialogflowV2beta1Sentiment",
+      "properties": {
+        "magnitude": {
+          "description": "A non-negative number in the [0, +inf) range, which represents the absolute\nmagnitude of sentiment, regardless of score (positive or negative).",
+          "format": "float",
+          "type": "number"
+        },
+        "score": {
+          "description": "Sentiment score between -1.0 (negative sentiment) and 1.0 (positive\nsentiment).",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1SentimentAnalysisResult": {
+      "description": "The result of sentiment analysis as configured by\n`sentiment_analysis_request_config`.",
+      "id": "GoogleCloudDialogflowV2beta1SentimentAnalysisResult",
+      "properties": {
+        "queryTextSentiment": {
+          "$ref": "GoogleCloudDialogflowV2beta1Sentiment",
+          "description": "The sentiment analysis result for `query_text`."
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDialogflowV2beta1WebhookRequest": {
       "description": "The request message for a webhook call.",
       "id": "GoogleCloudDialogflowV2beta1WebhookRequest",
       "properties": {
+        "alternativeQueryResults": {
+          "description": "Alternative query results from KnowledgeService.",
+          "items": {
+            "$ref": "GoogleCloudDialogflowV2beta1QueryResult"
+          },
+          "type": "array"
+        },
         "originalDetectIntentRequest": {
           "$ref": "GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest",
           "description": "Optional. The contents of the original request that was passed to\n`[Streaming]DetectIntent` call."
@@ -3773,6 +3927,10 @@
       "description": "The response message for a webhook call.",
       "id": "GoogleCloudDialogflowV2beta1WebhookResponse",
       "properties": {
+        "endInteraction": {
+          "description": "Optional. Indicates that this intent ends an interaction. Some integrations\n(e.g., Actions on Google or Dialogflow phone gateway) use this information\nto close interaction with an end user. Default is false.",
+          "type": "boolean"
+        },
         "followupEventInput": {
           "$ref": "GoogleCloudDialogflowV2beta1EventInput",
           "description": "Optional. Makes the platform immediately invoke another `DetectIntent` call\ninternally with the specified event as input."

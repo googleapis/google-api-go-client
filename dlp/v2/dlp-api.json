@@ -1159,7 +1159,7 @@
       }
     }
   },
-  "revision": "20180619",
+  "revision": "20180723",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2667,7 +2667,7 @@
           "type": "boolean"
         },
         "infoTypes": {
-          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.\n\nWhen no InfoTypes or CustomInfoTypes are specified in a request, the\nsystem may automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.",
+          "description": "Restricts what info_types to look for. The values must correspond to\nInfoType values returned by ListInfoTypes or listed at\nhttps://cloud.google.com/dlp/docs/infotypes-reference.\n\nWhen no InfoTypes or CustomInfoTypes are specified in a request, the\nsystem may automatically choose what detectors to run. By default this may\nbe all types, but may change over time as detectors are updated.\n\nThe special InfoType name \"ALL_BASIC\" can be used to trigger all detectors,\nbut may change over time as new InfoTypes are added. If you need precise\ncontrol and predictability as to what detectors are run you should specify\nspecific InfoTypes listed in the reference.",
           "items": {
             "$ref": "GooglePrivacyDlpV2InfoType"
           },

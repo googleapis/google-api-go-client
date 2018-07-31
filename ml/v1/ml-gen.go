@@ -23,6 +23,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"io/ioutil"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -197,6 +198,10 @@ type GoogleApi__HttpBody struct {
 
 	// Data: HTTP body binary data.
 	Data string `json:"data,omitempty"`
+
+	// DataReader is a TensorTask modification to make sending files from GCS
+	// oh so much more efficient.
+	DataReader io.Reader `json:"-"`
 
 	// Extensions: Application specific response metadata. Must be set in
 	// the first response
@@ -2887,7 +2892,12 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	ret.DataReader = res.Body
+	b, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	ret.Data = string(b)
 	return ret, nil
 	// {
 	//   "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",

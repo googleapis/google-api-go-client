@@ -2061,7 +2061,7 @@ func (s *PasswordRequirements) MarshalJSON() ([]byte, error) {
 // PermissionGrant: Configuration for an Android permission and its
 // grant state.
 type PermissionGrant struct {
-	// Permission: The android permission or group, e.g.
+	// Permission: The Android permission or group, e.g.
 	// android.permission.READ_CALENDAR or
 	// android.permission_group.CALENDAR.
 	Permission string `json:"permission,omitempty"`

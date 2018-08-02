@@ -1382,9 +1382,9 @@ type CseSiterestrictListCall struct {
 	header_      http.Header
 }
 
-// List: (Closed Beta API) Returns metadata about the search performed,
-// metadata about the custom search engine used for the search, and the
-// search results only for site-restrict cses.
+// List: Returns metadata about the search performed, metadata about the
+// custom search engine used for the search, and the search results.
+// Uses a small set of url patterns.
 func (r *CseSiterestrictService) List(q string) *CseSiterestrictListCall {
 	c := &CseSiterestrictListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("q", q)
@@ -1785,7 +1785,7 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	}
 	return ret, nil
 	// {
-	//   "description": "(Closed Beta API) Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results only for site-restrict cses.",
+	//   "description": "Returns metadata about the search performed, metadata about the custom search engine used for the search, and the search results. Uses a small set of url patterns.",
 	//   "httpMethod": "GET",
 	//   "id": "search.cse.siterestrict.list",
 	//   "parameterOrder": [

@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180706",
+  "revision": "20180724",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2222,7 +2222,7 @@
       "id": "PermissionGrant",
       "properties": {
         "permission": {
-          "description": "The android permission or group, e.g. android.permission.READ_CALENDAR or android.permission_group.CALENDAR.",
+          "description": "The Android permission or group, e.g. android.permission.READ_CALENDAR or android.permission_group.CALENDAR.",
           "type": "string"
         },
         "policy": {

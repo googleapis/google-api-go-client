@@ -93,7 +93,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/v7vxOssi30MR6abOqdfvqmKaGFQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Zp5udf3d_MSf3cProroao6vKvEo\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3969,7 +3969,6 @@
       }
     }
   },
-  "revision": "20180604",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -5987,6 +5986,10 @@
           },
           "readOnly": true,
           "type": "array"
+        },
+        "archived": {
+          "description": "Indicates if user is archived",
+          "type": "boolean"
         },
         "changePasswordAtNextLogin": {
           "description": "Boolean indicating if the user should change password in next login",

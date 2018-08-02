@@ -1,4 +1,4 @@
-// Package sqladmin provides access to the Cloud SQL Administration API.
+// Package sqladmin provides access to the Cloud SQL Admin API.
 //
 // See https://cloud.google.com/sql/docs/reference/latest
 //
@@ -1172,9 +1172,10 @@ type ImportContext struct {
 	// Kind: This is always sql#importContext.
 	Kind string `json:"kind,omitempty"`
 
-	// Uri: A path to the file in Cloud Storage from which the import is
-	// made. The URI is in the form gs://bucketName/fileName. Compressed
-	// gzip files (.gz) are supported when fileType is SQL.
+	// Uri: Path to the import file in Cloud Storage, in the form
+	// gs://bucketName/fileName. Compressed gzip files (.gz) are supported
+	// when fileType is SQL. The instance must have write permissions to the
+	// bucket and read access to the file.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CsvImportOptions") to
@@ -1644,7 +1645,7 @@ type LocationPreference struct {
 	// Kind: This is always sql#locationPreference.
 	Kind string `json:"kind,omitempty"`
 
-	// Zone: The preferred Compute Engine zone (e.g. us-centra1-a,
+	// Zone: The preferred Compute Engine zone (e.g. us-central1-a,
 	// us-central1-b, etc.).
 	Zone string `json:"zone,omitempty"`
 

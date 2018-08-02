@@ -1452,7 +1452,7 @@
       }
     }
   },
-  "revision": "20180712",
+  "revision": "20180729",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1917,6 +1917,20 @@
         "mimeType": {
           "description": "The format of the content field. Presently, only the value \"text/markdown\" is supported. See Markdown (https://en.wikipedia.org/wiki/Markdown) for more information.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DroppedLabels": {
+      "description": "A set of (label, value) pairs which were dropped during aggregation, attached to google.api.Distribution.Exemplars in google.api.Distribution values during aggregation.These values are used in combination with the label values that remain on the aggregated Distribution timeseries to construct the full label set for the exemplar values. The resulting full label set may be used to identify the specific task/job/instance (for example) which may be contributing to a long-tail, while allowing the storage savings of only storing aggregated distribution values for a large group.Note that there are no guarantees on ordering of the labels from exemplar-to-exemplar and from distribution-to-distribution in the same stream, and there may be duplicates. It is up to clients to resolve any ambiguities.",
+      "id": "DroppedLabels",
+      "properties": {
+        "label": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Map from label to its value, for all labels dropped in any aggregation.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -2552,7 +2566,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined custom metric types have the DNS name custom.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n\"custom.googleapis.com/invoice/paid/amount\"\n\"appengine.googleapis.com/http/server/response_latencies\"\n",
+          "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined metric types have the DNS name custom.googleapis.com or external.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n\"custom.googleapis.com/invoice/paid/amount\"\n\"external.googleapis.com/prometheus/up\"\n\"appengine.googleapis.com/http/server/response_latencies\"\n",
           "type": "string"
         },
         "unit": {
@@ -2962,6 +2976,17 @@
       "properties": {
         "fileName": {
           "description": "The path-qualified name of the .proto file that contained the associated protobuf element. For example: \"google/protobuf/source_context.proto\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SpanContext": {
+      "description": "The context of a span, attached to google.api.Distribution.Exemplars in google.api.Distribution values during aggregation.It contains the name of a span with format:  projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID",
+      "id": "SpanContext",
+      "properties": {
+        "spanName": {
+          "description": "The resource name of the span in the following format:\nprojects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]\nTRACE_ID is a unique identifier for a trace within a project; it is a 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a unique identifier for a span within a trace; it is a 16-character hexadecimal encoding of an 8-byte array.",
           "type": "string"
         }
       },

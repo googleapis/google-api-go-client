@@ -2631,25 +2631,25 @@ func (s *GoogleCloudDialogflowV2ListSessionEntityTypesResponse) MarshalJSON() ([
 // contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.
 type GoogleCloudDialogflowV2OriginalDetectIntentRequest struct {
-	// Payload: Optional. This field is set to the value of
-	// `QueryParameters.payload` field
-	// passed in the request.
+	// Payload: Optional. This field is set to the value of the
+	// `QueryParameters.payload`
+	// field passed in the request. Some integrations that query a
+	// Dialogflow
+	// agent may provide additional information in the payload.
 	//
-	// This field is used for the telephony gateway. It should have
-	// a
-	// structure similar to this JSON message:
+	// In particular for the Telephony Gateway this field has the
+	// form:
 	// <pre>{
 	//  "telephony": {
-	//  "caller_id": "+18558363987"
+	//    "caller_id": "+18558363987"
+	//  }
 	// }</pre>
-	// Note: The caller ID field (`caller_id`) will be in
-	// [E.164 format](https://en.wikipedia.org/wiki/E.164) and is not
-	// supported
-	// for standard tier agents. When the telephony gateway is used with
-	// a
-	// standard tier agent the `caller_id` field above will have a value
-	// of
-	// `REDACTED_IN_STANDARD_TIER_AGENT`.
+	// Note: The caller ID field (`caller_id`) will be redacted for
+	// Standard
+	// Edition agents and populated with the caller ID in
+	// [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Source: The source of this request, e.g., `google`, `facebook`,
@@ -5105,22 +5105,25 @@ func (s *GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata) MarshalJSON() (
 // the contents of the original request that was passed to
 // the `[Streaming]DetectIntent` call.
 type GoogleCloudDialogflowV2beta1OriginalDetectIntentRequest struct {
-	// Payload: Optional. This field is set to the value of
-	// `QueryParameters.payload` field
-	// passed in the request.
+	// Payload: Optional. This field is set to the value of the
+	// `QueryParameters.payload`
+	// field passed in the request. Some integrations that query a
+	// Dialogflow
+	// agent may provide additional information in the payload.
 	//
-	// This field is used for the telephony gateway. It should have
-	// a
-	// structure similar to this JSON message:
+	// In particular for the Telephony Gateway this field has the
+	// form:
 	// <pre>{
 	//  "telephony": {
 	//    "caller_id": "+18558363987"
 	//  }
 	// }</pre>
-	// Note: The caller ID field (`caller_id`) will be in
-	// [E.164 format](https://en.wikipedia.org/wiki/E.164) and is only
-	// supported
-	// for Enterprise Edition and not for Standard Edition agents. When the
+	// Note: The caller ID field (`caller_id`) will be redacted for
+	// Standard
+	// Edition agents and populated with the caller ID in
+	// [E.164
+	// format](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition
+	// agents.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
 	// Source: The source of this request, e.g., `google`, `facebook`,
@@ -5527,6 +5530,81 @@ type GoogleCloudDialogflowV2beta1WebhookResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1WebhookResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1WebhookResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse:
+// Response message for
+// KnowledgeService.BatchUpdateQuestionAnswerEntries.
+type GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse struct {
+	// QuestionAnswerEntries: The list of question-answer-entries.
+	QuestionAnswerEntries []*GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry `json:"questionAnswerEntries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "QuestionAnswerEntries") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QuestionAnswerEntries") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry: A
+// QuestionAnswerEntry resource.
+type GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry struct {
+	// Answer: Output only. Answer text.
+	Answer string `json:"answer,omitempty"`
+
+	// Name: The name of the question-answer-entry.
+	Name string `json:"name,omitempty"`
+
+	// Question: Output only. The question for the answer.
+	Question string `json:"question,omitempty"`
+
+	// State: Required. The state of the question-answer-entry.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "ENABLED" - This QuestionAnswerEntry is enabled.
+	//   "DISABLED" - This QuestionAnswerEntry is disabled.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Answer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

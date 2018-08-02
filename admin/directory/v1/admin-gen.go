@@ -3251,6 +3251,9 @@ type User struct {
 	// Aliases: List of aliases (Read-only)
 	Aliases []string `json:"aliases,omitempty"`
 
+	// Archived: Indicates if user is archived
+	Archived bool `json:"archived,omitempty"`
+
 	// ChangePasswordAtNextLogin: Boolean indicating if the user should
 	// change password in next login
 	ChangePasswordAtNextLogin bool `json:"changePasswordAtNextLogin,omitempty"`

@@ -744,7 +744,7 @@
       }
     }
   },
-  "revision": "20180709",
+  "revision": "20180729",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -1400,7 +1400,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined custom metric types have the DNS name custom.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n\"custom.googleapis.com/invoice/paid/amount\"\n\"appengine.googleapis.com/http/server/response_latencies\"\n",
+          "description": "The metric type, including its DNS name prefix. The type is not URL-encoded. All user-defined metric types have the DNS name custom.googleapis.com or external.googleapis.com. Metric types should use a natural hierarchical grouping. For example:\n\"custom.googleapis.com/invoice/paid/amount\"\n\"external.googleapis.com/prometheus/up\"\n\"appengine.googleapis.com/http/server/response_latencies\"\n",
           "type": "string"
         },
         "unit": {

@@ -252,12 +252,6 @@ type Deployment struct {
 	// EntryPoints: The deployment's entry points.
 	EntryPoints []*EntryPoint `json:"entryPoints,omitempty"`
 
-	// FunctionSet: Script's defined set of functions.
-	FunctionSet *GoogleAppsScriptTypeFunctionSet `json:"functionSet,omitempty"`
-
-	// ScopeSet: Set of scopes required by the deployment.
-	ScopeSet *GoogleAppsScriptTypeScopeSet `json:"scopeSet,omitempty"`
-
 	// UpdateTime: Last modified date time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -891,71 +885,6 @@ type GoogleAppsScriptTypeProcess struct {
 
 func (s *GoogleAppsScriptTypeProcess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAppsScriptTypeProcess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAppsScriptTypeScope: Represents an authorization scope.
-type GoogleAppsScriptTypeScope struct {
-	// Authorizer: Who authorized the scope.
-	//
-	// Possible values:
-	//   "SCOPE_AUTHORIZER_UNSPECIFIED" - Authorizer unspecified.
-	//   "AUTHORIZED_BY_DEVELOPER" - Developer authorized scope.
-	//   "AUTHORIZED_BY_END_USER" - End user authorized scope.
-	Authorizer string `json:"authorizer,omitempty"`
-
-	// Name: The scope's identifying string.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Authorizer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authorizer") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsScriptTypeScope) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsScriptTypeScope
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleAppsScriptTypeScopeSet: A set of scopes. No duplicates are
-// permitted.
-type GoogleAppsScriptTypeScopeSet struct {
-	// Values: List of scope values in the set.
-	Values []*GoogleAppsScriptTypeScope `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Values") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Values") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleAppsScriptTypeScopeSet) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleAppsScriptTypeScopeSet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

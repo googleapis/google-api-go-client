@@ -6075,16 +6075,18 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// time of the execution of the last run of the JobTrigger.
 	EnableAutoPopulationOfTimespanConfig bool `json:"enableAutoPopulationOfTimespanConfig,omitempty"`
 
-	// EndTime: Exclude files newer than this value.
+	// EndTime: Exclude files or rows newer than this value.
 	// If set to zero, no upper time limit is applied.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Exclude files older than this value.
+	// StartTime: Exclude files or rows older than this value.
 	StartTime string `json:"startTime,omitempty"`
 
 	// TimestampField: Specification of the field containing the timestamp
 	// of scanned items.
-	// Required for data sources like Datastore or BigQuery.
+	// Used for data sources like Datastore or BigQuery.
+	// If not specified for BigQuery, table last modification timestamp
+	// is checked against given time span.
 	// The valid data types of the timestamp field are:
 	// for BigQuery - timestamp, date, datetime;
 	// for Datastore - timestamp.

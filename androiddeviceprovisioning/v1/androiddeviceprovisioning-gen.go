@@ -202,6 +202,7 @@ type ClaimDeviceRequest struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
@@ -836,6 +837,7 @@ type DeviceClaim struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
@@ -864,14 +866,16 @@ func (s *DeviceClaim) MarshalJSON() ([]byte, error) {
 }
 
 // DeviceIdentifier: Encapsulates hardware and product IDs to identify a
-// manufactured device. To
-// learn more, read [Identifiers](/zero-touch/guides/identifiers).
+// manufactured device.
+// To understand requirements on identifier sets,
+// read
+// [Identifiers](/zero-touch/guides/identifiers).
 type DeviceIdentifier struct {
 	// Imei: The device’s IMEI number. Validated on input.
 	Imei string `json:"imei,omitempty"`
 
-	// Manufacturer: Required. The device manufacturer’s name. Matches the
-	// device's built-in
+	// Manufacturer: The device manufacturer’s name. Matches the device's
+	// built-in
 	// value returned from `android.os.Build.MANUFACTURER`. Allowed values
 	// are
 	// listed in [manufacturer
@@ -880,6 +884,12 @@ type DeviceIdentifier struct {
 
 	// Meid: The device’s MEID number.
 	Meid string `json:"meid,omitempty"`
+
+	// Model: The device model's name. Matches the device's built-in value
+	// returned from
+	// `android.os.Build.MODEL`. Allowed values are listed in
+	// [manufacturer names](/zero-touch/resources/manufacturer-names).
+	Model string `json:"model,omitempty"`
 
 	// SerialNumber: The manufacturer's serial number for the device. This
 	// value might not be
@@ -1250,6 +1260,7 @@ type FindDevicesByOwnerRequest struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
@@ -1544,6 +1555,7 @@ type PartnerClaim struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
@@ -1583,6 +1595,7 @@ type PartnerUnclaim struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 
@@ -1798,6 +1811,7 @@ type UnclaimDeviceRequest struct {
 	//
 	// Possible values:
 	//   "SECTION_TYPE_UNSPECIFIED" - Unspecified section type.
+	//   "SECTION_TYPE_SIM_LOCK" - SIM-lock section type.
 	//   "SECTION_TYPE_ZERO_TOUCH" - Zero-touch enrollment section type.
 	SectionType string `json:"sectionType,omitempty"`
 

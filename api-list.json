@@ -403,7 +403,7 @@
    "id": "appengine:v1alpha",
    "name": "appengine",
    "version": "v1alpha",
-   "title": "Google App Engine Admin API",
+   "title": "App Engine Admin API",
    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1alpha",
    "icons": {
@@ -418,7 +418,7 @@
    "id": "appengine:v1beta",
    "name": "appengine",
    "version": "v1beta",
-   "title": "Google App Engine Admin API",
+   "title": "App Engine Admin API",
    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
    "icons": {
@@ -433,7 +433,7 @@
    "id": "appengine:v1",
    "name": "appengine",
    "version": "v1",
-   "title": "Google App Engine Admin API",
+   "title": "App Engine Admin API",
    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1",
    "icons": {
@@ -448,7 +448,7 @@
    "id": "appengine:v1beta4",
    "name": "appengine",
    "version": "v1beta4",
-   "title": "Google App Engine Admin API",
+   "title": "App Engine Admin API",
    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta4",
    "icons": {
@@ -463,7 +463,7 @@
    "id": "appengine:v1beta5",
    "name": "appengine",
    "version": "v1beta5",
-   "title": "Google App Engine Admin API",
+   "title": "App Engine Admin API",
    "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta5",
    "icons": {
@@ -919,7 +919,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/cloud-tasks/",
+   "documentationLink": "https://cloud.google.com/tasks/",
    "preferred": true
   },
   {
@@ -1538,21 +1538,6 @@
    "title": "Cloud Firestore API",
    "description": "",
    "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/firestore",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "firestore:v1beta2",
-   "name": "firestore",
-   "version": "v1beta2",
-   "title": "Cloud Firestore API",
-   "description": "",
-   "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2697,8 +2682,8 @@
    "id": "sqladmin:v1beta3",
    "name": "sqladmin",
    "version": "v1beta3",
-   "title": "Cloud SQL Administration API",
-   "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
+   "title": "Cloud SQL Admin API",
+   "description": "Cloud SQL provides the Cloud SQL Admin API, a REST API for administering your instances programmatically.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta3/rest",
    "discoveryLink": "./apis/sqladmin/v1beta3/rest",
    "icons": {
@@ -2713,8 +2698,8 @@
    "id": "sqladmin:v1beta4",
    "name": "sqladmin",
    "version": "v1beta4",
-   "title": "Cloud SQL Administration API",
-   "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
+   "title": "Cloud SQL Admin API",
+   "description": "Cloud SQL provides the Cloud SQL Admin API, a REST API for administering your instances programmatically.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/sqladmin/v1beta4/rest",
    "discoveryLink": "./apis/sqladmin/v1beta4/rest",
    "icons": {
@@ -2891,6 +2876,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "texttospeech:v1",
+   "name": "texttospeech",
+   "version": "v1",
+   "title": "Cloud Text-to-Speech API",
+   "description": "Synthesizes natural-sounding speech by applying powerful neural network models.",
+   "discoveryRestUrl": "https://texttospeech.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/text-to-speech/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "texttospeech:v1beta1",
    "name": "texttospeech",
    "version": "v1beta1",
@@ -2902,7 +2902,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/text-to-speech/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

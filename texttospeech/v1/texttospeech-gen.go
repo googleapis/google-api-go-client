@@ -6,10 +6,10 @@
 //
 // Usage example:
 //
-//   import "google.golang.org/api/texttospeech/v1beta1"
+//   import "google.golang.org/api/texttospeech/v1"
 //   ...
 //   texttospeechService, err := texttospeech.New(oauthHttpClient)
-package texttospeech // import "google.golang.org/api/texttospeech/v1beta1"
+package texttospeech // import "google.golang.org/api/texttospeech/v1"
 
 import (
 	"bytes"
@@ -42,9 +42,9 @@ var _ = strings.Replace
 var _ = context.Canceled
 var _ = ctxhttp.Do
 
-const apiId = "texttospeech:v1beta1"
+const apiId = "texttospeech:v1"
 const apiName = "texttospeech"
-const apiVersion = "v1beta1"
+const apiVersion = "v1"
 const basePath = "https://texttospeech.googleapis.com/"
 
 // OAuth2 scopes used by this API.
@@ -118,12 +118,6 @@ type AudioConfig struct {
 	// higher
 	// than MP3 while using approximately the same bitrate.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
-
-	// EffectsProfileId: An identifier which selects 'audio effects'
-	// profiles that are applied on
-	// (post synthesized) text to speech.
-	// Effects are applied on top of each other in the order they are given.
-	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
 
 	// Pitch: Optional speaking pitch, in the range [-20.0, 20.0]. 20 means
 	// increase 20
@@ -554,7 +548,7 @@ func (c *TextSynthesizeCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/text:synthesize")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/text:synthesize")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("POST", urls, body)
 	req.Header = reqHeaders
@@ -600,12 +594,12 @@ func (c *TextSynthesizeCall) Do(opts ...googleapi.CallOption) (*SynthesizeSpeech
 	return ret, nil
 	// {
 	//   "description": "Synthesizes speech synchronously: receive results after all text input\nhas been processed.",
-	//   "flatPath": "v1beta1/text:synthesize",
+	//   "flatPath": "v1/text:synthesize",
 	//   "httpMethod": "POST",
 	//   "id": "texttospeech.text.synthesize",
 	//   "parameterOrder": [],
 	//   "parameters": {},
-	//   "path": "v1beta1/text:synthesize",
+	//   "path": "v1/text:synthesize",
 	//   "request": {
 	//     "$ref": "SynthesizeSpeechRequest"
 	//   },
@@ -702,7 +696,7 @@ func (c *VoicesListCall) doRequest(alt string) (*http.Response, error) {
 	}
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/voices")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/voices")
 	urls += "?" + c.urlParams_.Encode()
 	req, _ := http.NewRequest("GET", urls, body)
 	req.Header = reqHeaders
@@ -748,7 +742,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	return ret, nil
 	// {
 	//   "description": "Returns a list of Voice supported for synthesis.",
-	//   "flatPath": "v1beta1/voices",
+	//   "flatPath": "v1/voices",
 	//   "httpMethod": "GET",
 	//   "id": "texttospeech.voices.list",
 	//   "parameterOrder": [],
@@ -759,7 +753,7 @@ func (c *VoicesListCall) Do(opts ...googleapi.CallOption) (*ListVoicesResponse, 
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1beta1/voices",
+	//   "path": "v1/voices",
 	//   "response": {
 	//     "$ref": "ListVoicesResponse"
 	//   },

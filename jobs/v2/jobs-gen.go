@@ -1,4 +1,4 @@
-// Package jobs provides access to the Cloud Job Discovery.
+// Package jobs provides access to the Cloud Talent Solution API.
 //
 // See https://cloud.google.com/job-discovery/docs
 //
@@ -2092,7 +2092,7 @@ type GetHistogramRequest struct {
 	// Histogram response times can be slow, and counts
 	// can be approximations. This call may be temporarily or permanently
 	// removed
-	// prior to the production release of Cloud Job Discovery.
+	// prior to the production release of Cloud Talent Solution.
 	//
 	// Possible values:
 	//   "JOB_FIELD_UNSPECIFIED" - The default value if search type is not
@@ -2759,6 +2759,11 @@ type Job struct {
 	// contract. Jobs of this type are also returned by a search
 	// for
 	// EmploymentType.CONTRACTOR jobs.
+	//   "FLY_IN_FLY_OUT" - The job involves employing people in remote
+	// areas and flying them
+	// temporarily to the work site instead of relocating employees and
+	// their
+	// families permanently.
 	//   "OTHER" - The job does not fit any of the other listed types.
 	EmploymentTypes []string `json:"employmentTypes,omitempty"`
 
@@ -3427,6 +3432,11 @@ type JobFilters struct {
 	// contract. Jobs of this type are also returned by a search
 	// for
 	// EmploymentType.CONTRACTOR jobs.
+	//   "FLY_IN_FLY_OUT" - The job involves employing people in remote
+	// areas and flying them
+	// temporarily to the work site instead of relocating employees and
+	// their
+	// families permanently.
 	//   "OTHER" - The job does not fit any of the other listed types.
 	EmploymentTypes []string `json:"employmentTypes,omitempty"`
 
@@ -3917,6 +3927,11 @@ type JobQuery struct {
 	// contract. Jobs of this type are also returned by a search
 	// for
 	// EmploymentType.CONTRACTOR jobs.
+	//   "FLY_IN_FLY_OUT" - The job involves employing people in remote
+	// areas and flying them
+	// temporarily to the work site instead of relocating employees and
+	// their
+	// families permanently.
 	//   "OTHER" - The job does not fit any of the other listed types.
 	EmploymentTypes []string `json:"employmentTypes,omitempty"`
 
@@ -5813,7 +5828,7 @@ type CompaniesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all companies associated with a Cloud Job Discovery
+// List: Lists all companies associated with a Cloud Talent Solution
 // account.
 func (r *CompaniesService) List() *CompaniesListCall {
 	c := &CompaniesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5938,7 +5953,7 @@ func (c *CompaniesListCall) Do(opts ...googleapi.CallOption) (*ListCompaniesResp
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all companies associated with a Cloud Job Discovery account.",
+	//   "description": "Lists all companies associated with a Cloud Talent Solution account.",
 	//   "flatPath": "v2/companies",
 	//   "httpMethod": "GET",
 	//   "id": "jobs.companies.list",

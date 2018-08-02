@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/A-IxAkYBoHCgmwdviWG6unsoj34\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/r_jaVMPAg-E4yrrwFOgBuxGRyq4\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1966,6 +1966,11 @@
             "templateName"
           ],
           "parameters": {
+            "country": {
+              "description": "The country of the template to retrieve. Defaults to US.",
+              "location": "query",
+              "type": "string"
+            },
             "merchantId": {
               "description": "The ID of the account that should manage the order. This cannot be a multi-client account.",
               "format": "uint64",
@@ -3217,7 +3222,7 @@
         },
         "googleMyBusinessLink": {
           "$ref": "AccountGoogleMyBusinessLink",
-          "description": "The GMB account which is linked or in the process of being linked with the Merchant Center accounnt."
+          "description": "The GMB account which is linked or in the process of being linked with the Merchant Center account."
         },
         "id": {
           "annotations": {
@@ -3641,7 +3646,7 @@
       "id": "AccountsCustomBatchRequestEntryLinkRequest",
       "properties": {
         "action": {
-          "description": "Action to perform for this link.",
+          "description": "Action to perform for this link. The \"request\" action is only available to select merchants.",
           "type": "string"
         },
         "linkType": {
@@ -3706,7 +3711,7 @@
       "id": "AccountsLinkRequest",
       "properties": {
         "action": {
-          "description": "Action to perform for this link.",
+          "description": "Action to perform for this link. The \"request\" action is only available to select merchants.",
           "type": "string"
         },
         "linkType": {
@@ -4823,7 +4828,7 @@
           "type": "string"
         },
         "sellOnGoogleQuantity": {
-          "description": "The quantity of the product that is reserved for sell-on-google ads. Supported only for online products.",
+          "description": "The quantity of the product that is available for selling on Google. Supported only for online products.",
           "format": "uint32",
           "type": "integer"
         }
@@ -4962,7 +4967,7 @@
           "type": "string"
         },
         "sellOnGoogleQuantity": {
-          "description": "The quantity of the product that is reserved for sell-on-google ads. Supported only for online products.",
+          "description": "The quantity of the product that is available for selling on Google. Supported only for online products.",
           "format": "uint32",
           "type": "integer"
         }
@@ -5545,7 +5550,7 @@
           "type": "string"
         },
         "region": {
-          "description": "Top-level administrative subdivision of the country (e.g. \"CA\").",
+          "description": "Top-level administrative subdivision of the country. For example, a state like California (\"CA\") or a province like Quebec (\"QC\").",
           "type": "string"
         },
         "streetAddress": {
@@ -6396,7 +6401,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -6485,6 +6490,10 @@
     "OrdersCreateTestOrderRequest": {
       "id": "OrdersCreateTestOrderRequest",
       "properties": {
+        "country": {
+          "description": "The  CLDR territory code of the country of the test order to create. Affects the currency and addresses of orders created via template_name, or the addresses of orders created via test_order.\n\nAcceptable values are:  \n- \"US\" \n- \"FR\"  Defaults to US.",
+          "type": "string"
+        },
         "templateName": {
           "description": "The test order template to use. Specify as an alternative to testOrder as a shortcut for retrieving a template and then creating an order using that template.",
           "type": "string"
@@ -6619,7 +6628,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -6693,7 +6702,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "The amount that is refunded."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -6961,7 +6970,7 @@
           "description": "A list of errors defined if and only if the request failed."
         },
         "executionStatus": {
-          "description": "The status of the execution. Only defined if the method is not get or getByMerchantOrderId and if the request was successful.",
+          "description": "The status of the execution. Only defined if  \n- the request was successful; and \n- the method is not get, getByMerchantOrderId, or one of the test methods.",
           "type": "string"
         },
         "kind": {
@@ -7086,7 +7095,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "The amount that is refunded."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -7916,7 +7925,7 @@
               "content.pos.sale"
             ]
           },
-          "description": "The relative change of the available quantity. Negative for items sold.",
+          "description": "The relative change of the available quantity. Negative for items returned.",
           "format": "int64",
           "type": "string"
         },
@@ -7994,7 +8003,7 @@
               "content.pos.sale"
             ]
           },
-          "description": "The relative change of the available quantity. Negative for items sold.",
+          "description": "The relative change of the available quantity. Negative for items returned.",
           "format": "int64",
           "type": "string"
         },
@@ -8077,7 +8086,7 @@
               "content.pos.sale"
             ]
           },
-          "description": "The relative change of the available quantity. Negative for items sold.",
+          "description": "The relative change of the available quantity. Negative for items returned.",
           "format": "int64",
           "type": "string"
         },
@@ -8486,7 +8495,7 @@
           "type": "string"
         },
         "sellOnGoogleQuantity": {
-          "description": "The quantity of the product that is reserved for sell-on-google ads.",
+          "description": "The quantity of the product that is available for selling on Google. Supported only for online products.",
           "format": "int64",
           "type": "string"
         },

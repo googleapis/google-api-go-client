@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/kCPv4u6Uhzo97uC-UVSXFV5eBQ4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Q431XgB9BfIcyCs-szxnWaghv48\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -532,6 +532,11 @@
             "templateName"
           ],
           "parameters": {
+            "country": {
+              "description": "The country of the template to retrieve. Defaults to US.",
+              "location": "query",
+              "type": "string"
+            },
             "merchantId": {
               "description": "The ID of the account that should manage the order. This cannot be a multi-client account.",
               "format": "uint64",
@@ -1242,7 +1247,7 @@
           "type": "string"
         },
         "region": {
-          "description": "Top-level administrative subdivision of the country (e.g. \"CA\").",
+          "description": "Top-level administrative subdivision of the country. For example, a state like California (\"CA\") or a province like Quebec (\"QC\").",
           "type": "string"
         },
         "streetAddress": {
@@ -2093,7 +2098,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -2182,6 +2187,10 @@
     "OrdersCreateTestOrderRequest": {
       "id": "OrdersCreateTestOrderRequest",
       "properties": {
+        "country": {
+          "description": "The  CLDR territory code of the country of the test order to create. Affects the currency and addresses of orders created via template_name, or the addresses of orders created via test_order.\n\nAcceptable values are:  \n- \"US\" \n- \"FR\"  Defaults to US.",
+          "type": "string"
+        },
         "templateName": {
           "description": "The test order template to use. Specify as an alternative to testOrder as a shortcut for retrieving a template and then creating an order using that template.",
           "type": "string"
@@ -2316,7 +2325,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "Amount to refund for the cancelation. Optional. If not set, Google will calculate the default based on the price and tax of the items involved. The amount must not be larger than the net amount left on the order."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -2390,7 +2399,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "The amount that is refunded."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",
@@ -2658,7 +2667,7 @@
           "description": "A list of errors defined if and only if the request failed."
         },
         "executionStatus": {
-          "description": "The status of the execution. Only defined if the method is not get or getByMerchantOrderId and if the request was successful.",
+          "description": "The status of the execution. Only defined if  \n- the request was successful; and \n- the method is not get, getByMerchantOrderId, or one of the test methods.",
           "type": "string"
         },
         "kind": {
@@ -2783,7 +2792,7 @@
       "properties": {
         "amount": {
           "$ref": "Price",
-          "description": "The amount that is refunded."
+          "description": "Deprecated. Please use amountPretax and amountTax instead."
         },
         "amountPretax": {
           "$ref": "Price",

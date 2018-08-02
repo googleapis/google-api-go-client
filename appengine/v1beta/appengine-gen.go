@@ -714,9 +714,9 @@ func (s *BatchUpdateIngressRulesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BuildInfo: Google Cloud Container Builder build information.
+// BuildInfo: Google Cloud Build information.
 type BuildInfo struct {
-	// CloudBuildId: The Google Cloud Container Builder build id. Example:
+	// CloudBuildId: The Google Cloud Build id. Example:
 	// "f966068f-08b2-42c8-bdfe-74137dff2bf9"
 	CloudBuildId string `json:"cloudBuildId,omitempty"`
 
@@ -1097,17 +1097,16 @@ func (s *DebugInstanceRequest) MarshalJSON() ([]byte, error) {
 // Deployment: Code and application artifacts used to deploy a version
 // to App Engine.
 type Deployment struct {
-	// Build: Google Cloud Container Builder build information. Only
-	// applicable for instances running in the App Engine flexible
-	// environment.
+	// Build: Google Cloud Build build information. Only applicable for
+	// instances running in the App Engine flexible environment.
 	Build *BuildInfo `json:"build,omitempty"`
 
-	// CloudBuildOptions: Options for any Google Cloud Container Builder
-	// builds created as a part of this deployment.Note that this is
-	// orthogonal to the build parameter, where the deployment depends on an
-	// already existing cloud build. These options will only be used if a
-	// new build is created, such as when deploying to the App Engine
-	// flexible environment using files or zip.
+	// CloudBuildOptions: Options for any Google Cloud Build builds created
+	// as a part of this deployment.Note that this is orthogonal to the
+	// build parameter, where the deployment depends on an already existing
+	// cloud build. These options will only be used if a new build is
+	// created, such as when deploying to the App Engine flexible
+	// environment using files or zip.
 	CloudBuildOptions *CloudBuildOptions `json:"cloudBuildOptions,omitempty"`
 
 	// Container: The Docker image for the container that runs the version.

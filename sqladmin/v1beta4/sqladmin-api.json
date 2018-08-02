@@ -15,10 +15,10 @@
   "baseUrl": "https://www.googleapis.com/sql/v1beta4/",
   "batchPath": "batch/sqladmin/v1beta4",
   "canonicalName": "SQL Admin",
-  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
+  "description": "Cloud SQL provides the Cloud SQL Admin API, a REST API for administering your instances programmatically.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/gyjQXUISgXkljxOleaWUzAPLU9M\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/RxCLYcP9g8OWcIp3gyyH6nUAsH8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2283,7 +2283,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "A path to the file in Cloud Storage from which the import is made. The URI is in the form gs://bucketName/fileName. Compressed gzip files (.gz) are supported when fileType is SQL.",
+          "description": "Path to the import file in Cloud Storage, in the form gs://bucketName/fileName. Compressed gzip files (.gz) are supported when fileType is SQL. The instance must have write permissions to the bucket and read access to the file.",
           "type": "string"
         }
       },
@@ -2482,7 +2482,7 @@
           "type": "string"
         },
         "zone": {
-          "description": "The preferred Compute Engine zone (e.g. us-centra1-a, us-central1-b, etc.).",
+          "description": "The preferred Compute Engine zone (e.g. us-central1-a, us-central1-b, etc.).",
           "type": "string"
         }
       },
@@ -3145,6 +3145,6 @@
     }
   },
   "servicePath": "sql/v1beta4/",
-  "title": "Cloud SQL Administration API",
+  "title": "Cloud SQL Admin API",
   "version": "v1beta4"
 }

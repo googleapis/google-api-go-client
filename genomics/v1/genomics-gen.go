@@ -8881,6 +8881,9 @@ func (r *OperationsService) List(name string) *OperationsListCall {
 // the
 //   pipeline finishes, the value is the standard Google error code.
 // * labels.key or labels."key with space" where key is a label key.
+// * done&#58; If the pipeline is running, this value is false. Once
+// the
+//   pipeline finishes, the value is true.
 //
 // In v1 and v1alpha2, the following filter fields are supported&#58;
 //
@@ -9025,7 +9028,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A string for filtering Operations.\nIn v2alpha1, the following filter fields are supported\u0026#58;\n\n* createTime\u0026#58; The time this job was created\n* events\u0026#58; The set of event (names) that have occurred while running\n  the pipeline.  The \u0026#58; operator can be used to determine if a\n  particular event has occurred.\n* error\u0026#58; If the pipeline is running, this value is NULL.  Once the\n  pipeline finishes, the value is the standard Google error code.\n* labels.key or labels.\"key with space\" where key is a label key.\n\nIn v1 and v1alpha2, the following filter fields are supported\u0026#58;\n\n* projectId\u0026#58; Required. Corresponds to\n  OperationMetadata.projectId.\n* createTime\u0026#58; The time this job was created, in seconds from the\n  [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `\u003c=`\n  operators.\n* status\u0026#58; Can be `RUNNING`, `SUCCESS`, `FAILURE`, or `CANCELED`. Only\n  one status may be specified.\n* labels.key where key is a label key.\n\nExamples\u0026#58;\n\n* `projectId = my-project AND createTime \u003e= 1432140000`\n* `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING`\n* `projectId = my-project AND labels.color = *`\n* `projectId = my-project AND labels.color = red`",
+	//       "description": "A string for filtering Operations.\nIn v2alpha1, the following filter fields are supported\u0026#58;\n\n* createTime\u0026#58; The time this job was created\n* events\u0026#58; The set of event (names) that have occurred while running\n  the pipeline.  The \u0026#58; operator can be used to determine if a\n  particular event has occurred.\n* error\u0026#58; If the pipeline is running, this value is NULL.  Once the\n  pipeline finishes, the value is the standard Google error code.\n* labels.key or labels.\"key with space\" where key is a label key.\n* done\u0026#58; If the pipeline is running, this value is false. Once the\n  pipeline finishes, the value is true.\n\nIn v1 and v1alpha2, the following filter fields are supported\u0026#58;\n\n* projectId\u0026#58; Required. Corresponds to\n  OperationMetadata.projectId.\n* createTime\u0026#58; The time this job was created, in seconds from the\n  [epoch](http://en.wikipedia.org/wiki/Unix_time). Can use `\u003e=` and/or `\u003c=`\n  operators.\n* status\u0026#58; Can be `RUNNING`, `SUCCESS`, `FAILURE`, or `CANCELED`. Only\n  one status may be specified.\n* labels.key where key is a label key.\n\nExamples\u0026#58;\n\n* `projectId = my-project AND createTime \u003e= 1432140000`\n* `projectId = my-project AND createTime \u003e= 1432140000 AND createTime \u003c= 1432150000 AND status = RUNNING`\n* `projectId = my-project AND labels.color = *`\n* `projectId = my-project AND labels.color = red`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

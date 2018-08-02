@@ -1,6 +1,6 @@
-// Package cloudbuild provides access to the Cloud Container Builder.
+// Package cloudbuild provides access to the Cloud Build API.
 //
-// See https://cloud.google.com/container-builder/docs/
+// See https://cloud.google.com/cloud-build/docs/
 //
 // Usage example:
 //
@@ -260,7 +260,7 @@ func (s *Artifacts) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Build: A build resource in the Container Builder API.
+// Build: A build resource in the Cloud Build API.
 //
 // At a high level, a `Build` describes where to find source code, how
 // to build

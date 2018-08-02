@@ -349,6 +349,9 @@ type Finding struct {
 	// password field in clear text.
 	// An attacker can eavesdrop network traffic and sniff the password
 	// field.
+	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
+	// with an invalid content type,
+	// or without an 'X-Content-Type-Options: nosniff' header.
 	FindingType string `json:"findingType,omitempty"`
 
 	// FrameUrl: Output only.
@@ -398,6 +401,11 @@ type Finding struct {
 	// causing the
 	// vulnerability such as JavaScript sources, image, audio files, etc.
 	ViolatingResource *ViolatingResource `json:"violatingResource,omitempty"`
+
+	// VulnerableHeaders: Output only.
+	// An addon containing information about vulnerable or missing HTTP
+	// headers.
+	VulnerableHeaders *VulnerableHeaders `json:"vulnerableHeaders,omitempty"`
 
 	// VulnerableParameters: Output only.
 	// An addon containing information about request parameters which were
@@ -500,6 +508,9 @@ type FindingTypeStats struct {
 	// password field in clear text.
 	// An attacker can eavesdrop network traffic and sniff the password
 	// field.
+	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
+	// with an invalid content type,
+	// or without an 'X-Content-Type-Options: nosniff' header.
 	FindingType string `json:"findingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to
@@ -558,6 +569,37 @@ type GoogleAccount struct {
 
 func (s *GoogleAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Header: Describes a HTTP Header.
+type Header struct {
+	// Name: Header name.
+	Name string `json:"name,omitempty"`
+
+	// Value: Header value.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Header) MarshalJSON() ([]byte, error) {
+	type NoMethod Header
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1048,6 +1090,38 @@ type ViolatingResource struct {
 
 func (s *ViolatingResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolatingResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VulnerableHeaders: Information about vulnerable or missing HTTP
+// Headers.
+type VulnerableHeaders struct {
+	// Headers: List of vulnerable headers.
+	Headers []*Header `json:"headers,omitempty"`
+
+	// MissingHeaders: List of missing headers.
+	MissingHeaders []*Header `json:"missingHeaders,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Headers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Headers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VulnerableHeaders) MarshalJSON() ([]byte, error) {
+	type NoMethod VulnerableHeaders
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

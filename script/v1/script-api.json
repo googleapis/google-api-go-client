@@ -750,7 +750,7 @@
       }
     }
   },
-  "revision": "20180713",
+  "revision": "20180801",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -804,14 +804,6 @@
             "$ref": "EntryPoint"
           },
           "type": "array"
-        },
-        "functionSet": {
-          "$ref": "GoogleAppsScriptTypeFunctionSet",
-          "description": "Script's defined set of functions."
-        },
-        "scopeSet": {
-          "$ref": "GoogleAppsScriptTypeScopeSet",
-          "description": "Set of scopes required by the deployment."
         },
         "updateTime": {
           "description": "Last modified date time stamp.",
@@ -1191,45 +1183,6 @@
             "The user is an owner."
           ],
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsScriptTypeScope": {
-      "description": "Represents an authorization scope.",
-      "id": "GoogleAppsScriptTypeScope",
-      "properties": {
-        "authorizer": {
-          "description": "Who authorized the scope.",
-          "enum": [
-            "SCOPE_AUTHORIZER_UNSPECIFIED",
-            "AUTHORIZED_BY_DEVELOPER",
-            "AUTHORIZED_BY_END_USER"
-          ],
-          "enumDescriptions": [
-            "Authorizer unspecified.",
-            "Developer authorized scope.",
-            "End user authorized scope."
-          ],
-          "type": "string"
-        },
-        "name": {
-          "description": "The scope's identifying string.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleAppsScriptTypeScopeSet": {
-      "description": "A set of scopes. No duplicates are permitted.",
-      "id": "GoogleAppsScriptTypeScopeSet",
-      "properties": {
-        "values": {
-          "description": "List of scope values in the set.",
-          "items": {
-            "$ref": "GoogleAppsScriptTypeScope"
-          },
-          "type": "array"
         }
       },
       "type": "object"

@@ -15,7 +15,7 @@
   "baseUrl": "https://jobs.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Job Service",
-  "description": "Cloud Job Discovery provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.\n",
+  "description": "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/job-discovery/docs",
   "fullyEncodeReservedExpansion": true,
@@ -181,7 +181,7 @@
           ]
         },
         "list": {
-          "description": "Lists all companies associated with a Cloud Job Discovery account.",
+          "description": "Lists all companies associated with a Cloud Talent Solution account.",
           "flatPath": "v2/companies",
           "httpMethod": "GET",
           "id": "jobs.companies.list",
@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180716",
+  "revision": "20180726",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1608,7 +1608,7 @@
           "description": "Meta information, such as `user_id`, collected from the job searcher or\nother entity conducting the job search, which is used to improve the search\nquality of the service. Users determine identifier values, which must be\nunique and consist."
         },
         "searchTypes": {
-          "description": "Required.\n\nA list of facets that specify the histogram data to be calculated\nagainst and returned.\n\nHistogram response times can be slow, and counts\ncan be approximations. This call may be temporarily or permanently removed\nprior to the production release of Cloud Job Discovery.",
+          "description": "Required.\n\nA list of facets that specify the histogram data to be calculated\nagainst and returned.\n\nHistogram response times can be slow, and counts\ncan be approximations. This call may be temporarily or permanently removed\nprior to the production release of Cloud Talent Solution.",
           "enumDescriptions": [
             "The default value if search type is not specified.",
             "Filter by the company id field.",
@@ -2086,6 +2086,7 @@
             "The is an opportunity for an individual to volunteer, where there is no\nexpectation of compensation for the provided services.",
             "The job requires an employee to work on an as-needed basis with a\nflexible schedule.",
             "The job is offered as a contracted position with the understanding\nthat it is converted into a full-time position at the end of the\ncontract. Jobs of this type are also returned by a search for\nEmploymentType.CONTRACTOR jobs.",
+            "The job involves employing people in remote areas and flying them\ntemporarily to the work site instead of relocating employees and their\nfamilies permanently.",
             "The job does not fit any of the other listed types."
           ],
           "items": {
@@ -2099,6 +2100,7 @@
               "VOLUNTEER",
               "PER_DIEM",
               "CONTRACT_TO_HIRE",
+              "FLY_IN_FLY_OUT",
               "OTHER"
             ],
             "type": "string"
@@ -2381,6 +2383,7 @@
             "The is an opportunity for an individual to volunteer, where there is no\nexpectation of compensation for the provided services.",
             "The job requires an employee to work on an as-needed basis with a\nflexible schedule.",
             "The job is offered as a contracted position with the understanding\nthat it is converted into a full-time position at the end of the\ncontract. Jobs of this type are also returned by a search for\nEmploymentType.CONTRACTOR jobs.",
+            "The job involves employing people in remote areas and flying them\ntemporarily to the work site instead of relocating employees and their\nfamilies permanently.",
             "The job does not fit any of the other listed types."
           ],
           "items": {
@@ -2394,6 +2397,7 @@
               "VOLUNTEER",
               "PER_DIEM",
               "CONTRACT_TO_HIRE",
+              "FLY_IN_FLY_OUT",
               "OTHER"
             ],
             "type": "string"
@@ -2643,6 +2647,7 @@
             "The is an opportunity for an individual to volunteer, where there is no\nexpectation of compensation for the provided services.",
             "The job requires an employee to work on an as-needed basis with a\nflexible schedule.",
             "The job is offered as a contracted position with the understanding\nthat it is converted into a full-time position at the end of the\ncontract. Jobs of this type are also returned by a search for\nEmploymentType.CONTRACTOR jobs.",
+            "The job involves employing people in remote areas and flying them\ntemporarily to the work site instead of relocating employees and their\nfamilies permanently.",
             "The job does not fit any of the other listed types."
           ],
           "items": {
@@ -2656,6 +2661,7 @@
               "VOLUNTEER",
               "PER_DIEM",
               "CONTRACT_TO_HIRE",
+              "FLY_IN_FLY_OUT",
               "OTHER"
             ],
             "type": "string"
@@ -3290,7 +3296,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Job Discovery",
+  "title": "Cloud Talent Solution API",
   "version": "v2",
   "version_module": true
 }

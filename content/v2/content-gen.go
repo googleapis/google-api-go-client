@@ -254,7 +254,7 @@ type Account struct {
 	AdwordsLinks []*AccountAdwordsLink `json:"adwordsLinks,omitempty"`
 
 	// GoogleMyBusinessLink: The GMB account which is linked or in the
-	// process of being linked with the Merchant Center accounnt.
+	// process of being linked with the Merchant Center account.
 	GoogleMyBusinessLink *AccountGoogleMyBusinessLink `json:"googleMyBusinessLink,omitempty"`
 
 	// Id: Merchant Center account ID.
@@ -922,7 +922,8 @@ func (s *AccountsCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
 }
 
 type AccountsCustomBatchRequestEntryLinkRequest struct {
-	// Action: Action to perform for this link.
+	// Action: Action to perform for this link. The "request" action is only
+	// available to select merchants.
 	Action string `json:"action,omitempty"`
 
 	// LinkType: Type of the link between the two accounts.
@@ -1034,7 +1035,8 @@ func (s *AccountsCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
 }
 
 type AccountsLinkRequest struct {
-	// Action: Action to perform for this link.
+	// Action: Action to perform for this link. The "request" action is only
+	// available to select merchants.
 	Action string `json:"action,omitempty"`
 
 	// LinkType: Type of the link between the two accounts.
@@ -2811,8 +2813,8 @@ type Inventory struct {
 	// specified as 'null' if undecided.
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
-	// SellOnGoogleQuantity: The quantity of the product that is reserved
-	// for sell-on-google ads. Supported only for online products.
+	// SellOnGoogleQuantity: The quantity of the product that is available
+	// for selling on Google. Supported only for online products.
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Availability") to
@@ -3050,8 +3052,8 @@ type InventorySetRequest struct {
 	// specified as 'null' if undecided.
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
-	// SellOnGoogleQuantity: The quantity of the product that is reserved
-	// for sell-on-google ads. Supported only for online products.
+	// SellOnGoogleQuantity: The quantity of the product that is available
+	// for selling on Google. Supported only for online products.
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Availability") to
@@ -4017,8 +4019,9 @@ type OrderAddress struct {
 	// RecipientName: Name of the recipient.
 	RecipientName string `json:"recipientName,omitempty"`
 
-	// Region: Top-level administrative subdivision of the country (e.g.
-	// "CA").
+	// Region: Top-level administrative subdivision of the country. For
+	// example, a state like California ("CA") or a province like Quebec
+	// ("QC").
 	Region string `json:"region,omitempty"`
 
 	// StreetAddress: Street-level part of the address.
@@ -5414,10 +5417,7 @@ func (s *OrdersAdvanceTestOrderResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCancelLineItemRequest struct {
-	// Amount: Amount to refund for the cancelation. Optional. If not set,
-	// Google will calculate the default based on the price and tax of the
-	// items involved. The amount must not be larger than the net amount
-	// left on the order.
+	// Amount: Deprecated. Please use amountPretax and amountTax instead.
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: Amount to refund for the cancelation. Optional. If not
@@ -5581,6 +5581,16 @@ func (s *OrdersCancelResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCreateTestOrderRequest struct {
+	// Country: The  CLDR territory code of the country of the test order to
+	// create. Affects the currency and addresses of orders created via
+	// template_name, or the addresses of orders created via
+	// test_order.
+	//
+	// Acceptable values are:
+	// - "US"
+	// - "FR"  Defaults to US.
+	Country string `json:"country,omitempty"`
+
 	// TemplateName: The test order template to use. Specify as an
 	// alternative to testOrder as a shortcut for retrieving a template and
 	// then creating an order using that template.
@@ -5589,7 +5599,7 @@ type OrdersCreateTestOrderRequest struct {
 	// TestOrder: The test order to create.
 	TestOrder *TestOrder `json:"testOrder,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TemplateName") to
+	// ForceSendFields is a list of field names (e.g. "Country") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5597,10 +5607,10 @@ type OrdersCreateTestOrderRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TemplateName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -5785,10 +5795,7 @@ func (s *OrdersCustomBatchRequestEntryCancel) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersCustomBatchRequestEntryCancelLineItem struct {
-	// Amount: Amount to refund for the cancelation. Optional. If not set,
-	// Google will calculate the default based on the price and tax of the
-	// items involved. The amount must not be larger than the net amount
-	// left on the order.
+	// Amount: Deprecated. Please use amountPretax and amountTax instead.
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: Amount to refund for the cancelation. Optional. If not
@@ -5890,7 +5897,7 @@ func (s *OrdersCustomBatchRequestEntryInStoreRefundLineItem) MarshalJSON() ([]by
 }
 
 type OrdersCustomBatchRequestEntryRefund struct {
-	// Amount: The amount that is refunded.
+	// Amount: Deprecated. Please use amountPretax and amountTax instead.
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: The amount that is refunded. Either amount or
@@ -6306,9 +6313,10 @@ type OrdersCustomBatchResponseEntry struct {
 	// Errors: A list of errors defined if and only if the request failed.
 	Errors *Errors `json:"errors,omitempty"`
 
-	// ExecutionStatus: The status of the execution. Only defined if the
-	// method is not get or getByMerchantOrderId and if the request was
-	// successful.
+	// ExecutionStatus: The status of the execution. Only defined if
+	// - the request was successful; and
+	// - the method is not get, getByMerchantOrderId, or one of the test
+	// methods.
 	ExecutionStatus string `json:"executionStatus,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -6539,7 +6547,7 @@ func (s *OrdersListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersRefundRequest struct {
-	// Amount: The amount that is refunded.
+	// Amount: Deprecated. Please use amountPretax and amountTax instead.
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: The amount that is refunded. Either amount or
@@ -7704,7 +7712,7 @@ type PosSale struct {
 	Price *Price `json:"price,omitempty"`
 
 	// Quantity: The relative change of the available quantity. Negative for
-	// items sold.
+	// items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
@@ -7758,7 +7766,7 @@ type PosSaleRequest struct {
 	Price *Price `json:"price,omitempty"`
 
 	// Quantity: The relative change of the available quantity. Negative for
-	// items sold.
+	// items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
@@ -7816,7 +7824,7 @@ type PosSaleResponse struct {
 	Price *Price `json:"price,omitempty"`
 
 	// Quantity: The relative change of the available quantity. Negative for
-	// items sold.
+	// items returned.
 	Quantity int64 `json:"quantity,omitempty,string"`
 
 	// SaleId: A unique ID to group items from the same sale event.
@@ -8229,8 +8237,8 @@ type Product struct {
 	// (see products feed specification).
 	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
 
-	// SellOnGoogleQuantity: The quantity of the product that is reserved
-	// for sell-on-google ads.
+	// SellOnGoogleQuantity: The quantity of the product that is available
+	// for selling on Google. Supported only for online products.
 	SellOnGoogleQuantity int64 `json:"sellOnGoogleQuantity,omitempty,string"`
 
 	// Shipping: Shipping rules.
@@ -18808,6 +18816,13 @@ func (r *OrdersService) Gettestordertemplate(merchantId uint64, templateName str
 	return c
 }
 
+// Country sets the optional parameter "country": The country of the
+// template to retrieve. Defaults to US.
+func (c *OrdersGettestordertemplateCall) Country(country string) *OrdersGettestordertemplateCall {
+	c.urlParams_.Set("country", country)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -18912,6 +18927,11 @@ func (c *OrdersGettestordertemplateCall) Do(opts ...googleapi.CallOption) (*Orde
 	//     "templateName"
 	//   ],
 	//   "parameters": {
+	//     "country": {
+	//       "description": "The country of the template to retrieve. Defaults to US.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "merchantId": {
 	//       "description": "The ID of the account that should manage the order. This cannot be a multi-client account.",
 	//       "format": "uint64",

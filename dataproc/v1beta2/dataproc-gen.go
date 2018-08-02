@@ -212,6 +212,12 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates members with a role.
 type Binding struct {
+	// Condition: Unimplemented. The condition that is associated with this
+	// binding. NOTE: an unsatisfied condition will not allow user access
+	// via current binding. Different bindings, including their conditions,
+	// are examined independently.
+	Condition *Expr `json:"condition,omitempty"`
+
 	// Members: Specifies the identities requesting access for a Cloud
 	// Platform resource. members can have the following values:
 	// allUsers: A special identifier that represents anyone who is  on the
@@ -234,7 +240,7 @@ type Binding struct {
 	// roles/editor, or roles/owner.
 	Role string `json:"role,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Members") to
+	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -242,7 +248,7 @@ type Binding struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Members") to include in
+	// NullFields is a list of field names (e.g. "Condition") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -780,6 +786,56 @@ type EncryptionConfig struct {
 
 func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Expr: Represents an expression text. Example:
+// title: "User account presence"
+// description: "Determines whether the request has a user
+// account"
+// expression: "size(request.user) > 0"
+//
+type Expr struct {
+	// Description: An optional description of the expression. This is a
+	// longer text which describes the expression, e.g. when hovered over it
+	// in a UI.
+	Description string `json:"description,omitempty"`
+
+	// Expression: Textual representation of an expression in Common
+	// Expression Language syntax.The application context of the containing
+	// message determines which well-known feature set of CEL is supported.
+	Expression string `json:"expression,omitempty"`
+
+	// Location: An optional string indicating the location of the
+	// expression for error reporting, e.g. a file name and a position in
+	// the file.
+	Location string `json:"location,omitempty"`
+
+	// Title: An optional title for the expression, i.e. a short string
+	// describing its purpose. This can be used e.g. in UIs which allow to
+	// enter the expression.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Expr) MarshalJSON() ([]byte, error) {
+	type NoMethod Expr
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2158,8 +2214,8 @@ func (s *QueryList) MarshalJSON() ([]byte, error) {
 // RegexValidation: Validation based on regular expressions.
 type RegexValidation struct {
 	// Regexes: Required. RE2 regular expressions used to validate the
-	// parameter's value. The provided value must match the regexes in its
-	// entirety, e.g. substring matches are not enough.
+	// parameter's value. The value must match the regex in its entirety
+	// (substring matches are not sufficient).
 	Regexes []string `json:"regexes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Regexes") to
@@ -2489,54 +2545,68 @@ func (s *SubmitJobRequest) MarshalJSON() ([]byte, error) {
 }
 
 // TemplateParameter: A configurable parameter that replaces one or more
-// fields in the template.
+// fields in the template. Parameterizable fields: - Labels - File uris
+// - Job properties - Job arguments - Script variables - Main class (in
+// HadoopJob and SparkJob) - Zone (in ClusterSelector)
 type TemplateParameter struct {
-	// Description: Optional. User-friendly description of the parameter.
-	// Must not exceed 1024 characters.
+	// Description: Optional. Brief description of the parameter. Must not
+	// exceed 1024 characters.
 	Description string `json:"description,omitempty"`
 
-	// Fields: Required. Paths to all fields that this parameter replaces.
-	// Each field may appear in at most one Parameter's fields list.Field
-	// path syntax:A field path is similar to a FieldMask. For example, a
-	// field path that references the zone field of the template's cluster
-	// selector would look like:placement.clusterSelector.zoneThe only
-	// differences between field paths and standard field masks are
-	// that:
-	// Values in maps can be referenced by key.Example:
+	// Fields: Required. Paths to all fields that the parameter replaces. A
+	// field is allowed to appear in at most one parameter's list of field
+	// paths.A field path is similar in syntax to a
+	// google.protobuf.FieldMask. For example, a field path that references
+	// the zone field of a workflow template's cluster selector would be
+	// specified as <code>placement.clusterSelector.zone</code>.Also, field
+	// paths can reference fields using the following syntax:
+	// Values in maps can be referenced by key.
+	// Examples<br>
+	// labels'key'
 	// placement.clusterSelector.clusterLabels'key'
-	// Jobs in the jobs list can be referenced by step id.Example:
-	// jobs'step-id'.hadoopJob.mainJarFileUri
-	// Items in repeated fields can be referenced by zero-based
-	// index.Example: jobs'step-id'.sparkJob.args0NOTE: Maps and repeated
-	// fields may not be parameterized in their entirety. Only individual
-	// map values and items in repeated fields may be referenced. For
-	// example, the following field paths are invalid: -
-	// placement.clusterSelector.clusterLabels -
-	// jobs'step-id'.sparkJob.argsParameterizable fields:Only certain types
-	// of fields may be parameterized, specifically: - Labels - File uris -
-	// Job properties - Job arguments - Script variables - Main class (in
-	// HadoopJob and SparkJob) - Zone (in ClusterSelector)Examples of
-	// parameterizable fields:Labels:labels'key'
+	//
 	// placement.managedCluster.labels'key'
-	// placement.clusterSelector.clusterLabels'key'
-	// jobs'step-id'.labels'key'File
-	// uris:jobs'step-id'.hadoopJob.mainJarFileUri
-	// jobs'step-id'.hiveJob.queryFileUri
-	// jobs'step-id'.pySparkJob.mainPythonFileUri
-	// jobs'step-id'.hadoopJob.jarFileUris0
-	// jobs'step-id'.hadoopJob.archiveUris0
-	// jobs'step-id'.hadoopJob.fileUris0
-	// jobs'step-id'.pySparkJob.pythonFileUris0Other:jobs'step-id'.hadoopJob.
-	// properties'key' jobs'step-id'.hadoopJob.args0
-	// jobs'step-id'.hiveJob.scriptVariables'key'
-	// jobs'step-id'.hadoopJob.mainJarFileUri placement.clusterSelector.zone
+	// placement.clusterSelector.cluster
+	// Labels'key'
+	// jobsstep-id.labels'key'
+	// Jobs in the jobs list can be referenced by step-id.
+	// Examples:<br>
+	// jobsstep-id.hadoopJob.mainJarFileUri
+	// jobsstep-id.hiveJob
+	// .queryFileUri
+	// jobsstep-id.pySparkJob.mainPythonFileUri
+	// jobsstep-id.had
+	// oopJob.jarFileUris0
+	// jobsstep-id.hadoopJob.archiveUris0
+	// jobsstep-id.had
+	// oopJob.fileUris0
+	// jobsstep-id.pySparkJob.pythonFileUris0
+	// Items in repeated fields can be referenced by a zero-based index.
+	// Example:<br>
+	// jobsstep-id.sparkJob.args0
+	// Other
+	// examples:
+	// jobsstep-id.hadoopJob.properties'key'
+	// jobsstep-id.hadoopJob.
+	// args0
+	// jobsstep-id.hiveJob.scriptVariables'key'
+	// jobsstep-id.hadoopJob.m
+	// ainJarFileUri
+	// placement.clusterSelector.zoneIt may not be possible to parameterize
+	// maps and repeated fields in their entirety since only individual map
+	// values and individual items in repeated fields can be referenced. For
+	// example, the following field paths are
+	// invalid:
+	// placement.clusterSelector.clusterLabels
+	// jobsstep-id.sparkJob.
+	// args
 	Fields []string `json:"fields,omitempty"`
 
-	// Name: Required. User-friendly parameter name. This name is used as a
-	// key when providing a value for this parameter when the template is
-	// instantiated. Must contain only capital letters (A-Z), numbers (0-9),
-	// and underscores (_), and must not start with a number. The maximum
-	// length is 40 characters.
+	// Name: Required. Parameter name. The parameter name is used as the
+	// key, and paired with the parameter value, which are passed to the
+	// template when the template is instantiated. The name must contain
+	// only capital letters (A-Z), numbers (0-9), and underscores (_), and
+	// must not start with a number. The maximum length is 40 characters.
 	Name string `json:"name,omitempty"`
 
 	// Validation: Optional. Validation rules to be applied to this
@@ -2634,7 +2704,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // ValueValidation: Validation based on a list of allowed values.
 type ValueValidation struct {
-	// Values: Required. List of allowed values for this parameter.
+	// Values: Required. List of allowed values for the parameter.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -2825,8 +2895,8 @@ type WorkflowTemplate struct {
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Optional. Template parameters whose values are
-	// substituted into the template. Values for these parameters must be
-	// provided when the template is instantiated.
+	// substituted into the template. Values for parameters must be provided
+	// when the template is instantiated.
 	Parameters []*TemplateParameter `json:"parameters,omitempty"`
 
 	// Placement: Required. WorkflowTemplate scheduling information.

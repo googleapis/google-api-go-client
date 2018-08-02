@@ -15,10 +15,10 @@
   "baseUrl": "https://www.googleapis.com/sql/v1beta3/",
   "batchPath": "batch/sqladmin/v1beta3",
   "canonicalName": "SQL Admin",
-  "description": "Creates and configures Cloud SQL instances, which provide fully-managed MySQL databases.",
+  "description": "Cloud SQL provides the Cloud SQL Admin API, a REST API for administering your instances programmatically.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/WK2amJgLtVn-1ir4wN1RfkSPODA\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/FJoyLLk1UZU_9svJI62d3hhQYlA\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -910,7 +910,6 @@
       }
     }
   },
-  "revision": "20180314",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BackupConfiguration": {
@@ -1974,6 +1973,6 @@
     }
   },
   "servicePath": "sql/v1beta3/",
-  "title": "Cloud SQL Administration API",
+  "title": "Cloud SQL Admin API",
   "version": "v1beta3"
 }

@@ -1167,6 +1167,47 @@ func (s *Documentation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DroppedLabels: A set of (label, value) pairs which were dropped
+// during aggregation, attached to google.api.Distribution.Exemplars in
+// google.api.Distribution values during aggregation.These values are
+// used in combination with the label values that remain on the
+// aggregated Distribution timeseries to construct the full label set
+// for the exemplar values. The resulting full label set may be used to
+// identify the specific task/job/instance (for example) which may be
+// contributing to a long-tail, while allowing the storage savings of
+// only storing aggregated distribution values for a large group.Note
+// that there are no guarantees on ordering of the labels from
+// exemplar-to-exemplar and from distribution-to-distribution in the
+// same stream, and there may be duplicates. It is up to clients to
+// resolve any ambiguities.
+type DroppedLabels struct {
+	// Label: Map from label to its value, for all labels dropped in any
+	// aggregation.
+	Label map[string]string `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DroppedLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod DroppedLabels
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -2320,13 +2361,15 @@ type MetricDescriptor struct {
 	Name string `json:"name,omitempty"`
 
 	// Type: The metric type, including its DNS name prefix. The type is not
-	// URL-encoded. All user-defined custom metric types have the DNS name
-	// custom.googleapis.com. Metric types should use a natural hierarchical
-	// grouping. For
+	// URL-encoded. All user-defined metric types have the DNS name
+	// custom.googleapis.com or external.googleapis.com. Metric types should
+	// use a natural hierarchical grouping. For
 	// example:
 	// "custom.googleapis.com/invoice/paid/amount"
-	// "appengine.google
-	// apis.com/http/server/response_latencies"
+	// "external.googlea
+	// pis.com/prometheus/up"
+	// "appengine.googleapis.com/http/server/response_
+	// latencies"
 	//
 	Type string `json:"type,omitempty"`
 
@@ -3196,6 +3239,44 @@ type SourceContext struct {
 
 func (s *SourceContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpanContext: The context of a span, attached to
+// google.api.Distribution.Exemplars in google.api.Distribution values
+// during aggregation.It contains the name of a span with format:
+// projects/PROJECT_ID/traces/TRACE_ID/spans/SPAN_ID
+type SpanContext struct {
+	// SpanName: The resource name of the span in the following
+	// format:
+	// projects/[PROJECT_ID]/traces/[TRACE_ID]/spans/[SPAN_ID]
+	// TRACE_
+	// ID is a unique identifier for a trace within a project; it is a
+	// 32-character hexadecimal encoding of a 16-byte array.SPAN_ID is a
+	// unique identifier for a span within a trace; it is a 16-character
+	// hexadecimal encoding of an 8-byte array.
+	SpanName string `json:"spanName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SpanName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SpanName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpanContext) MarshalJSON() ([]byte, error) {
+	type NoMethod SpanContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

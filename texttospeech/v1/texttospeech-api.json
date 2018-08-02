@@ -20,7 +20,7 @@
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
   },
-  "id": "texttospeech:v1beta1",
+  "id": "texttospeech:v1",
   "kind": "discovery#restDescription",
   "name": "texttospeech",
   "ownerDomain": "google.com",
@@ -108,12 +108,12 @@
       "methods": {
         "synthesize": {
           "description": "Synthesizes speech synchronously: receive results after all text input\nhas been processed.",
-          "flatPath": "v1beta1/text:synthesize",
+          "flatPath": "v1/text:synthesize",
           "httpMethod": "POST",
           "id": "texttospeech.text.synthesize",
           "parameterOrder": [],
           "parameters": {},
-          "path": "v1beta1/text:synthesize",
+          "path": "v1/text:synthesize",
           "request": {
             "$ref": "SynthesizeSpeechRequest"
           },
@@ -130,7 +130,7 @@
       "methods": {
         "list": {
           "description": "Returns a list of Voice supported for synthesis.",
-          "flatPath": "v1beta1/voices",
+          "flatPath": "v1/voices",
           "httpMethod": "GET",
           "id": "texttospeech.voices.list",
           "parameterOrder": [],
@@ -141,7 +141,7 @@
               "type": "string"
             }
           },
-          "path": "v1beta1/voices",
+          "path": "v1/voices",
           "response": {
             "$ref": "ListVoicesResponse"
           },
@@ -174,13 +174,6 @@
             "Opus encoded audio wrapped in an ogg container. The result will be a\nfile which can be played natively on Android, and in browsers (at least\nChrome and Firefox). The quality of the encoding is considerably higher\nthan MP3 while using approximately the same bitrate."
           ],
           "type": "string"
-        },
-        "effectsProfileId": {
-          "description": "An identifier which selects 'audio effects' profiles that are applied on\n(post synthesized) text to speech.\nEffects are applied on top of each other in the order they are given.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         },
         "pitch": {
           "description": "Optional speaking pitch, in the range [-20.0, 20.0]. 20 means increase 20\nsemitones from the original pitch. -20 means decrease 20 semitones from the\noriginal pitch.",
@@ -338,6 +331,6 @@
   },
   "servicePath": "",
   "title": "Cloud Text-to-Speech API",
-  "version": "v1beta1",
+  "version": "v1",
   "version_module": true
 }

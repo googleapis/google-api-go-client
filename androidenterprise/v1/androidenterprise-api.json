@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/AFFEHUmDMrEYdaOxnZWUFow58ns\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/roOgUwR1ccx3Sqc93zbrjsOcnYQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -378,26 +378,6 @@
             "https://www.googleapis.com/auth/androidenterprise"
           ]
         },
-        "delete": {
-          "description": "Deletes the binding between the EMM and enterprise. This is now deprecated. Use this method only to unenroll customers that were previously enrolled with the insert call, then enroll them again with the enroll call.",
-          "httpMethod": "DELETE",
-          "id": "androidenterprise.enterprises.delete",
-          "parameterOrder": [
-            "enterpriseId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}",
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
         "enroll": {
           "description": "Enrolls an enterprise with the calling EMM.",
           "httpMethod": "POST",
@@ -543,32 +523,6 @@
           "path": "enterprises/{enterpriseId}/storeLayout",
           "response": {
             "$ref": "StoreLayout"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "insert": {
-          "description": "Establishes the binding between the EMM and an enterprise. This is now deprecated; use enroll instead.",
-          "httpMethod": "POST",
-          "id": "androidenterprise.enterprises.insert",
-          "parameterOrder": [
-            "token"
-          ],
-          "parameters": {
-            "token": {
-              "description": "The token provided by the enterprise to register the EMM.",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises",
-          "request": {
-            "$ref": "Enterprise"
-          },
-          "response": {
-            "$ref": "Enterprise"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -2804,7 +2758,6 @@
       }
     }
   },
-  "revision": "20180502",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3152,11 +3105,6 @@
           "type": "string"
         },
         "primaryDomain": {
-          "annotations": {
-            "required": [
-              "androidenterprise.enterprises.insert"
-            ]
-          },
           "description": "The enterprise's primary domain, such as \"example.com\".",
           "type": "string"
         }

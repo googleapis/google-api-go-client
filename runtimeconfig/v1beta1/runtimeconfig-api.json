@@ -798,13 +798,17 @@
       }
     }
   },
-  "revision": "20180710",
+  "revision": "20180730",
   "rootUrl": "https://runtimeconfig.googleapis.com/",
   "schemas": {
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
       "properties": {
+        "condition": {
+          "$ref": "Expr",
+          "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+        },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
@@ -848,6 +852,29 @@
         "cardinality": {
           "$ref": "Cardinality",
           "description": "The cardinality of the `EndCondition`."
+        }
+      },
+      "type": "object"
+    },
+    "Expr": {
+      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "id": "Expr",
+      "properties": {
+        "description": {
+          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "type": "string"
+        },
+        "expression": {
+          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "type": "string"
+        },
+        "location": {
+          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "type": "string"
+        },
+        "title": {
+          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1086,7 +1113,7 @@
       "type": "object"
     },
     "Waiter": {
-      "description": "A Waiter resource waits for some end condition within a RuntimeConfig resource\nto be met before it returns. For example, assume you have a distributed\nsystem where each node writes to a Variable resource indidicating the node's\nreadiness as part of the startup process.\n\nYou then configure a Waiter resource with the success condition set to wait\nuntil some number of nodes have checked in. Afterwards, your application\nruns some arbitrary code after the condition has been met and the waiter\nreturns successfully.\n\nOnce created, a Waiter resource is immutable.\n\nTo learn more about using waiters, read the\n[Creating a Waiter](/deployment-manager/runtime-configurator/creating-a-waiter)\ndocumentation.",
+      "description": "A Waiter resource waits for some end condition within a RuntimeConfig resource\nto be met before it returns. For example, assume you have a distributed\nsystem where each node writes to a Variable resource indicating the node's\nreadiness as part of the startup process.\n\nYou then configure a Waiter resource with the success condition set to wait\nuntil some number of nodes have checked in. Afterwards, your application\nruns some arbitrary code after the condition has been met and the waiter\nreturns successfully.\n\nOnce created, a Waiter resource is immutable.\n\nTo learn more about using waiters, read the\n[Creating a Waiter](/deployment-manager/runtime-configurator/creating-a-waiter)\ndocumentation.",
       "id": "Waiter",
       "properties": {
         "createTime": {

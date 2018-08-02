@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180719",
+  "revision": "20180730",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2501,7 +2501,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n \"caller_id\": \"+18558363987\"\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is not supported\nfor standard tier agents. When the telephony gateway is used with a\nstandard tier agent the `caller_id` field above will have a value of\n`REDACTED_IN_STANDARD_TIER_AGENT`.",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular for the Telephony Gateway this field has the form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
           "type": "object"
         },
         "source": {
@@ -3760,7 +3760,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "Optional. This field is set to the value of `QueryParameters.payload` field\npassed in the request.\n\nThis field is used for the telephony gateway. It should have a\nstructure similar to this JSON message:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be in\n[E.164 format](https://en.wikipedia.org/wiki/E.164) and is only supported\nfor Enterprise Edition and not for Standard Edition agents. When the",
+          "description": "Optional. This field is set to the value of the `QueryParameters.payload`\nfield passed in the request. Some integrations that query a Dialogflow\nagent may provide additional information in the payload.\n\nIn particular for the Telephony Gateway this field has the form:\n\u003cpre\u003e{\n \"telephony\": {\n   \"caller_id\": \"+18558363987\"\n }\n}\u003c/pre\u003e\nNote: The caller ID field (`caller_id`) will be redacted for Standard\nEdition agents and populated with the caller ID in [E.164\nformat](https://en.wikipedia.org/wiki/E.164) for Enterprise Edition agents.",
           "type": "object"
         },
         "source": {
@@ -3963,6 +3963,53 @@
         },
         "source": {
           "description": "Optional. This value is passed directly to `QueryResult.webhook_source`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse": {
+      "description": "Response message for KnowledgeService.BatchUpdateQuestionAnswerEntries.",
+      "id": "GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse",
+      "properties": {
+        "questionAnswerEntries": {
+          "description": "The list of question-answer-entries.",
+          "items": {
+            "$ref": "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry": {
+      "description": "A QuestionAnswerEntry resource.",
+      "id": "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry",
+      "properties": {
+        "answer": {
+          "description": "Output only. Answer text.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the question-answer-entry.",
+          "type": "string"
+        },
+        "question": {
+          "description": "Output only. The question for the answer.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Required. The state of the question-answer-entry.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ENABLED",
+            "DISABLED"
+          ],
+          "enumDescriptions": [
+            "State unspecified.",
+            "This QuestionAnswerEntry is enabled.",
+            "This QuestionAnswerEntry is disabled."
+          ],
           "type": "string"
         }
       },

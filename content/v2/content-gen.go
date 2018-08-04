@@ -8039,7 +8039,7 @@ type Product struct {
 	// AgeGroup: Target age group of the item.
 	AgeGroup string `json:"ageGroup,omitempty"`
 
-	// Aspects: Specifies the intended aspects for the product.
+	// Aspects: Deprecated. Do not use.
 	Aspects []*ProductAspect `json:"aspects,omitempty"`
 
 	// Availability: Availability status of the item.
@@ -8269,6 +8269,9 @@ type Product struct {
 
 	// Sizes: Size of the item.
 	Sizes []string `json:"sizes,omitempty"`
+
+	// Source: The source of the offer, i.e., how the offer was created.
+	Source string `json:"source,omitempty"`
 
 	// TargetCountry: The CLDR territory code for the item.
 	TargetCountry string `json:"targetCountry,omitempty"`

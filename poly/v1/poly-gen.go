@@ -179,6 +179,9 @@ type Asset struct {
 	// immutable; the author of an asset may change them post-publication.
 	PresentationParams *PresentationParams `json:"presentationParams,omitempty"`
 
+	// RemixInfo: The remix info for the asset.
+	RemixInfo *RemixInfo `json:"remixInfo,omitempty"`
+
 	// Thumbnail: The thumbnail image for the asset.
 	Thumbnail *File `json:"thumbnail,omitempty"`
 
@@ -856,6 +859,38 @@ func (s *Quaternion) UnmarshalJSON(data []byte) error {
 	s.Y = float64(s1.Y)
 	s.Z = float64(s1.Z)
 	return nil
+}
+
+// RemixInfo: Info about the sources of this asset (i.e. assets that
+// were remixed to
+// create this asset).
+type RemixInfo struct {
+	// SourceAsset: Resource ids for the sources of this remix, of the
+	// form:
+	// `assets/{ASSET_ID}`
+	SourceAsset []string `json:"sourceAsset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceAsset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceAsset") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemixInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RemixInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // StartAssetImportResponse: A response message from a request to

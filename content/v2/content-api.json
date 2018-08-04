@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/r_jaVMPAg-E4yrrwFOgBuxGRyq4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Oy6wSDUKf_-lZLo9jaU12V4cafc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -8245,7 +8245,7 @@
           "type": "string"
         },
         "aspects": {
-          "description": "Specifies the intended aspects for the product.",
+          "description": "Deprecated. Do not use.",
           "items": {
             "$ref": "ProductAspect"
           },
@@ -8540,6 +8540,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "source": {
+          "description": "The source of the offer, i.e., how the offer was created.",
+          "type": "string"
         },
         "targetCountry": {
           "annotations": {

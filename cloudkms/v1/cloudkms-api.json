@@ -358,7 +358,7 @@
                 "cryptoKeys": {
                   "methods": {
                     "create": {
-                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose is required.",
+                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose and CryptoKey.version_template.algorithm are\nrequired.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.create",
@@ -391,7 +391,7 @@
                       ]
                     },
                     "decrypt": {
-                      "description": "Decrypts data that was protected by Encrypt.",
+                      "description": "Decrypts data that was protected by Encrypt. The CryptoKey.purpose\nmust be ENCRYPT_DECRYPT.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:decrypt",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.decrypt",
@@ -419,7 +419,7 @@
                       ]
                     },
                     "encrypt": {
-                      "description": "Encrypts data, so that it can only be recovered by a call to Decrypt.",
+                      "description": "Encrypts data, so that it can only be recovered by a call to Decrypt.\nThe CryptoKey.purpose must be\nENCRYPT_DECRYPT.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:encrypt",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.encrypt",
@@ -623,7 +623,7 @@
                       ]
                     },
                     "updatePrimaryVersion": {
-                      "description": "Update the version of a CryptoKey that will be used in Encrypt.",
+                      "description": "Update the version of a CryptoKey that will be used in Encrypt.\n\nReturns an error if called on an asymmetric key.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys/{cryptoKeysId}:updatePrimaryVersion",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.updatePrimaryVersion",
@@ -844,7 +844,7 @@
       }
     }
   },
-  "revision": "20180702",
+  "revision": "20180731",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -899,6 +899,10 @@
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
       "properties": {
+        "condition": {
+          "$ref": "Expr",
+          "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+        },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
@@ -934,16 +938,16 @@
           "type": "string"
         },
         "nextRotationTime": {
-          "description": "At next_rotation_time, the Key Management Service will automatically:\n\n1. Create a new version of this CryptoKey.\n2. Mark the new version as primary.\n\nKey rotations performed manually via\nCreateCryptoKeyVersion and\nUpdateCryptoKeyPrimaryVersion\ndo not affect next_rotation_time.",
+          "description": "At next_rotation_time, the Key Management Service will automatically:\n\n1. Create a new version of this CryptoKey.\n2. Mark the new version as primary.\n\nKey rotations performed manually via\nCreateCryptoKeyVersion and\nUpdateCryptoKeyPrimaryVersion\ndo not affect next_rotation_time.\n\nKeys with purpose\nENCRYPT_DECRYPT support automatic\nrotation. For other keys, this field must be omitted.",
           "format": "google-datetime",
           "type": "string"
         },
         "primary": {
           "$ref": "CryptoKeyVersion",
-          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.\n"
+          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.\n\nAll keys with purpose\nENCRYPT_DECRYPT have a primary. For\nother keys, this field will be omitted."
         },
         "purpose": {
-          "description": "The immutable purpose of this CryptoKey. Currently, the only acceptable\npurpose is ENCRYPT_DECRYPT.",
+          "description": "The immutable purpose of this CryptoKey.",
           "enum": [
             "CRYPTO_KEY_PURPOSE_UNSPECIFIED",
             "ENCRYPT_DECRYPT"
@@ -955,7 +959,7 @@
           "type": "string"
         },
         "rotationPeriod": {
-          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.",
+          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.\n\nKeys with purpose\nENCRYPT_DECRYPT support automatic\nrotation. For other keys, this field must be omitted.",
           "format": "google-duration",
           "type": "string"
         }
@@ -963,7 +967,7 @@
       "type": "object"
     },
     "CryptoKeyVersion": {
-      "description": "A CryptoKeyVersion represents an individual cryptographic key, and the\nassociated key material.\n\nIt can be used for cryptographic operations either directly, or via its\nparent CryptoKey, in which case the server will choose the appropriate\nversion for the operation.\n\nFor security reasons, the raw cryptographic key material represented by a\nCryptoKeyVersion can never be viewed or exported. It can only be used to\nencrypt or decrypt data when an authorized user or application invokes Cloud\nKMS.",
+      "description": "A CryptoKeyVersion represents an individual cryptographic key, and the\nassociated key material.\n\nAn ENABLED version can be\nused for cryptographic operations.\n\nFor security reasons, the raw cryptographic key material represented by a\nCryptoKeyVersion can never be viewed or exported. It can only be used to\nencrypt, decrypt, or sign data when an authorized user or application invokes\nCloud KMS.",
       "id": "CryptoKeyVersion",
       "properties": {
         "createTime": {
@@ -996,7 +1000,7 @@
           ],
           "enumDescriptions": [
             "Not specified.",
-            "This version may be used in Encrypt and\nDecrypt requests.",
+            "This version may be used for cryptographic operations.",
             "This version may not be used, but the key material is still available,\nand the version can be placed back into the ENABLED state.",
             "This version is destroyed, and the key material is no longer stored.\nA version may not leave this state once entered.",
             "This version is scheduled for destruction, and will be destroyed soon.\nCall\nRestoreCryptoKeyVersion\nto put it back into the DISABLED state."
@@ -1046,12 +1050,12 @@
       "id": "EncryptRequest",
       "properties": {
         "additionalAuthenticatedData": {
-          "description": "Optional data that, if specified, must also be provided during decryption\nthrough DecryptRequest.additional_authenticated_data.  Must be no\nlarger than 64KiB.",
+          "description": "Optional data that, if specified, must also be provided during decryption\nthrough DecryptRequest.additional_authenticated_data.\n\nThe maximum size depends on the key version's\nprotection_level. For\nSOFTWARE keys, the AAD must be no larger than\n64KiB. For HSM keys, the combined length of the\nplaintext and additional_authenticated_data fields must be no larger than\n8KiB.",
           "format": "byte",
           "type": "string"
         },
         "plaintext": {
-          "description": "Required. The data to encrypt. Must be no larger than 64KiB.",
+          "description": "Required. The data to encrypt. Must be no larger than 64KiB.\n\nThe maximum size depends on the key version's\nprotection_level. For\nSOFTWARE keys, the plaintext must be no larger\nthan 64KiB. For HSM keys, the combined length of the\nplaintext and additional_authenticated_data fields must be no larger than\n8KiB.",
           "format": "byte",
           "type": "string"
         }
@@ -1069,6 +1073,29 @@
         },
         "name": {
           "description": "The resource name of the CryptoKeyVersion used in encryption.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Expr": {
+      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "id": "Expr",
+      "properties": {
+        "description": {
+          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "type": "string"
+        },
+        "expression": {
+          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "type": "string"
+        },
+        "location": {
+          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "type": "string"
+        },
+        "title": {
+          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },

@@ -123,9 +123,8 @@ type GenerateAccessTokenRequest struct {
 	// hour.
 	Lifetime string `json:"lifetime,omitempty"`
 
-	// Scope: Code to identify ApiScope (OAuth scope to be precise) to be
-	// included in the
-	// OAuth token.
+	// Scope: Code to identify the scopes to be included in the OAuth 2.0
+	// access token.
 	// See https://developers.google.com/identity/protocols/googlescopes for
 	// more
 	// information.
@@ -160,6 +159,7 @@ type GenerateAccessTokenResponse struct {
 	AccessToken string `json:"accessToken,omitempty"`
 
 	// ExpireTime: Token expiration time.
+	// The expiration time is always set.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

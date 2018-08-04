@@ -981,7 +981,7 @@
       }
     }
   },
-  "revision": "20180709",
+  "revision": "20180727",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1023,6 +1023,34 @@
         "trainingStep": {
           "description": "The global training step for this metric.",
           "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__AcceleratorConfig": {
+      "description": "Represents a hardware accelerator request config.",
+      "id": "GoogleCloudMlV1__AcceleratorConfig",
+      "properties": {
+        "count": {
+          "description": "The number of accelerators to attach to each machine running the job.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The available types of accelerators.",
+          "enum": [
+            "ACCELERATOR_TYPE_UNSPECIFIED",
+            "NVIDIA_TESLA_K80",
+            "NVIDIA_TESLA_P100",
+            "NVIDIA_TESLA_V100"
+          ],
+          "enumDescriptions": [
+            "Unspecified accelerator type. Default to no GPU.",
+            "Nvidia tesla k80 GPU.",
+            "Nvidia tesla P100 GPU.",
+            "Nvidia tesla V100 GPU. Not supported for batch prediction."
+          ],
           "type": "string"
         }
       },
@@ -1588,6 +1616,10 @@
       "description": "Represents input parameters for a prediction job.",
       "id": "GoogleCloudMlV1__PredictionInput",
       "properties": {
+        "accelerator": {
+          "$ref": "GoogleCloudMlV1__AcceleratorConfig",
+          "description": "Optional. The type and number of accelerators to be attached to each\nmachine running the job."
+        },
         "batchSize": {
           "description": "Optional. Number of records per batch, defaults to 64.\nThe service will buffer batch_size number of records in memory before\ninvoking one Tensorflow prediction call internally. So take the record\nsize and memory available into consideration when setting this parameter.",
           "format": "int64",
@@ -1958,6 +1990,10 @@
       "description": "Associates `members` with a `role`.",
       "id": "GoogleIamV1__Binding",
       "properties": {
+        "condition": {
+          "$ref": "GoogleType__Expr",
+          "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+        },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
@@ -2128,6 +2164,29 @@
         },
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleType__Expr": {
+      "description": "Represents an expression text. Example:\n\n    title: \"User account presence\"\n    description: \"Determines whether the request has a user account\"\n    expression: \"size(request.user) \u003e 0\"",
+      "id": "GoogleType__Expr",
+      "properties": {
+        "description": {
+          "description": "An optional description of the expression. This is a longer text which\ndescribes the expression, e.g. when hovered over it in a UI.",
+          "type": "string"
+        },
+        "expression": {
+          "description": "Textual representation of an expression in\nCommon Expression Language syntax.\n\nThe application context of the containing message determines which\nwell-known feature set of CEL is supported.",
+          "type": "string"
+        },
+        "location": {
+          "description": "An optional string indicating the location of the expression for error\nreporting, e.g. a file name and a position in the file.",
+          "type": "string"
+        },
+        "title": {
+          "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
           "type": "string"
         }
       },

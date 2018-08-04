@@ -845,9 +845,9 @@ type GoogleAppsScriptTypeProcess struct {
 	//   "TRIGGER" - The process was started from an event-based trigger.
 	//   "WEBAPP" - The process was started from a web app entry point.
 	//   "EDITOR" - The process was started using the Apps Script IDE.
-	//   "SIMPLE_TRIGGER" - The process was started from a GSuite simple
+	//   "SIMPLE_TRIGGER" - The process was started from a G Suite simple
 	// trigger.
-	//   "MENU" - The process was started from a GSuite menu item.
+	//   "MENU" - The process was started from a G Suite menu item.
 	ProcessType string `json:"processType,omitempty"`
 
 	// ProjectName: Name of the script being executed.

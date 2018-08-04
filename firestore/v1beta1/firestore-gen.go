@@ -1450,6 +1450,66 @@ func (s *GoogleFirestoreAdminV1beta1IndexField) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1beta1IndexOperationMetadata: Metadata for index
+// operations. This metadata populates
+// the metadata field of google.longrunning.Operation.
+type GoogleFirestoreAdminV1beta1IndexOperationMetadata struct {
+	// Cancelled: True if the [google.longrunning.Operation] was cancelled.
+	// If the
+	// cancellation is in progress, cancelled will be true
+	// but
+	// google.longrunning.Operation.done will be false.
+	Cancelled bool `json:"cancelled,omitempty"`
+
+	// DocumentProgress: Progress of the existing operation, measured in
+	// number of documents.
+	DocumentProgress *GoogleFirestoreAdminV1beta1Progress `json:"documentProgress,omitempty"`
+
+	// EndTime: The time the operation ended, either successfully or
+	// otherwise. Unset if
+	// the operation is still active.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Index: The index resource that this operation is acting on. For
+	// example:
+	// `projects/{project_id}/databases/{database_id}/indexes/{index
+	// _id}`
+	Index string `json:"index,omitempty"`
+
+	// OperationType: The type of index operation.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - Unspecified. Never set by server.
+	//   "CREATING_INDEX" - The operation is creating the index. Initiated
+	// by a `CreateIndex` call.
+	OperationType string `json:"operationType,omitempty"`
+
+	// StartTime: The time that work began on the operation.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cancelled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cancelled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta1IndexOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta1IndexOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1beta1ListIndexesResponse: The response for
 // FirestoreAdmin.ListIndexes.
 type GoogleFirestoreAdminV1beta1ListIndexesResponse struct {
@@ -1523,305 +1583,6 @@ type GoogleFirestoreAdminV1beta1Progress struct {
 
 func (s *GoogleFirestoreAdminV1beta1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta1Progress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1beta2FieldOperationMetadata: Metadata for
-// google.longrunning.Operation results from
-// FirestoreAdmin.UpdateField.
-type GoogleFirestoreAdminV1beta2FieldOperationMetadata struct {
-	// BytesProgress: The progress, in bytes, of this operation.
-	BytesProgress *GoogleFirestoreAdminV1beta2Progress `json:"bytesProgress,omitempty"`
-
-	// DocumentProgress: The progress, in documents, of this operation.
-	DocumentProgress *GoogleFirestoreAdminV1beta2Progress `json:"documentProgress,omitempty"`
-
-	// EndTime: The time this operation completed. Will be unset if
-	// operation still in
-	// progress.
-	EndTime string `json:"endTime,omitempty"`
-
-	// Field: The field resource that this operation is acting on. For
-	// example:
-	// `projects/{project_id}/databases/{database_id}/collectionGrou
-	// ps/{collection_id}/fields/{field_path}`
-	Field string `json:"field,omitempty"`
-
-	// IndexConfigDeltas: A list of IndexConfigDelta, which describe the
-	// intent of this
-	// operation.
-	IndexConfigDeltas []*GoogleFirestoreAdminV1beta2IndexConfigDelta `json:"indexConfigDeltas,omitempty"`
-
-	// StartTime: The time this operation started.
-	StartTime string `json:"startTime,omitempty"`
-
-	// State: The state of the operation.
-	//
-	// Possible values:
-	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
-	//   "INITIALIZING" - Request is being prepared for processing.
-	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called
-	// google.longrunning.Operations.CancelOperation on the operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
-	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called
-	// google.longrunning.Operations.CancelOperation.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BytesProgress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BytesProgress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1beta2FieldOperationMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1beta2FieldOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1beta2Index: Cloud Firestore indexes enable
-// simple and complex queries against
-// documents in a database.
-type GoogleFirestoreAdminV1beta2Index struct {
-	// Fields: The fields supported by this index.
-	//
-	// For composite indexes, this is always 2 or more fields.
-	// The last field entry is always for the field path `__name__`. If,
-	// on
-	// creation, `__name__` was not specified as the last field, it will be
-	// added
-	// automatically with the same direction as that of the last field
-	// defined. If
-	// the final field in a composite index is not directional, the
-	// `__name__`
-	// will be ordered ASCENDING (unless explicitly specified).
-	//
-	// For single field indexes, this will always be exactly one entry with
-	// a
-	// field path equal to the field path of the associated field.
-	Fields []*GoogleFirestoreAdminV1beta2IndexField `json:"fields,omitempty"`
-
-	// Name: Output only.
-	// A server defined name for this index.
-	// The form of this name for composite indexes will
-	// be:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{c
-	// ollection_id}/indexes/{composite_index_id}`
-	// For single field indexes, this field will be empty.
-	Name string `json:"name,omitempty"`
-
-	// QueryScope: Indexes with a collection query scope specified allow
-	// queries
-	// against a collection that is the child of a specific document,
-	// specified at
-	// query time, and that has the same collection id.
-	//
-	// Indexes with a collection group query scope specified allow queries
-	// against
-	// all collections descended from a specific document, specified at
-	// query
-	// time, and that have the same collection id as this index.
-	//
-	// Possible values:
-	//   "QUERY_SCOPE_UNSPECIFIED" - The query scope is unspecified. Not a
-	// valid option.
-	//   "COLLECTION" - Indexes with a collection query scope specified
-	// allow queries
-	// against a collection that is the child of a specific document,
-	// specified
-	// at query time, and that has the collection id specified by the index.
-	QueryScope string `json:"queryScope,omitempty"`
-
-	// State: Output only.
-	// The serving state of the index.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state is unspecified.
-	//   "CREATING" - The index is being created.
-	// There is an active long-running operation for the index.
-	// The index is updated when writing a document.
-	// Some index data may exist.
-	//   "READY" - The index is ready to be used.
-	// The index is updated when writing a document.
-	// The index is fully populated from all stored documents it applies to.
-	//   "NEEDS_REPAIR" - The index was being created, but something went
-	// wrong.
-	// There is no active long-running operation for the index,
-	// and the most recently finished long-running operation failed.
-	// The index is not updated when writing a document.
-	// Some index data may exist.
-	// Use the google.longrunning.Operations API to determine why the
-	// operation
-	// that last attempted to create this index failed, then re-create
-	// the
-	// index.
-	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Fields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1beta2Index) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1beta2Index
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1beta2IndexConfigDelta: Information about an
-// index configuration change.
-type GoogleFirestoreAdminV1beta2IndexConfigDelta struct {
-	// ChangeType: Specifies how the index is changing.
-	//
-	// Possible values:
-	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or
-	// known.
-	//   "ADD" - The single field index is being added.
-	//   "REMOVE" - The single field index is being removed.
-	ChangeType string `json:"changeType,omitempty"`
-
-	// Index: The index being changed.
-	Index *GoogleFirestoreAdminV1beta2Index `json:"index,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ChangeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChangeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1beta2IndexConfigDelta) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1beta2IndexConfigDelta
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1beta2IndexField: A field in an index.
-// The field_path describes which field is indexed, the value_mode
-// describes
-// how the field value is indexed.
-type GoogleFirestoreAdminV1beta2IndexField struct {
-	// ArrayConfig: Indicates that this field supports operations on
-	// `array_value`s.
-	//
-	// Possible values:
-	//   "ARRAY_CONFIG_UNSPECIFIED" - The index does not support additional
-	// array queries.
-	//   "CONTAINS" - The index supports array containment queries.
-	ArrayConfig string `json:"arrayConfig,omitempty"`
-
-	// FieldPath: Can be __name__.
-	// For single field indexes, this must match the name of the field or
-	// may
-	// be omitted.
-	FieldPath string `json:"fieldPath,omitempty"`
-
-	// Order: Indicates that this field supports ordering by the specified
-	// order or
-	// comparing using =, <, <=, >, >=.
-	//
-	// Possible values:
-	//   "ORDER_UNSPECIFIED" - The ordering is unspecified. Not a valid
-	// option.
-	//   "ASCENDING" - The field is ordered by ascending field value.
-	//   "DESCENDING" - The field is ordered by descending field value.
-	Order string `json:"order,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ArrayConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArrayConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1beta2IndexField) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1beta2IndexField
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleFirestoreAdminV1beta2Progress: Describes the progress of the
-// operation.
-// Unit of work is generic and must be interpreted based on where
-// Progress
-// is used.
-type GoogleFirestoreAdminV1beta2Progress struct {
-	// CompletedWork: The amount of work completed.
-	CompletedWork int64 `json:"completedWork,omitempty,string"`
-
-	// EstimatedWork: The amount of work estimated.
-	EstimatedWork int64 `json:"estimatedWork,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletedWork") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleFirestoreAdminV1beta2Progress) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleFirestoreAdminV1beta2Progress
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

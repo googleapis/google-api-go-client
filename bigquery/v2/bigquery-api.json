@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/3Atyu5ZACYC6Eyn9KxAhjyNVRb0\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/iYDb3HbdXa39hhjIqNB_EXQ9qus\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -1000,6 +1000,22 @@
   },
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
+    "BigQueryModelTraining": {
+      "id": "BigQueryModelTraining",
+      "properties": {
+        "currentIteration": {
+          "description": "[Output-only, Beta] Index of current ML training iteration. Updated during create model query job to show job progress.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "expectedTotalIterations": {
+          "description": "[Output-only, Beta] Expected number of iterations for the create model query job specified as num_iterations in the input query. The actual total number of iterations may be less than this number due to early stop.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "BigtableColumn": {
       "id": "BigtableColumn",
       "properties": {
@@ -1084,7 +1100,7 @@
       "id": "Clustering",
       "properties": {
         "fields": {
-          "description": "[Repeated] One or more fields on which data should be clustered. Only top-level, non-repeated, simple-type fields are supported. The order of the fields will determine how clusters will be generated, so it is important.",
+          "description": "[Repeated] One or more fields on which data should be clustered. Only top-level, non-repeated, simple-type fields are supported. When you cluster a table using multiple columns, the order of columns you specify is important. The order of the specified columns determines the sort order of the data.",
           "items": {
             "type": "string"
           },
@@ -1550,7 +1566,7 @@
           "type": "boolean"
         },
         "maxBadRecords": {
-          "description": "[Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Bigtable, Google Cloud Datastore backups and Avro formats.",
+          "description": "[Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. This is only valid for CSV, JSON, and Google Sheets. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Bigtable, Google Cloud Datastore backups and Avro formats.",
           "format": "int32",
           "type": "integer"
         },
@@ -1655,7 +1671,7 @@
       "id": "GoogleSheetsOptions",
       "properties": {
         "range": {
-          "description": "[Experimental] [Optional] Range of a sheet to query from. Only used when non-empty. Typical format: !:",
+          "description": "[Beta] [Optional] Range of a sheet to query from. Only used when non-empty. Typical format: !:",
           "type": "string"
         },
         "skipLeadingRows": {
@@ -1848,7 +1864,7 @@
         },
         "clustering": {
           "$ref": "Clustering",
-          "description": "[Experimental] Clustering specification for the destination table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
+          "description": "[Beta] Clustering specification for the destination table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
         },
         "createDisposition": {
           "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.",
@@ -1864,7 +1880,7 @@
         },
         "destinationTableProperties": {
           "$ref": "DestinationTableProperties",
-          "description": "[Experimental] [Optional] Properties with which to create the destination table if it is new."
+          "description": "[Beta] [Optional] Properties with which to create the destination table if it is new."
         },
         "encoding": {
           "description": "[Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties.",
@@ -1879,7 +1895,7 @@
           "type": "boolean"
         },
         "maxBadRecords": {
-          "description": "[Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. The default value is 0, which requires that all records are valid.",
+          "description": "[Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an invalid error is returned in the job result. This is only valid for CSV and JSON. The default value is 0, which requires that all records are valid.",
           "format": "int32",
           "type": "integer"
         },
@@ -1956,7 +1972,7 @@
         },
         "clustering": {
           "$ref": "Clustering",
-          "description": "[Experimental] Clustering specification for the destination table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
+          "description": "[Beta] Clustering specification for the destination table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
         },
         "createDisposition": {
           "description": "[Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion.",
@@ -2166,7 +2182,7 @@
           "type": "string"
         },
         "location": {
-          "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
+          "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
           "type": "string"
         },
         "projectId": {
@@ -2185,7 +2201,7 @@
       "id": "JobStatistics",
       "properties": {
         "completionRatio": {
-          "description": "[Experimental] [Output-only] Job progress (0.0 -\u003e 1.0) for LOAD and EXTRACT jobs.",
+          "description": "[TrustedTester] [Output-only] Job progress (0.0 -\u003e 1.0) for LOAD and EXTRACT jobs.",
           "format": "double",
           "type": "number"
         },
@@ -2210,6 +2226,13 @@
         "query": {
           "$ref": "JobStatistics2",
           "description": "[Output-only] Statistics for a query job."
+        },
+        "quotaDeferments": {
+          "description": "[Output-only] Quotas which delayed this job's start time.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "startTime": {
           "description": "[Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE.",
@@ -2237,25 +2260,29 @@
           "type": "boolean"
         },
         "ddlOperationPerformed": {
-          "description": "[Output-only, Experimental] The DDL operation performed, possibly dependent on the pre-existence of the DDL target. Possible values (new values might be added in the future): \"CREATE\": The query created the DDL target. \"SKIP\": No-op. Example cases: the query is CREATE TABLE IF NOT EXISTS while the table already exists, or the query is DROP TABLE IF EXISTS while the table does not exist. \"REPLACE\": The query replaced the DDL target. Example case: the query is CREATE OR REPLACE TABLE, and the table already exists. \"DROP\": The query deleted the DDL target.",
+          "description": "[Output-only, Beta] The DDL operation performed, possibly dependent on the pre-existence of the DDL target. Possible values (new values might be added in the future): \"CREATE\": The query created the DDL target. \"SKIP\": No-op. Example cases: the query is CREATE TABLE IF NOT EXISTS while the table already exists, or the query is DROP TABLE IF EXISTS while the table does not exist. \"REPLACE\": The query replaced the DDL target. Example case: the query is CREATE OR REPLACE TABLE, and the table already exists. \"DROP\": The query deleted the DDL target.",
           "type": "string"
         },
         "ddlTargetTable": {
           "$ref": "TableReference",
-          "description": "[Output-only, Experimental] The DDL target table. Present only for CREATE/DROP TABLE/VIEW queries."
+          "description": "[Output-only, Beta] The DDL target table. Present only for CREATE/DROP TABLE/VIEW queries."
         },
         "estimatedBytesProcessed": {
           "description": "[Output-only] The original estimate of bytes processed for the job.",
           "format": "int64",
           "type": "string"
         },
+        "modelTraining": {
+          "$ref": "BigQueryModelTraining",
+          "description": "[Output-only, Beta] Information about create model query job progress."
+        },
         "modelTrainingCurrentIteration": {
-          "description": "[Output-only, Beta] Index of current ML training iteration. Updated during create model query job to show job progress.",
+          "description": "[Output-only, Beta] Deprecated; do not use.",
           "format": "int32",
           "type": "integer"
         },
         "modelTrainingExpectedTotalIteration": {
-          "description": "[Output-only, Beta] Expected number of iterations for the create model query job specified as num_iterations in the input query. The actual total number of iterations may be less than this number due to early stop.",
+          "description": "[Output-only, Beta] Deprecated; do not use.",
           "format": "int64",
           "type": "string"
         },
@@ -2301,11 +2328,11 @@
           "description": "[Output-only] The schema of the results. Present only for successful dry run of non-legacy SQL queries."
         },
         "statementType": {
-          "description": "[Output-only, Experimental] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"MERGE\": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query.",
+          "description": "[Output-only, Beta] The type of query statement, if valid. Possible values (new values might be added in the future): \"SELECT\": SELECT query. \"INSERT\": INSERT query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"UPDATE\": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"DELETE\": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"MERGE\": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language \"CREATE_TABLE\": CREATE [OR REPLACE] TABLE without AS SELECT. \"CREATE_TABLE_AS_SELECT\": CREATE [OR REPLACE] TABLE ... AS SELECT ... \"DROP_TABLE\": DROP TABLE query. \"CREATE_VIEW\": CREATE [OR REPLACE] VIEW ... AS SELECT ... \"DROP_VIEW\": DROP VIEW query.",
           "type": "string"
         },
         "timeline": {
-          "description": "[Output-only] [Experimental] Describes a timeline of job execution.",
+          "description": "[Output-only] [Beta] Describes a timeline of job execution.",
           "items": {
             "$ref": "QueryTimelineSample"
           },
@@ -2332,7 +2359,7 @@
           "type": "string"
         },
         "undeclaredQueryParameters": {
-          "description": "[Output-only, Experimental] Standard SQL only: list of undeclared query parameters detected during a dry run validation.",
+          "description": "[Output-only, Beta] Standard SQL only: list of undeclared query parameters detected during a dry run validation.",
           "items": {
             "$ref": "QueryParameter"
           },
@@ -2609,7 +2636,7 @@
           "type": "string"
         },
         "location": {
-          "description": "[Experimental] The geographic location where the job should run. Required except for US and EU.",
+          "description": "The geographic location where the job should run. Required except for US and EU.",
           "type": "string"
         },
         "maxResults": {
@@ -2776,7 +2803,7 @@
       "properties": {
         "clustering": {
           "$ref": "Clustering",
-          "description": "[Experimental] Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
+          "description": "[Beta] Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
         },
         "creationTime": {
           "description": "[Output-only] The time when this table was created, in milliseconds since the epoch.",
@@ -2792,7 +2819,7 @@
           "description": "Custom encryption configuration (e.g., Cloud KMS keys)."
         },
         "etag": {
-          "description": "[Output-only] A hash of this resource.",
+          "description": "[Output-only] A hash of the table metadata. Used to ensure there were no concurrent modifications to the resource when attempting an update. Not guaranteed to change when the table contents or the fields numRows, numBytes, numLongTermBytes or lastModifiedTime change.",
           "type": "string"
         },
         "expirationTime": {
@@ -3046,7 +3073,7 @@
             "properties": {
               "clustering": {
                 "$ref": "Clustering",
-                "description": "[Experimental] Clustering specification for this table, if configured."
+                "description": "[Beta] Clustering specification for this table, if configured."
               },
               "creationTime": {
                 "description": "The time when this table was created, in milliseconds since the epoch.",
@@ -3181,12 +3208,12 @@
           "type": "string"
         },
         "field": {
-          "description": "[Experimental] [Optional] If not set, the table is partitioned by pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP type, or '_PARTITIONDATE' as DATE type. If field is specified, the table is instead partitioned by this field. The field must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or REQUIRED.",
+          "description": "[Beta] [Optional] If not set, the table is partitioned by pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP type, or '_PARTITIONDATE' as DATE type. If field is specified, the table is instead partitioned by this field. The field must be a top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or REQUIRED.",
           "type": "string"
         },
         "requirePartitionFilter": {
           "default": "false",
-          "description": "[Experimental] [Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.",
+          "description": "[Beta] [Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.",
           "type": "boolean"
         },
         "type": {

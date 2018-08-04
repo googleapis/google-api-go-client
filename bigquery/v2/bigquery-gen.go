@@ -152,6 +152,42 @@ type TablesService struct {
 	s *Service
 }
 
+type BigQueryModelTraining struct {
+	// CurrentIteration: [Output-only, Beta] Index of current ML training
+	// iteration. Updated during create model query job to show job
+	// progress.
+	CurrentIteration int64 `json:"currentIteration,omitempty"`
+
+	// ExpectedTotalIterations: [Output-only, Beta] Expected number of
+	// iterations for the create model query job specified as num_iterations
+	// in the input query. The actual total number of iterations may be less
+	// than this number due to early stop.
+	ExpectedTotalIterations int64 `json:"expectedTotalIterations,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentIteration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentIteration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryModelTraining) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryModelTraining
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BigtableColumn struct {
 	// Encoding: [Optional] The encoding of the values when the type is not
 	// STRING. Acceptable encoding values are: TEXT - indicates values are
@@ -324,8 +360,9 @@ func (s *BigtableOptions) MarshalJSON() ([]byte, error) {
 type Clustering struct {
 	// Fields: [Repeated] One or more fields on which data should be
 	// clustered. Only top-level, non-repeated, simple-type fields are
-	// supported. The order of the fields will determine how clusters will
-	// be generated, so it is important.
+	// supported. When you cluster a table using multiple columns, the order
+	// of columns you specify is important. The order of the specified
+	// columns determines the sort order of the data.
 	Fields []string `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -1039,9 +1076,10 @@ type ExternalDataConfiguration struct {
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when reading data. If the number of bad records
 	// exceeds this value, an invalid error is returned in the job result.
-	// The default value is 0, which requires that all records are valid.
-	// This setting is ignored for Google Cloud Bigtable, Google Cloud
-	// Datastore backups and Avro formats.
+	// This is only valid for CSV, JSON, and Google Sheets. The default
+	// value is 0, which requires that all records are valid. This setting
+	// is ignored for Google Cloud Bigtable, Google Cloud Datastore backups
+	// and Avro formats.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
 	// Schema: [Optional] The schema for the data. Schema is required for
@@ -1209,8 +1247,8 @@ func (s *GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleSheetsOptions struct {
-	// Range: [Experimental] [Optional] Range of a sheet to query from. Only
-	// used when non-empty. Typical format: !:
+	// Range: [Beta] [Optional] Range of a sheet to query from. Only used
+	// when non-empty. Typical format: !:
 	Range string `json:"range,omitempty"`
 
 	// SkipLeadingRows: [Optional] The number of rows at the top of a sheet
@@ -1541,10 +1579,9 @@ type JobConfigurationLoad struct {
 	// options and schema for CSV and JSON sources.
 	Autodetect bool `json:"autodetect,omitempty"`
 
-	// Clustering: [Experimental] Clustering specification for the
-	// destination table. Must be specified with time-based partitioning,
-	// data in the table will be first partitioned and subsequently
-	// clustered.
+	// Clustering: [Beta] Clustering specification for the destination
+	// table. Must be specified with time-based partitioning, data in the
+	// table will be first partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
@@ -1564,8 +1601,8 @@ type JobConfigurationLoad struct {
 	// into.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// DestinationTableProperties: [Experimental] [Optional] Properties with
-	// which to create the destination table if it is new.
+	// DestinationTableProperties: [Beta] [Optional] Properties with which
+	// to create the destination table if it is new.
 	DestinationTableProperties *DestinationTableProperties `json:"destinationTableProperties,omitempty"`
 
 	// Encoding: [Optional] The character encoding of the data. The
@@ -1596,8 +1633,8 @@ type JobConfigurationLoad struct {
 	// MaxBadRecords: [Optional] The maximum number of bad records that
 	// BigQuery can ignore when running the job. If the number of bad
 	// records exceeds this value, an invalid error is returned in the job
-	// result. The default value is 0, which requires that all records are
-	// valid.
+	// result. This is only valid for CSV and JSON. The default value is 0,
+	// which requires that all records are valid.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
 	// NullMarker: [Optional] Specifies a string that represents a null
@@ -1727,10 +1764,9 @@ type JobConfigurationQuery struct {
 	// result size exceeds the allowed maximum response size.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
-	// Clustering: [Experimental] Clustering specification for the
-	// destination table. Must be specified with time-based partitioning,
-	// data in the table will be first partitioned and subsequently
-	// clustered.
+	// Clustering: [Beta] Clustering specification for the destination
+	// table. Must be specified with time-based partitioning, data in the
+	// table will be first partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
 	// CreateDisposition: [Optional] Specifies whether the job is allowed to
@@ -2040,8 +2076,8 @@ type JobReference struct {
 	// maximum length is 1,024 characters.
 	JobId string `json:"jobId,omitempty"`
 
-	// Location: [Experimental] The geographic location of the job. Required
-	// except for US and EU. See details at
+	// Location: The geographic location of the job. Required except for US
+	// and EU. See details at
 	// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 	Location string `json:"location,omitempty"`
 
@@ -2072,7 +2108,7 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 }
 
 type JobStatistics struct {
-	// CompletionRatio: [Experimental] [Output-only] Job progress (0.0 ->
+	// CompletionRatio: [TrustedTester] [Output-only] Job progress (0.0 ->
 	// 1.0) for LOAD and EXTRACT jobs.
 	CompletionRatio float64 `json:"completionRatio,omitempty"`
 
@@ -2093,6 +2129,10 @@ type JobStatistics struct {
 
 	// Query: [Output-only] Statistics for a query job.
 	Query *JobStatistics2 `json:"query,omitempty"`
+
+	// QuotaDeferments: [Output-only] Quotas which delayed this job's start
+	// time.
+	QuotaDeferments []string `json:"quotaDeferments,omitempty"`
 
 	// StartTime: [Output-only] Start time of this job, in milliseconds
 	// since the epoch. This field will be present when the job transitions
@@ -2149,7 +2189,7 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// DdlOperationPerformed: [Output-only, Experimental] The DDL operation
+	// DdlOperationPerformed: [Output-only, Beta] The DDL operation
 	// performed, possibly dependent on the pre-existence of the DDL target.
 	// Possible values (new values might be added in the future): "CREATE":
 	// The query created the DDL target. "SKIP": No-op. Example cases: the
@@ -2160,23 +2200,24 @@ type JobStatistics2 struct {
 	// query deleted the DDL target.
 	DdlOperationPerformed string `json:"ddlOperationPerformed,omitempty"`
 
-	// DdlTargetTable: [Output-only, Experimental] The DDL target table.
-	// Present only for CREATE/DROP TABLE/VIEW queries.
+	// DdlTargetTable: [Output-only, Beta] The DDL target table. Present
+	// only for CREATE/DROP TABLE/VIEW queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
 	// EstimatedBytesProcessed: [Output-only] The original estimate of bytes
 	// processed for the job.
 	EstimatedBytesProcessed int64 `json:"estimatedBytesProcessed,omitempty,string"`
 
-	// ModelTrainingCurrentIteration: [Output-only, Beta] Index of current
-	// ML training iteration. Updated during create model query job to show
-	// job progress.
+	// ModelTraining: [Output-only, Beta] Information about create model
+	// query job progress.
+	ModelTraining *BigQueryModelTraining `json:"modelTraining,omitempty"`
+
+	// ModelTrainingCurrentIteration: [Output-only, Beta] Deprecated; do not
+	// use.
 	ModelTrainingCurrentIteration int64 `json:"modelTrainingCurrentIteration,omitempty"`
 
-	// ModelTrainingExpectedTotalIteration: [Output-only, Beta] Expected
-	// number of iterations for the create model query job specified as
-	// num_iterations in the input query. The actual total number of
-	// iterations may be less than this number due to early stop.
+	// ModelTrainingExpectedTotalIteration: [Output-only, Beta] Deprecated;
+	// do not use.
 	ModelTrainingExpectedTotalIteration int64 `json:"modelTrainingExpectedTotalIteration,omitempty,string"`
 
 	// NumDmlAffectedRows: [Output-only] The number of rows affected by a
@@ -2200,15 +2241,14 @@ type JobStatistics2 struct {
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// StatementType: [Output-only, Experimental] The type of query
-	// statement, if valid. Possible values (new values might be added in
-	// the future): "SELECT": SELECT query. "INSERT": INSERT query; see
+	// StatementType: [Output-only, Beta] The type of query statement, if
+	// valid. Possible values (new values might be added in the future):
+	// "SELECT": SELECT query. "INSERT": INSERT query; see
 	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "MERGE": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... "DROP_VIEW": DROP VIEW
 	// query.
 	StatementType string `json:"statementType,omitempty"`
 
-	// Timeline: [Output-only] [Experimental] Describes a timeline of job
-	// execution.
+	// Timeline: [Output-only] [Beta] Describes a timeline of job execution.
 	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
 	// TotalBytesBilled: [Output-only] Total bytes billed for the job.
@@ -2224,8 +2264,8 @@ type JobStatistics2 struct {
 	// TotalSlotMs: [Output-only] Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
-	// UndeclaredQueryParameters: [Output-only, Experimental] Standard SQL
-	// only: list of undeclared query parameters detected during a dry run
+	// UndeclaredQueryParameters: [Output-only, Beta] Standard SQL only:
+	// list of undeclared query parameters detected during a dry run
 	// validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
 
@@ -2734,8 +2774,8 @@ type QueryRequest struct {
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
-	// Location: [Experimental] The geographic location where the job should
-	// run. Required except for US and EU.
+	// Location: The geographic location where the job should run. Required
+	// except for US and EU.
 	Location string `json:"location,omitempty"`
 
 	// MaxResults: [Optional] The maximum number of rows of data to return
@@ -2973,9 +3013,9 @@ func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
 }
 
 type Table struct {
-	// Clustering: [Experimental] Clustering specification for the table.
-	// Must be specified with time-based partitioning, data in the table
-	// will be first partitioned and subsequently clustered.
+	// Clustering: [Beta] Clustering specification for the table. Must be
+	// specified with time-based partitioning, data in the table will be
+	// first partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
 	// CreationTime: [Output-only] The time when this table was created, in
@@ -2989,7 +3029,11 @@ type Table struct {
 	// KMS keys).
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
-	// Etag: [Output-only] A hash of this resource.
+	// Etag: [Output-only] A hash of the table metadata. Used to ensure
+	// there were no concurrent modifications to the resource when
+	// attempting an update. Not guaranteed to change when the table
+	// contents or the fields numRows, numBytes, numLongTermBytes or
+	// lastModifiedTime change.
 	Etag string `json:"etag,omitempty"`
 
 	// ExpirationTime: [Optional] The time when this table expires, in
@@ -3417,8 +3461,8 @@ func (s *TableList) MarshalJSON() ([]byte, error) {
 }
 
 type TableListTables struct {
-	// Clustering: [Experimental] Clustering specification for this table,
-	// if configured.
+	// Clustering: [Beta] Clustering specification for this table, if
+	// configured.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
 	// CreationTime: The time when this table was created, in milliseconds
@@ -3605,17 +3649,17 @@ type TimePartitioning struct {
 	// have an expiration time of its partition time plus this value.
 	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
 
-	// Field: [Experimental] [Optional] If not set, the table is partitioned
-	// by pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP
+	// Field: [Beta] [Optional] If not set, the table is partitioned by
+	// pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP
 	// type, or '_PARTITIONDATE' as DATE type. If field is specified, the
 	// table is instead partitioned by this field. The field must be a
 	// top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or
 	// REQUIRED.
 	Field string `json:"field,omitempty"`
 
-	// RequirePartitionFilter: [Experimental] [Optional] If set to true,
-	// queries over this table require a partition filter that can be used
-	// for partition elimination to be specified.
+	// RequirePartitionFilter: [Beta] [Optional] If set to true, queries
+	// over this table require a partition filter that can be used for
+	// partition elimination to be specified.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
 	// Type: [Required] The only type supported is DAY, which will generate

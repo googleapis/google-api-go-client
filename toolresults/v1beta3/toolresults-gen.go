@@ -2538,6 +2538,7 @@ type TestIssue struct {
 	//   "availableDeepLinks"
 	//   "compatibleWithOrchestrator"
 	//   "completeRoboScriptExecution"
+	//   "encounteredNonAndroidUiWidgetScreen"
 	//   "failedToInstall"
 	//   "fatalException"
 	//   "incompleteRoboScriptExecution"

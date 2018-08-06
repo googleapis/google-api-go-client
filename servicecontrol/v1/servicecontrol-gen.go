@@ -1204,6 +1204,11 @@ type LogEntry struct {
 	// "book_log".
 	Name string `json:"name,omitempty"`
 
+	// Operation: Optional. Information about an operation associated with
+	// the log entry, if
+	// applicable.
+	Operation *LogEntryOperation `json:"operation,omitempty"`
+
 	// ProtoPayload: The log entry payload, represented as a protocol buffer
 	// that is
 	// expressed as a JSON object. The only accepted type currently
@@ -1264,6 +1269,54 @@ type LogEntry struct {
 
 func (s *LogEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod LogEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LogEntryOperation: Additional information about a potentially
+// long-running operation with which
+// a log entry is associated.
+type LogEntryOperation struct {
+	// First: Optional. Set this to True if this is the first log entry in
+	// the operation.
+	First bool `json:"first,omitempty"`
+
+	// Id: Optional. An arbitrary operation identifier. Log entries with
+	// the
+	// same identifier are assumed to be part of the same operation.
+	Id string `json:"id,omitempty"`
+
+	// Last: Optional. Set this to True if this is the last log entry in the
+	// operation.
+	Last bool `json:"last,omitempty"`
+
+	// Producer: Optional. An arbitrary producer identifier. The combination
+	// of
+	// `id` and `producer` must be globally unique.  Examples for
+	// `producer`:
+	// "MyDivision.MyBigCompany.com",
+	// "github.com/MyProject/MyApplication".
+	Producer string `json:"producer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "First") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "First") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LogEntryOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod LogEntryOperation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

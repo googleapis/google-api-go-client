@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180707",
+  "revision": "20180805",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -852,6 +852,10 @@
           "description": "Required. The log to which this log entry belongs. Examples: `\"syslog\"`,\n`\"book_log\"`.",
           "type": "string"
         },
+        "operation": {
+          "$ref": "LogEntryOperation",
+          "description": "Optional. Information about an operation associated with the log entry, if\napplicable."
+        },
         "protoPayload": {
           "additionalProperties": {
             "description": "Properties of the object. Contains field @type with type URL.",
@@ -901,6 +905,29 @@
         "timestamp": {
           "description": "The time the event described by the log entry occurred. If\nomitted, defaults to operation start time.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogEntryOperation": {
+      "description": "Additional information about a potentially long-running operation with which\na log entry is associated.",
+      "id": "LogEntryOperation",
+      "properties": {
+        "first": {
+          "description": "Optional. Set this to True if this is the first log entry in the operation.",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "Optional. An arbitrary operation identifier. Log entries with the\nsame identifier are assumed to be part of the same operation.",
+          "type": "string"
+        },
+        "last": {
+          "description": "Optional. Set this to True if this is the last log entry in the operation.",
+          "type": "boolean"
+        },
+        "producer": {
+          "description": "Optional. An arbitrary producer identifier. The combination of\n`id` and `producer` must be globally unique.  Examples for `producer`:\n`\"MyDivision.MyBigCompany.com\"`, `\"github.com/MyProject/MyApplication\"`.",
           "type": "string"
         }
       },

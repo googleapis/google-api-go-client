@@ -737,7 +737,7 @@
         "vendors": {
           "methods": {
             "list": {
-              "description": "Lists vendors of the partner.",
+              "description": "Lists the vendors of the partner.",
               "flatPath": "v1/partners/{partnersId}/vendors",
               "httpMethod": "GET",
               "id": "androiddeviceprovisioning.partners.vendors.list",
@@ -813,7 +813,7 @@
       }
     }
   },
-  "revision": "20180728",
+  "revision": "20180804",
   "rootUrl": "https://androiddeviceprovisioning.googleapis.com/",
   "schemas": {
     "ClaimDeviceRequest": {
@@ -877,7 +877,7 @@
       "type": "object"
     },
     "Company": {
-      "description": "A customer resource in the zero-touch enrollment API.",
+      "description": "A reseller, vendor, or customer in the zero-touch reseller and customer APIs.",
       "id": "Company",
       "properties": {
         "adminEmails": {
@@ -893,11 +893,11 @@
           "type": "string"
         },
         "companyName": {
-          "description": "Required. The name of the company. For example _XYZ Corp_. Displayed to the\ncustomer's employees in the zero-touch enrollment portal.",
+          "description": "Required. The name of the company. For example _XYZ Corp_. Displayed to the\ncompany's employees in the zero-touch enrollment portal.",
           "type": "string"
         },
         "name": {
-          "description": "Output only. The API resource name of the company in the format\n`partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`. Assigned by the server.",
+          "description": "Output only. The API resource name of the company. The resource name is one\nof the following formats:\n\n* `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`\n* `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`\n* `partners/[PARTNER_ID]/vendors/[VENDOR_ID]/customers/[CUSTOMER_ID]`\n\nAssigned by the server.",
           "type": "string"
         },
         "ownerEmails": {
@@ -1161,7 +1161,7 @@
           "type": "string"
         },
         "manufacturer": {
-          "description": "The device manufacturer’s name. Matches the device's built-in\nvalue returned from `android.os.Build.MANUFACTURER`. Allowed values are\nlisted in [manufacturer names](/zero-touch/resources/manufacturer-names).",
+          "description": "The device manufacturer’s name. Matches the device's built-in\nvalue returned from `android.os.Build.MANUFACTURER`. Allowed values are\nlisted in\n[manufacturers](/zero-touch/resources/manufacturer-names#manufacturers-names).",
           "type": "string"
         },
         "meid": {
@@ -1169,11 +1169,11 @@
           "type": "string"
         },
         "model": {
-          "description": "The device model's name. Matches the device's built-in value returned from\n`android.os.Build.MODEL`. Allowed values are listed in\n[manufacturer names](/zero-touch/resources/manufacturer-names).",
+          "description": "The device model's name. Matches the device's built-in value returned from\n`android.os.Build.MODEL`. Allowed values are listed in\n[models](/zero-touch/resources/manufacturer-names#model-names).",
           "type": "string"
         },
         "serialNumber": {
-          "description": "The manufacturer's serial number for the device. This value might not be\nunique.",
+          "description": "The manufacturer's serial number for the device. This value might not be\nunique across different device models.",
           "type": "string"
         }
       },
@@ -1230,7 +1230,7 @@
             "Invalid code. Shouldn't be used.",
             "Pending.",
             "In progress.",
-            "Processed.\nThis doesn't mean all items were processed sucessfully, you should\ncheck the `response` field for the result of every item."
+            "Processed.\nThis doesn't mean all items were processed successfully, you should\ncheck the `response` field for the result of every item."
           ],
           "type": "string"
         },

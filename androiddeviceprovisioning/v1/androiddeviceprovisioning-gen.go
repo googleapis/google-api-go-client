@@ -299,7 +299,8 @@ func (s *ClaimDevicesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Company: A customer resource in the zero-touch enrollment API.
+// Company: A reseller, vendor, or customer in the zero-touch reseller
+// and customer APIs.
 type Company struct {
 	// AdminEmails: Input only. Optional. Email address of customer's users
 	// in the admin role.
@@ -312,13 +313,20 @@ type Company struct {
 
 	// CompanyName: Required. The name of the company. For example _XYZ
 	// Corp_. Displayed to the
-	// customer's employees in the zero-touch enrollment portal.
+	// company's employees in the zero-touch enrollment portal.
 	CompanyName string `json:"companyName,omitempty"`
 
-	// Name: Output only. The API resource name of the company in the
-	// format
-	// `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`. Assigned by the
-	// server.
+	// Name: Output only. The API resource name of the company. The resource
+	// name is one
+	// of the following formats:
+	//
+	// * `partners/[PARTNER_ID]/customers/[CUSTOMER_ID]`
+	// * `partners/[PARTNER_ID]/vendors/[VENDOR_ID]`
+	// *
+	// `partners/[PARTNER_ID]/vendors/[VENDOR_ID]/customers/[CUSTOMER_ID]`
+	//
+	// A
+	// ssigned by the server.
 	Name string `json:"name,omitempty"`
 
 	// OwnerEmails: Input only. Email address of customer's users in the
@@ -878,8 +886,10 @@ type DeviceIdentifier struct {
 	// built-in
 	// value returned from `android.os.Build.MANUFACTURER`. Allowed values
 	// are
-	// listed in [manufacturer
-	// names](/zero-touch/resources/manufacturer-names).
+	// listed
+	// in
+	// [manufacturers](/zero-touch/resources/manufacturer-names#manufactur
+	// ers-names).
 	Manufacturer string `json:"manufacturer,omitempty"`
 
 	// Meid: The device’s MEID number.
@@ -887,13 +897,14 @@ type DeviceIdentifier struct {
 
 	// Model: The device model's name. Matches the device's built-in value
 	// returned from
-	// `android.os.Build.MODEL`. Allowed values are listed in
-	// [manufacturer names](/zero-touch/resources/manufacturer-names).
+	// `android.os.Build.MODEL`. Allowed values are listed
+	// in
+	// [models](/zero-touch/resources/manufacturer-names#model-names).
 	Model string `json:"model,omitempty"`
 
 	// SerialNumber: The manufacturer's serial number for the device. This
 	// value might not be
-	// unique.
+	// unique across different device models.
 	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Imei") to
@@ -1019,7 +1030,7 @@ type DevicesLongRunningOperationMetadata struct {
 	//   "BATCH_PROCESS_PENDING" - Pending.
 	//   "BATCH_PROCESS_IN_PROGRESS" - In progress.
 	//   "BATCH_PROCESS_PROCESSED" - Processed.
-	// This doesn't mean all items were processed sucessfully, you
+	// This doesn't mean all items were processed successfully, you
 	// should
 	// check the `response` field for the result of every item.
 	ProcessingStatus string `json:"processingStatus,omitempty"`
@@ -5384,7 +5395,7 @@ type PartnersVendorsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists vendors of the partner.
+// List: Lists the vendors of the partner.
 func (r *PartnersVendorsService) List(parent string) *PartnersVendorsListCall {
 	c := &PartnersVendorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5499,7 +5510,7 @@ func (c *PartnersVendorsListCall) Do(opts ...googleapi.CallOption) (*ListVendors
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists vendors of the partner.",
+	//   "description": "Lists the vendors of the partner.",
 	//   "flatPath": "v1/partners/{partnersId}/vendors",
 	//   "httpMethod": "GET",
 	//   "id": "androiddeviceprovisioning.partners.vendors.list",

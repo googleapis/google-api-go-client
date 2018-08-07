@@ -1742,7 +1742,8 @@ type NonComplianceDetail struct {
 	//   "NO_LICENSES_REMAINING" - There are no licenses available to assign
 	// to the user.
 	//   "NOT_ENROLLED" - The enterprise is no longer enrolled with managed
-	// Play or Android Device Policy is not enabled for the enterprise.
+	// Play or the admin has not accepted the latest managed Play terms of
+	// service.
 	//   "USER_INVALID" - The user is no longer valid. The user may have
 	// been deleted or disabled.
 	InstallationFailureReason string `json:"installationFailureReason,omitempty"`

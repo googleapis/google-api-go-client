@@ -560,13 +560,15 @@ func (s *AdClients) MarshalJSON() ([]byte, error) {
 }
 
 type AdCode struct {
-	// AdCode: The ad code snippet.
+	// AdCode: The Auto ad code snippet. The ad code snippet.
 	AdCode string `json:"adCode,omitempty"`
 
-	// AmpBody: The ad code snippet that goes in the body of an AMP page.
+	// AmpBody: The AMP Auto ad code snippet that goes in the body of an AMP
+	// page.
 	AmpBody string `json:"ampBody,omitempty"`
 
-	// AmpHead: The ad code snippet that goes in the head of an AMP page.
+	// AmpHead: The AMP Auto ad code snippet that goes in the head of an AMP
+	// page.
 	AmpHead string `json:"ampHead,omitempty"`
 
 	// Kind: Kind this is, in this case adsense#adCode.
@@ -2034,7 +2036,7 @@ type AccountsAdclientsGetAdCodeCall struct {
 	header_      http.Header
 }
 
-// GetAdCode: Get ad code for a given ad client.
+// GetAdCode: Get Auto ad code for a given ad client.
 func (r *AccountsAdclientsService) GetAdCode(accountId string, adClientId string) *AccountsAdclientsGetAdCodeCall {
 	c := &AccountsAdclientsGetAdCodeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -2137,7 +2139,7 @@ func (c *AccountsAdclientsGetAdCodeCall) Do(opts ...googleapi.CallOption) (*AdCo
 	}
 	return ret, nil
 	// {
-	//   "description": "Get ad code for a given ad client.",
+	//   "description": "Get Auto ad code for a given ad client.",
 	//   "httpMethod": "GET",
 	//   "id": "adsense.accounts.adclients.getAdCode",
 	//   "parameterOrder": [

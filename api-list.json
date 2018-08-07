@@ -1547,6 +1547,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "firestore:v1beta2",
+   "name": "firestore",
+   "version": "v1beta2",
+   "title": "Cloud Firestore API",
+   "description": "",
+   "discoveryRestUrl": "https://firestore.googleapis.com/$discovery/rest?version=v1beta2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/firestore",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "fitness:v1",
    "name": "fitness",
    "version": "v1",
@@ -1822,7 +1837,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/job-discovery/docs",
+   "documentationLink": "https://cloud.google.com/talent-solution/job-search/docs/",
    "preferred": true
   },
   {

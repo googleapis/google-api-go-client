@@ -1061,6 +1061,9 @@ type MediaItem struct {
 
 	// MimeType: MIME type of the media item.
 	MimeType string `json:"mimeType,omitempty"`
+	
+	//The filename of the media item shown to the user in the Google Photos app (within the item's info section).
+	Filename string `json:"filename,omitempty"`
 
 	// ProductUrl: Google Photos URL for the media item. This link will only
 	// be available to

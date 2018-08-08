@@ -56,7 +56,6 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
-	s.Oauth = NewOauthService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -66,8 +65,6 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
-	Oauth *OauthService
-
 	Projects *ProjectsService
 }
 
@@ -76,27 +73,6 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
-}
-
-func NewOauthService(s *Service) *OauthService {
-	rs := &OauthService{s: s}
-	rs.ClientIds = NewOauthClientIdsService(s)
-	return rs
-}
-
-type OauthService struct {
-	s *Service
-
-	ClientIds *OauthClientIdsService
-}
-
-func NewOauthClientIdsService(s *Service) *OauthClientIdsService {
-	rs := &OauthClientIdsService{s: s}
-	return rs
-}
-
-type OauthClientIdsService struct {
-	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -369,24 +345,6 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Empty: A generic empty message that you can re-use to avoid defining
-// duplicated
-// empty messages in your APIs. A typical example is to use it as the
-// request
-// or the response type of an API method. For instance:
-//
-//     service Foo {
-//       rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty);
-//     }
-//
-// The JSON representation for `Empty` is empty JSON object `{}`.
-type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
 }
 
 // Expr: Represents an expression text. Example:
@@ -666,240 +624,6 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// method id "iap.oauth.clientIds.handleRedirect":
-
-type OauthClientIdsHandleRedirectCall struct {
-	s            *Service
-	clientId     string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// HandleRedirect: This endpoint is only meant to serve redirects from
-// the OAuth flow, and
-// should never be called explicitly. Any other calls will simply be
-// rejected
-// with BAD_REQUEST.
-//
-// Handles a redirect from Google's Authentication server after
-// completing
-// the login & consent flow of OAuth handshake.
-// Note that this does not terminate the OAuth flow, it is a hop that
-// will
-// always return a 302 to continue to Identity-Aware Proxy servers,
-// where
-// the OAuth flow is terminated.
-func (r *OauthClientIdsService) HandleRedirect(clientId string) *OauthClientIdsHandleRedirectCall {
-	c := &OauthClientIdsHandleRedirectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.clientId = clientId
-	return c
-}
-
-// Authuser sets the optional parameter "authuser": Auth user parameter
-// passed back by Google's OAuth 2.0 API.
-func (c *OauthClientIdsHandleRedirectCall) Authuser(authuser string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("authuser", authuser)
-	return c
-}
-
-// Code sets the optional parameter "code": Authentication code obtained
-// after OAuth login & consent
-// flow.
-// https://tools.ietf.org/html/rfc6749#section-1.3.1
-func (c *OauthClientIdsHandleRedirectCall) Code(code string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("code", code)
-	return c
-}
-
-// Hd sets the optional parameter "hd": Hosted Domain parameter passed
-// back by Google's OAuth 2.0 API.
-// More information can be found
-// at:
-// https://developers.google.com/identity/protocols/OpenIDConnect#hd-
-// param
-func (c *OauthClientIdsHandleRedirectCall) Hd(hd string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("hd", hd)
-	return c
-}
-
-// Prompt sets the optional parameter "prompt": Prompt parameter passed
-// back by Google's OAuth 2.0 API.
-// More information can be found
-// at:
-// https://developers.google.com/identity/protocols/OpenIDConnect#pro
-// mpt
-func (c *OauthClientIdsHandleRedirectCall) Prompt(prompt string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("prompt", prompt)
-	return c
-}
-
-// SessionState sets the optional parameter "sessionState": Session
-// state parameter passed back by Google's OAuth 2.0 API.
-func (c *OauthClientIdsHandleRedirectCall) SessionState(sessionState string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("sessionState", sessionState)
-	return c
-}
-
-// State sets the optional parameter "state": State parameter passed
-// back to the service provider from authentication
-// server in OAuth
-// flow.
-// https://tools.ietf.org/html/rfc6749#section-4.1.1
-func (c *OauthClientIdsHandleRedirectCall) State(state string) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("state", state)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *OauthClientIdsHandleRedirectCall) Fields(s ...googleapi.Field) *OauthClientIdsHandleRedirectCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *OauthClientIdsHandleRedirectCall) IfNoneMatch(entityTag string) *OauthClientIdsHandleRedirectCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *OauthClientIdsHandleRedirectCall) Context(ctx context.Context) *OauthClientIdsHandleRedirectCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *OauthClientIdsHandleRedirectCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OauthClientIdsHandleRedirectCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/oauth/clientIds/{+clientId}:handleRedirect")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"clientId": c.clientId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "iap.oauth.clientIds.handleRedirect" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *OauthClientIdsHandleRedirectCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "This endpoint is only meant to serve redirects from the OAuth flow, and\nshould never be called explicitly. Any other calls will simply be rejected\nwith BAD_REQUEST.\n\nHandles a redirect from Google's Authentication server after completing\nthe login \u0026 consent flow of OAuth handshake.\nNote that this does not terminate the OAuth flow, it is a hop that will\nalways return a 302 to continue to Identity-Aware Proxy servers, where\nthe OAuth flow is terminated.",
-	//   "flatPath": "v1beta1/oauth/clientIds/{clientIdsId}:handleRedirect",
-	//   "httpMethod": "GET",
-	//   "id": "iap.oauth.clientIds.handleRedirect",
-	//   "parameterOrder": [
-	//     "clientId"
-	//   ],
-	//   "parameters": {
-	//     "authuser": {
-	//       "description": "Auth user parameter passed back by Google's OAuth 2.0 API.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "clientId": {
-	//       "description": "The client_id against which the OAuth flow was initiated.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "code": {
-	//       "description": "Authentication code obtained after OAuth login \u0026 consent flow.\nhttps://tools.ietf.org/html/rfc6749#section-1.3.1",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "hd": {
-	//       "description": "Hosted Domain parameter passed back by Google's OAuth 2.0 API.\nMore information can be found at:\nhttps://developers.google.com/identity/protocols/OpenIDConnect#hd-param",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "prompt": {
-	//       "description": "Prompt parameter passed back by Google's OAuth 2.0 API.\nMore information can be found at:\nhttps://developers.google.com/identity/protocols/OpenIDConnect#prompt",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sessionState": {
-	//       "description": "Session state parameter passed back by Google's OAuth 2.0 API.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "state": {
-	//       "description": "State parameter passed back to the service provider from authentication\nserver in OAuth flow.\nhttps://tools.ietf.org/html/rfc6749#section-4.1.1",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/oauth/clientIds/{+clientId}:handleRedirect",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   }
-	// }
-
 }
 
 // method id "iap.projects.iap_web.getIamPolicy":

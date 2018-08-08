@@ -396,6 +396,9 @@ type CheckInRequest struct {
 	// Result: The operation has finished with the given result.
 	Result *Status `json:"result,omitempty"`
 
+	// WorkerStatus: Data about the status of the worker VM.
+	WorkerStatus *WorkerStatus `json:"workerStatus,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DeadlineExpired") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -722,6 +725,38 @@ type Disk struct {
 
 func (s *Disk) MarshalJSON() ([]byte, error) {
 	type NoMethod Disk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskStatus: The status of a disk on a VM.
+type DiskStatus struct {
+	// FreeSpaceBytes: Free disk space.
+	FreeSpaceBytes uint64 `json:"freeSpaceBytes,omitempty,string"`
+
+	// TotalSpaceBytes: Total disk space.
+	TotalSpaceBytes uint64 `json:"totalSpaceBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FreeSpaceBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FreeSpaceBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2008,6 +2043,46 @@ type WorkerReleasedEvent struct {
 
 func (s *WorkerReleasedEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod WorkerReleasedEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkerStatus: The status of the worker VM.
+type WorkerStatus struct {
+	// AttachedDisks: Status of attached disks.
+	AttachedDisks map[string]DiskStatus `json:"attachedDisks,omitempty"`
+
+	// BootDisk: Status of the boot disk.
+	BootDisk *DiskStatus `json:"bootDisk,omitempty"`
+
+	// FreeRamBytes: Free RAM.
+	FreeRamBytes uint64 `json:"freeRamBytes,omitempty,string"`
+
+	// TotalRamBytes: Total RAM.
+	TotalRamBytes uint64 `json:"totalRamBytes,omitempty,string"`
+
+	// UptimeSeconds: System uptime.
+	UptimeSeconds int64 `json:"uptimeSeconds,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AttachedDisks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttachedDisks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkerStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkerStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

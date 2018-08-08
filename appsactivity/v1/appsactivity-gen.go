@@ -1,4 +1,4 @@
-// Package appsactivity provides access to the G Suite Activity API.
+// Package appsactivity provides access to the Drive Activity API.
 //
 // See https://developers.google.com/google-apps/activity/
 //

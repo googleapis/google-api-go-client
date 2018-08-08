@@ -5863,9 +5863,11 @@ type DateRange struct {
 	// report is run.
 	//
 	// Possible values:
+	//   "LAST_14_DAYS"
 	//   "LAST_24_MONTHS"
 	//   "LAST_30_DAYS"
 	//   "LAST_365_DAYS"
+	//   "LAST_60_DAYS"
 	//   "LAST_7_DAYS"
 	//   "LAST_90_DAYS"
 	//   "MONTH_TO_DATE"

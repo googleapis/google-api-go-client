@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/ApdzKpiGZGsYO3N-7L7wHAjBJHw\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/svEMZJUiW-WS4IJWorhd4Zak_oA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -9523,7 +9523,6 @@
       }
     }
   },
-  "revision": "20180514",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -13583,9 +13582,11 @@
         "relativeDateRange": {
           "description": "The date range relative to the date of when the report is run.",
           "enum": [
+            "LAST_14_DAYS",
             "LAST_24_MONTHS",
             "LAST_30_DAYS",
             "LAST_365_DAYS",
+            "LAST_60_DAYS",
             "LAST_7_DAYS",
             "LAST_90_DAYS",
             "MONTH_TO_DATE",
@@ -13600,6 +13601,8 @@
             "YESTERDAY"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",

@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20180728",
+  "revision": "20180807",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -406,6 +406,10 @@
         "result": {
           "$ref": "Status",
           "description": "The operation has finished with the given result."
+        },
+        "workerStatus": {
+          "$ref": "WorkerStatus",
+          "description": "Data about the status of the worker VM."
         }
       },
       "type": "object"
@@ -550,6 +554,23 @@
         },
         "type": {
           "description": "The Compute Engine disk type. If unspecified, `pd-standard` is used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DiskStatus": {
+      "description": "The status of a disk on a VM.",
+      "id": "DiskStatus",
+      "properties": {
+        "freeSpaceBytes": {
+          "description": "Free disk space.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "totalSpaceBytes": {
+          "description": "Total disk space.",
+          "format": "uint64",
           "type": "string"
         }
       },
@@ -1151,6 +1172,39 @@
         },
         "zone": {
           "description": "The zone the worker was running in.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WorkerStatus": {
+      "description": "The status of the worker VM.",
+      "id": "WorkerStatus",
+      "properties": {
+        "attachedDisks": {
+          "additionalProperties": {
+            "$ref": "DiskStatus"
+          },
+          "description": "Status of attached disks.",
+          "type": "object"
+        },
+        "bootDisk": {
+          "$ref": "DiskStatus",
+          "description": "Status of the boot disk."
+        },
+        "freeRamBytes": {
+          "description": "Free RAM.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "totalRamBytes": {
+          "description": "Total RAM.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "uptimeSeconds": {
+          "description": "System uptime.",
+          "format": "int64",
           "type": "string"
         }
       },

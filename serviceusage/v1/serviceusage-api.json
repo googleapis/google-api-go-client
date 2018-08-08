@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20180731",
+  "revision": "20180803",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -1422,6 +1422,10 @@
         },
         "put": {
           "description": "Used for updating a resource.",
+          "type": "string"
+        },
+        "responseBody": {
+          "description": "Optional. The name of the response field whose value is mapped to the HTTP\nbody of response. Other response fields are ignored. When\nnot set, the response message will be used as HTTP body of response.\nNOTE: the referred field must be not a repeated field and must be present\nat the top-level of response message type.",
           "type": "string"
         },
         "restCollection": {

@@ -1122,6 +1122,36 @@ func (s *CourseWork) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type`
+// of `COURSE_WORK_CHANGES`.
+type CourseWorkChangesInfo struct {
+	// CourseId: The `course_id` of the course to subscribe to work changes
+	// for.
+	CourseId string `json:"courseId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CourseId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CourseId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CourseWorkChangesInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CourseWorkChangesInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole calendar date, e.g. date of birth. The time
 // of day and
 // time zone are either specified elsewhere or are not significant. The
@@ -1285,6 +1315,11 @@ type Feed struct {
 	// `COURSE_ROSTER_CHANGES`.
 	CourseRosterChangesInfo *CourseRosterChangesInfo `json:"courseRosterChangesInfo,omitempty"`
 
+	// CourseWorkChangesInfo: Information about a `Feed` with a `feed_type`
+	// of `COURSE_WORK_CHANGES`.
+	// This field must be specified if `feed_type` is `COURSE_WORK_CHANGES`.
+	CourseWorkChangesInfo *CourseWorkChangesInfo `json:"courseWorkChangesInfo,omitempty"`
+
 	// FeedType: The type of feed.
 	//
 	// Possible values:
@@ -1311,6 +1346,20 @@ type Feed struct {
 	// deleted, but notifications will be generated when a user joins a
 	// course
 	// by accepting an invitation.
+	//   "COURSE_WORK_CHANGES" - All course work activity for a particular
+	// course.
+	//
+	// Notifications will be generated when a CourseWork
+	// or
+	// StudentSubmission object is created or modified. No notification will
+	// be
+	// generated when a StudentSubmission object is created in connection
+	// with
+	// the creation or modification of its parent CourseWork object (but
+	// a
+	// notification will be generated for that CourseWork object's creation
+	// or
+	// modification).
 	FeedType string `json:"feedType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

@@ -14,18 +14,18 @@
       }
     }
   },
-  "basePath": "/dfareporting/v2.8/",
-  "baseUrl": "https://www.googleapis.com/dfareporting/v2.8/",
-  "batchPath": "batch/dfareporting/v2.8",
+  "basePath": "/dfareporting/v3.2/",
+  "baseUrl": "https://www.googleapis.com/dfareporting/v3.2/",
+  "batchPath": "batch/dfareporting/v3.2",
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/2K7Y6wJNmYvfshilj-oL4ykjzkc\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Ttfoj-4zMX1AXGRieIHImFX4l3M\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
   },
-  "id": "dfareporting:v2.8",
+  "id": "dfareporting:v3.2",
   "kind": "discovery#restDescription",
   "name": "dfareporting",
   "ownerDomain": "google.com",
@@ -1201,6 +1201,227 @@
         }
       }
     },
+    "advertiserLandingPages": {
+      "methods": {
+        "get": {
+          "description": "Gets one landing page by ID.",
+          "httpMethod": "GET",
+          "id": "dfareporting.advertiserLandingPages.get",
+          "parameterOrder": [
+            "profileId",
+            "id"
+          ],
+          "parameters": {
+            "id": {
+              "description": "Landing page ID.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/advertiserLandingPages/{id}",
+          "response": {
+            "$ref": "LandingPage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        },
+        "insert": {
+          "description": "Inserts a new landing page.",
+          "httpMethod": "POST",
+          "id": "dfareporting.advertiserLandingPages.insert",
+          "parameterOrder": [
+            "profileId"
+          ],
+          "parameters": {
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/advertiserLandingPages",
+          "request": {
+            "$ref": "LandingPage"
+          },
+          "response": {
+            "$ref": "LandingPage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        },
+        "list": {
+          "description": "Retrieves a list of landing pages.",
+          "httpMethod": "GET",
+          "id": "dfareporting.advertiserLandingPages.list",
+          "parameterOrder": [
+            "profileId"
+          ],
+          "parameters": {
+            "advertiserIds": {
+              "description": "Select only landing pages that belong to these advertisers.",
+              "format": "int64",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
+            "archived": {
+              "description": "Select only archived landing pages. Don't set this field to select both archived and non-archived landing pages.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "ids": {
+              "description": "Select only landing pages with these IDs.",
+              "format": "int64",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "1000",
+              "description": "Maximum number of results to return.",
+              "format": "int32",
+              "location": "query",
+              "maximum": "1000",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Value of the nextPageToken from the previous result page.",
+              "location": "query",
+              "type": "string"
+            },
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "searchString": {
+              "description": "Allows searching for landing pages by name or ID. Wildcards (*) are allowed. For example, \"landingpage*2017\" will return landing pages with names like \"landingpage July 2017\", \"landingpage March 2017\", or simply \"landingpage 2017\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"landingpage\" will match campaigns with name \"my landingpage\", \"landingpage 2015\", or simply \"landingpage\".",
+              "location": "query",
+              "type": "string"
+            },
+            "sortField": {
+              "default": "ID",
+              "description": "Field by which to sort the list.",
+              "enum": [
+                "ID",
+                "NAME"
+              ],
+              "enumDescriptions": [
+                "",
+                ""
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "sortOrder": {
+              "default": "ASCENDING",
+              "description": "Order of sorted results.",
+              "enum": [
+                "ASCENDING",
+                "DESCENDING"
+              ],
+              "enumDescriptions": [
+                "",
+                ""
+              ],
+              "location": "query",
+              "type": "string"
+            },
+            "subaccountId": {
+              "description": "Select only landing pages that belong to this subaccount.",
+              "format": "int64",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/advertiserLandingPages",
+          "response": {
+            "$ref": "AdvertiserLandingPagesListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        },
+        "patch": {
+          "description": "Updates an existing landing page. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "dfareporting.advertiserLandingPages.patch",
+          "parameterOrder": [
+            "profileId",
+            "id"
+          ],
+          "parameters": {
+            "id": {
+              "description": "Landing page ID.",
+              "format": "int64",
+              "location": "query",
+              "required": true,
+              "type": "string"
+            },
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/advertiserLandingPages",
+          "request": {
+            "$ref": "LandingPage"
+          },
+          "response": {
+            "$ref": "LandingPage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        },
+        "update": {
+          "description": "Updates an existing landing page.",
+          "httpMethod": "PUT",
+          "id": "dfareporting.advertiserLandingPages.update",
+          "parameterOrder": [
+            "profileId"
+          ],
+          "parameters": {
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/advertiserLandingPages",
+          "request": {
+            "$ref": "LandingPage"
+          },
+          "response": {
+            "$ref": "LandingPage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        }
+      }
+    },
     "advertisers": {
       "methods": {
         "get": {
@@ -1613,23 +1834,9 @@
           "httpMethod": "POST",
           "id": "dfareporting.campaigns.insert",
           "parameterOrder": [
-            "profileId",
-            "defaultLandingPageName",
-            "defaultLandingPageUrl"
+            "profileId"
           ],
           "parameters": {
-            "defaultLandingPageName": {
-              "description": "Default landing page name for this new campaign. Must be less than 256 characters long.",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "defaultLandingPageUrl": {
-              "description": "Default landing page URL for this new campaign.",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
             "profileId": {
               "description": "User profile ID associated with this request.",
               "format": "int64",
@@ -2552,11 +2759,11 @@
             "protocols": {
               "resumable": {
                 "multipart": true,
-                "path": "/resumable/upload/dfareporting/v2.8/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+                "path": "/resumable/upload/dfareporting/v3.2/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
               },
               "simple": {
                 "multipart": true,
-                "path": "/upload/dfareporting/v2.8/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
+                "path": "/upload/dfareporting/v3.2/userprofiles/{profileId}/creativeAssets/{advertiserId}/creativeAssets"
               }
             }
           },
@@ -5343,232 +5550,6 @@
         }
       }
     },
-    "landingPages": {
-      "methods": {
-        "delete": {
-          "description": "Deletes an existing campaign landing page.",
-          "httpMethod": "DELETE",
-          "id": "dfareporting.landingPages.delete",
-          "parameterOrder": [
-            "profileId",
-            "campaignId",
-            "id"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "id": {
-              "description": "Landing page ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}",
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "get": {
-          "description": "Gets one campaign landing page by ID.",
-          "httpMethod": "GET",
-          "id": "dfareporting.landingPages.get",
-          "parameterOrder": [
-            "profileId",
-            "campaignId",
-            "id"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "id": {
-              "description": "Landing page ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages/{id}",
-          "response": {
-            "$ref": "LandingPage"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "insert": {
-          "description": "Inserts a new landing page for the specified campaign.",
-          "httpMethod": "POST",
-          "id": "dfareporting.landingPages.insert",
-          "parameterOrder": [
-            "profileId",
-            "campaignId"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-          "request": {
-            "$ref": "LandingPage"
-          },
-          "response": {
-            "$ref": "LandingPage"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "list": {
-          "description": "Retrieves the list of landing pages for the specified campaign.",
-          "httpMethod": "GET",
-          "id": "dfareporting.landingPages.list",
-          "parameterOrder": [
-            "profileId",
-            "campaignId"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-          "response": {
-            "$ref": "LandingPagesListResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "patch": {
-          "description": "Updates an existing campaign landing page. This method supports patch semantics.",
-          "httpMethod": "PATCH",
-          "id": "dfareporting.landingPages.patch",
-          "parameterOrder": [
-            "profileId",
-            "campaignId",
-            "id"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "id": {
-              "description": "Landing page ID.",
-              "format": "int64",
-              "location": "query",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-          "request": {
-            "$ref": "LandingPage"
-          },
-          "response": {
-            "$ref": "LandingPage"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        },
-        "update": {
-          "description": "Updates an existing campaign landing page.",
-          "httpMethod": "PUT",
-          "id": "dfareporting.landingPages.update",
-          "parameterOrder": [
-            "profileId",
-            "campaignId"
-          ],
-          "parameters": {
-            "campaignId": {
-              "description": "Landing page campaign ID.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "profileId": {
-              "description": "User profile ID associated with this request.",
-              "format": "int64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "userprofiles/{profileId}/campaigns/{campaignId}/landingPages",
-          "request": {
-            "$ref": "LandingPage"
-          },
-          "response": {
-            "$ref": "LandingPage"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/dfatrafficking"
-          ]
-        }
-      }
-    },
     "languages": {
       "methods": {
         "list": {
@@ -5618,6 +5599,106 @@
           "path": "userprofiles/{profileId}/metros",
           "response": {
             "$ref": "MetrosListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        }
+      }
+    },
+    "mobileApps": {
+      "methods": {
+        "get": {
+          "description": "Gets one mobile app by ID.",
+          "httpMethod": "GET",
+          "id": "dfareporting.mobileApps.get",
+          "parameterOrder": [
+            "profileId",
+            "id"
+          ],
+          "parameters": {
+            "id": {
+              "description": "Mobile app ID.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/mobileApps/{id}",
+          "response": {
+            "$ref": "MobileApp"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/dfatrafficking"
+          ]
+        },
+        "list": {
+          "description": "Retrieves list of available mobile apps.",
+          "httpMethod": "GET",
+          "id": "dfareporting.mobileApps.list",
+          "parameterOrder": [
+            "profileId"
+          ],
+          "parameters": {
+            "directories": {
+              "description": "Select only apps from these directories.",
+              "enum": [
+                "APPLE_APP_STORE",
+                "GOOGLE_PLAY_STORE",
+                "UNKNOWN"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                ""
+              ],
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
+            "ids": {
+              "description": "Select only apps with these IDs.",
+              "location": "query",
+              "repeated": true,
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "1000",
+              "description": "Maximum number of results to return.",
+              "format": "int32",
+              "location": "query",
+              "maximum": "1000",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Value of the nextPageToken from the previous result page.",
+              "location": "query",
+              "type": "string"
+            },
+            "profileId": {
+              "description": "User profile ID associated with this request.",
+              "format": "int64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "searchString": {
+              "description": "Allows searching for objects by name or ID. Wildcards (*) are allowed. For example, \"app*2015\" will return objects with names like \"app Jan 2018\", \"app Jan 2018\", or simply \"app 2018\". Most of the searches also add wildcards implicitly at the start and the end of the search string. For example, a search string of \"app\" will match objects with name \"my app\", \"app 2018\", or simply \"app\".",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "userprofiles/{profileId}/mobileApps",
+          "response": {
+            "$ref": "MobileAppsListResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/dfatrafficking"
@@ -10358,6 +10439,29 @@
       },
       "type": "object"
     },
+    "AdvertiserLandingPagesListResponse": {
+      "description": "Landing Page List Response",
+      "id": "AdvertiserLandingPagesListResponse",
+      "properties": {
+        "kind": {
+          "default": "dfareporting#advertiserLandingPagesListResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#advertiserLandingPagesListResponse\".",
+          "type": "string"
+        },
+        "landingPages": {
+          "description": "Landing page collection",
+          "items": {
+            "$ref": "LandingPage"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Pagination token to be used for the next list operation.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AdvertisersListResponse": {
       "description": "Advertiser List Response",
       "id": "AdvertisersListResponse",
@@ -10554,6 +10658,11 @@
         "defaultClickThroughEventTagProperties": {
           "$ref": "DefaultClickThroughEventTagProperties",
           "description": "Click-through event tag ID override properties for this campaign."
+        },
+        "defaultLandingPageId": {
+          "description": "The default landing page ID for this campaign.",
+          "format": "int64",
+          "type": "string"
         },
         "endDate": {
           "description": "Date on which the campaign will stop running. On insert, the end date must be today or a future date. The end date must be later than or be the same as the start date. If, for example, you set 6/25/2015 as both the start and end dates, the effective campaign run date is just that day only, 6/25/2015. The hours, minutes, and seconds of the end date should not be set, as doing so will result in an error. This is a required field.",
@@ -10849,16 +10958,16 @@
       "description": "Creative Click Tag.",
       "id": "ClickTag",
       "properties": {
+        "clickThroughUrl": {
+          "$ref": "CreativeClickThroughUrl",
+          "description": "Parameter value for the specified click tag. This field contains a click-through url."
+        },
         "eventName": {
           "description": "Advertiser event name associated with the click tag. This field is used by DISPLAY_IMAGE_GALLERY and HTML5_BANNER creatives. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
           "type": "string"
         },
         "name": {
           "description": "Parameter name for the specified click tag. For DISPLAY_IMAGE_GALLERY creative assets, this field must match the value of the creative asset's creativeAssetId.name field.",
-          "type": "string"
-        },
-        "value": {
-          "description": "Parameter value for the specified click tag. This field contains a click-through url.",
           "type": "string"
         }
       },
@@ -11072,7 +11181,7 @@
       "id": "Conversion",
       "properties": {
         "childDirectedTreatment": {
-          "description": "Whether the conversion was directed toward children.",
+          "description": "Whether this particular request may come from a user under the age of 13, under COPPA compliance.",
           "type": "boolean"
         },
         "customVariables": {
@@ -11120,6 +11229,10 @@
           "description": "The mobile device ID. This field is mutually exclusive with encryptedUserId, encryptedUserIdCandidates[] and gclid. This or encryptedUserId or encryptedUserIdCandidates[] or gclid is a required field.",
           "type": "string"
         },
+        "nonPersonalizedAd": {
+          "description": "Whether the conversion was for a non personalized ad.",
+          "type": "boolean"
+        },
         "ordinal": {
           "description": "The ordinal of the conversion. Use this field to control how conversions of the same user and day are de-duplicated. This is a required field.",
           "type": "string"
@@ -11133,6 +11246,10 @@
           "description": "The timestamp of conversion, in Unix epoch micros. This is a required field.",
           "format": "int64",
           "type": "string"
+        },
+        "treatmentForUnderage": {
+          "description": "Whether this particular request may come from a user under the age of 16 (may differ by country), under compliance with the EU?s General Data Protection Regulation (GDPR).",
+          "type": "boolean"
         },
         "value": {
           "description": "The value of the conversion.",
@@ -11361,6 +11478,13 @@
           },
           "type": "array"
         },
+        "additionalSizes": {
+          "description": "Additional sizes associated with a responsive creative. When inserting or updating a creative either the size ID field or size width and height fields can be used. Applicable to DISPLAY creatives when the primary asset type is HTML_IMAGE",
+          "items": {
+            "$ref": "Size"
+          },
+          "type": "array"
+        },
         "advertiserId": {
           "description": "Advertiser ID of this creative. This is a required field. Applicable to all creative types.",
           "format": "int64",
@@ -11425,8 +11549,8 @@
           "type": "string"
         },
         "backupImageClickThroughUrl": {
-          "description": "Click-through URL for backup image. Applicable to the following creative types: FLASH_INPAGE, and HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
-          "type": "string"
+          "$ref": "CreativeClickThroughUrl",
+          "description": "Click-through URL for backup image. Applicable to ENHANCED_BANNER when the primary asset type is not HTML_IMAGE."
         },
         "backupImageFeatures": {
           "description": "List of feature dependencies that will cause a backup image to be served if the browser that serves the ad does not support them. Feature dependencies are features that a browser must be able to support in order to render your HTML5 creative asset correctly. This field is initially auto-generated to contain all features detected by DCM for all the assets of this creative and can then be modified by the client. To reset this field, copy over all the creativeAssets' detected features. Applicable to the following creative types: HTML5_BANNER. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.",
@@ -11591,7 +11715,7 @@
           "type": "string"
         },
         "companionCreatives": {
-          "description": "List of companion creatives assigned to an in-Stream video creative. Acceptable values include IDs of existing flash and image creatives. Applicable to the following creative types: all VPAID and all INSTREAM_VIDEO with dynamicAssetSelection set to false.",
+          "description": "List of companion creatives assigned to an in-Stream video creative. Acceptable values include IDs of existing flash and image creatives. Applicable to the following creative types: all VPAID, all INSTREAM_AUDIO and all INSTREAM_VIDEO with dynamicAssetSelection set to false.",
           "items": {
             "format": "int64",
             "type": "string"
@@ -11599,7 +11723,7 @@
           "type": "array"
         },
         "compatibility": {
-          "description": "Compatibilities associated with this creative. This is a read-only field. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices or in mobile apps for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. Only pre-existing creatives may have these compatibilities since new creatives will either be assigned DISPLAY or DISPLAY_INTERSTITIAL instead. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard. Applicable to all creative types.\n\nAcceptable values are:\n- \"APP\"\n- \"APP_INTERSTITIAL\"\n- \"IN_STREAM_VIDEO\"\n- \"DISPLAY\"\n- \"DISPLAY_INTERSTITIAL\"",
+          "description": "Compatibilities associated with this creative. This is a read-only field. DISPLAY and DISPLAY_INTERSTITIAL refer to rendering either on desktop or on mobile devices or in mobile apps for regular or interstitial ads, respectively. APP and APP_INTERSTITIAL are for rendering in mobile apps. Only pre-existing creatives may have these compatibilities since new creatives will either be assigned DISPLAY or DISPLAY_INTERSTITIAL instead. IN_STREAM_VIDEO refers to rendering in in-stream video ads developed with the VAST standard. IN_STREAM_AUDIO refers to rendering in in-stream audio ads developed with the VAST standard. Applicable to all creative types.\n\nAcceptable values are:\n- \"APP\"\n- \"APP_INTERSTITIAL\"\n- \"IN_STREAM_VIDEO\"\n- \"IN_STREAM_AUDIO\"\n- \"DISPLAY\"\n- \"DISPLAY_INTERSTITIAL\"",
           "items": {
             "enum": [
               "APP",
@@ -11703,12 +11827,26 @@
           "format": "int64",
           "type": "string"
         },
+        "mediaDescription": {
+          "description": "Description of the audio or video ad. Applicable to the following creative types: all INSTREAM_VIDEO, INSTREAM_AUDIO, and all VPAID.",
+          "type": "string"
+        },
+        "mediaDuration": {
+          "description": "Creative audio or video duration in seconds. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO, INSTREAM_AUDIO, all RICH_MEDIA, and all VPAID.",
+          "format": "float",
+          "type": "number"
+        },
         "name": {
           "description": "Name of the creative. This is a required field and must be less than 256 characters long. Applicable to all creative types.",
           "type": "string"
         },
         "overrideCss": {
           "description": "Override CSS value for rich media creatives. Applicable to the following creative types: all RICH_MEDIA.",
+          "type": "string"
+        },
+        "politeLoadAssetId": {
+          "description": "The asset ID of the polite load image asset. Applicable to the creative type: DISPLAY.",
+          "format": "int64",
           "type": "string"
         },
         "progressOffset": {
@@ -11786,7 +11924,7 @@
           "type": "string"
         },
         "thirdPartyUrls": {
-          "description": "Third-party URLs for tracking in-stream video creative events. Applicable to the following creative types: all INSTREAM_VIDEO and all VPAID.",
+          "description": "Third-party URLs for tracking in-stream creative events. Applicable to the following creative types: all INSTREAM_VIDEO, all INSTREAM_AUDIO, and all VPAID.",
           "items": {
             "$ref": "ThirdPartyTrackingUrl"
           },
@@ -11864,21 +12002,12 @@
         },
         "universalAdId": {
           "$ref": "UniversalAdId",
-          "description": "A Universal Ad ID as per the VAST 4.0 spec. Applicable to the following creative types: INSTREAM_VIDEO and VPAID."
+          "description": "A Universal Ad ID as per the VAST 4.0 spec. Applicable to the following creative types: INSTREAM_AUDIO and INSTREAM_VIDEO and VPAID."
         },
         "version": {
           "description": "The version number helps you keep track of multiple versions of your creative in your reports. The version number will always be auto-generated during insert operations to start at 1. For tracking creatives the version cannot be incremented and will always remain at 1. For all other creative types the version can be incremented only by 1 during update operations. In addition, the version will be automatically incremented by 1 when undergoing Rich Media creative merging. Applicable to all creative types.",
           "format": "int32",
           "type": "integer"
-        },
-        "videoDescription": {
-          "description": "Description of the video ad. Applicable to the following creative types: all INSTREAM_VIDEO and all VPAID.",
-          "type": "string"
-        },
-        "videoDuration": {
-          "description": "Creative video duration in seconds. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO, all RICH_MEDIA, and all VPAID.",
-          "format": "float",
-          "type": "number"
         }
       },
       "type": "object"
@@ -11892,8 +12021,15 @@
           "type": "boolean"
         },
         "active": {
-          "description": "Whether the video asset is active. This is a read-only field for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
+          "description": "Whether the video or audio asset is active. This is a read-only field for VPAID_NON_LINEAR_VIDEO assets. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "type": "boolean"
+        },
+        "additionalSizes": {
+          "description": "Additional sizes associated with this creative asset. HTML5 asset generated by compatible software such as GWD will be able to support more sizes this creative asset can render.",
+          "items": {
+            "$ref": "Size"
+          },
+          "type": "array"
         },
         "alignment": {
           "description": "Possible alignments for an asset. This is a read-only field. Applicable to the following creative types: RICH_MEDIA_DISPLAY_MULTI_FLOATING_INTERSTITIAL.",
@@ -11936,7 +12072,7 @@
           "description": "Exit event configured for the backup image. Applicable to the following creative types: all RICH_MEDIA."
         },
         "bitRate": {
-          "description": "Detected bit-rate for video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
+          "description": "Detected bit-rate for audio or video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "format": "int32",
           "type": "integer"
         },
@@ -12145,7 +12281,7 @@
           "type": "string"
         },
         "duration": {
-          "description": "Duration in seconds for which an asset will be displayed. Applicable to the following creative types: INSTREAM_VIDEO and VPAID_LINEAR_VIDEO. Value must be greater than or equal to 1.",
+          "description": "Duration in seconds for which an asset will be displayed. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and VPAID_LINEAR_VIDEO. Value must be greater than or equal to 1.",
           "format": "int32",
           "type": "integer"
         },
@@ -12198,13 +12334,32 @@
           "$ref": "DimensionValue",
           "description": "Dimension value for the ID of the asset. This is a read-only, auto-generated field."
         },
+        "mediaDuration": {
+          "description": "Detected duration for audio or video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
+          "format": "float",
+          "type": "number"
+        },
         "mimeType": {
-          "description": "Detected MIME type for video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
+          "description": "Detected MIME type for audio or video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "type": "string"
         },
         "offset": {
           "$ref": "OffsetPosition",
           "description": "Offset position for an asset in collapsed mode. This is a read-only field. Applicable to the following creative types: all RICH_MEDIA and all VPAID. Additionally, only applicable to assets whose displayType is ASSET_DISPLAY_TYPE_EXPANDING or ASSET_DISPLAY_TYPE_PEEL_DOWN."
+        },
+        "orientation": {
+          "description": "Orientation of video asset. This is a read-only, auto-generated field.",
+          "enum": [
+            "LANDSCAPE",
+            "PORTRAIT",
+            "SQUARE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         },
         "originalBackup": {
           "description": "Whether the backup asset is original or changed by the user in DCM. Applicable to the following creative types: all RICH_MEDIA.",
@@ -12256,18 +12411,22 @@
           "type": "number"
         },
         "role": {
-          "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to DISPLAY, FLASH_INPAGE, HTML5_BANNER, IMAGE, DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR_VIDEO creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO creative.",
+          "description": "Role of the asset in relation to creative. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT. This is a required field.\nPRIMARY applies to DISPLAY, FLASH_INPAGE, HTML5_BANNER, IMAGE, DISPLAY_IMAGE_GALLERY, all RICH_MEDIA (which may contain multiple primary assets), and all VPAID creatives.\nBACKUP_IMAGE applies to FLASH_INPAGE, HTML5_BANNER, all RICH_MEDIA, and all VPAID creatives. Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.\nADDITIONAL_IMAGE and ADDITIONAL_FLASH apply to FLASH_INPAGE creatives.\nOTHER refers to assets from sources other than DCM, such as Studio uploaded assets, applicable to all RICH_MEDIA and all VPAID creatives.\nPARENT_VIDEO refers to videos uploaded by the user in DCM and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nTRANSCODED_VIDEO refers to videos transcoded by DCM from PARENT_VIDEO assets and is applicable to INSTREAM_VIDEO and VPAID_LINEAR_VIDEO creatives.\nALTERNATE_VIDEO refers to the DCM representation of child asset videos from Studio, and is applicable to VPAID_LINEAR_VIDEO creatives. These cannot be added or removed within DCM.\nFor VPAID_LINEAR_VIDEO creatives, PARENT_VIDEO, TRANSCODED_VIDEO and ALTERNATE_VIDEO assets that are marked active serve as backup in case the VPAID creative cannot be served. Only PARENT_VIDEO assets can be added or removed for an INSTREAM_VIDEO or VPAID_LINEAR_VIDEO creative.\nPARENT_AUDIO refers to audios uploaded by the user in DCM and is applicable to INSTREAM_AUDIO creatives.\nTRANSCODED_AUDIO refers to audios transcoded by DCM from PARENT_AUDIO assets and is applicable to INSTREAM_AUDIO creatives.",
           "enum": [
             "ADDITIONAL_FLASH",
             "ADDITIONAL_IMAGE",
             "ALTERNATE_VIDEO",
             "BACKUP_IMAGE",
             "OTHER",
+            "PARENT_AUDIO",
             "PARENT_VIDEO",
             "PRIMARY",
+            "TRANSCODED_AUDIO",
             "TRANSCODED_VIDEO"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -12311,11 +12470,6 @@
           "description": "Whether the asset is vertically locked. This is a read-only field. Applicable to the following creative types: all RICH_MEDIA.",
           "type": "boolean"
         },
-        "videoDuration": {
-          "description": "Detected video duration for video asset. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
-          "format": "float",
-          "type": "number"
-        },
         "windowMode": {
           "description": "Window mode options for flash assets. Applicable to the following creative types: FLASH_INPAGE, RICH_MEDIA_DISPLAY_EXPANDING, RICH_MEDIA_IM_EXPAND, RICH_MEDIA_DISPLAY_BANNER, and RICH_MEDIA_INPAGE_FLOATING.",
           "enum": [
@@ -12357,6 +12511,7 @@
         "type": {
           "description": "Type of asset to upload. This is a required field. FLASH and IMAGE are no longer supported for new uploads. All image assets should use HTML_IMAGE.",
           "enum": [
+            "AUDIO",
             "FLASH",
             "HTML",
             "HTML_IMAGE",
@@ -12364,6 +12519,7 @@
             "VIDEO"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -12701,6 +12857,26 @@
       },
       "type": "object"
     },
+    "CreativeClickThroughUrl": {
+      "description": "Click-through URL",
+      "id": "CreativeClickThroughUrl",
+      "properties": {
+        "computedClickThroughUrl": {
+          "description": "Read-only convenience field representing the actual URL that will be used for this click-through. The URL is computed as follows: \n- If landingPageId is specified then that landing page's URL is assigned to this field.\n- Otherwise, the customClickThroughUrl is assigned to this field.",
+          "type": "string"
+        },
+        "customClickThroughUrl": {
+          "description": "Custom click-through URL. Applicable if the landingPageId field is left unset.",
+          "type": "string"
+        },
+        "landingPageId": {
+          "description": "ID of the landing page for the click-through URL.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CreativeCustomEvent": {
       "description": "Creative Custom Event.",
       "id": "CreativeCustomEvent",
@@ -12748,9 +12924,9 @@
           ],
           "type": "string"
         },
-        "exitUrl": {
-          "description": "Exit URL of the event. This field is used only for exit events.",
-          "type": "string"
+        "exitClickThroughUrl": {
+          "$ref": "CreativeClickThroughUrl",
+          "description": "Exit click-through URL for the event. This field is used only for exit events."
         },
         "id": {
           "description": "ID of this event. This is a required field and should not be modified after insertion.",
@@ -13515,6 +13691,38 @@
         "userLocalTime": {
           "description": "Whether or not to use the user's local time. If false, the America/New York time zone applies.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DeepLink": {
+      "description": "Contains information about a landing page deep link.",
+      "id": "DeepLink",
+      "properties": {
+        "appUrl": {
+          "description": "The URL of the mobile app being linked to.",
+          "type": "string"
+        },
+        "fallbackUrl": {
+          "description": "The fallback URL. This URL will be served to users who do not have the mobile app installed.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "dfareporting#deepLink",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#deepLink\".",
+          "type": "string"
+        },
+        "mobileApp": {
+          "$ref": "MobileApp",
+          "description": "The mobile app targeted by this deep link."
+        },
+        "remarketingListIds": {
+          "description": "Ads served to users on these remarketing lists will use this deep link. Applicable when mobileApp.directory is APPLE_APP_STORE.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -14455,6 +14663,10 @@
           "description": "Generated tag for this Floodlight activity. For global site tags, this is the event snippet.",
           "type": "string"
         },
+        "globalSiteTagGlobalSnippet": {
+          "description": "The global snippet section of a global site tag. The global site tag sets new cookies on your domain, which will store a unique identifier for a user or the ad click that brought the user to your site. Learn more.",
+          "type": "string"
+        },
         "kind": {
           "default": "dfareporting#floodlightActivitiesGenerateTagResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#floodlightActivitiesGenerateTagResponse\".",
@@ -14585,6 +14797,20 @@
           "$ref": "DimensionValue",
           "description": "Dimension value for the ID of the floodlight configuration. This is a read-only, auto-generated field."
         },
+        "floodlightTagType": {
+          "description": "The type of Floodlight tag this activity will generate. This is a required field.",
+          "enum": [
+            "GLOBAL_SITE_TAG",
+            "IFRAME",
+            "IMAGE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "hidden": {
           "description": "Whether this activity is archived.",
           "type": "boolean"
@@ -14597,10 +14823,6 @@
         "idDimensionValue": {
           "$ref": "DimensionValue",
           "description": "Dimension value for the ID of this floodlight activity. This is a read-only, auto-generated field."
-        },
-        "imageTagEnabled": {
-          "description": "Whether the image tag is enabled for this activity.",
-          "type": "boolean"
         },
         "kind": {
           "default": "dfareporting#floodlightActivity",
@@ -15422,9 +15644,21 @@
       "description": "Contains information about where a user's browser is taken after the user clicks an ad.",
       "id": "LandingPage",
       "properties": {
-        "default": {
-          "description": "Whether or not this landing page will be assigned to any ads or creatives that do not have a landing page assigned explicitly. Only one default landing page is allowed per campaign.",
+        "advertiserId": {
+          "description": "Advertiser ID of this landing page. This is a required field.",
+          "format": "int64",
+          "type": "string"
+        },
+        "archived": {
+          "description": "Whether this landing page has been archived.",
           "type": "boolean"
+        },
+        "deepLinks": {
+          "description": "Links that will direct the user to a mobile app, if installed.",
+          "items": {
+            "$ref": "DeepLink"
+          },
+          "type": "array"
         },
         "id": {
           "description": "ID of this landing page. This is a read-only, auto-generated field.",
@@ -15437,31 +15671,12 @@
           "type": "string"
         },
         "name": {
-          "description": "Name of this landing page. This is a required field. It must be less than 256 characters long, and must be unique among landing pages of the same campaign.",
+          "description": "Name of this landing page. This is a required field. It must be less than 256 characters long.",
           "type": "string"
         },
         "url": {
           "description": "URL of this landing page. This is a required field.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "LandingPagesListResponse": {
-      "description": "Landing Page List Response",
-      "id": "LandingPagesListResponse",
-      "properties": {
-        "kind": {
-          "default": "dfareporting#landingPagesListResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#landingPagesListResponse\".",
-          "type": "string"
-        },
-        "landingPages": {
-          "description": "Landing page collection",
-          "items": {
-            "$ref": "LandingPage"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -15739,6 +15954,67 @@
             "$ref": "Metro"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MobileApp": {
+      "description": "Contains information about a mobile app. Used as a landing page deep link.",
+      "id": "MobileApp",
+      "properties": {
+        "directory": {
+          "description": "Mobile app directory.",
+          "enum": [
+            "APPLE_APP_STORE",
+            "GOOGLE_PLAY_STORE",
+            "UNKNOWN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "id": {
+          "description": "ID of this mobile app.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "dfareporting#mobileApp",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#mobileApp\".",
+          "type": "string"
+        },
+        "publisherName": {
+          "description": "Publisher name.",
+          "type": "string"
+        },
+        "title": {
+          "description": "Title of this mobile app.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MobileAppsListResponse": {
+      "description": "Mobile app List Response",
+      "id": "MobileAppsListResponse",
+      "properties": {
+        "kind": {
+          "default": "dfareporting#mobileAppsListResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#mobileAppsListResponse\".",
+          "type": "string"
+        },
+        "mobileApps": {
+          "description": "Mobile apps collection.",
+          "items": {
+            "$ref": "MobileApp"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Pagination token to be used for the next list operation.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -16323,6 +16599,13 @@
         "adBlockingOptOut": {
           "description": "Whether this placement opts out of ad blocking. When true, ad blocking is disabled for this placement. When false, the campaign and site settings take effect.",
           "type": "boolean"
+        },
+        "additionalSizes": {
+          "description": "Additional sizes associated with this placement. When inserting or updating a placement, only the size ID field is used.",
+          "items": {
+            "$ref": "Size"
+          },
+          "type": "array"
         },
         "advertiserId": {
           "description": "Advertiser ID of this placement. This field can be left blank.",
@@ -19071,7 +19354,7 @@
       "id": "ThirdPartyTrackingUrl",
       "properties": {
         "thirdPartyUrlType": {
-          "description": "Third-party URL type for in-stream video creatives.",
+          "description": "Third-party URL type for in-stream video and in-stream audio creatives.",
           "enum": [
             "CLICK_TRACKING",
             "IMPRESSION",
@@ -19144,7 +19427,7 @@
       "type": "object"
     },
     "UniversalAdId": {
-      "description": "A Universal Ad ID as per the VAST 4.0 spec. Applicable to the following creative types: INSTREAM_VIDEO and VPAID.",
+      "description": "A Universal Ad ID as per the VAST 4.0 spec. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and VPAID.",
       "id": "UniversalAdId",
       "properties": {
         "registry": {
@@ -19733,6 +20016,20 @@
           "description": "Identifies what kind of resource this is. Value: the fixed string \"dfareporting#videoSettings\".",
           "type": "string"
         },
+        "orientation": {
+          "description": "Orientation of a video placement. If this value is set, placement will return assets matching the specified orientation.",
+          "enum": [
+            "ANY",
+            "LANDSCAPE",
+            "PORTRAIT"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "skippableSettings": {
           "$ref": "SkippableSetting",
           "description": "Settings for the skippability of video creatives served to this placement. If this object is provided, the creative-level skippable settings will be overridden."
@@ -19745,7 +20042,7 @@
       "type": "object"
     }
   },
-  "servicePath": "dfareporting/v2.8/",
+  "servicePath": "dfareporting/v3.2/",
   "title": "DCM/DFA Reporting And Trafficking API",
-  "version": "v2.8"
+  "version": "v3.2"
 }

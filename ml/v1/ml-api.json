@@ -310,6 +310,40 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "patch": {
+              "description": "Updates a specific job resource.\n\nCurrently the only supported fields to update are `labels`.",
+              "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}",
+              "httpMethod": "PATCH",
+              "id": "ml.projects.jobs.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Required. The job name.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/jobs/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. Specifies the path, relative to `Job`, of the field to update.\nTo adopt etag mechanism, include `etag` field in the mask, and include the\n`etag` value in your job resource.\n\nFor example, to change the labels of a job, the `update_mask` parameter\nwould be specified as `labels`, `etag`, and the\n`PATCH` request body would specify the new value, as follows:\n    {\n      \"labels\": {\n         \"owner\": \"Google\",\n         \"color\": \"Blue\"\n      }\n      \"etag\": \"33a64df551425fcc55e4d42a148795d9f25f89d4\"\n    }\nIf `etag` matches the one on the server, the labels of the job will be\nreplaced with the given ones, and the server end `etag` will be\nrecalculated.\n\nCurrently the only supported update masks are `labels` and `etag`.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "GoogleCloudMlV1__Job"
+              },
+              "response": {
+                "$ref": "GoogleCloudMlV1__Job"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "setIamPolicy": {
               "description": "Sets the access control policy on the specified resource. Replaces any\nexisting policy.",
               "flatPath": "v1/projects/{projectsId}/jobs/{jobsId}:setIamPolicy",
@@ -981,7 +1015,7 @@
       }
     }
   },
-  "revision": "20180727",
+  "revision": "20180804",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {

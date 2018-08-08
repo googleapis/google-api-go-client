@@ -1975,7 +1975,7 @@
       }
     }
   },
-  "revision": "20180605",
+  "revision": "20180807",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "Announcement": {
@@ -2425,6 +2425,17 @@
       },
       "type": "object"
     },
+    "CourseWorkChangesInfo": {
+      "description": "Information about a `Feed` with a `feed_type` of `COURSE_WORK_CHANGES`.",
+      "id": "CourseWorkChangesInfo",
+      "properties": {
+        "courseId": {
+          "description": "The `course_id` of the course to subscribe to work changes for.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Date": {
       "description": "Represents a whole calendar date, e.g. date of birth. The time of day and\ntime zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day may be 0 to\nrepresent a year and month where the day is not significant, e.g. credit card\nexpiration date. The year may be 0 to represent a month and day independent\nof year, e.g. anniversary date. Related types are google.type.TimeOfDay\nand `google.protobuf.Timestamp`.",
       "id": "Date",
@@ -2503,17 +2514,23 @@
           "$ref": "CourseRosterChangesInfo",
           "description": "Information about a `Feed` with a `feed_type` of `COURSE_ROSTER_CHANGES`.\nThis field must be specified if `feed_type` is `COURSE_ROSTER_CHANGES`."
         },
+        "courseWorkChangesInfo": {
+          "$ref": "CourseWorkChangesInfo",
+          "description": "Information about a `Feed` with a `feed_type` of `COURSE_WORK_CHANGES`.\nThis field must be specified if `feed_type` is `COURSE_WORK_CHANGES`."
+        },
         "feedType": {
           "description": "The type of feed.",
           "enum": [
             "FEED_TYPE_UNSPECIFIED",
             "DOMAIN_ROSTER_CHANGES",
-            "COURSE_ROSTER_CHANGES"
+            "COURSE_ROSTER_CHANGES",
+            "COURSE_WORK_CHANGES"
           ],
           "enumDescriptions": [
             "Should never be returned or provided.",
             "All roster changes for a particular domain.\n\nNotifications will be generated whenever a user joins or leaves a course.\n\nNo notifications will be generated when an invitation is created or\ndeleted, but notifications will be generated when a user joins a course\nby accepting an invitation.",
-            "All roster changes for a particular course.\n\nNotifications will be generated whenever a user joins or leaves a course.\n\nNo notifications will be generated when an invitation is created or\ndeleted, but notifications will be generated when a user joins a course\nby accepting an invitation."
+            "All roster changes for a particular course.\n\nNotifications will be generated whenever a user joins or leaves a course.\n\nNo notifications will be generated when an invitation is created or\ndeleted, but notifications will be generated when a user joins a course\nby accepting an invitation.",
+            "All course work activity for a particular course.\n\nNotifications will be generated when a CourseWork or\nStudentSubmission object is created or modified. No notification will be\ngenerated when a StudentSubmission object is created in connection with\nthe creation or modification of its parent CourseWork object (but a\nnotification will be generated for that CourseWork object's creation or\nmodification)."
           ],
           "type": "string"
         }

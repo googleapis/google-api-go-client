@@ -2449,6 +2449,16 @@ type HttpRule struct {
 	// Put: Used for updating a resource.
 	Put string `json:"put,omitempty"`
 
+	// ResponseBody: Optional. The name of the response field whose value is
+	// mapped to the HTTP
+	// body of response. Other response fields are ignored. When
+	// not set, the response message will be used as HTTP body of
+	// response.
+	// NOTE: the referred field must be not a repeated field and must be
+	// present
+	// at the top-level of response message type.
+	ResponseBody string `json:"responseBody,omitempty"`
+
 	// RestCollection: DO NOT USE. This is an experimental field.
 	//
 	// Optional. The REST collection name is by default derived from the

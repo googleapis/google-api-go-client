@@ -104,66 +104,6 @@
   },
   "protocol": "rest",
   "resources": {
-    "oauth": {
-      "resources": {
-        "clientIds": {
-          "methods": {
-            "handleRedirect": {
-              "description": "This endpoint is only meant to serve redirects from the OAuth flow, and\nshould never be called explicitly. Any other calls will simply be rejected\nwith BAD_REQUEST.\n\nHandles a redirect from Google's Authentication server after completing\nthe login \u0026 consent flow of OAuth handshake.\nNote that this does not terminate the OAuth flow, it is a hop that will\nalways return a 302 to continue to Identity-Aware Proxy servers, where\nthe OAuth flow is terminated.",
-              "flatPath": "v1beta1/oauth/clientIds/{clientIdsId}:handleRedirect",
-              "httpMethod": "GET",
-              "id": "iap.oauth.clientIds.handleRedirect",
-              "parameterOrder": [
-                "clientId"
-              ],
-              "parameters": {
-                "authuser": {
-                  "description": "Auth user parameter passed back by Google's OAuth 2.0 API.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "clientId": {
-                  "description": "The client_id against which the OAuth flow was initiated.",
-                  "location": "path",
-                  "pattern": "^[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "code": {
-                  "description": "Authentication code obtained after OAuth login \u0026 consent flow.\nhttps://tools.ietf.org/html/rfc6749#section-1.3.1",
-                  "location": "query",
-                  "type": "string"
-                },
-                "hd": {
-                  "description": "Hosted Domain parameter passed back by Google's OAuth 2.0 API.\nMore information can be found at:\nhttps://developers.google.com/identity/protocols/OpenIDConnect#hd-param",
-                  "location": "query",
-                  "type": "string"
-                },
-                "prompt": {
-                  "description": "Prompt parameter passed back by Google's OAuth 2.0 API.\nMore information can be found at:\nhttps://developers.google.com/identity/protocols/OpenIDConnect#prompt",
-                  "location": "query",
-                  "type": "string"
-                },
-                "sessionState": {
-                  "description": "Session state parameter passed back by Google's OAuth 2.0 API.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "state": {
-                  "description": "State parameter passed back to the service provider from authentication\nserver in OAuth flow.\nhttps://tools.ietf.org/html/rfc6749#section-4.1.1",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v1beta1/oauth/clientIds/{+clientId}:handleRedirect",
-              "response": {
-                "$ref": "Empty"
-              }
-            }
-          }
-        }
-      }
-    },
     "projects": {
       "resources": {
         "iap_web": {
@@ -437,7 +377,7 @@
       }
     }
   },
-  "revision": "20180712",
+  "revision": "20180806",
   "rootUrl": "https://iap.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -508,12 +448,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "Empty": {
-      "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
-      "id": "Empty",
-      "properties": {},
       "type": "object"
     },
     "Expr": {

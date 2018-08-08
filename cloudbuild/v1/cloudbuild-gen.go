@@ -1152,6 +1152,15 @@ type Results struct {
 	// indices.
 	BuildStepImages []string `json:"buildStepImages,omitempty"`
 
+	// BuildStepOutputs: List of build step outputs, produced by builder
+	// images, in the order
+	// corresponding to build step indices.
+	//
+	// Builders can produce this output by writing to
+	// `$BUILDER_OUTPUT/output`.
+	// Only the first 4KB of data is stored.
+	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
+
 	// Images: Container images that were built as a part of the build.
 	Images []*BuiltImage `json:"images,omitempty"`
 

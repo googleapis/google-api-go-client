@@ -421,7 +421,10 @@
           "path": "v1/services",
           "response": {
             "$ref": "ListServicesResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
         }
       },
       "resources": {
@@ -475,14 +478,17 @@
               "path": "v1/{+parent}/skus",
               "response": {
                 "$ref": "ListSkusResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
             }
           }
         }
       }
     }
   },
-  "revision": "20180731",
+  "revision": "20180806",
   "rootUrl": "https://cloudbilling.googleapis.com/",
   "schemas": {
     "AggregationInfo": {

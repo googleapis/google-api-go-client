@@ -292,7 +292,7 @@ func (c *ArchiveInsertCall) Do(opts ...googleapi.CallOption) (*Groups, error) {
 	//     "accept": [
 	//       "message/rfc822"
 	//     ],
-	//     "maxSize": "16MB",
+	//     "maxSize": "25MB",
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,

@@ -2121,7 +2121,7 @@
       }
     }
   },
-  "revision": "20180730",
+  "revision": "20180807",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -5053,53 +5053,6 @@
         },
         "source": {
           "description": "Optional. This value is passed directly to `QueryResult.webhook_source`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse": {
-      "description": "Response message for KnowledgeService.BatchUpdateQuestionAnswerEntries.",
-      "id": "GoogleCloudKnowledgeV1alpha1BatchUpdateQuestionAnswerEntriesResponse",
-      "properties": {
-        "questionAnswerEntries": {
-          "description": "The list of question-answer-entries.",
-          "items": {
-            "$ref": "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry": {
-      "description": "A QuestionAnswerEntry resource.",
-      "id": "GoogleCloudKnowledgeV1alpha1QuestionAnswerEntry",
-      "properties": {
-        "answer": {
-          "description": "Output only. Answer text.",
-          "type": "string"
-        },
-        "name": {
-          "description": "The name of the question-answer-entry.",
-          "type": "string"
-        },
-        "question": {
-          "description": "Output only. The question for the answer.",
-          "type": "string"
-        },
-        "state": {
-          "description": "Required. The state of the question-answer-entry.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "ENABLED",
-            "DISABLED"
-          ],
-          "enumDescriptions": [
-            "State unspecified.",
-            "This QuestionAnswerEntry is enabled.",
-            "This QuestionAnswerEntry is disabled."
-          ],
           "type": "string"
         }
       },

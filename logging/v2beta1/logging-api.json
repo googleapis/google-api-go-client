@@ -744,7 +744,7 @@
       }
     }
   },
-  "revision": "20180729",
+  "revision": "20180806",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -1669,6 +1669,10 @@
         "traceId": {
           "description": "Stackdriver Trace identifier for this request.",
           "type": "string"
+        },
+        "traceSampled": {
+          "description": "If true, the value in the 'trace_id' field was sampled for storage in a trace backend.",
+          "type": "boolean"
         },
         "urlMapEntry": {
           "description": "File or class that handled the request.",

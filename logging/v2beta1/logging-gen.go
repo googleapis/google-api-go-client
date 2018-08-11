@@ -1813,6 +1813,10 @@ type RequestLog struct {
 	// TraceId: Stackdriver Trace identifier for this request.
 	TraceId string `json:"traceId,omitempty"`
 
+	// TraceSampled: If true, the value in the 'trace_id' field was sampled
+	// for storage in a trace backend.
+	TraceSampled bool `json:"traceSampled,omitempty"`
+
 	// UrlMapEntry: File or class that handled the request.
 	UrlMapEntry string `json:"urlMapEntry,omitempty"`
 

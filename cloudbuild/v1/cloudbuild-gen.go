@@ -1156,8 +1156,10 @@ type Results struct {
 	// images, in the order
 	// corresponding to build step indices.
 	//
-	// Builders can produce this output by writing to
-	// `$BUILDER_OUTPUT/output`.
+	// [Cloud
+	// Builders](https://cloud.google.com/cloud-build/docs/cloud-builders)
+	// ca
+	// n produce this output by writing to `$BUILDER_OUTPUT/output`.
 	// Only the first 4KB of data is stored.
 	BuildStepOutputs []string `json:"buildStepOutputs,omitempty"`
 

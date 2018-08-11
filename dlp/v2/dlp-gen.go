@@ -96,6 +96,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
 	rs.DeidentifyTemplates = NewOrganizationsDeidentifyTemplatesService(s)
 	rs.InspectTemplates = NewOrganizationsInspectTemplatesService(s)
+	rs.StoredInfoTypes = NewOrganizationsStoredInfoTypesService(s)
 	return rs
 }
 
@@ -105,6 +106,8 @@ type OrganizationsService struct {
 	DeidentifyTemplates *OrganizationsDeidentifyTemplatesService
 
 	InspectTemplates *OrganizationsInspectTemplatesService
+
+	StoredInfoTypes *OrganizationsStoredInfoTypesService
 }
 
 func NewOrganizationsDeidentifyTemplatesService(s *Service) *OrganizationsDeidentifyTemplatesService {
@@ -125,6 +128,15 @@ type OrganizationsInspectTemplatesService struct {
 	s *Service
 }
 
+func NewOrganizationsStoredInfoTypesService(s *Service) *OrganizationsStoredInfoTypesService {
+	rs := &OrganizationsStoredInfoTypesService{s: s}
+	return rs
+}
+
+type OrganizationsStoredInfoTypesService struct {
+	s *Service
+}
+
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Content = NewProjectsContentService(s)
@@ -133,6 +145,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 	rs.Image = NewProjectsImageService(s)
 	rs.InspectTemplates = NewProjectsInspectTemplatesService(s)
 	rs.JobTriggers = NewProjectsJobTriggersService(s)
+	rs.StoredInfoTypes = NewProjectsStoredInfoTypesService(s)
 	return rs
 }
 
@@ -150,6 +163,8 @@ type ProjectsService struct {
 	InspectTemplates *ProjectsInspectTemplatesService
 
 	JobTriggers *ProjectsJobTriggersService
+
+	StoredInfoTypes *ProjectsStoredInfoTypesService
 }
 
 func NewProjectsContentService(s *Service) *ProjectsContentService {
@@ -203,6 +218,15 @@ func NewProjectsJobTriggersService(s *Service) *ProjectsJobTriggersService {
 }
 
 type ProjectsJobTriggersService struct {
+	s *Service
+}
+
+func NewProjectsStoredInfoTypesService(s *Service) *ProjectsStoredInfoTypesService {
+	rs := &ProjectsStoredInfoTypesService{s: s}
+	return rs
+}
+
+type ProjectsStoredInfoTypesService struct {
 	s *Service
 }
 
@@ -338,6 +362,38 @@ func (s *GooglePrivacyDlpV2AuxiliaryTable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2BigQueryField: Message defining a field of a
+// BigQuery table.
+type GooglePrivacyDlpV2BigQueryField struct {
+	// Field: Designated field in the BigQuery table.
+	Field *GooglePrivacyDlpV2FieldId `json:"field,omitempty"`
+
+	// Table: Source table of the field.
+	Table *GooglePrivacyDlpV2BigQueryTable `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2BigQueryField) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2BigQueryField
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2BigQueryKey: Row key for identifying a record in
 // BigQuery table.
 type GooglePrivacyDlpV2BigQueryKey struct {
@@ -385,8 +441,21 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// than this value, the
 	// rest of the rows are omitted. If not set, or if set to 0, all rows
 	// will be
-	// scanned. Cannot be used in conjunction with TimespanConfig.
+	// scanned. Only one of rows_limit and rows_limit_percent can be
+	// specified.
+	// Cannot be used in conjunction with TimespanConfig.
 	RowsLimit int64 `json:"rowsLimit,omitempty,string"`
+
+	// RowsLimitPercent: Max percentage of rows to scan. The rest are
+	// omitted. The number of rows
+	// scanned is rounded down. Must be between 0 and 100, inclusively. Both
+	// 0 and
+	// 100 means no limit. Defaults to 0. Only one of rows_limit
+	// and
+	// rows_limit_percent can be specified. Cannot be used in conjunction
+	// with
+	// TimespanConfig.
+	RowsLimitPercent int64 `json:"rowsLimitPercent,omitempty"`
 
 	// Possible values:
 	//   "SAMPLE_METHOD_UNSPECIFIED"
@@ -849,14 +918,57 @@ func (s *GooglePrivacyDlpV2CharsToIgnore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CloudStorageFileSet: Message representing a set of
+// files in Cloud Storage.
+type GooglePrivacyDlpV2CloudStorageFileSet struct {
+	// Url: The url, in the format `gs://<bucket>/<path>`. Trailing wildcard
+	// in the
+	// path is allowed.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Url") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Url") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudStorageFileSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CloudStorageOptions: Options defining a file or a
 // set of files (path ending with *) within
 // a Google Cloud Storage bucket.
 type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// BytesLimitPerFile: Max number of bytes to scan from a file. If a
 	// scanned file's size is bigger
-	// than this value then the rest of the bytes are omitted.
+	// than this value then the rest of the bytes are omitted. Only one
+	// of bytes_limit_per_file and bytes_limit_per_file_percent can be
+	// specified.
 	BytesLimitPerFile int64 `json:"bytesLimitPerFile,omitempty,string"`
+
+	// BytesLimitPerFilePercent: Max percentage of bytes to scan from a
+	// file. The rest are omitted. The
+	// number of bytes scanned is rounded down. Must be between 0 and
+	// 100,
+	// inclusively. Both 0 and 100 means no limit. Defaults to 0. Only
+	// one
+	// of bytes_limit_per_file and bytes_limit_per_file_percent can be
+	// specified.
+	BytesLimitPerFilePercent int64 `json:"bytesLimitPerFilePercent,omitempty"`
 
 	FileSet *GooglePrivacyDlpV2FileSet `json:"fileSet,omitempty"`
 
@@ -1348,6 +1460,42 @@ func (s *GooglePrivacyDlpV2CreateJobTriggerRequest) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CreateStoredInfoTypeRequest: Request message for
+// CreateStoredInfoType.
+type GooglePrivacyDlpV2CreateStoredInfoTypeRequest struct {
+	// Config: Configuration of the storedInfoType to create.
+	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
+
+	// StoredInfoTypeId: The storedInfoType ID can contain uppercase and
+	// lowercase letters,
+	// numbers, and hyphens; that is, it must match the regular
+	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// characters. Can be empty to allow the system to generate one.
+	StoredInfoTypeId string `json:"storedInfoTypeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CreateStoredInfoTypeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CryptoHashConfig: Pseudonymization method that
 // generates surrogates via cryptographic hashing.
 // Uses SHA-256.
@@ -1593,6 +1741,11 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 
 	// Regex: Regular expression based CustomInfoType.
 	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
+
+	// StoredType: Load an existing `StoredInfoType` resource for use
+	// in
+	// `InspectDataSource`. Not currently supported in `InspectContent`.
+	StoredType *GooglePrivacyDlpV2StoredType `json:"storedType,omitempty"`
 
 	// SurrogateType: Message for detecting output from deidentification
 	// transformations that
@@ -2278,6 +2431,14 @@ func (s *GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 // letters or digits may result in unexpected findings because such
 // characters
 // are treated as whitespace.
+// The
+// [limits](https://cloud.google.com/dlp/limits) page contains details
+// about
+// the size limits of dictionaries. For dictionaries that do not fit
+// within
+// these constraints, consider using `LargeCustomDictionaryConfig` in
+// the
+// `StoredInfoType` API.
 type GooglePrivacyDlpV2Dictionary struct {
 	// CloudStoragePath: Newline-delimited file of words in Cloud Storage.
 	// Only a single file
@@ -4241,6 +4402,58 @@ func (s *GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2LargeCustomDictionaryConfig: Configuration for a
+// custom dictionary created from a data source of any size
+// up to the maximum size defined in
+// the
+// [limits](https://cloud.google.com/dlp/limits) page. The artifacts
+// of
+// dictionary creation are stored in the specified GCS location.
+// Consider using
+// `CustomInfoType.Dictionary` for smaller dictionaries that satisfy the
+// size
+// requirements.
+type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
+	// BigQueryField: Field in a BigQuery table where each cell represents a
+	// dictionary phrase.
+	BigQueryField *GooglePrivacyDlpV2BigQueryField `json:"bigQueryField,omitempty"`
+
+	// CloudStorageFileSet: Set of files containing newline-delimited lists
+	// of dictionary phrases.
+	CloudStorageFileSet *GooglePrivacyDlpV2CloudStorageFileSet `json:"cloudStorageFileSet,omitempty"`
+
+	// OutputPath: Location to store dictionary artifacts in GCS. These
+	// files will only be
+	// accessible by project owners and the DLP API. If any of these
+	// artifacts
+	// are modified, the dictionary is considered invalid and can no longer
+	// be
+	// used.
+	OutputPath *GooglePrivacyDlpV2CloudStoragePath `json:"outputPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigQueryField") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigQueryField") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2LargeCustomDictionaryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LargeCustomDictionaryConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2LikelihoodAdjustment: Message for specifying an
 // adjustment to the likelihood of a finding as
 // part of a detection rule.
@@ -4483,6 +4696,45 @@ type GooglePrivacyDlpV2ListJobTriggersResponse struct {
 
 func (s *GooglePrivacyDlpV2ListJobTriggersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListJobTriggersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ListStoredInfoTypesResponse: Response message for
+// ListStoredInfoTypes.
+type GooglePrivacyDlpV2ListStoredInfoTypesResponse struct {
+	// NextPageToken: If the next page is available then the next page token
+	// to be used
+	// in following ListStoredInfoTypes request.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// StoredInfoTypes: List of storedInfoTypes, up to page_size in
+	// ListStoredInfoTypesRequest.
+	StoredInfoTypes []*GooglePrivacyDlpV2StoredInfoType `json:"storedInfoTypes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ListStoredInfoTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListStoredInfoTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5825,6 +6077,201 @@ func (s *GooglePrivacyDlpV2StorageConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2StoredInfoType: StoredInfoType resource message
+// that contains information about the current
+// version and any pending updates.
+type GooglePrivacyDlpV2StoredInfoType struct {
+	// CurrentVersion: Current version of the stored info type.
+	CurrentVersion *GooglePrivacyDlpV2StoredInfoTypeVersion `json:"currentVersion,omitempty"`
+
+	// Name: Resource name.
+	Name string `json:"name,omitempty"`
+
+	// PendingVersions: Pending versions of the stored info type. Empty if
+	// no versions are
+	// pending.
+	PendingVersions []*GooglePrivacyDlpV2StoredInfoTypeVersion `json:"pendingVersions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrentVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrentVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2StoredInfoType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StoredInfoType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2StoredInfoTypeConfig: Configuration for a
+// StoredInfoType.
+type GooglePrivacyDlpV2StoredInfoTypeConfig struct {
+	// Description: Description of the StoredInfoType (max 256 characters).
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Display name of the StoredInfoType (max 256 characters).
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LargeCustomDictionary: StoredInfoType were findings are defined by a
+	// dictionary of phrases.
+	LargeCustomDictionary *GooglePrivacyDlpV2LargeCustomDictionaryConfig `json:"largeCustomDictionary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2StoredInfoTypeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StoredInfoTypeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2StoredInfoTypeVersion: Version of a StoredInfoType,
+// including the configuration used to build it,
+// create timestamp, and current state.
+type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
+	// Config: StoredInfoType configuration.
+	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
+
+	// CreateTime: Create timestamp of the version. Read-only, determined by
+	// the system
+	// when the version is created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Errors: Errors that occurred when creating this storedInfoType
+	// version, or
+	// anomalies detected in the storedInfoType data that render it
+	// unusable. Only
+	// the five most recent errors will be displayed, with the most recent
+	// error
+	// appearing first.
+	// <p>For example, some of the data for stored custom dictionaries is
+	// put in
+	// the user's Google Cloud Storage bucket, and if this data is modified
+	// or
+	// deleted by the user or another system, the dictionary becomes
+	// invalid.
+	// <p>If any errors occur, fix the problem indicated by the error
+	// message and
+	// use the UpdateStoredInfoType API method to create another version of
+	// the
+	// storedInfoType to continue using it, reusing the same `config` if it
+	// was
+	// not the source of the error.
+	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
+
+	// State: Stored info type version state. Read-only, updated by the
+	// system
+	// during dictionary creation.
+	//
+	// Possible values:
+	//   "STORED_INFO_TYPE_STATE_UNSPECIFIED"
+	//   "PENDING" - StoredInfoType version is being created.
+	//   "READY" - StoredInfoType version is ready for use.
+	//   "FAILED" - StoredInfoType creation failed. All relevant error
+	// messages are returned in
+	// the `StoredInfoTypeVersion` message.
+	//   "INVALID" - StoredInfoType is no longer valid because artifacts
+	// stored in
+	// user-controlled storage were modified. To fix an invalid
+	// StoredInfoType,
+	// use the `UpdateStoredInfoType` method to create a new version.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2StoredInfoTypeVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StoredInfoTypeVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2StoredType: CustomInfoType implementation that
+// loads an
+// existing `StoredInfoType` resource for scanning in
+// `InspectDataSource`. Not
+// currently supported in `InspectContent`.
+type GooglePrivacyDlpV2StoredType struct {
+	// CreateTime: Timestamp indicating when the version of the
+	// `StoredInfoType` used for
+	// inspection was created. Output-only field, populated by the system.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Name: Resource name of the requested `StoredInfoType`, for
+	// example
+	// `organizations/433245324/storedInfoTypes/432452342`
+	// or
+	// `projects/project-id/storedInfoTypes/432452342`.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2StoredType) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StoredType
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2SummaryResult: A collection that informs the user
 // the number of times a particular
 // `TransformationResultCode` and error details occurred.
@@ -6401,6 +6848,42 @@ type GooglePrivacyDlpV2UpdateJobTriggerRequest struct {
 
 func (s *GooglePrivacyDlpV2UpdateJobTriggerRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UpdateJobTriggerRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2UpdateStoredInfoTypeRequest: Request message for
+// UpdateStoredInfoType.
+type GooglePrivacyDlpV2UpdateStoredInfoTypeRequest struct {
+	// Config: Updated configuration for the storedInfoType. If not
+	// provided, a new
+	// version of the storedInfoType will be created with the
+	// existing
+	// configuration.
+	Config *GooglePrivacyDlpV2StoredInfoTypeConfig `json:"config,omitempty"`
+
+	// UpdateMask: Mask to control which fields get updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8410,6 +8893,733 @@ func (c *OrganizationsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.storedInfoTypes.create":
+
+type OrganizationsStoredInfoTypesCreateCall struct {
+	s                                             *Service
+	parent                                        string
+	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Create: Creates a pre-built StoredInfoType to be used for inspecting
+// storage in
+// InspectDataSource.
+func (r *OrganizationsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesCreateCall {
+	c := &OrganizationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsStoredInfoTypesCreateCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsStoredInfoTypesCreateCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsStoredInfoTypesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createstoredinfotyperequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.storedInfoTypes.create" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.organizations.storedInfoTypes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/storedInfoTypes",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.storedInfoTypes.delete":
+
+type OrganizationsStoredInfoTypesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a StoredInfoType.
+func (r *OrganizationsStoredInfoTypesService) Delete(name string) *OrganizationsStoredInfoTypesDeleteCall {
+	c := &OrganizationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsStoredInfoTypesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsStoredInfoTypesDeleteCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsStoredInfoTypesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.storedInfoTypes.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a StoredInfoType.",
+	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.organizations.storedInfoTypes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the organization and storedInfoType to be deleted, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.storedInfoTypes.get":
+
+type OrganizationsStoredInfoTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a StoredInfoType.
+func (r *OrganizationsStoredInfoTypesService) Get(name string) *OrganizationsStoredInfoTypesGetCall {
+	c := &OrganizationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsStoredInfoTypesGetCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsStoredInfoTypesGetCall) IfNoneMatch(entityTag string) *OrganizationsStoredInfoTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsStoredInfoTypesGetCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsStoredInfoTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.storedInfoTypes.get" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a StoredInfoType.",
+	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.storedInfoTypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the organization and storedInfoType to be read, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.storedInfoTypes.list":
+
+type OrganizationsStoredInfoTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists StoredInfoTypes.
+func (r *OrganizationsStoredInfoTypesService) List(parent string) *OrganizationsStoredInfoTypesListCall {
+	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
+// a page of max size 100.
+func (c *OrganizationsStoredInfoTypesListCall) PageSize(pageSize int64) *OrganizationsStoredInfoTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
+// to `ListStoredInfoTypes`.
+func (c *OrganizationsStoredInfoTypesListCall) PageToken(pageToken string) *OrganizationsStoredInfoTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsStoredInfoTypesListCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsStoredInfoTypesListCall) IfNoneMatch(entityTag string) *OrganizationsStoredInfoTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsStoredInfoTypesListCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsStoredInfoTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.storedInfoTypes.list" call.
+// Exactly one of *GooglePrivacyDlpV2ListStoredInfoTypesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2ListStoredInfoTypesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListStoredInfoTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2ListStoredInfoTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists StoredInfoTypes.",
+	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.storedInfoTypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/storedInfoTypes",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsStoredInfoTypesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListStoredInfoTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.organizations.storedInfoTypes.patch":
+
+type OrganizationsStoredInfoTypesPatchCall struct {
+	s                                             *Service
+	name                                          string
+	googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Patch: Updates the StoredInfoType by creating a new version. The
+// existing version
+// will continue to be used until the new version is ready.
+func (r *OrganizationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesPatchCall {
+	c := &OrganizationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updatestoredinfotyperequest = googleprivacydlpv2updatestoredinfotyperequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsStoredInfoTypesPatchCall) Fields(s ...googleapi.Field) *OrganizationsStoredInfoTypesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsStoredInfoTypesPatchCall) Context(ctx context.Context) *OrganizationsStoredInfoTypesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsStoredInfoTypesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatestoredinfotyperequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.storedInfoTypes.patch" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dlp.organizations.storedInfoTypes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of organization and storedInfoType to be updated, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -12053,6 +13263,733 @@ func (c *ProjectsJobTriggersPatchCall) Do(opts ...googleapi.CallOption) (*Google
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2JobTrigger"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.storedInfoTypes.create":
+
+type ProjectsStoredInfoTypesCreateCall struct {
+	s                                             *Service
+	parent                                        string
+	googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Create: Creates a pre-built StoredInfoType to be used for inspecting
+// storage in
+// InspectDataSource.
+func (r *ProjectsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsStoredInfoTypesCreateCall {
+	c := &ProjectsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createstoredinfotyperequest = googleprivacydlpv2createstoredinfotyperequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsStoredInfoTypesCreateCall) Fields(s ...googleapi.Field) *ProjectsStoredInfoTypesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsStoredInfoTypesCreateCall) Context(ctx context.Context) *ProjectsStoredInfoTypesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsStoredInfoTypesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsStoredInfoTypesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createstoredinfotyperequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.storedInfoTypes.create" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.storedInfoTypes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/storedInfoTypes",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2CreateStoredInfoTypeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.storedInfoTypes.delete":
+
+type ProjectsStoredInfoTypesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a StoredInfoType.
+func (r *ProjectsStoredInfoTypesService) Delete(name string) *ProjectsStoredInfoTypesDeleteCall {
+	c := &ProjectsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsStoredInfoTypesDeleteCall) Fields(s ...googleapi.Field) *ProjectsStoredInfoTypesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsStoredInfoTypesDeleteCall) Context(ctx context.Context) *ProjectsStoredInfoTypesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsStoredInfoTypesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsStoredInfoTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.storedInfoTypes.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a StoredInfoType.",
+	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.projects.storedInfoTypes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the organization and storedInfoType to be deleted, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.storedInfoTypes.get":
+
+type ProjectsStoredInfoTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a StoredInfoType.
+func (r *ProjectsStoredInfoTypesService) Get(name string) *ProjectsStoredInfoTypesGetCall {
+	c := &ProjectsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsStoredInfoTypesGetCall) Fields(s ...googleapi.Field) *ProjectsStoredInfoTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsStoredInfoTypesGetCall) IfNoneMatch(entityTag string) *ProjectsStoredInfoTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsStoredInfoTypesGetCall) Context(ctx context.Context) *ProjectsStoredInfoTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsStoredInfoTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsStoredInfoTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.storedInfoTypes.get" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a StoredInfoType.",
+	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.projects.storedInfoTypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the organization and storedInfoType to be read, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.storedInfoTypes.list":
+
+type ProjectsStoredInfoTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists StoredInfoTypes.
+func (r *ProjectsStoredInfoTypesService) List(parent string) *ProjectsStoredInfoTypesListCall {
+	c := &ProjectsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Optional size of the
+// page, can be limited by server. If zero server returns
+// a page of max size 100.
+func (c *ProjectsStoredInfoTypesListCall) PageSize(pageSize int64) *ProjectsStoredInfoTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Optional page
+// token to continue retrieval. Comes from previous call
+// to `ListStoredInfoTypes`.
+func (c *ProjectsStoredInfoTypesListCall) PageToken(pageToken string) *ProjectsStoredInfoTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsStoredInfoTypesListCall) Fields(s ...googleapi.Field) *ProjectsStoredInfoTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsStoredInfoTypesListCall) IfNoneMatch(entityTag string) *ProjectsStoredInfoTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsStoredInfoTypesListCall) Context(ctx context.Context) *ProjectsStoredInfoTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsStoredInfoTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsStoredInfoTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/storedInfoTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.storedInfoTypes.list" call.
+// Exactly one of *GooglePrivacyDlpV2ListStoredInfoTypesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2ListStoredInfoTypesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListStoredInfoTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2ListStoredInfoTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists StoredInfoTypes.",
+	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.projects.storedInfoTypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional page token to continue retrieval. Comes from previous call\nto `ListStoredInfoTypes`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "The parent resource name, for example projects/my-project-id or\norganizations/my-org-id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/storedInfoTypes",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListStoredInfoTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsStoredInfoTypesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListStoredInfoTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.projects.storedInfoTypes.patch":
+
+type ProjectsStoredInfoTypesPatchCall struct {
+	s                                             *Service
+	name                                          string
+	googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// Patch: Updates the StoredInfoType by creating a new version. The
+// existing version
+// will continue to be used until the new version is ready.
+func (r *ProjectsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *ProjectsStoredInfoTypesPatchCall {
+	c := &ProjectsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updatestoredinfotyperequest = googleprivacydlpv2updatestoredinfotyperequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsStoredInfoTypesPatchCall) Fields(s ...googleapi.Field) *ProjectsStoredInfoTypesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsStoredInfoTypesPatchCall) Context(ctx context.Context) *ProjectsStoredInfoTypesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsStoredInfoTypesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsStoredInfoTypesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updatestoredinfotyperequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("PATCH", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.storedInfoTypes.patch" call.
+// Exactly one of *GooglePrivacyDlpV2StoredInfoType or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2StoredInfoType.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2StoredInfoType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2StoredInfoType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dlp.projects.storedInfoTypes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of organization and storedInfoType to be updated, for\nexample `organizations/433245324/storedInfoTypes/432452342` or\nprojects/project-id/storedInfoTypes/432452342.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/storedInfoTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2UpdateStoredInfoTypeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

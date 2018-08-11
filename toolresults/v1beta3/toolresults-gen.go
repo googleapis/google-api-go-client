@@ -1969,18 +1969,12 @@ func (s *Specification) MarshalJSON() ([]byte, error) {
 
 // StackTrace: A stacktrace.
 type StackTrace struct {
-	// ClusterId: Exception cluster ID
-	ClusterId string `json:"clusterId,omitempty"`
-
 	// Exception: The stack trace message.
 	//
 	// Required
 	Exception string `json:"exception,omitempty"`
 
-	// ReportId: Exception report ID
-	ReportId string `json:"reportId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// ForceSendFields is a list of field names (e.g. "Exception") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1988,7 +1982,7 @@ type StackTrace struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClusterId") to include in
+	// NullFields is a list of field names (e.g. "Exception") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

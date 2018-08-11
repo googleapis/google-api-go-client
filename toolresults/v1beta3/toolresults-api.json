@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/pUM8DBD2OzixJYx62P8tPpv6aFY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/pNPH2AZ9SpPvblKcrfrTUiJOIGw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2054,16 +2054,8 @@
       "description": "A stacktrace.",
       "id": "StackTrace",
       "properties": {
-        "clusterId": {
-          "description": "Exception cluster ID",
-          "type": "string"
-        },
         "exception": {
           "description": "The stack trace message.\n\nRequired",
-          "type": "string"
-        },
-        "reportId": {
-          "description": "Exception report ID",
           "type": "string"
         }
       },

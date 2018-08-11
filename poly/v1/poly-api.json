@@ -3,7 +3,7 @@
   "baseUrl": "https://poly.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Poly Service",
-  "description": "The Poly API provides read-only access to assets hosted on \u003ca href=\"https://poly.google.com\"\u003epoly.google.com\u003c/a\u003e.\n",
+  "description": "The Poly API provides read access to assets hosted on \u003ca href=\"https://poly.google.com\"\u003epoly.google.com\u003c/a\u003e to all, and upload access to \u003ca href=\"https://poly.google.com\"\u003epoly.google.com\u003c/a\u003e for whitelisted accounts.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/poly/",
   "fullyEncodeReservedExpansion": true,
@@ -290,7 +290,7 @@
       }
     }
   },
-  "revision": "20180803",
+  "revision": "20180808",
   "rootUrl": "https://poly.googleapis.com/",
   "schemas": {
     "Asset": {

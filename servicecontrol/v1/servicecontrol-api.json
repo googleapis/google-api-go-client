@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180805",
+  "revision": "20180806",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -539,13 +539,15 @@
             "LOAS_PROJECT_DISABLED",
             "SECURITY_POLICY_VIOLATED",
             "INVALID_CREDENTIAL",
+            "LOCATION_POLICY_VIOLATED",
             "NAMESPACE_LOOKUP_UNAVAILABLE",
             "SERVICE_STATUS_UNAVAILABLE",
             "BILLING_STATUS_UNAVAILABLE",
             "QUOTA_CHECK_UNAVAILABLE",
             "LOAS_PROJECT_LOOKUP_UNAVAILABLE",
             "CLOUD_RESOURCE_MANAGER_BACKEND_UNAVAILABLE",
-            "SECURITY_POLICY_BACKEND_UNAVAILABLE"
+            "SECURITY_POLICY_BACKEND_UNAVAILABLE",
+            "LOCATION_POLICY_BACKEND_UNAVAILABLE"
           ],
           "enumDescriptions": [
             "This is never used in `CheckResponse`.",
@@ -574,13 +576,15 @@
             "The consumer's LOAS project is not `ACTIVE` in LoquatV2.",
             "Request is not allowed as per security policies defined in Org Policy.",
             "The credential in the request can not be verified.",
+            "Request is not allowed as per location policies defined in Org Policy.",
             "The backend server for looking up project id/number is unavailable.",
             "The backend server for checking service status is unavailable.",
             "The backend server for checking billing status is unavailable.",
             "The backend server for checking quota limits is unavailable.",
             "The Spanner for looking up LOAS project is unavailable.",
             "Cloud Resource Manager backend server is unavailable.",
-            "Backend server for evaluating security policy is unavailable."
+            "Backend server for evaluating security policy is unavailable.",
+            "Backend server for evaluating location policy is unavailable."
           ],
           "type": "string"
         },
@@ -1108,6 +1112,41 @@
       },
       "type": "object"
     },
+    "Peer": {
+      "description": "This message defines attributes for a node that handles a network request.\nThe node can be either a service or an application that sends, forwards,\nor receives the request. Service peers should fill in the `service`,\n`principal`, and `labels` as appropriate.",
+      "id": "Peer",
+      "properties": {
+        "ip": {
+          "description": "The IP address of the peer.",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "The labels associated with the peer.",
+          "type": "object"
+        },
+        "port": {
+          "description": "The network port of the peer.",
+          "format": "int64",
+          "type": "string"
+        },
+        "principal": {
+          "description": "The identity of this peer. Similar to `Request.auth.principal`, but\nrelative to the peer instead of the request. For example, the\nidenity associated with a load balancer that forwared the request.",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "The CLDR country/region code associated with the above IP address.\nIf the IP address is private, the `region_code` should reflect the\nphysical location where this peer is running.",
+          "type": "string"
+        },
+        "service": {
+          "description": "The canonical service name of the peer.\n\nNOTE: different systems may have different service naming schemes.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "QuotaError": {
       "description": "Represents error information for QuotaOperation.",
       "id": "QuotaError",
@@ -1456,6 +1495,10 @@
         "callerSuppliedUserAgent": {
           "description": "The user agent of the caller.\nThis information is not authenticated and should be treated accordingly.\nFor example:\n\n+   `google-api-python-client/1.4.0`:\n    The request was made by the Google API client for Python.\n+   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:\n    The request was made by the Google Cloud SDK CLI (gcloud).\n+   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:\n    The request was made from the `my-project` App Engine app.\nNOLINT",
           "type": "string"
+        },
+        "destinationAttributes": {
+          "$ref": "Peer",
+          "description": "The destination of a network activity, such as accepting a TCP connection.\nIn a multi hop network activity, the destination represents the receiver of\nthe last hop. Only two fields are used in this message, Peer.port and\nPeer.ip. These fields are optionally populated by those services utilizing\nthe IAM condition feature."
         },
         "requestAttributes": {
           "$ref": "Request",

@@ -587,6 +587,8 @@ type CheckError struct {
 	// policies defined in Org Policy.
 	//   "INVALID_CREDENTIAL" - The credential in the request can not be
 	// verified.
+	//   "LOCATION_POLICY_VIOLATED" - Request is not allowed as per location
+	// policies defined in Org Policy.
 	//   "NAMESPACE_LOOKUP_UNAVAILABLE" - The backend server for looking up
 	// project id/number is unavailable.
 	//   "SERVICE_STATUS_UNAVAILABLE" - The backend server for checking
@@ -601,6 +603,8 @@ type CheckError struct {
 	// Manager backend server is unavailable.
 	//   "SECURITY_POLICY_BACKEND_UNAVAILABLE" - Backend server for
 	// evaluating security policy is unavailable.
+	//   "LOCATION_POLICY_BACKEND_UNAVAILABLE" - Backend server for
+	// evaluating location policy is unavailable.
 	Code string `json:"code,omitempty"`
 
 	// Detail: Free-form text providing details on the error cause of the
@@ -1633,6 +1637,64 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Peer: This message defines attributes for a node that handles a
+// network request.
+// The node can be either a service or an application that sends,
+// forwards,
+// or receives the request. Service peers should fill in the
+// `service`,
+// `principal`, and `labels` as appropriate.
+type Peer struct {
+	// Ip: The IP address of the peer.
+	Ip string `json:"ip,omitempty"`
+
+	// Labels: The labels associated with the peer.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Port: The network port of the peer.
+	Port int64 `json:"port,omitempty,string"`
+
+	// Principal: The identity of this peer. Similar to
+	// `Request.auth.principal`, but
+	// relative to the peer instead of the request. For example, the
+	// idenity associated with a load balancer that forwared the request.
+	Principal string `json:"principal,omitempty"`
+
+	// RegionCode: The CLDR country/region code associated with the above IP
+	// address.
+	// If the IP address is private, the `region_code` should reflect
+	// the
+	// physical location where this peer is running.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// Service: The canonical service name of the peer.
+	//
+	// NOTE: different systems may have different service naming schemes.
+	Service string `json:"service,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ip") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ip") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Peer) MarshalJSON() ([]byte, error) {
+	type NoMethod Peer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // QuotaError: Represents error information for QuotaOperation.
 type QuotaError struct {
 	// Code: Error code.
@@ -2352,6 +2414,17 @@ type RequestMetadata struct {
 	//     The request was made from the `my-project` App Engine app.
 	// NOLINT
 	CallerSuppliedUserAgent string `json:"callerSuppliedUserAgent,omitempty"`
+
+	// DestinationAttributes: The destination of a network activity, such as
+	// accepting a TCP connection.
+	// In a multi hop network activity, the destination represents the
+	// receiver of
+	// the last hop. Only two fields are used in this message, Peer.port
+	// and
+	// Peer.ip. These fields are optionally populated by those services
+	// utilizing
+	// the IAM condition feature.
+	DestinationAttributes *Peer `json:"destinationAttributes,omitempty"`
 
 	// RequestAttributes: Request attributes used in IAM condition
 	// evaluation. This field contains

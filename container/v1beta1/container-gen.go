@@ -639,6 +639,9 @@ type Cluster struct {
 	// This prefix will be used for assigning private IP addresses to
 	// the
 	// master or set of masters, as well as the ILB VIP.
+	// This field is deprecated,
+	// use
+	// private_cluster_config.master_ipv4_cidr_block instead.
 	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
 
 	// MonitoringService: The monitoring service the cluster should use to
@@ -715,7 +718,11 @@ type Cluster struct {
 	// default have no external IP addresses on the nodes and where nodes
 	// and the
 	// master communicate over private IP addresses.
+	// This field is deprecated, use private_cluster_config.enabled instead.
 	PrivateCluster bool `json:"privateCluster,omitempty"`
+
+	// PrivateClusterConfig: Configuration for private cluster.
+	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
 	// ResourceLabels: The resource labels for the cluster to use to
 	// annotate any related
@@ -847,6 +854,17 @@ type ClusterUpdate struct {
 	// This list must always include the cluster's primary zone.
 	DesiredLocations []string `json:"desiredLocations,omitempty"`
 
+	// DesiredLoggingService: The logging service the cluster should use to
+	// write metrics.
+	// Currently available options:
+	//
+	// * "logging.googleapis.com/kubernetes" - the Google Cloud
+	// Logging
+	// service with Kubernetes-native resource model in Stackdriver
+	// * "logging.googleapis.com" - the Google Cloud Logging service
+	// * "none" - no logs will be exported from the cluster
+	DesiredLoggingService string `json:"desiredLoggingService,omitempty"`
+
 	// DesiredMasterAuthorizedNetworksConfig: The desired configuration
 	// options for master authorized networks feature.
 	DesiredMasterAuthorizedNetworksConfig *MasterAuthorizedNetworksConfig `json:"desiredMasterAuthorizedNetworksConfig,omitempty"`
@@ -871,6 +889,9 @@ type ClusterUpdate struct {
 	// use to write metrics.
 	// Currently available options:
 	//
+	// * "monitoring.googleapis.com/kubernetes" - the Google Cloud
+	// Monitoring
+	// service with Kubernetes-native resource model in Stackdriver
 	// * "monitoring.googleapis.com" - the Google Cloud Monitoring service
 	// * "none" - no metrics will be exported from the cluster
 	DesiredMonitoringService string `json:"desiredMonitoringService,omitempty"`
@@ -2655,6 +2676,57 @@ type PodSecurityPolicyConfig struct {
 
 func (s *PodSecurityPolicyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PodSecurityPolicyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateClusterConfig: Configuration options for private clusters.
+type PrivateClusterConfig struct {
+	// EnablePrivateEndpoint: Whether the master's internal IP address is
+	// used as the cluster endpoint.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+
+	// EnablePrivateNodes: Whether nodes have only private IP addresses, and
+	// communicate with the
+	// master via private networking.
+	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
+
+	// MasterIpv4CidrBlock: The IP prefix in CIDR notation to use for the
+	// hosted master network. This
+	// prefix will be used for assigning private IP addresses to the master
+	// or
+	// set of masters, as well as the ILB VIP.
+	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
+
+	// PrivateEndpoint: Output only. The internal IP address of this
+	// cluster's master endpoint.
+	PrivateEndpoint string `json:"privateEndpoint,omitempty"`
+
+	// PublicEndpoint: Output only. The external IP address of this
+	// cluster's master endpoint.
+	PublicEndpoint string `json:"publicEndpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnablePrivateEndpoint") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablePrivateEndpoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateClusterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

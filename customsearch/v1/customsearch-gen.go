@@ -882,8 +882,9 @@ func (c *CseListCall) Rights(rights string) *CseListCall {
 // Safe sets the optional parameter "safe": Search safety level
 //
 // Possible values:
-//   "high" - Enables highest level of safe search filtering.
-//   "medium" - Enables moderate safe search filtering.
+//   "active" - Enables safe search filtering.
+//   "high" - (Deprecated) Same as active.
+//   "medium" - (Deprecated) Same as active.
 //   "off" (default) - Disables safe search filtering.
 func (c *CseListCall) Safe(safe string) *CseListCall {
 	c.urlParams_.Set("safe", safe)
@@ -1311,13 +1312,15 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "default": "off",
 	//       "description": "Search safety level",
 	//       "enum": [
+	//         "active",
 	//         "high",
 	//         "medium",
 	//         "off"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Enables highest level of safe search filtering.",
-	//         "Enables moderate safe search filtering.",
+	//         "Enables safe search filtering.",
+	//         "(Deprecated) Same as active.",
+	//         "(Deprecated) Same as active.",
 	//         "Disables safe search filtering."
 	//       ],
 	//       "location": "query",

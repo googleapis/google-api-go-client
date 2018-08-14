@@ -538,6 +538,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "binaryauthorization:v1beta1",
+   "name": "binaryauthorization",
+   "version": "v1beta1",
+   "title": "Binary Authorization API",
+   "description": "The management interface for Binary Authorization, a system providing policy control for images deployed to Kubernetes Engine clusters.",
+   "discoveryRestUrl": "https://binaryauthorization.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/binary-authorization/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "blogger:v2",
    "name": "blogger",
    "version": "v2",

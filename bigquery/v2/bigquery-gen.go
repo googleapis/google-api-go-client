@@ -524,8 +524,8 @@ type Dataset struct {
 
 	// Labels: The labels associated with this dataset. You can use these to
 	// organize and group your datasets. You can set this property when
-	// inserting or updating a dataset. See Labeling Datasets for more
-	// information.
+	// inserting or updating a dataset. See Creating and Updating Dataset
+	// Labels for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: [Output-only] The date when this dataset or any of

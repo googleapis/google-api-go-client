@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/iYDb3HbdXa39hhjIqNB_EXQ9qus\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/VdW6yLWLV4EG3GBmsDZLc41_FBk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,6 +998,7 @@
       }
     }
   },
+  "revision": "20180805",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -1222,7 +1223,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The labels associated with this dataset. You can use these to organize and group your datasets. You can set this property when inserting or updating a dataset. See Labeling Datasets for more information.",
+          "description": "The labels associated with this dataset. You can use these to organize and group your datasets. You can set this property when inserting or updating a dataset. See Creating and Updating Dataset Labels for more information.",
           "type": "object"
         },
         "lastModifiedTime": {

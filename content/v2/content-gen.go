@@ -439,6 +439,10 @@ type AccountStatus struct {
 	// string "content#accountStatus".
 	Kind string `json:"kind,omitempty"`
 
+	// Products: List of product-related data by channel, destination, and
+	// country. Data in this field may be delayed by up to 30 minutes.
+	Products []*AccountStatusProducts `json:"products,omitempty"`
+
 	// WebsiteClaimed: Whether the account's website is claimed or not.
 	WebsiteClaimed bool `json:"websiteClaimed,omitempty"`
 
@@ -607,6 +611,131 @@ type AccountStatusExampleItem struct {
 
 func (s *AccountStatusExampleItem) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountStatusExampleItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AccountStatusItemLevelIssue struct {
+	// AttributeName: The attribute's name, if the issue is caused by a
+	// single attribute.
+	AttributeName string `json:"attributeName,omitempty"`
+
+	// Code: The error code of the issue.
+	Code string `json:"code,omitempty"`
+
+	// Description: A short issue description in English.
+	Description string `json:"description,omitempty"`
+
+	// Detail: A detailed issue description in English.
+	Detail string `json:"detail,omitempty"`
+
+	// Documentation: The URL of a web page to help with resolving this
+	// issue.
+	Documentation string `json:"documentation,omitempty"`
+
+	// NumItems: Number of items with this issue.
+	NumItems int64 `json:"numItems,omitempty,string"`
+
+	// Resolution: Whether the issue can be resolved by the merchant.
+	Resolution string `json:"resolution,omitempty"`
+
+	// Servability: How this issue affects serving of the offer.
+	Servability string `json:"servability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountStatusItemLevelIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AccountStatusProducts struct {
+	// Channel: The channel the data applies to.
+	Channel string `json:"channel,omitempty"`
+
+	// Country: The country the data applies to.
+	Country string `json:"country,omitempty"`
+
+	// Destination: The destination the data applies to.
+	Destination string `json:"destination,omitempty"`
+
+	// ItemLevelIssues: List of item-level issues.
+	ItemLevelIssues []*AccountStatusItemLevelIssue `json:"itemLevelIssues,omitempty"`
+
+	// Statistics: Aggregated product statistics.
+	Statistics *AccountStatusStatistics `json:"statistics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountStatusProducts) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountStatusProducts
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AccountStatusStatistics struct {
+	// Active: Number of active offers.
+	Active int64 `json:"active,omitempty,string"`
+
+	// Disapproved: Number of disapproved offers.
+	Disapproved int64 `json:"disapproved,omitempty,string"`
+
+	// Expiring: Number of expiring offers.
+	Expiring int64 `json:"expiring,omitempty,string"`
+
+	// Pending: Number of pending offers.
+	Pending int64 `json:"pending,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Active") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Active") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccountStatusStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod AccountStatusStatistics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3117,19 +3246,23 @@ type InvoiceSummary struct {
 	AdditionalChargeSummaries []*InvoiceSummaryAdditionalChargeSummary `json:"additionalChargeSummaries,omitempty"`
 
 	// CustomerBalance: [required] Customer balance on this invoice. A
-	// positive amount means the customer is paying, a negative one means
+	// negative amount means the customer is paying, a positive one means
 	// the customer is receiving money. Note: the sum of merchant_balance,
 	// customer_balance and google_balance must always be zero.
+	//
+	// Furthermore the absolute value of this amount is expected to be equal
+	// to the sum of product amount and additional charges, minus
+	// promotions.
 	CustomerBalance *Amount `json:"customerBalance,omitempty"`
 
-	// GoogleBalance: [required] Google balance on this invoice. A positive
-	// amount means Google is paying, a negative one means Google is
+	// GoogleBalance: [required] Google balance on this invoice. A negative
+	// amount means Google is paying, a positive one means Google is
 	// receiving money. Note: the sum of merchant_balance, customer_balance
 	// and google_balance must always be zero.
 	GoogleBalance *Amount `json:"googleBalance,omitempty"`
 
 	// MerchantBalance: [required] Merchant balance on this invoice. A
-	// positive amount means the merchant is paying, a negative one means
+	// negative amount means the merchant is paying, a positive one means
 	// the merchant is receiving money. Note: the sum of merchant_balance,
 	// customer_balance and google_balance must always be zero.
 	MerchantBalance *Amount `json:"merchantBalance,omitempty"`
@@ -6020,8 +6153,9 @@ func (s *OrdersCustomBatchRequestEntryReturnLineItem) MarshalJSON() ([]byte, err
 }
 
 type OrdersCustomBatchRequestEntryReturnRefundLineItem struct {
-	// AmountPretax: The amount that is refunded. Optional, but if filled
-	// then both amountPretax and amountTax must be set.
+	// AmountPretax: The amount that is refunded. If omitted, refundless
+	// return is assumed (same as calling returnLineItem method). Optional,
+	// but if filled then both amountPretax and amountTax must be set.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
 	// AmountTax: Tax amount that correspond to refund amount in
@@ -6790,8 +6924,9 @@ func (s *OrdersReturnLineItemResponse) MarshalJSON() ([]byte, error) {
 }
 
 type OrdersReturnRefundLineItemRequest struct {
-	// AmountPretax: The amount that is refunded. Optional, but if filled
-	// then both amountPretax and amountTax must be set.
+	// AmountPretax: The amount that is refunded. If omitted, refundless
+	// return is assumed (same as calling returnLineItem method). Optional,
+	// but if filled then both amountPretax and amountTax must be set.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
 	// AmountTax: Tax amount that correspond to refund amount in
@@ -16966,7 +17101,9 @@ type OrderinvoicesCreaterefundinvoiceCall struct {
 
 // Createrefundinvoice: Creates a refund invoice for one or more
 // shipment groups, and triggers a refund for non-facilitated payment
-// orders.
+// orders. This can only be used for line items that have previously
+// been charged using createChargeInvoice. All amounts (except for the
+// summary) are incremental with respect to the previous invoice.
 func (r *OrderinvoicesService) Createrefundinvoice(merchantId uint64, orderId string, orderinvoicescreaterefundinvoicerequest *OrderinvoicesCreateRefundInvoiceRequest) *OrderinvoicesCreaterefundinvoiceCall {
 	c := &OrderinvoicesCreaterefundinvoiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17064,7 +17201,7 @@ func (c *OrderinvoicesCreaterefundinvoiceCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for non-facilitated payment orders.",
+	//   "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for non-facilitated payment orders. This can only be used for line items that have previously been charged using createChargeInvoice. All amounts (except for the summary) are incremental with respect to the previous invoice.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orderinvoices.createrefundinvoice",
 	//   "parameterOrder": [
@@ -19444,7 +19581,7 @@ type OrdersRefundCall struct {
 	header_             http.Header
 }
 
-// Refund: Refund a portion of the order, up to the full amount paid.
+// Refund: Deprecated, please use returnRefundLineItem instead.
 func (r *OrdersService) Refund(merchantId uint64, orderId string, ordersrefundrequest *OrdersRefundRequest) *OrdersRefundCall {
 	c := &OrdersRefundCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19540,7 +19677,7 @@ func (c *OrdersRefundCall) Do(opts ...googleapi.CallOption) (*OrdersRefundRespon
 	}
 	return ret, nil
 	// {
-	//   "description": "Refund a portion of the order, up to the full amount paid.",
+	//   "description": "Deprecated, please use returnRefundLineItem instead.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.refund",
 	//   "parameterOrder": [

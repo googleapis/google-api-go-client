@@ -283,7 +283,7 @@ type ListEnvironmentsResponse struct {
 	Environments []*Environment `json:"environments,omitempty"`
 
 	// NextPageToken: The page token used to query for the next page if one
-	// exists
+	// exists.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -420,17 +420,17 @@ type NodeConfig struct {
 	// communications, specified as a
 	// [relative resource
 	// name](/apis/design/resource_names#relative_resource_name).
-	// For example:
-	// "projects/{projectId}/global/networks/{networkId}".
+	// For example: "projects/{projectId}/global/networks/{networkId}".
 	//
-	// [Shared VPC](/vpc/docs/shared-vpc) is not currently supported.
-	// The
-	// network must belong to the environment's project. If unspecified,
-	// the
-	// "default" network ID in the environment's project is used.  If
-	// a
-	// [Custom Subnet Network]((/vpc/docs/vpc#vpc_networks_and_subnets)
+	// If unspecified, the default network in the environment's project is
+	// used.
+	// If a [Custom Subnet
+	// Network]((/vpc/docs/vpc#vpc_networks_and_subnets)
 	// is provided, `nodeConfig.subnetwork` must also be provided.
+	// For
+	// [Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements,
+	// see
+	// `nodeConfig.subnetwork`.
 	Network string `json:"network,omitempty"`
 
 	// OauthScopes: Optional. The set of Google API scopes to be made
@@ -461,9 +461,14 @@ type NodeConfig struct {
 	//
 	// If a subnetwork is provided, `nodeConfig.network` must also be
 	// provided,
-	// and the subnetwork must belong to the enclosing environment's project
+	// and the subnetwork must belong to the same project as the
+	// network.
+	//
+	// For Shared VPC, you must configure the subnetwork with secondary
+	// ranges
+	// named <strong>composer-pods</strong>
 	// and
-	// location.
+	// <strong>composer-services</strong> to support Alias IPs.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Tags: Optional. The list of instance tags applied to all node VMs.

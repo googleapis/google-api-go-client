@@ -5,7 +5,7 @@
   "description": "Searches over a website or collection of websites",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/custom-search/v1/using_rest",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/-4idoVIf2ZPpj-VVAhgM6s6ARM8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Nz7EqsJaWIDJp3FUTW78pyd2v30\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -163,15 +163,17 @@
               "type": "string"
             },
             "imgDominantColor": {
-              "description": "Returns images of a specific dominant color: yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
+              "description": "Returns images of a specific dominant color: red, orange, yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
               "enum": [
                 "black",
                 "blue",
                 "brown",
                 "gray",
                 "green",
+                "orange",
                 "pink",
                 "purple",
+                "red",
                 "teal",
                 "white",
                 "yellow"
@@ -182,8 +184,10 @@
                 "brown",
                 "gray",
                 "green",
+                "orange",
                 "pink",
                 "purple",
+                "red",
                 "teal",
                 "white",
                 "yellow"
@@ -515,15 +519,17 @@
                   "type": "string"
                 },
                 "imgDominantColor": {
-                  "description": "Returns images of a specific dominant color: yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
+                  "description": "Returns images of a specific dominant color: red, orange, yellow, green, teal, blue, purple, pink, white, gray, black and brown.",
                   "enum": [
                     "black",
                     "blue",
                     "brown",
                     "gray",
                     "green",
+                    "orange",
                     "pink",
                     "purple",
+                    "red",
                     "teal",
                     "white",
                     "yellow"
@@ -534,8 +540,10 @@
                     "brown",
                     "gray",
                     "green",
+                    "orange",
                     "pink",
                     "purple",
+                    "red",
                     "teal",
                     "white",
                     "yellow"
@@ -769,7 +777,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180815",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Context": {

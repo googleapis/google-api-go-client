@@ -1066,7 +1066,7 @@ func (s *Correction) MarshalJSON() ([]byte, error) {
 
 // Creative: A creative and its classification data.
 //
-// Next ID: 36
+// Next ID: 37
 type Creative struct {
 	// AccountId: The account that this creative belongs to.
 	// Can be used to filter the response of the
@@ -1133,7 +1133,8 @@ type Creative struct {
 	// fill a variety of slot sizes.
 	Attributes []string `json:"attributes,omitempty"`
 
-	// ClickThroughUrls: The set of destination URLs for the creative.
+	// ClickThroughUrls: The set of declared destination URLs for the
+	// creative.
 	ClickThroughUrls []string `json:"clickThroughUrls,omitempty"`
 
 	// Corrections: @OutputOnly Shows any corrections that were applied to

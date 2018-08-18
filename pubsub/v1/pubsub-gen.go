@@ -888,10 +888,6 @@ type PullRequest struct {
 	// Otherwise, the system may wait (for a bounded amount of time) until
 	// at
 	// least one message is available, rather than returning no messages.
-	// The
-	// client may cancel the request if it does not wish to wait any longer
-	// for
-	// the response.
 	ReturnImmediately bool `json:"returnImmediately,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxMessages") to
@@ -2306,7 +2302,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the cloud project that snapshots belong to.\nFormat is `projects/{project}`.",
+	//       "description": "The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -3636,7 +3632,7 @@ func (c *ProjectsSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListS
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the cloud project that subscriptions belong to.\nFormat is `projects/{project}`.",
+	//       "description": "The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -5374,7 +5370,7 @@ func (c *ProjectsTopicsListCall) Do(opts ...googleapi.CallOption) (*ListTopicsRe
 	//       "type": "string"
 	//     },
 	//     "project": {
-	//       "description": "The name of the cloud project that topics belong to.\nFormat is `projects/{project}`.",
+	//       "description": "The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

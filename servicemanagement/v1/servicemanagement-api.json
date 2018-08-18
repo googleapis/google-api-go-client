@@ -876,7 +876,7 @@
       }
     }
   },
-  "revision": "20180803",
+  "revision": "20180813",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1887,7 +1887,7 @@
           "type": "string"
         },
         "responseBody": {
-          "description": "Optional. The name of the response field whose value is mapped to the HTTP\nbody of response. Other response fields are ignored. When\nnot set, the response message will be used as HTTP body of response.\nNOTE: the referred field must be not a repeated field and must be present\nat the top-level of response message type.",
+          "description": "Optional. The name of the response field whose value is mapped to the HTTP\nbody of response. Other response fields are ignored. When\nnot set, the response message will be used as HTTP body of response.",
           "type": "string"
         },
         "selector": {

@@ -4408,11 +4408,11 @@ func (s *GooglePrivacyDlpV2LDiversityResult) MarshalJSON() ([]byte, error) {
 // the
 // [limits](https://cloud.google.com/dlp/limits) page. The artifacts
 // of
-// dictionary creation are stored in the specified GCS location.
-// Consider using
-// `CustomInfoType.Dictionary` for smaller dictionaries that satisfy the
-// size
-// requirements.
+// dictionary creation are stored in the specified Google Cloud
+// Storage
+// location. Consider using `CustomInfoType.Dictionary` for smaller
+// dictionaries
+// that satisfy the size requirements.
 type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
 	// BigQueryField: Field in a BigQuery table where each cell represents a
 	// dictionary phrase.
@@ -4422,13 +4422,13 @@ type GooglePrivacyDlpV2LargeCustomDictionaryConfig struct {
 	// of dictionary phrases.
 	CloudStorageFileSet *GooglePrivacyDlpV2CloudStorageFileSet `json:"cloudStorageFileSet,omitempty"`
 
-	// OutputPath: Location to store dictionary artifacts in GCS. These
-	// files will only be
-	// accessible by project owners and the DLP API. If any of these
-	// artifacts
-	// are modified, the dictionary is considered invalid and can no longer
-	// be
-	// used.
+	// OutputPath: Location to store dictionary artifacts in Google Cloud
+	// Storage. These files
+	// will only be accessible by project owners and the DLP API. If any of
+	// these
+	// artifacts are modified, the dictionary is considered invalid and can
+	// no
+	// longer be used.
 	OutputPath *GooglePrivacyDlpV2CloudStoragePath `json:"outputPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQueryField") to
@@ -6129,7 +6129,7 @@ type GooglePrivacyDlpV2StoredInfoTypeConfig struct {
 	// DisplayName: Display name of the StoredInfoType (max 256 characters).
 	DisplayName string `json:"displayName,omitempty"`
 
-	// LargeCustomDictionary: StoredInfoType were findings are defined by a
+	// LargeCustomDictionary: StoredInfoType where findings are defined by a
 	// dictionary of phrases.
 	LargeCustomDictionary *GooglePrivacyDlpV2LargeCustomDictionaryConfig `json:"largeCustomDictionary,omitempty"`
 
@@ -6231,11 +6231,8 @@ func (s *GooglePrivacyDlpV2StoredInfoTypeVersion) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2StoredType: CustomInfoType implementation that
-// loads an
-// existing `StoredInfoType` resource for scanning in
-// `InspectDataSource`. Not
-// currently supported in `InspectContent`.
+// GooglePrivacyDlpV2StoredType: A reference to a StoredInfoType to use
+// with scanning.
 type GooglePrivacyDlpV2StoredType struct {
 	// CreateTime: Timestamp indicating when the version of the
 	// `StoredInfoType` used for
@@ -8912,9 +8909,11 @@ type OrganizationsStoredInfoTypesCreateCall struct {
 	header_                                       http.Header
 }
 
-// Create: Creates a pre-built StoredInfoType to be used for inspecting
-// storage in
-// InspectDataSource.
+// Create: Creates a pre-built stored infoType to be used for
+// inspection.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *OrganizationsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesCreateCall {
 	c := &OrganizationsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9008,7 +9007,7 @@ func (c *OrganizationsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+	//   "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.organizations.storedInfoTypes.create",
@@ -9048,7 +9047,10 @@ type OrganizationsStoredInfoTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a StoredInfoType.
+// Delete: Deletes a stored infoType.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *OrganizationsStoredInfoTypesService) Delete(name string) *OrganizationsStoredInfoTypesDeleteCall {
 	c := &OrganizationsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9136,7 +9138,7 @@ func (c *OrganizationsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a StoredInfoType.",
+	//   "description": "Deletes a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.organizations.storedInfoTypes.delete",
@@ -9174,7 +9176,10 @@ type OrganizationsStoredInfoTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a StoredInfoType.
+// Get: Gets a stored infoType.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *OrganizationsStoredInfoTypesService) Get(name string) *OrganizationsStoredInfoTypesGetCall {
 	c := &OrganizationsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9275,7 +9280,7 @@ func (c *OrganizationsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a StoredInfoType.",
+	//   "description": "Gets a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.storedInfoTypes.get",
@@ -9313,7 +9318,10 @@ type OrganizationsStoredInfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists StoredInfoTypes.
+// List: Lists stored infoTypes.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *OrganizationsStoredInfoTypesService) List(parent string) *OrganizationsStoredInfoTypesListCall {
 	c := &OrganizationsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9432,7 +9440,7 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists StoredInfoTypes.",
+	//   "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.organizations.storedInfoTypes.list",
@@ -9502,9 +9510,12 @@ type OrganizationsStoredInfoTypesPatchCall struct {
 	header_                                       http.Header
 }
 
-// Patch: Updates the StoredInfoType by creating a new version. The
+// Patch: Updates the stored infoType by creating a new version. The
 // existing version
 // will continue to be used until the new version is ready.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *OrganizationsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *OrganizationsStoredInfoTypesPatchCall {
 	c := &OrganizationsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9598,7 +9609,7 @@ func (c *OrganizationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+	//   "description": "Updates the stored infoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.organizations.storedInfoTypes.patch",
@@ -13282,9 +13293,11 @@ type ProjectsStoredInfoTypesCreateCall struct {
 	header_                                       http.Header
 }
 
-// Create: Creates a pre-built StoredInfoType to be used for inspecting
-// storage in
-// InspectDataSource.
+// Create: Creates a pre-built stored infoType to be used for
+// inspection.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *ProjectsStoredInfoTypesService) Create(parent string, googleprivacydlpv2createstoredinfotyperequest *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) *ProjectsStoredInfoTypesCreateCall {
 	c := &ProjectsStoredInfoTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13378,7 +13391,7 @@ func (c *ProjectsStoredInfoTypesCreateCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+	//   "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
 	//   "httpMethod": "POST",
 	//   "id": "dlp.projects.storedInfoTypes.create",
@@ -13418,7 +13431,10 @@ type ProjectsStoredInfoTypesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a StoredInfoType.
+// Delete: Deletes a stored infoType.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *ProjectsStoredInfoTypesService) Delete(name string) *ProjectsStoredInfoTypesDeleteCall {
 	c := &ProjectsStoredInfoTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13506,7 +13522,7 @@ func (c *ProjectsStoredInfoTypesDeleteCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a StoredInfoType.",
+	//   "description": "Deletes a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dlp.projects.storedInfoTypes.delete",
@@ -13544,7 +13560,10 @@ type ProjectsStoredInfoTypesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a StoredInfoType.
+// Get: Gets a stored infoType.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *ProjectsStoredInfoTypesService) Get(name string) *ProjectsStoredInfoTypesGetCall {
 	c := &ProjectsStoredInfoTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13645,7 +13664,7 @@ func (c *ProjectsStoredInfoTypesGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a StoredInfoType.",
+	//   "description": "Gets a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.storedInfoTypes.get",
@@ -13683,7 +13702,10 @@ type ProjectsStoredInfoTypesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists StoredInfoTypes.
+// List: Lists stored infoTypes.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *ProjectsStoredInfoTypesService) List(parent string) *ProjectsStoredInfoTypesListCall {
 	c := &ProjectsStoredInfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13802,7 +13824,7 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists StoredInfoTypes.",
+	//   "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
 	//   "httpMethod": "GET",
 	//   "id": "dlp.projects.storedInfoTypes.list",
@@ -13872,9 +13894,12 @@ type ProjectsStoredInfoTypesPatchCall struct {
 	header_                                       http.Header
 }
 
-// Patch: Updates the StoredInfoType by creating a new version. The
+// Patch: Updates the stored infoType by creating a new version. The
 // existing version
 // will continue to be used until the new version is ready.
+// See https://cloud.google.com/dlp/docs/creating-stored-infotypes
+// to
+// learn more.
 func (r *ProjectsStoredInfoTypesService) Patch(name string, googleprivacydlpv2updatestoredinfotyperequest *GooglePrivacyDlpV2UpdateStoredInfoTypeRequest) *ProjectsStoredInfoTypesPatchCall {
 	c := &ProjectsStoredInfoTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13968,7 +13993,7 @@ func (c *ProjectsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+	//   "description": "Updates the stored infoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
 	//   "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "dlp.projects.storedInfoTypes.patch",

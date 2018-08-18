@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180814",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1879,7 +1879,7 @@
           "type": "array"
         },
         "webhookState": {
-          "description": "Required. Indicates whether webhooks are enabled for the intent.",
+          "description": "Optional. Indicates whether webhooks are enabled for the intent.",
           "enum": [
             "WEBHOOK_STATE_UNSPECIFIED",
             "WEBHOOK_STATE_ENABLED",
@@ -2365,7 +2365,7 @@
       "id": "GoogleCloudDialogflowV2IntentTrainingPhrase",
       "properties": {
         "name": {
-          "description": "Required. The unique identifier of this training phrase.",
+          "description": "Output only. The unique identifier of this training phrase.",
           "type": "string"
         },
         "parts": {
@@ -3096,7 +3096,7 @@
           "type": "array"
         },
         "webhookState": {
-          "description": "Required. Indicates whether webhooks are enabled for the intent.",
+          "description": "Optional. Indicates whether webhooks are enabled for the intent.",
           "enum": [
             "WEBHOOK_STATE_UNSPECIFIED",
             "WEBHOOK_STATE_ENABLED",
@@ -3619,7 +3619,7 @@
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
       "properties": {
         "name": {
-          "description": "Required. The unique identifier of this training phrase.",
+          "description": "Output only. The unique identifier of this training phrase.",
           "type": "string"
         },
         "parts": {

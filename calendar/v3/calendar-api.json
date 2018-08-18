@@ -17,7 +17,7 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/dXX22EnbNj6d6uLFR4Yty0KsWNk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/UfSqMqLGclhjNS9q0g-j705eXE8\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/calendar-16.png",
     "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -1604,6 +1604,7 @@
       }
     }
   },
+  "revision": "20180814",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2386,7 +2387,7 @@
         },
         "originalStartTime": {
           "$ref": "EventDateTime",
-          "description": "For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. Immutable."
+          "description": "For an instance of a recurring event, this is the time at which this event would start according to the recurrence data in the recurring event identified by recurringEventId. It uniquely identifies the instance within the recurring event series even if the instance was moved to a different time. Immutable."
         },
         "privateCopy": {
           "default": "false",

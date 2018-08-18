@@ -615,10 +615,10 @@ type CreateServiceAccountRequest struct {
 	// `[a-z]([-a-z0-9]*[a-z0-9])` to comply with RFC1035.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ServiceAccount: The ServiceAccount resource to create.
-	// Currently, only the following values are user
+	// ServiceAccount: The ServiceAccount resource to
+	// create. Currently, only the following values are user
 	// assignable:
-	// `display_name` .
+	// `display_name`, and `description`.
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -1614,15 +1614,15 @@ func (s *Role) MarshalJSON() ([]byte, error) {
 // the
 // `unique_id` of the service account.
 type ServiceAccount struct {
-	// DisplayName: Optional. A user-specified description of the service
-	// account.  Must be
-	// fewer than 100 UTF-8 bytes.
+	// DisplayName: Optional. A user-specified name for the service account.
+	// Must be
+	// less than or equal to 100 UTF-8 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: @OutputOnly The email address of the service account.
 	Email string `json:"email,omitempty"`
 
-	// Etag: Used to perform a consistent read-modify-write.
+	// Etag: Optional. Not currently used.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the service account in the following
@@ -5601,8 +5601,7 @@ type ProjectsServiceAccountsUpdateCall struct {
 // Update: Updates a ServiceAccount.
 //
 // Currently, only the following fields are updatable:
-// `display_name` .
-// The `etag` is mandatory.
+// `display_name`, `description`.
 func (r *ProjectsServiceAccountsService) Update(name string, serviceaccount *ServiceAccount) *ProjectsServiceAccountsUpdateCall {
 	c := &ProjectsServiceAccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5696,7 +5695,7 @@ func (c *ProjectsServiceAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
+	//   "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name`, `description`.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "iam.projects.serviceAccounts.update",

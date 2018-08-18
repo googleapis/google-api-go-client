@@ -2411,6 +2411,8 @@ type Notification struct {
 
 	IconUrl string `json:"iconUrl,omitempty"`
 
+	IsDocumentMature bool `json:"is_document_mature,omitempty"`
+
 	// Kind: Resource type.
 	Kind string `json:"kind,omitempty"`
 

@@ -238,7 +238,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the cloud project that snapshots belong to.\nFormat is `projects/{project}`.",
+                  "description": "The name of the project in which to list snapshots.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -502,7 +502,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the cloud project that subscriptions belong to.\nFormat is `projects/{project}`.",
+                  "description": "The name of the project in which to list subscriptions.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -853,7 +853,7 @@
                   "type": "string"
                 },
                 "project": {
-                  "description": "The name of the cloud project that topics belong to.\nFormat is `projects/{project}`.",
+                  "description": "The name of the project in which to list topics.\nFormat is `projects/{project-id}`.",
                   "location": "path",
                   "pattern": "^projects/[^/]+$",
                   "required": true,
@@ -1074,7 +1074,7 @@
       }
     }
   },
-  "revision": "20180723",
+  "revision": "20180806",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1370,7 +1370,7 @@
           "type": "integer"
         },
         "returnImmediately": {
-          "description": "If this field set to true, the system will respond immediately even if\nit there are no messages available to return in the `Pull` response.\nOtherwise, the system may wait (for a bounded amount of time) until at\nleast one message is available, rather than returning no messages. The\nclient may cancel the request if it does not wish to wait any longer for\nthe response.",
+          "description": "If this field set to true, the system will respond immediately even if\nit there are no messages available to return in the `Pull` response.\nOtherwise, the system may wait (for a bounded amount of time) until at\nleast one message is available, rather than returning no messages.",
           "type": "boolean"
         }
       },

@@ -736,6 +736,35 @@ type BuildTrigger struct {
 	// Id: Output only. Unique identifier of the trigger.
 	Id string `json:"id,omitempty"`
 
+	// IgnoredFiles: ignored_files and included_files are file glob matches
+	// using
+	// http://godoc/pkg/path/filepath#Match extended with support for
+	// "**".
+	//
+	// If ignored_files and changed files are both empty, then they are
+	// not used to determine whether or not to trigger a build.
+	//
+	// If ignored_files is not empty, then we ignore any files that
+	// match
+	// any of the ignored_file globs. If the change has no files that
+	// are
+	// outside of the ignored_files globs, then we do not trigger a build.
+	IgnoredFiles []string `json:"ignoredFiles,omitempty"`
+
+	// IncludedFiles: If any of the files altered in the commit pass the
+	// ignored_files
+	// filter and included_files is empty, then as far as this filter
+	// is
+	// concerned, we should trigger the build.
+	//
+	// If any of the files altered in the commit pass the
+	// ignored_files
+	// filter and included_files is not empty, then we make sure that
+	// at
+	// least one of those files matches a included_files glob. If not,
+	// then we do not trigger a build.
+	IncludedFiles []string `json:"includedFiles,omitempty"`
+
 	// Substitutions: Substitutions data for Build resource.
 	Substitutions map[string]string `json:"substitutions,omitempty"`
 

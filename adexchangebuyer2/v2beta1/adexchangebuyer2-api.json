@@ -1936,7 +1936,7 @@
       }
     }
   },
-  "revision": "20180709",
+  "revision": "20180816",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2286,7 +2286,7 @@
       "type": "object"
     },
     "Creative": {
-      "description": "A creative and its classification data.\n\nNext ID: 36",
+      "description": "A creative and its classification data.\n\nNext ID: 37",
       "id": "Creative",
       "properties": {
         "accountId": {
@@ -2371,7 +2371,7 @@
           "type": "array"
         },
         "clickThroughUrls": {
-          "description": "The set of destination URLs for the creative.",
+          "description": "The set of declared destination URLs for the creative.",
           "items": {
             "type": "string"
           },

@@ -431,7 +431,7 @@
         "storedInfoTypes": {
           "methods": {
             "create": {
-              "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+              "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
               "httpMethod": "POST",
               "id": "dlp.organizations.storedInfoTypes.create",
@@ -459,7 +459,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a StoredInfoType.",
+              "description": "Deletes a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "DELETE",
               "id": "dlp.organizations.storedInfoTypes.delete",
@@ -484,7 +484,7 @@
               ]
             },
             "get": {
-              "description": "Gets a StoredInfoType.",
+              "description": "Gets a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "GET",
               "id": "dlp.organizations.storedInfoTypes.get",
@@ -509,7 +509,7 @@
               ]
             },
             "list": {
-              "description": "Lists StoredInfoTypes.",
+              "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes",
               "httpMethod": "GET",
               "id": "dlp.organizations.storedInfoTypes.list",
@@ -545,7 +545,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+              "description": "Updates the stored infoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/organizations/{organizationsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "PATCH",
               "id": "dlp.organizations.storedInfoTypes.patch",
@@ -1305,7 +1305,7 @@
         "storedInfoTypes": {
           "methods": {
             "create": {
-              "description": "Creates a pre-built StoredInfoType to be used for inspecting storage in\nInspectDataSource.",
+              "description": "Creates a pre-built stored infoType to be used for inspection.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
               "httpMethod": "POST",
               "id": "dlp.projects.storedInfoTypes.create",
@@ -1333,7 +1333,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a StoredInfoType.",
+              "description": "Deletes a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "DELETE",
               "id": "dlp.projects.storedInfoTypes.delete",
@@ -1358,7 +1358,7 @@
               ]
             },
             "get": {
-              "description": "Gets a StoredInfoType.",
+              "description": "Gets a stored infoType.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "GET",
               "id": "dlp.projects.storedInfoTypes.get",
@@ -1383,7 +1383,7 @@
               ]
             },
             "list": {
-              "description": "Lists StoredInfoTypes.",
+              "description": "Lists stored infoTypes.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/projects/{projectsId}/storedInfoTypes",
               "httpMethod": "GET",
               "id": "dlp.projects.storedInfoTypes.list",
@@ -1419,7 +1419,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the StoredInfoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.",
+              "description": "Updates the stored infoType by creating a new version. The existing version\nwill continue to be used until the new version is ready.\nSee https://cloud.google.com/dlp/docs/creating-stored-infotypes to\nlearn more.",
               "flatPath": "v2/projects/{projectsId}/storedInfoTypes/{storedInfoTypesId}",
               "httpMethod": "PATCH",
               "id": "dlp.projects.storedInfoTypes.patch",
@@ -1451,7 +1451,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180814",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3552,7 +3552,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2LargeCustomDictionaryConfig": {
-      "description": "Configuration for a custom dictionary created from a data source of any size\nup to the maximum size defined in the\n[limits](https://cloud.google.com/dlp/limits) page. The artifacts of\ndictionary creation are stored in the specified GCS location. Consider using\n`CustomInfoType.Dictionary` for smaller dictionaries that satisfy the size\nrequirements.",
+      "description": "Configuration for a custom dictionary created from a data source of any size\nup to the maximum size defined in the\n[limits](https://cloud.google.com/dlp/limits) page. The artifacts of\ndictionary creation are stored in the specified Google Cloud Storage\nlocation. Consider using `CustomInfoType.Dictionary` for smaller dictionaries\nthat satisfy the size requirements.",
       "id": "GooglePrivacyDlpV2LargeCustomDictionaryConfig",
       "properties": {
         "bigQueryField": {
@@ -3565,7 +3565,7 @@
         },
         "outputPath": {
           "$ref": "GooglePrivacyDlpV2CloudStoragePath",
-          "description": "Location to store dictionary artifacts in GCS. These files will only be\naccessible by project owners and the DLP API. If any of these artifacts\nare modified, the dictionary is considered invalid and can no longer be\nused."
+          "description": "Location to store dictionary artifacts in Google Cloud Storage. These files\nwill only be accessible by project owners and the DLP API. If any of these\nartifacts are modified, the dictionary is considered invalid and can no\nlonger be used."
         }
       },
       "type": "object"
@@ -4368,7 +4368,7 @@
         },
         "largeCustomDictionary": {
           "$ref": "GooglePrivacyDlpV2LargeCustomDictionaryConfig",
-          "description": "StoredInfoType were findings are defined by a dictionary of phrases."
+          "description": "StoredInfoType where findings are defined by a dictionary of phrases."
         }
       },
       "type": "object"
@@ -4415,7 +4415,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2StoredType": {
-      "description": "CustomInfoType implementation that loads an\nexisting `StoredInfoType` resource for scanning in `InspectDataSource`. Not\ncurrently supported in `InspectContent`.",
+      "description": "A reference to a StoredInfoType to use with scanning.",
       "id": "GooglePrivacyDlpV2StoredType",
       "properties": {
         "createTime": {

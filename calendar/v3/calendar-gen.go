@@ -1338,7 +1338,9 @@ type Event struct {
 
 	// OriginalStartTime: For an instance of a recurring event, this is the
 	// time at which this event would start according to the recurrence data
-	// in the recurring event identified by recurringEventId. Immutable.
+	// in the recurring event identified by recurringEventId. It uniquely
+	// identifies the instance within the recurring event series even if the
+	// instance was moved to a different time. Immutable.
 	OriginalStartTime *EventDateTime `json:"originalStartTime,omitempty"`
 
 	// PrivateCopy: Whether this is a private event copy where changes are

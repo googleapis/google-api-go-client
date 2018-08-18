@@ -2121,7 +2121,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180814",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2401,7 +2401,7 @@
           "type": "array"
         },
         "webhookState": {
-          "description": "Required. Indicates whether webhooks are enabled for the intent.",
+          "description": "Optional. Indicates whether webhooks are enabled for the intent.",
           "enum": [
             "WEBHOOK_STATE_UNSPECIFIED",
             "WEBHOOK_STATE_ENABLED",
@@ -2873,7 +2873,7 @@
       "id": "GoogleCloudDialogflowV2IntentTrainingPhrase",
       "properties": {
         "name": {
-          "description": "Required. The unique identifier of this training phrase.",
+          "description": "Output only. The unique identifier of this training phrase.",
           "type": "string"
         },
         "parts": {
@@ -3422,7 +3422,7 @@
       "id": "GoogleCloudDialogflowV2beta1Document",
       "properties": {
         "content": {
-          "description": "The raw content of the document. This field is only permitted for\nEXTRACTIVE_QA and FAQ knowledge types.",
+          "description": "The raw content of the document. This field is only permitted for\nEXTRACTIVE_QA and FAQ knowledge types.\nNote: This field is in the process of being deprecated, please use\nraw_content instead.",
           "type": "string"
         },
         "contentUri": {
@@ -3456,6 +3456,11 @@
         },
         "name": {
           "description": "The document resource name.\nThe name must be empty when creating a document.\nFormat: `projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
+          "type": "string"
+        },
+        "rawContent": {
+          "description": "The raw content of the document. This field is only permitted for\nEXTRACTIVE_QA and FAQ knowledge types.",
+          "format": "byte",
           "type": "string"
         }
       },
@@ -3788,7 +3793,7 @@
           "type": "array"
         },
         "webhookState": {
-          "description": "Required. Indicates whether webhooks are enabled for the intent.",
+          "description": "Optional. Indicates whether webhooks are enabled for the intent.",
           "enum": [
             "WEBHOOK_STATE_UNSPECIFIED",
             "WEBHOOK_STATE_ENABLED",
@@ -4325,7 +4330,7 @@
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
       "properties": {
         "name": {
-          "description": "Required. The unique identifier of this training phrase.",
+          "description": "Output only. The unique identifier of this training phrase.",
           "type": "string"
         },
         "parts": {

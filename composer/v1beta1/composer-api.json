@@ -360,7 +360,7 @@
       }
     }
   },
-  "revision": "20180718",
+  "revision": "20180815",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -469,7 +469,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "The page token used to query for the next page if one exists",
+          "description": "The page token used to query for the next page if one exists.",
           "type": "string"
         }
       },
@@ -511,7 +511,7 @@
           "type": "string"
         },
         "network": {
-          "description": "Optional. The Compute Engine network to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example: \"projects/{projectId}/global/networks/{networkId}\".\n\n[Shared VPC](/vpc/docs/shared-vpc) is not currently supported. The\nnetwork must belong to the environment's project. If unspecified, the\n\"default\" network ID in the environment's project is used.  If a\n[Custom Subnet Network]((/vpc/docs/vpc#vpc_networks_and_subnets)\nis provided, `nodeConfig.subnetwork` must also be provided.",
+          "description": "Optional. The Compute Engine network to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example: \"projects/{projectId}/global/networks/{networkId}\".\n\nIf unspecified, the default network in the environment's project is used.\nIf a [Custom Subnet Network]((/vpc/docs/vpc#vpc_networks_and_subnets)\nis provided, `nodeConfig.subnetwork` must also be provided. For\n[Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see\n`nodeConfig.subnetwork`.",
           "type": "string"
         },
         "oauthScopes": {
@@ -526,7 +526,7 @@
           "type": "string"
         },
         "subnetwork": {
-          "description": "Optional. The Compute Engine subnetwork to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example:\n\"projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}\"\n\nIf a subnetwork is provided, `nodeConfig.network` must also be provided,\nand the subnetwork must belong to the enclosing environment's project and\nlocation.",
+          "description": "Optional. The Compute Engine subnetwork to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example:\n\"projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}\"\n\nIf a subnetwork is provided, `nodeConfig.network` must also be provided,\nand the subnetwork must belong to the same project as the network.\n\nFor Shared VPC, you must configure the subnetwork with secondary ranges\nnamed \u003cstrong\u003ecomposer-pods\u003c/strong\u003e and\n\u003cstrong\u003ecomposer-services\u003c/strong\u003e to support Alias IPs.",
           "type": "string"
         },
         "tags": {

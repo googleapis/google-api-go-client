@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180801",
+  "revision": "20180813",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1263,7 +1263,7 @@
           "type": "array"
         },
         "lastPolicyComplianceReportTime": {
-          "description": "The last time the device sent a policy compliance report. Important: This field is deprecated. The timestamp will be on last_status_report_time field, and last_status_report_time will be used for both status report and compliance report.",
+          "description": "Deprecated.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -1535,7 +1535,7 @@
           "enumDescriptions": [
             "This value is ignored.",
             "A notification sent when a device enrolls.",
-            "A notification sent when a device issues a policy compliance report. Important: This enum value is deprecated. The notification will be sent as STATUS_REPORT.",
+            "Deprecated.",
             "A notification sent when a device issues a status report.",
             "A notification sent when a device command has completed."
           ],

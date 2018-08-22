@@ -229,7 +229,7 @@ type CustomAccount struct {
 	// Required.
 	// The password of the custom account. The credential is stored
 	// encrypted
-	// and not returned in any response.
+	// and not returned in any response nor included in audit logs.
 	Password string `json:"password,omitempty"`
 
 	// Username: Required.
@@ -352,6 +352,9 @@ type Finding struct {
 	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
 	// with an invalid content type,
 	// or without an 'X-Content-Type-Options: nosniff' header.
+	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
+	// in AngularJS module that
+	// occurs when a user-provided string is interpolated by Angular.
 	FindingType string `json:"findingType,omitempty"`
 
 	// FrameUrl: Output only.
@@ -511,6 +514,9 @@ type FindingTypeStats struct {
 	//   "INVALID_CONTENT_TYPE" - An application returns sensitive content
 	// with an invalid content type,
 	// or without an 'X-Content-Type-Options: nosniff' header.
+	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
+	// in AngularJS module that
+	// occurs when a user-provided string is interpolated by Angular.
 	FindingType string `json:"findingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to
@@ -543,7 +549,7 @@ type GoogleAccount struct {
 	// Required.
 	// The password of the Google account. The credential is stored
 	// encrypted
-	// and not returned in any response.
+	// and not returned in any response nor included in audit logs.
 	Password string `json:"password,omitempty"`
 
 	// Username: Required.

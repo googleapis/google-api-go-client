@@ -1066,7 +1066,7 @@ func (s *Correction) MarshalJSON() ([]byte, error) {
 
 // Creative: A creative and its classification data.
 //
-// Next ID: 37
+// Next ID: 38
 type Creative struct {
 	// AccountId: The account that this creative belongs to.
 	// Can be used to filter the response of the
@@ -1133,8 +1133,7 @@ type Creative struct {
 	// fill a variety of slot sizes.
 	Attributes []string `json:"attributes,omitempty"`
 
-	// ClickThroughUrls: The set of declared destination URLs for the
-	// creative.
+	// ClickThroughUrls: The set of destination URLs for the creative.
 	ClickThroughUrls []string `json:"clickThroughUrls,omitempty"`
 
 	// Corrections: @OutputOnly Shows any corrections that were applied to
@@ -1168,6 +1167,10 @@ type Creative struct {
 	//   "APPROVED" - The creative has been approved.
 	//   "DISAPPROVED" - The creative has been disapproved.
 	DealsStatus string `json:"dealsStatus,omitempty"`
+
+	// DeclaredClickThroughUrls: The set of declared destination URLs for
+	// the creative.
+	DeclaredClickThroughUrls []string `json:"declaredClickThroughUrls,omitempty"`
 
 	// DetectedAdvertiserIds: @OutputOnly Detected advertiser IDs, if any.
 	DetectedAdvertiserIds googleapi.Int64s `json:"detectedAdvertiserIds,omitempty"`

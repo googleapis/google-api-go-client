@@ -786,11 +786,7 @@ type Device struct {
 	// true in the device's policy.
 	HardwareStatusSamples []*HardwareStatus `json:"hardwareStatusSamples,omitempty"`
 
-	// LastPolicyComplianceReportTime: The last time the device sent a
-	// policy compliance report. Important: This field is deprecated. The
-	// timestamp will be on last_status_report_time field, and
-	// last_status_report_time will be used for both status report and
-	// compliance report.
+	// LastPolicyComplianceReportTime: Deprecated.
 	LastPolicyComplianceReportTime string `json:"lastPolicyComplianceReportTime,omitempty"`
 
 	// LastPolicySyncTime: The last time the device fetched its policy.
@@ -1132,9 +1128,7 @@ type Enterprise struct {
 	// Possible values:
 	//   "NOTIFICATION_TYPE_UNSPECIFIED" - This value is ignored.
 	//   "ENROLLMENT" - A notification sent when a device enrolls.
-	//   "COMPLIANCE_REPORT" - A notification sent when a device issues a
-	// policy compliance report. Important: This enum value is deprecated.
-	// The notification will be sent as STATUS_REPORT.
+	//   "COMPLIANCE_REPORT" - Deprecated.
 	//   "STATUS_REPORT" - A notification sent when a device issues a status
 	// report.
 	//   "COMMAND" - A notification sent when a device command has

@@ -23,6 +23,7 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
+	"io/ioutil"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -197,6 +198,10 @@ type GoogleApi__HttpBody struct {
 
 	// Data: HTTP body binary data.
 	Data string `json:"data,omitempty"`
+
+	// DataReader is a TensorTask modification to make sending files from GCS
+	// oh so much more efficient.
+	DataReader io.Reader `json:"-"`
 
 	// Extensions: Application specific response metadata. Must be set in
 	// the first response
@@ -2814,7 +2819,10 @@ func (c *ProjectsGetConfigCall) doRequest(alt string) (*http.Response, error) {
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getConfig")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -2945,15 +2953,15 @@ func (c *ProjectsPredictCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudmlv1__predictrequest)
-	if err != nil {
-		return nil, err
-	}
+	body = strings.NewReader(c.googlecloudmlv1__predictrequest.HttpBody.Data)
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:predict")
 	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
@@ -2993,10 +3001,12 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 			HTTPStatusCode: res.StatusCode,
 		},
 	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
+	b, err := ioutil.ReadAll(res.Body)
+	if err != nil {
 		return nil, err
 	}
+
+	ret.Data = string(b)
 	return ret, nil
 	// {
 	//   "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",

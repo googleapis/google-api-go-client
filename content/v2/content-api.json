@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/hgFti6BYeSGsWMuNQgARbdQrkno\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/blFCrhUn6XemJhWRf80H1m7OIII\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1718,6 +1718,107 @@
         }
       }
     },
+    "orderreports": {
+      "methods": {
+        "listdisbursements": {
+          "description": "Retrieves a report for disbursements from your Merchant Center account.",
+          "httpMethod": "GET",
+          "id": "content.orderreports.listdisbursements",
+          "parameterOrder": [
+            "merchantId"
+          ],
+          "parameters": {
+            "disbursementEndDate": {
+              "description": "The last date which disbursements occurred. In ISO 8601 format. Default: current date.",
+              "location": "query",
+              "type": "string"
+            },
+            "disbursementStartDate": {
+              "description": "The first date which disbursements occurred. In ISO 8601 format.",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "description": "The maximum number of disbursements to return in the response, used for paging.",
+              "format": "uint32",
+              "location": "query",
+              "type": "integer"
+            },
+            "merchantId": {
+              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "The token returned by the previous request.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/orderreports/disbursements",
+          "response": {
+            "$ref": "OrderreportsListDisbursementsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "listtransactions": {
+          "description": "Retrieves a list of transactions for an disbursement from your Merchant Center account.",
+          "httpMethod": "GET",
+          "id": "content.orderreports.listtransactions",
+          "parameterOrder": [
+            "merchantId",
+            "disbursementId"
+          ],
+          "parameters": {
+            "disbursementEndDate": {
+              "description": "The last date in which disbursements occurred. In ISO 8601 format. Default: current date.",
+              "location": "query",
+              "type": "string"
+            },
+            "disbursementId": {
+              "description": "The Google-provided ID of the disbursement (found in Wallet).",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "disbursementStartDate": {
+              "description": "The first date in which disbursements occurred. In ISO 8601 format.",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "description": "The maximum number of disbursements to return in the response, used for paging.",
+              "format": "uint32",
+              "location": "query",
+              "type": "integer"
+            },
+            "merchantId": {
+              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "The token returned by the previous request.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/orderreports/disbursements/{disbursementId}/transactions",
+          "response": {
+            "$ref": "OrderreportsListTransactionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        }
+      }
+    },
     "orders": {
       "methods": {
         "acknowledge": {
@@ -2006,7 +2107,7 @@
           ]
         },
         "instorerefundlineitem": {
-          "description": "Notifies that item return and refund was handled directly in store.",
+          "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).",
           "httpMethod": "POST",
           "id": "content.orders.instorerefundlineitem",
           "parameterOrder": [
@@ -3203,7 +3304,7 @@
       }
     }
   },
-  "revision": "20180809",
+  "revision": "20180821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6153,6 +6254,76 @@
       },
       "type": "object"
     },
+    "OrderReportDisbursement": {
+      "id": "OrderReportDisbursement",
+      "properties": {
+        "disbursementAmount": {
+          "$ref": "Price",
+          "description": "The disbursement amount."
+        },
+        "disbursementCreationDate": {
+          "description": "The disbursement date, in ISO 8601 format.",
+          "type": "string"
+        },
+        "disbursementDate": {
+          "description": "The date the disbursement was initiated, in ISO 8601 format.",
+          "type": "string"
+        },
+        "disbursementId": {
+          "description": "The ID of the disbursement.",
+          "type": "string"
+        },
+        "merchantId": {
+          "description": "The ID of the managing account.",
+          "format": "uint64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrderReportTransaction": {
+      "id": "OrderReportTransaction",
+      "properties": {
+        "disbursementAmount": {
+          "$ref": "Price",
+          "description": "The disbursement amount."
+        },
+        "disbursementCreationDate": {
+          "description": "The date the disbursement was created, in ISO 8601 format.",
+          "type": "string"
+        },
+        "disbursementDate": {
+          "description": "The date the disbursement was initiated, in ISO 8601 format.",
+          "type": "string"
+        },
+        "disbursementId": {
+          "description": "The ID of the disbursement.",
+          "type": "string"
+        },
+        "merchantId": {
+          "description": "The ID of the managing account.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "merchantOrderId": {
+          "description": "Merchant-provided id of the order.",
+          "type": "string"
+        },
+        "orderId": {
+          "description": "The id of the order.",
+          "type": "string"
+        },
+        "productAmount": {
+          "$ref": "Amount",
+          "description": "Total amount for the items."
+        },
+        "transactionDate": {
+          "description": "The date of the transaction, in ISO 8601 format.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "OrderReturn": {
       "id": "OrderReturn",
       "properties": {
@@ -6458,6 +6629,50 @@
           "default": "content#orderpaymentsNotifyRefundResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderpaymentsNotifyRefundResponse\".",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrderreportsListDisbursementsResponse": {
+      "id": "OrderreportsListDisbursementsResponse",
+      "properties": {
+        "disbursements": {
+          "description": "The list of disbursements.",
+          "items": {
+            "$ref": "OrderReportDisbursement"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "content#orderreportsListDisbursementsResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreportsListDisbursementsResponse\".",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "The token for the retrieval of the next page of disbursements.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrderreportsListTransactionsResponse": {
+      "id": "OrderreportsListTransactionsResponse",
+      "properties": {
+        "kind": {
+          "default": "content#orderreportsListTransactionsResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderreportsListTransactionsResponse\".",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "The token for the retrieval of the next page of transactions.",
+          "type": "string"
+        },
+        "transactions": {
+          "description": "The list of transactions.",
+          "items": {
+            "$ref": "OrderReportTransaction"
+          },
+          "type": "array"
         }
       },
       "type": "object"

@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/iiy-ozrQzjedL49jGEceCdzqV5k\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/yNSDT8GbE0Hi1bq_MfUpEIg4L9o\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1770,6 +1770,7 @@
       }
     }
   },
+  "revision": "20180816",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2142,6 +2143,10 @@
               "description": "Whether the current user can delete this file.",
               "type": "boolean"
             },
+            "canDeleteChildren": {
+              "description": "Whether the current user can delete children of this folder. This is false when the item is not a folder. Only populated for Team Drive items.",
+              "type": "boolean"
+            },
             "canDownload": {
               "description": "Whether the current user can download this file.",
               "type": "boolean"
@@ -2154,12 +2159,28 @@
               "description": "Whether the current user can list the children of this folder. This is always false when the item is not a folder.",
               "type": "boolean"
             },
+            "canMoveChildrenOutOfTeamDrive": {
+              "description": "Whether the current user can move children of this folder outside of the Team Drive. This is false when the item is not a folder. Only populated for Team Drive items.",
+              "type": "boolean"
+            },
+            "canMoveChildrenWithinTeamDrive": {
+              "description": "Whether the current user can move children of this folder within the Team Drive. This is false when the item is not a folder. Only populated for Team Drive items.",
+              "type": "boolean"
+            },
             "canMoveItemIntoTeamDrive": {
               "description": "Whether the current user can move this item into a Team Drive. If the item is in a Team Drive, this field is equivalent to canMoveTeamDriveItem.",
               "type": "boolean"
             },
+            "canMoveItemOutOfTeamDrive": {
+              "description": "Whether the current user can move this Team Drive item outside of this Team Drive by changing its parent. Note that a request to change the parent of the item may still fail depending on the new parent that is being added. Only populated for Team Drive items.",
+              "type": "boolean"
+            },
+            "canMoveItemWithinTeamDrive": {
+              "description": "Whether the current user can move this Team Drive item within this Team Drive. Note that a request to change the parent of the item may still fail depending on the new parent that is being added. Only populated for Team Drive items.",
+              "type": "boolean"
+            },
             "canMoveTeamDriveItem": {
-              "description": "Whether the current user can move this Team Drive item by changing its parent. Note that a request to change the parent for this item may still fail depending on the new parent that is being added. Only populated for Team Drive files.",
+              "description": "Deprecated - use canMoveItemWithinTeamDrive or canMoveItemOutOfTeamDrive instead.",
               "type": "boolean"
             },
             "canReadRevisions": {
@@ -2171,7 +2192,7 @@
               "type": "boolean"
             },
             "canRemoveChildren": {
-              "description": "Whether the current user can remove children from this folder. This is always false when the item is not a folder.",
+              "description": "Whether the current user can remove children from this folder. This is always false when the item is not a folder. For Team Drive items, use canDeleteChildren or canTrashChildren instead.",
               "type": "boolean"
             },
             "canRename": {
@@ -2184,6 +2205,10 @@
             },
             "canTrash": {
               "description": "Whether the current user can move this file to trash.",
+              "type": "boolean"
+            },
+            "canTrashChildren": {
+              "description": "Whether the current user can trash children of this folder. This is false when the item is not a folder. Only populated for Team Drive items.",
               "type": "boolean"
             },
             "canUntrash": {
@@ -2975,6 +3000,10 @@
               "description": "Whether the current user can copy files in this Team Drive.",
               "type": "boolean"
             },
+            "canDeleteChildren": {
+              "description": "Whether the current user can delete children from folders in this Team Drive.",
+              "type": "boolean"
+            },
             "canDeleteTeamDrive": {
               "description": "Whether the current user can delete this Team Drive. Attempting to delete the Team Drive may still fail if there are untrashed items inside the Team Drive.",
               "type": "boolean"
@@ -3000,7 +3029,7 @@
               "type": "boolean"
             },
             "canRemoveChildren": {
-              "description": "Whether the current user can remove children from folders in this Team Drive.",
+              "description": "Deprecated - use canDeleteChildren or canTrashChildren instead.",
               "type": "boolean"
             },
             "canRename": {
@@ -3013,6 +3042,10 @@
             },
             "canShare": {
               "description": "Whether the current user can share files or folders in this Team Drive.",
+              "type": "boolean"
+            },
+            "canTrashChildren": {
+              "description": "Whether the current user can trash children from folders in this Team Drive.",
               "type": "boolean"
             }
           },

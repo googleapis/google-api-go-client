@@ -457,6 +457,18 @@ type AndroidModel struct {
 	//   "PHYSICAL" - Actual hardware
 	Form string `json:"form,omitempty"`
 
+	// FormFactor: Whther this device is a phone, tablet, wearable,
+	// etc.
+	// @OutputOnly
+	//
+	// Possible values:
+	//   "DEVICE_FORM_FACTOR_UNSPECIFIED" - Do not use. For proto versioning
+	// only.
+	//   "PHONE" - This device has the shape of a phone
+	//   "TABLET" - This device has the shape of a tablet
+	//   "WEARABLE" - This device has the shape of a watch or other wearable
+	FormFactor string `json:"formFactor,omitempty"`
+
 	// Id: The unique opaque id for this model.
 	// Use this for invoking the TestExecutionService.
 	// @OutputOnly

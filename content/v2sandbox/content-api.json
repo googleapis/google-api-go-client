@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/KvnwY7Xj6smoEY6Txpg_A-_ULmE\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/kgPtidcipbzhbCRh7x96H2hAeIM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -572,7 +572,7 @@
           ]
         },
         "instorerefundlineitem": {
-          "description": "Notifies that item return and refund was handled directly in store.",
+          "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).",
           "httpMethod": "POST",
           "id": "content.orders.instorerefundlineitem",
           "parameterOrder": [
@@ -1009,7 +1009,7 @@
       }
     }
   },
-  "revision": "20180809",
+  "revision": "20180821",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Amount": {

@@ -950,8 +950,8 @@ func (s *GooglePrivacyDlpV2CloudStorageFileSet) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2CloudStorageOptions: Options defining a file or a
-// set of files (path ending with *) within
-// a Google Cloud Storage bucket.
+// set of files within a Google Cloud Storage
+// bucket.
 type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// BytesLimitPerFile: Max number of bytes to scan from a file. If a
 	// scanned file's size is bigger
@@ -970,6 +970,7 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// specified.
 	BytesLimitPerFilePercent int64 `json:"bytesLimitPerFilePercent,omitempty"`
 
+	// FileSet: The set of one or more files to scan.
 	FileSet *GooglePrivacyDlpV2FileSet `json:"fileSet,omitempty"`
 
 	// FileTypes: List of file type groups to include in the scan.
@@ -2768,9 +2769,9 @@ func (s *GooglePrivacyDlpV2FieldTransformation) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2FileSet: Set of files to scan.
 type GooglePrivacyDlpV2FileSet struct {
-	// Url: The url, in the format `gs://<bucket>/<path>`. Trailing wildcard
-	// in the
-	// path is allowed.
+	// Url: The Cloud Storage url of the file(s) to scan, in the
+	// format
+	// `gs://<bucket>/<path>`. Trailing wildcard in the path is allowed.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Url") to
@@ -5620,7 +5621,11 @@ func (s *GooglePrivacyDlpV2RedactImageResponse) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Regex: Message defining a custom regular
 // expression.
 type GooglePrivacyDlpV2Regex struct {
-	// Pattern: Pattern defining the regular expression.
+	// Pattern: Pattern defining the regular expression. Its
+	// syntax
+	// (https://github.com/google/re2/wiki/Syntax) can be found under
+	// the
+	// google/re2 repository on GitHub.
 	Pattern string `json:"pattern,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Pattern") to
@@ -12964,6 +12969,8 @@ func (r *ProjectsJobTriggersService) List(parent string) *ProjectsJobTriggersLis
 // - `update_time`: corresponds to time the triggeredJob was last
 // updated.
 // - `name`: corresponds to JobTrigger's name.
+// - `display_name`: corresponds to JobTrigger's display name.
+// - `status`: corresponds to JobTrigger's status.
 func (c *ProjectsJobTriggersListCall) OrderBy(orderBy string) *ProjectsJobTriggersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -13090,7 +13097,7 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the triggeredJob was created.\n- `update_time`: corresponds to time the triggeredJob was last updated.\n- `name`: corresponds to JobTrigger's name.",
+	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the triggeredJob was created.\n- `update_time`: corresponds to time the triggeredJob was last updated.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

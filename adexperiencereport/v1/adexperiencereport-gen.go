@@ -131,6 +131,7 @@ type PlatformSummary struct {
 	//   "REGION_UNKNOWN" - Ad standard not yet defined for your region.
 	//   "REGION_A" - Region A.
 	//   "REGION_B" - Region B.
+	//   "REGION_C" - Region C.
 	Region []string `json:"region,omitempty"`
 
 	// ReportUrl: A link that leads to a full ad experience report.

@@ -525,8 +525,8 @@ type CryptoKey struct {
 	// do not affect next_rotation_time.
 	//
 	// Keys with purpose
-	// ENCRYPT_DECRYPT support automatic
-	// rotation. For other keys, this field must be omitted.
+	// ENCRYPT_DECRYPT support
+	// automatic rotation. For other keys, this field must be omitted.
 	NextRotationTime string `json:"nextRotationTime,omitempty"`
 
 	// Primary: Output only. A copy of the "primary" CryptoKeyVersion that
@@ -539,8 +539,8 @@ type CryptoKey struct {
 	// UpdateCryptoKeyPrimaryVersion.
 	//
 	// All keys with purpose
-	// ENCRYPT_DECRYPT have a primary. For
-	// other keys, this field will be omitted.
+	// ENCRYPT_DECRYPT have a
+	// primary. For other keys, this field will be omitted.
 	Primary *CryptoKeyVersion `json:"primary,omitempty"`
 
 	// Purpose: The immutable purpose of this CryptoKey.
@@ -568,8 +568,8 @@ type CryptoKey struct {
 	// If rotation_period is set, next_rotation_time must also be set.
 	//
 	// Keys with purpose
-	// ENCRYPT_DECRYPT support automatic
-	// rotation. For other keys, this field must be omitted.
+	// ENCRYPT_DECRYPT support
+	// automatic rotation. For other keys, this field must be omitted.
 	RotationPeriod string `json:"rotationPeriod,omitempty"`
 
 	// VersionTemplate: A template describing settings for new
@@ -1370,7 +1370,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // LocationMetadata: Cloud KMS metadata for the given
 // google.cloud.location.Location.
 type LocationMetadata struct {
-	// HsmAvailable: Indicates that CryptoKeys with
+	// HsmAvailable: Indicates whether CryptoKeys with
 	// protection_level
 	// HSM can be created in this location.
 	HsmAvailable bool `json:"hsmAvailable,omitempty"`
@@ -2950,9 +2950,9 @@ type ProjectsLocationsKeyRingsCryptoKeysCreateCall struct {
 
 // Create: Create a new CryptoKey within a KeyRing.
 //
-// CryptoKey.purpose and CryptoKey.version_template.algorithm
-// are
-// required.
+// CryptoKey.purpose and
+// CryptoKey.version_template.algorithm
+// are required.
 func (r *ProjectsLocationsKeyRingsCryptoKeysService) Create(parent string, cryptokey *CryptoKey) *ProjectsLocationsKeyRingsCryptoKeysCreateCall {
 	c := &ProjectsLocationsKeyRingsCryptoKeysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3054,7 +3054,7 @@ func (c *ProjectsLocationsKeyRingsCryptoKeysCreateCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose and CryptoKey.version_template.algorithm are\nrequired.",
+	//   "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose and\nCryptoKey.version_template.algorithm\nare required.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
 	//   "httpMethod": "POST",
 	//   "id": "cloudkms.projects.locations.keyRings.cryptoKeys.create",

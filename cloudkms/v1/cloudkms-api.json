@@ -12,7 +12,7 @@
   "baseUrl": "https://cloudkms.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud KMS",
-  "description": "Manages encryption for your cloud services the same way you do on-premises. You can generate, use, rotate, and destroy AES256 encryption keys.",
+  "description": "Cloud KMS allows you to keep cryptographic keys in one central cloud service, for direct use by other cloud resources and applications. With Cloud KMS you are the ultimate custodian of your data, you can manage encryption in the cloud the same way you do on-premises, and you have a provable and monitorable root of trust over your data.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/kms/",
   "fullyEncodeReservedExpansion": true,
@@ -358,7 +358,7 @@
                 "cryptoKeys": {
                   "methods": {
                     "create": {
-                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose and CryptoKey.version_template.algorithm are\nrequired.",
+                      "description": "Create a new CryptoKey within a KeyRing.\n\nCryptoKey.purpose and\nCryptoKey.version_template.algorithm\nare required.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/keyRings/{keyRingsId}/cryptoKeys",
                       "httpMethod": "POST",
                       "id": "cloudkms.projects.locations.keyRings.cryptoKeys.create",
@@ -943,7 +943,7 @@
       }
     }
   },
-  "revision": "20180804",
+  "revision": "20180821",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AsymmetricDecryptRequest": {
@@ -1084,13 +1084,13 @@
           "type": "string"
         },
         "nextRotationTime": {
-          "description": "At next_rotation_time, the Key Management Service will automatically:\n\n1. Create a new version of this CryptoKey.\n2. Mark the new version as primary.\n\nKey rotations performed manually via\nCreateCryptoKeyVersion and\nUpdateCryptoKeyPrimaryVersion\ndo not affect next_rotation_time.\n\nKeys with purpose\nENCRYPT_DECRYPT support automatic\nrotation. For other keys, this field must be omitted.",
+          "description": "At next_rotation_time, the Key Management Service will automatically:\n\n1. Create a new version of this CryptoKey.\n2. Mark the new version as primary.\n\nKey rotations performed manually via\nCreateCryptoKeyVersion and\nUpdateCryptoKeyPrimaryVersion\ndo not affect next_rotation_time.\n\nKeys with purpose\nENCRYPT_DECRYPT support\nautomatic rotation. For other keys, this field must be omitted.",
           "format": "google-datetime",
           "type": "string"
         },
         "primary": {
           "$ref": "CryptoKeyVersion",
-          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.\n\nAll keys with purpose\nENCRYPT_DECRYPT have a primary. For\nother keys, this field will be omitted."
+          "description": "Output only. A copy of the \"primary\" CryptoKeyVersion that will be used\nby Encrypt when this CryptoKey is given\nin EncryptRequest.name.\n\nThe CryptoKey's primary version can be updated via\nUpdateCryptoKeyPrimaryVersion.\n\nAll keys with purpose\nENCRYPT_DECRYPT have a\nprimary. For other keys, this field will be omitted."
         },
         "purpose": {
           "description": "The immutable purpose of this CryptoKey.",
@@ -1109,7 +1109,7 @@
           "type": "string"
         },
         "rotationPeriod": {
-          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.\n\nKeys with purpose\nENCRYPT_DECRYPT support automatic\nrotation. For other keys, this field must be omitted.",
+          "description": "next_rotation_time will be advanced by this period when the service\nautomatically rotates a key. Must be at least one day.\n\nIf rotation_period is set, next_rotation_time must also be set.\n\nKeys with purpose\nENCRYPT_DECRYPT support\nautomatic rotation. For other keys, this field must be omitted.",
           "format": "google-duration",
           "type": "string"
         },
@@ -1553,7 +1553,7 @@
       "id": "LocationMetadata",
       "properties": {
         "hsmAvailable": {
-          "description": "Indicates that CryptoKeys with\nprotection_level\nHSM can be created in this location.",
+          "description": "Indicates whether CryptoKeys with\nprotection_level\nHSM can be created in this location.",
           "type": "boolean"
         }
       },

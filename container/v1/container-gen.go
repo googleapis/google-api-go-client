@@ -450,11 +450,15 @@ type Cluster struct {
 	// cluster.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 
-	// CurrentNodeVersion: [Output only] The current version of the node
-	// software components.
-	// If they are currently at multiple versions because they're in the
-	// process
-	// of being upgraded, this reflects the minimum version of all nodes.
+	// CurrentNodeVersion: [Output only] Deprecated,
+	// use
+	// [NodePool.version](/kubernetes-engine/docs/reference/rest/v1/proje
+	// cts.zones.clusters.nodePool)
+	// instead. The current version of the node software components. If they
+	// are
+	// currently at multiple versions because they're in the process of
+	// being
+	// upgraded, this reflects the minimum version of all nodes.
 	CurrentNodeVersion string `json:"currentNodeVersion,omitempty"`
 
 	// Description: An optional description of this cluster.
@@ -1519,8 +1523,10 @@ type MasterAuth struct {
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 
 	// ClientCertificateConfig: Configuration for client certificate
-	// authentication on the cluster.  If no
-	// configuration is specified, a client certificate is issued.
+	// authentication on the cluster. For
+	// clusters before v1.12, if no configuration is specified, a
+	// client
+	// certificate is issued.
 	ClientCertificateConfig *ClientCertificateConfig `json:"clientCertificateConfig,omitempty"`
 
 	// ClientKey: [Output only] Base64-encoded private key used by clients

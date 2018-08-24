@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20180710",
+  "revision": "20180822",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -453,6 +453,22 @@
             "Do not use.  For proto versioning only.",
             "A software stack that simulates the device",
             "Actual hardware"
+          ],
+          "type": "string"
+        },
+        "formFactor": {
+          "description": "Whther this device is a phone, tablet, wearable, etc.\n@OutputOnly",
+          "enum": [
+            "DEVICE_FORM_FACTOR_UNSPECIFIED",
+            "PHONE",
+            "TABLET",
+            "WEARABLE"
+          ],
+          "enumDescriptions": [
+            "Do not use. For proto versioning only.",
+            "This device has the shape of a phone",
+            "This device has the shape of a tablet",
+            "This device has the shape of a watch or other wearable"
           ],
           "type": "string"
         },

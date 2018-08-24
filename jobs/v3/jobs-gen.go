@@ -1,6 +1,6 @@
 // Package jobs provides access to the Cloud Talent Solution API.
 //
-// See https://cloud.google.com/job-discovery/docs
+// See https://cloud.google.com/talent-solution/job-search/docs/
 //
 // Usage example:
 //
@@ -392,7 +392,13 @@ type CommuteInfo struct {
 	// calculation.
 	JobLocation *Location `json:"jobLocation,omitempty"`
 
-	// TravelDuration: Travel time to reach the job.
+	// TravelDuration: The number of seconds required to travel to the job
+	// location from the
+	// query location. A duration of 0 seconds indicates that the job is
+	// not
+	// reachable within the requested duration, but was returned as part of
+	// an
+	// expanded query.
 	TravelDuration string `json:"travelDuration,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobLocation") to
@@ -3777,7 +3783,7 @@ type SearchJobsResponse struct {
 
 	// HistogramResults: The histogram results that match with
 	// specified
-	// SearchJobsRequest.histogram_request.
+	// SearchJobsRequest.histogram_facets.
 	HistogramResults *HistogramResults `json:"histogramResults,omitempty"`
 
 	// LocationFilters: The location filters that the service applied to the

@@ -1744,6 +1744,11 @@ type FileCapabilities struct {
 	// CanDelete: Whether the current user can delete this file.
 	CanDelete bool `json:"canDelete,omitempty"`
 
+	// CanDeleteChildren: Whether the current user can delete children of
+	// this folder. This is false when the item is not a folder. Only
+	// populated for Team Drive items.
+	CanDeleteChildren bool `json:"canDeleteChildren,omitempty"`
+
 	// CanDownload: Whether the current user can download this file.
 	CanDownload bool `json:"canDownload,omitempty"`
 
@@ -1754,15 +1759,36 @@ type FileCapabilities struct {
 	// this folder. This is always false when the item is not a folder.
 	CanListChildren bool `json:"canListChildren,omitempty"`
 
+	// CanMoveChildrenOutOfTeamDrive: Whether the current user can move
+	// children of this folder outside of the Team Drive. This is false when
+	// the item is not a folder. Only populated for Team Drive items.
+	CanMoveChildrenOutOfTeamDrive bool `json:"canMoveChildrenOutOfTeamDrive,omitempty"`
+
+	// CanMoveChildrenWithinTeamDrive: Whether the current user can move
+	// children of this folder within the Team Drive. This is false when the
+	// item is not a folder. Only populated for Team Drive items.
+	CanMoveChildrenWithinTeamDrive bool `json:"canMoveChildrenWithinTeamDrive,omitempty"`
+
 	// CanMoveItemIntoTeamDrive: Whether the current user can move this item
 	// into a Team Drive. If the item is in a Team Drive, this field is
 	// equivalent to canMoveTeamDriveItem.
 	CanMoveItemIntoTeamDrive bool `json:"canMoveItemIntoTeamDrive,omitempty"`
 
-	// CanMoveTeamDriveItem: Whether the current user can move this Team
-	// Drive item by changing its parent. Note that a request to change the
-	// parent for this item may still fail depending on the new parent that
-	// is being added. Only populated for Team Drive files.
+	// CanMoveItemOutOfTeamDrive: Whether the current user can move this
+	// Team Drive item outside of this Team Drive by changing its parent.
+	// Note that a request to change the parent of the item may still fail
+	// depending on the new parent that is being added. Only populated for
+	// Team Drive items.
+	CanMoveItemOutOfTeamDrive bool `json:"canMoveItemOutOfTeamDrive,omitempty"`
+
+	// CanMoveItemWithinTeamDrive: Whether the current user can move this
+	// Team Drive item within this Team Drive. Note that a request to change
+	// the parent of the item may still fail depending on the new parent
+	// that is being added. Only populated for Team Drive items.
+	CanMoveItemWithinTeamDrive bool `json:"canMoveItemWithinTeamDrive,omitempty"`
+
+	// CanMoveTeamDriveItem: Deprecated - use canMoveItemWithinTeamDrive or
+	// canMoveItemOutOfTeamDrive instead.
 	CanMoveTeamDriveItem bool `json:"canMoveTeamDriveItem,omitempty"`
 
 	// CanReadRevisions: Whether the current user can read the revisions
@@ -1776,7 +1802,8 @@ type FileCapabilities struct {
 	CanReadTeamDrive bool `json:"canReadTeamDrive,omitempty"`
 
 	// CanRemoveChildren: Whether the current user can remove children from
-	// this folder. This is always false when the item is not a folder.
+	// this folder. This is always false when the item is not a folder. For
+	// Team Drive items, use canDeleteChildren or canTrashChildren instead.
 	CanRemoveChildren bool `json:"canRemoveChildren,omitempty"`
 
 	// CanRename: Whether the current user can rename this file.
@@ -1788,6 +1815,11 @@ type FileCapabilities struct {
 
 	// CanTrash: Whether the current user can move this file to trash.
 	CanTrash bool `json:"canTrash,omitempty"`
+
+	// CanTrashChildren: Whether the current user can trash children of this
+	// folder. This is false when the item is not a folder. Only populated
+	// for Team Drive items.
+	CanTrashChildren bool `json:"canTrashChildren,omitempty"`
 
 	// CanUntrash: Whether the current user can restore this file from
 	// trash.
@@ -3020,6 +3052,10 @@ type TeamDriveCapabilities struct {
 	// CanCopy: Whether the current user can copy files in this Team Drive.
 	CanCopy bool `json:"canCopy,omitempty"`
 
+	// CanDeleteChildren: Whether the current user can delete children from
+	// folders in this Team Drive.
+	CanDeleteChildren bool `json:"canDeleteChildren,omitempty"`
+
 	// CanDeleteTeamDrive: Whether the current user can delete this Team
 	// Drive. Attempting to delete the Team Drive may still fail if there
 	// are untrashed items inside the Team Drive.
@@ -3044,8 +3080,8 @@ type TeamDriveCapabilities struct {
 	// resource of files in this Team Drive.
 	CanReadRevisions bool `json:"canReadRevisions,omitempty"`
 
-	// CanRemoveChildren: Whether the current user can remove children from
-	// folders in this Team Drive.
+	// CanRemoveChildren: Deprecated - use canDeleteChildren or
+	// canTrashChildren instead.
 	CanRemoveChildren bool `json:"canRemoveChildren,omitempty"`
 
 	// CanRename: Whether the current user can rename files or folders in
@@ -3059,6 +3095,10 @@ type TeamDriveCapabilities struct {
 	// CanShare: Whether the current user can share files or folders in this
 	// Team Drive.
 	CanShare bool `json:"canShare,omitempty"`
+
+	// CanTrashChildren: Whether the current user can trash children from
+	// folders in this Team Drive.
+	CanTrashChildren bool `json:"canTrashChildren,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CanAddChildren") to
 	// unconditionally include in API requests. By default, fields with

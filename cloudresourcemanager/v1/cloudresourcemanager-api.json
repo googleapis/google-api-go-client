@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180820",
+  "revision": "20180815",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -1909,7 +1909,7 @@
           "type": "string"
         },
         "type": {
-          "description": "Required field representing the resource type this id is for.\nAt present, the valid types are: \"organization\" and \"folder\".",
+          "description": "Required field representing the resource type this id is for.\nAt present, the valid types are: \"organization\"",
           "type": "string"
         }
       },

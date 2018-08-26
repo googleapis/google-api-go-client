@@ -510,8 +510,11 @@ type Cluster struct {
 	// cluster.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 
-	// CurrentNodeVersion: [Output only] The current version of the node
-	// software components.
+	// CurrentNodeVersion: [Output only] Deprecated,
+	// use
+	// [NodePool.version](/kubernetes-engine/docs/reference/rest/v1beta1/
+	// projects.zones.clusters.nodePool)
+	// instead. The current version of the node software components.
 	// If they are currently at multiple versions because they're in the
 	// process
 	// of being upgraded, this reflects the minimum version of all nodes.
@@ -1867,8 +1870,10 @@ type MasterAuth struct {
 	ClientCertificate string `json:"clientCertificate,omitempty"`
 
 	// ClientCertificateConfig: Configuration for client certificate
-	// authentication on the cluster.  If no
-	// configuration is specified, a client certificate is issued.
+	// authentication on the cluster. For
+	// clusters before v1.12, if no configuration is specified, a
+	// client
+	// certificate is issued.
 	ClientCertificateConfig *ClientCertificateConfig `json:"clientCertificateConfig,omitempty"`
 
 	// ClientKey: [Output only] Base64-encoded private key used by clients
@@ -3932,6 +3937,18 @@ type UsableSubnetwork struct {
 	// Example: projects/my-project/global/networks/my-network
 	Network string `json:"network,omitempty"`
 
+	// SecondaryIpRanges: Secondary IP ranges.
+	SecondaryIpRanges []*UsableSubnetworkSecondaryRange `json:"secondaryIpRanges,omitempty"`
+
+	// StatusMessage: A human readable status message representing the
+	// reasons for cases where
+	// the caller cannot use the secondary ranges under the subnet. For
+	// example if
+	// the secondary_ip_ranges is empty due to a permission issue, an
+	// insufficient
+	// permission message will be given by status_message.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
 	// Subnetwork: Subnetwork Name.
 	// Example:
 	// projects/my-project/regions/us-central1/subnetworks/my-subnet
@@ -3956,6 +3973,62 @@ type UsableSubnetwork struct {
 
 func (s *UsableSubnetwork) MarshalJSON() ([]byte, error) {
 	type NoMethod UsableSubnetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UsableSubnetworkSecondaryRange: Secondary IP range of a usable
+// subnetwork.
+type UsableSubnetworkSecondaryRange struct {
+	// IpCidrRange: The range of IP addresses belonging to this subnetwork
+	// secondary range.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// RangeName: The name associated with this subnetwork secondary range,
+	// used when adding
+	// an alias IP range to a VM instance.
+	RangeName string `json:"rangeName,omitempty"`
+
+	// Status: This field is to determine the status of the secondary range
+	// programmably.
+	//
+	// Possible values:
+	//   "UNKNOWN" - UNKNOWN is the zero value of the Status enum. It's not
+	// a valid status.
+	//   "UNUSED" - UNUSED denotes that this range is unclaimed by any
+	// cluster.
+	//   "IN_USE_SERVICE" - IN_USE_SERVICE denotes that this range is
+	// claimed by a cluster for
+	// services. It cannot be used for other clusters.
+	//   "IN_USE_SHAREABLE_POD" - IN_USE_SHAREABLE_POD denotes this range
+	// was created by the network admin
+	// and is currently claimed by a cluster for pods. It can only be used
+	// by
+	// other clusters as a pod range.
+	//   "IN_USE_MANAGED_POD" - IN_USE_MANAGED_POD denotes this range was
+	// created by GKE and is claimed
+	// for pods. It cannot be used for other clusters.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UsableSubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
+	type NoMethod UsableSubnetworkSecondaryRange
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

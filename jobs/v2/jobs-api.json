@@ -17,7 +17,7 @@
   "canonicalName": "Job Service",
   "description": "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.\n",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/job-discovery/docs",
+  "documentationLink": "https://cloud.google.com/talent-solution/job-search/docs/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180726",
+  "revision": "20180821",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -670,7 +670,7 @@
           "description": "Location used as the destination in the commute calculation."
         },
         "travelDuration": {
-          "description": "Travel time to reach the job.",
+          "description": "The number of seconds required to travel to the job location from the query\nlocation. A duration of 0 seconds indicates that the job is not\nreachable within the requested duration, but was returned as part of an\nexpanded query.",
           "format": "google-duration",
           "type": "string"
         }

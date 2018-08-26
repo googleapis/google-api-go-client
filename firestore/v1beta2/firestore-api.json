@@ -15,7 +15,7 @@
   "baseUrl": "https://firestore.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Firestore",
-  "description": "",
+  "description": "Accesses the NoSQL document database built for automatic scaling, high performance, and ease of application development.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/firestore",
   "fullyEncodeReservedExpansion": true,
@@ -227,7 +227,7 @@
       }
     }
   },
-  "revision": "20180806",
+  "revision": "20180814",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "GoogleFirestoreAdminV1beta2Field": {

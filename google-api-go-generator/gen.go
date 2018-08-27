@@ -1060,7 +1060,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 			case disco.StructKind:
 				addSubStruct(subApiName, p.Type())
 			default:
-				panicf("Unknown type for %s: %v", subApiName, p.Type())
+				panicf("Unknown type for %q: %v", subApiName, p.Type())
 			}
 		}
 	case disco.ArrayKind:
@@ -1081,7 +1081,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		case disco.StructKind:
 			addSubStruct(subApiName, at)
 		default:
-			panicf("Unknown array type for %s: %v", subApiName, at)
+			panicf("Unknown array type for %q: %v", subApiName, at)
 		}
 	case disco.AnyStructKind, disco.MapKind, disco.SimpleKind, disco.ReferenceKind:
 		// Do nothing.
@@ -1440,7 +1440,7 @@ type Method struct {
 	r   *disco.Resource // or nil if a API-level (top-level) method
 	m   *disco.Method
 
-	params []*Param // all Params, of each type, lazily set by first access to Parameters
+	params []*Param // all Params, of each type, lazily set by first call of Params method.
 }
 
 func (m *Method) Id() string {
@@ -2090,22 +2090,27 @@ func resolveRelative(basestr, relstr string) string {
 	return u.String()
 }
 
-func (meth *Method) NewArguments() (args *arguments) {
-	args = &arguments{
+func (meth *Method) NewArguments() *arguments {
+	args := &arguments{
 		method: meth,
 		m:      make(map[string]*argument),
 	}
-	po := meth.m.ParameterOrder
-	if len(po) > 0 {
-		for _, pname := range po {
-			arg := meth.NewArg(pname, meth.NamedParam(pname))
-			args.AddArg(arg)
+	pnames := meth.m.ParameterOrder
+	if len(pnames) == 0 {
+		// No parameterOrder; collect required parameters and sort by name.
+		for _, reqParam := range meth.grepParams(func(p *Param) bool { return p.p.Required }) {
+			pnames = append(pnames, reqParam.p.Name)
 		}
+		sort.Strings(pnames)
+	}
+	for _, pname := range pnames {
+		arg := meth.NewArg(pname, meth.NamedParam(pname))
+		args.AddArg(arg)
 	}
 	if rs := meth.m.Request; rs != nil {
 		args.AddArg(meth.NewBodyArg(rs))
 	}
-	return
+	return args
 }
 
 func (meth *Method) NewBodyArg(ds *disco.Schema) *argument {

@@ -19,8 +19,8 @@ package http
 import (
 	"net/http"
 
-	"contrib.go.opencensus.io/exporter/stackdriver/propagation"
 	"go.opencensus.io/plugin/ochttp"
+	"google.golang.org/api/transport/http/internal/propagation"
 )
 
 func addOCTransport(trans http.RoundTripper) http.RoundTripper {

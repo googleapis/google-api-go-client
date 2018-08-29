@@ -213,7 +213,7 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 // Either `content` or `uri` must be supplied. Supplying both or
 // neither
 // returns google.rpc.Code.INVALID_ARGUMENT. See
-// [audio limits](https://cloud.google.com/speech/limits#content).
+// [content limits](/speech-to-text/quotas#content).
 type RecognitionAudio struct {
 	// Content: The audio data bytes encoded as specified
 	// in
@@ -224,8 +224,9 @@ type RecognitionAudio struct {
 
 	// Uri: URI that points to a file that contains audio data bytes as
 	// specified in
-	// `RecognitionConfig`. Currently, only Google Cloud Storage URIs
-	// are
+	// `RecognitionConfig`. The file must not be compressed (for example,
+	// gzip).
+	// Currently, only Google Cloud Storage URIs are
 	// supported, which must be specified in the following
 	// format:
 	// `gs://bucket_name/object_name` (other URI formats
@@ -328,8 +329,7 @@ type RecognitionConfig struct {
 	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
 	// tag.
 	// Example: "en-US".
-	// See [Language
-	// Support](https://cloud.google.com/speech/docs/languages)
+	// See [Language Support](/speech-to-text/docs/languages)
 	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -366,8 +366,11 @@ type RecognitionConfig struct {
 	// for all other audio formats. For details, see AudioEncoding.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
-	// SpeechContexts: *Optional* A means to provide context to assist the
-	// speech recognition.
+	// SpeechContexts: *Optional* array of SpeechContext.
+	// A means to provide context to assist the speech recognition. For
+	// more
+	// information, see [Phrase
+	// Hints](/speech-to-text/docs/basics#phrase-hints).
 	SpeechContexts []*SpeechContext `json:"speechContexts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -481,7 +484,7 @@ type SpeechContext struct {
 	// used
 	// to add additional words to the vocabulary of the recognizer.
 	// See
-	// [usage limits](https://cloud.google.com/speech/limits#content).
+	// [usage limits](/speech-to-text/quotas#content).
 	Phrases []string `json:"phrases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Phrases") to
@@ -530,7 +533,7 @@ type SpeechRecognitionAlternative struct {
 
 	// Words: Output only. A list of word-specific information for each
 	// recognized word.
-	// Note: When enable_speaker_diarization is true, you will see all the
+	// Note: When `enable_speaker_diarization` is true, you will see all the
 	// words
 	// from the beginning of the audio.
 	Words []*WordInfo `json:"words,omitempty"`

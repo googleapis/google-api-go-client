@@ -1917,6 +1917,7 @@ type SubscriptionPurchase struct {
 	// - Payment pending
 	// - Payment received
 	// - Free trial
+	// - Pending deferred upgrade/downgrade
 	PaymentState int64 `json:"paymentState,omitempty"`
 
 	// PriceAmountMicros: Price of the subscription, not including tax.

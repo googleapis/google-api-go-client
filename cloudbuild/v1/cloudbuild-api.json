@@ -15,6 +15,7 @@
   "description": "Creates and manages builds on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/cloud-build/docs/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -561,7 +562,7 @@
       }
     }
   },
-  "revision": "20180816",
+  "revision": "20180828",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {

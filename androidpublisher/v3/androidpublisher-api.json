@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"Zkyw9ACJZUvcYmlFaKGChzhmtnE/iaTk-fz_0QtjWkldKrpIGHBP-TM\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/zem5Qd2iN88JN9HgdtGKjtTNK54\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2221,6 +2221,7 @@
       }
     }
   },
+  "revision": "20180827",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3094,7 +3095,7 @@
           "type": "string"
         },
         "paymentState": {
-          "description": "The payment state of the subscription. Possible values are:  \n- Payment pending \n- Payment received \n- Free trial",
+          "description": "The payment state of the subscription. Possible values are:  \n- Payment pending \n- Payment received \n- Free trial \n- Pending deferred upgrade/downgrade",
           "format": "int32",
           "type": "integer"
         },

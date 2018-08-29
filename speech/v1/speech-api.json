@@ -174,7 +174,7 @@
       }
     }
   },
-  "revision": "20180629",
+  "revision": "20180823",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "LongRunningRecognizeRequest": {
@@ -228,7 +228,7 @@
       "type": "object"
     },
     "RecognitionAudio": {
-      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[audio limits](https://cloud.google.com/speech/limits#content).",
+      "description": "Contains audio data in the encoding specified in the `RecognitionConfig`.\nEither `content` or `uri` must be supplied. Supplying both or neither\nreturns google.rpc.Code.INVALID_ARGUMENT. See\n[content limits](/speech-to-text/quotas#content).",
       "id": "RecognitionAudio",
       "properties": {
         "content": {
@@ -237,7 +237,7 @@
           "type": "string"
         },
         "uri": {
-          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. Currently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
+          "description": "URI that points to a file that contains audio data bytes as specified in\n`RecognitionConfig`. The file must not be compressed (for example, gzip).\nCurrently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats return\ngoogle.rpc.Code.INVALID_ARGUMENT). For more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
           "type": "string"
         }
       },
@@ -276,7 +276,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](https://cloud.google.com/speech/docs/languages)\nfor a list of the currently supported language codes.",
+          "description": "*Required* The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](/speech-to-text/docs/languages)\nfor a list of the currently supported language codes.",
           "type": "string"
         },
         "maxAlternatives": {
@@ -294,7 +294,7 @@
           "type": "integer"
         },
         "speechContexts": {
-          "description": "*Optional* A means to provide context to assist the speech recognition.",
+          "description": "*Optional* array of SpeechContext.\nA means to provide context to assist the speech recognition. For more\ninformation, see [Phrase Hints](/speech-to-text/docs/basics#phrase-hints).",
           "items": {
             "$ref": "SpeechContext"
           },
@@ -337,7 +337,7 @@
       "id": "SpeechContext",
       "properties": {
         "phrases": {
-          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](https://cloud.google.com/speech/limits#content).",
+          "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](/speech-to-text/quotas#content).",
           "items": {
             "type": "string"
           },
@@ -360,7 +360,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When enable_speaker_diarization is true, you will see all the words\nfrom the beginning of the audio.",
+          "description": "Output only. A list of word-specific information for each recognized word.\nNote: When `enable_speaker_diarization` is true, you will see all the words\nfrom the beginning of the audio.",
           "items": {
             "$ref": "WordInfo"
           },

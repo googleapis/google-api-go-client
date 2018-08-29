@@ -798,6 +798,17 @@ type Creative struct {
 	// creative. Read-only. This field should not be set in requests.
 	Corrections []*CreativeCorrections `json:"corrections,omitempty"`
 
+	// CreativeStatusIdentityType: Creative status identity type that the
+	// creative item applies to. Ad Exchange real-time bidding is migrating
+	// to the sizeless creative verification. Originally, Ad Exchange
+	// assigned creative verification status to a unique combination of a
+	// buyer creative ID and creative dimensions. Post-migration, a single
+	// verification status will be assigned at the buyer creative ID level.
+	// This field allows to distinguish whether a given creative status
+	// applies to a unique combination of a buyer creative ID and creative
+	// dimensions, or to a buyer creative ID as a whole.
+	CreativeStatusIdentityType string `json:"creativeStatusIdentityType,omitempty"`
+
 	// DealsStatus: Top-level deals status. Read-only. This field should not
 	// be set in requests. If disapproved, an entry for
 	// auctionType=DIRECT_DEALS (or ALL) in servingRestrictions will also
@@ -3376,10 +3387,6 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 }
 
 type PublisherProfileApiProto struct {
-	// AccountId: Deprecated: use the seller.account_id. The account id of
-	// the seller.
-	AccountId string `json:"accountId,omitempty"`
-
 	// Audience: Publisher provided info on its audience.
 	Audience string `json:"audience,omitempty"`
 
@@ -3452,7 +3459,7 @@ type PublisherProfileApiProto struct {
 	// TopHeadlines: Publisher provided key metrics and rankings.
 	TopHeadlines []string `json:"topHeadlines,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AccountId") to
+	// ForceSendFields is a list of field names (e.g. "Audience") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3460,7 +3467,7 @@ type PublisherProfileApiProto struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// NullFields is a list of field names (e.g. "Audience") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

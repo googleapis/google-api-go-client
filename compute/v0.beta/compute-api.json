@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/76kDbNvsClwCFP6NXuYbeq_-TWY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/yY5Jnalk5wiipt_KVhW0auCsLwU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -6702,7 +6702,7 @@
           ]
         },
         "aggregatedList": {
-          "description": "Retrieves aggregated list of instances.",
+          "description": "Retrieves aggregated list of all of the instances in your project across all regions and zones.",
           "httpMethod": "GET",
           "id": "compute.instances.aggregatedList",
           "parameterOrder": [
@@ -7048,7 +7048,7 @@
           ]
         },
         "getSerialPortOutput": {
-          "description": "Returns the specified instance's serial port output.",
+          "description": "Returns the last 1 MB of serial port output from the specified instance.",
           "httpMethod": "GET",
           "id": "compute.instances.getSerialPortOutput",
           "parameterOrder": [
@@ -20485,7 +20485,7 @@
       }
     }
   },
-  "revision": "20180730",
+  "revision": "20180817",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -21497,6 +21497,10 @@
       "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance.\n\nThis property is mutually exclusive with the source property; you can only define one or the other, but not both.",
       "id": "AttachedDiskInitializeParams",
       "properties": {
+        "description": {
+          "description": "An optional description. Provide this property when creating the disk.",
+          "type": "string"
+        },
         "diskName": {
           "description": "Specifies the disk name. If not specified, the default is to use the name of the instance. If the disk with the instance name exists already in the given zone/region, a new name will be automatically generated.",
           "type": "string"
@@ -21504,18 +21508,6 @@
         "diskSizeGb": {
           "description": "Specifies the size of the disk in base-2 GB.",
           "format": "int64",
-          "type": "string"
-        },
-        "diskStorageType": {
-          "description": "[Deprecated] Storage type of the disk.",
-          "enum": [
-            "HDD",
-            "SSD"
-          ],
-          "enumDescriptions": [
-            "",
-            ""
-          ],
           "type": "string"
         },
         "diskType": {
@@ -29653,7 +29645,7 @@
           "type": "string"
         },
         "availabilityZone": {
-          "description": "[Output Only] Availability zone for this location. Within a metropolitan area (metro), maintenance will not be simultaneously scheduled in more than one availability zone. Example: \"zone1\" or \"zone2\".",
+          "description": "[Output Only] Availability zone for this InterconnectLocation. Within a metropolitan area (metro), maintenance will not be simultaneously scheduled in more than one availability zone. Example: \"zone1\" or \"zone2\".",
           "type": "string"
         },
         "city": {
@@ -36751,7 +36743,7 @@
       "type": "object"
     },
     "SecurityPolicy": {
-      "description": "A security policy is comprised of one or more rules. It can also be associated with one or more 'targets'. (== resource_for beta.securityPolicies ==)",
+      "description": "A security policy is comprised of one or more rules. It can also be associated with one or more 'targets'. (== resource_for v1.securityPolicies ==) (== resource_for beta.securityPolicies ==)",
       "id": "SecurityPolicy",
       "properties": {
         "creationTimestamp": {
@@ -36979,11 +36971,9 @@
         "versionedExpr": {
           "description": "Preconfigured versioned expression. If this field is specified, config must also be specified. Available preconfigured expressions along with their requirements are: SRC_IPS_V1 - must specify the corresponding src_ip_range field in config.",
           "enum": [
-            "SRC_IPS_V1",
-            "VERSIONED_EXPR_UNSPECIFIED"
+            "SRC_IPS_V1"
           ],
           "enumDescriptions": [
-            "",
             ""
           ],
           "type": "string"
@@ -37368,6 +37358,10 @@
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
         },
+        "expireTime": {
+          "description": "[Output Only] Expire time of the certificate. RFC3339",
+          "type": "string"
+        },
         "id": {
           "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
           "format": "uint64",
@@ -37377,6 +37371,10 @@
           "default": "compute#sslCertificate",
           "description": "[Output Only] Type of the resource. Always compute#sslCertificate for SSL certificates.",
           "type": "string"
+        },
+        "managed": {
+          "$ref": "SslCertificateManagedSslCertificate",
+          "description": "Configuration and status of a managed SSL certificate."
         },
         "name": {
           "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
@@ -37389,6 +37387,31 @@
         },
         "selfLink": {
           "description": "[Output only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfManaged": {
+          "$ref": "SslCertificateSelfManagedSslCertificate",
+          "description": "Configuration and status of a self-managed SSL certificate."
+        },
+        "subjectAlternativeNames": {
+          "description": "[Output Only] Domains associated with the certificate via Subject Alternative Name.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "type": {
+          "description": "(Optional) Specifies the type of SSL certificate, either \"SELF_MANAGED\" or \"MANAGED\". If not specified, the certificate is self-managed and the fields certificate and private_key are used.",
+          "enum": [
+            "MANAGED",
+            "SELF_MANAGED",
+            "TYPE_UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         }
       },
@@ -37502,6 +37525,80 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "SslCertificateManagedSslCertificate": {
+      "description": "Configuration and status of a managed SSL certificate.",
+      "id": "SslCertificateManagedSslCertificate",
+      "properties": {
+        "domainStatus": {
+          "additionalProperties": {
+            "enum": [
+              "ACTIVE",
+              "DOMAIN_STATUS_UNSPECIFIED",
+              "FAILED_CAA_CHECKING",
+              "FAILED_CAA_FORBIDDEN",
+              "FAILED_NOT_VISIBLE",
+              "FAILED_RATE_LIMITED",
+              "PROVISIONING"
+            ],
+            "enumDescriptions": [
+              "",
+              "",
+              "",
+              "",
+              "",
+              "",
+              ""
+            ],
+            "type": "string"
+          },
+          "description": "[Output only] Detailed statuses of the domains specified for managed certificate resource.",
+          "type": "object"
+        },
+        "domains": {
+          "description": "The domains for which a managed SSL certificate will be generated. Currently only single-domain certs are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "status": {
+          "description": "[Output only] Status of the managed certificate resource.",
+          "enum": [
+            "ACTIVE",
+            "MANAGED_CERTIFICATE_STATUS_UNSPECIFIED",
+            "PROVISIONING",
+            "PROVISIONING_FAILED",
+            "PROVISIONING_FAILED_PERMANENTLY",
+            "RENEWAL_FAILED"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SslCertificateSelfManagedSslCertificate": {
+      "description": "Configuration and status of a self-managed SSL certificate.",
+      "id": "SslCertificateSelfManagedSslCertificate",
+      "properties": {
+        "certificate": {
+          "description": "A local certificate file. The certificate must be in PEM format. The certificate chain must be no greater than 5 certs long. The chain must include at least one intermediate cert.",
+          "type": "string"
+        },
+        "privateKey": {
+          "description": "A write-only private key in PEM format. Only insert requests will include this field.",
+          "type": "string"
         }
       },
       "type": "object"

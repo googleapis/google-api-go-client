@@ -4032,6 +4032,9 @@ type VolumeVolumeInfo struct {
 	// "Suspense", etc.
 	Categories []string `json:"categories,omitempty"`
 
+	// ComicsContent: Whether the volume has comics content.
+	ComicsContent bool `json:"comicsContent,omitempty"`
+
 	// ContentVersion: An identifier for the version of the volume content
 	// (text & images). (In LITE projection)
 	ContentVersion string `json:"contentVersion,omitempty"`

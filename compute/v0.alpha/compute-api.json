@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/6UL88WQ31_b1Uxfeta8aTab44cU\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ywyVu5AtiGvJAHrRgKunuMjQuw4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -4792,158 +4792,6 @@
         }
       }
     },
-    "hostTypes": {
-      "methods": {
-        "aggregatedList": {
-          "description": "Retrieves an aggregated list of host types.",
-          "httpMethod": "GET",
-          "id": "compute.hostTypes.aggregatedList",
-          "parameterOrder": [
-            "project"
-          ],
-          "parameters": {
-            "filter": {
-              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
-              "location": "query",
-              "type": "string"
-            },
-            "maxResults": {
-              "default": "500",
-              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
-              "format": "uint32",
-              "location": "query",
-              "minimum": "0",
-              "type": "integer"
-            },
-            "orderBy": {
-              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
-              "location": "query",
-              "type": "string"
-            },
-            "pageToken": {
-              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
-              "location": "query",
-              "type": "string"
-            },
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/aggregated/hostTypes",
-          "response": {
-            "$ref": "HostTypeAggregatedList"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        },
-        "get": {
-          "description": "Returns the specified host type. Gets a list of available host types by making a list() request.",
-          "httpMethod": "GET",
-          "id": "compute.hostTypes.get",
-          "parameterOrder": [
-            "project",
-            "zone",
-            "hostType"
-          ],
-          "parameters": {
-            "hostType": {
-              "description": "Name of the host type to return.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            },
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/hostTypes/{hostType}",
-          "response": {
-            "$ref": "HostType"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        },
-        "list": {
-          "description": "Retrieves a list of host types available to the specified project.",
-          "httpMethod": "GET",
-          "id": "compute.hostTypes.list",
-          "parameterOrder": [
-            "project",
-            "zone"
-          ],
-          "parameters": {
-            "filter": {
-              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
-              "location": "query",
-              "type": "string"
-            },
-            "maxResults": {
-              "default": "500",
-              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
-              "format": "uint32",
-              "location": "query",
-              "minimum": "0",
-              "type": "integer"
-            },
-            "orderBy": {
-              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
-              "location": "query",
-              "type": "string"
-            },
-            "pageToken": {
-              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
-              "location": "query",
-              "type": "string"
-            },
-            "project": {
-              "description": "Project ID for this request.",
-              "location": "path",
-              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
-              "required": true,
-              "type": "string"
-            },
-            "zone": {
-              "description": "The name of the zone for this request.",
-              "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{project}/zones/{zone}/hostTypes",
-          "response": {
-            "$ref": "HostTypeList"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/compute",
-            "https://www.googleapis.com/auth/compute.readonly"
-          ]
-        }
-      }
-    },
     "httpHealthChecks": {
       "methods": {
         "delete": {
@@ -7750,7 +7598,7 @@
           ]
         },
         "aggregatedList": {
-          "description": "Retrieves aggregated list of instances.",
+          "description": "Retrieves aggregated list of all of the instances in your project across all regions and zones.",
           "httpMethod": "GET",
           "id": "compute.instances.aggregatedList",
           "parameterOrder": [
@@ -8143,7 +7991,7 @@
           ]
         },
         "getSerialPortOutput": {
-          "description": "Returns the specified instance's serial port output.",
+          "description": "Returns the last 1 MB of serial port output from the specified instance.",
           "httpMethod": "GET",
           "id": "compute.instances.getSerialPortOutput",
           "parameterOrder": [
@@ -10927,6 +10775,276 @@
             }
           },
           "path": "{project}/global/licenses/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
+    "machineImages": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the specified machine image. If you delete an instance template that is being referenced from another instance group, the instance group will not be able to create or recreate virtual machine instances. Deleting an machine image is permanent and cannot be undone.",
+          "httpMethod": "DELETE",
+          "id": "compute.machineImages.delete",
+          "parameterOrder": [
+            "project",
+            "machineImage"
+          ],
+          "parameters": {
+            "machineImage": {
+              "description": "The name of the machine image to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{machineImage}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified machine image. Gets a list of available machine images by making a list() request.",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.get",
+          "parameterOrder": [
+            "project",
+            "machineImage"
+          ],
+          "parameters": {
+            "machineImage": {
+              "description": "The name of the machine image.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{machineImage}",
+          "response": {
+            "$ref": "MachineImage"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates an machine image in the specified project using the data that is included in the request. If you are creating a new template to update an existing instance group, your new machine image must use the same network or, if applicable, the same subnetwork as the original template.",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.insert",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "sourceInstance": {
+              "description": "Optional. Source image to restore onto a disk.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages",
+          "request": {
+            "$ref": "MachineImage"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Retrieves a list of machine images that are contained within the specified project.",
+          "httpMethod": "GET",
+          "id": "compute.machineImages.list",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages",
+          "response": {
+            "$ref": "MachineImageList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "setIamPolicy": {
+          "description": "Sets the access control policy on the specified resource. Replaces any existing policy.",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.setIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/setIamPolicy",
+          "request": {
+            "$ref": "GlobalSetPolicyRequest"
+          },
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.machineImages.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name of the resource for this request.",
+              "location": "path",
+              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/machineImages/{resource}/testIamPermissions",
           "request": {
             "$ref": "TestPermissionsRequest"
           },
@@ -25035,7 +25153,7 @@
       }
     }
   },
-  "revision": "20180730",
+  "revision": "20180817",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -26542,6 +26660,10 @@
       "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance.\n\nThis property is mutually exclusive with the source property; you can only define one or the other, but not both.",
       "id": "AttachedDiskInitializeParams",
       "properties": {
+        "description": {
+          "description": "An optional description. Provide this property when creating the disk.",
+          "type": "string"
+        },
         "diskName": {
           "description": "Specifies the disk name. If not specified, the default is to use the name of the instance. If the disk with the instance name exists already in the given zone/region, a new name will be automatically generated.",
           "type": "string"
@@ -26549,18 +26671,6 @@
         "diskSizeGb": {
           "description": "Specifies the size of the disk in base-2 GB.",
           "format": "int64",
-          "type": "string"
-        },
-        "diskStorageType": {
-          "description": "[Deprecated] Storage type of the disk.",
-          "enum": [
-            "HDD",
-            "SSD"
-          ],
-          "enumDescriptions": [
-            "",
-            ""
-          ],
           "type": "string"
         },
         "diskType": {
@@ -28229,6 +28339,13 @@
       "description": "Represents a Commitment resource. Creating a Commitment resource means that you are purchasing a committed use contract with an explicit start and end time. You can create commitments based on vCPUs and memory usage and receive discounted rates. For full details, read Signing Up for Committed Use Discounts.\n\nCommitted use discounts are subject to Google Cloud Platform's Service Specific Terms. By purchasing a committed use discount, you agree to these terms. Committed use discounts will not renew, so you must purchase a new commitment to continue receiving discounts. (== resource_for beta.commitments ==) (== resource_for v1.commitments ==)",
       "id": "Commitment",
       "properties": {
+        "allocations": {
+          "description": "List of allocations for this commitment.",
+          "items": {
+            "$ref": "Allocation"
+          },
+          "type": "array"
+        },
         "creationTimestamp": {
           "description": "[Output Only] Creation timestamp in RFC3339 text format.",
           "type": "string"
@@ -30148,6 +30265,10 @@
           "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. This field cannot be used with port or portRange fields.\n\nWhen the load balancing scheme is INTERNAL and protocol is TCP/UDP, specify this field to allow packets addressed to any ports will be forwarded to the backends configured with this forwarding rule.",
           "type": "boolean"
         },
+        "allowGlobalAccess": {
+          "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. If the field is set to TRUE, clients can access ILB from all regions. Otherwise only allows access from clients in the same region as the internal load balancer.",
+          "type": "boolean"
+        },
         "backendService": {
           "description": "This field is only used for INTERNAL load balancing.\n\nFor internal load balancing, this field identifies the BackendService resource to receive the matched traffic.",
           "type": "string"
@@ -31369,385 +31490,6 @@
       },
       "type": "object"
     },
-    "HostType": {
-      "description": "A Host Type resource.",
-      "id": "HostType",
-      "properties": {
-        "cpuPlatform": {
-          "description": "[Output Only] The CPU platform used by this host type.",
-          "type": "string"
-        },
-        "creationTimestamp": {
-          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
-          "type": "string"
-        },
-        "deprecated": {
-          "$ref": "DeprecationStatus",
-          "description": "[Output Only] The deprecation status associated with this host type."
-        },
-        "description": {
-          "description": "[Output Only] An optional textual description of the resource.",
-          "type": "string"
-        },
-        "guestCpus": {
-          "description": "[Output Only] The number of virtual CPUs that are available to the host type.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "id": {
-          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
-          "format": "uint64",
-          "type": "string"
-        },
-        "kind": {
-          "default": "compute#hostType",
-          "description": "[Output Only] The type of the resource. Always compute#hostType for host types.",
-          "type": "string"
-        },
-        "localSsdGb": {
-          "description": "[Output Only] Local SSD available to the host type, defined in GB.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "memoryMb": {
-          "description": "[Output Only] The amount of physical memory available to the host type, defined in MB.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "name": {
-          "description": "[Output Only] Name of the resource.",
-          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
-          "type": "string"
-        },
-        "selfLink": {
-          "description": "[Output Only] Server-defined URL for the resource.",
-          "type": "string"
-        },
-        "zone": {
-          "description": "[Output Only] The name of the zone where the host type resides, such as us-central1-a.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "HostTypeAggregatedList": {
-      "id": "HostTypeAggregatedList",
-      "properties": {
-        "id": {
-          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
-          "type": "string"
-        },
-        "items": {
-          "additionalProperties": {
-            "$ref": "HostTypesScopedList",
-            "description": "[Output Only] Name of the scope containing this set of host types."
-          },
-          "description": "A list of HostTypesScopedList resources.",
-          "type": "object"
-        },
-        "kind": {
-          "default": "compute#hostTypeAggregatedList",
-          "description": "[Output Only] Type of resource.Always compute#hostTypeAggregatedList for aggregated lists of host types.",
-          "type": "string"
-        },
-        "nextPageToken": {
-          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
-          "type": "string"
-        },
-        "selfLink": {
-          "description": "[Output Only] Server-defined URL for this resource.",
-          "type": "string"
-        },
-        "warning": {
-          "description": "[Output Only] Informational warning message.",
-          "properties": {
-            "code": {
-              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
-              "enum": [
-                "CLEANUP_FAILED",
-                "DEPRECATED_RESOURCE_USED",
-                "DEPRECATED_TYPE_USED",
-                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
-                "EXPERIMENTAL_TYPE_USED",
-                "EXTERNAL_API_WARNING",
-                "FIELD_VALUE_OVERRIDEN",
-                "INJECTED_KERNELS_DEPRECATED",
-                "MISSING_TYPE_DEPENDENCY",
-                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
-                "NEXT_HOP_CANNOT_IP_FORWARD",
-                "NEXT_HOP_INSTANCE_NOT_FOUND",
-                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
-                "NEXT_HOP_NOT_RUNNING",
-                "NOT_CRITICAL_ERROR",
-                "NO_RESULTS_ON_PAGE",
-                "REQUIRED_TOS_AGREEMENT",
-                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
-                "RESOURCE_NOT_DELETED",
-                "SCHEMA_VALIDATION_IGNORED",
-                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
-                "UNDECLARED_PROPERTIES",
-                "UNREACHABLE"
-              ],
-              "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-              ],
-              "type": "string"
-            },
-            "data": {
-              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
-              "items": {
-                "properties": {
-                  "key": {
-                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
-                    "type": "string"
-                  },
-                  "value": {
-                    "description": "[Output Only] A warning data value corresponding to the key.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "type": "array"
-            },
-            "message": {
-              "description": "[Output Only] A human-readable description of the warning code.",
-              "type": "string"
-            }
-          },
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "HostTypeList": {
-      "description": "Contains a list of host types.",
-      "id": "HostTypeList",
-      "properties": {
-        "id": {
-          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
-          "type": "string"
-        },
-        "items": {
-          "description": "A list of HostType resources.",
-          "items": {
-            "$ref": "HostType"
-          },
-          "type": "array"
-        },
-        "kind": {
-          "default": "compute#hostTypeList",
-          "description": "[Output Only] Type of resource.Always compute#hostTypeList for lists of host types.",
-          "type": "string"
-        },
-        "nextPageToken": {
-          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
-          "type": "string"
-        },
-        "selfLink": {
-          "description": "[Output Only] Server-defined URL for this resource.",
-          "type": "string"
-        },
-        "warning": {
-          "description": "[Output Only] Informational warning message.",
-          "properties": {
-            "code": {
-              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
-              "enum": [
-                "CLEANUP_FAILED",
-                "DEPRECATED_RESOURCE_USED",
-                "DEPRECATED_TYPE_USED",
-                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
-                "EXPERIMENTAL_TYPE_USED",
-                "EXTERNAL_API_WARNING",
-                "FIELD_VALUE_OVERRIDEN",
-                "INJECTED_KERNELS_DEPRECATED",
-                "MISSING_TYPE_DEPENDENCY",
-                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
-                "NEXT_HOP_CANNOT_IP_FORWARD",
-                "NEXT_HOP_INSTANCE_NOT_FOUND",
-                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
-                "NEXT_HOP_NOT_RUNNING",
-                "NOT_CRITICAL_ERROR",
-                "NO_RESULTS_ON_PAGE",
-                "REQUIRED_TOS_AGREEMENT",
-                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
-                "RESOURCE_NOT_DELETED",
-                "SCHEMA_VALIDATION_IGNORED",
-                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
-                "UNDECLARED_PROPERTIES",
-                "UNREACHABLE"
-              ],
-              "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-              ],
-              "type": "string"
-            },
-            "data": {
-              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
-              "items": {
-                "properties": {
-                  "key": {
-                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
-                    "type": "string"
-                  },
-                  "value": {
-                    "description": "[Output Only] A warning data value corresponding to the key.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "type": "array"
-            },
-            "message": {
-              "description": "[Output Only] A human-readable description of the warning code.",
-              "type": "string"
-            }
-          },
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "HostTypesScopedList": {
-      "id": "HostTypesScopedList",
-      "properties": {
-        "hostTypes": {
-          "description": "[Output Only] A list of host types contained in this scope.",
-          "items": {
-            "$ref": "HostType"
-          },
-          "type": "array"
-        },
-        "warning": {
-          "description": "[Output Only] An informational warning that appears when the host types list is empty.",
-          "properties": {
-            "code": {
-              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
-              "enum": [
-                "CLEANUP_FAILED",
-                "DEPRECATED_RESOURCE_USED",
-                "DEPRECATED_TYPE_USED",
-                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
-                "EXPERIMENTAL_TYPE_USED",
-                "EXTERNAL_API_WARNING",
-                "FIELD_VALUE_OVERRIDEN",
-                "INJECTED_KERNELS_DEPRECATED",
-                "MISSING_TYPE_DEPENDENCY",
-                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
-                "NEXT_HOP_CANNOT_IP_FORWARD",
-                "NEXT_HOP_INSTANCE_NOT_FOUND",
-                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
-                "NEXT_HOP_NOT_RUNNING",
-                "NOT_CRITICAL_ERROR",
-                "NO_RESULTS_ON_PAGE",
-                "REQUIRED_TOS_AGREEMENT",
-                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
-                "RESOURCE_NOT_DELETED",
-                "SCHEMA_VALIDATION_IGNORED",
-                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
-                "UNDECLARED_PROPERTIES",
-                "UNREACHABLE"
-              ],
-              "enumDescriptions": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
-              ],
-              "type": "string"
-            },
-            "data": {
-              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
-              "items": {
-                "properties": {
-                  "key": {
-                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
-                    "type": "string"
-                  },
-                  "value": {
-                    "description": "[Output Only] A warning data value corresponding to the key.",
-                    "type": "string"
-                  }
-                },
-                "type": "object"
-              },
-              "type": "array"
-            },
-            "message": {
-              "description": "[Output Only] A human-readable description of the warning code.",
-              "type": "string"
-            }
-          },
-          "type": "object"
-        }
-      },
-      "type": "object"
-    },
     "HttpHealthCheck": {
       "description": "An HttpHealthCheck resource. This resource defines a template for how individual instances should be checked for health, via HTTP.",
       "id": "HttpHealthCheck",
@@ -32444,6 +32186,9 @@
             "$ref": "AcceleratorConfig"
           },
           "type": "array"
+        },
+        "hostname": {
+          "type": "string"
         },
         "id": {
           "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -35957,7 +35702,7 @@
           "type": "string"
         },
         "availabilityZone": {
-          "description": "[Output Only] Availability zone for this location. Within a metropolitan area (metro), maintenance will not be simultaneously scheduled in more than one availability zone. Example: \"zone1\" or \"zone2\".",
+          "description": "[Output Only] Availability zone for this InterconnectLocation. Within a metropolitan area (metro), maintenance will not be simultaneously scheduled in more than one availability zone. Example: \"zone1\" or \"zone2\".",
           "type": "string"
         },
         "city": {
@@ -36890,6 +36635,192 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MachineImage": {
+      "description": "Machine image resource.",
+      "id": "MachineImage",
+      "properties": {
+        "creationTimestamp": {
+          "description": "[Output Only] The creation timestamp for this machine image in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] A unique identifier for this machine image. The server defines this identifier.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#machineImage",
+          "description": "[Output Only] The resource type, which is always compute#machineImage for machine image.",
+          "type": "string"
+        },
+        "name": {
+          "annotations": {
+            "required": [
+              "compute.machineImages.insert"
+            ]
+          },
+          "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] The URL for this machine image. The server defines this URL.",
+          "type": "string"
+        },
+        "sourceInstance": {
+          "description": "The source instance used to create the template. You can provide this as a partial or full URL to the resource. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/instance \n- projects/project/zones/zone/instances/instance",
+          "type": "string"
+        },
+        "sourceInstanceProperties": {
+          "$ref": "SourceInstanceProperties"
+        },
+        "status": {
+          "description": "[Output Only] The status of disk creation.",
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY",
+            "UPLOADING"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "storageLocations": {
+          "description": "GCS bucket storage location of the snapshot (regional or multi-regional).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "MachineImageList": {
+      "description": "A list of machine images.",
+      "id": "MachineImageList",
+      "properties": {
+        "etag": {
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of MachineImage resources.",
+          "items": {
+            "$ref": "MachineImage"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#machineImageList",
+          "description": "[Output Only] The resource type, which is always compute#machineImagesListResponse for machine image lists.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"
@@ -42530,9 +42461,6 @@
       "properties": {
         "dailyMaintenanceWindow": {
           "$ref": "ResourcePolicyDailyCycle"
-        },
-        "weeklyMaintenanceWindow": {
-          "$ref": "ResourcePolicyWeeklyCycle"
         }
       },
       "type": "object"
@@ -43854,6 +43782,133 @@
       },
       "type": "object"
     },
+    "SavedAttachedDisk": {
+      "description": "An instance-attached disk resource.",
+      "id": "SavedAttachedDisk",
+      "properties": {
+        "autoDelete": {
+          "description": "Specifies whether the disk will be auto-deleted when the instance is deleted (but not when the disk is detached from the instance).",
+          "type": "boolean"
+        },
+        "boot": {
+          "description": "Indicates that this is a boot disk. The virtual machine will use the first partition of the disk for its root filesystem.",
+          "type": "boolean"
+        },
+        "deviceName": {
+          "description": "Specifies a unique device name of your choice that is reflected into the /dev/disk/by-id/google-* tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance.\n\nIf not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine. This field is only applicable for persistent disks.",
+          "type": "string"
+        },
+        "diskEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Encrypts or decrypts a disk using a customer-supplied encryption key.\n\nIf you are creating a new disk, this field encrypts the new disk using an encryption key that you provide. If you are attaching an existing disk that is already encrypted, this field decrypts the disk using the customer-supplied encryption key.\n\nIf you encrypt a disk using a customer-supplied key, you must provide the same key again when you attempt to use this resource at a later time. For example, you must provide the key when you create a snapshot or an image from the disk or when you attach the disk to a virtual machine instance.\n\nIf you do not provide an encryption key, then the disk will be encrypted using an automatically generated key and you do not need to provide a key to use the disk later.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot use your own keys to encrypt disks in a managed instance group."
+        },
+        "diskSizeGb": {
+          "description": "The size of the disk in base-2 GB. This supersedes disk_size_gb in InitializeParams.",
+          "format": "int64",
+          "type": "string"
+        },
+        "guestOsFeatures": {
+          "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.",
+          "items": {
+            "$ref": "GuestOsFeature"
+          },
+          "type": "array"
+        },
+        "index": {
+          "description": "[Output Only] A zero-based index to this disk, where 0 is reserved for the boot disk. If you have many disks attached to an instance, each disk would have a unique index number.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "initializeParams": {
+          "$ref": "AttachedDiskInitializeParams",
+          "description": "[Input Only] Specifies the parameters for a new disk that will be created alongside the new instance. Use initialization parameters to create boot disks or local SSDs attached to the new instance.\n\nThis property is mutually exclusive with the source property; you can only define one or the other, but not both."
+        },
+        "interface": {
+          "description": "Specifies the disk interface to use for attaching this disk, which is either SCSI or NVME. The default is SCSI. Persistent disks must always use SCSI and the request will fail if you attempt to attach a persistent disk in any other format than SCSI. Local SSDs can use either NVME or SCSI. For performance characteristics of SCSI over NVMe, see Local SSD performance.",
+          "enum": [
+            "NVDIMM",
+            "NVME",
+            "SCSI"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#savedAttachedDisk",
+          "description": "[Output Only] Type of the resource. Always compute#attachedDisk for attached disks.",
+          "type": "string"
+        },
+        "licenses": {
+          "description": "[Output Only] Any valid publicly visible licenses.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "mode": {
+          "description": "The mode in which to attach this disk, either READ_WRITE or READ_ONLY. If not specified, the default is to attach the disk in READ_WRITE mode.",
+          "enum": [
+            "READ_ONLY",
+            "READ_WRITE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "savedState": {
+          "description": "For LocalSSD disks on VM Instances in STOPPED or SUSPENDED state, this field is set to PRESERVED if the LocalSSD data has been saved to a persistent location by customer request. (see the discard_local_ssd option on Stop/Suspend). Read-only in the api.",
+          "enum": [
+            "DISK_SAVED_STATE_UNSPECIFIED",
+            "PRESERVED"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "source": {
+          "description": "Specifies a valid partial or full URL to an existing Persistent Disk resource. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nIf desired, you can also attach existing non-root persistent disks using this property. This field is only applicable for persistent disks.\n\nNote that for InstanceTemplate, specify the disk name, not the URL for the disk.",
+          "type": "string"
+        },
+        "storageBytes": {
+          "description": "[Output Only] A size of the storage used by the disk's snapshot.",
+          "format": "int64",
+          "type": "string"
+        },
+        "storageBytesStatus": {
+          "description": "[Output Only] An indicator whether storageBytes is in a stable state or it is being adjusted as a result of shared storage reallocation. This status can either be UPDATING, meaning the size of the snapshot is being updated, or UP_TO_DATE, meaning the size of the snapshot is up-to-date.",
+          "enum": [
+            "UPDATING",
+            "UP_TO_DATE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "type": {
+          "description": "Specifies the type of the disk, either SCRATCH or PERSISTENT. If not specified, the default is PERSISTENT.",
+          "enum": [
+            "PERSISTENT",
+            "SCRATCH"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Scheduling": {
       "description": "Sets the scheduling options for an Instance.",
       "id": "Scheduling",
@@ -43939,7 +43994,7 @@
       "type": "object"
     },
     "SecurityPolicy": {
-      "description": "A security policy is comprised of one or more rules. It can also be associated with one or more 'targets'. (== resource_for beta.securityPolicies ==)",
+      "description": "A security policy is comprised of one or more rules. It can also be associated with one or more 'targets'. (== resource_for v1.securityPolicies ==) (== resource_for beta.securityPolicies ==)",
       "id": "SecurityPolicy",
       "properties": {
         "creationTimestamp": {
@@ -44167,11 +44222,9 @@
         "versionedExpr": {
           "description": "Preconfigured versioned expression. If this field is specified, config must also be specified. Available preconfigured expressions along with their requirements are: SRC_IPS_V1 - must specify the corresponding src_ip_range field in config.",
           "enum": [
-            "SRC_IPS_V1",
-            "VERSIONED_EXPR_UNSPECIFIED"
+            "SRC_IPS_V1"
           ],
           "enumDescriptions": [
-            "",
             ""
           ],
           "type": "string"
@@ -44547,6 +44600,85 @@
       },
       "type": "object"
     },
+    "SourceInstanceProperties": {
+      "description": "",
+      "id": "SourceInstanceProperties",
+      "properties": {
+        "canIpForward": {
+          "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information.",
+          "type": "boolean"
+        },
+        "deletionProtection": {
+          "description": "Whether the resource should be protected against deletion.",
+          "type": "boolean"
+        },
+        "description": {
+          "description": "An optional text description for the instances that are created from this instance template.",
+          "type": "string"
+        },
+        "disks": {
+          "description": "An array of disks that are associated with the instances that are created from this template.",
+          "items": {
+            "$ref": "SavedAttachedDisk"
+          },
+          "type": "array"
+        },
+        "guestAccelerators": {
+          "description": "A list of guest accelerator cards' type and count to use for instances created from the instance template.",
+          "items": {
+            "$ref": "AcceleratorConfig"
+          },
+          "type": "array"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels to apply to instances that are created from this template.",
+          "type": "object"
+        },
+        "machineType": {
+          "annotations": {
+            "required": [
+              "compute.instanceTemplates.insert"
+            ]
+          },
+          "description": "The machine type to use for instances that are created from this template.",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "Metadata",
+          "description": "The metadata key/value pairs to assign to instances that are created from this template. These pairs can consist of custom metadata or predefined keys. See Project and instance metadata for more information."
+        },
+        "minCpuPlatform": {
+          "description": "Minimum cpu/platform to be used by this instance. The instance may be scheduled on the specified or newer cpu/platform. Applicable values are the friendly names of CPU platforms, such as minCpuPlatform: \"Intel Haswell\" or minCpuPlatform: \"Intel Sandy Bridge\". For more information, read Specifying a Minimum CPU Platform.",
+          "type": "string"
+        },
+        "networkInterfaces": {
+          "description": "An array of network access configurations for this interface.",
+          "items": {
+            "$ref": "NetworkInterface"
+          },
+          "type": "array"
+        },
+        "scheduling": {
+          "$ref": "Scheduling",
+          "description": "Specifies the scheduling options for the instances that are created from this template."
+        },
+        "serviceAccounts": {
+          "description": "A list of service accounts with specified scopes. Access tokens for these service accounts are available to the instances that are created from this template. Use metadata queries to obtain the access tokens for these instances.",
+          "items": {
+            "$ref": "ServiceAccount"
+          },
+          "type": "array"
+        },
+        "tags": {
+          "$ref": "Tags",
+          "description": "A list of tags to apply to the instances that are created from this template. The tags identify valid sources or targets for network firewalls. The setTags method can modify this list of tags. Each tag within the list must comply with RFC1035."
+        }
+      },
+      "type": "object"
+    },
     "SslCertificate": {
       "description": "An SslCertificate resource. This resource provides a mechanism to upload an SSL key and certificate to the load balancer to serve secure connections from the user. (== resource_for beta.sslCertificates ==) (== resource_for v1.sslCertificates ==)",
       "id": "SslCertificate",
@@ -44859,12 +44991,14 @@
             "enum": [
               "ACTIVE",
               "DOMAIN_STATUS_UNSPECIFIED",
+              "FAILED_CAA_CHECKING",
               "FAILED_CAA_FORBIDDEN",
               "FAILED_NOT_VISIBLE",
               "FAILED_RATE_LIMITED",
               "PROVISIONING"
             ],
             "enumDescriptions": [
+              "",
               "",
               "",
               "",
@@ -48784,7 +48918,7 @@
     "UrlMapsScopedList": {
       "id": "UrlMapsScopedList",
       "properties": {
-        "UrlMaps": {
+        "urlMaps": {
           "description": "A list of UrlMaps contained in this scope.",
           "items": {
             "$ref": "UrlMap"

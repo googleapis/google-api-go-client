@@ -645,6 +645,8 @@ type CryptoKeyVersion struct {
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
 	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
+	// SHA256 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
@@ -780,6 +782,8 @@ type CryptoKeyVersionTemplate struct {
 	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
 	// SHA256 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.

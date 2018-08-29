@@ -2805,7 +2805,7 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 // [`strftime`](https://docs.python.org/2/library/time.html#time.strftime
 // ) with the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in
 // Java, one can use the Joda Time's [`ISODateTimeFormat.dateTime()`](
-// http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime-- ) to obtain a formatter capable of generating timestamps in this
+// http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D ) to obtain a formatter capable of generating timestamps in this
 // format.
 type Timestamp struct {
 	// Nanos: Non-negative fractions of a second at nanosecond resolution.

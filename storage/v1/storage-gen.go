@@ -549,6 +549,15 @@ type BucketLifecycleRuleCondition struct {
 	// matches archived objects.
 	IsLive *bool `json:"isLive,omitempty"`
 
+	// MatchesPattern: A regular expression that satisfies the RE2 syntax
+	// language. This condition is satisfied when the name of the object
+	// matches the RE2 pattern. Note: This feature is currently in the
+	// "Early Access" launch stage and is only available to a whitelisted
+	// set of users; that means that this feature may changed in
+	// backward-incompatible ways and that it is not guaranteed to be
+	// released.
+	MatchesPattern string `json:"matchesPattern,omitempty"`
+
 	// MatchesStorageClass: Objects having any of the storage classes
 	// specified by this condition will be matched. Values include
 	// MULTI_REGIONAL, REGIONAL, NEARLINE, COLDLINE, STANDARD, and
@@ -1294,8 +1303,7 @@ type Object struct {
 	Kind string `json:"kind,omitempty"`
 
 	// KmsKeyName: Cloud KMS Key used to encrypt this object, if the object
-	// is encrypted by such a key. Limited availability; usable only by
-	// enabled projects.
+	// is encrypted by such a key.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// Md5Hash: MD5 hash of the data; encoded using base64. For more
@@ -8792,8 +8800,7 @@ func (c *ObjectsInsertCall) IfMetagenerationNotMatch(ifMetagenerationNotMatch in
 // the Cloud KMS key, of the form
 // projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key,
 //  that will be used to encrypt the object. Overrides the object
-// metadata's kms_key_name value, if any. Limited availability; usable
-// only by enabled projects.
+// metadata's kms_key_name value, if any.
 func (c *ObjectsInsertCall) KmsKeyName(kmsKeyName string) *ObjectsInsertCall {
 	c.urlParams_.Set("kmsKeyName", kmsKeyName)
 	return c
@@ -9061,7 +9068,7 @@ func (c *ObjectsInsertCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//       "type": "string"
 	//     },
 	//     "kmsKeyName": {
-	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any. Limited availability; usable only by enabled projects.",
+	//       "description": "Resource name of the Cloud KMS key, of the form projects/my-project/locations/global/keyRings/my-kr/cryptoKeys/my-key, that will be used to encrypt the object. Overrides the object metadata's kms_key_name value, if any.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1572,7 +1572,7 @@
       }
     }
   },
-  "revision": "20180726",
+  "revision": "20180823",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -1794,7 +1794,7 @@
       "id": "AutomaticScaling",
       "properties": {
         "coolDownPeriod": {
-          "description": "Amount of time that the Autoscaler (https://cloud.google.com/compute/docs/autoscaler/) should wait between changes to the number of virtual machines. Only applicable in the App Engine flexible environment.",
+          "description": "The time period that the Autoscaler (https://cloud.google.com/compute/docs/autoscaler/) should wait before it starts collecting information from a new instance. This prevents the autoscaler from collecting information when the instance is initializing, during which the collected usage would not be reliable. Only applicable in the App Engine flexible environment.",
           "format": "google-duration",
           "type": "string"
         },
@@ -3655,6 +3655,10 @@
           "description": "Whether to deploy this version in a container on a virtual machine.",
           "type": "boolean"
         },
+        "vpcAccessConnector": {
+          "$ref": "VpcAccessConnector",
+          "description": "Enables VPC connectivity for standard apps."
+        },
         "zones": {
           "description": "The Google Compute Engine zones that are supported by this version in the App Engine flexible environment.",
           "items": {
@@ -3680,6 +3684,17 @@
         },
         "volumeType": {
           "description": "Underlying volume type, e.g. 'tmpfs'.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VpcAccessConnector": {
+      "description": "VPC access connector specification.",
+      "id": "VpcAccessConnector",
+      "properties": {
+        "name": {
+          "description": "Full Serverless VPC Access Connector name e.g. /projects/my-project/locations/us-central1/connectors/c1.",
           "type": "string"
         }
       },

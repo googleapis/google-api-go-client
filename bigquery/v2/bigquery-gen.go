@@ -1466,6 +1466,10 @@ type JobConfiguration struct {
 	// limit is exceeded, BigQuery may attempt to terminate the job.
 	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
 
+	// JobType: [Output-only] The type of the job. Can be QUERY, LOAD,
+	// EXTRACT, COPY or UNKNOWN.
+	JobType string `json:"jobType,omitempty"`
+
 	// Labels: The labels associated with this job. You can use these to
 	// organize and group your jobs. Label keys and values can be no longer
 	// than 63 characters, can only contain lowercase letters, numeric
@@ -1779,7 +1783,8 @@ type JobConfigurationQuery struct {
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
 	// DefaultDataset: [Optional] Specifies the default dataset to use for
-	// unqualified table names in the query.
+	// unqualified table names in the query. Note that this does not alter
+	// behavior of unqualified dataset names.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
 	// DestinationEncryptionConfiguration: Custom encryption configuration
@@ -2189,19 +2194,19 @@ type JobStatistics2 struct {
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// DdlOperationPerformed: [Output-only, Beta] The DDL operation
-	// performed, possibly dependent on the pre-existence of the DDL target.
-	// Possible values (new values might be added in the future): "CREATE":
-	// The query created the DDL target. "SKIP": No-op. Example cases: the
-	// query is CREATE TABLE IF NOT EXISTS while the table already exists,
-	// or the query is DROP TABLE IF EXISTS while the table does not exist.
+	// DdlOperationPerformed: The DDL operation performed, possibly
+	// dependent on the pre-existence of the DDL target. Possible values
+	// (new values might be added in the future): "CREATE": The query
+	// created the DDL target. "SKIP": No-op. Example cases: the query is
+	// CREATE TABLE IF NOT EXISTS while the table already exists, or the
+	// query is DROP TABLE IF EXISTS while the table does not exist.
 	// "REPLACE": The query replaced the DDL target. Example case: the query
 	// is CREATE OR REPLACE TABLE, and the table already exists. "DROP": The
 	// query deleted the DDL target.
 	DdlOperationPerformed string `json:"ddlOperationPerformed,omitempty"`
 
-	// DdlTargetTable: [Output-only, Beta] The DDL target table. Present
-	// only for CREATE/DROP TABLE/VIEW queries.
+	// DdlTargetTable: The DDL target table. Present only for CREATE/DROP
+	// TABLE/VIEW queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
 	// EstimatedBytesProcessed: [Output-only] The original estimate of bytes
@@ -2241,9 +2246,9 @@ type JobStatistics2 struct {
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// StatementType: [Output-only, Beta] The type of query statement, if
-	// valid. Possible values (new values might be added in the future):
-	// "SELECT": SELECT query. "INSERT": INSERT query; see
+	// StatementType: The type of query statement, if valid. Possible values
+	// (new values might be added in the future): "SELECT": SELECT query.
+	// "INSERT": INSERT query; see
 	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "MERGE": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... "DROP_VIEW": DROP VIEW
 	// query.
 	StatementType string `json:"statementType,omitempty"`
@@ -2264,9 +2269,8 @@ type JobStatistics2 struct {
 	// TotalSlotMs: [Output-only] Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
-	// UndeclaredQueryParameters: [Output-only, Beta] Standard SQL only:
-	// list of undeclared query parameters detected during a dry run
-	// validation.
+	// UndeclaredQueryParameters: Standard SQL only: list of undeclared
+	// query parameters detected during a dry run validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingTier") to

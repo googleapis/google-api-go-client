@@ -2169,9 +2169,9 @@ func (r *ProjectsLocationsRegistriesService) List(parent string) *ProjectsLocati
 // of registries to return in the response. If this value
 // is zero, the service will select a default size. A call may return
 // fewer
-// objects than requested, but if there is a non-empty `page_token`,
-// it
-// indicates that more entries are available.
+// objects than requested. A non-empty `next_page_token` in the
+// response
+// indicates that more data is available.
 func (c *ProjectsLocationsRegistriesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2179,9 +2179,9 @@ func (c *ProjectsLocationsRegistriesListCall) PageSize(pageSize int64) *Projects
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListDeviceRegistriesResponse`; indicates
-// that this is a continuation of a prior `ListDeviceRegistries` call,
+// that this is a continuation of a prior `ListDeviceRegistries` call
 // and
-// that the system should return the next page of data.
+// the system should return the next page of data.
 func (c *ProjectsLocationsRegistriesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -2290,13 +2290,13 @@ func (c *ProjectsLocationsRegistriesListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of registries to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested, but if there is a non-empty `page_token`, it\nindicates that more entries are available.",
+	//       "description": "The maximum number of registries to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDeviceRegistriesResponse`; indicates\nthat this is a continuation of a prior `ListDeviceRegistries` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDeviceRegistriesResponse`; indicates\nthat this is a continuation of a prior `ListDeviceRegistries` call and\nthe system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3209,18 +3209,16 @@ func (r *ProjectsLocationsRegistriesDevicesService) List(parent string) *Project
 }
 
 // DeviceIds sets the optional parameter "deviceIds": A list of device
-// string identifiers. If empty, it will ignore this field.
-// For example, `['device0', 'device12']`. This field cannot hold more
-// than
-// 10,000 entries.
+// string IDs. For example, `['device0', 'device12']`.
+// If empty, this field is ignored. Maximum IDs: 10,000
 func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceIds(deviceIds ...string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.SetMulti("deviceIds", append([]string{}, deviceIds...))
 	return c
 }
 
 // DeviceNumIds sets the optional parameter "deviceNumIds": A list of
-// device numerical ids. If empty, it will ignore this field. This
-// field cannot hold more than 10,000 entries.
+// device numeric IDs. If empty, this field is ignored. Maximum
+// IDs: 10,000.
 func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceNumIds(deviceNumIds ...uint64) *ProjectsLocationsRegistriesDevicesListCall {
 	var deviceNumIds_ []string
 	for _, v := range deviceNumIds {
@@ -3232,8 +3230,7 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) DeviceNumIds(deviceNumIds .
 
 // FieldMask sets the optional parameter "fieldMask": The fields of the
 // `Device` resource to be returned in the response. The
-// fields `id`, and `num_id` are always returned by default, along with
-// any
+// fields `id` and `num_id` are always returned, along with any
 // other fields specified.
 func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
@@ -3244,9 +3241,9 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string)
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
 // fewer
-// objects than requested, but if there is a non-empty `page_token`,
-// it
-// indicates that more entries are available.
+// objects than requested. A non-empty `next_page_token` in the
+// response
+// indicates that more data is available.
 func (c *ProjectsLocationsRegistriesDevicesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -3254,8 +3251,8 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) PageSize(pageSize int64) *P
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListDevicesResponse`; indicates
-// that this is a continuation of a prior `ListDevices` call, and
-// that the system should return the next page of data.
+// that this is a continuation of a prior `ListDevices` call and
+// the system should return the next page of data.
 func (c *ProjectsLocationsRegistriesDevicesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3364,32 +3361,32 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "deviceIds": {
-	//       "description": "A list of device string identifiers. If empty, it will ignore this field.\nFor example, `['device0', 'device12']`. This field cannot hold more than\n10,000 entries.",
+	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`.\nIf empty, this field is ignored. Maximum IDs: 10,000",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "deviceNumIds": {
-	//       "description": "A list of device numerical ids. If empty, it will ignore this field. This\nfield cannot hold more than 10,000 entries.",
+	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum\nIDs: 10,000.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
+	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested, but if there is a non-empty `page_token`, it\nindicates that more entries are available.",
+	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call and\nthe system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4633,18 +4630,16 @@ func (r *ProjectsLocationsRegistriesGroupsDevicesService) List(parent string) *P
 }
 
 // DeviceIds sets the optional parameter "deviceIds": A list of device
-// string identifiers. If empty, it will ignore this field.
-// For example, `['device0', 'device12']`. This field cannot hold more
-// than
-// 10,000 entries.
+// string IDs. For example, `['device0', 'device12']`.
+// If empty, this field is ignored. Maximum IDs: 10,000
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceIds(deviceIds ...string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.SetMulti("deviceIds", append([]string{}, deviceIds...))
 	return c
 }
 
 // DeviceNumIds sets the optional parameter "deviceNumIds": A list of
-// device numerical ids. If empty, it will ignore this field. This
-// field cannot hold more than 10,000 entries.
+// device numeric IDs. If empty, this field is ignored. Maximum
+// IDs: 10,000.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceNumIds(deviceNumIds ...uint64) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	var deviceNumIds_ []string
 	for _, v := range deviceNumIds {
@@ -4656,8 +4651,7 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) DeviceNumIds(deviceNu
 
 // FieldMask sets the optional parameter "fieldMask": The fields of the
 // `Device` resource to be returned in the response. The
-// fields `id`, and `num_id` are always returned by default, along with
-// any
+// fields `id` and `num_id` are always returned, along with any
 // other fields specified.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) FieldMask(fieldMask string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("fieldMask", fieldMask)
@@ -4668,9 +4662,9 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) FieldMask(fieldMask s
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
 // fewer
-// objects than requested, but if there is a non-empty `page_token`,
-// it
-// indicates that more entries are available.
+// objects than requested. A non-empty `next_page_token` in the
+// response
+// indicates that more data is available.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageSize(pageSize int64) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4678,8 +4672,8 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageSize(pageSize int
 
 // PageToken sets the optional parameter "pageToken": The value returned
 // by the last `ListDevicesResponse`; indicates
-// that this is a continuation of a prior `ListDevices` call, and
-// that the system should return the next page of data.
+// that this is a continuation of a prior `ListDevices` call and
+// the system should return the next page of data.
 func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) PageToken(pageToken string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4788,32 +4782,32 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "deviceIds": {
-	//       "description": "A list of device string identifiers. If empty, it will ignore this field.\nFor example, `['device0', 'device12']`. This field cannot hold more than\n10,000 entries.",
+	//       "description": "A list of device string IDs. For example, `['device0', 'device12']`.\nIf empty, this field is ignored. Maximum IDs: 10,000",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "deviceNumIds": {
-	//       "description": "A list of device numerical ids. If empty, it will ignore this field. This\nfield cannot hold more than 10,000 entries.",
+	//       "description": "A list of device numeric IDs. If empty, this field is ignored. Maximum\nIDs: 10,000.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "fieldMask": {
-	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id`, and `num_id` are always returned by default, along with any\nother fields specified.",
+	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested, but if there is a non-empty `page_token`, it\nindicates that more entries are available.",
+	//       "description": "The maximum number of devices to return in the response. If this value\nis zero, the service will select a default size. A call may return fewer\nobjects than requested. A non-empty `next_page_token` in the response\nindicates that more data is available.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call, and\nthat the system should return the next page of data.",
+	//       "description": "The value returned by the last `ListDevicesResponse`; indicates\nthat this is a continuation of a prior `ListDevices` call and\nthe system should return the next page of data.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

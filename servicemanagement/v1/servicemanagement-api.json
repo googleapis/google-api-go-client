@@ -339,7 +339,7 @@
           ],
           "parameters": {
             "configId": {
-              "description": "The id of the service configuration resource.",
+              "description": "The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
               "location": "query",
               "type": "string"
             },
@@ -569,7 +569,7 @@
               ],
               "parameters": {
                 "configId": {
-                  "description": "The id of the service configuration resource.",
+                  "description": "The id of the service configuration resource.\n\nThis field must be specified for the server to return all fields, including\n`SourceInfo`.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -876,7 +876,7 @@
       }
     }
   },
-  "revision": "20180813",
+  "revision": "20180825",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -2760,7 +2760,7 @@
           "description": "HTTP configuration."
         },
         "id": {
-          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead.",
+          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead. Must be no longer than 60 characters.",
           "type": "string"
         },
         "logging": {

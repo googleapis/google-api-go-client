@@ -291,9 +291,9 @@ type Cluster struct {
 	// labels can be associated with a cluster.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Metrics: Contains cluster daemon metrics such as HDFS and YARN
-	// stats.Beta Feature: This report is available for testing purposes
-	// only. It may be changed before final release.
+	// Metrics: Output only. Contains cluster daemon metrics such as HDFS
+	// and YARN stats.Beta Feature: This report is available for testing
+	// purposes only. It may be changed before final release.
 	Metrics *ClusterMetrics `json:"metrics,omitempty"`
 
 	// ProjectId: Required. The Google Cloud Platform project ID that the

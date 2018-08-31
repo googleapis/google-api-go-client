@@ -1029,6 +1029,7 @@ func (s *EntityMention) MarshalJSON() ([]byte, error) {
 // analysis.
 // Setting each one to true will enable that specific analysis for the
 // input.
+// Next ID: 10
 type Features struct {
 	// ClassifyText: Classify the full document into categories. If this is
 	// true,
@@ -1290,6 +1291,7 @@ func (s *Sentence) MarshalJSON() ([]byte, error) {
 // Sentiment: Represents the feeling associated with the entire text or
 // entities in
 // the text.
+// Next ID: 5
 type Sentiment struct {
 	// Magnitude: A non-negative number in the [0, +inf) range, which
 	// represents

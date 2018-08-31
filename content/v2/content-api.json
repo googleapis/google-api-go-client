@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/blFCrhUn6XemJhWRf80H1m7OIII\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/BHrSU9D3B6OA1Q17-906PS_R18E\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1954,6 +1954,40 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
+        "canceltestorderbycustomer": {
+          "description": "Sandbox only. Cancels a test order for customer-initiated cancellation.",
+          "httpMethod": "POST",
+          "id": "content.orders.canceltestorderbycustomer",
+          "parameterOrder": [
+            "merchantId",
+            "orderId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "orderId": {
+              "description": "The ID of the test order to cancel.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/testorders/{orderId}/cancelByCustomer",
+          "request": {
+            "$ref": "OrdersCancelTestOrderByCustomerRequest"
+          },
+          "response": {
+            "$ref": "OrdersCancelTestOrderByCustomerResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
         "createtestorder": {
           "description": "Sandbox only. Creates a test order.",
           "httpMethod": "POST",
@@ -3304,7 +3338,7 @@
       }
     }
   },
-  "revision": "20180821",
+  "revision": "20180829",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3321,6 +3355,10 @@
             "$ref": "AccountAdwordsLink"
           },
           "type": "array"
+        },
+        "businessInformation": {
+          "$ref": "AccountBusinessInformation",
+          "description": "The business information of the account."
         },
         "googleMyBusinessLink": {
           "$ref": "AccountGoogleMyBusinessLink",
@@ -3380,6 +3418,32 @@
       },
       "type": "object"
     },
+    "AccountAddress": {
+      "id": "AccountAddress",
+      "properties": {
+        "country": {
+          "description": "CLDR country code (e.g. \"US\").",
+          "type": "string"
+        },
+        "locality": {
+          "description": "City, town or commune. May also include dependent localities or sublocalities (e.g. neighborhoods or suburbs).",
+          "type": "string"
+        },
+        "postalCode": {
+          "description": "Postal code or ZIP (e.g. \"94043\").",
+          "type": "string"
+        },
+        "region": {
+          "description": "Top-level administrative subdivision of the country. For example, a state like California (\"CA\") or a province like Quebec (\"QC\").",
+          "type": "string"
+        },
+        "streetAddress": {
+          "description": "Street-level part of the address.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AccountAdwordsLink": {
       "id": "AccountAdwordsLink",
       "properties": {
@@ -3390,6 +3454,42 @@
         },
         "status": {
           "description": "Status of the link between this Merchant Center account and the AdWords account. Upon retrieval, it represents the actual status of the link and can be either active if it was approved in Google AdWords or pending if it's pending approval. Upon insertion, it represents the intended status of the link. Re-uploading a link with status active when it's still pending or with status pending when it's already active will have no effect: the status will remain unchanged. Re-uploading a link with deprecated status inactive is equivalent to not submitting the link at all and will delete the link if it was active or cancel the link request if it was pending.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountBusinessInformation": {
+      "id": "AccountBusinessInformation",
+      "properties": {
+        "address": {
+          "$ref": "AccountAddress",
+          "description": "The address of the business."
+        },
+        "customerService": {
+          "$ref": "AccountCustomerService",
+          "description": "The customer service information of the business."
+        },
+        "phoneNumber": {
+          "description": "The phone number of the business.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AccountCustomerService": {
+      "id": "AccountCustomerService",
+      "properties": {
+        "email": {
+          "description": "Customer service email.",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "Customer service phone number.",
+          "type": "string"
+        },
+        "url": {
+          "description": "Customer service URL.",
           "type": "string"
         }
       },
@@ -6799,6 +6899,27 @@
         "kind": {
           "default": "content#ordersCancelResponse",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCancelResponse\".",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCancelTestOrderByCustomerRequest": {
+      "id": "OrdersCancelTestOrderByCustomerRequest",
+      "properties": {
+        "reason": {
+          "description": "The reason for the cancellation.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCancelTestOrderByCustomerResponse": {
+      "id": "OrdersCancelTestOrderByCustomerResponse",
+      "properties": {
+        "kind": {
+          "default": "content#ordersCancelTestOrderByCustomerResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCancelTestOrderByCustomerResponse\".",
           "type": "string"
         }
       },

@@ -245,7 +245,7 @@
       }
     }
   },
-  "revision": "20180813",
+  "revision": "20180824",
   "rootUrl": "https://serviceuser.googleapis.com/",
   "schemas": {
     "Api": {
@@ -1682,7 +1682,7 @@
           "description": "HTTP configuration."
         },
         "id": {
-          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead.",
+          "description": "A unique ID for a specific instance of this message, typically assigned\nby the client for tracking purpose. If empty, the server may choose to\ngenerate one instead. Must be no longer than 60 characters.",
           "type": "string"
         },
         "logging": {

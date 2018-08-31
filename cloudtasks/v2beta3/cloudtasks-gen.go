@@ -196,15 +196,13 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // The task will be delivered to the App Engine app which belongs to the
 // same
 // project as the queue. For more information, see
-// [How Requests
-// are
-// Routed](https://cloud.google.com/appengine/docs/standard/python/ho
-// w-requests-are-routed)
-// and how routing is affected
-// by
+// [How Requests are
+// Routed](https://cloud.google.com/appengine/docs/standard/python/how-re
+// quests-are-routed)
+// and how routing is affected by
 // [dispatch
-// files](https://cloud.google.com/appengine/docs/python/con
-// fig/dispatchref).
+// files](https://cloud.google.com/appengine/docs/python/config/dispatchr
+// ef).
 //
 // The AppEngineRouting used to construct the URL that the task
 // is
@@ -287,11 +285,10 @@ type AppEngineHttpRequest struct {
 	//
 	// In addition, Cloud Tasks sets some headers when the task is
 	// dispatched,
-	// such as headers containing information about the task;
-	// see
+	// such as headers containing information about the task; see
 	// [request
-	// headers](https://cloud.google.com/appengine/docs/python/t
-	// askqueue/push/creating-handlers#reading_request_headers).
+	// headers](https://cloud.google.com/appengine/docs/python/taskqueue/push
+	// /creating-handlers#reading_request_headers).
 	// These headers are set only when the task is dispatched, so they are
 	// not
 	// visible when the task is returned in a Cloud Tasks
@@ -1213,9 +1210,7 @@ type Queue struct {
 	// queue.
 	//
 	// When a queue is disabled, tasks can still be added to a queue
-	// but the tasks are not dispatched and
-	// LeaseTasks calls return a
-	// `FAILED_PRECONDITION` error.
+	// but the tasks are not dispatched.
 	//
 	// To permanently delete this queue and all of its tasks,
 	// call
@@ -1280,12 +1275,12 @@ type RateLimits struct {
 	// be
 	// continuously refilled with new tokens based
 	// on
-	// max_tasks_dispatched_per_second.
+	// max_dispatches_per_second.
 	//
 	// Cloud Tasks will pick the value of `max_burst_size` based on
 	// the
 	// value of
-	// max_tasks_dispatched_per_second.
+	// max_dispatches_per_second.
 	//
 	// For App Engine queues that were created or updated
 	// using
@@ -1297,9 +1292,9 @@ type RateLimits struct {
 	// UpdateQueue is called on a queue
 	// created by `queue.yaml/xml`, `max_burst_size` will be reset based
 	// on the value of
-	// max_tasks_dispatched_per_second,
+	// max_dispatches_per_second,
 	// regardless of whether
-	// max_tasks_dispatched_per_second
+	// max_dispatches_per_second
 	// is updated.
 	//
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
@@ -1388,11 +1383,24 @@ type ResumeQueueRequest struct {
 //
 // These settings determine when a failed task attempt is retried.
 type RetryConfig struct {
-	// MaxAttempts: The maximum number of attempts for a task.
+	// MaxAttempts: Number of attempts per task.
 	//
-	// Cloud Tasks will attempt the task `max_attempts` times (that
-	// is, if the first attempt fails, then there will be
-	// `max_attempts - 1` retries).  Must be > 0.
+	// Cloud Tasks will attempt the task `max_attempts` times (that is, if
+	// the
+	// first attempt fails, then there will be `max_attempts - 1` retries).
+	// Must
+	// be >= -1.
+	//
+	// If unspecified when the queue is created, Cloud Tasks will pick
+	// the
+	// default.
+	//
+	// -1 indicates unlimited attempts.
+	//
+	// This field has the same meaning as
+	// [task_retry_limit in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
+	// n/config/queueref#retry_parameters).
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
 	// MaxBackoff: A task will be scheduled for retry between
@@ -1492,9 +1500,6 @@ type RetryConfig struct {
 	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
 	// n/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
-
-	// UnlimitedAttempts: If true, then the number of attempts is unlimited.
-	UnlimitedAttempts bool `json:"unlimitedAttempts,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
 	// unconditionally include in API requests. By default, fields with
@@ -1763,7 +1768,7 @@ type Task struct {
 	// attempt.
 	//
 	// Only dispatch_time will be set.
-	// The other AttemptStatus information is not retained by Cloud Tasks.
+	// The other Attempt information is not retained by Cloud Tasks.
 	FirstAttempt *Attempt `json:"firstAttempt,omitempty"`
 
 	// LastAttempt: Output only. The status of the task's last attempt.

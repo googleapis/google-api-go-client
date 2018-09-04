@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20180822",
+  "revision": "20180901",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1305,7 +1305,8 @@
             "TEST_ONLY_APK",
             "MALFORMED_IPA",
             "NO_CODE_APK",
-            "INVALID_INPUT_APK"
+            "INVALID_INPUT_APK",
+            "INVALID_APK_PREVIEW_SDK"
           ],
           "enumDescriptions": [
             "Do not use. For proto versioning only.",
@@ -1330,7 +1331,8 @@
             "The APK is marked as \"testOnly\".\nNOT USED",
             "The input IPA could not be parsed.\nNOT USED",
             "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code",
-            "Either the provided input APK path was malformed,\nthe APK file does not exist, or the user does not have permission to\naccess the APK file."
+            "Either the provided input APK path was malformed,\nthe APK file does not exist, or the user does not have permission to\naccess the APK file.",
+            "APK is built for a preview SDK which is unsupported"
           ],
           "type": "string"
         },
@@ -1432,7 +1434,7 @@
           "type": "array"
         },
         "networkProfile": {
-          "description": "The network traffic profile used for running the test.\nOptional",
+          "description": "Optional. The network traffic profile used for running the test.\nAvailable network profiles can be queried by using the\nNETWORK_CONFIGURATION environment type when calling\nTestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.",
           "type": "string"
         }
       },

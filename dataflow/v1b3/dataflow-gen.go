@@ -1699,16 +1699,21 @@ type ExecutionStageState struct {
 	// This state is a terminal state, may only be set by the Cloud
 	// Dataflow
 	// service, and only as a transition from `JOB_STATE_DRAINING`.
-	//   "JOB_STATE_PENDING" - 'JOB_STATE_PENDING' indicates that the job
+	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
 	// has been created but is not yet
 	// running.  Jobs that are pending may only transition to
 	// `JOB_STATE_RUNNING`,
 	// or `JOB_STATE_FAILED`.
-	//   "JOB_STATE_CANCELLING" - 'JOB_STATE_CANCELLING' indicates that the
+	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
 	// job has been explicitly cancelled
 	// and is in the process of stopping.  Jobs that are cancelling may
 	// only
-	// transition to 'JOB_STATE_CANCELLED' or 'JOB_STATE_FAILED'.
+	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
+	// been created but is being
+	// delayed until launch. Jobs that are queued may only transition
+	// to
+	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	ExecutionStageState string `json:"executionStageState,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentStateTime") to
@@ -2390,16 +2395,21 @@ type Job struct {
 	// This state is a terminal state, may only be set by the Cloud
 	// Dataflow
 	// service, and only as a transition from `JOB_STATE_DRAINING`.
-	//   "JOB_STATE_PENDING" - 'JOB_STATE_PENDING' indicates that the job
+	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
 	// has been created but is not yet
 	// running.  Jobs that are pending may only transition to
 	// `JOB_STATE_RUNNING`,
 	// or `JOB_STATE_FAILED`.
-	//   "JOB_STATE_CANCELLING" - 'JOB_STATE_CANCELLING' indicates that the
+	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
 	// job has been explicitly cancelled
 	// and is in the process of stopping.  Jobs that are cancelling may
 	// only
-	// transition to 'JOB_STATE_CANCELLED' or 'JOB_STATE_FAILED'.
+	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
+	// been created but is being
+	// delayed until launch. Jobs that are queued may only transition
+	// to
+	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	CurrentState string `json:"currentState,omitempty"`
 
 	// CurrentStateTime: The timestamp associated with the current state.
@@ -2550,16 +2560,21 @@ type Job struct {
 	// This state is a terminal state, may only be set by the Cloud
 	// Dataflow
 	// service, and only as a transition from `JOB_STATE_DRAINING`.
-	//   "JOB_STATE_PENDING" - 'JOB_STATE_PENDING' indicates that the job
+	//   "JOB_STATE_PENDING" - `JOB_STATE_PENDING` indicates that the job
 	// has been created but is not yet
 	// running.  Jobs that are pending may only transition to
 	// `JOB_STATE_RUNNING`,
 	// or `JOB_STATE_FAILED`.
-	//   "JOB_STATE_CANCELLING" - 'JOB_STATE_CANCELLING' indicates that the
+	//   "JOB_STATE_CANCELLING" - `JOB_STATE_CANCELLING` indicates that the
 	// job has been explicitly cancelled
 	// and is in the process of stopping.  Jobs that are cancelling may
 	// only
-	// transition to 'JOB_STATE_CANCELLED' or 'JOB_STATE_FAILED'.
+	// transition to `JOB_STATE_CANCELLED` or `JOB_STATE_FAILED`.
+	//   "JOB_STATE_QUEUED" - `JOB_STATE_QUEUED` indicates that the job has
+	// been created but is being
+	// delayed until launch. Jobs that are queued may only transition
+	// to
+	// `JOB_STATE_PENDING` or `JOB_STATE_CANCELLED`.
 	RequestedState string `json:"requestedState,omitempty"`
 
 	// StageStates: This field may be mutated by the Cloud Dataflow

@@ -1936,7 +1936,7 @@
       }
     }
   },
-  "revision": "20180820",
+  "revision": "20180830",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2703,7 +2703,8 @@
             "NON_WHITELISTED_OMID_VENDOR",
             "DESTINATION_EXPERIENCE",
             "UNSUPPORTED_LANGUAGE",
-            "NON_SSL_COMPLIANT"
+            "NON_SSL_COMPLIANT",
+            "TEMPORARY_PAUSE"
           ],
           "enumDescriptions": [
             "The length of the image animation is longer than allowed.",
@@ -2804,7 +2805,8 @@
             "Use of an Open Measurement SDK vendor not on approved whitelist.",
             "Unacceptable landing page.",
             "Unsupported language.",
-            "Non-SSL compliant."
+            "Non-SSL compliant.",
+            "Temporary pausing of creative."
           ],
           "type": "string"
         }

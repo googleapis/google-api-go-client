@@ -458,7 +458,7 @@
       }
     }
   },
-  "revision": "20180816",
+  "revision": "20180830",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -573,6 +573,10 @@
           "description": "Required. Unique name of the resource in this scope including project and\nlocation using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\n\nNote: Redis instances are managed and addressed at regional level so\nlocation_id here refers to a GCP region; however, users may choose which\nspecific zone (or collection of zones for cross-zone instances) an instance\nshould be provisioned in. Refer to [location_id] and\n[alternative_location_id] fields for more details.",
           "type": "string"
         },
+        "persistenceIamIdentity": {
+          "description": "Output only. IAM identity used by import / export operations to transfer\ndata to/from GCS.  Format is \"serviceAccount:\u003cservice_account_email\u003e\".  The\nvalue may change over time for a given instance so should be checked before\neach import/export operation.",
+          "type": "string"
+        },
         "port": {
           "description": "Output only. The port number of the exposed Redis endpoint.",
           "format": "int32",
@@ -603,7 +607,6 @@
             "DELETING",
             "REPAIRING",
             "MAINTENANCE",
-            "EXPORTING",
             "IMPORTING"
           ],
           "enumDescriptions": [
@@ -614,7 +617,6 @@
             "Redis instance is being deleted.",
             "Redis instance is being repaired and may be unusable. Details can be\nfound in the `status_message` field.",
             "Maintenance is being performed on this Redis instance.",
-            "Redis instance is exporting data.",
             "Redis instance is importing data (availability may be affected)."
           ],
           "type": "string"

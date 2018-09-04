@@ -318,6 +318,15 @@ type Instance struct {
 	// [alternative_location_id] fields for more details.
 	Name string `json:"name,omitempty"`
 
+	// PersistenceIamIdentity: Output only. IAM identity used by import /
+	// export operations to transfer
+	// data to/from GCS.  Format is
+	// "serviceAccount:<service_account_email>".  The
+	// value may change over time for a given instance so should be checked
+	// before
+	// each import/export operation.
+	PersistenceIamIdentity string `json:"persistenceIamIdentity,omitempty"`
+
 	// Port: Output only. The port number of the exposed Redis endpoint.
 	Port int64 `json:"port,omitempty"`
 
@@ -364,7 +373,6 @@ type Instance struct {
 	// found in the `status_message` field.
 	//   "MAINTENANCE" - Maintenance is being performed on this Redis
 	// instance.
-	//   "EXPORTING" - Redis instance is exporting data.
 	//   "IMPORTING" - Redis instance is importing data (availability may be
 	// affected).
 	State string `json:"state,omitempty"`

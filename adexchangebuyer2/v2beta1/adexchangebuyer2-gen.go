@@ -1599,6 +1599,7 @@ type Disapproval struct {
 	//   "DESTINATION_EXPERIENCE" - Unacceptable landing page.
 	//   "UNSUPPORTED_LANGUAGE" - Unsupported language.
 	//   "NON_SSL_COMPLIANT" - Non-SSL compliant.
+	//   "TEMPORARY_PAUSE" - Temporary pausing of creative.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to

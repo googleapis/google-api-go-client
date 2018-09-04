@@ -2159,6 +2159,8 @@ type TestMatrix struct {
 	// the APK file does not exist, or the user does not have permission
 	// to
 	// access the APK file.
+	//   "INVALID_APK_PREVIEW_SDK" - APK is built for a preview SDK which is
+	// unsupported
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// ProjectId: The cloud project that owns the test matrix.
@@ -2310,9 +2312,13 @@ type TestSetup struct {
 	// Optional
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
 
-	// NetworkProfile: The network traffic profile used for running the
-	// test.
-	// Optional
+	// NetworkProfile: Optional. The network traffic profile used for
+	// running the test.
+	// Available network profiles can be queried by using
+	// the
+	// NETWORK_CONFIGURATION environment type when
+	// calling
+	// TestEnvironmentDiscoveryService.GetTestEnvironmentCatalog.
 	NetworkProfile string `json:"networkProfile,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to

@@ -7855,6 +7855,27 @@ func (r *OrganizationsDeidentifyTemplatesService) List(parent string) *Organizat
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc,update_time, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the template was created.
+// - `update_time`: corresponds to time the template was last updated.
+// - `name`: corresponds to template's name.
+// - `display_name`: corresponds to template's display name.
+func (c *OrganizationsDeidentifyTemplatesListCall) OrderBy(orderBy string) *OrganizationsDeidentifyTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -7975,6 +7996,11 @@ func (c *OrganizationsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOpti
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
@@ -8594,6 +8620,27 @@ func (r *OrganizationsInspectTemplatesService) List(parent string) *Organization
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc,update_time, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the template was created.
+// - `update_time`: corresponds to time the template was last updated.
+// - `name`: corresponds to template's name.
+// - `display_name`: corresponds to template's display name.
+func (c *OrganizationsInspectTemplatesListCall) OrderBy(orderBy string) *OrganizationsInspectTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -8714,6 +8761,11 @@ func (c *OrganizationsInspectTemplatesListCall) Do(opts ...googleapi.CallOption)
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
@@ -10516,6 +10568,27 @@ func (r *ProjectsDeidentifyTemplatesService) List(parent string) *ProjectsDeiden
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc,update_time, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the template was created.
+// - `update_time`: corresponds to time the template was last updated.
+// - `name`: corresponds to template's name.
+// - `display_name`: corresponds to template's display name.
+func (c *ProjectsDeidentifyTemplatesListCall) OrderBy(orderBy string) *ProjectsDeidentifyTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -10636,6 +10709,11 @@ func (c *ProjectsDeidentifyTemplatesListCall) Do(opts ...googleapi.CallOption) (
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
@@ -12217,6 +12295,27 @@ func (r *ProjectsInspectTemplatesService) List(parent string) *ProjectsInspectTe
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc,update_time, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the template was created.
+// - `update_time`: corresponds to time the template was last updated.
+// - `name`: corresponds to template's name.
+// - `display_name`: corresponds to template's display name.
+func (c *ProjectsInspectTemplatesListCall) OrderBy(orderBy string) *ProjectsInspectTemplatesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -12337,6 +12436,11 @@ func (c *ProjectsInspectTemplatesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the template was created.\n- `update_time`: corresponds to time the template was last updated.\n- `name`: corresponds to template's name.\n- `display_name`: corresponds to template's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
@@ -12965,8 +13069,8 @@ func (r *ProjectsJobTriggersService) List(parent string) *ProjectsJobTriggersLis
 //
 // Supported fields are:
 //
-// - `create_time`: corresponds to time the triggeredJob was created.
-// - `update_time`: corresponds to time the triggeredJob was last
+// - `create_time`: corresponds to time the JobTrigger was created.
+// - `update_time`: corresponds to time the JobTrigger was last
 // updated.
 // - `name`: corresponds to JobTrigger's name.
 // - `display_name`: corresponds to JobTrigger's display name.
@@ -13097,7 +13201,7 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//   ],
 	//   "parameters": {
 	//     "orderBy": {
-	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the triggeredJob was created.\n- `update_time`: corresponds to time the triggeredJob was last updated.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

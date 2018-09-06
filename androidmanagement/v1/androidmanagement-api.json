@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20180820",
+  "revision": "20180829",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -937,12 +937,14 @@
             "INSTALL_TYPE_UNSPECIFIED",
             "PREINSTALLED",
             "FORCE_INSTALLED",
+            "BLOCKED",
             "AVAILABLE"
           ],
           "enumDescriptions": [
             "Unspecified. Defaults to AVAILABLE.",
             "The app is automatically installed and can be removed by the user.",
             "The app is automatically installed and can't be removed by the user.",
+            "The app is blocked and can't be installed. If the app was installed under a previous policy, it will be uninstalled.",
             "The app is available to install."
           ],
           "type": "string"
@@ -2894,7 +2896,7 @@
           "type": "boolean"
         },
         "memoryInfoEnabled": {
-          "description": "Whether memory info reporting is enabled.",
+          "description": "Whether memory reporting is enabled.",
           "type": "boolean"
         },
         "networkInfoEnabled": {

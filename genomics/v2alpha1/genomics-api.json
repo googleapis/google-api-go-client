@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180905",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -998,6 +998,12 @@
       },
       "type": "object"
     },
+    "RunPipelineResponse": {
+      "description": "The response to the RunPipeline method, returned in the operation's result\nfield on success.",
+      "id": "RunPipelineResponse",
+      "properties": {},
+      "type": "object"
+    },
     "RuntimeMetadata": {
       "description": "Runtime metadata that will be populated in the\nruntimeMetadata\nfield of the Operation associated with a RunPipeline execution.",
       "id": "RuntimeMetadata",
@@ -1014,7 +1020,7 @@
       "id": "Secret",
       "properties": {
         "cipherText": {
-          "description": "The value of the cipherText response from the `encrypt` method.",
+          "description": "The value of the cipherText response from the `encrypt` method. This field\nis intentionally unaudited.",
           "type": "string"
         },
         "keyName": {

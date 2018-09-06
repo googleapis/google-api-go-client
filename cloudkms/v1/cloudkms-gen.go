@@ -1515,6 +1515,36 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // via
 // GetPublicKey.
 type PublicKey struct {
+	// Algorithm: The Algorithm associated
+	// with this key.
+	//
+	// Possible values:
+	//   "CRYPTO_KEY_VERSION_ALGORITHM_UNSPECIFIED" - Not specified.
+	//   "GOOGLE_SYMMETRIC_ENCRYPTION" - Creates symmetric encryption keys.
+	//   "RSA_SIGN_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
+	// digest.
+	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
+	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
+	// SHA256 digest.
+	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
+	// digest.
+	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
+	// digest.
+	Algorithm string `json:"algorithm,omitempty"`
+
 	// Pem: The public key, encoded in PEM format. For more information, see
 	// the
 	// [RFC 7468](https://tools.ietf.org/html/rfc7468) sections for
@@ -1530,7 +1560,7 @@ type PublicKey struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Pem") to
+	// ForceSendFields is a list of field names (e.g. "Algorithm") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1538,8 +1568,8 @@ type PublicKey struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Pem") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Algorithm") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.

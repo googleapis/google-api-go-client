@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20180728",
+  "revision": "20180905",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3068,6 +3068,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "RunPipelineResponse": {
+      "description": "The response to the RunPipeline method, returned in the operation's result\nfield on success.",
+      "id": "RunPipelineResponse",
+      "properties": {},
       "type": "object"
     },
     "RuntimeMetadata": {

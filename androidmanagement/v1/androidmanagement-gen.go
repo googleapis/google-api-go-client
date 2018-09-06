@@ -401,6 +401,8 @@ type ApplicationPolicy struct {
 	// removed by the user.
 	//   "FORCE_INSTALLED" - The app is automatically installed and can't be
 	// removed by the user.
+	//   "BLOCKED" - The app is blocked and can't be installed. If the app
+	// was installed under a previous policy, it will be uninstalled.
 	//   "AVAILABLE" - The app is available to install.
 	InstallType string `json:"installType,omitempty"`
 
@@ -2857,7 +2859,7 @@ type StatusReportingSettings struct {
 	// HardwareStatusEnabled: Whether hardware status reporting is enabled.
 	HardwareStatusEnabled bool `json:"hardwareStatusEnabled,omitempty"`
 
-	// MemoryInfoEnabled: Whether memory info reporting is enabled.
+	// MemoryInfoEnabled: Whether memory reporting is enabled.
 	MemoryInfoEnabled bool `json:"memoryInfoEnabled,omitempty"`
 
 	// NetworkInfoEnabled: Whether network info reporting is enabled.

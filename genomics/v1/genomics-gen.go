@@ -3197,6 +3197,12 @@ func (s *ReferenceSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RunPipelineResponse: The response to the RunPipeline method, returned
+// in the operation's result
+// field on success.
+type RunPipelineResponse struct {
+}
+
 // RuntimeMetadata: Runtime metadata that will be populated in
 // the
 // runtimeMetadata

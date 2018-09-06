@@ -406,8 +406,9 @@ func (s *AndroidTest) MarshalJSON() ([]byte, error) {
 // "1.212s" }
 type Any struct {
 	// TypeUrl: A URL/resource name that uniquely identifies the type of the
-	// serialized protocol buffer message. The last segment of the URL's
-	// path must represent the fully qualified name of the type (as in
+	// serialized protocol buffer message. This string must contain at least
+	// one "/" character. The last segment of the URL's path must represent
+	// the fully qualified name of the type (as in
 	// `path/google.protobuf.Duration`). The name should be in a canonical
 	// form (e.g., leading "." is not accepted).
 	//

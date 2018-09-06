@@ -577,6 +577,9 @@ type Node struct {
 	//   "STARTING" - TPU node is currently starting.
 	//   "PREEMPTED" - TPU node has been preempted. Only applies to
 	// Preemptible TPU Nodes.
+	//   "TERMINATED" - TPU node has been terminated due to maintenance or
+	// has reached the end of
+	// its life cycle (for preemptible nodes).
 	State string `json:"state,omitempty"`
 
 	// TensorflowVersion: The version of Tensorflow running in the

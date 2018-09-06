@@ -1602,6 +1602,12 @@ func (s *RunPipelineRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RunPipelineResponse: The response to the RunPipeline method, returned
+// in the operation's result
+// field on success.
+type RunPipelineResponse struct {
+}
+
 // RuntimeMetadata: Runtime metadata that will be populated in
 // the
 // runtimeMetadata
@@ -1639,7 +1645,8 @@ func (s *RuntimeMetadata) MarshalJSON() ([]byte, error) {
 // by the worker VM when running the pipeline.
 type Secret struct {
 	// CipherText: The value of the cipherText response from the `encrypt`
-	// method.
+	// method. This field
+	// is intentionally unaudited.
 	CipherText string `json:"cipherText,omitempty"`
 
 	// KeyName: The name of the Cloud KMS key that will be used to decrypt

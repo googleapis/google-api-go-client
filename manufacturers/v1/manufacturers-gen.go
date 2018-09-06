@@ -689,7 +689,8 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 // Product: Product data.
 type Product struct {
 	// Attributes: Attributes of the product uploaded to the Manufacturer
-	// Center.
+	// Center. Manually
+	// edited attributes are taken into account.
 	Attributes *Attributes `json:"attributes,omitempty"`
 
 	// ContentLanguage: The content language of the product as a two-letter
@@ -700,39 +701,9 @@ type Product struct {
 	// DestinationStatuses: The status of the destinations.
 	DestinationStatuses []*DestinationStatus `json:"destinationStatuses,omitempty"`
 
-	// FinalAttributes: Final attributes of the product. The final
-	// attributes are obtained by
-	// overriding the uploaded attributes with the manually provided and
-	// deleted
-	// attributes. Google systems only process, evaluate, review, and/or use
-	// final
-	// attributes.
-	//
-	// This field is deprecated and will be removed end of July 2018. Please
-	// use
-	// attributes.
-	FinalAttributes *Attributes `json:"finalAttributes,omitempty"`
-
 	// Issues: A server-generated list of issues associated with the
 	// product.
 	Issues []*Issue `json:"issues,omitempty"`
-
-	// ManuallyDeletedAttributes: Names of the attributes of the product
-	// deleted manually via the
-	// Manufacturer Center UI.
-	//
-	// This field is deprecated and will be removed end of July 2018. Please
-	// use
-	// attributes.
-	ManuallyDeletedAttributes []string `json:"manuallyDeletedAttributes,omitempty"`
-
-	// ManuallyProvidedAttributes: Attributes of the product provided
-	// manually via the Manufacturer Center UI.
-	//
-	// This field is deprecated and will be removed end of July 2018. Please
-	// use
-	// attributes.
-	ManuallyProvidedAttributes *Attributes `json:"manuallyProvidedAttributes,omitempty"`
 
 	// Name: Name in the format
 	// `{target_country}:{content_language}:{product_id}`.
@@ -767,15 +738,6 @@ type Product struct {
 	// code (for example,
 	// US).
 	TargetCountry string `json:"targetCountry,omitempty"`
-
-	// UploadedAttributes: Attributes of the product uploaded via the
-	// Manufacturer Center API or via
-	// feeds.
-	//
-	// This field is deprecated and will be removed end of July 2018. Please
-	// use
-	// attributes.
-	UploadedAttributes *Attributes `json:"uploadedAttributes,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1012,13 +974,6 @@ func (r *AccountsProductsService) Get(parent string, name string) *AccountsProdu
 // included in the response. Only sections listed here
 // will be returned.
 //
-// If this parameter is not specified, ATTRIBUTES and ISSUES are
-// returned.
-// This behavior is temporary and will be removed once all clients are
-// ready
-// or at the latest end of July 2018. After that no sections will be
-// returned.
-//
 // Possible values:
 //   "UNKNOWN"
 //   "ATTRIBUTES"
@@ -1134,7 +1089,7 @@ func (c *AccountsProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, er
 	//   ],
 	//   "parameters": {
 	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.\n\nIf this parameter is not specified, ATTRIBUTES and ISSUES are returned.\nThis behavior is temporary and will be removed once all clients are ready\nor at the latest end of July 2018. After that no sections will be returned.",
+	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.",
 	//       "enum": [
 	//         "UNKNOWN",
 	//         "ATTRIBUTES",
@@ -1192,13 +1147,6 @@ func (r *AccountsProductsService) List(parent string) *AccountsProductsListCall 
 // Include sets the optional parameter "include": The information to be
 // included in the response. Only sections listed here
 // will be returned.
-//
-// If this parameter is not specified, ATTRIBUTES and ISSUES are
-// returned.
-// This behavior is temporary and will be removed once all clients are
-// ready
-// or at the latest end of July 2018. After that no sections will be
-// returned.
 //
 // Possible values:
 //   "UNKNOWN"
@@ -1328,7 +1276,7 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	//   ],
 	//   "parameters": {
 	//     "include": {
-	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.\n\nIf this parameter is not specified, ATTRIBUTES and ISSUES are returned.\nThis behavior is temporary and will be removed once all clients are ready\nor at the latest end of July 2018. After that no sections will be returned.",
+	//       "description": "The information to be included in the response. Only sections listed here\nwill be returned.",
 	//       "enum": [
 	//         "UNKNOWN",
 	//         "ATTRIBUTES",

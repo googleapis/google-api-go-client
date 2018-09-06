@@ -1060,7 +1060,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 			case disco.StructKind:
 				addSubStruct(subApiName, p.Type())
 			default:
-				panicf("Unknown type for %q: %s", subApiName, p.Type())
+				panicf("Unknown type for %s: %v", subApiName, p.Type())
 			}
 		}
 	case disco.ArrayKind:
@@ -1081,7 +1081,7 @@ func (s *Schema) populateSubSchemas() (outerr error) {
 		case disco.StructKind:
 			addSubStruct(subApiName, at)
 		default:
-			panicf("Unknown array type for %q: %s", subApiName, at)
+			panicf("Unknown array type for %s: %v", subApiName, at)
 		}
 	case disco.AnyStructKind, disco.MapKind, disco.SimpleKind, disco.ReferenceKind:
 		// Do nothing.
@@ -1857,6 +1857,7 @@ func (meth *Method) generateCode() {
 		pn(`reqHeaders.Set("Content-Type", "application/json")`)
 	}
 	pn(`c.urlParams_.Set("alt", alt)`)
+	pn(`c.urlParams_.Set("prettyPrint", "false")`)
 
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
 	if meth.supportsMediaUpload() {

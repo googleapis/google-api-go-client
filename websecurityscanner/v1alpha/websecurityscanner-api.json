@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20180820",
+  "revision": "20180906",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -614,7 +614,10 @@
             "XSS_ERROR",
             "CLEAR_TEXT_PASSWORD",
             "INVALID_CONTENT_TYPE",
-            "XSS_ANGULAR_CALLBACK"
+            "XSS_ANGULAR_CALLBACK",
+            "INVALID_HEADER",
+            "MISSPELLED_SECURITY_HEADER_NAME",
+            "MISMATCHING_SECURITY_HEADER_VALUES"
           ],
           "enumDescriptions": [
             "The invalid finding type.",
@@ -625,7 +628,10 @@
             "A potential cross-site scripting (XSS) bug due to JavaScript breakage.\nIn some circumstances, the application under test might modify the test\nstring before it is parsed by the browser. When the browser attempts to\nruns this modified test string, it will likely break and throw a\nJavaScript execution error, thus an injection issue is occurring.\nHowever, it may not be exploitable. Manual verification is needed to see\nif the test string modifications can be evaded and confirm that the issue\nis in fact an XSS vulnerability. For detailed explanations on XSS, see\nhttps://www.google.com/about/appsecurity/learning/xss/.",
             "An application appears to be transmitting a password field in clear text.\nAn attacker can eavesdrop network traffic and sniff the password field.",
             "An application returns sensitive content with an invalid content type,\nor without an 'X-Content-Type-Options: nosniff' header.",
-            "A cross-site scripting (XSS) vulnerability in AngularJS module that\noccurs when a user-provided string is interpolated by Angular."
+            "A cross-site scripting (XSS) vulnerability in AngularJS module that\noccurs when a user-provided string is interpolated by Angular.",
+            "A malformed or invalid valued header.",
+            "Misspelled security header name.",
+            "Mismatching values in a duplicate security header."
           ],
           "type": "string"
         },
@@ -696,7 +702,10 @@
             "XSS_ERROR",
             "CLEAR_TEXT_PASSWORD",
             "INVALID_CONTENT_TYPE",
-            "XSS_ANGULAR_CALLBACK"
+            "XSS_ANGULAR_CALLBACK",
+            "INVALID_HEADER",
+            "MISSPELLED_SECURITY_HEADER_NAME",
+            "MISMATCHING_SECURITY_HEADER_VALUES"
           ],
           "enumDescriptions": [
             "The invalid finding type.",
@@ -707,7 +716,10 @@
             "A potential cross-site scripting (XSS) bug due to JavaScript breakage.\nIn some circumstances, the application under test might modify the test\nstring before it is parsed by the browser. When the browser attempts to\nruns this modified test string, it will likely break and throw a\nJavaScript execution error, thus an injection issue is occurring.\nHowever, it may not be exploitable. Manual verification is needed to see\nif the test string modifications can be evaded and confirm that the issue\nis in fact an XSS vulnerability. For detailed explanations on XSS, see\nhttps://www.google.com/about/appsecurity/learning/xss/.",
             "An application appears to be transmitting a password field in clear text.\nAn attacker can eavesdrop network traffic and sniff the password field.",
             "An application returns sensitive content with an invalid content type,\nor without an 'X-Content-Type-Options: nosniff' header.",
-            "A cross-site scripting (XSS) vulnerability in AngularJS module that\noccurs when a user-provided string is interpolated by Angular."
+            "A cross-site scripting (XSS) vulnerability in AngularJS module that\noccurs when a user-provided string is interpolated by Angular.",
+            "A malformed or invalid valued header.",
+            "Misspelled security header name.",
+            "Mismatching values in a duplicate security header."
           ],
           "type": "string"
         }

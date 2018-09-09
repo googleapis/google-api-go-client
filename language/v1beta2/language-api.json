@@ -225,7 +225,7 @@
       }
     }
   },
-  "revision": "20180827",
+  "revision": "20180903",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -1150,7 +1150,7 @@
       "type": "object"
     },
     "Sentiment": {
-      "description": "Represents the feeling associated with the entire text or entities in\nthe text.\nNext ID: 5",
+      "description": "Represents the feeling associated with the entire text or entities in\nthe text.\nNext ID: 6",
       "id": "Sentiment",
       "properties": {
         "magnitude": {

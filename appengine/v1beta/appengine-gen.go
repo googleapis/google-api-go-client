@@ -537,10 +537,12 @@ func (s *AuthorizedDomain) MarshalJSON() ([]byte, error) {
 // AutomaticScaling: Automatic scaling is based on request rate,
 // response latencies, and other application metrics.
 type AutomaticScaling struct {
-	// CoolDownPeriod: Amount of time that the Autoscaler
+	// CoolDownPeriod: The time period that the Autoscaler
 	// (https://cloud.google.com/compute/docs/autoscaler/) should wait
-	// between changes to the number of virtual machines. Only applicable in
-	// the App Engine flexible environment.
+	// before it starts collecting information from a new instance. This
+	// prevents the autoscaler from collecting information when the instance
+	// is initializing, during which the collected usage would not be
+	// reliable. Only applicable in the App Engine flexible environment.
 	CoolDownPeriod string `json:"coolDownPeriod,omitempty"`
 
 	// CpuUtilization: Target scaling by CPU usage.
@@ -3697,6 +3699,9 @@ type Version struct {
 	// machine.
 	Vm bool `json:"vm,omitempty"`
 
+	// VpcAccessConnector: Enables VPC connectivity for standard apps.
+	VpcAccessConnector *VpcAccessConnector `json:"vpcAccessConnector,omitempty"`
+
 	// Zones: The Google Compute Engine zones that are supported by this
 	// version in the App Engine flexible environment.
 	Zones []string `json:"zones,omitempty"`
@@ -3775,6 +3780,35 @@ func (s *Volume) UnmarshalJSON(data []byte) error {
 	}
 	s.SizeGb = float64(s1.SizeGb)
 	return nil
+}
+
+// VpcAccessConnector: VPC access connector specification.
+type VpcAccessConnector struct {
+	// Name: Full Serverless VPC Access Connector name e.g.
+	// /projects/my-project/locations/us-central1/connectors/c1.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcAccessConnector) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcAccessConnector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ZipInfo: The zip file information for a zip deployment.

@@ -927,6 +927,104 @@ func (s *GetIosPostInstallAttributionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetIosReopenAttributionRequest: Request for iSDK to get reopen
+// attribution for app universal link open
+// deeplinking. This endpoint is meant for only iOS requests.
+type GetIosReopenAttributionRequest struct {
+	// BundleId: APP bundle ID.
+	BundleId string `json:"bundleId,omitempty"`
+
+	// RequestedLink: FDL link to be verified from an app universal link
+	// open.
+	// The FDL link can be one of:
+	// 1) short FDL.
+	// e.g. <app_code>.page.link/<ddl_id>, or
+	// 2) long FDL.
+	// e.g. <app_code>.page.link/?{query params}, or
+	// 3) Invite FDL.
+	// e.g. <app_code>.page.link/i/<invite_id_or_alias>
+	RequestedLink string `json:"requestedLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetIosReopenAttributionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetIosReopenAttributionRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GetIosReopenAttributionResponse: Response for iSDK to get reopen
+// attribution for app universal link open
+// deeplinking. This endpoint is meant for only iOS requests.
+type GetIosReopenAttributionResponse struct {
+	// DeepLink: The deep-link attributed the app universal link open. For
+	// both regular
+	// FDL links and invite FDL links.
+	DeepLink string `json:"deepLink,omitempty"`
+
+	// InvitationId: Optional invitation ID, for only invite typed requested
+	// FDL links.
+	InvitationId string `json:"invitationId,omitempty"`
+
+	// ResolvedLink: The entire FDL, expanded from a short link. It is the
+	// same as the
+	// requested_link, if it is long.
+	ResolvedLink string `json:"resolvedLink,omitempty"`
+
+	// UtmCampaign: Scion campaign value to be propagated by iSDK to Scion
+	// at app-reopen.
+	UtmCampaign string `json:"utmCampaign,omitempty"`
+
+	// UtmMedium: Scion medium value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmMedium string `json:"utmMedium,omitempty"`
+
+	// UtmSource: Scion source value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmSource string `json:"utmSource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeepLink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeepLink") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetIosReopenAttributionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayAnalytics: Parameters for Google Play Campaign
 // Measurements.
 // [Learn
@@ -1806,6 +1904,128 @@ func (c *V1InstallAttributionCall) Do(opts ...googleapi.CallOption) (*GetIosPost
 	//   },
 	//   "response": {
 	//     "$ref": "GetIosPostInstallAttributionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/firebase"
+	//   ]
+	// }
+
+}
+
+// method id "firebasedynamiclinks.reopenAttribution":
+
+type V1ReopenAttributionCall struct {
+	s                              *Service
+	getiosreopenattributionrequest *GetIosReopenAttributionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// ReopenAttribution: Get iOS reopen attribution for app universal link
+// open deeplinking.
+func (r *V1Service) ReopenAttribution(getiosreopenattributionrequest *GetIosReopenAttributionRequest) *V1ReopenAttributionCall {
+	c := &V1ReopenAttributionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.getiosreopenattributionrequest = getiosreopenattributionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1ReopenAttributionCall) Fields(s ...googleapi.Field) *V1ReopenAttributionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1ReopenAttributionCall) Context(ctx context.Context) *V1ReopenAttributionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1ReopenAttributionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1ReopenAttributionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiosreopenattributionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/reopenAttribution")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedynamiclinks.reopenAttribution" call.
+// Exactly one of *GetIosReopenAttributionResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GetIosReopenAttributionResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *V1ReopenAttributionCall) Do(opts ...googleapi.CallOption) (*GetIosReopenAttributionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GetIosReopenAttributionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get iOS reopen attribution for app universal link open deeplinking.",
+	//   "flatPath": "v1/reopenAttribution",
+	//   "httpMethod": "POST",
+	//   "id": "firebasedynamiclinks.reopenAttribution",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/reopenAttribution",
+	//   "request": {
+	//     "$ref": "GetIosReopenAttributionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GetIosReopenAttributionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/firebase"

@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180825",
+  "revision": "20180901",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1581,7 +1581,7 @@
           "type": "string"
         },
         "callerSuppliedUserAgent": {
-          "description": "The user agent of the caller.\nThis information is not authenticated and should be treated accordingly.\nFor example:\n\n+   `google-api-python-client/1.4.0`:\n    The request was made by the Google API client for Python.\n+   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:\n    The request was made by the Google Cloud SDK CLI (gcloud).\n+   `AppEngine-Google; (+http://code.google.com/appengine; appid: s~my-project`:\n    The request was made from the `my-project` App Engine app.\nNOLINT",
+          "description": "The user agent of the caller.\nThis information is not authenticated and should be treated accordingly.\nFor example:\n\n+   `google-api-python-client/1.4.0`:\n    The request was made by the Google API client for Python.\n+   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:\n    The request was made by the Google Cloud SDK CLI (gcloud).\n+   `AppEngine-Google; (+http://code.google.com/appengine; appid:\ns~my-project`:\n    The request was made from the `my-project` App Engine app.\nNOLINT",
           "type": "string"
         },
         "destinationAttributes": {
@@ -1646,6 +1646,13 @@
       "properties": {
         "currentLocations": {
           "description": "The locations of a resource after the execution of the operation.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "originalLocations": {
+          "description": "The locations of a resource prior to the execution of the operation.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
           "items": {
             "type": "string"
           },

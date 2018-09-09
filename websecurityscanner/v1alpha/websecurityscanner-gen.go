@@ -355,6 +355,11 @@ type Finding struct {
 	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
 	// in AngularJS module that
 	// occurs when a user-provided string is interpolated by Angular.
+	//   "INVALID_HEADER" - A malformed or invalid valued header.
+	//   "MISSPELLED_SECURITY_HEADER_NAME" - Misspelled security header
+	// name.
+	//   "MISMATCHING_SECURITY_HEADER_VALUES" - Mismatching values in a
+	// duplicate security header.
 	FindingType string `json:"findingType,omitempty"`
 
 	// FrameUrl: Output only.
@@ -517,6 +522,11 @@ type FindingTypeStats struct {
 	//   "XSS_ANGULAR_CALLBACK" - A cross-site scripting (XSS) vulnerability
 	// in AngularJS module that
 	// occurs when a user-provided string is interpolated by Angular.
+	//   "INVALID_HEADER" - A malformed or invalid valued header.
+	//   "MISSPELLED_SECURITY_HEADER_NAME" - Misspelled security header
+	// name.
+	//   "MISMATCHING_SECURITY_HEADER_VALUES" - Mismatching values in a
+	// duplicate security header.
 	FindingType string `json:"findingType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FindingCount") to

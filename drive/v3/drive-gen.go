@@ -1469,8 +1469,9 @@ type Permission struct {
 
 	// Role: The role granted by this permission. While new values may be
 	// supported in the future, the following are currently allowed:
-	// - organizer
 	// - owner
+	// - organizer
+	// - fileOrganizer
 	// - writer
 	// - commenter
 	// - reader
@@ -1529,6 +1530,7 @@ type PermissionTeamDrivePermissionDetails struct {
 	// Role: The primary role for this user. While new values may be added
 	// in the future, the following are currently possible:
 	// - organizer
+	// - fileOrganizer
 	// - writer
 	// - commenter
 	// - reader

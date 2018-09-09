@@ -615,10 +615,10 @@ type CreateServiceAccountRequest struct {
 	// `[a-z]([-a-z0-9]*[a-z0-9])` to comply with RFC1035.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ServiceAccount: The ServiceAccount resource to
-	// create. Currently, only the following values are user
+	// ServiceAccount: The ServiceAccount resource to create.
+	// Currently, only the following values are user
 	// assignable:
-	// `display_name`, and `description`.
+	// `display_name` .
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -849,19 +849,20 @@ type LintResult struct {
 	// DebugMessage: Human readable debug message associated with the issue.
 	DebugMessage string `json:"debugMessage,omitempty"`
 
-	// FieldName: The name of the field for which this lint result is about,
-	// relative to the
-	// input object to lint in the request.
+	// FieldName: The name of the field for which this lint result is
+	// about.
 	//
 	// For nested messages, `field_name` consists of names of the embedded
 	// fields
-	// separated by period character. For instance, if the lint request is
-	// on a
+	// separated by period character. The top-level qualifier is the input
+	// object
+	// to lint in the request. For instance, if the lint request is on
+	// a
 	// google.iam.v1.Policy and this lint result is about a
 	// condition
 	// expression of one of the input policy bindings, the field would
 	// be
-	// populated as `bindings.condition.expression`.
+	// populated as `policy.bindings.condition.expression`.
 	//
 	// This field does not identify the ordinality of the repetitive fields
 	// (for
@@ -1614,15 +1615,15 @@ func (s *Role) MarshalJSON() ([]byte, error) {
 // the
 // `unique_id` of the service account.
 type ServiceAccount struct {
-	// DisplayName: Optional. A user-specified name for the service account.
-	// Must be
-	// less than or equal to 100 UTF-8 bytes.
+	// DisplayName: Optional. A user-specified description of the service
+	// account.  Must be
+	// fewer than 100 UTF-8 bytes.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: @OutputOnly The email address of the service account.
 	Email string `json:"email,omitempty"`
 
-	// Etag: Optional. Not currently used.
+	// Etag: Used to perform a consistent read-modify-write.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: The resource name of the service account in the following
@@ -1696,11 +1697,16 @@ func (s *ServiceAccount) MarshalJSON() ([]byte, error) {
 // key-pairs,
 // and Google retains ONLY the public key.
 //
-// System-managed key-pairs are managed automatically by Google, and
-// rotated
-// daily without user intervention.  The private key never leaves
-// Google's
-// servers to maximize security.
+// System-managed keys are automatically rotated by Google, and are used
+// for
+// signing for a maximum of two weeks. The rotation process is
+// probabilistic,
+// and usage of the new key will gradually ramp up and down over the
+// key's
+// lifetime. We recommend caching the public key set for a service
+// account for
+// no more than 24 hours to ensure you have access to the latest
+// keys.
 //
 // Public keys for all service accounts are also published at the
 // OAuth2
@@ -5625,7 +5631,8 @@ type ProjectsServiceAccountsUpdateCall struct {
 // Update: Updates a ServiceAccount.
 //
 // Currently, only the following fields are updatable:
-// `display_name`, `description`.
+// `display_name` .
+// The `etag` is mandatory.
 func (r *ProjectsServiceAccountsService) Update(name string, serviceaccount *ServiceAccount) *ProjectsServiceAccountsUpdateCall {
 	c := &ProjectsServiceAccountsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5720,7 +5727,7 @@ func (c *ProjectsServiceAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name`, `description`.",
+	//   "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "iam.projects.serviceAccounts.update",

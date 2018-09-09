@@ -1067,6 +1067,11 @@ type EntryPoint struct {
 	// Optional.
 	AccessCode string `json:"accessCode,omitempty"`
 
+	// EntryPointFeatures: Features of the entry point, such as being toll
+	// or toll-free. One entry point can have multiple features. However,
+	// toll and toll-free cannot be both set on the same entry point.
+	EntryPointFeatures []string `json:"entryPointFeatures,omitempty"`
+
 	// EntryPointType: The type of the conference entry point.
 	// Possible values are:
 	// - "video" - joining a conference over HTTP. A conference can have
@@ -1125,6 +1130,12 @@ type EntryPoint struct {
 	// fields should be displayed.
 	// Optional.
 	Pin string `json:"pin,omitempty"`
+
+	// RegionCode: The CLDR/ISO 3166 region code for the country associated
+	// with this phone access. Example: "SE" for Sweden.
+	// Calendar backend will populate this field only for
+	// EntryPointType.PHONE.
+	RegionCode string `json:"regionCode,omitempty"`
 
 	// Uri: The URI of the entry point. The maximum length is 1300
 	// characters.

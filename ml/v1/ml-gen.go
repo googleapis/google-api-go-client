@@ -1559,15 +1559,40 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   <dt>standard_p100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>standard</i> that
-	//   also includes a single NVIDIA Tesla P100 GPU. The availability of
-	// these
-	//   GPUs is in the <i>Beta</i> launch stage.
+	//   also includes a single NVIDIA Tesla P100 GPU.
 	//   </dd>
 	//   <dt>complex_model_m_p100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>complex_model_m</i> that also includes
-	//   four NVIDIA Tesla P100 GPUs. The availability of these GPUs is in
-	//   the <i>Beta</i> launch stage.
+	//   four NVIDIA Tesla P100 GPUs.
+	//   </dd>
+	//   <dt>standard_v100</dt>
+	//   <dd>
+	//   A machine equivalent to <i>standard</i> that
+	//   also includes a single NVIDIA Tesla V100 GPU. The availability of
+	// these
+	//   GPUs is in the <i>Beta</i> launch stage.
+	//   </dd>
+	//   <dt>large_model_v100</dt>
+	//   <dd>
+	//   A machine equivalent to <i>large_model</i> that
+	//   also includes a single NVIDIA Tesla V100 GPU. The availability of
+	// these
+	//   GPUs is in the <i>Beta</i> launch stage.
+	//   </dd>
+	//   <dt>complex_model_m_v100</dt>
+	//   <dd>
+	//   A machine equivalent to <i>complex_model_m</i> that
+	//   also includes four NVIDIA Tesla V100 GPUs. The availability of
+	// these
+	//   GPUs is in the <i>Beta</i> launch stage.
+	//   </dd>
+	//   <dt>complex_model_l_v100</dt>
+	//   <dd>
+	//   A machine equivalent to <i>complex_model_l</i> that
+	//   also includes eight NVIDIA Tesla V100 GPUs. The availability of
+	// these
+	//   GPUs is in the <i>Beta</i> launch stage.
 	//   </dd>
 	//   <dt>cloud_tpu</dt>
 	//   <dd>

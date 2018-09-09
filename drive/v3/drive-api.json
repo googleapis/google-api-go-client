@@ -35,7 +35,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/yNSDT8GbE0Hi1bq_MfUpEIg4L9o\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/79RB5EuEpU35909wc6O7vR4Degc\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1770,7 +1770,7 @@
       }
     }
   },
-  "revision": "20180816",
+  "revision": "20180830",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -2703,7 +2703,7 @@
               "drive.permissions.create"
             ]
           },
-          "description": "The role granted by this permission. While new values may be supported in the future, the following are currently allowed:  \n- organizer \n- owner \n- writer \n- commenter \n- reader",
+          "description": "The role granted by this permission. While new values may be supported in the future, the following are currently allowed:  \n- owner \n- organizer \n- fileOrganizer \n- writer \n- commenter \n- reader",
           "type": "string"
         },
         "teamDrivePermissionDetails": {
@@ -2719,7 +2719,7 @@
                 "type": "string"
               },
               "role": {
-                "description": "The primary role for this user. While new values may be added in the future, the following are currently possible:  \n- organizer \n- writer \n- commenter \n- reader",
+                "description": "The primary role for this user. While new values may be added in the future, the following are currently possible:  \n- organizer \n- fileOrganizer \n- writer \n- commenter \n- reader",
                 "type": "string"
               },
               "teamDrivePermissionType": {

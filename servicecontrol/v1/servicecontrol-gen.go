@@ -2544,7 +2544,8 @@ type RequestMetadata struct {
 	//     The request was made by the Google API client for Python.
 	// +   `Cloud SDK Command Line Tool apitools-client/1.0 gcloud/0.9.62`:
 	//     The request was made by the Google Cloud SDK CLI (gcloud).
-	// +   `AppEngine-Google; (+http://code.google.com/appengine; appid:
+	// +   `AppEngine-Google; (+http://code.google.com/appengine;
+	// appid:
 	// s~my-project`:
 	//     The request was made from the `my-project` App Engine app.
 	// NOLINT
@@ -2716,6 +2717,15 @@ type ResourceLocation struct {
 	//     "us-east1"
 	//     "nam3"
 	CurrentLocations []string `json:"currentLocations,omitempty"`
+
+	// OriginalLocations: The locations of a resource prior to the execution
+	// of the operation.
+	// For example:
+	//
+	//     "europe-west1-a"
+	//     "us-east1"
+	//     "nam3"
+	OriginalLocations []string `json:"originalLocations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentLocations") to
 	// unconditionally include in API requests. By default, fields with

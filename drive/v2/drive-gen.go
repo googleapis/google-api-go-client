@@ -2400,10 +2400,11 @@ type Permission struct {
 
 	// Role: The primary role for this user. While new values may be
 	// supported in the future, the following are currently allowed:
-	// - organizer
 	// - owner
-	// - reader
+	// - organizer
+	// - fileOrganizer
 	// - writer
+	// - reader
 	Role string `json:"role,omitempty"`
 
 	// SelfLink: A link back to this permission.
@@ -2476,8 +2477,9 @@ type PermissionTeamDrivePermissionDetails struct {
 	// Role: The primary role for this user. While new values may be added
 	// in the future, the following are currently possible:
 	// - organizer
-	// - reader
+	// - fileOrganizer
 	// - writer
+	// - reader
 	Role string `json:"role,omitempty"`
 
 	// TeamDrivePermissionType: The Team Drive permission type for this
@@ -8471,8 +8473,8 @@ type FilesTrashCall struct {
 }
 
 // Trash: Moves a file to the trash. The currently authenticated user
-// must own the file or be an organizer on the parent for Team Drive
-// files.
+// must own the file or be at least a fileOrganizer on the parent for
+// Team Drive files.
 func (r *FilesService) Trash(fileId string) *FilesTrashCall {
 	c := &FilesTrashCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.fileId = fileId
@@ -8568,7 +8570,7 @@ func (c *FilesTrashCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves a file to the trash. The currently authenticated user must own the file or be an organizer on the parent for Team Drive files.",
+	//   "description": "Moves a file to the trash. The currently authenticated user must own the file or be at least a fileOrganizer on the parent for Team Drive files.",
 	//   "httpMethod": "POST",
 	//   "id": "drive.files.trash",
 	//   "parameterOrder": [

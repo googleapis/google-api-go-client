@@ -826,7 +826,7 @@
               ]
             },
             "update": {
-              "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name`, `description`.",
+              "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
               "httpMethod": "PUT",
               "id": "iam.projects.serviceAccounts.update",
@@ -1081,7 +1081,7 @@
       }
     }
   },
-  "revision": "20180809",
+  "revision": "20180830",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1269,7 +1269,7 @@
         },
         "serviceAccount": {
           "$ref": "ServiceAccount",
-          "description": "The ServiceAccount resource to\ncreate. Currently, only the following values are user assignable:\n`display_name`, and `description`."
+          "description": "The ServiceAccount resource to create.\nCurrently, only the following values are user assignable:\n`display_name` ."
         }
       },
       "type": "object"
@@ -1362,7 +1362,7 @@
           "type": "string"
         },
         "fieldName": {
-          "description": "The name of the field for which this lint result is about, relative to the\ninput object to lint in the request.\n\nFor nested messages, `field_name` consists of names of the embedded fields\nseparated by period character. For instance, if the lint request is on a\ngoogle.iam.v1.Policy and this lint result is about a condition\nexpression of one of the input policy bindings, the field would be\npopulated as `bindings.condition.expression`.\n\nThis field does not identify the ordinality of the repetitive fields (for\ninstance bindings in a policy).",
+          "description": "The name of the field for which this lint result is about.\n\nFor nested messages, `field_name` consists of names of the embedded fields\nseparated by period character. The top-level qualifier is the input object\nto lint in the request. For instance, if the lint request is on a\ngoogle.iam.v1.Policy and this lint result is about a condition\nexpression of one of the input policy bindings, the field would be\npopulated as `policy.bindings.condition.expression`.\n\nThis field does not identify the ordinality of the repetitive fields (for\ninstance bindings in a policy).",
           "type": "string"
         },
         "level": {
@@ -1737,7 +1737,7 @@
       "id": "ServiceAccount",
       "properties": {
         "displayName": {
-          "description": "Optional. A user-specified name for the service account. Must be\nless than or equal to 100 UTF-8 bytes.",
+          "description": "Optional. A user-specified description of the service account.  Must be\nfewer than 100 UTF-8 bytes.",
           "type": "string"
         },
         "email": {
@@ -1745,7 +1745,7 @@
           "type": "string"
         },
         "etag": {
-          "description": "Optional. Not currently used.",
+          "description": "Used to perform a consistent read-modify-write.",
           "format": "byte",
           "type": "string"
         },
@@ -1769,7 +1769,7 @@
       "type": "object"
     },
     "ServiceAccountKey": {
-      "description": "Represents a service account key.\n\nA service account has two sets of key-pairs: user-managed, and\nsystem-managed.\n\nUser-managed key-pairs can be created and deleted by users.  Users are\nresponsible for rotating these keys periodically to ensure security of\ntheir service accounts.  Users retain the private key of these key-pairs,\nand Google retains ONLY the public key.\n\nSystem-managed key-pairs are managed automatically by Google, and rotated\ndaily without user intervention.  The private key never leaves Google's\nservers to maximize security.\n\nPublic keys for all service accounts are also published at the OAuth2\nService Account API.",
+      "description": "Represents a service account key.\n\nA service account has two sets of key-pairs: user-managed, and\nsystem-managed.\n\nUser-managed key-pairs can be created and deleted by users.  Users are\nresponsible for rotating these keys periodically to ensure security of\ntheir service accounts.  Users retain the private key of these key-pairs,\nand Google retains ONLY the public key.\n\nSystem-managed keys are automatically rotated by Google, and are used for\nsigning for a maximum of two weeks. The rotation process is probabilistic,\nand usage of the new key will gradually ramp up and down over the key's\nlifetime. We recommend caching the public key set for a service account for\nno more than 24 hours to ensure you have access to the latest keys.\n\nPublic keys for all service accounts are also published at the OAuth2\nService Account API.",
       "id": "ServiceAccountKey",
       "properties": {
         "keyAlgorithm": {

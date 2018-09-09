@@ -17,7 +17,7 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/UfSqMqLGclhjNS9q0g-j705eXE8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/tcwTOYbl_YJZylW89WfrDXzmqR8\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/calendar-16.png",
     "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20180814",
+  "revision": "20180906",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {
@@ -2114,6 +2114,13 @@
           "description": "The access code to access the conference. The maximum length is 128 characters.\nWhen creating new conference data, populate only the subset of {meetingCode, accessCode, passcode, password, pin} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.\nOptional.",
           "type": "string"
         },
+        "entryPointFeatures": {
+          "description": "Features of the entry point, such as being toll or toll-free. One entry point can have multiple features. However, toll and toll-free cannot be both set on the same entry point.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "entryPointType": {
           "description": "The type of the conference entry point.\nPossible values are:  \n- \"video\" - joining a conference over HTTP. A conference can have zero or one video entry point.\n- \"phone\" - joining a conference by dialing a phone number. A conference can have zero or more phone entry points.\n- \"sip\" - joining a conference over SIP. A conference can have zero or one sip entry point.\n- \"more\" - further conference joining instructions, for example additional phone numbers. A conference can have zero or one more entry point. A conference with only a more entry point is not a valid conference.",
           "type": "string"
@@ -2136,6 +2143,10 @@
         },
         "pin": {
           "description": "The PIN to access the conference. The maximum length is 128 characters.\nWhen creating new conference data, populate only the subset of {meetingCode, accessCode, passcode, password, pin} fields that match the terminology that the conference provider uses. Only the populated fields should be displayed.\nOptional.",
+          "type": "string"
+        },
+        "regionCode": {
+          "description": "The CLDR/ISO 3166 region code for the country associated with this phone access. Example: \"SE\" for Sweden.\nCalendar backend will populate this field only for EntryPointType.PHONE.",
           "type": "string"
         },
         "uri": {

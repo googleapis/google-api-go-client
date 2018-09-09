@@ -196,11 +196,29 @@
           "scopes": [
             "https://www.googleapis.com/auth/firebase"
           ]
+        },
+        "reopenAttribution": {
+          "description": "Get iOS reopen attribution for app universal link open deeplinking.",
+          "flatPath": "v1/reopenAttribution",
+          "httpMethod": "POST",
+          "id": "firebasedynamiclinks.reopenAttribution",
+          "parameterOrder": [],
+          "parameters": {},
+          "path": "v1/reopenAttribution",
+          "request": {
+            "$ref": "GetIosReopenAttributionRequest"
+          },
+          "response": {
+            "$ref": "GetIosReopenAttributionResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/firebase"
+          ]
         }
       }
     }
   },
-  "revision": "20180823",
+  "revision": "20180906",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -705,6 +723,52 @@
         },
         "utmSource": {
           "description": "Scion source value to be propagated by iSDK to Scion at post-install.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetIosReopenAttributionRequest": {
+      "description": "Request for iSDK to get reopen attribution for app universal link open\ndeeplinking. This endpoint is meant for only iOS requests.",
+      "id": "GetIosReopenAttributionRequest",
+      "properties": {
+        "bundleId": {
+          "description": "APP bundle ID.",
+          "type": "string"
+        },
+        "requestedLink": {
+          "description": "FDL link to be verified from an app universal link open.\nThe FDL link can be one of:\n1) short FDL.\ne.g. \u003capp_code\u003e.page.link/\u003cddl_id\u003e, or\n2) long FDL.\ne.g. \u003capp_code\u003e.page.link/?{query params}, or\n3) Invite FDL.\ne.g. \u003capp_code\u003e.page.link/i/\u003cinvite_id_or_alias\u003e",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GetIosReopenAttributionResponse": {
+      "description": "Response for iSDK to get reopen attribution for app universal link open\ndeeplinking. This endpoint is meant for only iOS requests.",
+      "id": "GetIosReopenAttributionResponse",
+      "properties": {
+        "deepLink": {
+          "description": "The deep-link attributed the app universal link open. For both regular\nFDL links and invite FDL links.",
+          "type": "string"
+        },
+        "invitationId": {
+          "description": "Optional invitation ID, for only invite typed requested FDL links.",
+          "type": "string"
+        },
+        "resolvedLink": {
+          "description": "The entire FDL, expanded from a short link. It is the same as the\nrequested_link, if it is long.",
+          "type": "string"
+        },
+        "utmCampaign": {
+          "description": "Scion campaign value to be propagated by iSDK to Scion at app-reopen.",
+          "type": "string"
+        },
+        "utmMedium": {
+          "description": "Scion medium value to be propagated by iSDK to Scion at app-reopen.",
+          "type": "string"
+        },
+        "utmSource": {
+          "description": "Scion source value to be propagated by iSDK to Scion at app-reopen.",
           "type": "string"
         }
       },

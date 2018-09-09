@@ -775,7 +775,10 @@ type ListLogEntriesRequest struct {
 	// "bi
 	// llingAccounts/[BILLING_ACCOUNT_ID]"
 	// "folders/[FOLDER_ID]"
-	// Projects listed in the project_ids field are added to this list.
+	// Projects listed in the project_ids field are added to this list. Only
+	// one of the permissions, <code>logging.logEntries.list</code> or
+	// <code>logging.privateLogEntries.list</code>, is needed for each
+	// parent resource.
 	ResourceNames []string `json:"resourceNames,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filter") to
@@ -2225,7 +2228,11 @@ type WriteLogEntriesRequest struct {
 	// [LOG_ID] must be URL-encoded. For example,
 	// "projects/my-project-id/logs/syslog" or
 	// "organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Fa
-	// ctivity". For more information about log names, see LogEntry.
+	// ctivity". The permission <code>logging.logEntries.create</code> is
+	// needed on each project, organization, billing account, or folder that
+	// is receiving new log entries, whether the resource is specified in
+	// <code>logName</code> or in an individual log entry. For more
+	// information about log names, see LogEntry.
 	LogName string `json:"logName,omitempty"`
 
 	// PartialSuccess: Optional. Whether valid entries should be written

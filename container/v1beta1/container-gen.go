@@ -497,6 +497,9 @@ type Cluster struct {
 	// one automatically chosen or specify a `/14` block in `10.0.0.0/8`.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
 
+	// Conditions: Which conditions caused the current cluster state.
+	Conditions []*StatusCondition `json:"conditions,omitempty"`
+
 	// CreateTime: [Output only] The time the cluster was created,
 	// in
 	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
@@ -2235,8 +2238,9 @@ type NodeConfig struct {
 	//  "cluster-name"
 	//  "cluster-uid"
 	//  "configure-sh"
-	//  "gci-update-strategy"
+	//  "enable-oslogin"
 	//  "gci-ensure-gke-docker"
+	//  "gci-update-strategy"
 	//  "instance-template"
 	//  "kube-env"
 	//  "startup-script"
@@ -2398,6 +2402,9 @@ type NodePool struct {
 	// is enabled
 	// only if a valid configuration is present.
 	Autoscaling *NodePoolAutoscaling `json:"autoscaling,omitempty"`
+
+	// Conditions: Which conditions caused the current node pool state.
+	Conditions []*StatusCondition `json:"conditions,omitempty"`
 
 	// Config: The node configuration of the pool.
 	Config *NodeConfig `json:"config,omitempty"`
@@ -2590,6 +2597,9 @@ func (s *NodeTaint) MarshalJSON() ([]byte, error) {
 // have happened or are
 // happening on the cluster. All fields are output only.
 type Operation struct {
+	// ClusterConditions: Which conditions caused the current cluster state.
+	ClusterConditions []*StatusCondition `json:"clusterConditions,omitempty"`
+
 	// Detail: Detailed operation progress, if available.
 	Detail string `json:"detail,omitempty"`
 
@@ -2609,6 +2619,10 @@ type Operation struct {
 
 	// Name: The server-assigned ID for the operation.
 	Name string `json:"name,omitempty"`
+
+	// NodepoolConditions: Which conditions caused the current node pool
+	// state.
+	NodepoolConditions []*StatusCondition `json:"nodepoolConditions,omitempty"`
 
 	// OperationType: The operation type.
 	//
@@ -2671,20 +2685,21 @@ type Operation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Detail") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ClusterConditions")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Detail") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClusterConditions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3729,6 +3744,47 @@ type StartIPRotationRequest struct {
 
 func (s *StartIPRotationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartIPRotationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StatusCondition: StatusCondition describes why a cluster or a node
+// pool has a certain status
+// (e.g., ERROR or DEGRADED).
+type StatusCondition struct {
+	// Code: Machine-friendly representation of the condition
+	//
+	// Possible values:
+	//   "UNKNOWN" - UNKNOWN indicates a generic condition.
+	//   "GCE_STOCKOUT" - GCE_STOCKOUT indicates a GCE stockout.
+	//   "GKE_SERVICE_ACCOUNT_DELETED" - GKE_SERVICE_ACCOUNT_DELETED
+	// indicates that the user deleted their robot
+	// service account.
+	// More codes TBA
+	Code string `json:"code,omitempty"`
+
+	// Message: Human-friendly representation of the condition
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatusCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusCondition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

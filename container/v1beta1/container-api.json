@@ -2435,7 +2435,7 @@
       }
     }
   },
-  "revision": "20180813",
+  "revision": "20180824",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2571,6 +2571,13 @@
         "clusterIpv4Cidr": {
           "description": "The IP address range of the container pods in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`). Leave blank to have\none automatically chosen or specify a `/14` block in `10.0.0.0/8`.",
           "type": "string"
+        },
+        "conditions": {
+          "description": "Which conditions caused the current cluster state.",
+          "items": {
+            "$ref": "StatusCondition"
+          },
+          "type": "array"
         },
         "createTime": {
           "description": "[Output only] The time the cluster was created, in\n[RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.",
@@ -3375,7 +3382,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "The metadata key/value pairs assigned to instances in the cluster.\n\nKeys must conform to the regexp [a-zA-Z0-9-_]+ and be less than 128 bytes\nin length. These are reflected as part of a URL in the metadata server.\nAdditionally, to avoid ambiguity, keys must not conflict with any other\nmetadata keys for the project or be one of the reserved keys:\n \"cluster-location\"\n \"cluster-name\"\n \"cluster-uid\"\n \"configure-sh\"\n \"gci-update-strategy\"\n \"gci-ensure-gke-docker\"\n \"instance-template\"\n \"kube-env\"\n \"startup-script\"\n \"user-data\"\n\nValues are free-form strings, and only have meaning as interpreted by\nthe image running in the instance. The only restriction placed on them is\nthat each value's size must be less than or equal to 32 KB.\n\nThe total size of all keys and values must be less than 512 KB.",
+          "description": "The metadata key/value pairs assigned to instances in the cluster.\n\nKeys must conform to the regexp [a-zA-Z0-9-_]+ and be less than 128 bytes\nin length. These are reflected as part of a URL in the metadata server.\nAdditionally, to avoid ambiguity, keys must not conflict with any other\nmetadata keys for the project or be one of the reserved keys:\n \"cluster-location\"\n \"cluster-name\"\n \"cluster-uid\"\n \"configure-sh\"\n \"enable-oslogin\"\n \"gci-ensure-gke-docker\"\n \"gci-update-strategy\"\n \"instance-template\"\n \"kube-env\"\n \"startup-script\"\n \"user-data\"\n\nValues are free-form strings, and only have meaning as interpreted by\nthe image running in the instance. The only restriction placed on them is\nthat each value's size must be less than or equal to 32 KB.\n\nThe total size of all keys and values must be less than 512 KB.",
           "type": "object"
         },
         "minCpuPlatform": {
@@ -3444,6 +3451,13 @@
         "autoscaling": {
           "$ref": "NodePoolAutoscaling",
           "description": "Autoscaler configuration for this NodePool. Autoscaler is enabled\nonly if a valid configuration is present."
+        },
+        "conditions": {
+          "description": "Which conditions caused the current node pool state.",
+          "items": {
+            "$ref": "StatusCondition"
+          },
+          "type": "array"
         },
         "config": {
           "$ref": "NodeConfig",
@@ -3570,6 +3584,13 @@
       "description": "This operation resource represents operations that may have happened or are\nhappening on the cluster. All fields are output only.",
       "id": "Operation",
       "properties": {
+        "clusterConditions": {
+          "description": "Which conditions caused the current cluster state.",
+          "items": {
+            "$ref": "StatusCondition"
+          },
+          "type": "array"
+        },
         "detail": {
           "description": "Detailed operation progress, if available.",
           "type": "string"
@@ -3585,6 +3606,13 @@
         "name": {
           "description": "The server-assigned ID for the operation.",
           "type": "string"
+        },
+        "nodepoolConditions": {
+          "description": "Which conditions caused the current node pool state.",
+          "items": {
+            "$ref": "StatusCondition"
+          },
+          "type": "array"
         },
         "operationType": {
           "description": "The operation type.",
@@ -4223,6 +4251,31 @@
         },
         "zone": {
           "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "StatusCondition": {
+      "description": "StatusCondition describes why a cluster or a node pool has a certain status\n(e.g., ERROR or DEGRADED).",
+      "id": "StatusCondition",
+      "properties": {
+        "code": {
+          "description": "Machine-friendly representation of the condition",
+          "enum": [
+            "UNKNOWN",
+            "GCE_STOCKOUT",
+            "GKE_SERVICE_ACCOUNT_DELETED"
+          ],
+          "enumDescriptions": [
+            "UNKNOWN indicates a generic condition.",
+            "GCE_STOCKOUT indicates a GCE stockout.",
+            "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.\nMore codes TBA"
+          ],
+          "type": "string"
+        },
+        "message": {
+          "description": "Human-friendly representation of the condition",
           "type": "string"
         }
       },

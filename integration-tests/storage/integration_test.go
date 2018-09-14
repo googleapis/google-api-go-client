@@ -405,7 +405,7 @@ func TestFunctions(t *testing.T) {
 		}
 		obj, err := s.Objects.Insert(bucket, o).Media(f).Do()
 		if err != nil {
-			t.Fatalf("unable to insert object %q: %v", obj, err)
+			t.Fatalf("unable to insert object %v: %v", obj, err)
 		}
 		if got, want := obj.Size, c.size; got != want {
 			t.Errorf("object %q size = %v; want %v", c.name, got, want)

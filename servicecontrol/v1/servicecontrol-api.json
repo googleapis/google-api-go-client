@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180901",
+  "revision": "20180908",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -824,7 +824,7 @@
       "type": "object"
     },
     "HttpRequest": {
-      "description": "A common proto for logging HTTP requests. Only contains semantics\ndefined by the HTTP specification. Product-specific logging\ninformation MUST be defined in a separate message.\n\nThis is an exact copy of HttpRequest message defined in Stackdriver.",
+      "description": "A common proto for logging HTTP requests. Only contains semantics\ndefined by the HTTP specification. Product-specific logging\ninformation MUST be defined in a separate message.",
       "id": "HttpRequest",
       "properties": {
         "cacheFillBytes": {

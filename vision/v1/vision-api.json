@@ -315,7 +315,7 @@
       }
     }
   },
-  "revision": "20180809",
+  "revision": "20180907",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -400,6 +400,13 @@
           "description": "If present, landmark detection has completed successfully.",
           "items": {
             "$ref": "EntityAnnotation"
+          },
+          "type": "array"
+        },
+        "localizedObjectAnnotations": {
+          "description": "If present, localized object detection has completed successfully.\nThis will be sorted descending by confidence score.",
+          "items": {
+            "$ref": "LocalizedObjectAnnotation"
           },
           "type": "array"
         },
@@ -1025,7 +1032,8 @@
             "SAFE_SEARCH_DETECTION",
             "IMAGE_PROPERTIES",
             "CROP_HINTS",
-            "WEB_DETECTION"
+            "WEB_DETECTION",
+            "OBJECT_LOCALIZATION"
           ],
           "enumDescriptions": [
             "Unspecified feature type.",
@@ -1038,7 +1046,8 @@
             "Run Safe Search to detect potentially unsafe\nor undesirable content.",
             "Compute a set of image properties, such as the\nimage's dominant colors.",
             "Run crop hints.",
-            "Run web detection."
+            "Run web detection.",
+            "Run localizer for object detection."
           ],
           "type": "string"
         }
@@ -1127,6 +1136,13 @@
           "description": "If present, landmark detection has completed successfully.",
           "items": {
             "$ref": "GoogleCloudVisionV1p1beta1EntityAnnotation"
+          },
+          "type": "array"
+        },
+        "localizedObjectAnnotations": {
+          "description": "If present, localized object detection has completed successfully.\nThis will be sorted descending by confidence score.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation"
           },
           "type": "array"
         },
@@ -1699,6 +1715,34 @@
         "mimeType": {
           "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation": {
+      "description": "Set of detected objects with bounding boxes.",
+      "id": "GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation",
+      "properties": {
+        "boundingPoly": {
+          "$ref": "GoogleCloudVisionV1p1beta1BoundingPoly",
+          "description": "Image region to which this object belongs. This must be populated."
+        },
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -2322,6 +2366,13 @@
           },
           "type": "array"
         },
+        "localizedObjectAnnotations": {
+          "description": "If present, localized object detection has completed successfully.\nThis will be sorted descending by confidence score.",
+          "items": {
+            "$ref": "GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation"
+          },
+          "type": "array"
+        },
         "logoAnnotations": {
           "description": "If present, logo detection has completed successfully.",
           "items": {
@@ -2898,6 +2949,34 @@
         "mimeType": {
           "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation": {
+      "description": "Set of detected objects with bounding boxes.",
+      "id": "GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation",
+      "properties": {
+        "boundingPoly": {
+          "$ref": "GoogleCloudVisionV1p2beta1BoundingPoly",
+          "description": "Image region to which this object belongs. This must be populated."
+        },
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"
@@ -4451,7 +4530,7 @@
           "description": "The Product."
         },
         "score": {
-          "description": "A confidence level on the match, ranging from 0 (no confidence) to\n1 (full confidence).\n\nThis field is returned only if `view` is set to `FULL` in\nthe request.",
+          "description": "A confidence level on the match, ranging from 0 (no confidence) to\n1 (full confidence).",
           "format": "float",
           "type": "number"
         }
@@ -5126,6 +5205,34 @@
             "$ref": "Operation"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LocalizedObjectAnnotation": {
+      "description": "Set of detected objects with bounding boxes.",
+      "id": "LocalizedObjectAnnotation",
+      "properties": {
+        "boundingPoly": {
+          "$ref": "BoundingPoly",
+          "description": "Image region to which this object belongs. This must be populated."
+        },
+        "languageCode": {
+          "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.",
+          "type": "string"
+        },
+        "mid": {
+          "description": "Object ID that should align with EntityAnnotation mid.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Object name, expressed in its `language_code` language.",
+          "type": "string"
+        },
+        "score": {
+          "description": "Score of the result. Range [0, 1].",
+          "format": "float",
+          "type": "number"
         }
       },
       "type": "object"

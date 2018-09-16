@@ -807,8 +807,8 @@ type ComposeRequestSourceObjects struct {
 	// Generation: The generation of this object to use as the source.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Name: The source object's name. The source object's bucket is
-	// implicitly the destination bucket.
+	// Name: The source object's name. All source objects must reside in the
+	// same bucket.
 	Name string `json:"name,omitempty"`
 
 	// ObjectPreconditions: Conditions that must be met for this operation
@@ -5107,7 +5107,7 @@ func (c *ObjectsComposeCall) Do(opts ...googleapi.CallOption) (*Object, error) {
 	//   ],
 	//   "parameters": {
 	//     "destinationBucket": {
-	//       "description": "Name of the bucket in which to store the new object.",
+	//       "description": "Name of the bucket containing the source objects. The destination object is stored in this bucket.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

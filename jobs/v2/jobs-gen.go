@@ -5176,7 +5176,7 @@ type SearchJobsResponse struct {
 	// seenenable_precise_result_size.
 	EstimatedTotalSize int64 `json:"estimatedTotalSize,omitempty,string"`
 
-	// HistogramResults: The histogram results that match with
+	// HistogramResults: The histogram results that match
 	// specified
 	// SearchJobsRequest.HistogramFacets.
 	HistogramResults *HistogramResults `json:"histogramResults,omitempty"`

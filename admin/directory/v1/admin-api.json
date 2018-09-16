@@ -93,7 +93,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Zp5udf3d_MSf3cProroao6vKvEo\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/bJY6yaK7IUjX9b18cnF3M_RjDj0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3969,6 +3969,7 @@
       }
     }
   },
+  "revision": "20180911",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4260,10 +4261,20 @@
           "type": "string"
         },
         "resourceId": {
+          "annotations": {
+            "required": [
+              "directory.resources.calendars.insert"
+            ]
+          },
           "description": "The unique ID for the calendar resource.",
           "type": "string"
         },
         "resourceName": {
+          "annotations": {
+            "required": [
+              "directory.resources.calendars.insert"
+            ]
+          },
           "description": "The name of the calendar resource. For example, \"Training Room 1A\".",
           "type": "string"
         },
@@ -5005,6 +5016,10 @@
       "description": "JSON template for Member resource in Directory API.",
       "id": "Member",
       "properties": {
+        "delivery_settings": {
+          "description": "Delivery settings of member",
+          "type": "string"
+        },
         "email": {
           "description": "Email of member (Read-only)",
           "type": "string"
@@ -5988,7 +6003,7 @@
           "type": "array"
         },
         "archived": {
-          "description": "Indicates if user is archived",
+          "description": "Indicates if user is archived.",
           "type": "boolean"
         },
         "changePasswordAtNextLogin": {
@@ -6155,7 +6170,7 @@
           "type": "any"
         },
         "suspended": {
-          "description": "Indicates if user is suspended",
+          "description": "Indicates if user is suspended.",
           "type": "boolean"
         },
         "suspensionReason": {

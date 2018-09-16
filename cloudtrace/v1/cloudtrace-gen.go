@@ -174,7 +174,9 @@ type Trace struct {
 
 	// TraceId: Globally unique identifier for the trace. This identifier is
 	// a 128-bit
-	// numeric value formatted as a 32-byte hex string.
+	// numeric value formatted as a 32-byte hex string. For
+	// example,
+	// `382d4f4c6b7bb2f4a972559d9085001d`.
 	TraceId string `json:"traceId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -291,7 +293,7 @@ type TraceSpan struct {
 
 	// SpanId: Identifier for the span. Must be a 64-bit integer other than
 	// 0 and
-	// unique within a trace.
+	// unique within a trace. For example, `2205310701640571284`.
 	SpanId uint64 `json:"spanId,omitempty,string"`
 
 	// StartTime: Start time of the span in nanoseconds from the UNIX epoch.

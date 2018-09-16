@@ -165,8 +165,6 @@ func (s *PlatformSummary) MarshalJSON() ([]byte, error) {
 }
 
 // SiteSummaryResponse: Response message for GetSiteSummary.
-// Do not confuse with same message in
-// google.chrome.abusiveexperiencereport.v1
 type SiteSummaryResponse struct {
 	// DesktopSummary: Summary for the desktop review of the site.
 	DesktopSummary *PlatformSummary `json:"desktopSummary,omitempty"`

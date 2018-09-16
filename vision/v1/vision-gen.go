@@ -247,6 +247,11 @@ type AnnotateImageResponse struct {
 	// successfully.
 	LandmarkAnnotations []*EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
+	// LocalizedObjectAnnotations: If present, localized object detection
+	// has completed successfully.
+	// This will be sorted descending by confidence score.
+	LocalizedObjectAnnotations []*LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
+
 	// LogoAnnotations: If present, logo detection has completed
 	// successfully.
 	LogoAnnotations []*EntityAnnotation `json:"logoAnnotations,omitempty"`
@@ -1470,6 +1475,7 @@ type Feature struct {
 	// image's dominant colors.
 	//   "CROP_HINTS" - Run crop hints.
 	//   "WEB_DETECTION" - Run web detection.
+	//   "OBJECT_LOCALIZATION" - Run localizer for object detection.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxResults") to
@@ -1649,6 +1655,11 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	// LandmarkAnnotations: If present, landmark detection has completed
 	// successfully.
 	LandmarkAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
+
+	// LocalizedObjectAnnotations: If present, localized object detection
+	// has completed successfully.
+	// This will be sorted descending by confidence score.
+	LocalizedObjectAnnotations []*GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
 
 	// LogoAnnotations: If present, logo detection has completed
 	// successfully.
@@ -2595,6 +2606,66 @@ func (s *GoogleCloudVisionV1p1beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVisionV1p1beta1InputConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation: Set of detected
+// objects with bounding boxes.
+type GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation struct {
+	// BoundingPoly: Image region to which this object belongs. This must be
+	// populated.
+	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p1beta1LocalizedObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p1beta1LocationInfo: Detected entity location
@@ -3720,6 +3791,11 @@ type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 	// successfully.
 	LandmarkAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"landmarkAnnotations,omitempty"`
 
+	// LocalizedObjectAnnotations: If present, localized object detection
+	// has completed successfully.
+	// This will be sorted descending by confidence score.
+	LocalizedObjectAnnotations []*GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation `json:"localizedObjectAnnotations,omitempty"`
+
 	// LogoAnnotations: If present, logo detection has completed
 	// successfully.
 	LogoAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"logoAnnotations,omitempty"`
@@ -4669,6 +4745,66 @@ func (s *GoogleCloudVisionV1p2beta1InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVisionV1p2beta1InputConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation: Set of detected
+// objects with bounding boxes.
+type GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation struct {
+	// BoundingPoly: Image region to which this object belongs. This must be
+	// populated.
+	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1LocalizedObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudVisionV1p2beta1LocationInfo: Detected entity location
@@ -7474,9 +7610,6 @@ type GoogleCloudVisionV1p3beta1ProductSearchResultsResult struct {
 	// Score: A confidence level on the match, ranging from 0 (no
 	// confidence) to
 	// 1 (full confidence).
-	//
-	// This field is returned only if `view` is set to `FULL` in
-	// the request.
 	Score float64 `json:"score,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Image") to
@@ -8764,6 +8897,66 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LocalizedObjectAnnotation: Set of detected objects with bounding
+// boxes.
+type LocalizedObjectAnnotation struct {
+	// BoundingPoly: Image region to which this object belongs. This must be
+	// populated.
+	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more
+	// information,
+	// see
+	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Mid: Object ID that should align with EntityAnnotation mid.
+	Mid string `json:"mid,omitempty"`
+
+	// Name: Object name, expressed in its `language_code` language.
+	Name string `json:"name,omitempty"`
+
+	// Score: Score of the result. Range [0, 1].
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LocalizedObjectAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod LocalizedObjectAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LocalizedObjectAnnotation) UnmarshalJSON(data []byte) error {
+	type NoMethod LocalizedObjectAnnotation
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // LocationInfo: Detected entity location information.

@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180821",
+  "revision": "20180906",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -3191,7 +3191,7 @@
         },
         "histogramResults": {
           "$ref": "HistogramResults",
-          "description": "The histogram results that match with specified\nSearchJobsRequest.HistogramFacets."
+          "description": "The histogram results that match specified\nSearchJobsRequest.HistogramFacets."
         },
         "jobView": {
           "description": "Corresponds to SearchJobsRequest.job_view.",

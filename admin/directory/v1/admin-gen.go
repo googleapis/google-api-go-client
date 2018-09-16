@@ -1951,6 +1951,9 @@ func (s *Groups) MarshalJSON() ([]byte, error) {
 
 // Member: JSON template for Member resource in Directory API.
 type Member struct {
+	// DeliverySettings: Delivery settings of member
+	DeliverySettings string `json:"delivery_settings,omitempty"`
+
 	// Email: Email of member (Read-only)
 	Email string `json:"email,omitempty"`
 
@@ -1978,7 +1981,7 @@ type Member struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Email") to
+	// ForceSendFields is a list of field names (e.g. "DeliverySettings") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1986,12 +1989,13 @@ type Member struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DeliverySettings") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3251,7 +3255,7 @@ type User struct {
 	// Aliases: List of aliases (Read-only)
 	Aliases []string `json:"aliases,omitempty"`
 
-	// Archived: Indicates if user is archived
+	// Archived: Indicates if user is archived.
 	Archived bool `json:"archived,omitempty"`
 
 	// ChangePasswordAtNextLogin: Boolean indicating if the user should
@@ -3349,7 +3353,7 @@ type User struct {
 
 	SshPublicKeys interface{} `json:"sshPublicKeys,omitempty"`
 
-	// Suspended: Indicates if user is suspended
+	// Suspended: Indicates if user is suspended.
 	Suspended bool `json:"suspended,omitempty"`
 
 	// SuspensionReason: Suspension reason if user is suspended (Read-only)

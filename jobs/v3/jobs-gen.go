@@ -1409,11 +1409,11 @@ type HistogramFacets struct {
 	// allowed.
 	CustomAttributeHistogramFacets []*CustomAttributeHistogramRequest `json:"customAttributeHistogramFacets,omitempty"`
 
-	// SimpleHistogramFacets: Optional. Specifies the simple type of
-	// histogram facets, for example,
-	// `COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc. This field is equivalent
-	// to
-	// GetHistogramRequest.
+	// SimpleHistogramFacets: Optional.
+	//
+	// Specifies the simple type of histogram facets, for
+	// example,
+	// `COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc.
 	//
 	// Possible values:
 	//   "SEARCH_TYPE_UNSPECIFIED" - The default value if search type is not
@@ -3628,41 +3628,46 @@ type SearchJobsRequest struct {
 	// "relevance desc".
 	//
 	// Supported options are:
-	//   * "relevance desc": By relevance descending, as determined by the
+	//
+	// * "relevance desc": By relevance descending, as determined by the
 	// API
-	//     algorithms. Relevance thresholding of query results is only
+	// algorithms. Relevance thresholding of query results is only
 	// available
-	//     with this ordering.
-	//   * "posting_publish_time desc": By Job.posting_publish_time
-	//     descending.
-	//   * "posting_update_time desc": By Job.posting_update_time
+	// with this ordering.
+	// * "posting_publish_time desc": By Job.posting_publish_time
 	// descending.
-	//   * "title": By Job.title ascending.
-	//   * "title desc": By Job.title descending.
-	//   * "annualized_base_compensation": By job's
-	//     CompensationInfo.annualized_base_compensation ascending. If
+	// * "posting_update_time desc": By Job.posting_update_time
+	// descending.
+	// * "title": By Job.title ascending.
+	// * "title desc": By Job.title descending.
+	// * "annualized_base_compensation": By
 	// job's
-	//     annualized base compensation is unspecified, they are put at the
-	// end of
-	//     search result.
-	//   * "annualized_base_compensation desc": By job's
-	//     CompensationInfo.annualized_base_compensation descending. If
+	// CompensationInfo.annualized_base_compensation_range ascending.
+	// Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of
+	// search results.
+	// * "annualized_base_compensation desc": By
 	// job's
-	//     annualized base compensation is unspecified, they are put at the
-	// end of
-	//     search result.
-	//   * "annualized_total_compensation": By job's
-	//     CompensationInfo.annualized_total_compensation ascending. If
+	// CompensationInfo.annualized_base_compensation_range descending.
+	// Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of
+	// search results.
+	// * "annualized_total_compensation": By
 	// job's
-	//     annualized total compensation is unspecified, they are put at the
-	// end
-	//     of search result.
-	//   * "annualized_total_compensation desc": By job's
-	//     CompensationInfo.annualized_total_compensation descending. If
+	// CompensationInfo.annualized_total_compensation_range ascending.
+	// Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of
+	// search results.
+	// * "annualized_total_compensation desc": By
 	// job's
-	//     annualized total compensation is unspecified, they are put at the
-	// end
-	//     of search result.
+	// CompensationInfo.annualized_total_compensation_range descending.
+	// Jobs
+	// whose annualized base compensation is unspecified are put at the end
+	// of
+	// search results.
 	OrderBy string `json:"orderBy,omitempty"`
 
 	// PageSize: Optional.
@@ -3781,7 +3786,7 @@ type SearchJobsResponse struct {
 	// see enable_precise_result_size.
 	EstimatedTotalSize int64 `json:"estimatedTotalSize,omitempty"`
 
-	// HistogramResults: The histogram results that match with
+	// HistogramResults: The histogram results that match
 	// specified
 	// SearchJobsRequest.histogram_facets.
 	HistogramResults *HistogramResults `json:"histogramResults,omitempty"`

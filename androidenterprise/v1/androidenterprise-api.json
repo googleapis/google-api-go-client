@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/roOgUwR1ccx3Sqc93zbrjsOcnYQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/vCaS2ioKmnec_iMjVAeARXNdtks\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2758,6 +2758,7 @@
       }
     }
   },
+  "revision": "20180913",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2806,6 +2807,62 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "playSearch": {
+          "$ref": "AdministratorWebTokenSpecPlaySearch",
+          "description": "Options for displaying the Play Search page."
+        },
+        "privateApps": {
+          "$ref": "AdministratorWebTokenSpecPrivateApps",
+          "description": "Options for displaying the Private Apps page."
+        },
+        "storeBuilder": {
+          "$ref": "AdministratorWebTokenSpecStoreBuilder",
+          "description": "Options for displaying the Store Builder page."
+        },
+        "webApps": {
+          "$ref": "AdministratorWebTokenSpecWebApps",
+          "description": "Options for displaying the Web Apps page."
+        }
+      },
+      "type": "object"
+    },
+    "AdministratorWebTokenSpecPlaySearch": {
+      "id": "AdministratorWebTokenSpecPlaySearch",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Play Search page is displayed. Default is true.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AdministratorWebTokenSpecPrivateApps": {
+      "id": "AdministratorWebTokenSpecPrivateApps",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Private Apps page is displayed. Default is true.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AdministratorWebTokenSpecStoreBuilder": {
+      "id": "AdministratorWebTokenSpecStoreBuilder",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Store Builder is be displayed. Default is true.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "AdministratorWebTokenSpecWebApps": {
+      "id": "AdministratorWebTokenSpecWebApps",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Web Apps page is displayed. Default is true.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -4245,7 +4302,7 @@
           "type": "string"
         },
         "link": {
-          "description": "Ordered list of pages a user should be able to reach from this page. The pages must exist, must not be this page, and once a link is created the page linked to cannot be deleted until all links to it are removed. It is recommended that the basic pages are created first, before adding the links between pages.\n\nNo attempt is made to verify that all pages are reachable from the homepage.",
+          "description": "Ordered list of pages a user should be able to reach from this page. The list can't include this page. It is recommended that the basic pages are created first, before adding the links between pages.\n\nThe API doesn't verify that the pages exist or the pages are reachable.",
           "items": {
             "type": "string"
           },

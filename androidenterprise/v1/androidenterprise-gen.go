@@ -339,6 +339,18 @@ type AdministratorWebTokenSpec struct {
 	// "approve" mode.
 	Permission []string `json:"permission,omitempty"`
 
+	// PlaySearch: Options for displaying the Play Search page.
+	PlaySearch *AdministratorWebTokenSpecPlaySearch `json:"playSearch,omitempty"`
+
+	// PrivateApps: Options for displaying the Private Apps page.
+	PrivateApps *AdministratorWebTokenSpecPrivateApps `json:"privateApps,omitempty"`
+
+	// StoreBuilder: Options for displaying the Store Builder page.
+	StoreBuilder *AdministratorWebTokenSpecStoreBuilder `json:"storeBuilder,omitempty"`
+
+	// WebApps: Options for displaying the Web Apps page.
+	WebApps *AdministratorWebTokenSpecWebApps `json:"webApps,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Kind") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -358,6 +370,114 @@ type AdministratorWebTokenSpec struct {
 
 func (s *AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AdministratorWebTokenSpecPlaySearch struct {
+	// Enabled: Whether the Play Search page is displayed. Default is true.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpecPlaySearch) MarshalJSON() ([]byte, error) {
+	type NoMethod AdministratorWebTokenSpecPlaySearch
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AdministratorWebTokenSpecPrivateApps struct {
+	// Enabled: Whether the Private Apps page is displayed. Default is true.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpecPrivateApps) MarshalJSON() ([]byte, error) {
+	type NoMethod AdministratorWebTokenSpecPrivateApps
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AdministratorWebTokenSpecStoreBuilder struct {
+	// Enabled: Whether the Store Builder is be displayed. Default is true.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpecStoreBuilder) MarshalJSON() ([]byte, error) {
+	type NoMethod AdministratorWebTokenSpecStoreBuilder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AdministratorWebTokenSpecWebApps struct {
+	// Enabled: Whether the Web Apps page is displayed. Default is true.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpecWebApps) MarshalJSON() ([]byte, error) {
+	type NoMethod AdministratorWebTokenSpecWebApps
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3124,13 +3244,12 @@ type StorePage struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Link: Ordered list of pages a user should be able to reach from this
-	// page. The pages must exist, must not be this page, and once a link is
-	// created the page linked to cannot be deleted until all links to it
-	// are removed. It is recommended that the basic pages are created
-	// first, before adding the links between pages.
+	// page. The list can't include this page. It is recommended that the
+	// basic pages are created first, before adding the links between
+	// pages.
 	//
-	// No attempt is made to verify that all pages are reachable from the
-	// homepage.
+	// The API doesn't verify that the pages exist or the pages are
+	// reachable.
 	Link []string `json:"link,omitempty"`
 
 	// Name: Ordered list of localized strings giving the name of this page.

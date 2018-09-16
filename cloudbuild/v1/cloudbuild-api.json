@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20180828",
+  "revision": "20180913",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -791,6 +791,20 @@
             "Service may automatically determine build log streaming behavior.",
             "Build logs should be streamed to Google Cloud Storage.",
             "Build logs should not be streamed to Google Cloud Storage; they will be\nwritten when the build is completed."
+          ],
+          "type": "string"
+        },
+        "logging": {
+          "description": "Option to specify the logging mode, which determines where the logs are stored.",
+          "enum": [
+            "LOGGING_UNSPECIFIED",
+            "LEGACY",
+            "GCS_ONLY"
+          ],
+          "enumDescriptions": [
+            "The service determines the logging mode. The default is `LEGACY`",
+            "Stackdriver logging and Cloud Storage logging are enabled.",
+            "Only Cloud Storage logging is enabled."
           ],
           "type": "string"
         },

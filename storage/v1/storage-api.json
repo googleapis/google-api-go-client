@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/xdKZYE7J0j8r4Yn83tamAAsa-ZE\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/akd8i6K-8A6ohXFVzxQZomL5PpA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -1573,7 +1573,7 @@
           ],
           "parameters": {
             "destinationBucket": {
-              "description": "Name of the bucket in which to store the new object.",
+              "description": "Name of the bucket containing the source objects. The destination object is stored in this bucket.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2766,7 +2766,7 @@
       }
     }
   },
-  "revision": "20180824",
+  "revision": "20180905",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -2911,7 +2911,7 @@
                         "type": "boolean"
                       },
                       "matchesPattern": {
-                        "description": "A regular expression that satisfies the RE2 syntax language. This condition is satisfied when the name of the object matches the RE2 pattern. Note: This feature is currently in the \"Early Access\" launch stage and is only available to a whitelisted set of users; that means that this feature may changed in backward-incompatible ways and that it is not guaranteed to be released.",
+                        "description": "A regular expression that satisfies the RE2 syntax. This condition is satisfied when the name of the object matches the RE2 pattern. Note: This feature is currently in the \"Early Access\" launch stage and is only available to a whitelisted set of users; that means that this feature may be changed in backward-incompatible ways and that it is not guaranteed to be released.",
                         "type": "string"
                       },
                       "matchesStorageClass": {
@@ -3253,7 +3253,7 @@
                     "storage.objects.compose"
                   ]
                 },
-                "description": "The source object's name. The source object's bucket is implicitly the destination bucket.",
+                "description": "The source object's name. All source objects must reside in the same bucket.",
                 "type": "string"
               },
               "objectPreconditions": {

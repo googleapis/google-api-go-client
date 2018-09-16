@@ -1150,8 +1150,6 @@ func (s *ExponentialBuckets) UnmarshalJSON(data []byte) error {
 // defined by the HTTP specification. Product-specific
 // logging
 // information MUST be defined in a separate message.
-//
-// This is an exact copy of HttpRequest message defined in Stackdriver.
 type HttpRequest struct {
 	// CacheFillBytes: The number of HTTP response bytes inserted into
 	// cache. Set only when a

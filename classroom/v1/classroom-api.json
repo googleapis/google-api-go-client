@@ -1975,7 +1975,7 @@
       }
     }
   },
-  "revision": "20180807",
+  "revision": "20180911",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "Announcement": {
@@ -2437,7 +2437,7 @@
       "type": "object"
     },
     "Date": {
-      "description": "Represents a whole calendar date, e.g. date of birth. The time of day and\ntime zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day may be 0 to\nrepresent a year and month where the day is not significant, e.g. credit card\nexpiration date. The year may be 0 to represent a month and day independent\nof year, e.g. anniversary date. Related types are google.type.TimeOfDay\nand `google.protobuf.Timestamp`.",
+      "description": "Represents a whole calendar date, for example date of birth. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day can be 0 to\nrepresent a year and month where the day is not significant, for example\ncredit card expiration date. The year can be 0 to represent a month and day\nindependent of year, for example anniversary date. Related types are\ngoogle.type.TimeOfDay and `google.protobuf.Timestamp`.",
       "id": "Date",
       "properties": {
         "day": {

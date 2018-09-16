@@ -492,6 +492,17 @@ type BuildOptions struct {
 	// written when the build is completed.
 	LogStreamingOption string `json:"logStreamingOption,omitempty"`
 
+	// Logging: Option to specify the logging mode, which determines where
+	// the logs are stored.
+	//
+	// Possible values:
+	//   "LOGGING_UNSPECIFIED" - The service determines the logging mode.
+	// The default is `LEGACY`
+	//   "LEGACY" - Stackdriver logging and Cloud Storage logging are
+	// enabled.
+	//   "GCS_ONLY" - Only Cloud Storage logging is enabled.
+	Logging string `json:"logging,omitempty"`
+
 	// MachineType: Compute Engine machine type on which to run the build.
 	//
 	// Possible values:

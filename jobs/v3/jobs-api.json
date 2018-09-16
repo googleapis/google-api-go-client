@@ -593,7 +593,7 @@
       }
     }
   },
-  "revision": "20180821",
+  "revision": "20180906",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1248,7 +1248,7 @@
           "type": "array"
         },
         "simpleHistogramFacets": {
-          "description": "Optional. Specifies the simple type of histogram facets, for example,\n`COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc. This field is equivalent to\nGetHistogramRequest.",
+          "description": "Optional.\n\nSpecifies the simple type of histogram facets, for example,\n`COMPANY_SIZE`, `EMPLOYMENT_TYPE` etc.",
           "enumDescriptions": [
             "The default value if search type is not specified.",
             "Filter by the company id field.",
@@ -2298,7 +2298,7 @@
           "type": "integer"
         },
         "orderBy": {
-          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n  * \"relevance desc\": By relevance descending, as determined by the API\n    algorithms. Relevance thresholding of query results is only available\n    with this ordering.\n  * \"posting_publish_time desc\": By Job.posting_publish_time\n    descending.\n  * \"posting_update_time desc\": By Job.posting_update_time descending.\n  * \"title\": By Job.title ascending.\n  * \"title desc\": By Job.title descending.\n  * \"annualized_base_compensation\": By job's\n    CompensationInfo.annualized_base_compensation ascending. If job's\n    annualized base compensation is unspecified, they are put at the end of\n    search result.\n  * \"annualized_base_compensation desc\": By job's\n    CompensationInfo.annualized_base_compensation descending. If job's\n    annualized base compensation is unspecified, they are put at the end of\n    search result.\n  * \"annualized_total_compensation\": By job's\n    CompensationInfo.annualized_total_compensation ascending. If job's\n    annualized total compensation is unspecified, they are put at the end\n    of search result.\n  * \"annualized_total_compensation desc\": By job's\n    CompensationInfo.annualized_total_compensation descending. If job's\n    annualized total compensation is unspecified, they are put at the end\n    of search result.",
+          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* \"relevance desc\": By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* \"posting_publish_time desc\": By Job.posting_publish_time descending.\n* \"posting_update_time desc\": By Job.posting_update_time descending.\n* \"title\": By Job.title ascending.\n* \"title desc\": By Job.title descending.\n* \"annualized_base_compensation\": By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_base_compensation desc\": By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_total_compensation\": By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_total_compensation desc\": By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.",
           "type": "string"
         },
         "pageSize": {
@@ -2351,7 +2351,7 @@
         },
         "histogramResults": {
           "$ref": "HistogramResults",
-          "description": "The histogram results that match with specified\nSearchJobsRequest.histogram_facets."
+          "description": "The histogram results that match specified\nSearchJobsRequest.histogram_facets."
         },
         "locationFilters": {
           "description": "The location filters that the service applied to the specified query. If\nany filters are lat-lng based, the JobLocation.location_type is\nJobLocation.LocationType#LOCATION_TYPE_UNSPECIFIED.",

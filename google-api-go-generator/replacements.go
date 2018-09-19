@@ -23,7 +23,7 @@ var replacementPackage = map[string]string{
 	"monitoring":        "cloud.google.com/go/monitoring/apiv3",
 	"oslogin":           "cloud.google.com/go/oslogin/apiv1",
 	"pubsub":            "cloud.google.com/go/pubsub",
-	"redis":             "cloud.google.com/go/redis/apiv1beta1",
+	"redis":             "cloud.google.com/go/redis/apiv1",
 	"spanner":           "cloud.google.com/go/spanner",
 	"speech":            "cloud.google.com/go/speech/apiv1",
 	"texttospeech":      "cloud.google.com/go/texttospeech/apiv1",

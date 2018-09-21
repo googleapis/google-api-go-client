@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/YNEYVcvvIGNMtQqDhq2IeA4gjxw\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/v57-_Sh4S8XGyiUsZYxECpFpt-g\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -5799,7 +5799,7 @@
               "type": "string"
             },
             "sourceInstanceTemplate": {
-              "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/global/instanceTemplates/instanceTemplate \n- projects/project/global/global/instanceTemplates/instanceTemplate \n- global/instancesTemplates/instanceTemplate",
+              "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate \n- projects/project/global/instanceTemplates/instanceTemplate \n- global/instanceTemplates/instanceTemplate",
               "location": "query",
               "type": "string"
             },
@@ -16497,7 +16497,7 @@
       }
     }
   },
-  "revision": "20180817",
+  "revision": "20180828",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -28443,6 +28443,7 @@
             "DISKS_TOTAL_GB",
             "FIREWALLS",
             "FORWARDING_RULES",
+            "GLOBAL_INTERNAL_ADDRESSES",
             "GPUS_ALL_REGIONS",
             "HEALTH_CHECKS",
             "IMAGES",
@@ -28495,6 +28496,7 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

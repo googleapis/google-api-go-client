@@ -1634,7 +1634,7 @@
       }
     }
   },
-  "revision": "20180910",
+  "revision": "20180914",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2242,7 +2242,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Optional. Map from parameter names to values that should be used for those parameters.",
+          "description": "Optional. Map from parameter names to values that should be used for those parameters. Values may not exceed 100 characters.",
           "type": "object"
         },
         "requestId": {

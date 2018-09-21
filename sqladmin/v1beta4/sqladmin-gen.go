@@ -7404,7 +7404,6 @@ func (c *InstancesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	return ret, nil
 	// {
 	//   "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
-	//   "etagRequired": true,
 	//   "httpMethod": "PUT",
 	//   "id": "sql.instances.update",
 	//   "parameterOrder": [

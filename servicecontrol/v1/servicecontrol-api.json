@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180908",
+  "revision": "20180919",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -871,7 +871,7 @@
           "type": "string"
         },
         "requestUrl": {
-          "description": "The scheme (http, https), the host name, the path and the query\nportion of the URL that was requested.\nExample: `\"http://example.com/some/info?color=red\"`.",
+          "description": "The scheme (http, https), the host name, the path, and the query\nportion of the URL that was requested.\nExample: `\"http://example.com/some/info?color=red\"`.",
           "type": "string"
         },
         "responseSize": {
@@ -884,7 +884,7 @@
           "type": "string"
         },
         "status": {
-          "description": "The response code indicating the status of response.\nExamples: 200, 404.",
+          "description": "The response code indicating the status of the response.\nExamples: 200, 404.",
           "format": "int32",
           "type": "integer"
         },
@@ -996,7 +996,7 @@
           "type": "string"
         },
         "trace": {
-          "description": "Optional. Resource name of the trace associated with the log entry, if any.\nIf it contains a relative resource name, the name is assumed to be relative\nto `//tracing.googleapis.com`. Example:\n`projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`",
+          "description": "Optional. Resource name of the trace associated with the log entry, if any.\nIf this field contains a relative resource name, you can assume the name is\nrelative to `//tracing.googleapis.com`. Example:\n`projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824`",
           "type": "string"
         }
       },

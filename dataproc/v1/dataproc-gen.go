@@ -1156,7 +1156,7 @@ func (s *InstanceGroupConfig) MarshalJSON() ([]byte, error) {
 // workflow template.
 type InstantiateWorkflowTemplateRequest struct {
 	// Parameters: Optional. Map from parameter names to values that should
-	// be used for those parameters.
+	// be used for those parameters. Values may not exceed 100 characters.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// RequestId: Optional. A tag that prevents multiple concurrent workflow

@@ -1,4 +1,13 @@
 {
+  "auth": {
+    "oauth2": {
+      "scopes": {
+        "https://www.googleapis.com/auth/indexing": {
+          "description": "Submit data to Google for indexing"
+        }
+      }
+    }
+  },
   "basePath": "",
   "baseUrl": "https://indexing.googleapis.com/",
   "batchPath": "batch",
@@ -113,7 +122,10 @@
           "path": "v3/urlNotifications/metadata",
           "response": {
             "$ref": "UrlNotificationMetadata"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/indexing"
+          ]
         },
         "publish": {
           "description": "Notifies that a URL has been updated or deleted.",
@@ -128,12 +140,15 @@
           },
           "response": {
             "$ref": "PublishUrlNotificationResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/indexing"
+          ]
         }
       }
     }
   },
-  "revision": "20180621",
+  "revision": "20180911",
   "rootUrl": "https://indexing.googleapis.com/",
   "schemas": {
     "PublishUrlNotificationResponse": {

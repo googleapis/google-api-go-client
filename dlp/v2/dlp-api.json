@@ -1471,7 +1471,7 @@
       }
     }
   },
-  "revision": "20180911",
+  "revision": "20180918",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2220,9 +2220,20 @@
           "$ref": "GooglePrivacyDlpV2Dictionary",
           "description": "A list of phrases to detect as a CustomInfoType."
         },
+        "exclusionType": {
+          "enum": [
+            "EXCLUSION_TYPE_UNSPECIFIED",
+            "EXCLUSION_TYPE_EXCLUDE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "infoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
-          "description": "All CustomInfoTypes must have a name\nthat does not conflict with built-in InfoTypes or other CustomInfoTypes."
+          "description": "CustomInfoType can either be a new infoType, or an extension of built-in\ninfoType, when the name matches one of existing infoTypes and that infoType\nis specified in `InspectContent.info_types` field. Specifying the latter\nadds findings to the one detected by the system. If built-in info type is\nnot specified in `InspectContent.info_types` list then the name is treated\nas a custom info type."
         },
         "likelihood": {
           "description": "Likelihood to return for this CustomInfoType. This base value can be\naltered by a detection rule if the finding meets the criteria specified by\nthe rule. Defaults to `VERY_LIKELY` if not specified.",
@@ -2678,6 +2689,55 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2ExcludeInfoTypes": {
+      "description": "List of exclude infoTypes.",
+      "id": "GooglePrivacyDlpV2ExcludeInfoTypes",
+      "properties": {
+        "infoTypes": {
+          "description": "InfoType list in ExclusionRule rule drops a finding when it overlaps or\ncontained within with a finding of an infoType from this list. For\nexample, for `InspectionRuleSet.info_types` containing \"PHONE_NUMBER\"` and\n`exclusion_rule` containing `exclude_info_types.info_types` with\n\"EMAIL_ADDRESS\" the phone number findings are dropped if they overlap\nwith EMAIL_ADDRESS finding.\nThat leads to \"555-222-2222@example.org\" to generate only a single\nfinding, namely email address.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2InfoType"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2ExclusionRule": {
+      "description": "The rule that specifies conditions when findings of infoTypes specified in\n`InspectionRuleSet` are removed from results.",
+      "id": "GooglePrivacyDlpV2ExclusionRule",
+      "properties": {
+        "dictionary": {
+          "$ref": "GooglePrivacyDlpV2Dictionary",
+          "description": "Dictionary which defines the rule."
+        },
+        "excludeInfoTypes": {
+          "$ref": "GooglePrivacyDlpV2ExcludeInfoTypes",
+          "description": "Set of infoTypes for which findings would affect this rule."
+        },
+        "matchingType": {
+          "description": "How the rule is applied, see MatchingType documentation for details.",
+          "enum": [
+            "MATCHING_TYPE_UNSPECIFIED",
+            "MATCHING_TYPE_FULL_MATCH",
+            "MATCHING_TYPE_PARTIAL_MATCH",
+            "MATCHING_TYPE_INVERSE_MATCH"
+          ],
+          "enumDescriptions": [
+            "Invalid.",
+            "Full match.\n\n- Dictionary: join of Dictionary results matched complete finding quote\n- Regex: all regex matches fill a finding quote start to end\n- Exclude info type: completely inside affecting info types findings",
+            "Partial match.\n\n- Dictionary: at least one of the tokens in the finding matches\n- Regex: substring of the finding matches\n- Exclude info type: intersects with affecting info types findings",
+            "Inverse match.\n\n- Dictionary: no tokens in the finding match the dictionary\n- Regex: finding doesn't match the regex\n- Exclude info type: no intersection with affecting info types findings"
+          ],
+          "type": "string"
+        },
+        "regex": {
+          "$ref": "GooglePrivacyDlpV2Regex",
+          "description": "Regular expression which defines the rule."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2Expressions": {
       "description": "An expression, consisting or an operator and conditions.",
       "id": "GooglePrivacyDlpV2Expressions",
@@ -3063,6 +3123,13 @@
             "Many matching elements."
           ],
           "type": "string"
+        },
+        "ruleSet": {
+          "description": "Set of rules to apply to the findings for this InspectConfig.\nExclusion rules, contained in the set are executed in the end, other\nrules are executed in the order they are specified for each info type.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2InspectionRuleSet"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3184,6 +3251,42 @@
           "description": "The last update timestamp of a inspectTemplate, output only field.",
           "format": "google-datetime",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2InspectionRule": {
+      "description": "A single inspection rule to be applied to infoTypes, specified in\n`InspectionRuleSet`.",
+      "id": "GooglePrivacyDlpV2InspectionRule",
+      "properties": {
+        "exclusionRule": {
+          "$ref": "GooglePrivacyDlpV2ExclusionRule",
+          "description": "Exclusion rule."
+        },
+        "hotwordRule": {
+          "$ref": "GooglePrivacyDlpV2HotwordRule",
+          "description": "Hotword-based detection rule."
+        }
+      },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2InspectionRuleSet": {
+      "description": "Rule set for modifying a set of infoTypes to alter behavior under certain\ncircumstances, depending on the specific details of the rules within the set.",
+      "id": "GooglePrivacyDlpV2InspectionRuleSet",
+      "properties": {
+        "infoTypes": {
+          "description": "List of infoTypes this rule set is applied to.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2InfoType"
+          },
+          "type": "array"
+        },
+        "rules": {
+          "description": "Set of rules to be applied to infoTypes. The rules are applied in order.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2InspectionRule"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4878,16 +4981,16 @@
       "type": "object"
     },
     "GoogleTypeDate": {
-      "description": "Represents a whole calendar date, for example date of birth. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day can be 0 to\nrepresent a year and month where the day is not significant, for example\ncredit card expiration date. The year can be 0 to represent a month and day\nindependent of year, for example anniversary date. Related types are\ngoogle.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, e.g. a birthday. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. This can represent:\n\n* A full date, with non-zero year, month and day values\n* A month and day value, with a zero year, e.g. an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, e.g. a credit card expiration date\n\nRelated types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
       "id": "GoogleTypeDate",
       "properties": {
         "day": {
-          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
+          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year by itself or a year and month where the day is not\nsignificant.",
           "format": "int32",
           "type": "integer"
         },
         "month": {
-          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a date without a\nmonth.",
+          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a\nmonth and day.",
           "format": "int32",
           "type": "integer"
         },

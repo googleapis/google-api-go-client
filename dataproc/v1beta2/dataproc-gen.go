@@ -1161,7 +1161,7 @@ type InstantiateWorkflowTemplateRequest struct {
 	InstanceId string `json:"instanceId,omitempty"`
 
 	// Parameters: Optional. Map from parameter names to values that should
-	// be used for those parameters.
+	// be used for those parameters. Values may not exceed 100 characters.
 	Parameters map[string]string `json:"parameters,omitempty"`
 
 	// RequestId: Optional. A tag that prevents multiple concurrent workflow
@@ -2280,6 +2280,18 @@ type SoftwareConfig struct {
 	// "1.2" (including a subminor version, such as "1.2.29"), or the
 	// "preview" version. If unspecified, it defaults to the latest version.
 	ImageVersion string `json:"imageVersion,omitempty"`
+
+	// OptionalComponents: The set of optional components to activate on the
+	// cluster.
+	//
+	// Possible values:
+	//   "COMPONENT_UNSPECIFIED" - Unspecified component.
+	//   "JUPYTER" - The Jupyter Notebook.
+	//   "HIVE_WEBHCAT" - The Hive Web HCatalog (the REST service for
+	// accessing HCatalog).
+	//   "ZEPPELIN" - The Zeppelin notebook.
+	//   "ANACONDA" - The Anaconda python distribution.
+	OptionalComponents []string `json:"optionalComponents,omitempty"`
 
 	// Properties: Optional. The properties to set on daemon config
 	// files.Property keys are specified in prefix:property format, such as
@@ -3793,15 +3805,22 @@ func (r *ProjectsLocationsWorkflowTemplatesService) InstantiateInline(parent str
 	return c
 }
 
-// InstanceId sets the optional parameter "instanceId": A tag that
+// InstanceId sets the optional parameter "instanceId": Deprecated.
+// Please use request_id field instead.
+func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) InstanceId(instanceId string) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
+	c.urlParams_.Set("instanceId", instanceId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A tag that
 // prevents multiple concurrent workflow instances with the same tag
 // from running. This mitigates risk of concurrent instances started due
 // to retries.It is recommended to always set this value to a UUID
 // (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag
 // must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
 // and hyphens (-). The maximum length is 40 characters.
-func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) InstanceId(instanceId string) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
-	c.urlParams_.Set("instanceId", instanceId)
+func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) RequestId(requestId string) *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -3901,7 +3920,7 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "instanceId": {
-	//       "description": "Optional. A tag that prevents multiple concurrent workflow instances with the same tag from running. This mitigates risk of concurrent instances started due to retries.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "description": "Deprecated. Please use request_id field instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3910,6 +3929,11 @@ func (c *ProjectsLocationsWorkflowTemplatesInstantiateInlineCall) Do(opts ...goo
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A tag that prevents multiple concurrent workflow instances with the same tag from running. This mitigates risk of concurrent instances started due to retries.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -9314,15 +9338,22 @@ func (r *ProjectsRegionsWorkflowTemplatesService) InstantiateInline(parent strin
 	return c
 }
 
-// InstanceId sets the optional parameter "instanceId": A tag that
+// InstanceId sets the optional parameter "instanceId": Deprecated.
+// Please use request_id field instead.
+func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) InstanceId(instanceId string) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
+	c.urlParams_.Set("instanceId", instanceId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A tag that
 // prevents multiple concurrent workflow instances with the same tag
 // from running. This mitigates risk of concurrent instances started due
 // to retries.It is recommended to always set this value to a UUID
 // (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag
 // must contain only letters (a-z, A-Z), numbers (0-9), underscores (_),
 // and hyphens (-). The maximum length is 40 characters.
-func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) InstanceId(instanceId string) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
-	c.urlParams_.Set("instanceId", instanceId)
+func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) RequestId(requestId string) *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -9422,7 +9453,7 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "instanceId": {
-	//       "description": "Optional. A tag that prevents multiple concurrent workflow instances with the same tag from running. This mitigates risk of concurrent instances started due to retries.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "description": "Deprecated. Please use request_id field instead.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9431,6 +9462,11 @@ func (c *ProjectsRegionsWorkflowTemplatesInstantiateInlineCall) Do(opts ...googl
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/regions/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A tag that prevents multiple concurrent workflow instances with the same tag from running. This mitigates risk of concurrent instances started due to retries.It is recommended to always set this value to a UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier).The tag must contain only letters (a-z, A-Z), numbers (0-9), underscores (_), and hyphens (-). The maximum length is 40 characters.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

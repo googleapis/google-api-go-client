@@ -748,9 +748,8 @@ type Device struct {
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
 	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final policy compliance
-	// report published to Cloud Pub/Sub when the device acknowledges the
-	// deletion.
+	// returned by an API call, but is used in the final status report
+	// published to Cloud Pub/Sub when the device acknowledges the deletion.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	AppliedState string `json:"appliedState,omitempty"`
@@ -869,9 +868,8 @@ type Device struct {
 	//   "ACTIVE" - The device is active.
 	//   "DISABLED" - The device is disabled.
 	//   "DELETED" - The device was deleted. This state will never be
-	// returned by an API call, but is used in the final policy compliance
-	// report published to Cloud Pub/Sub when the device acknowledges the
-	// deletion.
+	// returned by an API call, but is used in the final status report
+	// published to Cloud Pub/Sub when the device acknowledges the deletion.
 	//   "PROVISIONING" - The device is being provisioned. Newly enrolled
 	// devices are in this state until they have a policy applied.
 	State string `json:"state,omitempty"`

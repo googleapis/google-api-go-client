@@ -1015,7 +1015,7 @@
       }
     }
   },
-  "revision": "20180903",
+  "revision": "20180918",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1077,13 +1077,15 @@
             "ACCELERATOR_TYPE_UNSPECIFIED",
             "NVIDIA_TESLA_K80",
             "NVIDIA_TESLA_P100",
-            "NVIDIA_TESLA_V100"
+            "NVIDIA_TESLA_V100",
+            "NVIDIA_TESLA_P4"
           ],
           "enumDescriptions": [
             "Unspecified accelerator type. Default to no GPU.",
-            "Nvidia tesla k80 GPU.",
-            "Nvidia tesla P100 GPU.",
-            "Nvidia tesla V100 GPU. Not supported for batch prediction."
+            "Nvidia Tesla K80 GPU.",
+            "Nvidia Tesla P100 GPU.",
+            "Nvidia Tesla V100 GPU.",
+            "Nvidia Tesla P4 GPU."
           ],
           "type": "string"
         }
@@ -1115,16 +1117,18 @@
           "description": "Available accelerators for the capability.",
           "enumDescriptions": [
             "Unspecified accelerator type. Default to no GPU.",
-            "Nvidia tesla k80 GPU.",
-            "Nvidia tesla P100 GPU.",
-            "Nvidia tesla V100 GPU. Not supported for batch prediction."
+            "Nvidia Tesla K80 GPU.",
+            "Nvidia Tesla P100 GPU.",
+            "Nvidia Tesla V100 GPU.",
+            "Nvidia Tesla P4 GPU."
           ],
           "items": {
             "enum": [
               "ACCELERATOR_TYPE_UNSPECIFIED",
               "NVIDIA_TESLA_K80",
               "NVIDIA_TESLA_P100",
-              "NVIDIA_TESLA_V100"
+              "NVIDIA_TESLA_V100",
+              "NVIDIA_TESLA_P4"
             ],
             "type": "string"
           },
@@ -1666,14 +1670,16 @@
             "JSON",
             "TEXT",
             "TF_RECORD",
-            "TF_RECORD_GZIP"
+            "TF_RECORD_GZIP",
+            "CSV"
           ],
           "enumDescriptions": [
             "Unspecified format.",
             "Each line of the file is a JSON dictionary representing one record.",
             "Deprecated. Use JSON instead.",
             "INPUT ONLY. The source file is a TFRecord file.",
-            "INPUT ONLY. The source file is a GZIP-compressed TFRecord file."
+            "INPUT ONLY. The source file is a GZIP-compressed TFRecord file.",
+            "OUTPUT ONLY. Output values will be in comma-separated rows, with keys\nin a separate file."
           ],
           "type": "string"
         },
@@ -1691,6 +1697,26 @@
         },
         "modelName": {
           "description": "Use this field if you want to use the default version for the specified\nmodel. The string must use the following format:\n\n`\"projects/YOUR_PROJECT/models/YOUR_MODEL\"`",
+          "type": "string"
+        },
+        "outputDataFormat": {
+          "description": "Optional. Format of the output data files, defaults to JSON.",
+          "enum": [
+            "DATA_FORMAT_UNSPECIFIED",
+            "JSON",
+            "TEXT",
+            "TF_RECORD",
+            "TF_RECORD_GZIP",
+            "CSV"
+          ],
+          "enumDescriptions": [
+            "Unspecified format.",
+            "Each line of the file is a JSON dictionary representing one record.",
+            "Deprecated. Use JSON instead.",
+            "INPUT ONLY. The source file is a TFRecord file.",
+            "INPUT ONLY. The source file is a GZIP-compressed TFRecord file.",
+            "OUTPUT ONLY. Output values will be in comma-separated rows, with keys\nin a separate file."
+          ],
           "type": "string"
         },
         "outputPath": {
@@ -1898,7 +1924,7 @@
           "type": "string"
         },
         "framework": {
-          "description": "Optional. The machine learning framework Cloud ML Engine uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\nand `XGBOOST`. If you do not specify a framework, Cloud ML Engine uses\nTensorFlow. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also set\nthe runtime version of the model to 1.4 or greater.",
+          "description": "Optional. The machine learning framework Cloud ML Engine uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\n`XGBOOST`. If you do not specify a framework, Cloud ML Engine\nwill analyze files in the deployment_uri to determine a framework. If you\nchoose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime version\nof the model to 1.4 or greater.",
           "enum": [
             "FRAMEWORK_UNSPECIFIED",
             "TENSORFLOW",

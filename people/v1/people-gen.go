@@ -663,12 +663,14 @@ func (s *CreateContactGroupRequest) MarshalJSON() ([]byte, error) {
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0
-	// if specifying a year/month where the day is not significant.
+	// if specifying a year by itself or a year and month where the day is
+	// not
+	// significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a date
+	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
 	// without a
-	// month.
+	// month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date

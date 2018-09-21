@@ -211,7 +211,7 @@
       }
     }
   },
-  "revision": "20180911",
+  "revision": "20180914",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -364,7 +364,7 @@
           "type": "array"
         },
         "useEnhanced": {
-          "description": "*Optional* Set to true to use an enhanced model for speech recognition.\nYou must also set the `model` field to a valid, enhanced model. If\n`use_enhanced` is set to true and the `model` field is not set, then\n`use_enhanced` is ignored. If `use_enhanced` is true and an enhanced\nversion of the specified model does not exist, then the speech is\nrecognized using the standard version of the specified model.\n\nEnhanced speech models require that you opt-in to data logging using\ninstructions in the [documentation](/speech-to-text/enable-data-logging).\nIf you set `use_enhanced` to true and you have not enabled audio logging,\nthen you will receive an error.",
+          "description": "*Optional* Set to true to use an enhanced model for speech recognition.\nIf `use_enhanced` is set to true and the `model` field is not set, then\nan appropriate enhanced model is chosen if:\n1. project is eligible for requesting enhanced models\n2. an enhanced model exists for the audio\n\nIf `use_enhanced` is true and an enhanced version of the specified model\ndoes not exist, then the speech is recognized using the standard version\nof the specified model.\n\nEnhanced speech models require that you opt-in to data logging using\ninstructions in the\n[documentation](/speech-to-text/docs/enable-data-logging). If you set\n`use_enhanced` to true and you have not enabled audio logging, then you\nwill receive an error.",
           "type": "boolean"
         }
       },

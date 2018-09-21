@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Xa2MJM4_QayM_5ewnuXBVfoRUCY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/n52wIU61ZBKKKB4SSQGUdTYQbe4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -7126,7 +7126,7 @@
               "type": "string"
             },
             "sourceInstanceTemplate": {
-              "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/global/instanceTemplates/instanceTemplate \n- projects/project/global/global/instanceTemplates/instanceTemplate \n- global/instancesTemplates/instanceTemplate",
+              "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate \n- projects/project/global/instanceTemplates/instanceTemplate \n- global/instanceTemplates/instanceTemplate",
               "location": "query",
               "type": "string"
             },
@@ -8842,6 +8842,40 @@
           "path": "{project}/global/interconnects/{interconnect}",
           "response": {
             "$ref": "Interconnect"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getDiagnostics": {
+          "description": "Returns the interconnectDiagnostics for the specified interconnect.",
+          "httpMethod": "GET",
+          "id": "compute.interconnects.getDiagnostics",
+          "parameterOrder": [
+            "project",
+            "interconnect"
+          ],
+          "parameters": {
+            "interconnect": {
+              "description": "Name of the interconnect resource to query.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/interconnects/{interconnect}/getDiagnostics",
+          "response": {
+            "$ref": "InterconnectsGetDiagnosticsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -20485,7 +20519,7 @@
       }
     }
   },
-  "revision": "20180817",
+  "revision": "20180828",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -27217,6 +27251,10 @@
           "description": "The service account to be used as credentials for all operations performed by the managed instance group on instances. The service accounts needs all permissions required to create and delete instances. By default, the service account {projectNumber}@cloudservices.gserviceaccount.com is used.",
           "type": "string"
         },
+        "status": {
+          "$ref": "InstanceGroupManagerStatus",
+          "description": "[Output Only] The status of this managed instance group."
+        },
         "targetPools": {
           "description": "The URLs for all TargetPool resources to which instances in the instanceGroup field are added. The target pools automatically apply to all of the instances in the managed instance group.",
           "items": {
@@ -27566,6 +27604,16 @@
           "description": "[Output Only] The number of instances in the managed instance group that are pending to be restarted.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "InstanceGroupManagerStatus": {
+      "id": "InstanceGroupManagerStatus",
+      "properties": {
+        "isStable": {
+          "description": "[Output Only] A bit indicating whether the managed instance group is in a stable state. A stable state means that: none of the instances in the managed instance group is currently undergoing any type of change (for example, creation, restart, or deletion); no future changes are scheduled for instances in the managed instance group; and the managed instance group itself is not being modified.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -29524,6 +29572,129 @@
       },
       "type": "object"
     },
+    "InterconnectDiagnostics": {
+      "description": "Diagnostics information about interconnect, contains detailed and current technical information about Google?s side of the connection.",
+      "id": "InterconnectDiagnostics",
+      "properties": {
+        "arpCaches": {
+          "description": "A list of InterconnectDiagnostics.ARPEntry objects, describing individual neighbors currently seen by the Google router in the ARP cache for the Interconnect. This will be empty when the Interconnect is not bundled.",
+          "items": {
+            "$ref": "InterconnectDiagnosticsARPEntry"
+          },
+          "type": "array"
+        },
+        "links": {
+          "description": "A list of InterconnectDiagnostics.LinkStatus objects, describing the status for each link on the Interconnect.",
+          "items": {
+            "$ref": "InterconnectDiagnosticsLinkStatus"
+          },
+          "type": "array"
+        },
+        "macAddress": {
+          "description": "The MAC address of the Interconnect's bundle interface.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InterconnectDiagnosticsARPEntry": {
+      "description": "Describing the ARP neighbor entries seen on this link",
+      "id": "InterconnectDiagnosticsARPEntry",
+      "properties": {
+        "ipAddress": {
+          "description": "The IP address of this ARP neighbor.",
+          "type": "string"
+        },
+        "macAddress": {
+          "description": "The MAC address of this ARP neighbor.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InterconnectDiagnosticsLinkLACPStatus": {
+      "id": "InterconnectDiagnosticsLinkLACPStatus",
+      "properties": {
+        "googleSystemId": {
+          "description": "System ID of the port on Google?s side of the LACP exchange.",
+          "type": "string"
+        },
+        "neighborSystemId": {
+          "description": "System ID of the port on the neighbor?s side of the LACP exchange.",
+          "type": "string"
+        },
+        "state": {
+          "enum": [
+            "ACTIVE",
+            "DETACHED"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InterconnectDiagnosticsLinkOpticalPower": {
+      "id": "InterconnectDiagnosticsLinkOpticalPower",
+      "properties": {
+        "state": {
+          "enum": [
+            "HIGH_ALARM",
+            "HIGH_WARNING",
+            "LOW_ALARM",
+            "LOW_WARNING",
+            "OK"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "value": {
+          "description": "Value of the current optical power, read in dBm.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "InterconnectDiagnosticsLinkStatus": {
+      "id": "InterconnectDiagnosticsLinkStatus",
+      "properties": {
+        "arpCaches": {
+          "description": "A list of InterconnectDiagnostics.ARPEntry objects, describing the ARP neighbor entries seen on this link. This will be empty if the link is bundled",
+          "items": {
+            "$ref": "InterconnectDiagnosticsARPEntry"
+          },
+          "type": "array"
+        },
+        "circuitId": {
+          "description": "The unique ID for this link assigned during turn up by Google.",
+          "type": "string"
+        },
+        "googleDemarc": {
+          "description": "The Demarc address assigned by Google and provided in the LoA.",
+          "type": "string"
+        },
+        "lacpStatus": {
+          "$ref": "InterconnectDiagnosticsLinkLACPStatus"
+        },
+        "receivingOpticalPower": {
+          "$ref": "InterconnectDiagnosticsLinkOpticalPower"
+        },
+        "transmittingOpticalPower": {
+          "$ref": "InterconnectDiagnosticsLinkOpticalPower"
+        }
+      },
+      "type": "object"
+    },
     "InterconnectList": {
       "description": "Response to the list request, and contains a list of interconnects.",
       "id": "InterconnectList",
@@ -29944,6 +30115,16 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InterconnectsGetDiagnosticsResponse": {
+      "description": "Response for the InterconnectsGetDiagnosticsRequest.",
+      "id": "InterconnectsGetDiagnosticsResponse",
+      "properties": {
+        "result": {
+          "$ref": "InterconnectDiagnostics"
         }
       },
       "type": "object"
@@ -30967,7 +31148,7 @@
         },
         "loadBalancer": {
           "$ref": "NetworkEndpointGroupLbNetworkEndpointGroup",
-          "description": "This field is only valid when the network endpoint group is used for load balancing."
+          "description": "This field is only valid when the network endpoint group is used for load balancing. [Deprecated] This field is deprecated."
         },
         "name": {
           "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
@@ -31112,20 +31293,20 @@
       "id": "NetworkEndpointGroupLbNetworkEndpointGroup",
       "properties": {
         "defaultPort": {
-          "description": "The default port used if the port number is not specified in the network endpoint.",
+          "description": "The default port used if the port number is not specified in the network endpoint. [Deprecated] This field is deprecated.",
           "format": "int32",
           "type": "integer"
         },
         "network": {
-          "description": "The URL of the network to which all network endpoints in the NEG belong. Uses \"default\" project network if unspecified.",
+          "description": "The URL of the network to which all network endpoints in the NEG belong. Uses \"default\" project network if unspecified. [Deprecated] This field is deprecated.",
           "type": "string"
         },
         "subnetwork": {
-          "description": "Optional URL of the subnetwork to which all network endpoints in the NEG belong.",
+          "description": "Optional URL of the subnetwork to which all network endpoints in the NEG belong. [Deprecated] This field is deprecated.",
           "type": "string"
         },
         "zone": {
-          "description": "[Output Only] The URL of the zone where the network endpoint group is located.",
+          "description": "[Output Only] The URL of the zone where the network endpoint group is located. [Deprecated] This field is deprecated.",
           "type": "string"
         }
       },
@@ -31779,13 +31960,6 @@
         "nodeTemplate": {
           "description": "The URL of the node template to which this node group belongs.",
           "type": "string"
-        },
-        "nodes": {
-          "description": "[Deprecated] Use nodeGroups.listNodes instead. [Output Only] A list of nodes in this node group.",
-          "items": {
-            "$ref": "NodeGroupNode"
-          },
-          "type": "array"
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
@@ -33908,6 +34082,7 @@
             "DISKS_TOTAL_GB",
             "FIREWALLS",
             "FORWARDING_RULES",
+            "GLOBAL_INTERNAL_ADDRESSES",
             "GPUS_ALL_REGIONS",
             "HEALTH_CHECKS",
             "IMAGES",
@@ -33961,6 +34136,7 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

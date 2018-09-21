@@ -45,6 +45,12 @@ const apiName = "indexing"
 const apiVersion = "v3"
 const basePath = "https://indexing.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Submit data to Google for indexing
+	IndexingScope = "https://www.googleapis.com/auth/indexing"
+)
+
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -333,7 +339,10 @@ func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*Url
 	//   "path": "v3/urlNotifications/metadata",
 	//   "response": {
 	//     "$ref": "UrlNotificationMetadata"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/indexing"
+	//   ]
 	// }
 
 }
@@ -451,7 +460,10 @@ func (c *UrlNotificationsPublishCall) Do(opts ...googleapi.CallOption) (*Publish
 	//   },
 	//   "response": {
 	//     "$ref": "PublishUrlNotificationResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/indexing"
+	//   ]
 	// }
 
 }

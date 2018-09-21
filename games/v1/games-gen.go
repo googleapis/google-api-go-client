@@ -5885,6 +5885,13 @@ func (r *AchievementsService) Unlock(achievementId string) *AchievementsUnlockCa
 	return c
 }
 
+// BuiltinGameId sets the optional parameter "builtinGameId": Override
+// used only by built-in games in Play Games application.
+func (c *AchievementsUnlockCall) BuiltinGameId(builtinGameId string) *AchievementsUnlockCall {
+	c.urlParams_.Set("builtinGameId", builtinGameId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5979,6 +5986,11 @@ func (c *AchievementsUnlockCall) Do(opts ...googleapi.CallOption) (*AchievementU
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "builtinGameId": {
+	//       "description": "Override used only by built-in games in Play Games application.",
+	//       "location": "query",
+	//       "type": "string"
 	//     }
 	//   },
 	//   "path": "achievements/{achievementId}/unlock",
@@ -6008,6 +6020,13 @@ type AchievementsUpdateMultipleCall struct {
 func (r *AchievementsService) UpdateMultiple(achievementupdatemultiplerequest *AchievementUpdateMultipleRequest) *AchievementsUpdateMultipleCall {
 	c := &AchievementsUpdateMultipleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.achievementupdatemultiplerequest = achievementupdatemultiplerequest
+	return c
+}
+
+// BuiltinGameId sets the optional parameter "builtinGameId": Override
+// used only by built-in games in Play Games application.
+func (c *AchievementsUpdateMultipleCall) BuiltinGameId(builtinGameId string) *AchievementsUpdateMultipleCall {
+	c.urlParams_.Set("builtinGameId", builtinGameId)
 	return c
 }
 
@@ -6099,6 +6118,13 @@ func (c *AchievementsUpdateMultipleCall) Do(opts ...googleapi.CallOption) (*Achi
 	//   "description": "Updates multiple achievements for the currently authenticated player.",
 	//   "httpMethod": "POST",
 	//   "id": "games.achievements.updateMultiple",
+	//   "parameters": {
+	//     "builtinGameId": {
+	//       "description": "Override used only by built-in games in Play Games application.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "achievements/updateMultiple",
 	//   "request": {
 	//     "$ref": "AchievementUpdateMultipleRequest"

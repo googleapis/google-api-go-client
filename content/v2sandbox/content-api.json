@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/GgBKM4eW6PbUI0IwUflHrQshXJ4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/YP471yMxZRzFo0x6lmoLMOTwZBs\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -475,6 +475,40 @@
           },
           "response": {
             "$ref": "OrdersCreateTestOrderResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
+        "createtestreturn": {
+          "description": "Sandbox only. Creates a test return.",
+          "httpMethod": "POST",
+          "id": "content.orders.createtestreturn",
+          "parameterOrder": [
+            "merchantId",
+            "orderId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "orderId": {
+              "description": "The ID of the order.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/orders/{orderId}/testreturn",
+          "request": {
+            "$ref": "OrdersCreateTestReturnRequest"
+          },
+          "response": {
+            "$ref": "OrdersCreateTestReturnResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -1043,7 +1077,7 @@
       }
     }
   },
-  "revision": "20180829",
+  "revision": "20180914",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Amount": {
@@ -2273,6 +2307,34 @@
       },
       "type": "object"
     },
+    "OrdersCreateTestReturnRequest": {
+      "id": "OrdersCreateTestReturnRequest",
+      "properties": {
+        "items": {
+          "description": "Returned items.",
+          "items": {
+            "$ref": "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCreateTestReturnResponse": {
+      "id": "OrdersCreateTestReturnResponse",
+      "properties": {
+        "kind": {
+          "default": "content#ordersCreateTestReturnResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCreateTestReturnResponse\".",
+          "type": "string"
+        },
+        "returnId": {
+          "description": "The ID of the newly created test order return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "OrdersCustomBatchRequest": {
       "id": "OrdersCustomBatchRequest",
       "properties": {
@@ -2411,6 +2473,21 @@
         "reasonText": {
           "description": "The explanation of the reason.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem": {
+      "id": "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem",
+      "properties": {
+        "lineItemId": {
+          "description": "The ID of the line item to return.",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "Quantity that is returned.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"

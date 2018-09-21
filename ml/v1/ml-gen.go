@@ -289,10 +289,10 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Unspecified accelerator type.
 	// Default to no GPU.
-	//   "NVIDIA_TESLA_K80" - Nvidia tesla k80 GPU.
-	//   "NVIDIA_TESLA_P100" - Nvidia tesla P100 GPU.
-	//   "NVIDIA_TESLA_V100" - Nvidia tesla V100 GPU. Not supported for
-	// batch prediction.
+	//   "NVIDIA_TESLA_K80" - Nvidia Tesla K80 GPU.
+	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
+	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
+	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -404,10 +404,10 @@ type GoogleCloudMlV1__Capability struct {
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Unspecified accelerator type.
 	// Default to no GPU.
-	//   "NVIDIA_TESLA_K80" - Nvidia tesla k80 GPU.
-	//   "NVIDIA_TESLA_P100" - Nvidia tesla P100 GPU.
-	//   "NVIDIA_TESLA_V100" - Nvidia tesla V100 GPU. Not supported for
-	// batch prediction.
+	//   "NVIDIA_TESLA_K80" - Nvidia Tesla K80 GPU.
+	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
+	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
+	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:
@@ -1319,6 +1319,9 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//   "TF_RECORD" - INPUT ONLY. The source file is a TFRecord file.
 	//   "TF_RECORD_GZIP" - INPUT ONLY. The source file is a GZIP-compressed
 	// TFRecord file.
+	//   "CSV" - OUTPUT ONLY. Output values will be in comma-separated rows,
+	// with keys
+	// in a separate file.
 	DataFormat string `json:"dataFormat,omitempty"`
 
 	// InputPaths: Required. The Google Cloud Storage location of the input
@@ -1338,6 +1341,22 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//
 	// "projects/YOUR_PROJECT/models/YOUR_MODEL"
 	ModelName string `json:"modelName,omitempty"`
+
+	// OutputDataFormat: Optional. Format of the output data files, defaults
+	// to JSON.
+	//
+	// Possible values:
+	//   "DATA_FORMAT_UNSPECIFIED" - Unspecified format.
+	//   "JSON" - Each line of the file is a JSON dictionary representing
+	// one record.
+	//   "TEXT" - Deprecated. Use JSON instead.
+	//   "TF_RECORD" - INPUT ONLY. The source file is a TFRecord file.
+	//   "TF_RECORD_GZIP" - INPUT ONLY. The source file is a GZIP-compressed
+	// TFRecord file.
+	//   "CSV" - OUTPUT ONLY. Output values will be in comma-separated rows,
+	// with keys
+	// in a separate file.
+	OutputDataFormat string `json:"outputDataFormat,omitempty"`
 
 	// OutputPath: Required. The output Google Cloud Storage location.
 	OutputPath string `json:"outputPath,omitempty"`
@@ -1886,11 +1905,12 @@ type GoogleCloudMlV1__Version struct {
 	// uses to train
 	// this version of the model. Valid values are `TENSORFLOW`,
 	// `SCIKIT_LEARN`,
-	// and `XGBOOST`. If you do not specify a framework, Cloud ML Engine
-	// uses
-	// TensorFlow. If you choose `SCIKIT_LEARN` or `XGBOOST`, you must also
-	// set
-	// the runtime version of the model to 1.4 or greater.
+	// `XGBOOST`. If you do not specify a framework, Cloud ML Engine
+	// will analyze files in the deployment_uri to determine a framework. If
+	// you
+	// choose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime
+	// version
+	// of the model to 1.4 or greater.
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Defaults to

@@ -4013,6 +4013,7 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // An example quota configuration in yaml format:
 //
 //    quota:
+//      limits:
 //
 //      - name: apiWriteQpsPerProject
 //        metric: library.googleapis.com/write_calls

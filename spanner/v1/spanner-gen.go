@@ -5898,10 +5898,10 @@ type ProjectsInstancesDatabasesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a database resource.
-// Returns an empty
-// policy if a database exists but does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a database
+// resource.
+// Returns an empty policy if a database exists but does
+// not have a policy set.
 //
 // Authorization requires `spanner.databases.getIamPolicy` permission
 // on
@@ -6000,7 +6000,7 @@ func (c *ProjectsInstancesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the access control policy for a database resource. Returns an empty\npolicy if a database exists but does not have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
+	//   "description": "Gets the access control policy for a database resource.\nReturns an empty policy if a database exists but does\nnot have a policy set.\n\nAuthorization requires `spanner.databases.getIamPolicy` permission on\nresource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.getIamPolicy",
@@ -6232,13 +6232,12 @@ type ProjectsInstancesDatabasesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on a database resource.
-// Replaces any
-// existing policy.
-//
-// Authorization requires `spanner.databases.setIamPolicy` permission
-// on
+// SetIamPolicy: Sets the access control policy on a database
 // resource.
+// Replaces any existing policy.
+//
+// Authorization requires `spanner.databases.setIamPolicy`
+// permission on resource.
 func (r *ProjectsInstancesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesDatabasesSetIamPolicyCall {
 	c := &ProjectsInstancesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6333,7 +6332,7 @@ func (c *ProjectsInstancesDatabasesSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the access control policy on a database resource. Replaces any\nexisting policy.\n\nAuthorization requires `spanner.databases.setIamPolicy` permission on\nresource.",
+	//   "description": "Sets the access control policy on a database resource.\nReplaces any existing policy.\n\nAuthorization requires `spanner.databases.setIamPolicy`\npermission on resource.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.setIamPolicy",
@@ -6378,13 +6377,11 @@ type ProjectsInstancesDatabasesTestIamPermissionsCall struct {
 // TestIamPermissions: Returns permissions that the caller has on the
 // specified database resource.
 //
-// Attempting this RPC on a non-existent Cloud Spanner database will
-// result in
-// a NOT_FOUND error if the user has `spanner.databases.list` permission
-// on
-// the containing Cloud Spanner instance. Otherwise returns an empty set
-// of
-// permissions.
+// Attempting this RPC on a non-existent Cloud Spanner database
+// will
+// result in a NOT_FOUND error if the user has
+// `spanner.databases.list` permission on the containing Cloud
+// Spanner instance. Otherwise returns an empty set of permissions.
 func (r *ProjectsInstancesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesDatabasesTestIamPermissionsCall {
 	c := &ProjectsInstancesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -6479,7 +6476,7 @@ func (c *ProjectsInstancesDatabasesTestIamPermissionsCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will result in\na NOT_FOUND error if the user has `spanner.databases.list` permission on\nthe containing Cloud Spanner instance. Otherwise returns an empty set of\npermissions.",
+	//   "description": "Returns permissions that the caller has on the specified database resource.\n\nAttempting this RPC on a non-existent Cloud Spanner database will\nresult in a NOT_FOUND error if the user has\n`spanner.databases.list` permission on the containing Cloud\nSpanner instance. Otherwise returns an empty set of permissions.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}:testIamPermissions",
 	//   "httpMethod": "POST",
 	//   "id": "spanner.projects.instances.databases.testIamPermissions",

@@ -1259,8 +1259,7 @@ type AccountsCustomBatchResponseEntry struct {
 	// string "content#accountsCustomBatchResponseEntry".
 	Kind string `json:"kind,omitempty"`
 
-	// LinkStatus: The status of the updated link. Only defined if the
-	// method is link.
+	// LinkStatus: Deprecated. This field is never set.
 	LinkStatus string `json:"linkStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Account") to
@@ -6145,6 +6144,68 @@ func (s *OrdersCreateTestOrderResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type OrdersCreateTestReturnRequest struct {
+	// Items: Returned items.
+	Items []*OrdersCustomBatchRequestEntryCreateTestReturnReturnItem `json:"items,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrdersCreateTestReturnRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod OrdersCreateTestReturnRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrdersCreateTestReturnResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#ordersCreateTestReturnResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ReturnId: The ID of the newly created test order return.
+	ReturnId string `json:"returnId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrdersCreateTestReturnResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod OrdersCreateTestReturnResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type OrdersCustomBatchRequest struct {
 	// Entries: The request entries to be processed in the batch.
 	Entries []*OrdersCustomBatchRequestEntry `json:"entries,omitempty"`
@@ -6332,6 +6393,36 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 
 func (s *OrdersCustomBatchRequestEntryCancelLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod OrdersCustomBatchRequestEntryCancelLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrdersCustomBatchRequestEntryCreateTestReturnReturnItem struct {
+	// LineItemId: The ID of the line item to return.
+	LineItemId string `json:"lineItemId,omitempty"`
+
+	// Quantity: Quantity that is returned.
+	Quantity int64 `json:"quantity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LineItemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LineItemId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrdersCustomBatchRequestEntryCreateTestReturnReturnItem) MarshalJSON() ([]byte, error) {
+	type NoMethod OrdersCustomBatchRequestEntryCreateTestReturnReturnItem
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8704,7 +8795,8 @@ type Product struct {
 	// of the product, not this identifier.
 	OfferId string `json:"offerId,omitempty"`
 
-	// OnlineOnly: Whether an item is available for purchase only online.
+	// OnlineOnly: Deprecated. Whether an item is available for purchase
+	// only online.
 	OnlineOnly bool `json:"onlineOnly,omitempty"`
 
 	// Pattern: The item's pattern (e.g. polka dots).
@@ -8779,8 +8871,8 @@ type Product struct {
 	// UnitPricingMeasure: The measure and dimension of an item.
 	UnitPricingMeasure *ProductUnitPricingMeasure `json:"unitPricingMeasure,omitempty"`
 
-	// ValidatedDestinations: The read-only list of intended destinations
-	// which passed validation.
+	// ValidatedDestinations: Deprecated. The read-only list of intended
+	// destinations which passed validation.
 	ValidatedDestinations []string `json:"validatedDestinations,omitempty"`
 
 	// Warnings: Read-only warnings.
@@ -8873,7 +8965,7 @@ type ProductCustomAttribute struct {
 	Type string `json:"type,omitempty"`
 
 	// Unit: Free-form unit of the attribute. Unit can only be used for
-	// values of type INT or FLOAT.
+	// values of type int, float, or price.
 	Unit string `json:"unit,omitempty"`
 
 	// Value: The value of the attribute.
@@ -19503,6 +19595,151 @@ func (c *OrdersCreatetestorderCall) Do(opts ...googleapi.CallOption) (*OrdersCre
 	//   },
 	//   "response": {
 	//     "$ref": "OrdersCreateTestOrderResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.orders.createtestreturn":
+
+type OrdersCreatetestreturnCall struct {
+	s                             *APIService
+	merchantId                    uint64
+	orderId                       string
+	orderscreatetestreturnrequest *OrdersCreateTestReturnRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Createtestreturn: Sandbox only. Creates a test return.
+func (r *OrdersService) Createtestreturn(merchantId uint64, orderId string, orderscreatetestreturnrequest *OrdersCreateTestReturnRequest) *OrdersCreatetestreturnCall {
+	c := &OrdersCreatetestreturnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.orderId = orderId
+	c.orderscreatetestreturnrequest = orderscreatetestreturnrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrdersCreatetestreturnCall) Fields(s ...googleapi.Field) *OrdersCreatetestreturnCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrdersCreatetestreturnCall) Context(ctx context.Context) *OrdersCreatetestreturnCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrdersCreatetestreturnCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrdersCreatetestreturnCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.orderscreatetestreturnrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/orders/{orderId}/testreturn")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"orderId":    c.orderId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.orders.createtestreturn" call.
+// Exactly one of *OrdersCreateTestReturnResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *OrdersCreateTestReturnResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrdersCreatetestreturnCall) Do(opts ...googleapi.CallOption) (*OrdersCreateTestReturnResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &OrdersCreateTestReturnResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sandbox only. Creates a test return.",
+	//   "httpMethod": "POST",
+	//   "id": "content.orders.createtestreturn",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "orderId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderId": {
+	//       "description": "The ID of the order.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/orders/{orderId}/testreturn",
+	//   "request": {
+	//     "$ref": "OrdersCreateTestReturnRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "OrdersCreateTestReturnResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

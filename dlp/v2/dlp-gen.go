@@ -1720,9 +1720,22 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	// Dictionary: A list of phrases to detect as a CustomInfoType.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
 
-	// InfoType: All CustomInfoTypes must have a name
-	// that does not conflict with built-in InfoTypes or other
-	// CustomInfoTypes.
+	// Possible values:
+	//   "EXCLUSION_TYPE_UNSPECIFIED"
+	//   "EXCLUSION_TYPE_EXCLUDE"
+	ExclusionType string `json:"exclusionType,omitempty"`
+
+	// InfoType: CustomInfoType can either be a new infoType, or an
+	// extension of built-in
+	// infoType, when the name matches one of existing infoTypes and that
+	// infoType
+	// is specified in `InspectContent.info_types` field. Specifying the
+	// latter
+	// adds findings to the one detected by the system. If built-in info
+	// type is
+	// not specified in `InspectContent.info_types` list then the name is
+	// treated
+	// as a custom info type.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
 	// Likelihood: Likelihood to return for this CustomInfoType. This base
@@ -2649,6 +2662,108 @@ func (s *GooglePrivacyDlpV2Error) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ExcludeInfoTypes: List of exclude infoTypes.
+type GooglePrivacyDlpV2ExcludeInfoTypes struct {
+	// InfoTypes: InfoType list in ExclusionRule rule drops a finding when
+	// it overlaps or
+	// contained within with a finding of an infoType from this list.
+	// For
+	// example, for `InspectionRuleSet.info_types` containing
+	// "PHONE_NUMBER" and
+	// `exclusion_rule` containing `exclude_info_types.info_types`
+	// with
+	// "EMAIL_ADDRESS" the phone number findings are dropped if they
+	// overlap
+	// with EMAIL_ADDRESS finding.
+	// That leads to "555-222-2222@example.org" to generate only a
+	// single
+	// finding, namely email address.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ExcludeInfoTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ExcludeInfoTypes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ExclusionRule: The rule that specifies conditions
+// when findings of infoTypes specified in
+// `InspectionRuleSet` are removed from results.
+type GooglePrivacyDlpV2ExclusionRule struct {
+	// Dictionary: Dictionary which defines the rule.
+	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
+
+	// ExcludeInfoTypes: Set of infoTypes for which findings would affect
+	// this rule.
+	ExcludeInfoTypes *GooglePrivacyDlpV2ExcludeInfoTypes `json:"excludeInfoTypes,omitempty"`
+
+	// MatchingType: How the rule is applied, see MatchingType documentation
+	// for details.
+	//
+	// Possible values:
+	//   "MATCHING_TYPE_UNSPECIFIED" - Invalid.
+	//   "MATCHING_TYPE_FULL_MATCH" - Full match.
+	//
+	// - Dictionary: join of Dictionary results matched complete finding
+	// quote
+	// - Regex: all regex matches fill a finding quote start to end
+	// - Exclude info type: completely inside affecting info types findings
+	//   "MATCHING_TYPE_PARTIAL_MATCH" - Partial match.
+	//
+	// - Dictionary: at least one of the tokens in the finding matches
+	// - Regex: substring of the finding matches
+	// - Exclude info type: intersects with affecting info types findings
+	//   "MATCHING_TYPE_INVERSE_MATCH" - Inverse match.
+	//
+	// - Dictionary: no tokens in the finding match the dictionary
+	// - Regex: finding doesn't match the regex
+	// - Exclude info type: no intersection with affecting info types
+	// findings
+	MatchingType string `json:"matchingType,omitempty"`
+
+	// Regex: Regular expression which defines the rule.
+	Regex *GooglePrivacyDlpV2Regex `json:"regex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dictionary") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dictionary") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ExclusionRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ExclusionRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Expressions: An expression, consisting or an
 // operator and conditions.
 type GooglePrivacyDlpV2Expressions struct {
@@ -3406,6 +3521,14 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	//   "VERY_LIKELY" - Many matching elements.
 	MinLikelihood string `json:"minLikelihood,omitempty"`
 
+	// RuleSet: Set of rules to apply to the findings for this
+	// InspectConfig.
+	// Exclusion rules, contained in the set are executed in the end,
+	// other
+	// rules are executed in the order they are specified for each info
+	// type.
+	RuleSet []*GooglePrivacyDlpV2InspectionRuleSet `json:"ruleSet,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ContentOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3683,6 +3806,74 @@ type GooglePrivacyDlpV2InspectTemplate struct {
 
 func (s *GooglePrivacyDlpV2InspectTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2InspectTemplate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2InspectionRule: A single inspection rule to be
+// applied to infoTypes, specified in
+// `InspectionRuleSet`.
+type GooglePrivacyDlpV2InspectionRule struct {
+	// ExclusionRule: Exclusion rule.
+	ExclusionRule *GooglePrivacyDlpV2ExclusionRule `json:"exclusionRule,omitempty"`
+
+	// HotwordRule: Hotword-based detection rule.
+	HotwordRule *GooglePrivacyDlpV2HotwordRule `json:"hotwordRule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExclusionRule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExclusionRule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2InspectionRule) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InspectionRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2InspectionRuleSet: Rule set for modifying a set of
+// infoTypes to alter behavior under certain
+// circumstances, depending on the specific details of the rules within
+// the set.
+type GooglePrivacyDlpV2InspectionRuleSet struct {
+	// InfoTypes: List of infoTypes this rule set is applied to.
+	InfoTypes []*GooglePrivacyDlpV2InfoType `json:"infoTypes,omitempty"`
+
+	// Rules: Set of rules to be applied to infoTypes. The rules are applied
+	// in order.
+	Rules []*GooglePrivacyDlpV2InspectionRule `json:"rules,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InfoTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2InspectionRuleSet
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7166,28 +7357,32 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleTypeDate: Represents a whole calendar date, for example date of
-// birth. The time of day
+// GoogleTypeDate: Represents a whole or partial calendar date, e.g. a
+// birthday. The time of day
 // and time zone are either specified elsewhere or are not significant.
 // The date
-// is relative to the Proleptic Gregorian Calendar. The day can be 0
-// to
-// represent a year and month where the day is not significant, for
-// example
-// credit card expiration date. The year can be 0 to represent a month
-// and day
-// independent of year, for example anniversary date. Related types
-// are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// is relative to the Proleptic Gregorian Calendar. This can
+// represent:
+//
+// * A full date, with non-zero year, month and day values
+// * A month and day value, with a zero year, e.g. an anniversary
+// * A year on its own, with zero month and day values
+// * A year and month value, with a zero day, e.g. a credit card
+// expiration date
+//
+// Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
 type GoogleTypeDate struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0
-	// if specifying a year/month where the day is not significant.
+	// if specifying a year by itself or a year and month where the day is
+	// not
+	// significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a date
+	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
 	// without a
-	// month.
+	// month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date

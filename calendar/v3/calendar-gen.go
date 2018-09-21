@@ -50,8 +50,17 @@ const (
 	// Manage your calendars
 	CalendarScope = "https://www.googleapis.com/auth/calendar"
 
+	// View and edit events on all your calendars
+	CalendarEventsScope = "https://www.googleapis.com/auth/calendar.events"
+
+	// View events on all your calendars
+	CalendarEventsReadonlyScope = "https://www.googleapis.com/auth/calendar.events.readonly"
+
 	// View your calendars
 	CalendarReadonlyScope = "https://www.googleapis.com/auth/calendar.readonly"
+
+	// View your Calendar settings
+	CalendarSettingsReadonlyScope = "https://www.googleapis.com/auth/calendar.settings.readonly"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -5401,7 +5410,10 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//     "https://www.googleapis.com/auth/calendar.events",
+	//     "https://www.googleapis.com/auth/calendar.events.readonly",
+	//     "https://www.googleapis.com/auth/calendar.readonly",
+	//     "https://www.googleapis.com/auth/calendar.settings.readonly"
 	//   ]
 	// }
 
@@ -5643,7 +5655,8 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "calendars/{calendarId}/events/{eventId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -5837,6 +5850,8 @@ func (c *EventsGetCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events",
+	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ]
 	// }
@@ -6005,7 +6020,8 @@ func (c *EventsImportCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -6201,7 +6217,8 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -6478,6 +6495,8 @@ func (c *EventsInstancesCall) Do(opts ...googleapi.CallOption) (*Events, error) 
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events",
+	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -6926,6 +6945,8 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events",
+	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -7104,7 +7125,8 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -7327,7 +7349,8 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -7472,7 +7495,8 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -7695,7 +7719,8 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//     "$ref": "Event"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/calendar"
+	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events"
 	//   ]
 	// }
 
@@ -8118,6 +8143,8 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
+	//     "https://www.googleapis.com/auth/calendar.events",
+	//     "https://www.googleapis.com/auth/calendar.events.readonly",
 	//     "https://www.googleapis.com/auth/calendar.readonly"
 	//   ],
 	//   "supportsSubscription": true
@@ -8377,7 +8404,8 @@ func (c *SettingsGetCall) Do(opts ...googleapi.CallOption) (*Setting, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//     "https://www.googleapis.com/auth/calendar.readonly",
+	//     "https://www.googleapis.com/auth/calendar.settings.readonly"
 	//   ]
 	// }
 
@@ -8548,7 +8576,8 @@ func (c *SettingsListCall) Do(opts ...googleapi.CallOption) (*Settings, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//     "https://www.googleapis.com/auth/calendar.readonly",
+	//     "https://www.googleapis.com/auth/calendar.settings.readonly"
 	//   ],
 	//   "supportsSubscription": true
 	// }
@@ -8738,7 +8767,8 @@ func (c *SettingsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/calendar",
-	//     "https://www.googleapis.com/auth/calendar.readonly"
+	//     "https://www.googleapis.com/auth/calendar.readonly",
+	//     "https://www.googleapis.com/auth/calendar.settings.readonly"
 	//   ],
 	//   "supportsSubscription": true
 	// }

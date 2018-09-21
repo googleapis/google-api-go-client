@@ -8607,11 +8607,19 @@ type OperationsCancelCall struct {
 	header_                http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
+// Cancel: Starts asynchronous cancellation on a long-running
+// operation.
 // The server makes a best effort to cancel the operation, but success
-// is not guaranteed. Clients may use Operations.GetOperation or
-// Operations.ListOperations to check whether the cancellation succeeded
-// or the operation completed despite cancellation.
+// is not
+// guaranteed. Clients may use Operations.GetOperation
+// or Operations.ListOperations
+// to check whether the cancellation succeeded or the operation
+// completed
+// despite cancellation.
+// Authorization requires the following [Google
+// IAM](https://cloud.google.com/iam) permission&#58;
+//
+// * `genomics.operations.cancel`
 func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8706,7 +8714,7 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. Clients may use Operations.GetOperation or Operations.ListOperations to check whether the cancellation succeeded or the operation completed despite cancellation.",
+	//   "description": "Starts asynchronous cancellation on a long-running operation.\nThe server makes a best effort to cancel the operation, but success is not\nguaranteed. Clients may use Operations.GetOperation\nor Operations.ListOperations\nto check whether the cancellation succeeded or the operation completed\ndespite cancellation.\nAuthorization requires the following [Google IAM](https://cloud.google.com/iam) permission\u0026#58;\n\n* `genomics.operations.cancel`",
 	//   "flatPath": "v1/operations/{operationsId}:cancel",
 	//   "httpMethod": "POST",
 	//   "id": "genomics.operations.cancel",
@@ -8748,11 +8756,14 @@ type OperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation.  Clients can
-// use this
-// method to poll the operation result at intervals as recommended by
-// the API
-// service.
+// Get: Gets the latest state of a long-running operation.
+// Clients can use this method to poll the operation result at intervals
+// as
+// recommended by the API service.
+// Authorization requires the following [Google
+// IAM](https://cloud.google.com/iam) permission&#58;
+//
+// * `genomics.operations.get`
 func (r *OperationsService) Get(name string) *OperationsGetCall {
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8854,7 +8865,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "description": "Gets the latest state of a long-running operation.\nClients can use this method to poll the operation result at intervals as\nrecommended by the API service.\nAuthorization requires the following [Google IAM](https://cloud.google.com/iam) permission\u0026#58;\n\n* `genomics.operations.get`",
 	//   "flatPath": "v1/operations/{operationsId}",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.operations.get",
@@ -8895,6 +8906,10 @@ type OperationsListCall struct {
 
 // List: Lists operations that match the specified filter in the
 // request.
+// Authorization requires the following [Google
+// IAM](https://cloud.google.com/iam) permission&#58;
+//
+// * `genomics.operations.list`
 func (r *OperationsService) List(name string) *OperationsListCall {
 	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9053,7 +9068,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists operations that match the specified filter in the request.",
+	//   "description": "Lists operations that match the specified filter in the request.\nAuthorization requires the following [Google IAM](https://cloud.google.com/iam) permission\u0026#58;\n\n* `genomics.operations.list`",
 	//   "flatPath": "v1/operations",
 	//   "httpMethod": "GET",
 	//   "id": "genomics.operations.list",

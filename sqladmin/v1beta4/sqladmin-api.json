@@ -18,7 +18,7 @@
   "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/QJeloIS_ina-crFwRUPcF4y05nc\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/2mZN4YeAwjZYJZLdyVkbR-kEwpc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1138,7 +1138,6 @@
         },
         "update": {
           "description": "Updates settings of a Cloud SQL instance. Caution: This is not a partial update, so you must include values for all the settings that you want to retain. For partial updates, use patch.",
-          "etagRequired": true,
           "httpMethod": "PUT",
           "id": "sql.instances.update",
           "parameterOrder": [
@@ -1618,7 +1617,7 @@
       }
     }
   },
-  "revision": "20180912",
+  "revision": "20180917",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {

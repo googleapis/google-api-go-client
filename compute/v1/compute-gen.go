@@ -18049,6 +18049,7 @@ type Quota struct {
 	//   "DISKS_TOTAL_GB"
 	//   "FIREWALLS"
 	//   "FORWARDING_RULES"
+	//   "GLOBAL_INTERNAL_ADDRESSES"
 	//   "GPUS_ALL_REGIONS"
 	//   "HEALTH_CHECKS"
 	//   "IMAGES"
@@ -52408,10 +52409,9 @@ func (c *InstancesInsertCall) RequestId(requestId string) *InstancesInsertCall {
 // This field is optional. It can be a full or partial URL. For example,
 // the following are all valid URLs to an instance template:
 // -
-// https://www.googleapis.com/compute/v1/projects/project/global/global/instanceTemplates/instanceTemplate
-// - projects/project/global/global/instanceTemplates/instanceTemplate
-//
-// - global/instancesTemplates/instanceTemplate
+// https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate
+// - projects/project/global/instanceTemplates/instanceTemplate
+// - global/instanceTemplates/instanceTemplate
 func (c *InstancesInsertCall) SourceInstanceTemplate(sourceInstanceTemplate string) *InstancesInsertCall {
 	c.urlParams_.Set("sourceInstanceTemplate", sourceInstanceTemplate)
 	return c
@@ -52526,7 +52526,7 @@ func (c *InstancesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//       "type": "string"
 	//     },
 	//     "sourceInstanceTemplate": {
-	//       "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/global/instanceTemplates/instanceTemplate \n- projects/project/global/global/instanceTemplates/instanceTemplate \n- global/instancesTemplates/instanceTemplate",
+	//       "description": "Specifies instance template to create the instance.\n\nThis field is optional. It can be a full or partial URL. For example, the following are all valid URLs to an instance template:  \n- https://www.googleapis.com/compute/v1/projects/project/global/instanceTemplates/instanceTemplate \n- projects/project/global/instanceTemplates/instanceTemplate \n- global/instanceTemplates/instanceTemplate",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

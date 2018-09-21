@@ -3002,13 +3002,13 @@ type NotificationChannelDescriptor struct {
 	// service that provides basic features, a moderate allotment of logs,
 	// and access to built-in metrics. A number of features are not
 	// available in this tier. For more details, see the service tiers
-	// documentation (https://cloud.google.com/monitoring/accounts/tiers).
+	// documentation (https://cloud.google.com/monitoring/workspaces/tiers).
 	//   "SERVICE_TIER_PREMIUM" - The Stackdriver Premium tier, a higher,
 	// more expensive tier of service that provides access to all
 	// Stackdriver features, lets you use Stackdriver with AWS accounts, and
 	// has a larger allotments for logs and metrics. For more details, see
 	// the service tiers documentation
-	// (https://cloud.google.com/monitoring/accounts/tiers).
+	// (https://cloud.google.com/monitoring/workspaces/tiers).
 	SupportedTiers []string `json:"supportedTiers,omitempty"`
 
 	// Type: The type of notification channel, such as "email", "sms", etc.
@@ -7161,7 +7161,7 @@ type ProjectsNotificationChannelsCreateCall struct {
 
 // Create: Creates a new notification channel, representing a single
 // notification endpoint such as an email address, SMS number, or
-// pagerduty service.
+// PagerDuty service.
 func (r *ProjectsNotificationChannelsService) Create(name string, notificationchannel *NotificationChannel) *ProjectsNotificationChannelsCreateCall {
 	c := &ProjectsNotificationChannelsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7256,7 +7256,7 @@ func (c *ProjectsNotificationChannelsCreateCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new notification channel, representing a single notification endpoint such as an email address, SMS number, or pagerduty service.",
+	//   "description": "Creates a new notification channel, representing a single notification endpoint such as an email address, SMS number, or PagerDuty service.",
 	//   "flatPath": "v3/projects/{projectsId}/notificationChannels",
 	//   "httpMethod": "POST",
 	//   "id": "monitoring.projects.notificationChannels.create",

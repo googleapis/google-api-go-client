@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/BHrSU9D3B6OA1Q17-906PS_R18E\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/wJ6op8HehvvrmPEffRA5vcCZodE\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2015,6 +2015,40 @@
             "https://www.googleapis.com/auth/content"
           ]
         },
+        "createtestreturn": {
+          "description": "Sandbox only. Creates a test return.",
+          "httpMethod": "POST",
+          "id": "content.orders.createtestreturn",
+          "parameterOrder": [
+            "merchantId",
+            "orderId"
+          ],
+          "parameters": {
+            "merchantId": {
+              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
+              "format": "uint64",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "orderId": {
+              "description": "The ID of the order.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{merchantId}/orders/{orderId}/testreturn",
+          "request": {
+            "$ref": "OrdersCreateTestReturnRequest"
+          },
+          "response": {
+            "$ref": "OrdersCreateTestReturnResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/content"
+          ]
+        },
         "custombatch": {
           "description": "Retrieves or modifies multiple orders in a single request.",
           "httpMethod": "POST",
@@ -3338,7 +3372,7 @@
       }
     }
   },
-  "revision": "20180829",
+  "revision": "20180914",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -4004,7 +4038,7 @@
           "type": "string"
         },
         "linkStatus": {
-          "description": "The status of the updated link. Only defined if the method is link.",
+          "description": "Deprecated. This field is never set.",
           "type": "string"
         }
       },
@@ -6958,6 +6992,34 @@
       },
       "type": "object"
     },
+    "OrdersCreateTestReturnRequest": {
+      "id": "OrdersCreateTestReturnRequest",
+      "properties": {
+        "items": {
+          "description": "Returned items.",
+          "items": {
+            "$ref": "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCreateTestReturnResponse": {
+      "id": "OrdersCreateTestReturnResponse",
+      "properties": {
+        "kind": {
+          "default": "content#ordersCreateTestReturnResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#ordersCreateTestReturnResponse\".",
+          "type": "string"
+        },
+        "returnId": {
+          "description": "The ID of the newly created test order return.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "OrdersCustomBatchRequest": {
       "id": "OrdersCustomBatchRequest",
       "properties": {
@@ -7096,6 +7158,21 @@
         "reasonText": {
           "description": "The explanation of the reason.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem": {
+      "id": "OrdersCustomBatchRequestEntryCreateTestReturnReturnItem",
+      "properties": {
+        "lineItemId": {
+          "description": "The ID of the line item to return.",
+          "type": "string"
+        },
+        "quantity": {
+          "description": "Quantity that is returned.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -8902,7 +8979,7 @@
           "type": "string"
         },
         "onlineOnly": {
-          "description": "Whether an item is available for purchase only online.",
+          "description": "Deprecated. Whether an item is available for purchase only online.",
           "type": "boolean"
         },
         "pattern": {
@@ -9012,7 +9089,7 @@
           "description": "The measure and dimension of an item."
         },
         "validatedDestinations": {
-          "description": "The read-only list of intended destinations which passed validation.",
+          "description": "Deprecated. The read-only list of intended destinations which passed validation.",
           "items": {
             "type": "string"
           },
@@ -9058,7 +9135,7 @@
           "type": "string"
         },
         "unit": {
-          "description": "Free-form unit of the attribute. Unit can only be used for values of type INT or FLOAT.",
+          "description": "Free-form unit of the attribute. Unit can only be used for values of type int, float, or price.",
           "type": "string"
         },
         "value": {

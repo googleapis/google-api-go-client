@@ -948,7 +948,7 @@ func (c *ProjectsServiceAccountsGenerateIdentityBindingAccessTokenCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUsing `-` as a wildcard for the project will infer the project from\nthe account.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUse hyphen as placeholder for project id since there is no project context\nfor this API.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,

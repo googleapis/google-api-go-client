@@ -212,6 +212,7 @@ type BiddersService struct {
 
 func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 	rs := &BiddersAccountsService{s: s}
+	rs.Creatives = NewBiddersAccountsCreativesService(s)
 	rs.FilterSets = NewBiddersAccountsFilterSetsService(s)
 	return rs
 }
@@ -219,7 +220,18 @@ func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 type BiddersAccountsService struct {
 	s *Service
 
+	Creatives *BiddersAccountsCreativesService
+
 	FilterSets *BiddersAccountsFilterSetsService
+}
+
+func NewBiddersAccountsCreativesService(s *Service) *BiddersAccountsCreativesService {
+	rs := &BiddersAccountsCreativesService{s: s}
+	return rs
+}
+
+type BiddersAccountsCreativesService struct {
+	s *Service
 }
 
 func NewBiddersAccountsFilterSetsService(s *Service) *BiddersAccountsFilterSetsService {
@@ -11558,6 +11570,148 @@ func (c *AccountsPublisherProfilesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "adexchangebuyer2.bidders.accounts.creatives.delete":
+
+type BiddersAccountsCreativesDeleteCall struct {
+	s          *Service
+	ownerName  string
+	creativeId string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single creative.
+//
+// A creative is deactivated upon deletion and does not count against
+// active
+// snippet quota. A deleted creative should not be used in bidding (all
+// bids
+// with that creative will be rejected).
+func (r *BiddersAccountsCreativesService) Delete(ownerName string, creativeId string) *BiddersAccountsCreativesDeleteCall {
+	c := &BiddersAccountsCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ownerName = ownerName
+	c.creativeId = creativeId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersAccountsCreativesDeleteCall) Fields(s ...googleapi.Field) *BiddersAccountsCreativesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersAccountsCreativesDeleteCall) Context(ctx context.Context) *BiddersAccountsCreativesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersAccountsCreativesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersAccountsCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+ownerName}/creatives/{creativeId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("DELETE", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ownerName":  c.ownerName,
+		"creativeId": c.creativeId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.bidders.accounts.creatives.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BiddersAccountsCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single creative.\n\nA creative is deactivated upon deletion and does not count against active\nsnippet quota. A deleted creative should not be used in bidding (all bids\nwith that creative will be rejected).",
+	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/creatives/{creativeId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "adexchangebuyer2.bidders.accounts.creatives.delete",
+	//   "parameterOrder": [
+	//     "ownerName",
+	//     "creativeId"
+	//   ],
+	//   "parameters": {
+	//     "creativeId": {
+	//       "description": "The ID of the creative to delete.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "ownerName": {
+	//       "description": "Name of the buyer account that owns the creative.\nSupports two cases:\n- For the buyer account representing bidder 123:\n`bidders/123/accounts/123/`\n\n- For the child seat buyer account 456 whose bidder is 123:\n`bidders/123/accounts/456/`",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+ownerName}/creatives/{creativeId}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
 }
 
 // method id "adexchangebuyer2.bidders.accounts.filterSets.create":

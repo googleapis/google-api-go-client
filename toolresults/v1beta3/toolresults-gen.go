@@ -2537,6 +2537,7 @@ type TestIssue struct {
 	//   "encounteredNonAndroidUiWidgetScreen"
 	//   "failedToInstall"
 	//   "fatalException"
+	//   "inAppPurchases"
 	//   "incompleteRoboScriptExecution"
 	//   "iosCrash"
 	//   "iosException"
@@ -2544,9 +2545,11 @@ type TestIssue struct {
 	//   "nativeCrash"
 	//   "nonSdkApiUsageViolation"
 	//   "performedGoogleLogin"
+	//   "performedMonkeyActions"
 	//   "startActivityNotFound"
 	//   "unspecifiedType"
 	//   "unusedRoboDirective"
+	//   "usedRoboDirective"
 	Type string `json:"type,omitempty"`
 
 	// Warning: Warning message with additional details of the issue. Should
@@ -2800,7 +2803,7 @@ func (s *Thumbnail) MarshalJSON() ([]byte, error) {
 // In JavaScript, one can convert a Date object to this format using the
 // standard
 // [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
-// t/Reference/Global_Objects/Date/toISOString] method. In Python, a
+// t/Reference/Global_Objects/Date/toISOString) method. In Python, a
 // standard `datetime.datetime` object can be converted to this format
 // using
 // [`strftime`](https://docs.python.org/2/library/time.html#time.strftime

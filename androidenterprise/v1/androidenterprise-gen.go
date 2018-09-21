@@ -429,7 +429,8 @@ func (s *AdministratorWebTokenSpecPrivateApps) MarshalJSON() ([]byte, error) {
 }
 
 type AdministratorWebTokenSpecStoreBuilder struct {
-	// Enabled: Whether the Store Builder is be displayed. Default is true.
+	// Enabled: Whether the Store Builder page is displayed. Default is
+	// true.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Enabled") to

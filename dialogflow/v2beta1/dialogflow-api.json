@@ -516,7 +516,7 @@
                 "entities": {
                   "methods": {
                     "batchCreate": {
-                      "description": "Creates multiple new entities in the specified entity type (extends the\nexisting collection of entries).\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+                      "description": "Creates multiple new entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchCreate",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.entityTypes.entities.batchCreate",
@@ -572,7 +572,7 @@
                       ]
                     },
                     "batchUpdate": {
-                      "description": "Updates entities in the specified entity type (replaces the existing\ncollection of entries).\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+                      "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchUpdate",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.entityTypes.entities.batchUpdate",
@@ -581,7 +581,7 @@
                       ],
                       "parameters": {
                         "parent": {
-                          "description": "Required. The name of the entity type to update the entities in. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+                          "description": "Required. The name of the entity type to update or create entities in.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                           "required": true,
@@ -2304,7 +2304,7 @@
       }
     }
   },
-  "revision": "20180828",
+  "revision": "20180918",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3347,7 +3347,7 @@
       "id": "GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest",
       "properties": {
         "entities": {
-          "description": "Required. The collection of entities to create.",
+          "description": "Required. The entities to create.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1EntityTypeEntity"
           },
@@ -3407,11 +3407,11 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest": {
-      "description": "The response message for EntityTypes.BatchCreateEntities.",
+      "description": "The request message for EntityTypes.BatchUpdateEntities.",
       "id": "GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest",
       "properties": {
         "entities": {
-          "description": "Required. The collection of new entities to replace the existing entities.",
+          "description": "Required. The entities to update or create.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1EntityTypeEntity"
           },
@@ -3435,7 +3435,7 @@
       "properties": {
         "entityTypeBatchInline": {
           "$ref": "GoogleCloudDialogflowV2beta1EntityTypeBatch",
-          "description": "The collection of entity type to update or create."
+          "description": "The collection of entity types to update or create."
         },
         "entityTypeBatchUri": {
           "description": "The URI to a Google Cloud Storage file containing entity types to update\nor create. The file format can either be a serialized proto (of\nEntityBatch type) or a JSON object. Note: The URI must start with\n\"gs://\".",

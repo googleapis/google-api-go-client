@@ -2266,7 +2266,7 @@ func (s *GoogleCloudDialogflowV2beta1Agent) UnmarshalJSON(data []byte) error {
 // GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest: The request
 // message for EntityTypes.BatchCreateEntities.
 type GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest struct {
-	// Entities: Required. The collection of entities to create.
+	// Entities: Required. The entities to create.
 	Entities []*GoogleCloudDialogflowV2beta1EntityTypeEntity `json:"entities,omitempty"`
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
@@ -2410,11 +2410,10 @@ func (s *GoogleCloudDialogflowV2beta1BatchDeleteIntentsRequest) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest: The response
-// message for EntityTypes.BatchCreateEntities.
+// GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest: The request
+// message for EntityTypes.BatchUpdateEntities.
 type GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest struct {
-	// Entities: Required. The collection of new entities to replace the
-	// existing entities.
+	// Entities: Required. The entities to update or create.
 	Entities []*GoogleCloudDialogflowV2beta1EntityTypeEntity `json:"entities,omitempty"`
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
@@ -2457,7 +2456,7 @@ func (s *GoogleCloudDialogflowV2beta1BatchUpdateEntitiesRequest) MarshalJSON() (
 // GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest: The
 // request message for EntityTypes.BatchUpdateEntityTypes.
 type GoogleCloudDialogflowV2beta1BatchUpdateEntityTypesRequest struct {
-	// EntityTypeBatchInline: The collection of entity type to update or
+	// EntityTypeBatchInline: The collection of entity types to update or
 	// create.
 	EntityTypeBatchInline *GoogleCloudDialogflowV2beta1EntityTypeBatch `json:"entityTypeBatchInline,omitempty"`
 
@@ -8479,8 +8478,7 @@ type ProjectsAgentEntityTypesEntitiesBatchCreateCall struct {
 }
 
 // BatchCreate: Creates multiple new entities in the specified entity
-// type (extends the
-// existing collection of entries).
+// type.
 //
 // Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchCreate(parent string, googleclouddialogflowv2beta1batchcreateentitiesrequest *GoogleCloudDialogflowV2beta1BatchCreateEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchCreateCall {
@@ -8577,7 +8575,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchCreateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates multiple new entities in the specified entity type (extends the\nexisting collection of entries).\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
+	//   "description": "Creates multiple new entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchCreate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.entities.batchCreate",
@@ -8758,9 +8756,11 @@ type ProjectsAgentEntityTypesEntitiesBatchUpdateCall struct {
 	header_                                                http.Header
 }
 
-// BatchUpdate: Updates entities in the specified entity type (replaces
-// the existing
-// collection of entries).
+// BatchUpdate: Updates or creates multiple entities in the specified
+// entity type. This
+// method does not affect entities in the entity type that aren't
+// explicitly
+// specified in the request.
 //
 // Operation <response: google.protobuf.Empty,
 //            metadata: google.protobuf.Struct>
@@ -8858,7 +8858,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates entities in the specified entity type (replaces the existing\ncollection of entries).\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.entities.batchUpdate",
@@ -8867,7 +8867,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The name of the entity type to update the entities in. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+	//       "description": "Required. The name of the entity type to update or create entities in.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,

@@ -49,6 +49,13 @@ func TestTokenSource(t *testing.T) {
 		t.Errorf("got %v, wanted no error", err)
 	}
 
+	// Load valid JSON. No way to really test the contents; we just
+	// verify that there is no error.
+	ds = &DialSettings{CredentialsJSON: []byte(validServiceAccountJSON)}
+	if _, err := Creds(ctx, ds); err != nil {
+		t.Errorf("got %v, wanted no error", err)
+	}
+
 	// If both a file and TokenSource are passed, the file takes precedence
 	// (existing behavior).
 	// TODO(jba): make this an error?

@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20180915",
+  "revision": "20180922",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -2971,6 +2971,10 @@
         "trace": {
           "description": "Optional. Resource name of the trace associated with the log entry, if any. If it contains a relative resource name, the name is assumed to be relative to //tracing.googleapis.com. Example: projects/my-projectid/traces/06796866738c859f2f19b7cfb3214824",
           "type": "string"
+        },
+        "traceSampled": {
+          "description": "Optional. The sampling decision of the trace associated with the log entry. True means that the trace resource name in the trace field was sampled for storage in a trace backend. False means that the trace was not sampled for storage when this log entry was written, or the sampling decision was unknown at the time. A non-sampled trace value is still useful as a request correlation identifier. The default is False.",
+          "type": "boolean"
         }
       },
       "type": "object"

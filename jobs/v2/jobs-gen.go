@@ -1061,14 +1061,21 @@ func (s *CompensationInfo) MarshalJSON() ([]byte, error) {
 
 // CompensationRange: Compensation range.
 type CompensationRange struct {
-	// Max: Required.
+	// Max: Optional.
 	//
-	// The maximum amount of compensation.
+	// The maximum amount of compensation. If left empty, the value is
+	// set
+	// to a maximal compensation value and the currency code is set to
+	// match the currency code of
+	// min_compensation.
 	Max *Money `json:"max,omitempty"`
 
-	// Min: Required.
+	// Min: Optional.
 	//
-	// The minimum amount of compensation.
+	// The minimum amount of compensation. If left empty, the value is
+	// set
+	// to zero and the currency code is set to match the
+	// currency code of max_compensation.
 	Min *Money `json:"min,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Max") to
@@ -1457,19 +1464,19 @@ func (s *CustomFieldFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole calendar date, e.g. date of birth. The time
-// of day and
-// time zone are either specified elsewhere or are not significant. The
-// date
-// is relative to the Proleptic Gregorian Calendar. The day may be 0
+// Date: Represents a whole calendar date, for example date of birth.
+// The time of day
+// and time zone are either specified elsewhere or are not significant.
+// The date
+// is relative to the Proleptic Gregorian Calendar. The day can be 0
 // to
-// represent a year and month where the day is not significant, e.g.
-// credit card
-// expiration date. The year may be 0 to represent a month and day
-// independent
-// of year, e.g. anniversary date. Related types are
-// google.type.TimeOfDay
-// and `google.protobuf.Timestamp`.
+// represent a year and month where the day is not significant, for
+// example
+// credit card expiration date. The year can be 0 to represent a month
+// and day
+// independent of year, for example anniversary date. Related types
+// are
+// google.type.TimeOfDay and `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0

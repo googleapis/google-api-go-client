@@ -12,9 +12,9 @@
   "baseUrl": "https://adexchangebuyer.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "AdExchangeBuyerII",
-  "description": "Accesses the latest features for managing Ad Exchange accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
+  "description": "Accesses the latest features for managing Authorized Buyers accounts, Real-Time Bidding configurations and auction metrics, and Marketplace programmatic deals.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://developers.google.com/ad-exchange/buyer-rest/reference/rest/",
+  "documentationLink": "https://developers.google.com/authorized-buyers/apis/reference/rest/",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -191,7 +191,7 @@
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list method.",
+                  "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list\nmethod.",
                   "location": "query",
                   "type": "string"
                 },
@@ -942,7 +942,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "An optional PQL query used to query for products. See\nhttps://developers.google.com/doubleclick-publishers/docs/pqlreference\nfor documentation about PQL and examples.\n\nNested repeated fields, such as product.targetingCriterion.inclusions,\ncannot be filtered.",
+                  "description": "An optional PQL query used to query for products. See\nhttps://developers.google.com/ad-manager/docs/pqlreference\nfor documentation about PQL and examples.\n\nNested repeated fields, such as product.targetingCriterion.inclusions,\ncannot be filtered.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1413,7 +1413,7 @@
                       "type": "string"
                     },
                     "ownerName": {
-                      "description": "Name of the buyer account that owns the creative.\nSupports two cases:\n- For the buyer account representing bidder 123:\n`bidders/123/accounts/123/`\n\n- For the child seat buyer account 456 whose bidder is 123:\n`bidders/123/accounts/456/`",
+                      "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123/`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/`",
                       "location": "path",
                       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
                       "required": true,
@@ -1766,7 +1766,7 @@
                           ],
                           "parameters": {
                             "creativeStatusId": {
-                              "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).",
+                              "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
                               "format": "int32",
                               "location": "path",
                               "required": true,
@@ -1814,7 +1814,7 @@
                           ],
                           "parameters": {
                             "creativeStatusId": {
-                              "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+                              "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
                               "format": "int32",
                               "location": "path",
                               "required": true,
@@ -2311,7 +2311,7 @@
                       ],
                       "parameters": {
                         "creativeStatusId": {
-                          "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).",
+                          "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
                           "format": "int32",
                           "location": "path",
                           "required": true,
@@ -2359,7 +2359,7 @@
                       ],
                       "parameters": {
                         "creativeStatusId": {
-                          "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+                          "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
                           "format": "int32",
                           "location": "path",
                           "required": true,
@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20180917",
+  "revision": "20180925",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2574,7 +2574,7 @@
             "Ad slot with size specified by height and width in pixels.",
             "Special size to describe an interstitial ad slot.",
             "Native (mobile) ads rendered by the publisher.",
-            "Fluid size (i.e. responsive size) can be resized automatically with the\nchange of outside environment."
+            "Fluid size (i.e., responsive size) can be resized automatically with the\nchange of outside environment."
           ],
           "type": "string"
         },
@@ -2719,11 +2719,11 @@
       "type": "object"
     },
     "Buyer": {
-      "description": "Represents a buyer of inventory. Each buyer is identified by a unique\nAd Exchange account ID.",
+      "description": "Represents a buyer of inventory. Each buyer is identified by a unique\nAuthorized Buyers account ID.",
       "id": "Buyer",
       "properties": {
         "accountId": {
-          "description": "Ad Exchange account ID of the buyer.",
+          "description": "Authorized Buyers account ID of the buyer.",
           "type": "string"
         }
       },
@@ -2734,7 +2734,7 @@
       "id": "CalloutStatusRow",
       "properties": {
         "calloutStatusId": {
-          "description": "The ID of the callout status.\nSee [callout-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/callout-status-codes).",
+          "description": "The ID of the callout status.\nSee [callout-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/callout-status-codes).",
           "format": "int32",
           "type": "integer"
         },
@@ -2756,7 +2756,7 @@
       "type": "object"
     },
     "Client": {
-      "description": "A client resource represents a client buyer\u0026mdash;an agency,\na brand, or an advertiser customer of the sponsor buyer.\nUsers associated with the client buyer have restricted access to\nthe Ad Exchange Marketplace and certain other sections\nof the Ad Exchange Buyer UI based on the role\ngranted to the client buyer.\nAll fields are required unless otherwise specified.",
+      "description": "A client resource represents a client buyer\u0026mdash;an agency, a brand, or an\nadvertiser customer of the sponsor buyer. Users associated with the client\nbuyer have restricted access to the Marketplace and certain other sections of\nthe Authorized Buyers UI based on the role granted to the client buyer. All\nfields are required unless otherwise specified.",
       "id": "Client",
       "properties": {
         "clientAccountId": {
@@ -2835,7 +2835,7 @@
       "type": "object"
     },
     "ClientUser": {
-      "description": "A client user is created under a client buyer and has restricted access to\nthe Ad Exchange Marketplace and certain other sections\nof the Ad Exchange Buyer UI based on the role\ngranted to the associated client buyer.\n\nThe only way a new client user can be created is via accepting an\nemail invitation\n(see the\naccounts.clients.invitations.create\nmethod).\n\nAll fields are required unless otherwise specified.",
+      "description": "A client user is created under a client buyer and has restricted access to\nthe Marketplace and certain other sections of the Authorized Buyers UI based\non the role granted to the associated client buyer.\n\nThe only way a new client user can be created is via accepting an\nemail invitation\n(see the\naccounts.clients.invitations.create\nmethod).\n\nAll fields are required unless otherwise specified.",
       "id": "ClientUser",
       "properties": {
         "clientAccountId": {
@@ -2872,7 +2872,7 @@
       "type": "object"
     },
     "ClientUserInvitation": {
-      "description": "An invitation for a new client user to get access to the Ad Exchange\nBuyer UI.\nAll fields are required unless otherwise specified.",
+      "description": "An invitation for a new client user to get access to the Authorized Buyers\nUI. All fields are required unless otherwise specified.",
       "id": "ClientUserInvitation",
       "properties": {
         "clientAccountId": {
@@ -3231,7 +3231,7 @@
       "type": "object"
     },
     "CreativeRestrictions": {
-      "description": "Represents creative restrictions associated to Programmatic Guaranteed/\nPreferred Deal in DFP.\nThis doesn't apply to Private Auction and AdX Preferred Deals.",
+      "description": "Represents creative restrictions associated to Programmatic Guaranteed/\nPreferred Deal in Ad Manager.\nThis doesn't apply to Private Auction and AdX Preferred Deals.",
       "id": "CreativeRestrictions",
       "properties": {
         "creativeFormat": {
@@ -3278,7 +3278,7 @@
       "id": "CreativeSize",
       "properties": {
         "allowedFormats": {
-          "description": "What formats are allowed by the publisher.\nIf this repeated field is empty then all formats are allowed.\nE.g., if this field contains AllowedFormatType.AUDIO then the publisher\nonly allows an audio ad (without any video).",
+          "description": "What formats are allowed by the publisher.\nIf this repeated field is empty then all formats are allowed.\nFor example, if this field contains AllowedFormatType.AUDIO then the\npublisher only allows an audio ad (without any video).",
           "enumDescriptions": [
             "A placeholder for an undefined allowed format.",
             "An audio-only ad (without any video)."
@@ -3359,7 +3359,7 @@
       "type": "object"
     },
     "CreativeSpecification": {
-      "description": "Represents information for a creative that is associated with a Programmatic\nGuaranteed/Preferred Deal in DFP.",
+      "description": "Represents information for a creative that is associated with a Programmatic\nGuaranteed/Preferred Deal in Ad Manager.",
       "id": "CreativeSpecification",
       "properties": {
         "creativeCompanionSizes": {
@@ -3385,7 +3385,7 @@
           "description": "The number of bids with the specified status."
         },
         "creativeStatusId": {
-          "description": "The ID of the creative status.\nSee [creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).",
+          "description": "The ID of the creative status.\nSee [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
           "format": "int32",
           "type": "integer"
         },
@@ -3420,16 +3420,16 @@
       "type": "object"
     },
     "Date": {
-      "description": "Represents a whole calendar date, for example date of birth. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day can be 0 to\nrepresent a year and month where the day is not significant, for example\ncredit card expiration date. The year can be 0 to represent a month and day\nindependent of year, for example anniversary date. Related types are\ngoogle.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, e.g. a birthday. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. This can represent:\n\n* A full date, with non-zero year, month and day values\n* A month and day value, with a zero year, e.g. an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, e.g. a credit card expiration date\n\nRelated types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
       "id": "Date",
       "properties": {
         "day": {
-          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
+          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year by itself or a year and month where the day is not\nsignificant.",
           "format": "int32",
           "type": "integer"
         },
         "month": {
-          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a date without a\nmonth.",
+          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a\nmonth and day.",
           "format": "int32",
           "type": "integer"
         },
@@ -3556,7 +3556,7 @@
         },
         "creativeRestrictions": {
           "$ref": "CreativeRestrictions",
-          "description": "Restricitions about the creatives associated with the deal (i.e. size)\nThis is available for Programmatic Guaranteed/Preferred Deals in DFP.\n@OutputOnly"
+          "description": "Restricitions about the creatives associated with the deal (i.e., size)\nThis is available for Programmatic Guaranteed/Preferred Deals in Ad Manager.\n@OutputOnly"
         },
         "creativeSafeFrameCompatibility": {
           "description": "Specifies whether the creative is safeFrame compatible.\n@OutputOnly",
@@ -3925,7 +3925,8 @@
             "DESTINATION_EXPERIENCE",
             "UNSUPPORTED_LANGUAGE",
             "NON_SSL_COMPLIANT",
-            "TEMPORARY_PAUSE"
+            "TEMPORARY_PAUSE",
+            "BAIL_BONDS"
           ],
           "enumDescriptions": [
             "The length of the image animation is longer than allowed.",
@@ -4027,7 +4028,8 @@
             "Unacceptable landing page.",
             "Unsupported language.",
             "Non-SSL compliant.",
-            "Temporary pausing of creative."
+            "Temporary pausing of creative.",
+            "Promotes services related to bail bonds."
           ],
           "type": "string"
         }
@@ -4041,7 +4043,7 @@
       "type": "object"
     },
     "FilterSet": {
-      "description": "A set of filters that is applied to a request for data.\nWithin a filter set, an AND operation is performed across the filters\nrepresented by each field. An OR operation is performed across the filters\nrepresented by the multiple values of a repeated field. E.g.\n\"format=VIDEO AND deal_id=12 AND (seller_network_id=34 OR\nseller_network_id=56)\"",
+      "description": "A set of filters that is applied to a request for data.\nWithin a filter set, an AND operation is performed across the filters\nrepresented by each field. An OR operation is performed across the filters\nrepresented by the multiple values of a repeated field, e.g.,\n\"format=VIDEO AND deal_id=12 AND (seller_network_id=34 OR\nseller_network_id=56)\".",
       "id": "FilterSet",
       "properties": {
         "absoluteDateRange": {
@@ -4049,11 +4051,11 @@
           "description": "An absolute date range, defined by a start date and an end date.\nInterpreted relative to Pacific time zone."
         },
         "creativeId": {
-          "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses account-level troubleshooting data,\ni.e. one whose name matches the `bidders/*/accounts/*/filterSets/*`\npattern.",
+          "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses account-level troubleshooting data,\ni.e., one whose name matches the `bidders/*/accounts/*/filterSets/*`\npattern.",
           "type": "string"
         },
         "dealId": {
-          "description": "The ID of the deal on which to filter; optional. This field may be set\nonly for a filter set that accesses account-level troubleshooting data,\ni.e. one whose name matches the `bidders/*/accounts/*/filterSets/*`\npattern.",
+          "description": "The ID of the deal on which to filter; optional. This field may be set\nonly for a filter set that accesses account-level troubleshooting data,\ni.e., one whose name matches the `bidders/*/accounts/*/filterSets/*`\npattern.",
           "format": "int64",
           "type": "string"
         },
@@ -4072,12 +4074,12 @@
           "type": "string"
         },
         "formats": {
-          "description": "The list of formats on which to filter; may be empty. The filters\nrepresented by multiple formats are ORed together (i.e. if non-empty,\nresults must match any one of the formats).",
+          "description": "The list of formats on which to filter; may be empty. The filters\nrepresented by multiple formats are ORed together (i.e., if non-empty,\nresults must match any one of the formats).",
           "enumDescriptions": [
             "A placeholder for an undefined format; indicates that no format filter\nwill be applied.",
-            "The ad impression is a native ad, and display (i.e. image) format.",
+            "The ad impression is a native ad, and display (i.e., image) format.",
             "The ad impression is a native ad, and video format.",
-            "The ad impression is not a native ad, and display (i.e. image) format.",
+            "The ad impression is not a native ad, and display (i.e., image) format.",
             "The ad impression is not a native ad, and video format."
           ],
           "items": {
@@ -4097,7 +4099,7 @@
           "type": "string"
         },
         "platforms": {
-          "description": "The list of platforms on which to filter; may be empty. The filters\nrepresented by multiple platforms are ORed together (i.e. if non-empty,\nresults must match any one of the platforms).",
+          "description": "The list of platforms on which to filter; may be empty. The filters\nrepresented by multiple platforms are ORed together (i.e., if non-empty,\nresults must match any one of the platforms).",
           "enumDescriptions": [
             "A placeholder for an undefined platform; indicates that no platform\nfilter will be applied.",
             "The ad impression appears on a desktop.",
@@ -4116,7 +4118,7 @@
           "type": "array"
         },
         "publisherIdentifiers": {
-          "description": "For Exchange Bidding buyers only.\nThe list of publisher identifiers on which to filter; may be empty.\nThe filters represented by multiple publisher identifiers are ORed\ntogether.",
+          "description": "For Open Bidding partners only.\nThe list of publisher identifiers on which to filter; may be empty.\nThe filters represented by multiple publisher identifiers are ORed\ntogether.",
           "items": {
             "type": "string"
           },
@@ -4131,7 +4133,7 @@
           "description": "A relative date range, defined by an offset from today and a duration.\nInterpreted relative to Pacific time zone."
         },
         "sellerNetworkIds": {
-          "description": "For Ad Exchange buyers only.\nThe list of IDs of the seller (publisher) networks on which to filter;\nmay be empty. The filters represented by multiple seller network IDs are\nORed together (i.e. if non-empty, results must match any one of the\npublisher networks).\nSee [seller-network-ids](https://developers.google.com/ad-exchange/rtb/downloads/seller-network-ids)\nfile for the set of existing seller network IDs.",
+          "description": "For Authorized Buyers only.\nThe list of IDs of the seller (publisher) networks on which to filter;\nmay be empty. The filters represented by multiple seller network IDs are\nORed together (i.e., if non-empty, results must match any one of the\npublisher networks). See\n[seller-network-ids](https://developers.google.com/authorized-buyers/rtb/downloads/seller-network-ids)\nfile for the set of existing seller network IDs.",
           "items": {
             "format": "int32",
             "type": "integer"
@@ -4375,7 +4377,7 @@
       "type": "object"
     },
     "InventorySizeTargeting": {
-      "description": "Represents the size of an ad unit that can be targeted on an ad\nrequest. It only applies to Private Auction, AdX Preferred Deals and\nAuction Packages. This targeting does not apply to Programmatic Guaranteed\nand Preferred Deals in DFP.",
+      "description": "Represents the size of an ad unit that can be targeted on an ad\nrequest. It only applies to Private Auction, AdX Preferred Deals and\nAuction Packages. This targeting does not apply to Programmatic Guaranteed\nand Preferred Deals in Ad Manager.",
       "id": "InventorySizeTargeting",
       "properties": {
         "excludedInventorySizes": {
@@ -4494,7 +4496,7 @@
           "type": "array"
         },
         "nextPageToken": {
-          "description": "A token to retrieve the next page of results.\nPass this value in the\nListClientsRequest.pageToken\nfield in the subsequent call to the\naccounts.clients.list method\nto retrieve the next page of results.",
+          "description": "A token to retrieve the next page of results.\nPass this value in the\nListClientsRequest.pageToken\nfield in the subsequent call to the\naccounts.clients.list\nmethod to retrieve the next page of results.",
           "type": "string"
         }
       },
@@ -4534,11 +4536,11 @@
           ],
           "enumDescriptions": [
             "A placeholder for an undefined status.\nThis value will never be returned in responses.",
-            "Indicates that the detail ID refers to a creative attribute; see\n[publisher-excludable-creative-attributes](https://developers.google.com/ad-exchange/rtb/downloads/publisher-excludable-creative-attributes).",
-            "Indicates that the detail ID refers to a vendor; see\n[vendors](https://developers.google.com/ad-exchange/rtb/downloads/vendors).",
-            "Indicates that the detail ID refers to a sensitive category; see\n[ad-sensitive-categories](https://developers.google.com/ad-exchange/rtb/downloads/ad-sensitive-categories).",
-            "Indicates that the detail ID refers to a product category; see\n[ad-product-categories](https://developers.google.com/ad-exchange/rtb/downloads/ad-product-categories).",
-            "Indicates that the detail ID refers to a disapproval reason; see\nDisapprovalReason enum in [snippet-status-report-proto](https://developers.google.com/ad-exchange/rtb/downloads/snippet-status-report-proto)."
+            "Indicates that the detail ID refers to a creative attribute; see\n[publisher-excludable-creative-attributes](https://developers.google.com/authorized-buyers/rtb/downloads/publisher-excludable-creative-attributes).",
+            "Indicates that the detail ID refers to a vendor; see\n[vendors](https://developers.google.com/authorized-buyers/rtb/downloads/vendors).",
+            "Indicates that the detail ID refers to a sensitive category; see\n[ad-sensitive-categories](https://developers.google.com/authorized-buyers/rtb/downloads/ad-sensitive-categories).",
+            "Indicates that the detail ID refers to a product category; see\n[ad-product-categories](https://developers.google.com/authorized-buyers/rtb/downloads/ad-product-categories).",
+            "Indicates that the detail ID refers to a disapproval reason; see\nDisapprovalReason enum in [snippet-status-report-proto](https://developers.google.com/authorized-buyers/rtb/downloads/snippet-status-report-proto)."
           ],
           "type": "string"
         },
@@ -4783,11 +4785,11 @@
         },
         "placementTargeting": {
           "$ref": "PlacementTargeting",
-          "description": "Placement targeting information, e.g. URL, mobile applications."
+          "description": "Placement targeting information, e.g., URL, mobile applications."
         },
         "technologyTargeting": {
           "$ref": "TechnologyTargeting",
-          "description": "Technology targeting information, e.g. operating system, device category."
+          "description": "Technology targeting information, e.g., operating system, device category."
         },
         "videoTargeting": {
           "$ref": "VideoTargeting",
@@ -5032,7 +5034,7 @@
       "type": "object"
     },
     "PlacementTargeting": {
-      "description": "Represents targeting about where the ads can appear, e.g. certain sites or\nmobile applications.\nDifferent placement targeting types will be logically OR'ed.",
+      "description": "Represents targeting about where the ads can appear, e.g., certain sites or\nmobile applications.\nDifferent placement targeting types will be logically OR'ed.",
       "id": "PlacementTargeting",
       "properties": {
         "mobileApplicationTargeting": {
@@ -5167,7 +5169,7 @@
           "type": "string"
         },
         "productRevision": {
-          "description": "The revision number of the product. (auto-assigned by marketplace)",
+          "description": "The revision number of the product (auto-assigned by Marketplace).",
           "format": "int64",
           "type": "string"
         },
@@ -5221,7 +5223,7 @@
       "type": "object"
     },
     "Proposal": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a proposal in the marketplace. A proposal is the unit of\nnegotiation between a seller and a buyer and contains deals which\nare served.\n\nNote: you can not update, create, or otherwise modify Private\nAuction or Preferred Deals deals through the API.\n\nFields are updatable unless noted otherwise.",
+      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a proposal in the Marketplace. A proposal is the unit of\nnegotiation between a seller and a buyer and contains deals which\nare served.\n\nNote: you can not update, create, or otherwise modify Private\nAuction or Preferred Deals deals through the API.\n\nFields are updatable unless noted otherwise.",
       "id": "Proposal",
       "properties": {
         "billedBuyer": {
@@ -5452,16 +5454,16 @@
       "type": "object"
     },
     "RelativeDateRange": {
-      "description": "A relative date range, specified by an offset and a duration.\nThe supported range of dates begins 30 days before today and ends today.\nI.e. the limits for these values are:\noffset_days \u003e= 0\nduration_days \u003e= 1\noffset_days + duration_days \u003c= 30",
+      "description": "A relative date range, specified by an offset and a duration.\nThe supported range of dates begins 30 days before today and ends today,\ni.e., the limits for these values are:\noffset_days \u003e= 0\nduration_days \u003e= 1\noffset_days + duration_days \u003c= 30",
       "id": "RelativeDateRange",
       "properties": {
         "durationDays": {
-          "description": "The number of days in the requested date range. E.g. for a range spanning\ntoday, 1. For a range spanning the last 7 days, 7.",
+          "description": "The number of days in the requested date range, e.g., for a range spanning\ntoday: 1. For a range spanning the last 7 days: 7.",
           "format": "int32",
           "type": "integer"
         },
         "offsetDays": {
-          "description": "The end date of the filter set, specified as the number of days before\ntoday. E.g. for a range where the last date is today, 0.",
+          "description": "The end date of the filter set, specified as the number of days before\ntoday, e.g., for a range where the last date is today: 0.",
           "format": "int32",
           "type": "integer"
         }
@@ -5519,7 +5521,7 @@
       "type": "object"
     },
     "Seller": {
-      "description": "Represents a seller of inventory. Each seller is identified by a unique\nAd Exchange account ID.",
+      "description": "Represents a seller of inventory. Each seller is identified by a unique\nAd Manager account ID.",
       "id": "Seller",
       "properties": {
         "accountId": {
@@ -5667,7 +5669,7 @@
         },
         "dayPartTargetingValue": {
           "$ref": "DayPartTargeting",
-          "description": "The daypart targeting to include / exclude.\nFilled in when the key is GOOG_DAYPART_TARGETING.\nThe definition of this targeting is derived from the structure\nused by DFP."
+          "description": "The daypart targeting to include / exclude.\nFilled in when the key is GOOG_DAYPART_TARGETING.\nThe definition of this targeting is derived from the structure\nused by Ad Manager."
         },
         "longValue": {
           "description": "The long value to include/exclude.",
@@ -5745,7 +5747,7 @@
       "type": "object"
     },
     "UrlTargeting": {
-      "description": "Represents a list of targeted and excluded URLs (e.g google.com).\nFor Private Auction and AdX Preferred Deals, URLs are either included or\nexcluded.\nFor DFP Programmatic Guaranteed and Preferred Deals, this doesn't apply.",
+      "description": "Represents a list of targeted and excluded URLs (e.g., google.com).\nFor Private Auction and AdX Preferred Deals, URLs are either included or\nexcluded.\nFor Programmatic Guaranteed and Preferred Deals, this doesn't\napply.",
       "id": "UrlTargeting",
       "properties": {
         "excludedUrls": {

@@ -360,7 +360,7 @@
       }
     }
   },
-  "revision": "20180815",
+  "revision": "20180915",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -511,7 +511,7 @@
           "type": "string"
         },
         "network": {
-          "description": "Optional. The Compute Engine network to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example: \"projects/{projectId}/global/networks/{networkId}\".\n\nIf unspecified, the default network in the environment's project is used.\nIf a [Custom Subnet Network]((/vpc/docs/vpc#vpc_networks_and_subnets)\nis provided, `nodeConfig.subnetwork` must also be provided. For\n[Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see\n`nodeConfig.subnetwork`.",
+          "description": "Optional. The Compute Engine network to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example: \"projects/{projectId}/global/networks/{networkId}\".\n\nIf unspecified, the default network in the environment's project is used.\nIf a [Custom Subnet Network](/vpc/docs/vpc#vpc_networks_and_subnets)\nis provided, `nodeConfig.subnetwork` must also be provided. For\n[Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements, see\n`nodeConfig.subnetwork`.",
           "type": "string"
         },
         "oauthScopes": {

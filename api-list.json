@@ -1980,7 +1980,7 @@
    "name": "logging",
    "version": "v2",
    "title": "Stackdriver Logging API",
-   "description": "Writes log entries and manages your Stackdriver Logging configuration.",
+   "description": "Writes log entries and manages your Logging configuration.",
    "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1995,7 +1995,7 @@
    "name": "logging",
    "version": "v2beta1",
    "title": "Stackdriver Logging API",
-   "description": "Writes log entries and manages your Stackdriver Logging configuration.",
+   "description": "Writes log entries and manages your Logging configuration.",
    "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3054,6 +3054,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "videointelligence:v1p1beta1",
+   "name": "videointelligence",
+   "version": "v1p1beta1",
+   "title": "Cloud Video Intelligence API",
+   "description": "Cloud Video Intelligence API.",
+   "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1p1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/video-intelligence/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "videointelligence:v1",
    "name": "videointelligence",
    "version": "v1",
@@ -3066,21 +3081,6 @@
    },
    "documentationLink": "https://cloud.google.com/video-intelligence/docs/",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "videointelligence:v1beta1",
-   "name": "videointelligence",
-   "version": "v1beta1",
-   "title": "Cloud Video Intelligence API",
-   "description": "Cloud Video Intelligence API.",
-   "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/video-intelligence/docs/",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

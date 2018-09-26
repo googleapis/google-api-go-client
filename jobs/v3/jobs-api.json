@@ -593,7 +593,7 @@
       }
     }
   },
-  "revision": "20180906",
+  "revision": "20180917",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1042,11 +1042,11 @@
       "properties": {
         "maxCompensation": {
           "$ref": "Money",
-          "description": "Required.\n\nThe maximum amount of compensation."
+          "description": "Optional.\n\nThe maximum amount of compensation. If left empty, the value is set\nto a maximal compensation value and the currency code is set to\nmatch the currency code of\nmin_compensation."
         },
         "minCompensation": {
           "$ref": "Money",
-          "description": "Required.\n\nThe minimum amount of compensation."
+          "description": "Optional.\n\nThe minimum amount of compensation. If left empty, the value is set\nto zero and the currency code is set to match the\ncurrency code of max_compensation."
         }
       },
       "type": "object"

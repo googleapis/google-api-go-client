@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/n52wIU61ZBKKKB4SSQGUdTYQbe4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/WSRp3TGVPnOQb-Ze_lvpMQoWF2U\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -6976,7 +6976,7 @@
             "instance": {
               "description": "Name of the instance resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -6998,6 +6998,58 @@
           "path": "{project}/zones/{zone}/instances/{instance}",
           "response": {
             "$ref": "Instance"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getGuestAttributes": {
+          "description": "Returns the specified guest attributes entry.",
+          "httpMethod": "GET",
+          "id": "compute.instances.getGuestAttributes",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "queryPath": {
+              "description": "Specifies the guest attributes path to be queried.",
+              "location": "query",
+              "type": "string"
+            },
+            "variableKey": {
+              "description": "Specifies the key for the guest attributes entry.",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/getGuestAttributes",
+          "response": {
+            "$ref": "GuestAttributes"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -7097,6 +7149,48 @@
           "path": "{project}/zones/{zone}/instances/{instance}/serialPort",
           "response": {
             "$ref": "SerialPortOutput"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getShieldedVmIdentity": {
+          "description": "Returns the Shielded VM Identity of an instance",
+          "httpMethod": "GET",
+          "id": "compute.instances.getShieldedVmIdentity",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/getShieldedVmIdentity",
+          "response": {
+            "$ref": "ShieldedVmIdentity"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -14902,6 +14996,71 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getNatMappingInfo": {
+          "description": "Retrieves runtime Nat mapping information of VM endpoints.",
+          "httpMethod": "GET",
+          "id": "compute.routers.getNatMappingInfo",
+          "parameterOrder": [
+            "project",
+            "region",
+            "router"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "router": {
+              "description": "Name of the Router resource to query for Nat Mapping information of VM endpoints.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/routers/{router}/getNatMappingInfo",
+          "response": {
+            "$ref": "VmEndpointNatMappingsList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "getRouterStatus": {
           "description": "Retrieves runtime information of the specified router.",
           "httpMethod": "GET",
@@ -15451,6 +15610,11 @@
               "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
               "required": true,
               "type": "string"
+            },
+            "validateOnly": {
+              "description": "If true, the request will not be committed.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/global/securityPolicies/{securityPolicy}/addRule",
@@ -15596,6 +15760,11 @@
               "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
               "location": "query",
               "type": "string"
+            },
+            "validateOnly": {
+              "description": "If true, the request will not be committed.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/global/securityPolicies",
@@ -15776,6 +15945,11 @@
               "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
               "required": true,
               "type": "string"
+            },
+            "validateOnly": {
+              "description": "If true, the request will not be committed.",
+              "location": "query",
+              "type": "boolean"
             }
           },
           "path": "{project}/global/securityPolicies/{securityPolicy}/patchRule",
@@ -20519,7 +20693,7 @@
       }
     }
   },
-  "revision": "20180828",
+  "revision": "20180906",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -24922,7 +25096,7 @@
       "id": "ForwardingRule",
       "properties": {
         "IPAddress": {
-          "description": "The IP address that this forwarding rule is serving on behalf of.\n\nAddresses are restricted based on the forwarding rule's load balancing scheme (EXTERNAL or INTERNAL) and scope (global or regional).\n\nWhen the load balancing scheme is EXTERNAL, for global forwarding rules, the address must be a global IP, and for regional forwarding rules, the address must live in the same region as the forwarding rule. If this field is empty, an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL_SELF_MANAGED, this must be a URL reference to an existing Address resource ( internal regional static IP address).\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnet configured for the forwarding rule. By default, if this field is empty, an ephemeral internal IP address will be automatically allocated from the IP range of the subnet or network configured for this forwarding rule.\n\nAn address can be specified either by a literal IP address or a URL reference to an existing Address resource. The following examples are all valid:  \n- 100.1.2.3 \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address \n- projects/project/regions/region/addresses/address \n- regions/region/addresses/address \n- global/addresses/address \n- address",
+          "description": "The IP address that this forwarding rule is serving on behalf of.\n\nAddresses are restricted based on the forwarding rule's load balancing scheme (EXTERNAL or INTERNAL) and scope (global or regional).\n\nWhen the load balancing scheme is EXTERNAL, for global forwarding rules, the address must be a global IP, and for regional forwarding rules, the address must live in the same region as the forwarding rule. If this field is empty, an ephemeral IPv4 address from the same scope (global or regional) will be assigned. A regional forwarding rule supports IPv4 only. A global forwarding rule supports either IPv4 or IPv6.\n\nWhen the load balancing scheme is INTERNAL_SELF_MANAGED, this must be a URL reference to an existing Address resource ( internal regional static IP address), with a purpose of GCE_END_POINT and address_type of INTERNAL.\n\nWhen the load balancing scheme is INTERNAL, this can only be an RFC 1918 IP address belonging to the network/subnet configured for the forwarding rule. By default, if this field is empty, an ephemeral internal IP address will be automatically allocated from the IP range of the subnet or network configured for this forwarding rule.\n\nAn address can be specified either by a literal IP address or a URL reference to an existing Address resource. The following examples are all valid:  \n- 100.1.2.3 \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/addresses/address \n- projects/project/regions/region/addresses/address \n- regions/region/addresses/address \n- global/addresses/address \n- address",
           "type": "string"
         },
         "IPProtocol": {
@@ -25434,6 +25608,70 @@
       },
       "type": "object"
     },
+    "GuestAttributes": {
+      "description": "A guest attributes entry.",
+      "id": "GuestAttributes",
+      "properties": {
+        "kind": {
+          "default": "compute#guestAttributes",
+          "description": "[Output Only] Type of the resource. Always compute#guestAttributes for guest attributes entry.",
+          "type": "string"
+        },
+        "queryPath": {
+          "description": "The path to be queried. This can be the default namespace ('/') or a nested namespace ('//') or a specified key ('//')",
+          "type": "string"
+        },
+        "queryValue": {
+          "$ref": "GuestAttributesValue",
+          "description": "[Output Only] The value of the requested queried path."
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "variableKey": {
+          "description": "The key to search for.",
+          "type": "string"
+        },
+        "variableValue": {
+          "description": "[Output Only] The value found for the requested key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GuestAttributesEntry": {
+      "description": "A guest attributes namespace/key/value entry.",
+      "id": "GuestAttributesEntry",
+      "properties": {
+        "key": {
+          "description": "Key for the guest attribute entry.",
+          "type": "string"
+        },
+        "namespace": {
+          "description": "Namespace for the guest attribute entry.",
+          "type": "string"
+        },
+        "value": {
+          "description": "Value for the guest attribute entry.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GuestAttributesValue": {
+      "description": "Array of guest attribute namespace/key/value tuples.",
+      "id": "GuestAttributesValue",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "GuestAttributesEntry"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GuestOsFeature": {
       "description": "Guest OS features.",
       "id": "GuestOsFeature",
@@ -25689,11 +25927,9 @@
             "HTTPS",
             "INVALID",
             "SSL",
-            "TCP",
-            "UDP"
+            "TCP"
           ],
           "enumDescriptions": [
-            "",
             "",
             "",
             "",
@@ -25702,9 +25938,6 @@
             ""
           ],
           "type": "string"
-        },
-        "udpHealthCheck": {
-          "$ref": "UDPHealthCheck"
         },
         "unhealthyThreshold": {
           "description": "A so-far healthy instance will be marked unhealthy after this many consecutive failures. The default value is 2.",
@@ -30166,7 +30399,7 @@
               "compute.images.insert"
             ]
           },
-          "description": "[Output Only] Name of the resource. The name is 1-63 characters long and complies with RFC1035.",
+          "description": "Name of the resource. The name must be 1-63 characters long and comply with RFC1035.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
@@ -31132,6 +31365,11 @@
           "description": "[Output Only] Creation timestamp in RFC3339 text format.",
           "type": "string"
         },
+        "defaultPort": {
+          "description": "The default port used if the port number is not specified in the network endpoint.",
+          "format": "int32",
+          "type": "integer"
+        },
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
@@ -31154,6 +31392,10 @@
           "description": "Name of the resource; provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "type": "string"
         },
+        "network": {
+          "description": "The URL of the network to which all network endpoints in the NEG belong. Uses \"default\" project network if unspecified.",
+          "type": "string"
+        },
         "networkEndpointType": {
           "description": "Type of network endpoints in this network endpoint group. Currently the only supported value is GCE_VM_IP_PORT.",
           "enum": [
@@ -31172,6 +31414,14 @@
           "description": "[Output only] Number of network endpoints in the network endpoint group.",
           "format": "int32",
           "type": "integer"
+        },
+        "subnetwork": {
+          "description": "Optional URL of the subnetwork to which all network endpoints in the NEG belong.",
+          "type": "string"
+        },
+        "zone": {
+          "description": "[Output Only] The URL of the zone where the network endpoint group is located.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -36096,6 +36346,13 @@
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
+        "nats": {
+          "description": "A list of Nat services created in this router.",
+          "items": {
+            "$ref": "RouterNat"
+          },
+          "type": "array"
+        },
         "network": {
           "annotations": {
             "required": [
@@ -36511,6 +36768,118 @@
       },
       "type": "object"
     },
+    "RouterNat": {
+      "description": "Represents a Nat resource. It enables the VMs within the specified subnetworks to access Internet without external IP addresses. It specifies a list of subnetworks (and the ranges within) that want to use NAT. Customers can also provide the external IPs that would be used for NAT. GCP would auto-allocate ephemeral IPs if no external IPs are provided.",
+      "id": "RouterNat",
+      "properties": {
+        "icmpIdleTimeoutSec": {
+          "description": "Timeout (in seconds) for ICMP connections. Defaults to 30s if not set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minPortsPerVm": {
+          "description": "Minimum number of ports allocated to a VM from this NAT config. If not set, a default number of ports is allocated to a VM. This gets rounded up to the nearest power of 2. Eg. if the value of this field is 50, at least 64 ports will be allocated to a VM.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Unique name of this Nat service. The name must be 1-63 characters long and comply with RFC1035.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "natIpAllocateOption": {
+          "description": "Specify the NatIpAllocateOption. If it is AUTO_ONLY, then nat_ip should be empty.",
+          "enum": [
+            "AUTO_ONLY",
+            "MANUAL_ONLY"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "natIps": {
+          "description": "A list of URLs of the IP resources used for this Nat service. These IPs must be valid static external IP addresses assigned to the project. max_length is subject to change post alpha.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sourceSubnetworkIpRangesToNat": {
+          "description": "Specify the Nat option. If this field contains ALL_SUBNETWORKS_ALL_IP_RANGES or ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES, then there should not be any other Router.Nat section in any Router for this network in this region.",
+          "enum": [
+            "ALL_SUBNETWORKS_ALL_IP_RANGES",
+            "ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES",
+            "LIST_OF_SUBNETWORKS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "subnetworks": {
+          "description": "A list of Subnetwork resources whose traffic should be translated by NAT Gateway. It is used only when LIST_OF_SUBNETWORKS is selected for the SubnetworkIpRangeToNatOption above.",
+          "items": {
+            "$ref": "RouterNatSubnetworkToNat"
+          },
+          "type": "array"
+        },
+        "tcpEstablishedIdleTimeoutSec": {
+          "description": "Timeout (in seconds) for TCP established connections. Defaults to 1200s if not set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "tcpTransitoryIdleTimeoutSec": {
+          "description": "Timeout (in seconds) for TCP transitory connections. Defaults to 30s if not set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "udpIdleTimeoutSec": {
+          "description": "Timeout (in seconds) for UDP connections. Defaults to 30s if not set.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "RouterNatSubnetworkToNat": {
+      "description": "Defines the IP ranges that want to use NAT for a subnetwork.",
+      "id": "RouterNatSubnetworkToNat",
+      "properties": {
+        "name": {
+          "description": "URL for the subnetwork resource to use NAT.",
+          "type": "string"
+        },
+        "secondaryIpRangeNames": {
+          "description": "A list of the secondary ranges of the Subnetwork that are allowed to use NAT. This can be populated only if \"LIST_OF_SECONDARY_IP_RANGES\" is one of the values in source_ip_ranges_to_nat.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sourceIpRangesToNat": {
+          "description": "Specify the options for NAT ranges in the Subnetwork. All usages of single value are valid except NAT_IP_RANGE_OPTION_UNSPECIFIED. The only valid option with multiple values is: [\"PRIMARY_IP_RANGE\", \"LIST_OF_SECONDARY_IP_RANGES\"] Default: [ALL_IP_RANGES]",
+          "items": {
+            "enum": [
+              "ALL_IP_RANGES",
+              "LIST_OF_SECONDARY_IP_RANGES",
+              "PRIMARY_IP_RANGE"
+            ],
+            "enumDescriptions": [
+              "",
+              "",
+              ""
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "RouterStatus": {
       "id": "RouterStatus",
       "properties": {
@@ -36531,6 +36900,12 @@
         "bgpPeerStatus": {
           "items": {
             "$ref": "RouterStatusBgpPeerStatus"
+          },
+          "type": "array"
+        },
+        "natStatus": {
+          "items": {
+            "$ref": "RouterStatusNatStatus"
           },
           "type": "array"
         },
@@ -36597,6 +36972,48 @@
         "uptimeSeconds": {
           "description": "Time this session has been up, in seconds. Format: 145",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RouterStatusNatStatus": {
+      "description": "Status of a NAT contained in this router.",
+      "id": "RouterStatusNatStatus",
+      "properties": {
+        "autoAllocatedNatIps": {
+          "description": "A list of IPs auto-allocated for NAT. Example: [\"1.1.1.1\", \"129.2.16.89\"]",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "minExtraNatIpsNeeded": {
+          "description": "The number of extra IPs to allocate. This will be greater than 0 only if user-specified IPs are NOT enough to allow all configured VMs to use NAT. This value is meaningful only when auto-allocation of NAT IPs is *not* used.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "Unique name of this NAT.",
+          "type": "string"
+        },
+        "numVmEndpointsWithNatMappings": {
+          "description": "Number of VM endpoints (i.e., Nics) that can use NAT.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "userAllocatedNatIpResources": {
+          "description": "A list of fully qualified URLs of reserved IP address resources.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "userAllocatedNatIps": {
+          "description": "A list of IPs user-allocated for NAT. They will be raw IP strings like \"179.12.26.133\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -37233,6 +37650,37 @@
         "enableVtpm": {
           "description": "Defines whether the instance has the vTPM enabled.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedVmIdentity": {
+      "description": "A shielded VM identity entry.",
+      "id": "ShieldedVmIdentity",
+      "properties": {
+        "encryptionKey": {
+          "$ref": "ShieldedVmIdentityEntry"
+        },
+        "kind": {
+          "default": "compute#shieldedVmIdentity",
+          "description": "[Output Only] Type of the resource. Always compute#shieldedVmIdentity for shielded VM identity entry.",
+          "type": "string"
+        },
+        "signingKey": {
+          "$ref": "ShieldedVmIdentityEntry"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedVmIdentityEntry": {
+      "description": "A Shielded VM Identity Entry.",
+      "id": "ShieldedVmIdentityEntry",
+      "properties": {
+        "ekCert": {
+          "type": "string"
+        },
+        "ekPub": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -38096,7 +38544,7 @@
           "type": "string"
         },
         "enableFlowLogs": {
-          "description": "Whether to enable flow logging for this subnetwork.",
+          "description": "Whether to enable flow logging for this subnetwork. If this field is not explicitly set, it will not appear in get listings. If not set the default behavior is to disable flow logging.",
           "type": "boolean"
         },
         "fingerprint": {
@@ -40636,29 +41084,6 @@
       },
       "type": "object"
     },
-    "UDPHealthCheck": {
-      "id": "UDPHealthCheck",
-      "properties": {
-        "port": {
-          "description": "The UDP port number for the health check request. Valid values are 1 through 65535.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "portName": {
-          "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence.",
-          "type": "string"
-        },
-        "request": {
-          "description": "Raw data of request to send in payload of UDP packet. It is an error if this is empty. The request data can only be ASCII.",
-          "type": "string"
-        },
-        "response": {
-          "description": "The bytes to match against the beginning of the response data. It is an error if this is empty. The response data can only be ASCII.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "UrlMap": {
       "description": "A UrlMap resource. This resource defines the mapping from URL to the BackendService resource, based on the \"longest-match\" of the URL's host and path.",
       "id": "UrlMap",
@@ -41076,6 +41501,162 @@
         "reportNamePrefix": {
           "description": "An optional prefix for the name of the usage report object stored in bucketName. If not supplied, defaults to usage. The report is stored as a CSV file named report_name_prefix_gce_YYYYMMDD.csv where YYYYMMDD is the day of the usage according to Pacific Time. If you supply a prefix, it should conform to Cloud Storage object naming conventions.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VmEndpointNatMappings": {
+      "description": "Contain information of Nat mapping for a VM endpoint (i.e., NIC).",
+      "id": "VmEndpointNatMappings",
+      "properties": {
+        "instanceName": {
+          "description": "Name of the VM instance which the endpoint belongs to",
+          "type": "string"
+        },
+        "interfaceNatMappings": {
+          "items": {
+            "$ref": "VmEndpointNatMappingsInterfaceNatMappings"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "VmEndpointNatMappingsInterfaceNatMappings": {
+      "description": "Contain information of Nat mapping for an interface of this endpoint.",
+      "id": "VmEndpointNatMappingsInterfaceNatMappings",
+      "properties": {
+        "natIpPortRanges": {
+          "description": "A list of all IP:port-range mappings assigned to this interface. These ranges are inclusive, that is, both the first and the last ports can be used for NAT. Example: [\"2.2.2.2:12345-12355\", \"1.1.1.1:2234-2234\"].",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "numTotalNatPorts": {
+          "description": "Total number of ports across all NAT IPs allocated to this interface. It equals to the aggregated port number in the field nat_ip_port_ranges.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "sourceAliasIpRange": {
+          "description": "Alias IP range for this interface endpoint. It will be a private (RFC 1918) IP range. Examples: \"10.33.4.55/32\", or \"192.168.5.0/24\".",
+          "type": "string"
+        },
+        "sourceVirtualIp": {
+          "description": "Primary IP of the VM for this NIC.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VmEndpointNatMappingsList": {
+      "description": "Contains a list of VmEndpointNatMappings.",
+      "id": "VmEndpointNatMappingsList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#vmEndpointNatMappingsList",
+          "description": "[Output Only] Type of resource. Always compute#vmEndpointNatMappingsList for lists of Nat mappings of VM endpoints.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "result": {
+          "description": "[Output Only] A list of Nat mapping information of VM endpoints.",
+          "items": {
+            "$ref": "VmEndpointNatMappings"
+          },
+          "type": "array"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"

@@ -496,68 +496,6 @@ func (s *AuthorizationConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuthorizationRule: Authorization rule for API services.
-//
-// It specifies the permission(s) required for an API element for the
-// overall
-// API request to succeed. It is typically used to mark request message
-// fields
-// that contain the name of the resource and indicates the permissions
-// that
-// will be checked on that resource.
-//
-// For example:
-//
-//     package google.storage.v1;
-//
-//     message CopyObjectRequest {
-//       string source = 1 [
-//         (google.api.authz).permissions = "storage.objects.get"];
-//
-//       string destination = 2 [
-//         (google.api.authz).permissions =
-//             "storage.objects.create,storage.objects.update"];
-//     }
-type AuthorizationRule struct {
-	// Permissions: The required permissions. The acceptable values vary
-	// depend on the
-	// authorization system used. For Google APIs, it should be a
-	// comma-separated
-	// Google IAM permission values. When multiple permissions are listed,
-	// the
-	// semantics is not defined by the system. Additional documentation
-	// must
-	// be provided manually.
-	Permissions string `json:"permissions,omitempty"`
-
-	// Selector: Selects the API elements to which this rule applies.
-	//
-	// Refer to selector for syntax details.
-	Selector string `json:"selector,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AuthorizationRule) MarshalJSON() ([]byte, error) {
-	type NoMethod AuthorizationRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Backend: `Backend` defines the backend configuration for a service.
 type Backend struct {
 	// Rules: A list of API backend rules that apply to individual API
@@ -2431,15 +2369,6 @@ type HttpRule struct {
 	// the nesting may only be one level deep).
 	AdditionalBindings []*HttpRule `json:"additionalBindings,omitempty"`
 
-	// Authorizations: Specifies the permission(s) required for an API
-	// element for the overall
-	// API request to succeed. It is typically used to mark request message
-	// fields
-	// that contain the name of the resource and indicates the permissions
-	// that
-	// will be checked on that resource.
-	Authorizations []*AuthorizationRule `json:"authorizations,omitempty"`
-
 	// Body: The name of the request field whose value is mapped to the HTTP
 	// request
 	// body, or `*` for mapping all request fields not captured by the
@@ -2469,20 +2398,6 @@ type HttpRule struct {
 	// resources.
 	Get string `json:"get,omitempty"`
 
-	// MediaDownload: Use this only for Scotty Requests. Do not use this for
-	// bytestream methods.
-	// For media support, add instead [][google.bytestream.RestByteStream]
-	// as an
-	// API to your configuration.
-	MediaDownload *MediaDownload `json:"mediaDownload,omitempty"`
-
-	// MediaUpload: Use this only for Scotty Requests. Do not use this for
-	// media support using
-	// Bytestream, add instead
-	// [][google.bytestream.RestByteStream] as an API to your
-	// configuration for Bytestream methods.
-	MediaUpload *MediaUpload `json:"mediaUpload,omitempty"`
-
 	// Patch: Maps to HTTP PATCH. Used for updating a resource.
 	Patch string `json:"patch,omitempty"`
 
@@ -2503,54 +2418,6 @@ type HttpRule struct {
 	// response
 	// message type.
 	ResponseBody string `json:"responseBody,omitempty"`
-
-	// RestCollection: DO NOT USE. This is an experimental field.
-	//
-	// Optional. The REST collection name is by default derived from the
-	// URL
-	// pattern. If specified, this field overrides the default collection
-	// name.
-	// Example:
-	//
-	//     rpc AddressesAggregatedList(AddressesAggregatedListRequest)
-	//         returns (AddressesAggregatedListResponse) {
-	//       option (google.api.http) = {
-	//         get: "/v1/projects/{project_id}/aggregated/addresses"
-	//         rest_collection: "projects.addresses"
-	//       };
-	//     }
-	//
-	// This method has the automatically derived collection
-	// name
-	// "projects.aggregated". Because, semantically, this rpc is actually
-	// an
-	// operation on the "projects.addresses" collection, the
-	// `rest_collection`
-	// field is configured to override the derived collection name.
-	RestCollection string `json:"restCollection,omitempty"`
-
-	// RestMethodName: DO NOT USE. This is an experimental field.
-	//
-	// Optional. The rest method name is by default derived from the
-	// URL
-	// pattern. If specified, this field overrides the default method
-	// name.
-	// Example:
-	//
-	//     rpc CreateResource(CreateResourceRequest)
-	//         returns (CreateResourceResponse) {
-	//       option (google.api.http) = {
-	//         post: "/v1/resources",
-	//         body: "resource",
-	//         rest_method_name: "insert"
-	//       };
-	//     }
-	//
-	// This method has the automatically derived rest method name
-	// "create", but for backwards compatibility with apiary, it is
-	// specified as
-	// insert.
-	RestMethodName string `json:"restMethodName,omitempty"`
 
 	// Selector: Selects a method to which this rule applies.
 	//
@@ -2862,135 +2729,6 @@ type LoggingDestination struct {
 
 func (s *LoggingDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MediaDownload: Defines the Media configuration for a service in case
-// of a download.
-// Use this only for Scotty Requests. Do not use this for media support
-// using
-// Bytestream, add instead [][google.bytestream.RestByteStream] as an
-// API to
-// your configuration for Bytestream methods.
-type MediaDownload struct {
-	// CompleteNotification: A boolean that determines whether a
-	// notification for the completion of a
-	// download should be sent to the backend.
-	CompleteNotification bool `json:"completeNotification,omitempty"`
-
-	// DownloadService: DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING
-	// IS REMOVED.
-	//
-	// Specify name of the download service if one is used for download.
-	DownloadService string `json:"downloadService,omitempty"`
-
-	// Dropzone: Name of the Scotty dropzone to use for the current API.
-	Dropzone string `json:"dropzone,omitempty"`
-
-	// Enabled: Whether download is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// MaxDirectDownloadSize: Optional maximum acceptable size for direct
-	// download.
-	// The size is specified in bytes.
-	MaxDirectDownloadSize int64 `json:"maxDirectDownloadSize,omitempty,string"`
-
-	// UseDirectDownload: A boolean that determines if direct download from
-	// ESF should be used for
-	// download of this media.
-	UseDirectDownload bool `json:"useDirectDownload,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompleteNotification") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteNotification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MediaDownload) MarshalJSON() ([]byte, error) {
-	type NoMethod MediaDownload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MediaUpload: Defines the Media configuration for a service in case of
-// an upload.
-// Use this only for Scotty Requests. Do not use this for media support
-// using
-// Bytestream, add instead [][google.bytestream.RestByteStream] as an
-// API to
-// your configuration for Bytestream methods.
-type MediaUpload struct {
-	// CompleteNotification: A boolean that determines whether a
-	// notification for the completion of an
-	// upload should be sent to the backend. These notifications will not be
-	// seen
-	// by the client and will not consume quota.
-	CompleteNotification bool `json:"completeNotification,omitempty"`
-
-	// Dropzone: Name of the Scotty dropzone to use for the current API.
-	Dropzone string `json:"dropzone,omitempty"`
-
-	// Enabled: Whether upload is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// MaxSize: Optional maximum acceptable size for an upload.
-	// The size is specified in bytes.
-	MaxSize int64 `json:"maxSize,omitempty,string"`
-
-	// MimeTypes: An array of mimetype patterns. Esf will only accept
-	// uploads that match one
-	// of the given patterns.
-	MimeTypes []string `json:"mimeTypes,omitempty"`
-
-	// ProgressNotification: Whether to receive a notification for progress
-	// changes of media upload.
-	ProgressNotification bool `json:"progressNotification,omitempty"`
-
-	// StartNotification: Whether to receive a notification on the start of
-	// media upload.
-	StartNotification bool `json:"startNotification,omitempty"`
-
-	// UploadService: DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING
-	// IS REMOVED.
-	//
-	// Specify name of the upload service if one is used for upload.
-	UploadService string `json:"uploadService,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompleteNotification") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteNotification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MediaUpload) MarshalJSON() ([]byte, error) {
-	type NoMethod MediaUpload
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -2361,7 +2361,7 @@
       }
     }
   },
-  "revision": "20180824",
+  "revision": "20180917",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2602,6 +2602,10 @@
             "$ref": "NodePool"
           },
           "type": "array"
+        },
+        "privateClusterConfig": {
+          "$ref": "PrivateClusterConfig",
+          "description": "Configuration for private cluster."
         },
         "resourceLabels": {
           "additionalProperties": {
@@ -3349,6 +3353,33 @@
         },
         "zone": {
           "description": "The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the operation\nis taking place.\nThis field is deprecated, use location instead.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PrivateClusterConfig": {
+      "description": "Configuration options for private clusters.",
+      "id": "PrivateClusterConfig",
+      "properties": {
+        "enablePrivateEndpoint": {
+          "description": "Whether the master's internal IP address is used as the cluster endpoint.",
+          "type": "boolean"
+        },
+        "enablePrivateNodes": {
+          "description": "Whether nodes have internal IP addresses only. If enabled, all nodes are\ngiven only RFC 1918 private addresses and communicate with the master via\nprivate networking.",
+          "type": "boolean"
+        },
+        "masterIpv4CidrBlock": {
+          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the master or\nset of masters, as well as the ILB VIP. This range must not overlap with\nany other ranges in use within the cluster's network.",
+          "type": "string"
+        },
+        "privateEndpoint": {
+          "description": "Output only. The internal IP address of this cluster's master endpoint.",
+          "type": "string"
+        },
+        "publicEndpoint": {
+          "description": "Output only. The external IP address of this cluster's master endpoint.",
           "type": "string"
         }
       },

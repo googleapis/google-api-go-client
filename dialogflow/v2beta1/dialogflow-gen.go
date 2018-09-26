@@ -733,9 +733,10 @@ type GoogleCloudDialogflowV2Intent struct {
 	// intent.
 	Events []string `json:"events,omitempty"`
 
-	// FollowupIntentInfo: Optional. Collection of information about all
-	// followup intents that have
-	// name of this intent as a root_name.
+	// FollowupIntentInfo: Read-only. Information about all followup intents
+	// that have this intent as
+	// a direct or indirect parent. We populate this field only in the
+	// output.
 	FollowupIntentInfo []*GoogleCloudDialogflowV2IntentFollowupIntentInfo `json:"followupIntentInfo,omitempty"`
 
 	// InputContextNames: Optional. The list of context names required for
@@ -784,9 +785,13 @@ type GoogleCloudDialogflowV2Intent struct {
 	// the intent.
 	Parameters []*GoogleCloudDialogflowV2IntentParameter `json:"parameters,omitempty"`
 
-	// ParentFollowupIntentName: The unique identifier of the parent intent
-	// in the chain of followup
-	// intents.
+	// ParentFollowupIntentName: Read-only after creation. The unique
+	// identifier of the parent intent in the
+	// chain of followup intents. You can set this field when creating an
+	// intent,
+	// for example with CreateIntent or BatchUpdateIntents, in order to
+	// make this intent a followup intent.
+	//
 	// It identifies the parent followup intent.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	ParentFollowupIntentName string `json:"parentFollowupIntentName,omitempty"`
@@ -802,10 +807,12 @@ type GoogleCloudDialogflowV2Intent struct {
 	// session when this intent is matched.
 	ResetContexts bool `json:"resetContexts,omitempty"`
 
-	// RootFollowupIntentName: The unique identifier of the root intent in
-	// the chain of followup intents.
-	// It identifies the correct followup intents chain for this
-	// intent.
+	// RootFollowupIntentName: Read-only. The unique identifier of the root
+	// intent in the chain of
+	// followup intents. It identifies the correct followup intents chain
+	// for
+	// this intent. We populate this field only in the output.
+	//
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
@@ -859,7 +866,7 @@ type GoogleCloudDialogflowV2IntentFollowupIntentInfo struct {
 	FollowupIntentName string `json:"followupIntentName,omitempty"`
 
 	// ParentFollowupIntentName: The unique identifier of the followup
-	// intent parent.
+	// intent's parent.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	ParentFollowupIntentName string `json:"parentFollowupIntentName,omitempty"`
 
@@ -3480,9 +3487,10 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// intent.
 	Events []string `json:"events,omitempty"`
 
-	// FollowupIntentInfo: Optional. Collection of information about all
-	// followup intents that have
-	// name of this intent as a root_name.
+	// FollowupIntentInfo: Read-only. Information about all followup intents
+	// that have this intent as
+	// a direct or indirect parent. We populate this field only in the
+	// output.
 	FollowupIntentInfo []*GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo `json:"followupIntentInfo,omitempty"`
 
 	// InputContextNames: Optional. The list of context names required for
@@ -3548,9 +3556,13 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// the intent.
 	Parameters []*GoogleCloudDialogflowV2beta1IntentParameter `json:"parameters,omitempty"`
 
-	// ParentFollowupIntentName: The unique identifier of the parent intent
-	// in the chain of followup
-	// intents.
+	// ParentFollowupIntentName: Read-only after creation. The unique
+	// identifier of the parent intent in the
+	// chain of followup intents. You can set this field when creating an
+	// intent,
+	// for example with CreateIntent or BatchUpdateIntents, in order to
+	// make this intent a followup intent.
+	//
 	// It identifies the parent followup intent.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	ParentFollowupIntentName string `json:"parentFollowupIntentName,omitempty"`
@@ -3566,10 +3578,12 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// session when this intent is matched.
 	ResetContexts bool `json:"resetContexts,omitempty"`
 
-	// RootFollowupIntentName: The unique identifier of the root intent in
-	// the chain of followup intents.
-	// It identifies the correct followup intents chain for this
-	// intent.
+	// RootFollowupIntentName: Read-only. The unique identifier of the root
+	// intent in the chain of
+	// followup intents. It identifies the correct followup intents chain
+	// for
+	// this intent. We populate this field only in the output.
+	//
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
@@ -3656,7 +3670,7 @@ type GoogleCloudDialogflowV2beta1IntentFollowupIntentInfo struct {
 	FollowupIntentName string `json:"followupIntentName,omitempty"`
 
 	// ParentFollowupIntentName: The unique identifier of the followup
-	// intent parent.
+	// intent's parent.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	ParentFollowupIntentName string `json:"parentFollowupIntentName,omitempty"`
 
@@ -11113,7 +11127,8 @@ type ProjectsAgentIntentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes the specified intent.
+// Delete: Deletes the specified intent and its direct or indirect
+// followup intents.
 func (r *ProjectsAgentIntentsService) Delete(name string) *ProjectsAgentIntentsDeleteCall {
 	c := &ProjectsAgentIntentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11202,7 +11217,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes the specified intent.",
+	//   "description": "Deletes the specified intent and its direct or indirect followup intents.",
 	//   "flatPath": "v2beta1/projects/{projectsId}/agent/intents/{intentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "dialogflow.projects.agent.intents.delete",
@@ -11211,7 +11226,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or\nindirect followup intents, we also delete them.\n\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,

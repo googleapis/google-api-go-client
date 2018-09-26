@@ -125,40 +125,6 @@ type ProjectsLocationsOperationsService struct {
 type CancelOperationRequest struct {
 }
 
-// ClientList: The sets of network addresses and DNS names for hosts to
-// which a given
-// export or share should be allowed or denied.
-type ClientList struct {
-	// HostNames: DNS names of hosts, with optional wildcards.
-	HostNames []string `json:"hostNames,omitempty"`
-
-	// IpAddresses: IPv4 addresses in the format
-	// {octet 1}.{octet 2}.{octet 3}.{octet 4}.
-	IpAddresses []string `json:"ipAddresses,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "HostNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HostNames") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ClientList) MarshalJSON() ([]byte, error) {
-	type NoMethod ClientList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -177,99 +143,14 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Export: File share export specification.
-type Export struct {
-	// AllowedClients: The clients which may connect.
-	AllowedClients *ClientList `json:"allowedClients,omitempty"`
-
-	// Async: Writes may be completed when not yet on stable storage.
-	Async bool `json:"async,omitempty"`
-
-	// DeniedClients: The clients which may not connect.
-	DeniedClients *ClientList `json:"deniedClients,omitempty"`
-
-	// Networks: Networks on which the export should appear.
-	// If none are specified, the default is all networks to which the
-	// instance is
-	// connected to.
-	Networks []*NetworkConfig `json:"networks,omitempty"`
-
-	// NfsExport: Export rule for NFS
-	NfsExport *NfsExport `json:"nfsExport,omitempty"`
-
-	// Path: Path to export (either "" or of the form
-	// /file_share_name[/subdir]).
-	Path string `json:"path,omitempty"`
-
-	// ReadOnly: Whether the file share should be exported as read-only.
-	ReadOnly bool `json:"readOnly,omitempty"`
-
-	// SmbExport: Export rule for SMB
-	SmbExport *SmbExport `json:"smbExport,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowedClients") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedClients") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Export) MarshalJSON() ([]byte, error) {
-	type NoMethod Export
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // FileShareConfig: File share configuration for the instance.
 type FileShareConfig struct {
 	// CapacityGb: File share capacity in gigabytes (GB).
 	// Cloud Filestore defines 1 GB as 1024^3 bytes.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
 
-	// Deleted: Delete requested. The file share will be deleted.
-	Deleted bool `json:"deleted,omitempty"`
-
-	// Enabled: Service enabled.
-	//
-	// When enabled, the instance exposes the exports to the user for
-	// mounting.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// Exports: Exports.
-	// If protocols and exports are both zero-length, a default protocol
-	// of
-	// NFSV3 and a default export of "*" are provided, and enabled is set
-	// to
-	// true.
-	Exports []*Export `json:"exports,omitempty"`
-
 	// Name: The name of the file share (must be 16 characters or less).
 	Name string `json:"name,omitempty"`
-
-	// Protocols: Protocols supported.
-	//
-	// Possible values:
-	//   "FILE_SHARE_PROTOCOL_UNSPECIFIED" - MODE_UNSPECIFIED serves a "not
-	// set" default value when a FileShareProtocol
-	// is a separate field in a message.
-	//   "NFS_V3" - NFS 3.0
-	//   "NFS_V4_0" - NFS 4.0
-	//   "NFS_V4_1" - NFS 4.1
-	//   "SMB_V2_0" - SMB 2.0
-	//   "SMB_V2_1" - SMB 2.1
-	//   "SMB_V3" - SMB 3.0
-	Protocols []string `json:"protocols,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CapacityGb") to
 	// unconditionally include in API requests. By default, fields with
@@ -315,26 +196,6 @@ type Instance struct {
 
 	// Labels: Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LoggingService: The logging service the instance should use to write
-	// logs.
-	// Currently available options:
-	//
-	// * `logging.googleapis.com` - the Google Cloud Logging service.
-	// * `none` - no logs will be exported from the instance.
-	// * if left as an empty string,`logging.googleapis.com` will be used.
-	LoggingService string `json:"loggingService,omitempty"`
-
-	// MonitoringService: The monitoring service the instance should use to
-	// write metrics.
-	// Currently available options:
-	//
-	// * `monitoring.googleapis.com` - the Google Cloud Monitoring
-	// service.
-	// * `none` - no metrics will be exported from the instance.
-	// * if left as an empty string, `monitoring.googleapis.com` will be
-	// used.
-	MonitoringService string `json:"monitoringService,omitempty"`
 
 	// Name: Output only.
 	// The resource name of the instance, in the
@@ -599,7 +460,6 @@ type NetworkConfig struct {
 	// Possible values:
 	//   "ADDRESS_MODE_UNSPECIFIED" - Internet protocol not set.
 	//   "MODE_IPV4" - Use the IPv4 internet protocol.
-	//   "MODE_IPV6" - Use the IPv6 internet protocol.
 	Modes []string `json:"modes,omitempty"`
 
 	// Network: The name of the Google Compute Engine
@@ -618,13 +478,6 @@ type NetworkConfig struct {
 	// ranges
 	// for other Cloud Filestore instances in the selected VPC network.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
-
-	// Subnetwork: Output only.
-	// The name of the Google Compute
-	// Engine
-	// [subnetwork](/compute/docs/subnetworks) to which the
-	// instance is connected.
-	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddresses") to
 	// unconditionally include in API requests. By default, fields with
@@ -645,66 +498,6 @@ type NetworkConfig struct {
 
 func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// NfsExport: NfsExport specifies attributes of a given NFS export rule.
-type NfsExport struct {
-	// AnonymousGid: GID for anonymous or squashed GIDs.
-	AnonymousGid int64 `json:"anonymousGid,omitempty,string"`
-
-	// AnonymousUid: UID for anonymous or squashed UIDs.
-	AnonymousUid int64 `json:"anonymousUid,omitempty,string"`
-
-	// Protocols: Network transport protocols to be enabled.
-	// The default is TCP.
-	//
-	// Possible values:
-	//   "NETWORK_PROTOCOLS_UNSPECIFIED" - MODE_UNSPECIFIED serves a "not
-	// set" default value when this type is a
-	// separate field in a message.
-	//   "TCP" - Transport Control Protocol.
-	//   "UDP" - User Datagram Protocol.
-	Protocols []string `json:"protocols,omitempty"`
-
-	// Squash: The mode of mapping of UIDs and GIDs (if any).
-	//
-	// Possible values:
-	//   "SQUASH_MODE_UNSPECIFIED" - No mapping.
-	//   "ROOT" - UID 0 maps to anon_uid and GID 0 maps to anon_gid.
-	//   "ALL" - All UIDs map to anon_uid and all GIDs map to anon_gid.
-	Squash string `json:"squash,omitempty"`
-
-	// UnauthenticatedLocksAllowed: If unauthenticated_locks_allowed is
-	// true, locking requests do not require
-	// authentication.
-	UnauthenticatedLocksAllowed bool `json:"unauthenticatedLocksAllowed,omitempty"`
-
-	// UserPortsAllowed: If user_ports_allowed is true, client ports greater
-	// than or equal to 1024
-	// are allowed.
-	UserPortsAllowed bool `json:"userPortsAllowed,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnonymousGid") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnonymousGid") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *NfsExport) MarshalJSON() ([]byte, error) {
-	type NoMethod NfsExport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -835,39 +628,6 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// SmbExport: SmbExport defines attributes of a given SMB sharing rule.
-type SmbExport struct {
-	// Browsable: If true, allow clients to see this share when browsing the
-	// instance for
-	// shares.
-	Browsable bool `json:"browsable,omitempty"`
-
-	// FileShare: The published name of the share (if different from name).
-	FileShare string `json:"fileShare,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Browsable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Browsable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *SmbExport) MarshalJSON() ([]byte, error) {
-	type NoMethod SmbExport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

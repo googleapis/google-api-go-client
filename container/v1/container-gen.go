@@ -642,6 +642,9 @@ type Cluster struct {
 	// specified.
 	NodePools []*NodePool `json:"nodePools,omitempty"`
 
+	// PrivateClusterConfig: Configuration for private cluster.
+	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
+
 	// ResourceLabels: The resource labels for the cluster to use to
 	// annotate any related
 	// Google Compute Engine resources.
@@ -2200,6 +2203,61 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateClusterConfig: Configuration options for private clusters.
+type PrivateClusterConfig struct {
+	// EnablePrivateEndpoint: Whether the master's internal IP address is
+	// used as the cluster endpoint.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+
+	// EnablePrivateNodes: Whether nodes have internal IP addresses only. If
+	// enabled, all nodes are
+	// given only RFC 1918 private addresses and communicate with the master
+	// via
+	// private networking.
+	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
+
+	// MasterIpv4CidrBlock: The IP range in CIDR notation to use for the
+	// hosted master network. This
+	// range will be used for assigning internal IP addresses to the master
+	// or
+	// set of masters, as well as the ILB VIP. This range must not overlap
+	// with
+	// any other ranges in use within the cluster's network.
+	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
+
+	// PrivateEndpoint: Output only. The internal IP address of this
+	// cluster's master endpoint.
+	PrivateEndpoint string `json:"privateEndpoint,omitempty"`
+
+	// PublicEndpoint: Output only. The external IP address of this
+	// cluster's master endpoint.
+	PublicEndpoint string `json:"publicEndpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnablePrivateEndpoint") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablePrivateEndpoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateClusterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

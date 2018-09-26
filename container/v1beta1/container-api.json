@@ -2435,7 +2435,7 @@
       }
     }
   },
-  "revision": "20180824",
+  "revision": "20180917",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2720,7 +2720,7 @@
           "description": "Configuration for the PodSecurityPolicy feature."
         },
         "privateCluster": {
-          "description": "If this is a private cluster setup. Private clusters are clusters that, by\ndefault have no external IP addresses on the nodes and where nodes and the\nmaster communicate over private IP addresses.\nThis field is deprecated, use private_cluster_config.enabled instead.",
+          "description": "If this is a private cluster setup. Private clusters are clusters that, by\ndefault have no external IP addresses on the nodes and where nodes and the\nmaster communicate over private IP addresses.\nThis field is deprecated, use private_cluster_config.enable_private_nodes\ninstead.",
           "type": "boolean"
         },
         "privateClusterConfig": {
@@ -3764,11 +3764,11 @@
           "type": "boolean"
         },
         "enablePrivateNodes": {
-          "description": "Whether nodes have only private IP addresses, and communicate with the\nmaster via private networking.",
+          "description": "Whether nodes have internal IP addresses only. If enabled, all nodes are\ngiven only RFC 1918 private addresses and communicate with the master via\nprivate networking.",
           "type": "boolean"
         },
         "masterIpv4CidrBlock": {
-          "description": "The IP prefix in CIDR notation to use for the hosted master network. This\nprefix will be used for assigning private IP addresses to the master or\nset of masters, as well as the ILB VIP.",
+          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the master or\nset of masters, as well as the ILB VIP. This range must not overlap with\nany other ranges in use within the cluster's network.",
           "type": "string"
         },
         "privateEndpoint": {
@@ -4265,12 +4265,14 @@
           "enum": [
             "UNKNOWN",
             "GCE_STOCKOUT",
-            "GKE_SERVICE_ACCOUNT_DELETED"
+            "GKE_SERVICE_ACCOUNT_DELETED",
+            "GCE_QUOTA_EXCEEDED"
           ],
           "enumDescriptions": [
             "UNKNOWN indicates a generic condition.",
             "GCE_STOCKOUT indicates a GCE stockout.",
-            "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.\nMore codes TBA"
+            "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.",
+            "GCE quota was exceeded.\nMore codes TBA"
           ],
           "type": "string"
         },

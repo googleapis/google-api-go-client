@@ -347,7 +347,7 @@
       }
     }
   },
-  "revision": "20180601",
+  "revision": "20180924",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -619,6 +619,11 @@
       "description": "Raw pose measurement for an entity.",
       "id": "Pose",
       "properties": {
+        "accuracyMeters": {
+          "description": "The estimated horizontal accuracy of this pose in meters with 68% (one\nstandard deviation) confidence. For more information, see:\nhttps://developer.android.com/reference/android/location/Location#getAccuracy()",
+          "format": "float",
+          "type": "number"
+        },
         "altitude": {
           "description": "Altitude of the pose in meters above WGS84 ellipsoid.\nNaN indicates an unmeasured quantity.",
           "format": "double",

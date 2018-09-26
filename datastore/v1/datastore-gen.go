@@ -180,9 +180,9 @@ func (s *AllocateIdsResponse) MarshalJSON() ([]byte, error) {
 // ArrayValue: An array value.
 type ArrayValue struct {
 	// Values: Values in the array.
-	// The order of this array may not be preserved if it contains a mix
-	// of
-	// indexed and unindexed values.
+	// The order of values in an array is preserved as long as all values
+	// have
+	// identical settings for 'exclude_from_indexes'.
 	Values []*Value `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to

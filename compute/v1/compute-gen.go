@@ -4877,6 +4877,10 @@ func (s *ConnectionDraining) MarshalJSON() ([]byte, error) {
 
 // CustomerEncryptionKey: Represents a customer-supplied encryption key
 type CustomerEncryptionKey struct {
+	// KmsKeyName: The name of the encryption key that is stored in Google
+	// Cloud KMS.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
 	// RawKey: Specifies a 256-bit customer-supplied encryption key, encoded
 	// in RFC 4648 base64 to either encrypt or decrypt this resource.
 	RawKey string `json:"rawKey,omitempty"`
@@ -4885,7 +4889,7 @@ type CustomerEncryptionKey struct {
 	// customer-supplied encryption key that protects this resource.
 	Sha256 string `json:"sha256,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RawKey") to
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4893,8 +4897,8 @@ type CustomerEncryptionKey struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RawKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -6801,7 +6805,8 @@ type ForwardingRule struct {
 	//
 	// When the load balancing scheme is INTERNAL_SELF_MANAGED, this must be
 	// a URL reference to an existing Address resource ( internal regional
-	// static IP address).
+	// static IP address), with a purpose of GCE_END_POINT and address_type
+	// of INTERNAL.
 	//
 	// When the load balancing scheme is INTERNAL, this can only be an RFC
 	// 1918 IP address belonging to the network/subnet configured for the
@@ -7556,6 +7561,11 @@ type HTTPHealthCheck struct {
 	// default value is /.
 	RequestPath string `json:"requestPath,omitempty"`
 
+	// Response: The string to match anywhere in the first 1024 bytes of the
+	// response body. If left empty (the default value), the status code
+	// determines health. The response data can only be ASCII.
+	Response string `json:"response,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -7605,6 +7615,11 @@ type HTTPSHealthCheck struct {
 	// RequestPath: The request path of the HTTPS health check request. The
 	// default value is /.
 	RequestPath string `json:"requestPath,omitempty"`
+
+	// Response: The string to match anywhere in the first 1024 bytes of the
+	// response body. If left empty (the default value), the status code
+	// determines health. The response data can only be ASCII.
+	Response string `json:"response,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Host") to
 	// unconditionally include in API requests. By default, fields with
@@ -13386,8 +13401,8 @@ type License struct {
 	// license to images, snapshots, and disks.
 	LicenseCode uint64 `json:"licenseCode,omitempty,string"`
 
-	// Name: [Output Only] Name of the resource. The name is 1-63 characters
-	// long and complies with RFC1035.
+	// Name: Name of the resource. The name must be 1-63 characters long and
+	// comply with RFC1035.
 	Name string `json:"name,omitempty"`
 
 	ResourceRequirements *LicenseResourceRequirements `json:"resourceRequirements,omitempty"`
@@ -22510,6 +22525,8 @@ type Subnetwork struct {
 	Description string `json:"description,omitempty"`
 
 	// EnableFlowLogs: Whether to enable flow logging for this subnetwork.
+	// If this field is not explicitly set, it will not appear in get
+	// listings. If not set the default behavior is to disable flow logging.
 	EnableFlowLogs bool `json:"enableFlowLogs,omitempty"`
 
 	// Fingerprint: Fingerprint of this resource. A hash of the contents
@@ -52130,7 +52147,7 @@ func (c *InstancesGetCall) Do(opts ...googleapi.CallOption) (*Instance, error) {
 	//     "instance": {
 	//       "description": "Name of the instance resource to return.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     },

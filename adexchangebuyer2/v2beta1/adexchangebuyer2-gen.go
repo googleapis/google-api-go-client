@@ -1,6 +1,6 @@
 // Package adexchangebuyer2 provides access to the Ad Exchange Buyer API II.
 //
-// See https://developers.google.com/ad-exchange/buyer-rest/reference/rest/
+// See https://developers.google.com/authorized-buyers/apis/reference/rest/
 //
 // Usage example:
 //
@@ -581,7 +581,7 @@ type AdSize struct {
 	// pixels.
 	//   "INTERSTITIAL" - Special size to describe an interstitial ad slot.
 	//   "NATIVE" - Native (mobile) ads rendered by the publisher.
-	//   "FLUID" - Fluid size (i.e. responsive size) can be resized
+	//   "FLUID" - Fluid size (i.e., responsive size) can be resized
 	// automatically with the
 	// change of outside environment.
 	SizeType string `json:"sizeType,omitempty"`
@@ -852,9 +852,9 @@ func (s *BidResponseWithoutBidsStatusRow) MarshalJSON() ([]byte, error) {
 
 // Buyer: Represents a buyer of inventory. Each buyer is identified by a
 // unique
-// Ad Exchange account ID.
+// Authorized Buyers account ID.
 type Buyer struct {
-	// AccountId: Ad Exchange account ID of the buyer.
+	// AccountId: Authorized Buyers account ID of the buyer.
 	AccountId string `json:"accountId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
@@ -888,8 +888,8 @@ func (s *Buyer) MarshalJSON() ([]byte, error) {
 type CalloutStatusRow struct {
 	// CalloutStatusId: The ID of the callout status.
 	// See
-	// [callout-status-codes](https://developers.google.com/ad-exchange/rtb/d
-	// ownloads/callout-status-codes).
+	// [callout-status-codes](https://developers.google.com/authorized-buyers
+	// /rtb/downloads/callout-status-codes).
 	CalloutStatusId int64 `json:"calloutStatusId,omitempty"`
 
 	// ImpressionCount: The number of impressions for which there was a bid
@@ -929,14 +929,15 @@ func (s *CalloutStatusRow) MarshalJSON() ([]byte, error) {
 type CancelNegotiationRequest struct {
 }
 
-// Client: A client resource represents a client buyer&mdash;an
-// agency,
-// a brand, or an advertiser customer of the sponsor buyer.
-// Users associated with the client buyer have restricted access to
-// the Ad Exchange Marketplace and certain other sections
-// of the Ad Exchange Buyer UI based on the role
-// granted to the client buyer.
-// All fields are required unless otherwise specified.
+// Client: A client resource represents a client buyer&mdash;an agency,
+// a brand, or an
+// advertiser customer of the sponsor buyer. Users associated with the
+// client
+// buyer have restricted access to the Marketplace and certain other
+// sections of
+// the Authorized Buyers UI based on the role granted to the client
+// buyer. All
+// fields are required unless otherwise specified.
 type Client struct {
 	// ClientAccountId: The globally-unique numerical ID of the client.
 	// The value of this field is ignored in create and update operations.
@@ -1077,9 +1078,9 @@ func (s *Client) MarshalJSON() ([]byte, error) {
 
 // ClientUser: A client user is created under a client buyer and has
 // restricted access to
-// the Ad Exchange Marketplace and certain other sections
-// of the Ad Exchange Buyer UI based on the role
-// granted to the associated client buyer.
+// the Marketplace and certain other sections of the Authorized Buyers
+// UI based
+// on the role granted to the associated client buyer.
 //
 // The only way a new client user can be created is via accepting
 // an
@@ -1145,9 +1146,8 @@ func (s *ClientUser) MarshalJSON() ([]byte, error) {
 }
 
 // ClientUserInvitation: An invitation for a new client user to get
-// access to the Ad Exchange
-// Buyer UI.
-// All fields are required unless otherwise specified.
+// access to the Authorized Buyers
+// UI. All fields are required unless otherwise specified.
 type ClientUserInvitation struct {
 	// ClientAccountId: Numerical account ID of the client buyer
 	// that the invited user is associated with.
@@ -1571,7 +1571,7 @@ func (s *CreativeDealAssociation) MarshalJSON() ([]byte, error) {
 
 // CreativeRestrictions: Represents creative restrictions associated to
 // Programmatic Guaranteed/
-// Preferred Deal in DFP.
+// Preferred Deal in Ad Manager.
 // This doesn't apply to Private Auction and AdX Preferred Deals.
 type CreativeRestrictions struct {
 	// CreativeFormat: The format of the environment that the creatives will
@@ -1632,9 +1632,9 @@ func (s *CreativeRestrictions) MarshalJSON() ([]byte, error) {
 type CreativeSize struct {
 	// AllowedFormats: What formats are allowed by the publisher.
 	// If this repeated field is empty then all formats are allowed.
-	// E.g., if this field contains AllowedFormatType.AUDIO then the
-	// publisher
-	// only allows an audio ad (without any video).
+	// For example, if this field contains AllowedFormatType.AUDIO then
+	// the
+	// publisher only allows an audio ad (without any video).
 	//
 	// Possible values:
 	//   "UNKNOWN" - A placeholder for an undefined allowed format.
@@ -1720,7 +1720,7 @@ func (s *CreativeSize) MarshalJSON() ([]byte, error) {
 
 // CreativeSpecification: Represents information for a creative that is
 // associated with a Programmatic
-// Guaranteed/Preferred Deal in DFP.
+// Guaranteed/Preferred Deal in Ad Manager.
 type CreativeSpecification struct {
 	// CreativeCompanionSizes: Companion sizes may be filled in only when
 	// this is a video creative.
@@ -1765,8 +1765,8 @@ type CreativeStatusRow struct {
 
 	// CreativeStatusId: The ID of the creative status.
 	// See
-	// [creative-status-codes](https://developers.google.com/ad-exchange/rtb/
-	// downloads/creative-status-codes).
+	// [creative-status-codes](https://developers.google.com/authorized-buyer
+	// s/rtb/downloads/creative-status-codes).
 	CreativeStatusId int64 `json:"creativeStatusId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -1830,28 +1830,32 @@ func (s *CriteriaTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole calendar date, for example date of birth.
+// Date: Represents a whole or partial calendar date, e.g. a birthday.
 // The time of day
 // and time zone are either specified elsewhere or are not significant.
 // The date
-// is relative to the Proleptic Gregorian Calendar. The day can be 0
-// to
-// represent a year and month where the day is not significant, for
-// example
-// credit card expiration date. The year can be 0 to represent a month
-// and day
-// independent of year, for example anniversary date. Related types
-// are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// is relative to the Proleptic Gregorian Calendar. This can
+// represent:
+//
+// * A full date, with non-zero year, month and day values
+// * A month and day value, with a zero year, e.g. an anniversary
+// * A year on its own, with zero month and day values
+// * A year and month value, with a zero day, e.g. a credit card
+// expiration date
+//
+// Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0
-	// if specifying a year/month where the day is not significant.
+	// if specifying a year by itself or a year and month where the day is
+	// not
+	// significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a date
+	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
 	// without a
-	// month.
+	// month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
@@ -2037,9 +2041,9 @@ type Deal struct {
 	CreativePreApprovalPolicy string `json:"creativePreApprovalPolicy,omitempty"`
 
 	// CreativeRestrictions: Restricitions about the creatives associated
-	// with the deal (i.e. size)
-	// This is available for Programmatic Guaranteed/Preferred Deals in
-	// DFP.
+	// with the deal (i.e., size)
+	// This is available for Programmatic Guaranteed/Preferred Deals in Ad
+	// Manager.
 	// @OutputOnly
 	CreativeRestrictions *CreativeRestrictions `json:"creativeRestrictions,omitempty"`
 
@@ -2562,6 +2566,7 @@ type Disapproval struct {
 	//   "UNSUPPORTED_LANGUAGE" - Unsupported language.
 	//   "NON_SSL_COMPLIANT" - Non-SSL compliant.
 	//   "TEMPORARY_PAUSE" - Temporary pausing of creative.
+	//   "BAIL_BONDS" - Promotes services related to bail bonds.
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Details") to
@@ -2611,11 +2616,11 @@ type Empty struct {
 // filters
 // represented by each field. An OR operation is performed across the
 // filters
-// represented by the multiple values of a repeated field.
-// E.g.
+// represented by the multiple values of a repeated field,
+// e.g.,
 // "format=VIDEO AND deal_id=12 AND (seller_network_id=34
 // OR
-// seller_network_id=56)"
+// seller_network_id=56)".
 type FilterSet struct {
 	// AbsoluteDateRange: An absolute date range, defined by a start date
 	// and an end date.
@@ -2626,7 +2631,7 @@ type FilterSet struct {
 	// field may be set
 	// only for a filter set that accesses account-level troubleshooting
 	// data,
-	// i.e. one whose name matches the
+	// i.e., one whose name matches the
 	// `bidders/*/accounts/*/filterSets/*`
 	// pattern.
 	CreativeId string `json:"creativeId,omitempty"`
@@ -2635,7 +2640,7 @@ type FilterSet struct {
 	// may be set
 	// only for a filter set that accesses account-level troubleshooting
 	// data,
-	// i.e. one whose name matches the
+	// i.e., one whose name matches the
 	// `bidders/*/accounts/*/filterSets/*`
 	// pattern.
 	DealId int64 `json:"dealId,omitempty,string"`
@@ -2652,7 +2657,7 @@ type FilterSet struct {
 
 	// Formats: The list of formats on which to filter; may be empty. The
 	// filters
-	// represented by multiple formats are ORed together (i.e. if
+	// represented by multiple formats are ORed together (i.e., if
 	// non-empty,
 	// results must match any one of the formats).
 	//
@@ -2661,11 +2666,11 @@ type FilterSet struct {
 	// indicates that no format filter
 	// will be applied.
 	//   "NATIVE_DISPLAY" - The ad impression is a native ad, and display
-	// (i.e. image) format.
+	// (i.e., image) format.
 	//   "NATIVE_VIDEO" - The ad impression is a native ad, and video
 	// format.
 	//   "NON_NATIVE_DISPLAY" - The ad impression is not a native ad, and
-	// display (i.e. image) format.
+	// display (i.e., image) format.
 	//   "NON_NATIVE_VIDEO" - The ad impression is not a native ad, and
 	// video format.
 	Formats []string `json:"formats,omitempty"`
@@ -2686,7 +2691,7 @@ type FilterSet struct {
 
 	// Platforms: The list of platforms on which to filter; may be empty.
 	// The filters
-	// represented by multiple platforms are ORed together (i.e. if
+	// represented by multiple platforms are ORed together (i.e., if
 	// non-empty,
 	// results must match any one of the platforms).
 	//
@@ -2699,7 +2704,7 @@ type FilterSet struct {
 	//   "MOBILE" - The ad impression appears on a mobile device.
 	Platforms []string `json:"platforms,omitempty"`
 
-	// PublisherIdentifiers: For Exchange Bidding buyers only.
+	// PublisherIdentifiers: For Open Bidding partners only.
 	// The list of publisher identifiers on which to filter; may be
 	// empty.
 	// The filters represented by multiple publisher identifiers are
@@ -2717,17 +2722,17 @@ type FilterSet struct {
 	// Interpreted relative to Pacific time zone.
 	RelativeDateRange *RelativeDateRange `json:"relativeDateRange,omitempty"`
 
-	// SellerNetworkIds: For Ad Exchange buyers only.
+	// SellerNetworkIds: For Authorized Buyers only.
 	// The list of IDs of the seller (publisher) networks on which to
 	// filter;
 	// may be empty. The filters represented by multiple seller network IDs
 	// are
-	// ORed together (i.e. if non-empty, results must match any one of
+	// ORed together (i.e., if non-empty, results must match any one of
 	// the
 	// publisher networks).
 	// See
-	// [seller-network-ids](https://developers.google.com/ad-exchange/rtb/dow
-	// nloads/seller-network-ids)
+	// [seller-network-ids](https://developers.google.com/authorized-buye
+	// rs/rtb/downloads/seller-network-ids)
 	// file for the set of existing seller network IDs.
 	SellerNetworkIds []int64 `json:"sellerNetworkIds,omitempty"`
 
@@ -3158,7 +3163,7 @@ func (s *ImpressionMetricsRow) MarshalJSON() ([]byte, error) {
 // and
 // Auction Packages. This targeting does not apply to Programmatic
 // Guaranteed
-// and Preferred Deals in DFP.
+// and Preferred Deals in Ad Manager.
 type InventorySizeTargeting struct {
 	// ExcludedInventorySizes: A list of inventory sizes to be excluded.
 	ExcludedInventorySizes []*AdSize `json:"excludedInventorySizes,omitempty"`
@@ -3411,8 +3416,8 @@ type ListClientsResponse struct {
 	// Pass this value in the
 	// ListClientsRequest.pageToken
 	// field in the subsequent call to the
-	// accounts.clients.list method
-	// to retrieve the next page of results.
+	// accounts.clients.list
+	// method to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3503,27 +3508,27 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 	// creative attribute;
 	// see
 	// [publisher-excludable-creative-attributes](https://developers.goog
-	// le.com/ad-exchange/rtb/downloads/publisher-excludable-creative-attribu
-	// tes).
+	// le.com/authorized-buyers/rtb/downloads/publisher-excludable-creative-a
+	// ttributes).
 	//   "VENDOR" - Indicates that the detail ID refers to a vendor;
 	// see
-	// [vendors](https://developers.google.com/ad-exchange/rtb/downloads/
-	// vendors).
+	// [vendors](https://developers.google.com/authorized-buyers/rtb/down
+	// loads/vendors).
 	//   "SENSITIVE_CATEGORY" - Indicates that the detail ID refers to a
 	// sensitive category;
 	// see
-	// [ad-sensitive-categories](https://developers.google.com/ad-exchang
-	// e/rtb/downloads/ad-sensitive-categories).
+	// [ad-sensitive-categories](https://developers.google.com/authorized
+	// -buyers/rtb/downloads/ad-sensitive-categories).
 	//   "PRODUCT_CATEGORY" - Indicates that the detail ID refers to a
 	// product category;
 	// see
-	// [ad-product-categories](https://developers.google.com/ad-exchange/
-	// rtb/downloads/ad-product-categories).
+	// [ad-product-categories](https://developers.google.com/authorized-b
+	// uyers/rtb/downloads/ad-product-categories).
 	//   "DISAPPROVAL_REASON" - Indicates that the detail ID refers to a
 	// disapproval reason; see
 	// DisapprovalReason enum in
-	// [snippet-status-report-proto](https://developers.google.com/ad-exchang
-	// e/rtb/downloads/snippet-status-report-proto).
+	// [snippet-status-report-proto](https://developers.google.com/authorized
+	// -buyers/rtb/downloads/snippet-status-report-proto).
 	DetailType string `json:"detailType,omitempty"`
 
 	// FilteredBidDetailRows: List of rows, with counts of bids with a given
@@ -4066,12 +4071,12 @@ type MarketplaceTargeting struct {
 	// InventorySizeTargeting: Inventory sizes to be included/excluded.
 	InventorySizeTargeting *InventorySizeTargeting `json:"inventorySizeTargeting,omitempty"`
 
-	// PlacementTargeting: Placement targeting information, e.g. URL, mobile
-	// applications.
+	// PlacementTargeting: Placement targeting information, e.g., URL,
+	// mobile applications.
 	PlacementTargeting *PlacementTargeting `json:"placementTargeting,omitempty"`
 
-	// TechnologyTargeting: Technology targeting information, e.g. operating
-	// system, device category.
+	// TechnologyTargeting: Technology targeting information, e.g.,
+	// operating system, device category.
 	TechnologyTargeting *TechnologyTargeting `json:"technologyTargeting,omitempty"`
 
 	// VideoTargeting: Video targeting information.
@@ -4546,7 +4551,7 @@ func (s *PauseProposalRequest) MarshalJSON() ([]byte, error) {
 }
 
 // PlacementTargeting: Represents targeting about where the ads can
-// appear, e.g. certain sites or
+// appear, e.g., certain sites or
 // mobile applications.
 // Different placement targeting types will be logically OR'ed.
 type PlacementTargeting struct {
@@ -4780,8 +4785,8 @@ type Product struct {
 	// ProductId: The unique ID for the product.
 	ProductId string `json:"productId,omitempty"`
 
-	// ProductRevision: The revision number of the product. (auto-assigned
-	// by marketplace)
+	// ProductRevision: The revision number of the product (auto-assigned by
+	// Marketplace).
 	ProductRevision int64 `json:"productRevision,omitempty,string"`
 
 	// PublisherProfileId: An ID which can be used by the Publisher Profile
@@ -4853,7 +4858,7 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 // Please contact your
 // account manager for access to Marketplace resources.
 //
-// Represents a proposal in the marketplace. A proposal is the unit
+// Represents a proposal in the Marketplace. A proposal is the unit
 // of
 // negotiation between a seller and a buyer and contains deals which
 // are served.
@@ -5182,20 +5187,20 @@ func (s *Reason) MarshalJSON() ([]byte, error) {
 // RelativeDateRange: A relative date range, specified by an offset and
 // a duration.
 // The supported range of dates begins 30 days before today and ends
-// today.
-// I.e. the limits for these values are:
+// today,
+// i.e., the limits for these values are:
 // offset_days >= 0
 // duration_days >= 1
 // offset_days + duration_days <= 30
 type RelativeDateRange struct {
-	// DurationDays: The number of days in the requested date range. E.g.
+	// DurationDays: The number of days in the requested date range, e.g.,
 	// for a range spanning
-	// today, 1. For a range spanning the last 7 days, 7.
+	// today: 1. For a range spanning the last 7 days: 7.
 	DurationDays int64 `json:"durationDays,omitempty"`
 
 	// OffsetDays: The end date of the filter set, specified as the number
 	// of days before
-	// today. E.g. for a range where the last date is today, 0.
+	// today, e.g., for a range where the last date is today: 0.
 	OffsetDays int64 `json:"offsetDays,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationDays") to
@@ -5322,7 +5327,7 @@ func (s *SecurityContext) MarshalJSON() ([]byte, error) {
 
 // Seller: Represents a seller of inventory. Each seller is identified
 // by a unique
-// Ad Exchange account ID.
+// Ad Manager account ID.
 type Seller struct {
 	// AccountId: The unique ID for the seller. The seller fills in this
 	// field.
@@ -5562,7 +5567,7 @@ type TargetingValue struct {
 	// exclude.
 	// Filled in when the key is GOOG_DAYPART_TARGETING.
 	// The definition of this targeting is derived from the structure
-	// used by DFP.
+	// used by Ad Manager.
 	DayPartTargetingValue *DayPartTargeting `json:"dayPartTargetingValue,omitempty"`
 
 	// LongValue: The long value to include/exclude.
@@ -5717,12 +5722,12 @@ func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UrlTargeting: Represents a list of targeted and excluded URLs (e.g
+// UrlTargeting: Represents a list of targeted and excluded URLs (e.g.,
 // google.com).
 // For Private Auction and AdX Preferred Deals, URLs are either included
 // or
 // excluded.
-// For DFP Programmatic Guaranteed and Preferred Deals, this doesn't
+// For Programmatic Guaranteed and Preferred Deals, this doesn't
 // apply.
 type UrlTargeting struct {
 	// ExcludedUrls: A list of URLs to be excluded.
@@ -6192,7 +6197,8 @@ func (c *AccountsClientsListCall) PageSize(pageSize int64) *AccountsClientsListC
 // of
 // ListClientsResponse.nextPageToken
 // returned from the previous call to the
-// accounts.clients.list method.
+// accounts.clients.list
+// method.
 func (c *AccountsClientsListCall) PageToken(pageToken string) *AccountsClientsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6325,7 +6331,7 @@ func (c *AccountsClientsListCall) Do(opts ...googleapi.CallOption) (*ListClients
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list method.",
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientsResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.list\nmethod.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9444,8 +9450,7 @@ func (r *AccountsProductsService) List(accountId string) *AccountsProductsListCa
 // Filter sets the optional parameter "filter": An optional PQL query
 // used to query for products.
 // See
-// https://developers.google.com/doubleclick-publishers/docs/pqlrefer
-// ence
+// https://developers.google.com/ad-manager/docs/pqlreference
 // for documentation about PQL and examples.
 //
 // Nested repeated fields, such as
@@ -9581,7 +9586,7 @@ func (c *AccountsProductsListCall) Do(opts ...googleapi.CallOption) (*ListProduc
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "An optional PQL query used to query for products. See\nhttps://developers.google.com/doubleclick-publishers/docs/pqlreference\nfor documentation about PQL and examples.\n\nNested repeated fields, such as product.targetingCriterion.inclusions,\ncannot be filtered.",
+	//       "description": "An optional PQL query used to query for products. See\nhttps://developers.google.com/ad-manager/docs/pqlreference\nfor documentation about PQL and examples.\n\nNested repeated fields, such as product.targetingCriterion.inclusions,\ncannot be filtered.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11696,7 +11701,7 @@ func (c *BiddersAccountsCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "ownerName": {
-	//       "description": "Name of the buyer account that owns the creative.\nSupports two cases:\n- For the buyer account representing bidder 123:\n`bidders/123/accounts/123/`\n\n- For the child seat buyer account 456 whose bidder is 123:\n`bidders/123/accounts/456/`",
+	//       "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123/`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/`",
 	//       "location": "path",
 	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
 	//       "required": true,
@@ -13454,7 +13459,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsCreativesListCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -13662,7 +13667,7 @@ func (c *BiddersAccountsFilterSetsFilteredBidsDetailsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -16042,7 +16047,7 @@ func (c *BiddersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by\ncreative.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,
@@ -16250,7 +16255,7 @@ func (c *BiddersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "creativeStatusId": {
-	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/ad-exchange/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).\nDetails are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
 	//       "format": "int32",
 	//       "location": "path",
 	//       "required": true,

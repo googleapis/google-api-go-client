@@ -425,7 +425,7 @@ type NodeConfig struct {
 	// If unspecified, the default network in the environment's project is
 	// used.
 	// If a [Custom Subnet
-	// Network]((/vpc/docs/vpc#vpc_networks_and_subnets)
+	// Network](/vpc/docs/vpc#vpc_networks_and_subnets)
 	// is provided, `nodeConfig.subnetwork` must also be provided.
 	// For
 	// [Shared VPC](/vpc/docs/shared-vpc) subnetwork requirements,

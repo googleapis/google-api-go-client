@@ -734,7 +734,9 @@ type Cluster struct {
 	// default have no external IP addresses on the nodes and where nodes
 	// and the
 	// master communicate over private IP addresses.
-	// This field is deprecated, use private_cluster_config.enabled instead.
+	// This field is deprecated, use
+	// private_cluster_config.enable_private_nodes
+	// instead.
 	PrivateCluster bool `json:"privateCluster,omitempty"`
 
 	// PrivateClusterConfig: Configuration for private cluster.
@@ -2798,16 +2800,20 @@ type PrivateClusterConfig struct {
 	// used as the cluster endpoint.
 	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
 
-	// EnablePrivateNodes: Whether nodes have only private IP addresses, and
-	// communicate with the
-	// master via private networking.
+	// EnablePrivateNodes: Whether nodes have internal IP addresses only. If
+	// enabled, all nodes are
+	// given only RFC 1918 private addresses and communicate with the master
+	// via
+	// private networking.
 	EnablePrivateNodes bool `json:"enablePrivateNodes,omitempty"`
 
-	// MasterIpv4CidrBlock: The IP prefix in CIDR notation to use for the
+	// MasterIpv4CidrBlock: The IP range in CIDR notation to use for the
 	// hosted master network. This
-	// prefix will be used for assigning private IP addresses to the master
+	// range will be used for assigning internal IP addresses to the master
 	// or
-	// set of masters, as well as the ILB VIP.
+	// set of masters, as well as the ILB VIP. This range must not overlap
+	// with
+	// any other ranges in use within the cluster's network.
 	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
 
 	// PrivateEndpoint: Output only. The internal IP address of this
@@ -3760,6 +3766,7 @@ type StatusCondition struct {
 	//   "GKE_SERVICE_ACCOUNT_DELETED" - GKE_SERVICE_ACCOUNT_DELETED
 	// indicates that the user deleted their robot
 	// service account.
+	//   "GCE_QUOTA_EXCEEDED" - GCE quota was exceeded.
 	// More codes TBA
 	Code string `json:"code,omitempty"`
 

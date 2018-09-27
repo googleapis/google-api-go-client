@@ -1452,7 +1452,7 @@
       }
     }
   },
-  "revision": "20180916",
+  "revision": "20180922",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2712,7 +2712,7 @@
           "type": "object"
         },
         "type": {
-          "description": "Required. The monitored resource type. This field must match the type field of a MonitoredResourceDescriptor object. For example, the type of a Compute Engine VM instance is gce_instance.",
+          "description": "Required. The monitored resource type. This field must match the type field of a MonitoredResourceDescriptor object. For example, the type of a Compute Engine VM instance is gce_instance. For a list of types, see Monitoring resource types and Logging resource types.",
           "type": "string"
         }
       },

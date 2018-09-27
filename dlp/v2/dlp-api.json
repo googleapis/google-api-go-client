@@ -527,6 +527,11 @@
                 "parent"
               ],
               "parameters": {
+                "orderBy": {
+                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
@@ -946,6 +951,11 @@
               "parameters": {
                 "filter": {
                   "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n\nThe length of this field should be no more than 500 characters.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "orderBy": {
+                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
                   "location": "query",
                   "type": "string"
                 },
@@ -1411,6 +1421,11 @@
                 "parent"
               ],
               "parameters": {
+                "orderBy": {
+                  "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
                   "format": "int32",
@@ -1471,7 +1486,7 @@
       }
     }
   },
-  "revision": "20180918",
+  "revision": "20180925",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2221,13 +2236,14 @@
           "description": "A list of phrases to detect as a CustomInfoType."
         },
         "exclusionType": {
+          "description": "If set to EXCLUSION_TYPE_EXCLUDE this infoType will not cause a finding\nto be returned. It still can be used for rules matching.",
           "enum": [
             "EXCLUSION_TYPE_UNSPECIFIED",
             "EXCLUSION_TYPE_EXCLUDE"
           ],
           "enumDescriptions": [
-            "",
-            ""
+            "A finding of this custom info type will not be excluded from results.",
+            "A finding of this custom info type will be excluded from final results,\nbut can still affect rule execution."
           ],
           "type": "string"
         },

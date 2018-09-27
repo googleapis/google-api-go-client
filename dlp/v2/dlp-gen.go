@@ -1720,9 +1720,16 @@ type GooglePrivacyDlpV2CustomInfoType struct {
 	// Dictionary: A list of phrases to detect as a CustomInfoType.
 	Dictionary *GooglePrivacyDlpV2Dictionary `json:"dictionary,omitempty"`
 
+	// ExclusionType: If set to EXCLUSION_TYPE_EXCLUDE this infoType will
+	// not cause a finding
+	// to be returned. It still can be used for rules matching.
+	//
 	// Possible values:
-	//   "EXCLUSION_TYPE_UNSPECIFIED"
-	//   "EXCLUSION_TYPE_EXCLUDE"
+	//   "EXCLUSION_TYPE_UNSPECIFIED" - A finding of this custom info type
+	// will not be excluded from results.
+	//   "EXCLUSION_TYPE_EXCLUDE" - A finding of this custom info type will
+	// be excluded from final results,
+	// but can still affect rule execution.
 	ExclusionType string `json:"exclusionType,omitempty"`
 
 	// InfoType: CustomInfoType can either be a new infoType, or an
@@ -9594,6 +9601,29 @@ func (r *OrganizationsStoredInfoTypesService) List(parent string) *Organizations
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc, display_name, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the most recent version of
+// the
+// resource was created.
+// - `state`: corresponds to the state of the resource.
+// - `name`: corresponds to resource name.
+// - `display_name`: corresponds to info type's display name.
+func (c *OrganizationsStoredInfoTypesListCall) OrderBy(orderBy string) *OrganizationsStoredInfoTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -9715,6 +9745,11 @@ func (c *OrganizationsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) 
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",
@@ -11747,6 +11782,27 @@ func (c *ProjectsDlpJobsListCall) Filter(filter string) *ProjectsDlpJobsListCall
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc, end_time asc, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the job was created.
+// - `end_time`: corresponds to time the job ended.
+// - `name`: corresponds to job's name.
+// - `state`: corresponds to `state`
+func (c *ProjectsDlpJobsListCall) OrderBy(orderBy string) *ProjectsDlpJobsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
 func (c *ProjectsDlpJobsListCall) PageSize(pageSize int64) *ProjectsDlpJobsListCall {
@@ -11879,6 +11935,11 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, end_time asc, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the job was created.\n- `end_time`: corresponds to time the job ended.\n- `name`: corresponds to job's name.\n- `state`: corresponds to `state`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14061,6 +14122,29 @@ func (r *ProjectsStoredInfoTypesService) List(parent string) *ProjectsStoredInfo
 	return c
 }
 
+// OrderBy sets the optional parameter "orderBy": Optional comma
+// separated list of fields to order by,
+// followed by `asc` or `desc` postfix. This list is
+// case-insensitive,
+// default sorting order is ascending, redundant space characters
+// are
+// insignificant.
+//
+// Example: `name asc, display_name, create_time desc`
+//
+// Supported fields are:
+//
+// - `create_time`: corresponds to time the most recent version of
+// the
+// resource was created.
+// - `state`: corresponds to the state of the resource.
+// - `name`: corresponds to resource name.
+// - `display_name`: corresponds to info type's display name.
+func (c *ProjectsStoredInfoTypesListCall) OrderBy(orderBy string) *ProjectsStoredInfoTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Optional size of the
 // page, can be limited by server. If zero server returns
 // a page of max size 100.
@@ -14182,6 +14266,11 @@ func (c *ProjectsStoredInfoTypesListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "orderBy": {
+	//       "description": "Optional comma separated list of fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc, display_name, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the most recent version of the\nresource was created.\n- `state`: corresponds to the state of the resource.\n- `name`: corresponds to resource name.\n- `display_name`: corresponds to info type's display name.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Optional size of the page, can be limited by server. If zero server returns\na page of max size 100.",
 	//       "format": "int32",

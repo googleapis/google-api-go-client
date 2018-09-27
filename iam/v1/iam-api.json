@@ -1081,7 +1081,7 @@
       }
     }
   },
-  "revision": "20180830",
+  "revision": "20180920",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1706,7 +1706,7 @@
           "type": "string"
         },
         "stage": {
-          "description": "The current launch stage of the role.",
+          "description": "The current launch stage of the role. If the `ALPHA` launch stage has been\nselected for a role, the `stage` field will not be included in the\nreturned definition for the role.",
           "enum": [
             "ALPHA",
             "BETA",
@@ -1716,12 +1716,12 @@
             "EAP"
           ],
           "enumDescriptions": [
-            "The user has indicated this role is currently in an alpha phase.",
-            "The user has indicated this role is currently in a beta phase.",
+            "The user has indicated this role is currently in an Alpha phase. If this\nlaunch stage is selected, the `stage` field will not be included when\nrequesting the definition for a given role.",
+            "The user has indicated this role is currently in a Beta phase.",
             "The user has indicated this role is generally available.",
             "The user has indicated this role is being deprecated.",
             "This role is disabled and will not contribute permissions to any members\nit is granted to in policies.",
-            "The user has indicated this role is currently in an eap phase."
+            "The user has indicated this role is currently in an EAP phase."
           ],
           "type": "string"
         },

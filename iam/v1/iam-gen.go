@@ -1540,12 +1540,19 @@ type Role struct {
 	// roles.
 	Name string `json:"name,omitempty"`
 
-	// Stage: The current launch stage of the role.
+	// Stage: The current launch stage of the role. If the `ALPHA` launch
+	// stage has been
+	// selected for a role, the `stage` field will not be included in
+	// the
+	// returned definition for the role.
 	//
 	// Possible values:
-	//   "ALPHA" - The user has indicated this role is currently in an alpha
-	// phase.
-	//   "BETA" - The user has indicated this role is currently in a beta
+	//   "ALPHA" - The user has indicated this role is currently in an Alpha
+	// phase. If this
+	// launch stage is selected, the `stage` field will not be included
+	// when
+	// requesting the definition for a given role.
+	//   "BETA" - The user has indicated this role is currently in a Beta
 	// phase.
 	//   "GA" - The user has indicated this role is generally available.
 	//   "DEPRECATED" - The user has indicated this role is being
@@ -1553,7 +1560,7 @@ type Role struct {
 	//   "DISABLED" - This role is disabled and will not contribute
 	// permissions to any members
 	// it is granted to in policies.
-	//   "EAP" - The user has indicated this role is currently in an eap
+	//   "EAP" - The user has indicated this role is currently in an EAP
 	// phase.
 	Stage string `json:"stage,omitempty"`
 

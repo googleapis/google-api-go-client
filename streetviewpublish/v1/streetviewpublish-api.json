@@ -347,7 +347,7 @@
       }
     }
   },
-  "revision": "20180924",
+  "revision": "20180927",
   "rootUrl": "https://streetviewpublish.googleapis.com/",
   "schemas": {
     "BatchDeletePhotosRequest": {
@@ -620,7 +620,7 @@
       "id": "Pose",
       "properties": {
         "accuracyMeters": {
-          "description": "The estimated horizontal accuracy of this pose in meters with 68% (one\nstandard deviation) confidence. For more information, see:\nhttps://developer.android.com/reference/android/location/Location#getAccuracy()",
+          "description": "The estimated horizontal accuracy of this pose in meters with 68%\nconfidence (one standard deviation). For example, on Android, this value is\navailable from this method:\nhttps://developer.android.com/reference/android/location/Location#getAccuracy().\nOther platforms have different methods of obtaining similar accuracy\nestimations.",
           "format": "float",
           "type": "number"
         },

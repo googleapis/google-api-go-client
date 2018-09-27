@@ -2690,7 +2690,8 @@ type MonitoredResource struct {
 
 	// Type: Required. The monitored resource type. This field must match
 	// the type field of a MonitoredResourceDescriptor object. For example,
-	// the type of a Compute Engine VM instance is gce_instance.
+	// the type of a Compute Engine VM instance is gce_instance. For a list
+	// of types, see Monitoring resource types and Logging resource types.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Labels") to

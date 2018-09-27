@@ -245,7 +245,7 @@
       }
     }
   },
-  "revision": "20180907",
+  "revision": "20180922",
   "rootUrl": "https://serviceuser.googleapis.com/",
   "schemas": {
     "Api": {
@@ -909,14 +909,6 @@
           "description": "Maps to HTTP GET. Used for listing and getting information about\nresources.",
           "type": "string"
         },
-        "mediaDownload": {
-          "$ref": "MediaDownload",
-          "description": "Use this only for Scotty Requests. Do not use this for bytestream methods.\nFor media support, add instead [][google.bytestream.RestByteStream] as an\nAPI to your configuration."
-        },
-        "mediaUpload": {
-          "$ref": "MediaUpload",
-          "description": "Use this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead\n[][google.bytestream.RestByteStream] as an API to your\nconfiguration for Bytestream methods."
-        },
         "patch": {
           "description": "Maps to HTTP PATCH. Used for updating a resource.",
           "type": "string"
@@ -1047,81 +1039,6 @@
         },
         "monitoredResource": {
           "description": "The monitored resource type. The type must be defined in the\nService.monitored_resources section.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "MediaDownload": {
-      "description": "Defines the Media configuration for a service in case of a download.\nUse this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead [][google.bytestream.RestByteStream] as an API to\nyour configuration for Bytestream methods.",
-      "id": "MediaDownload",
-      "properties": {
-        "completeNotification": {
-          "description": "A boolean that determines whether a notification for the completion of a\ndownload should be sent to the backend.",
-          "type": "boolean"
-        },
-        "downloadService": {
-          "description": "DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING IS REMOVED.\n\nSpecify name of the download service if one is used for download.",
-          "type": "string"
-        },
-        "dropzone": {
-          "description": "Name of the Scotty dropzone to use for the current API.",
-          "type": "string"
-        },
-        "enabled": {
-          "description": "Whether download is enabled.",
-          "type": "boolean"
-        },
-        "maxDirectDownloadSize": {
-          "description": "Optional maximum acceptable size for direct download.\nThe size is specified in bytes.",
-          "format": "int64",
-          "type": "string"
-        },
-        "useDirectDownload": {
-          "description": "A boolean that determines if direct download from ESF should be used for\ndownload of this media.",
-          "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "MediaUpload": {
-      "description": "Defines the Media configuration for a service in case of an upload.\nUse this only for Scotty Requests. Do not use this for media support using\nBytestream, add instead [][google.bytestream.RestByteStream] as an API to\nyour configuration for Bytestream methods.",
-      "id": "MediaUpload",
-      "properties": {
-        "completeNotification": {
-          "description": "A boolean that determines whether a notification for the completion of an\nupload should be sent to the backend. These notifications will not be seen\nby the client and will not consume quota.",
-          "type": "boolean"
-        },
-        "dropzone": {
-          "description": "Name of the Scotty dropzone to use for the current API.",
-          "type": "string"
-        },
-        "enabled": {
-          "description": "Whether upload is enabled.",
-          "type": "boolean"
-        },
-        "maxSize": {
-          "description": "Optional maximum acceptable size for an upload.\nThe size is specified in bytes.",
-          "format": "int64",
-          "type": "string"
-        },
-        "mimeTypes": {
-          "description": "An array of mimetype patterns. Esf will only accept uploads that match one\nof the given patterns.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "progressNotification": {
-          "description": "Whether to receive a notification for progress changes of media upload.",
-          "type": "boolean"
-        },
-        "startNotification": {
-          "description": "Whether to receive a notification on the start of media upload.",
-          "type": "boolean"
-        },
-        "uploadService": {
-          "description": "DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING IS REMOVED.\n\nSpecify name of the upload service if one is used for upload.",
           "type": "string"
         }
       },
@@ -1523,7 +1440,7 @@
       "type": "object"
     },
     "Quota": {
-      "description": "Quota configuration helps to achieve fairness and budgeting in service\nusage.\n\nThe quota configuration works this way:\n- The service configuration defines a set of metrics.\n- For API calls, the quota.metric_rules maps methods to metrics with\n  corresponding costs.\n- The quota.limits defines limits on the metrics, which will be used for\n  quota checks at runtime.\n\nAn example quota configuration in yaml format:\n\n   quota:\n\n     - name: apiWriteQpsPerProject\n       metric: library.googleapis.com/write_calls\n       unit: \"1/min/{project}\"  # rate limit for consumer projects\n       values:\n         STANDARD: 10000\n\n\n     # The metric rules bind all methods to the read_calls metric,\n     # except for the UpdateBook and DeleteBook methods. These two methods\n     # are mapped to the write_calls metric, with the UpdateBook method\n     # consuming at twice rate as the DeleteBook method.\n     metric_rules:\n     - selector: \"*\"\n       metric_costs:\n         library.googleapis.com/read_calls: 1\n     - selector: google.example.library.v1.LibraryService.UpdateBook\n       metric_costs:\n         library.googleapis.com/write_calls: 2\n     - selector: google.example.library.v1.LibraryService.DeleteBook\n       metric_costs:\n         library.googleapis.com/write_calls: 1\n\n Corresponding Metric definition:\n\n     metrics:\n     - name: library.googleapis.com/read_calls\n       display_name: Read requests\n       metric_kind: DELTA\n       value_type: INT64\n\n     - name: library.googleapis.com/write_calls\n       display_name: Write requests\n       metric_kind: DELTA\n       value_type: INT64",
+      "description": "Quota configuration helps to achieve fairness and budgeting in service\nusage.\n\nThe quota configuration works this way:\n- The service configuration defines a set of metrics.\n- For API calls, the quota.metric_rules maps methods to metrics with\n  corresponding costs.\n- The quota.limits defines limits on the metrics, which will be used for\n  quota checks at runtime.\n\nAn example quota configuration in yaml format:\n\n   quota:\n     limits:\n\n     - name: apiWriteQpsPerProject\n       metric: library.googleapis.com/write_calls\n       unit: \"1/min/{project}\"  # rate limit for consumer projects\n       values:\n         STANDARD: 10000\n\n\n     # The metric rules bind all methods to the read_calls metric,\n     # except for the UpdateBook and DeleteBook methods. These two methods\n     # are mapped to the write_calls metric, with the UpdateBook method\n     # consuming at twice rate as the DeleteBook method.\n     metric_rules:\n     - selector: \"*\"\n       metric_costs:\n         library.googleapis.com/read_calls: 1\n     - selector: google.example.library.v1.LibraryService.UpdateBook\n       metric_costs:\n         library.googleapis.com/write_calls: 2\n     - selector: google.example.library.v1.LibraryService.DeleteBook\n       metric_costs:\n         library.googleapis.com/write_calls: 1\n\n Corresponding Metric definition:\n\n     metrics:\n     - name: library.googleapis.com/read_calls\n       display_name: Read requests\n       metric_kind: DELTA\n       value_type: INT64\n\n     - name: library.googleapis.com/write_calls\n       display_name: Write requests\n       metric_kind: DELTA\n       value_type: INT64",
       "id": "Quota",
       "properties": {
         "limits": {

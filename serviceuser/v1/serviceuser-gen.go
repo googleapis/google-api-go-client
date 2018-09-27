@@ -1872,20 +1872,6 @@ type HttpRule struct {
 	// resources.
 	Get string `json:"get,omitempty"`
 
-	// MediaDownload: Use this only for Scotty Requests. Do not use this for
-	// bytestream methods.
-	// For media support, add instead [][google.bytestream.RestByteStream]
-	// as an
-	// API to your configuration.
-	MediaDownload *MediaDownload `json:"mediaDownload,omitempty"`
-
-	// MediaUpload: Use this only for Scotty Requests. Do not use this for
-	// media support using
-	// Bytestream, add instead
-	// [][google.bytestream.RestByteStream] as an API to your
-	// configuration for Bytestream methods.
-	MediaUpload *MediaUpload `json:"mediaUpload,omitempty"`
-
 	// Patch: Maps to HTTP PATCH. Used for updating a resource.
 	Patch string `json:"patch,omitempty"`
 
@@ -2181,135 +2167,6 @@ type LoggingDestination struct {
 
 func (s *LoggingDestination) MarshalJSON() ([]byte, error) {
 	type NoMethod LoggingDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MediaDownload: Defines the Media configuration for a service in case
-// of a download.
-// Use this only for Scotty Requests. Do not use this for media support
-// using
-// Bytestream, add instead [][google.bytestream.RestByteStream] as an
-// API to
-// your configuration for Bytestream methods.
-type MediaDownload struct {
-	// CompleteNotification: A boolean that determines whether a
-	// notification for the completion of a
-	// download should be sent to the backend.
-	CompleteNotification bool `json:"completeNotification,omitempty"`
-
-	// DownloadService: DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING
-	// IS REMOVED.
-	//
-	// Specify name of the download service if one is used for download.
-	DownloadService string `json:"downloadService,omitempty"`
-
-	// Dropzone: Name of the Scotty dropzone to use for the current API.
-	Dropzone string `json:"dropzone,omitempty"`
-
-	// Enabled: Whether download is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// MaxDirectDownloadSize: Optional maximum acceptable size for direct
-	// download.
-	// The size is specified in bytes.
-	MaxDirectDownloadSize int64 `json:"maxDirectDownloadSize,omitempty,string"`
-
-	// UseDirectDownload: A boolean that determines if direct download from
-	// ESF should be used for
-	// download of this media.
-	UseDirectDownload bool `json:"useDirectDownload,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompleteNotification") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteNotification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MediaDownload) MarshalJSON() ([]byte, error) {
-	type NoMethod MediaDownload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// MediaUpload: Defines the Media configuration for a service in case of
-// an upload.
-// Use this only for Scotty Requests. Do not use this for media support
-// using
-// Bytestream, add instead [][google.bytestream.RestByteStream] as an
-// API to
-// your configuration for Bytestream methods.
-type MediaUpload struct {
-	// CompleteNotification: A boolean that determines whether a
-	// notification for the completion of an
-	// upload should be sent to the backend. These notifications will not be
-	// seen
-	// by the client and will not consume quota.
-	CompleteNotification bool `json:"completeNotification,omitempty"`
-
-	// Dropzone: Name of the Scotty dropzone to use for the current API.
-	Dropzone string `json:"dropzone,omitempty"`
-
-	// Enabled: Whether upload is enabled.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// MaxSize: Optional maximum acceptable size for an upload.
-	// The size is specified in bytes.
-	MaxSize int64 `json:"maxSize,omitempty,string"`
-
-	// MimeTypes: An array of mimetype patterns. Esf will only accept
-	// uploads that match one
-	// of the given patterns.
-	MimeTypes []string `json:"mimeTypes,omitempty"`
-
-	// ProgressNotification: Whether to receive a notification for progress
-	// changes of media upload.
-	ProgressNotification bool `json:"progressNotification,omitempty"`
-
-	// StartNotification: Whether to receive a notification on the start of
-	// media upload.
-	StartNotification bool `json:"startNotification,omitempty"`
-
-	// UploadService: DO NOT USE FIELDS BELOW THIS LINE UNTIL THIS WARNING
-	// IS REMOVED.
-	//
-	// Specify name of the upload service if one is used for upload.
-	UploadService string `json:"uploadService,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CompleteNotification") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompleteNotification") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MediaUpload) MarshalJSON() ([]byte, error) {
-	type NoMethod MediaUpload
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3334,6 +3191,7 @@ func (s *PublishedService) MarshalJSON() ([]byte, error) {
 // An example quota configuration in yaml format:
 //
 //    quota:
+//      limits:
 //
 //      - name: apiWriteQpsPerProject
 //        metric: library.googleapis.com/write_calls

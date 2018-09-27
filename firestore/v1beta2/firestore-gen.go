@@ -94,6 +94,7 @@ type ProjectsService struct {
 
 func NewProjectsDatabasesService(s *Service) *ProjectsDatabasesService {
 	rs := &ProjectsDatabasesService{s: s}
+	rs.CollectionGroup = NewProjectsDatabasesCollectionGroupService(s)
 	rs.CollectionGroups = NewProjectsDatabasesCollectionGroupsService(s)
 	return rs
 }
@@ -101,7 +102,30 @@ func NewProjectsDatabasesService(s *Service) *ProjectsDatabasesService {
 type ProjectsDatabasesService struct {
 	s *Service
 
+	CollectionGroup *ProjectsDatabasesCollectionGroupService
+
 	CollectionGroups *ProjectsDatabasesCollectionGroupsService
+}
+
+func NewProjectsDatabasesCollectionGroupService(s *Service) *ProjectsDatabasesCollectionGroupService {
+	rs := &ProjectsDatabasesCollectionGroupService{s: s}
+	rs.Indexes = NewProjectsDatabasesCollectionGroupIndexesService(s)
+	return rs
+}
+
+type ProjectsDatabasesCollectionGroupService struct {
+	s *Service
+
+	Indexes *ProjectsDatabasesCollectionGroupIndexesService
+}
+
+func NewProjectsDatabasesCollectionGroupIndexesService(s *Service) *ProjectsDatabasesCollectionGroupIndexesService {
+	rs := &ProjectsDatabasesCollectionGroupIndexesService{s: s}
+	return rs
+}
+
+type ProjectsDatabasesCollectionGroupIndexesService struct {
+	s *Service
 }
 
 func NewProjectsDatabasesCollectionGroupsService(s *Service) *ProjectsDatabasesCollectionGroupsService {
@@ -935,6 +959,350 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "firestore.projects.databases.collectionGroup.indexes.create":
+
+type ProjectsDatabasesCollectionGroupIndexesCreateCall struct {
+	s                                *Service
+	parent                           string
+	googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Create: Creates a composite index. This returns a
+// google.longrunning.Operation
+// which may be used to track the status of the creation. The metadata
+// for
+// the operation will be the type IndexOperationMetadata.
+func (r *ProjectsDatabasesCollectionGroupIndexesService) Create(parent string, googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index) *ProjectsDatabasesCollectionGroupIndexesCreateCall {
+	c := &ProjectsDatabasesCollectionGroupIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlefirestoreadminv1beta2index = googlefirestoreadminv1beta2index
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesCollectionGroupIndexesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupIndexesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesCollectionGroupIndexesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupIndexesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesCollectionGroupIndexesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCollectionGroupIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2index)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+parent}/indexes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.collectionGroup.indexes.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesCollectionGroupIndexesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a composite index. This returns a google.longrunning.Operation\nwhich may be used to track the status of the creation. The metadata for\nthe operation will be the type IndexOperationMetadata.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroup/{collectionGroupId}/indexes",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.collectionGroup.indexes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroup/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+parent}/indexes",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1beta2Index"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.collectionGroup.indexes.list":
+
+type ProjectsDatabasesCollectionGroupIndexesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists composite indexes.
+func (r *ProjectsDatabasesCollectionGroupIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c := &ProjectsDatabasesCollectionGroupIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to
+// list results.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The number of
+// results to return.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) PageSize(pageSize int64) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// returned from a previous call to
+// FirestoreAdmin.ListIndexes, that may be used to get the next
+// page of results.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupIndexesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+parent}/indexes")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("GET", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.collectionGroup.indexes.list" call.
+// Exactly one of *GoogleFirestoreAdminV1beta2ListIndexesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleFirestoreAdminV1beta2ListIndexesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2ListIndexesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleFirestoreAdminV1beta2ListIndexesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists composite indexes.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroup/{collectionGroupId}/indexes",
+	//   "httpMethod": "GET",
+	//   "id": "firestore.projects.databases.collectionGroup.indexes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "The filter to apply to list results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "The number of results to return.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListIndexes, that may be used to get the next\npage of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroup/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+parent}/indexes",
+	//   "response": {
+	//     "$ref": "GoogleFirestoreAdminV1beta2ListIndexesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsDatabasesCollectionGroupIndexesListCall) Pages(ctx context.Context, f func(*GoogleFirestoreAdminV1beta2ListIndexesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "firestore.projects.databases.collectionGroups.fields.get":
 
 type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
@@ -1464,147 +1832,6 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.
 
 }
 
-// method id "firestore.projects.databases.collectionGroups.indexes.create":
-
-type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
-	s                                *Service
-	parent                           string
-	googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index
-	urlParams_                       gensupport.URLParams
-	ctx_                             context.Context
-	header_                          http.Header
-}
-
-// Create: Creates a composite index. This returns a
-// google.longrunning.Operation
-// which may be used to track the status of the creation. The metadata
-// for
-// the operation will be the type IndexOperationMetadata.
-func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
-	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlefirestoreadminv1beta2index = googlefirestoreadminv1beta2index
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2index)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+parent}/indexes")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("POST", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firestore.projects.databases.collectionGroups.indexes.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleLongrunningOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a composite index. This returns a google.longrunning.Operation\nwhich may be used to track the status of the creation. The metadata for\nthe operation will be the type IndexOperationMetadata.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
-	//   "httpMethod": "POST",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+parent}/indexes",
-	//   "request": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2Index"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
-}
-
 // method id "firestore.projects.databases.collectionGroups.indexes.delete":
 
 type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
@@ -1871,207 +2098,4 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Do(opts ...googleapi.C
 	//   ]
 	// }
 
-}
-
-// method id "firestore.projects.databases.collectionGroups.indexes.list":
-
-type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists composite indexes.
-func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The number of
-// results to return.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageSize(pageSize int64) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A page token,
-// returned from a previous call to
-// FirestoreAdmin.ListIndexes, that may be used to get the next
-// page of results.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+parent}/indexes")
-	urls += "?" + c.urlParams_.Encode()
-	req, _ := http.NewRequest("GET", urls, body)
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "firestore.projects.databases.collectionGroups.indexes.list" call.
-// Exactly one of *GoogleFirestoreAdminV1beta2ListIndexesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirestoreAdminV1beta2ListIndexesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2ListIndexesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &GoogleFirestoreAdminV1beta2ListIndexesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Lists composite indexes.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
-	//   "httpMethod": "GET",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The number of results to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListIndexes, that may be used to get the next\npage of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+parent}/indexes",
-	//   "response": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2ListIndexesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Pages(ctx context.Context, f func(*GoogleFirestoreAdminV1beta2ListIndexesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
 }

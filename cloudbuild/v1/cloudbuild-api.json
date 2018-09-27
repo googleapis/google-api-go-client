@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20180913",
+  "revision": "20180927",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -941,7 +941,7 @@
           "description": "Output only. Stores timing information for executing this build step."
         },
         "volumes": {
-          "description": "List of volumes to mount into the build step.\n\nEach volume will be created as an empty volume prior to execution of the\nbuild step. Upon completion of the build, volumes and their contents will\nbe discarded.\n\nUsing a named volume in only one step is not valid as it is indicative\nof a mis-configured build request.",
+          "description": "List of volumes to mount into the build step.\n\nEach volume is created as an empty volume prior to execution of the\nbuild step. Upon completion of the build, volumes and their contents are\ndiscarded.\n\nUsing a named volume in only one step is not valid as it is indicative\nof a build request with an incorrect configuration.",
           "items": {
             "$ref": "Volume"
           },
@@ -1264,7 +1264,7 @@
             "format": "byte",
             "type": "string"
           },
-          "description": "Map of environment variable name to its encrypted value.\n\nSecret environment variables must be unique across all of a build's\nsecrets, and must be used by at least one build step. Values can be at most\n1 KB in size. There can be at most ten secret values across all of a\nbuild's secrets.",
+          "description": "Map of environment variable name to its encrypted value.\n\nSecret environment variables must be unique across all of a build's\nsecrets, and must be used by at least one build step. Values can be at most\n2 KB in size. There can be at most ten secret values across all of a\nbuild's secrets.",
           "type": "object"
         }
       },

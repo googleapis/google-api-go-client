@@ -673,7 +673,7 @@ func (c *ProjectsServiceAccountsGenerateAccessTokenCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUsing `-` as a wildcard for the project will infer the project from\nthe account.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -810,7 +810,7 @@ func (c *ProjectsServiceAccountsGenerateIdTokenCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUsing `-` as a wildcard for the project will infer the project from\nthe account.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -948,7 +948,7 @@ func (c *ProjectsServiceAccountsGenerateIdentityBindingAccessTokenCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUse hyphen as placeholder for project id since there is no project context\nfor this API.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -1082,7 +1082,7 @@ func (c *ProjectsServiceAccountsSignBlobCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUsing `-` as a wildcard for the project will infer the project from\nthe account.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -1219,7 +1219,7 @@ func (c *ProjectsServiceAccountsSignJwtCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.\nUsing `-` as a wildcard for the project will infer the project from\nthe account.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,

@@ -712,11 +712,16 @@ func (s *Place) MarshalJSON() ([]byte, error) {
 // Pose: Raw pose measurement for an entity.
 type Pose struct {
 	// AccuracyMeters: The estimated horizontal accuracy of this pose in
-	// meters with 68% (one
-	// standard deviation) confidence. For more information,
-	// see:
-	// https://developer.android.com/reference/android/location/Location
-	// #getAccuracy()
+	// meters with 68%
+	// confidence (one standard deviation). For example, on Android, this
+	// value is
+	// available from this
+	// method:
+	// https://developer.android.com/reference/android/location/Locat
+	// ion#getAccuracy().
+	// Other platforms have different methods of obtaining similar
+	// accuracy
+	// estimations.
 	AccuracyMeters float64 `json:"accuracyMeters,omitempty"`
 
 	// Altitude: Altitude of the pose in meters above WGS84 ellipsoid.

@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+// +build go1.8
+
 // Package propagation implements X-Cloud-Trace-Context header propagation used
 // by Google Cloud products.
 package propagation

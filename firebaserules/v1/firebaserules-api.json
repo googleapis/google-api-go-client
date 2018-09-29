@@ -237,7 +237,7 @@
               ],
               "parameters": {
                 "executableVersion": {
-                  "description": "The requested runtime executable version.\nDefaults to FIREBASE_RULES_EXECUTABLE_V1",
+                  "description": "The requested runtime executable version.\nDefaults to FIREBASE_RULES_EXECUTABLE_V1.",
                   "enum": [
                     "RELEASE_EXECUTABLE_VERSION_UNSPECIFIED",
                     "FIREBASE_RULES_EXECUTABLE_V1",
@@ -470,7 +470,7 @@
       }
     }
   },
-  "revision": "20180605",
+  "revision": "20180927",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -593,6 +593,11 @@
         },
         "rulesetName": {
           "description": "`Ruleset` name associated with the `Release` executable.",
+          "type": "string"
+        },
+        "syncTime": {
+          "description": "Optional, indicates the freshness of the result. The response is\nguaranteed to be the latest within an interval up to the\nsync_time (inclusive).",
+          "format": "google-datetime",
           "type": "string"
         },
         "updateTime": {

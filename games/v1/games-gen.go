@@ -6338,6 +6338,13 @@ func (r *ApplicationsService) Played() *ApplicationsPlayedCall {
 	return c
 }
 
+// BuiltinGameId sets the optional parameter "builtinGameId": Override
+// used only by built-in games in Play Games application.
+func (c *ApplicationsPlayedCall) BuiltinGameId(builtinGameId string) *ApplicationsPlayedCall {
+	c.urlParams_.Set("builtinGameId", builtinGameId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -6395,6 +6402,13 @@ func (c *ApplicationsPlayedCall) Do(opts ...googleapi.CallOption) error {
 	//   "description": "Indicate that the the currently authenticated user is playing your application.",
 	//   "httpMethod": "POST",
 	//   "id": "games.applications.played",
+	//   "parameters": {
+	//     "builtinGameId": {
+	//       "description": "Override used only by built-in games in Play Games application.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "applications/played",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/games",

@@ -188,7 +188,7 @@ type GoogleCloudRedisV1OperationMetadata struct {
 	ApiVersion string `json:"apiVersion,omitempty"`
 
 	// CancelRequested: Specifies if cancellation was requested for the
-	// operaiton.
+	// operation.
 	CancelRequested bool `json:"cancelRequested,omitempty"`
 
 	// CreateTime: Creation timestamp.

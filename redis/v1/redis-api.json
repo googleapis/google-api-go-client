@@ -458,7 +458,7 @@
       }
     }
   },
-  "revision": "20180906",
+  "revision": "20180927",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -490,7 +490,7 @@
           "type": "string"
         },
         "cancelRequested": {
-          "description": "Specifies if cancellation was requested for the operaiton.",
+          "description": "Specifies if cancellation was requested for the operation.",
           "type": "boolean"
         },
         "createTime": {

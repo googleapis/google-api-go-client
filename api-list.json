@@ -2600,6 +2600,36 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "servicenetworking:v1beta",
+   "name": "servicenetworking",
+   "version": "v1beta",
+   "title": "Service Networking API",
+   "description": "The Service Networking API provides automatic management of network configurations necessary for certain services.",
+   "discoveryRestUrl": "https://servicenetworking.googleapis.com/$discovery/rest?version=v1beta",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/service-infrastructure/docs/service-networking/reference/rest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "servicenetworking:v1",
+   "name": "servicenetworking",
+   "version": "v1",
+   "title": "Service Networking API",
+   "description": "The Service Networking API provides automatic management of network configurations necessary for certain services.",
+   "discoveryRestUrl": "https://servicenetworking.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/service-infrastructure/docs/service-networking/reference/rest/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "serviceusage:v1",
    "name": "serviceusage",
    "version": "v1",

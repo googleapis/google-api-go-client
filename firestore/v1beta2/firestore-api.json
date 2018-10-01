@@ -111,85 +111,6 @@
       "resources": {
         "databases": {
           "resources": {
-            "collectionGroup": {
-              "resources": {
-                "indexes": {
-                  "methods": {
-                    "create": {
-                      "description": "Creates a composite index. This returns a google.longrunning.Operation\nwhich may be used to track the status of the creation. The metadata for\nthe operation will be the type IndexOperationMetadata.",
-                      "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroup/{collectionGroupId}/indexes",
-                      "httpMethod": "POST",
-                      "id": "firestore.projects.databases.collectionGroup.indexes.create",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroup/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1beta2/{+parent}/indexes",
-                      "request": {
-                        "$ref": "GoogleFirestoreAdminV1beta2Index"
-                      },
-                      "response": {
-                        "$ref": "GoogleLongrunningOperation"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/datastore"
-                      ]
-                    },
-                    "list": {
-                      "description": "Lists composite indexes.",
-                      "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroup/{collectionGroupId}/indexes",
-                      "httpMethod": "GET",
-                      "id": "firestore.projects.databases.collectionGroup.indexes.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "filter": {
-                          "description": "The filter to apply to list results.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "pageSize": {
-                          "description": "The number of results to return.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListIndexes, that may be used to get the next\npage of results.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroup/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1beta2/{+parent}/indexes",
-                      "response": {
-                        "$ref": "GoogleFirestoreAdminV1beta2ListIndexesResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/datastore"
-                      ]
-                    }
-                  }
-                }
-              }
-            },
             "collectionGroups": {
               "resources": {
                 "fields": {
@@ -301,6 +222,35 @@
                 },
                 "indexes": {
                   "methods": {
+                    "create": {
+                      "description": "Creates a composite index. This returns a google.longrunning.Operation\nwhich may be used to track the status of the creation. The metadata for\nthe operation will be the type IndexOperationMetadata.",
+                      "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
+                      "httpMethod": "POST",
+                      "id": "firestore.projects.databases.collectionGroups.indexes.create",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta2/{+parent}/indexes",
+                      "request": {
+                        "$ref": "GoogleFirestoreAdminV1beta2Index"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/datastore"
+                      ]
+                    },
                     "delete": {
                       "description": "Deletes a composite index.",
                       "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes/{indexesId}",
@@ -352,6 +302,48 @@
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/datastore"
                       ]
+                    },
+                    "list": {
+                      "description": "Lists composite indexes.",
+                      "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
+                      "httpMethod": "GET",
+                      "id": "firestore.projects.databases.collectionGroups.indexes.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "filter": {
+                          "description": "The filter to apply to list results.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "The number of results to return.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "A page token, returned from a previous call to\nFirestoreAdmin.ListIndexes, that may be used to get the next\npage of results.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "A parent name of the form\n`projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta2/{+parent}/indexes",
+                      "response": {
+                        "$ref": "GoogleFirestoreAdminV1beta2ListIndexesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/datastore"
+                      ]
                     }
                   }
                 }
@@ -362,7 +354,7 @@
       }
     }
   },
-  "revision": "20180910",
+  "revision": "20180919",
   "rootUrl": "https://firestore.googleapis.com/",
   "schemas": {
     "Empty": {

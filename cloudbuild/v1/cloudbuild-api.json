@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20180927",
+  "revision": "20181001",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -780,6 +780,13 @@
           "format": "int64",
           "type": "string"
         },
+        "env": {
+          "description": "A list of global environment variable definitions that will exist for all\nbuild steps in this build. If a variable is defined in both globally and in\na build step, the variable will use the build step value.\n\nThe elements are of the form \"KEY=VALUE\" for the environment variable \"KEY\"\nbeing given the value \"VALUE\".",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "logStreamingOption": {
           "description": "Option to define build log streaming behavior to Google Cloud\nStorage.",
           "enum": [
@@ -834,6 +841,13 @@
           ],
           "type": "string"
         },
+        "secretEnv": {
+          "description": "A list of global environment variables, which are encrypted using a Cloud\nKey Management Service crypto key. These values must be specified in the\nbuild's `Secret`. These variables will be available to all build steps\nin this build.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "sourceProvenanceHash": {
           "description": "Requested hash for SourceProvenance.",
           "enumDescriptions": [
@@ -862,6 +876,13 @@
             "Do not fail the build if error in substitutions checks."
           ],
           "type": "string"
+        },
+        "volumes": {
+          "description": "Global list of volumes to mount for ALL build steps\n\nEach volume is created as an empty volume prior to starting the build\nprocess. Upon completion of the build, volumes and their contents are\ndiscarded. Global volume names and paths cannot conflict with the volumes\ndefined a build step.\n\nUsing a global volume in a build with only one step is not valid as\nit is indicative of a build request with an incorrect configuration.",
+          "items": {
+            "$ref": "Volume"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -899,6 +920,10 @@
         "name": {
           "description": "Required. The name of the container image that will run this particular\nbuild step.\n\nIf the image is available in the host's Docker daemon's cache, it\nwill be run directly. If not, the host will attempt to pull the image\nfirst, using the builder service account's credentials if necessary.\n\nThe Docker daemon's cache will already have the latest versions of all of\nthe officially supported build steps\n([https://github.com/GoogleCloudPlatform/cloud-builders](https://github.com/GoogleCloudPlatform/cloud-builders)).\nThe Docker daemon will also have cached many of the layers for some popular\nimages, like \"ubuntu\", \"debian\", but they will be refreshed at the time you\nattempt to use them.\n\nIf you built an image in a previous build step, it will be stored in the\nhost's Docker daemon's cache and is available to use as the name for a\nlater build step.",
           "type": "string"
+        },
+        "pullTiming": {
+          "$ref": "TimeSpan",
+          "description": "Output only. Stores timing information for pulling this build step's\nbuilder image only."
         },
         "secretEnv": {
           "description": "A list of environment variables which are encrypted using a Cloud Key\nManagement Service crypto key. These values must be specified in the\nbuild's `Secret`.",
@@ -1264,7 +1289,7 @@
             "format": "byte",
             "type": "string"
           },
-          "description": "Map of environment variable name to its encrypted value.\n\nSecret environment variables must be unique across all of a build's\nsecrets, and must be used by at least one build step. Values can be at most\n2 KB in size. There can be at most ten secret values across all of a\nbuild's secrets.",
+          "description": "Map of environment variable name to its encrypted value.\n\nSecret environment variables must be unique across all of a build's\nsecrets, and must be used by at least one build step. Values can be at most\n64 KB in size. There can be at most 100 secret values across all of a\nbuild's secrets.",
           "type": "object"
         }
       },

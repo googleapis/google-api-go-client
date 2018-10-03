@@ -26,7 +26,7 @@
   "description": "Manipulates events and other calendar data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/google-apps/calendar/firstapp",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/O6MFETlqfCeObFZezUNM84-_9Qk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/sLMuvoBnESkB9rCN44a7T_y4ruQ\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/calendar-16.png",
     "x32": "http://www.google.com/images/icons/product/calendar-32.png"
@@ -801,9 +801,24 @@
               "type": "string"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the deletion of the event. Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the deletion of the event. Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Guests who should receive notifications about the deletion of the event.",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "calendars/{calendarId}/events/{eventId}",
@@ -932,9 +947,24 @@
               "type": "integer"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the creation of the new event. Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the new event. Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Whether to send notifications about the creation of the new event. Note that some emails might still be sent. The default is False.",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             },
             "supportsAttachments": {
               "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
@@ -1198,9 +1228,24 @@
               "type": "string"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the change of the event's organizer. Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the change of the event's organizer. Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Guests who should receive notifications about the change of the event's organizer.",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             }
           },
           "path": "calendars/{calendarId}/events/{eventId}/move",
@@ -1254,9 +1299,24 @@
               "type": "integer"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (e.g. description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Guests who should receive notifications about the event update (e.g., attendee responses, title changes, etc.).",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             },
             "supportsAttachments": {
               "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
@@ -1292,9 +1352,24 @@
               "type": "string"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the creation of the event. Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the event. Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Guests who should receive notifications about the creation of the new event.",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             },
             "text": {
               "description": "The text describing the event to be created.",
@@ -1354,9 +1429,24 @@
               "type": "integer"
             },
             "sendNotifications": {
-              "description": "Whether to send notifications about the event update (e.g. attendee's responses, title changes, etc.). Optional. The default is False.",
+              "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (e.g. description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is False.",
               "location": "query",
               "type": "boolean"
+            },
+            "sendUpdates": {
+              "description": "Guests who should receive notifications about the event update (e.g., attendee responses, title changes, etc.).",
+              "enum": [
+                "all",
+                "externalOnly",
+                "none"
+              ],
+              "enumDescriptions": [
+                "Notifications will be sent to all guests.",
+                "Notifications will be sent to non-Google Calendar guests only.",
+                "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+              ],
+              "location": "query",
+              "type": "string"
             },
             "supportsAttachments": {
               "description": "Whether API client performing operation supports event attachments. Optional. The default is False.",
@@ -1634,7 +1724,7 @@
       }
     }
   },
-  "revision": "20180916",
+  "revision": "20180923",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {

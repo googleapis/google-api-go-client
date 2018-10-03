@@ -1015,7 +1015,7 @@
       }
     }
   },
-  "revision": "20180918",
+  "revision": "20180928",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1651,7 +1651,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__PredictionInput": {
-      "description": "Represents input parameters for a prediction job.",
+      "description": "Represents input parameters for a prediction job. Next field: 19",
       "id": "GoogleCloudMlV1__PredictionInput",
       "properties": {
         "accelerator": {

@@ -1293,7 +1293,7 @@ func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__PredictionInput: Represents input parameters for a
-// prediction job.
+// prediction job. Next field: 19
 type GoogleCloudMlV1__PredictionInput struct {
 	// Accelerator: Optional. The type and number of accelerators to be
 	// attached to each

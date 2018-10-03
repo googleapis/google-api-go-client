@@ -332,11 +332,7 @@ type AdministratorWebTokenSpec struct {
 	// https.
 	Parent string `json:"parent,omitempty"`
 
-	// Permission: The list of permissions the admin is granted within the
-	// iframe. The admin will only be allowed to view an iframe if they have
-	// all of the permissions associated with it. The only valid value is
-	// "approveApps" that will allow the admin to access the iframe in
-	// "approve" mode.
+	// Permission: Deprecated. Use PlaySearch.approveApps.
 	Permission []string `json:"permission,omitempty"`
 
 	// PlaySearch: Options for displaying the Play Search page.
@@ -375,10 +371,14 @@ func (s *AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
 }
 
 type AdministratorWebTokenSpecPlaySearch struct {
+	// ApproveApps: Allow access to the iframe in approve mode. Default is
+	// false.
+	ApproveApps bool `json:"approveApps,omitempty"`
+
 	// Enabled: Whether the Play Search page is displayed. Default is true.
 	Enabled bool `json:"enabled,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// ForceSendFields is a list of field names (e.g. "ApproveApps") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -386,10 +386,10 @@ type AdministratorWebTokenSpecPlaySearch struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ApproveApps") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

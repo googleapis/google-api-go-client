@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20180907",
+  "revision": "20180928",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -4380,7 +4380,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\" or \"apparel\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {

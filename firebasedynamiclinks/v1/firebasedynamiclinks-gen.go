@@ -211,6 +211,10 @@ type CreateManagedShortLinkRequest struct {
 	// Links must be named to be tracked.
 	Name string `json:"name,omitempty"`
 
+	// SdkVersion: Google SDK version. Version takes the form
+	// "$major.$minor.$patch"
+	SdkVersion string `json:"sdkVersion,omitempty"`
+
 	// Suffix: Short Dynamic Link suffix. Optional.
 	Suffix *Suffix `json:"suffix,omitempty"`
 
@@ -299,6 +303,10 @@ type CreateShortDynamicLinkRequest struct {
 	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
 	// ortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
+
+	// SdkVersion: Google SDK version. Version takes the form
+	// "$major.$minor.$patch"
+	SdkVersion string `json:"sdkVersion,omitempty"`
 
 	// Suffix: Short Dynamic Link suffix. Optional.
 	Suffix *Suffix `json:"suffix,omitempty"`
@@ -756,7 +764,8 @@ type GetIosPostInstallAttributionRequest struct {
 	// API call.
 	RetrievalMethod string `json:"retrievalMethod,omitempty"`
 
-	// SdkVersion: Google SDK version.
+	// SdkVersion: Google SDK version. Version takes the form
+	// "$major.$minor.$patch"
 	SdkVersion string `json:"sdkVersion,omitempty"`
 
 	// UniqueMatchLinkToCheck: Possible unique matched link that server need
@@ -944,6 +953,10 @@ type GetIosReopenAttributionRequest struct {
 	// 3) Invite FDL.
 	// e.g. <app_code>.page.link/i/<invite_id_or_alias>
 	RequestedLink string `json:"requestedLink,omitempty"`
+
+	// SdkVersion: Google SDK version. Version takes the form
+	// "$major.$minor.$patch"
+	SdkVersion string `json:"sdkVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BundleId") to
 	// unconditionally include in API requests. By default, fields with
@@ -1662,6 +1675,13 @@ func (c *V1GetLinkStatsCall) DurationDays(durationDays int64) *V1GetLinkStatsCal
 	return c
 }
 
+// SdkVersion sets the optional parameter "sdkVersion": Google SDK
+// version. Version takes the form "$major.$minor.$patch"
+func (c *V1GetLinkStatsCall) SdkVersion(sdkVersion string) *V1GetLinkStatsCall {
+	c.urlParams_.Set("sdkVersion", sdkVersion)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1775,6 +1795,11 @@ func (c *V1GetLinkStatsCall) Do(opts ...googleapi.CallOption) (*DynamicLinkStats
 	//       "description": "Dynamic Link URL. e.g. https://abcd.app.goo.gl/wxyz",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sdkVersion": {
+	//       "description": "Google SDK version. Version takes the form \"$major.$minor.$patch\"",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

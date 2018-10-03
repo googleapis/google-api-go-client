@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/wnVF1M3mFvninDJmxw3IyfCInOE\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/b3sQEuTXitgH53KR5OMiuqs10Mw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2758,7 +2758,7 @@
       }
     }
   },
-  "revision": "20180912",
+  "revision": "20181001",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2802,7 +2802,7 @@
           "type": "string"
         },
         "permission": {
-          "description": "The list of permissions the admin is granted within the iframe. The admin will only be allowed to view an iframe if they have all of the permissions associated with it. The only valid value is \"approveApps\" that will allow the admin to access the iframe in \"approve\" mode.",
+          "description": "Deprecated. Use PlaySearch.approveApps.",
           "items": {
             "type": "string"
           },
@@ -2830,6 +2830,10 @@
     "AdministratorWebTokenSpecPlaySearch": {
       "id": "AdministratorWebTokenSpecPlaySearch",
       "properties": {
+        "approveApps": {
+          "description": "Allow access to the iframe in approve mode. Default is false.",
+          "type": "boolean"
+        },
         "enabled": {
           "description": "Whether the Play Search page is displayed. Default is true.",
           "type": "boolean"

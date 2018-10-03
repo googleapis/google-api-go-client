@@ -998,13 +998,17 @@ type TransferConfig struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: The resource name of the transfer config.
-	// Transfer config names have the
-	// form
-	// `projects/{project_id}/transferConfigs/{config_id}`.
-	// Where `config_id` is usually a uuid, even though it is not
-	// guaranteed or required. The name is ignored when creating a
-	// transfer
-	// config.
+	// Transfer config names have the form
+	// of
+	// `projects/{project_id}/location/{region}/transferConfigs/{config_id
+	// }`.
+	// The name is automatically generated based on the config_id specified
+	// in
+	// CreateTransferConfigRequest along with project_id and region. If
+	// config_id
+	// is not provided, usually a uuid, even though it is not guaranteed
+	// or
+	// required, will be generated for config_id.
 	Name string `json:"name,omitempty"`
 
 	// NextRunTime: Output only. Next time when data transfer will run.
@@ -2834,6 +2838,7 @@ func (c *ProjectsLocationsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -3347,7 +3352,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form\n`projects/{project_id}/transferConfigs/{config_id}`.\nWhere `config_id` is usually a uuid, even though it is not\nguaranteed or required. The name is ignored when creating a transfer\nconfig.",
+	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -4537,6 +4542,7 @@ func (c *ProjectsTransferConfigsDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
 	//     "https://www.googleapis.com/auth/cloud-platform"
 	//   ]
 	// }
@@ -5050,7 +5056,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form\n`projects/{project_id}/transferConfigs/{config_id}`.\nWhere `config_id` is usually a uuid, even though it is not\nguaranteed or required. The name is ignored when creating a transfer\nconfig.",
+	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,

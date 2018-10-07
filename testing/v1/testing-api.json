@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20180927",
+  "revision": "20181002",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -792,16 +792,16 @@
       "type": "object"
     },
     "Date": {
-      "description": "Represents a whole calendar date, for example date of birth. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. The day can be 0 to\nrepresent a year and month where the day is not significant, for example\ncredit card expiration date. The year can be 0 to represent a month and day\nindependent of year, for example anniversary date. Related types are\ngoogle.type.TimeOfDay and `google.protobuf.Timestamp`.",
+      "description": "Represents a whole or partial calendar date, e.g. a birthday. The time of day\nand time zone are either specified elsewhere or are not significant. The date\nis relative to the Proleptic Gregorian Calendar. This can represent:\n\n* A full date, with non-zero year, month and day values\n* A month and day value, with a zero year, e.g. an anniversary\n* A year on its own, with zero month and day values\n* A year and month value, with a zero day, e.g. a credit card expiration date\n\nRelated types are google.type.TimeOfDay and `google.protobuf.Timestamp`.",
       "id": "Date",
       "properties": {
         "day": {
-          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year/month where the day is not significant.",
+          "description": "Day of month. Must be from 1 to 31 and valid for the year and month, or 0\nif specifying a year by itself or a year and month where the day is not\nsignificant.",
           "format": "int32",
           "type": "integer"
         },
         "month": {
-          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a date without a\nmonth.",
+          "description": "Month of year. Must be from 1 to 12, or 0 if specifying a year without a\nmonth and day.",
           "format": "int32",
           "type": "integer"
         },
@@ -1002,6 +1002,13 @@
             "$ref": "IosVersion"
           },
           "type": "array"
+        },
+        "xcodeVersions": {
+          "description": "Output only. The set of supported Xcode versions.",
+          "items": {
+            "$ref": "XcodeVersion"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -1122,6 +1129,13 @@
           "format": "int32",
           "type": "integer"
         },
+        "supportedXcodeVersionIds": {
+          "description": "Output only. The available Xcode versions for this version.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "tags": {
           "description": "Output only. Tags for this dimension.\nExamples: \"default\", \"preview\", \"deprecated\"",
           "items": {
@@ -1139,6 +1153,10 @@
         "testsZip": {
           "$ref": "FileReference",
           "description": "Required. The .zip containing the .xctestrun file and the contents of the\nDerivedData/Build/Products directory.\nThe .xctestrun file in this zip is ignored if the xctestrun field is\nspecified."
+        },
+        "xcodeVersion": {
+          "description": "Optional. The Xcode version that should be used for the test.\nUse the EnvironmentDiscoveryService to get supported options.\nDefaults to the latest Xcode version Firebase Test Lab supports.",
+          "type": "string"
         },
         "xctestrun": {
           "$ref": "FileReference",
@@ -1509,6 +1527,7 @@
             "NO_TESTS_IN_XC_TEST_ZIP",
             "USE_DESTINATION_ARTIFACTS",
             "TEST_NOT_APP_HOSTED",
+            "PLIST_CANNOT_BE_PARSED",
             "TEST_ONLY_APK",
             "MALFORMED_IPA",
             "NO_CODE_APK",
@@ -1540,6 +1559,7 @@
             "The .xctestrun file did not specify any test targets.",
             "One or more of the test targets defined in the .xctestrun file specifies\n\"UseDestinationArtifacts\", which is disallowed.",
             "XC tests which run on physical devices must have\n\"IsAppHostedTestBundle\" == \"true\" in the xctestrun file.",
+            "An Info.plist file in the XCTest zip could not be parsed.",
             "The APK is marked as \"testOnly\".\nNOT USED",
             "The input IPA could not be parsed.\nNOT USED",
             "APK contains no code.\nSee also\nhttps://developer.android.com/guide/topics/manifest/application-element.html#code",
@@ -1785,6 +1805,24 @@
           "description": "Packet loss ratio (0.0 - 1.0)",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "XcodeVersion": {
+      "description": "An Xcode version that an iOS version is compatible with.",
+      "id": "XcodeVersion",
+      "properties": {
+        "tags": {
+          "description": "Output only. Tags for this Xcode version.\nExamples: \"default\"",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "version": {
+          "description": "Output only. The id for this version.\nExample: \"9.2\"",
+          "type": "string"
         }
       },
       "type": "object"

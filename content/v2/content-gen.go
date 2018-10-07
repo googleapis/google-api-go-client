@@ -4318,9 +4318,10 @@ type Order struct {
 	// PlacedDate: The date when the order was placed, in ISO 8601 format.
 	PlacedDate string `json:"placedDate,omitempty"`
 
-	// Promotions: The details of the merchant provided promotions applied
-	// to the order. More details about the program are here.
-	Promotions []*OrderPromotion `json:"promotions,omitempty"`
+	// Promotions: Deprecated. The details of the merchant provided
+	// promotions applied to the order. More details about the program are
+	// here.
+	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
 	// Refunds: Refunds for the order.
 	Refunds []*OrderRefund `json:"refunds,omitempty"`
@@ -4569,6 +4570,103 @@ type OrderDeliveryDetails struct {
 
 func (s *OrderDeliveryDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderDeliveryDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrderLegacyPromotion struct {
+	Benefits []*OrderLegacyPromotionBenefit `json:"benefits,omitempty"`
+
+	// EffectiveDates: The date and time frame when the promotion is active
+	// and ready for validation review. Note that the promotion live time
+	// may be delayed for a few hours due to the validation review.
+	// Start date and end date are separated by a forward slash (/). The
+	// start date is specified by the format (YYYY-MM-DD), followed by the
+	// letter ?T?, the time of the day when the sale starts (in Greenwich
+	// Mean Time, GMT), followed by an expression of the time zone for the
+	// sale. The end date is in the same format.
+	EffectiveDates string `json:"effectiveDates,omitempty"`
+
+	// GenericRedemptionCode: Optional. The text code that corresponds to
+	// the promotion when applied on the retailer?s website.
+	GenericRedemptionCode string `json:"genericRedemptionCode,omitempty"`
+
+	// Id: The unique ID of the promotion.
+	Id string `json:"id,omitempty"`
+
+	// LongTitle: The full title of the promotion.
+	LongTitle string `json:"longTitle,omitempty"`
+
+	// ProductApplicability: Whether the promotion is applicable to all
+	// products or only specific products.
+	ProductApplicability string `json:"productApplicability,omitempty"`
+
+	// RedemptionChannel: Indicates that the promotion is valid online.
+	RedemptionChannel string `json:"redemptionChannel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Benefits") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Benefits") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrderLegacyPromotion) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderLegacyPromotion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrderLegacyPromotionBenefit struct {
+	// Discount: The discount in the order price when the promotion is
+	// applied.
+	Discount *Price `json:"discount,omitempty"`
+
+	// OfferIds: The OfferId(s) that were purchased in this order and map to
+	// this specific benefit of the promotion.
+	OfferIds []string `json:"offerIds,omitempty"`
+
+	// SubType: Further describes the benefit of the promotion. Note that we
+	// will expand on this enumeration as we support new promotion
+	// sub-types.
+	SubType string `json:"subType,omitempty"`
+
+	// TaxImpact: The impact on tax when the promotion is applied.
+	TaxImpact *Price `json:"taxImpact,omitempty"`
+
+	// Type: Describes whether the promotion applies to products (e.g. 20%
+	// off) or to shipping (e.g. Free Shipping).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Discount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Discount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrderLegacyPromotionBenefit) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderLegacyPromotionBenefit
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4933,103 +5031,6 @@ type OrderPaymentMethod struct {
 
 func (s *OrderPaymentMethod) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderPaymentMethod
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type OrderPromotion struct {
-	Benefits []*OrderPromotionBenefit `json:"benefits,omitempty"`
-
-	// EffectiveDates: The date and time frame when the promotion is active
-	// and ready for validation review. Note that the promotion live time
-	// may be delayed for a few hours due to the validation review.
-	// Start date and end date are separated by a forward slash (/). The
-	// start date is specified by the format (YYYY-MM-DD), followed by the
-	// letter ?T?, the time of the day when the sale starts (in Greenwich
-	// Mean Time, GMT), followed by an expression of the time zone for the
-	// sale. The end date is in the same format.
-	EffectiveDates string `json:"effectiveDates,omitempty"`
-
-	// GenericRedemptionCode: Optional. The text code that corresponds to
-	// the promotion when applied on the retailer?s website.
-	GenericRedemptionCode string `json:"genericRedemptionCode,omitempty"`
-
-	// Id: The unique ID of the promotion.
-	Id string `json:"id,omitempty"`
-
-	// LongTitle: The full title of the promotion.
-	LongTitle string `json:"longTitle,omitempty"`
-
-	// ProductApplicability: Whether the promotion is applicable to all
-	// products or only specific products.
-	ProductApplicability string `json:"productApplicability,omitempty"`
-
-	// RedemptionChannel: Indicates that the promotion is valid online.
-	RedemptionChannel string `json:"redemptionChannel,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Benefits") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Benefits") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OrderPromotion) MarshalJSON() ([]byte, error) {
-	type NoMethod OrderPromotion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type OrderPromotionBenefit struct {
-	// Discount: The discount in the order price when the promotion is
-	// applied.
-	Discount *Price `json:"discount,omitempty"`
-
-	// OfferIds: The OfferId(s) that were purchased in this order and map to
-	// this specific benefit of the promotion.
-	OfferIds []string `json:"offerIds,omitempty"`
-
-	// SubType: Further describes the benefit of the promotion. Note that we
-	// will expand on this enumeration as we support new promotion
-	// sub-types.
-	SubType string `json:"subType,omitempty"`
-
-	// TaxImpact: The impact on tax when the promotion is applied.
-	TaxImpact *Price `json:"taxImpact,omitempty"`
-
-	// Type: Describes whether the promotion applies to products (e.g. 20%
-	// off) or to shipping (e.g. Free Shipping).
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Discount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Discount") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OrderPromotionBenefit) MarshalJSON() ([]byte, error) {
-	type NoMethod OrderPromotionBenefit
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -10764,9 +10765,10 @@ type TestOrder struct {
 	// delivery addresses for the delivery.
 	PredefinedDeliveryAddress string `json:"predefinedDeliveryAddress,omitempty"`
 
-	// Promotions: The details of the merchant provided promotions applied
-	// to the order. More details about the program are here.
-	Promotions []*OrderPromotion `json:"promotions,omitempty"`
+	// Promotions: Deprecated. The details of the merchant provided
+	// promotions applied to the order. More details about the program are
+	// here.
+	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
 	// ShippingCost: The total cost of shipping for all items.
 	ShippingCost *Price `json:"shippingCost,omitempty"`
@@ -18575,9 +18577,10 @@ type OrderreportsListdisbursementsCall struct {
 
 // Listdisbursements: Retrieves a report for disbursements from your
 // Merchant Center account.
-func (r *OrderreportsService) Listdisbursements(merchantId uint64) *OrderreportsListdisbursementsCall {
+func (r *OrderreportsService) Listdisbursements(merchantId uint64, disbursementStartDate string) *OrderreportsListdisbursementsCall {
 	c := &OrderreportsListdisbursementsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
+	c.urlParams_.Set("disbursementStartDate", disbursementStartDate)
 	return c
 }
 
@@ -18586,14 +18589,6 @@ func (r *OrderreportsService) Listdisbursements(merchantId uint64) *Orderreports
 // ISO 8601 format. Default: current date.
 func (c *OrderreportsListdisbursementsCall) DisbursementEndDate(disbursementEndDate string) *OrderreportsListdisbursementsCall {
 	c.urlParams_.Set("disbursementEndDate", disbursementEndDate)
-	return c
-}
-
-// DisbursementStartDate sets the optional parameter
-// "disbursementStartDate": The first date which disbursements occurred.
-// In ISO 8601 format.
-func (c *OrderreportsListdisbursementsCall) DisbursementStartDate(disbursementStartDate string) *OrderreportsListdisbursementsCall {
-	c.urlParams_.Set("disbursementStartDate", disbursementStartDate)
 	return c
 }
 
@@ -18711,7 +18706,8 @@ func (c *OrderreportsListdisbursementsCall) Do(opts ...googleapi.CallOption) (*O
 	//   "httpMethod": "GET",
 	//   "id": "content.orderreports.listdisbursements",
 	//   "parameterOrder": [
-	//     "merchantId"
+	//     "merchantId",
+	//     "disbursementStartDate"
 	//   ],
 	//   "parameters": {
 	//     "disbursementEndDate": {
@@ -18722,6 +18718,7 @@ func (c *OrderreportsListdisbursementsCall) Do(opts ...googleapi.CallOption) (*O
 	//     "disbursementStartDate": {
 	//       "description": "The first date which disbursements occurred. In ISO 8601 format.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
@@ -18789,10 +18786,11 @@ type OrderreportsListtransactionsCall struct {
 
 // Listtransactions: Retrieves a list of transactions for an
 // disbursement from your Merchant Center account.
-func (r *OrderreportsService) Listtransactions(merchantId uint64, disbursementId string) *OrderreportsListtransactionsCall {
+func (r *OrderreportsService) Listtransactions(merchantId uint64, disbursementId string, transactionStartDate string) *OrderreportsListtransactionsCall {
 	c := &OrderreportsListtransactionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
 	c.disbursementId = disbursementId
+	c.urlParams_.Set("transactionStartDate", transactionStartDate)
 	return c
 }
 
@@ -18815,14 +18813,6 @@ func (c *OrderreportsListtransactionsCall) PageToken(pageToken string) *Orderrep
 // Default: current date.
 func (c *OrderreportsListtransactionsCall) TransactionEndDate(transactionEndDate string) *OrderreportsListtransactionsCall {
 	c.urlParams_.Set("transactionEndDate", transactionEndDate)
-	return c
-}
-
-// TransactionStartDate sets the optional parameter
-// "transactionStartDate": The first date in which transaction occurred.
-// In ISO 8601 format.
-func (c *OrderreportsListtransactionsCall) TransactionStartDate(transactionStartDate string) *OrderreportsListtransactionsCall {
-	c.urlParams_.Set("transactionStartDate", transactionStartDate)
 	return c
 }
 
@@ -18928,7 +18918,8 @@ func (c *OrderreportsListtransactionsCall) Do(opts ...googleapi.CallOption) (*Or
 	//   "id": "content.orderreports.listtransactions",
 	//   "parameterOrder": [
 	//     "merchantId",
-	//     "disbursementId"
+	//     "disbursementId",
+	//     "transactionStartDate"
 	//   ],
 	//   "parameters": {
 	//     "disbursementId": {
@@ -18963,6 +18954,7 @@ func (c *OrderreportsListtransactionsCall) Do(opts ...googleapi.CallOption) (*Or
 	//     "transactionStartDate": {
 	//       "description": "The first date in which transaction occurred. In ISO 8601 format.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },

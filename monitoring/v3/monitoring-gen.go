@@ -1680,12 +1680,13 @@ func (s *HttpCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InternalChecker: Nimbus InternalCheckers.
+// InternalChecker: Nimbus InternalCheckers. The API currently only
+// allows reading of internal checkers, creation of internal checkers is
+// a manual process.
 type InternalChecker struct {
-	// CheckerId: The checker ID.
-	CheckerId string `json:"checkerId,omitempty"`
-
-	// DisplayName: The checker's human-readable name.
+	// DisplayName: The checker's human-readable name. The display name
+	// should be unique within a Stackdriver Workspace in order to make it
+	// easier to identify; however, uniqueness is not enforced.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// GcpZone: The GCP zone the uptime check should egress from. Only
@@ -1693,14 +1694,17 @@ type InternalChecker struct {
 	// specified.
 	GcpZone string `json:"gcpZone,omitempty"`
 
-	// Network: The internal network to perform this uptime check on.
+	// Name: A unique resource name for this InternalChecker. The format
+	// is:projects/[PROJECT_ID]/internalCheckers/[CHECKER_ID].PROJECT_ID is
+	// the GCP project ID where the internal resource lives. Not necessarily
+	// the same as the project_id for the config.
+	Name string `json:"name,omitempty"`
+
+	// Network: The GCP VPC network (https://cloud.google.com/vpc/docs/vpc)
+	// where the internal resource lives (ex: "default").
 	Network string `json:"network,omitempty"`
 
-	// ProjectId: The GCP project ID. Not necessarily the same as the
-	// project_id for the config.
-	ProjectId string `json:"projectId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CheckerId") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1708,10 +1712,10 @@ type InternalChecker struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CheckerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3681,7 +3685,7 @@ type UptimeCheckConfig struct {
 
 	// DisplayName: A human-friendly name for the uptime check
 	// configuration. The display name should be unique within a Stackdriver
-	// Account in order to make it easier to identify; however, uniqueness
+	// Workspace in order to make it easier to identify; however, uniqueness
 	// is not enforced. Required.
 	DisplayName string `json:"displayName,omitempty"`
 

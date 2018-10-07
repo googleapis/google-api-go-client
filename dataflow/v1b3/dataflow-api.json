@@ -1543,7 +1543,7 @@
       }
     }
   },
-  "revision": "20180828",
+  "revision": "20180926",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -3201,6 +3201,10 @@
       "description": "MapTask consists of an ordered set of instructions, each of which\ndescribes one particular low-level operation for the worker to\nperform in order to accomplish the MapTask's WorkItem.\n\nEach instruction must appear in the list before any instructions which\ndepends on its output.",
       "id": "MapTask",
       "properties": {
+        "counterPrefix": {
+          "description": "Counter prefix that can be used to prefix counters. Not currently used in\nDataflow.",
+          "type": "string"
+        },
         "instructions": {
           "description": "The instructions in the MapTask.",
           "items": {

@@ -1040,28 +1040,32 @@ func (s *ClientInfoDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole calendar date, for example date of birth.
+// Date: Represents a whole or partial calendar date, e.g. a birthday.
 // The time of day
 // and time zone are either specified elsewhere or are not significant.
 // The date
-// is relative to the Proleptic Gregorian Calendar. The day can be 0
-// to
-// represent a year and month where the day is not significant, for
-// example
-// credit card expiration date. The year can be 0 to represent a month
-// and day
-// independent of year, for example anniversary date. Related types
-// are
-// google.type.TimeOfDay and `google.protobuf.Timestamp`.
+// is relative to the Proleptic Gregorian Calendar. This can
+// represent:
+//
+// * A full date, with non-zero year, month and day values
+// * A month and day value, with a zero year, e.g. an anniversary
+// * A year on its own, with zero month and day values
+// * A year and month value, with a zero day, e.g. a credit card
+// expiration date
+//
+// Related types are google.type.TimeOfDay and
+// `google.protobuf.Timestamp`.
 type Date struct {
 	// Day: Day of month. Must be from 1 to 31 and valid for the year and
 	// month, or 0
-	// if specifying a year/month where the day is not significant.
+	// if specifying a year by itself or a year and month where the day is
+	// not
+	// significant.
 	Day int64 `json:"day,omitempty"`
 
-	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a date
+	// Month: Month of year. Must be from 1 to 12, or 0 if specifying a year
 	// without a
-	// month.
+	// month and day.
 	Month int64 `json:"month,omitempty"`
 
 	// Year: Year of date. Must be from 1 to 9999, or 0 if specifying a date
@@ -1477,6 +1481,9 @@ type IosDeviceCatalog struct {
 	// Versions: Output only. The set of supported iOS software versions.
 	Versions []*IosVersion `json:"versions,omitempty"`
 
+	// XcodeVersions: Output only. The set of supported Xcode versions.
+	XcodeVersions []*XcodeVersion `json:"xcodeVersions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Models") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1676,6 +1683,10 @@ type IosVersion struct {
 	// Examples: "1", "2"
 	MinorVersion int64 `json:"minorVersion,omitempty"`
 
+	// SupportedXcodeVersionIds: Output only. The available Xcode versions
+	// for this version.
+	SupportedXcodeVersionIds []string `json:"supportedXcodeVersionIds,omitempty"`
+
 	// Tags: Output only. Tags for this dimension.
 	// Examples: "default", "preview", "deprecated"
 	Tags []string `json:"tags,omitempty"`
@@ -1722,6 +1733,13 @@ type IosXcTest struct {
 	// is
 	// specified.
 	TestsZip *FileReference `json:"testsZip,omitempty"`
+
+	// XcodeVersion: Optional. The Xcode version that should be used for the
+	// test.
+	// Use the EnvironmentDiscoveryService to get supported
+	// options.
+	// Defaults to the latest Xcode version Firebase Test Lab supports.
+	XcodeVersion string `json:"xcodeVersion,omitempty"`
 
 	// Xctestrun: Optional. An .xctestrun file that will override the
 	// .xctestrun file in the
@@ -2503,6 +2521,8 @@ type TestMatrix struct {
 	//   "TEST_NOT_APP_HOSTED" - XC tests which run on physical devices must
 	// have
 	// "IsAppHostedTestBundle" == "true" in the xctestrun file.
+	//   "PLIST_CANNOT_BE_PARSED" - An Info.plist file in the XCTest zip
+	// could not be parsed.
 	//   "TEST_ONLY_APK" - The APK is marked as "testOnly".
 	// NOT USED
 	//   "MALFORMED_IPA" - The input IPA could not be parsed.
@@ -2956,6 +2976,40 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 	s.PacketDuplicationRatio = float64(s1.PacketDuplicationRatio)
 	s.PacketLossRatio = float64(s1.PacketLossRatio)
 	return nil
+}
+
+// XcodeVersion: An Xcode version that an iOS version is compatible
+// with.
+type XcodeVersion struct {
+	// Tags: Output only. Tags for this Xcode version.
+	// Examples: "default"
+	Tags []string `json:"tags,omitempty"`
+
+	// Version: Output only. The id for this version.
+	// Example: "9.2"
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *XcodeVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod XcodeVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // method id "testing.applicationDetailService.getApkDetails":

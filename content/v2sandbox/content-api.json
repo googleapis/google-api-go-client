@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/rup5A2mSFsbf4vp8MSpzfR7ukeY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/GRoRxlrCdBLGKUMJw71OQeeOuuY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1170,7 +1170,7 @@
       }
     }
   },
-  "revision": "20180921",
+  "revision": "20181002",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Amount": {
@@ -1408,9 +1408,9 @@
           "type": "string"
         },
         "promotions": {
-          "description": "The details of the merchant provided promotions applied to the order. More details about the program are here.",
+          "description": "Deprecated. The details of the merchant provided promotions applied to the order. More details about the program are here.",
           "items": {
-            "$ref": "OrderPromotion"
+            "$ref": "OrderLegacyPromotion"
           },
           "type": "array"
         },
@@ -1567,6 +1567,71 @@
         },
         "phoneNumber": {
           "description": "The phone number of the person receiving the delivery.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrderLegacyPromotion": {
+      "id": "OrderLegacyPromotion",
+      "properties": {
+        "benefits": {
+          "items": {
+            "$ref": "OrderLegacyPromotionBenefit"
+          },
+          "type": "array"
+        },
+        "effectiveDates": {
+          "description": "The date and time frame when the promotion is active and ready for validation review. Note that the promotion live time may be delayed for a few hours due to the validation review.\nStart date and end date are separated by a forward slash (/). The start date is specified by the format (YYYY-MM-DD), followed by the letter ?T?, the time of the day when the sale starts (in Greenwich Mean Time, GMT), followed by an expression of the time zone for the sale. The end date is in the same format.",
+          "type": "string"
+        },
+        "genericRedemptionCode": {
+          "description": "Optional. The text code that corresponds to the promotion when applied on the retailer?s website.",
+          "type": "string"
+        },
+        "id": {
+          "description": "The unique ID of the promotion.",
+          "type": "string"
+        },
+        "longTitle": {
+          "description": "The full title of the promotion.",
+          "type": "string"
+        },
+        "productApplicability": {
+          "description": "Whether the promotion is applicable to all products or only specific products.",
+          "type": "string"
+        },
+        "redemptionChannel": {
+          "description": "Indicates that the promotion is valid online.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OrderLegacyPromotionBenefit": {
+      "id": "OrderLegacyPromotionBenefit",
+      "properties": {
+        "discount": {
+          "$ref": "Price",
+          "description": "The discount in the order price when the promotion is applied."
+        },
+        "offerIds": {
+          "description": "The OfferId(s) that were purchased in this order and map to this specific benefit of the promotion.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "subType": {
+          "description": "Further describes the benefit of the promotion. Note that we will expand on this enumeration as we support new promotion sub-types.",
+          "type": "string"
+        },
+        "taxImpact": {
+          "$ref": "Price",
+          "description": "The impact on tax when the promotion is applied."
+        },
+        "type": {
+          "description": "Describes whether the promotion applies to products (e.g. 20% off) or to shipping (e.g. Free Shipping).",
           "type": "string"
         }
       },
@@ -1883,71 +1948,6 @@
         },
         "type": {
           "description": "The type of instrument.\n\nAcceptable values are:  \n- \"AMEX\" \n- \"DISCOVER\" \n- \"JCB\" \n- \"MASTERCARD\" \n- \"UNIONPAY\" \n- \"VISA\" \n- \"\"",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderPromotion": {
-      "id": "OrderPromotion",
-      "properties": {
-        "benefits": {
-          "items": {
-            "$ref": "OrderPromotionBenefit"
-          },
-          "type": "array"
-        },
-        "effectiveDates": {
-          "description": "The date and time frame when the promotion is active and ready for validation review. Note that the promotion live time may be delayed for a few hours due to the validation review.\nStart date and end date are separated by a forward slash (/). The start date is specified by the format (YYYY-MM-DD), followed by the letter ?T?, the time of the day when the sale starts (in Greenwich Mean Time, GMT), followed by an expression of the time zone for the sale. The end date is in the same format.",
-          "type": "string"
-        },
-        "genericRedemptionCode": {
-          "description": "Optional. The text code that corresponds to the promotion when applied on the retailer?s website.",
-          "type": "string"
-        },
-        "id": {
-          "description": "The unique ID of the promotion.",
-          "type": "string"
-        },
-        "longTitle": {
-          "description": "The full title of the promotion.",
-          "type": "string"
-        },
-        "productApplicability": {
-          "description": "Whether the promotion is applicable to all products or only specific products.",
-          "type": "string"
-        },
-        "redemptionChannel": {
-          "description": "Indicates that the promotion is valid online.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderPromotionBenefit": {
-      "id": "OrderPromotionBenefit",
-      "properties": {
-        "discount": {
-          "$ref": "Price",
-          "description": "The discount in the order price when the promotion is applied."
-        },
-        "offerIds": {
-          "description": "The OfferId(s) that were purchased in this order and map to this specific benefit of the promotion.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "subType": {
-          "description": "Further describes the benefit of the promotion. Note that we will expand on this enumeration as we support new promotion sub-types.",
-          "type": "string"
-        },
-        "taxImpact": {
-          "$ref": "Price",
-          "description": "The impact on tax when the promotion is applied."
-        },
-        "type": {
-          "description": "Describes whether the promotion applies to products (e.g. 20% off) or to shipping (e.g. Free Shipping).",
           "type": "string"
         }
       },
@@ -3687,9 +3687,9 @@
           "type": "string"
         },
         "promotions": {
-          "description": "The details of the merchant provided promotions applied to the order. More details about the program are here.",
+          "description": "Deprecated. The details of the merchant provided promotions applied to the order. More details about the program are here.",
           "items": {
-            "$ref": "OrderPromotion"
+            "$ref": "OrderLegacyPromotion"
           },
           "type": "array"
         },

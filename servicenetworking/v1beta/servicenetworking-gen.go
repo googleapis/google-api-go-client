@@ -1,6 +1,6 @@
 // Package servicenetworking provides access to the Service Networking API.
 //
-// See https://cloud.google.com/service-infrastructure/docs/service-networking/reference/rest/
+// See https://cloud.google.com/service-infrastructure/docs/service-networking/getting-started
 //
 // Usage example:
 //
@@ -183,39 +183,6 @@ type AddSubnetworkRequest struct {
 
 func (s *AddSubnetworkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AddSubnetworkRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// AddSubnetworkResponse: Message returning the name of the created
-// service subnetwork.
-type AddSubnetworkResponse struct {
-	// IpCidrRange: Subnetwork CIDR range in "10.x.x.x/y" format.
-	IpCidrRange string `json:"ipCidrRange,omitempty"`
-
-	// Name: Subnetwork name.
-	// See https://cloud.google.com/compute/docs/vpc/
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IpCidrRange") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AddSubnetworkResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod AddSubnetworkResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1671,7 +1638,7 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //     service Messaging {
 //       rpc GetMessage(GetMessageRequest) returns (Message) {
 //         option (google.api.http) = {
-//             get: "/v1/{name=messages/*"}"
+//             get: "/v1/{name=messages/*}"
 //         };
 //       }
 //     }

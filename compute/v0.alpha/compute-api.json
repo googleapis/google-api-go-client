@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/aevGYKjpR0UQGTLcKM__yq0k0zM\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ZUowuDtavO6IK65oAdlyg4ocZ38\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -10839,7 +10839,7 @@
     "machineImages": {
       "methods": {
         "delete": {
-          "description": "Deletes the specified machine image. Deleting an machine image is permanent and cannot be undone.",
+          "description": "Deletes the specified machine image. Deleting a machine image is permanent and cannot be undone.",
           "httpMethod": "DELETE",
           "id": "compute.machineImages.delete",
           "parameterOrder": [
@@ -10945,7 +10945,7 @@
           ]
         },
         "insert": {
-          "description": "Creates an machine image in the specified project using the data that is included in the request. If you are creating a new machine image to update an existing instance, your new machine image must use the same network or, if applicable, the same subnetwork as the original instance.",
+          "description": "Creates a machine image in the specified project using the data that is included in the request. If you are creating a new machine image to update an existing instance, your new machine image should use the same network or, if applicable, the same subnetwork as the original instance.",
           "httpMethod": "POST",
           "id": "compute.machineImages.insert",
           "parameterOrder": [
@@ -10965,7 +10965,7 @@
               "type": "string"
             },
             "sourceInstance": {
-              "description": "Optional. Source image to restore onto a disk.",
+              "description": "Required. Source instance that is used to create the machine image from.",
               "location": "query",
               "type": "string"
             }
@@ -25241,7 +25241,7 @@
       }
     }
   },
-  "revision": "20180906",
+  "revision": "20180916",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -32312,7 +32312,8 @@
       "id": "Instance",
       "properties": {
         "allocationAffinity": {
-          "$ref": "AllocationAffinity"
+          "$ref": "AllocationAffinity",
+          "description": "The configuration of desired allocations which this Instance could consume capacity from."
         },
         "canIpForward": {
           "description": "Allows this instance to send and receive packets with non-matching destination or source IPs. This is required if you plan to use this instance to forward routes. For more information, see Enabling IP Forwarding.",
@@ -33377,7 +33378,17 @@
           "description": "[Output Only] A bit indicating whether the managed instance group is in a stable state. A stable state means that: none of the instances in the managed instance group is currently undergoing any type of change (for example, creation, restart, or deletion); no future changes are scheduled for instances in the managed instance group; and the managed instance group itself is not being modified.",
           "type": "boolean"
         },
-        "versionTargetReached": {
+        "versionTarget": {
+          "$ref": "InstanceGroupManagerStatusVersionTarget",
+          "description": "[Output Only] A status of consistency of Instances' versions with their target version specified by version field on Instance Group Manager."
+        }
+      },
+      "type": "object"
+    },
+    "InstanceGroupManagerStatusVersionTarget": {
+      "id": "InstanceGroupManagerStatusVersionTarget",
+      "properties": {
+        "isReached": {
           "description": "[Output Only] A bit indicating whether version target has been reached in this managed instance group, i.e. all instances are in their target version. Instances' target version are specified by version field on Instance Group Manager.",
           "type": "boolean"
         }
@@ -34348,6 +34359,10 @@
       "description": "",
       "id": "InstanceProperties",
       "properties": {
+        "allocationAffinity": {
+          "$ref": "AllocationAffinity",
+          "description": "The configuration of desired allocations which this Instance could consume capacity from."
+        },
         "canIpForward": {
           "description": "Enables instances created based on this template to send packets with source IP addresses other than their own and receive packets with destination IP addresses other than their own. If these instances will be used as an IP gateway or it will be set as the next-hop in a Route resource, specify true. If unsure, leave this set to false. See the Enable IP forwarding documentation for more information.",
           "type": "boolean"
@@ -36750,7 +36765,7 @@
       "type": "object"
     },
     "LogConfigCounterOptions": {
-      "description": "Increment a streamz counter with the specified metric and field names.\n\nMetric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended.\n\nField names correspond to IAM request parameters and field values are their respective values.\n\nAt present the only supported field names are - \"iam_principal\", corresponding to IAMContext.principal; - \"\" (empty string), resulting in one aggretated counter with no field.\n\nExamples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/backend_debug_access_count {iam_principal=[value of IAMContext.principal]}\n\nAt this time we do not support: * multiple field names (though this may be supported in the future) * decrementing the counter * incrementing it by anything other than 1",
+      "description": "Increment a streamz counter with the specified metric and field names.\n\nMetric names should start with a '/', generally be lowercase-only, and end in \"_count\". Field names should not contain an initial slash. The actual exported metric names will have \"/iam/policy\" prepended.\n\nField names correspond to IAM request parameters and field values are their respective values.\n\nSupported field names: - \"authority\", which is \"[token]\" if IAMContext.token is present, otherwise the value of IAMContext.authority_selector if present, and otherwise a representation of IAMContext.principal; or - \"iam_principal\", a representation of IAMContext.principal even if a token or authority selector is present; or - \"\" (empty string), resulting in a counter with no fields.\n\nExamples: counter { metric: \"/debug_access_count\" field: \"iam_principal\" } ==\u003e increment counter /iam/policy/backend_debug_access_count {iam_principal=[value of IAMContext.principal]}\n\nAt this time we do not support multiple field names (though this may be supported in the future).",
       "id": "LogConfigCounterOptions",
       "properties": {
         "field": {
@@ -36824,7 +36839,8 @@
           "type": "string"
         },
         "sourceInstanceProperties": {
-          "$ref": "SourceInstanceProperties"
+          "$ref": "SourceInstanceProperties",
+          "description": "[Output Only] properties of source instance. Currently, input for this field is not supported."
         },
         "status": {
           "description": "[Output Only] The status of disk creation.",
@@ -37632,7 +37648,7 @@
       "type": "object"
     },
     "Network": {
-      "description": "Represents a Network resource. Read Networks and Firewalls for more information. (== resource_for v1.networks ==) (== resource_for beta.networks ==)",
+      "description": "Represents a Network resource. Read Virtual Private Cloud (VPC) Network Overview for more information. (== resource_for v1.networks ==) (== resource_for beta.networks ==)",
       "id": "Network",
       "properties": {
         "IPv4Range": {
@@ -37641,7 +37657,7 @@
           "type": "string"
         },
         "autoCreateSubnetworks": {
-          "description": "When set to true, the network is created in \"auto subnet mode\". When set to false, the network is in \"custom subnet mode\".\n\nIn \"auto subnet mode\", a newly created network is assigned the default CIDR of 10.128.0.0/9 and it automatically creates one subnetwork per region.",
+          "description": "When set to true, the VPC network is created in \"auto\" mode. When set to false, the VPC network is created in \"custom\" mode.\n\nAn auto mode VPC network starts with one subnet per region. Each subnet has a predetermined range as described in Auto mode VPC network IP ranges.",
           "type": "boolean"
         },
         "creationTimestamp": {
@@ -37665,7 +37681,7 @@
           "type": "string"
         },
         "gatewayIPv4": {
-          "description": "A gateway address for default routing to other networks. This value is read only and is selected by the Google Compute Engine, typically as the first usable address in the IPv4Range.",
+          "description": "[Output Only] The gateway address for default routing out of the network. This value is read only and is selected by GCP.",
           "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}",
           "type": "string"
         },
@@ -37717,7 +37733,7 @@
           "type": "string"
         },
         "subnetworks": {
-          "description": "[Output Only] Server-defined fully-qualified URLs for all subnetworks in this network.",
+          "description": "[Output Only] Server-defined fully-qualified URLs for all subnetworks in this VPC network.",
           "items": {
             "type": "string"
           },
@@ -38541,7 +38557,7 @@
       "id": "NetworkRoutingConfig",
       "properties": {
         "routingMode": {
-          "description": "The network-wide routing mode to use. If set to REGIONAL, this network's cloud routers will only advertise routes with subnetworks of this network in the same region as the router. If set to GLOBAL, this network's cloud routers will advertise routes with all subnetworks of this network, across regions.",
+          "description": "The network-wide routing mode to use. If set to REGIONAL, this network's cloud routers will only advertise routes with subnets of this network in the same region as the router. If set to GLOBAL, this network's cloud routers will advertise routes with all subnets of this network, across regions.",
           "enum": [
             "GLOBAL",
             "REGIONAL"
@@ -44825,7 +44841,7 @@
           "type": "boolean"
         },
         "deletionProtection": {
-          "description": "Whether the resource should be protected against deletion.",
+          "description": "Whether the instance created from the machine image should be protected against deletion.",
           "type": "boolean"
         },
         "description": {

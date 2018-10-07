@@ -93,7 +93,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/bJY6yaK7IUjX9b18cnF3M_RjDj0\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/3gWnYLZX6BDruNsFQ2Dxff52vJg\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3969,7 +3969,7 @@
       }
     }
   },
-  "revision": "20180911",
+  "revision": "20180917",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4408,6 +4408,45 @@
           "description": "Chromebook boot mode (Read-only)",
           "type": "string"
         },
+        "cpuStatusReports": {
+          "description": "Reports of CPU utilization and temperature (Read-only)",
+          "items": {
+            "properties": {
+              "cpuTemperatureInfo": {
+                "description": "List of CPU temperature samples.",
+                "items": {
+                  "properties": {
+                    "label": {
+                      "description": "CPU label",
+                      "type": "string"
+                    },
+                    "temperature": {
+                      "description": "Temperature in Celsius degrees.",
+                      "format": "int32",
+                      "type": "integer"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              },
+              "cpuUtilizationPercentageInfo": {
+                "items": {
+                  "format": "int32",
+                  "type": "integer"
+                },
+                "type": "array"
+              },
+              "reportTime": {
+                "description": "Date and time the report was received.",
+                "format": "date-time",
+                "type": "string"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
         "deviceFiles": {
           "description": "List of device files to download (Read-only)",
           "items": {
@@ -4437,6 +4476,38 @@
         "deviceId": {
           "description": "Unique identifier of Chrome OS Device (Read-only)",
           "type": "string"
+        },
+        "diskVolumeReports": {
+          "description": "Reports of disk space and other info about mounted/connected volumes.",
+          "items": {
+            "properties": {
+              "volumeInfo": {
+                "description": "Disk volumes",
+                "items": {
+                  "properties": {
+                    "storageFree": {
+                      "description": "Free disk space [in bytes]",
+                      "format": "int64",
+                      "type": "string"
+                    },
+                    "storageTotal": {
+                      "description": "Total disk space [in bytes]",
+                      "format": "int64",
+                      "type": "string"
+                    },
+                    "volumeId": {
+                      "description": "Volume id",
+                      "type": "string"
+                    }
+                  },
+                  "type": "object"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
         },
         "etag": {
           "description": "ETag of the resource.",
@@ -4525,6 +4596,32 @@
         "supportEndDate": {
           "description": "Final date the device will be supported (Read-only)",
           "format": "date-time",
+          "type": "string"
+        },
+        "systemRamFreeReports": {
+          "description": "Reports of amounts of available RAM memory (Read-only)",
+          "items": {
+            "properties": {
+              "reportTime": {
+                "description": "Date and time the report was received.",
+                "format": "date-time",
+                "type": "string"
+              },
+              "systemRamFreeInfo": {
+                "items": {
+                  "format": "int64",
+                  "type": "string"
+                },
+                "type": "array"
+              }
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "systemRamTotal": {
+          "description": "Total RAM on the device [in bytes] (Read-only)",
+          "format": "int64",
           "type": "string"
         },
         "tpmVersionInfo": {

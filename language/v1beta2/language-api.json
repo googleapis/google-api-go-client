@@ -18,6 +18,7 @@
   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/natural-language/",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -225,7 +226,7 @@
       }
     }
   },
-  "revision": "20180903",
+  "revision": "20180930",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {

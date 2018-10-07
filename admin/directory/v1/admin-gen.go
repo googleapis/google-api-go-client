@@ -1065,11 +1065,19 @@ type ChromeOsDevice struct {
 	// BootMode: Chromebook boot mode (Read-only)
 	BootMode string `json:"bootMode,omitempty"`
 
+	// CpuStatusReports: Reports of CPU utilization and temperature
+	// (Read-only)
+	CpuStatusReports []*ChromeOsDeviceCpuStatusReports `json:"cpuStatusReports,omitempty"`
+
 	// DeviceFiles: List of device files to download (Read-only)
 	DeviceFiles []*ChromeOsDeviceDeviceFiles `json:"deviceFiles,omitempty"`
 
 	// DeviceId: Unique identifier of Chrome OS Device (Read-only)
 	DeviceId string `json:"deviceId,omitempty"`
+
+	// DiskVolumeReports: Reports of disk space and other info about
+	// mounted/connected volumes.
+	DiskVolumeReports []*ChromeOsDeviceDiskVolumeReports `json:"diskVolumeReports,omitempty"`
 
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
@@ -1131,6 +1139,13 @@ type ChromeOsDevice struct {
 
 	// SupportEndDate: Final date the device will be supported (Read-only)
 	SupportEndDate string `json:"supportEndDate,omitempty"`
+
+	// SystemRamFreeReports: Reports of amounts of available RAM memory
+	// (Read-only)
+	SystemRamFreeReports []*ChromeOsDeviceSystemRamFreeReports `json:"systemRamFreeReports,omitempty"`
+
+	// SystemRamTotal: Total RAM on the device [in bytes] (Read-only)
+	SystemRamTotal int64 `json:"systemRamTotal,omitempty,string"`
 
 	// TpmVersionInfo: Trusted Platform Module (TPM) (Read-only)
 	TpmVersionInfo *ChromeOsDeviceTpmVersionInfo `json:"tpmVersionInfo,omitempty"`
@@ -1197,6 +1212,69 @@ func (s *ChromeOsDeviceActiveTimeRanges) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ChromeOsDeviceCpuStatusReports struct {
+	// CpuTemperatureInfo: List of CPU temperature samples.
+	CpuTemperatureInfo []*ChromeOsDeviceCpuStatusReportsCpuTemperatureInfo `json:"cpuTemperatureInfo,omitempty"`
+
+	CpuUtilizationPercentageInfo []int64 `json:"cpuUtilizationPercentageInfo,omitempty"`
+
+	// ReportTime: Date and time the report was received.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CpuTemperatureInfo")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpuTemperatureInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceCpuStatusReports) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceCpuStatusReports
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ChromeOsDeviceCpuStatusReportsCpuTemperatureInfo struct {
+	// Label: CPU label
+	Label string `json:"label,omitempty"`
+
+	// Temperature: Temperature in Celsius degrees.
+	Temperature int64 `json:"temperature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Label") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceCpuStatusReportsCpuTemperatureInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceCpuStatusReportsCpuTemperatureInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ChromeOsDeviceDeviceFiles struct {
 	// CreateTime: Date and time the file was created
 	CreateTime string `json:"createTime,omitempty"`
@@ -1233,6 +1311,66 @@ func (s *ChromeOsDeviceDeviceFiles) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ChromeOsDeviceDiskVolumeReports struct {
+	// VolumeInfo: Disk volumes
+	VolumeInfo []*ChromeOsDeviceDiskVolumeReportsVolumeInfo `json:"volumeInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VolumeInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VolumeInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceDiskVolumeReports) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceDiskVolumeReports
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ChromeOsDeviceDiskVolumeReportsVolumeInfo struct {
+	// StorageFree: Free disk space [in bytes]
+	StorageFree int64 `json:"storageFree,omitempty,string"`
+
+	// StorageTotal: Total disk space [in bytes]
+	StorageTotal int64 `json:"storageTotal,omitempty,string"`
+
+	// VolumeId: Volume id
+	VolumeId string `json:"volumeId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StorageFree") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StorageFree") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceDiskVolumeReportsVolumeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceDiskVolumeReportsVolumeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ChromeOsDeviceRecentUsers struct {
 	// Email: Email address of the user. Present only if the user type is
 	// managed
@@ -1260,6 +1398,35 @@ type ChromeOsDeviceRecentUsers struct {
 
 func (s *ChromeOsDeviceRecentUsers) MarshalJSON() ([]byte, error) {
 	type NoMethod ChromeOsDeviceRecentUsers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ChromeOsDeviceSystemRamFreeReports struct {
+	// ReportTime: Date and time the report was received.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	SystemRamFreeInfo googleapi.Int64s `json:"systemRamFreeInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReportTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReportTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ChromeOsDeviceSystemRamFreeReports) MarshalJSON() ([]byte, error) {
+	type NoMethod ChromeOsDeviceSystemRamFreeReports
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

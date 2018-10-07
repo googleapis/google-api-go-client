@@ -347,8 +347,7 @@ type Application struct {
 
 	// DispatchRules: HTTP path dispatch rules for requests to the
 	// application that do not explicitly target a service or version. Rules
-	// are order-dependent. Up to 20 dispatch rules can be
-	// supported.@OutputOnly
+	// are order-dependent. Up to 20 dispatch rules can be supported.
 	DispatchRules []*UrlDispatchRule `json:"dispatchRules,omitempty"`
 
 	// FeatureSettings: The feature specific settings to be used in the

@@ -626,7 +626,7 @@
       }
     }
   },
-  "revision": "20180917",
+  "revision": "20180927",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1274,7 +1274,7 @@
       "id": "CustomRankingInfo",
       "properties": {
         "importanceLevel": {
-          "description": "Required.\n\nControls over how important the score of\nCustomRankingInfo.ranking_expression gets applied to job's final\nranking position.\n\nAn error will be thrown if not specified.",
+          "description": "Required.\n\nControls over how important the score of\nCustomRankingInfo.ranking_expression gets applied to job's final\nranking position.\n\nAn error is thrown if not specified.",
           "enum": [
             "IMPORTANCE_LEVEL_UNSPECIFIED",
             "NONE",
@@ -1700,7 +1700,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "Optional.\n\nThe language of the posting. This field is distinct from\nany requirements for fluency that are associated with the job.\n\nLanguage codes must be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){:\nclass=\"external\" target=\"_blank\" }.\n\nThe default value is `en-US`.",
+          "description": "Optional.\n\nThe language of the posting. This field is distinct from\nany requirements for fluency that are associated with the job.\n\nLanguage codes must be in BCP-47 format, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47){:\nclass=\"external\" target=\"_blank\" }.\n\nIf this field is unspecified and Job.description is present, detected\nlanguage code based on Job.description is assigned, otherwise\ndefaults to 'en_US'.",
           "type": "string"
         },
         "name": {
@@ -1957,7 +1957,7 @@
           "description": "Optional.\n\nThis search filter is applied only to\nJob.compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs meeting\nthese criteria are searched. If a filter isn't defined, all open jobs\nare searched."
         },
         "customAttributeFilter": {
-          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: =, !=, \u003c, \u003c=, \u003e, \u003e= where the left of the operator\nis a custom field key and the right of the operator is a number or string\n(surrounded by quotes) value.\n\nSupported functions are LOWER(\u003cfield_name\u003e) to\nperform case insensitive match and EMPTY(\u003cfield_name\u003e) to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 50\ncomparisons/functions are allowed in the expression. The expression\nmust be \u003c 2000 characters in length.\n\nSample Query:\n(LOWER(driving_license)=\"class a\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10",
+          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of SQL syntax.\n\nSupported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the\nleft of the operator is a custom field key and the right of the operator\nis a number or a quoted string. You must escape backslash (\\\\) and\nquote (\\\") characters.\n\nSupported functions are `LOWER([field_name])` to\nperform a case insensitive match and `EMPTY([field_name])` to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 50\ncomparisons or functions are allowed in the expression. The expression\nmust be \u003c 3000 characters in length.\n\nSample Query:\n`(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10`",
           "type": "string"
         },
         "disableSpellCheck": {
@@ -1993,6 +1993,13 @@
               "FLY_IN_FLY_OUT",
               "OTHER_EMPLOYMENT_TYPE"
             ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "excludedJobs": {
+          "description": "Optional.\n\nThis filter specifies a list of job names to be excluded during search.\n\nAt most 200 excluded job names are allowed.",
+          "items": {
             "type": "string"
           },
           "type": "array"
@@ -2464,6 +2471,20 @@
           "description": "Optional.\n\nControls whether to disable exact keyword match on Job.job_title,\nJob.description, Job.company_display_name, Job.locations,\nJob.qualifications. When disable keyword match is turned off, a\nkeyword match returns jobs that do not match given category filters when\nthere are matching keywords. For example, the query \"program manager,\" a\nresult is returned even if the job posting has the title \"software\ndeveloper,\" which does not fall into \"program manager\" ontology, but does\nhave \"program manager\" appearing in its description.\n\nFor queries like \"cloud\" that does not contain title or\nlocation specific ontology, jobs with \"cloud\" keyword matches are returned\nregardless of this flag's value.\n\nPlease use Company.keyword_searchable_custom_fields or\nCompany.keyword_searchable_custom_attributes if company specific\nglobally matched custom field/attribute string values is needed. Enabling\nkeyword match improves recall of subsequent search requests.\n\nDefaults to false.",
           "type": "boolean"
         },
+        "diversificationLevel": {
+          "description": "Optional.\n\nControls whether highly similar jobs are returned next to each other in\nthe search results. Jobs are determined to be highly similar based on\ntheir titles, job categories, and locations. Highly similar results will\nbe clustered so that only one representative job of the cluster will be\ndisplayed to the job seeker higher up in the results, with the other jobs\nbeing displayed lower down in the results.\n\nDefaults to DiversificationLevel.SIMPLE if no value\nis specified.",
+          "enum": [
+            "DIVERSIFICATION_LEVEL_UNSPECIFIED",
+            "DISABLED",
+            "SIMPLE"
+          ],
+          "enumDescriptions": [
+            "",
+            "Disables diversification. Jobs that would normally be pushed to the last\npage would not have their positions altered. This may result in highly\nsimilar jobs appearing in sequence in the search results.",
+            "Default diversifying behavior. The result list is ordered such that\nhighly similar results are pushed to the end of the last page of search\nresults."
+          ],
+          "type": "string"
+        },
         "enableBroadening": {
           "description": "Optional.\n\nControls whether to broaden the search when it produces sparse results.\nBroadened queries append results to the end of the matching results\nlist.\n\nDefaults to false.",
           "type": "boolean"
@@ -2507,7 +2528,7 @@
           "type": "integer"
         },
         "orderBy": {
-          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* \"relevance desc\": By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* \"posting_publish_time desc\": By Job.posting_publish_time descending.\n* \"posting_update_time desc\": By Job.posting_update_time descending.\n* \"title\": By Job.title ascending.\n* \"title desc\": By Job.title descending.\n* \"annualized_base_compensation\": By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_base_compensation desc\": By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_total_compensation\": By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized_total_compensation desc\": By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"custom_ranking desc\": By the relevance score adjusted to the\nSearchJobsRequest.custom_ranking_info.ranking_expression with weight\nfactor assigned by\nSearchJobsRequest.custom_ranking_info.importance_level in descending\norder.",
+          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* \"relevance desc\": By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* \"posting`_`publish`_`time desc\": By Job.posting_publish_time descending.\n* \"posting`_`update`_`time desc\": By Job.posting_update_time descending.\n* \"title\": By Job.title ascending.\n* \"title desc\": By Job.title descending.\n* \"annualized`_`base`_`compensation\": By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`base`_`compensation desc\": By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation\": By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation desc\": By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"custom`_`ranking desc\": By the relevance score adjusted to the\nSearchJobsRequest.custom_ranking_info.ranking_expression with weight\nfactor assigned by\nSearchJobsRequest.custom_ranking_info.importance_level in descending\norder.",
           "type": "string"
         },
         "pageSize": {
@@ -2596,7 +2617,7 @@
           "description": "The spell checking result, and correction."
         },
         "totalSize": {
-          "description": "The precise result count, which is available only if the client set\nenable_precise_result_size to `true` or if the response\nis the last page of results. Otherwise, the value will be `-1`.",
+          "description": "The precise result count, which is available only if the client set\nenable_precise_result_size to `true` or if the response\nis the last page of results. Otherwise, the value is `-1`.",
           "format": "int32",
           "type": "integer"
         }

@@ -15,7 +15,7 @@
   "description": "Lets Android application developers access their Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/zem5Qd2iN88JN9HgdtGKjtTNK54\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/e520iNtPgxEXRrgBLjKXoFE2OsA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -388,6 +388,11 @@
                 "editId"
               ],
               "parameters": {
+                "ackBundleInstallationWarning": {
+                  "description": "Must be set to true if the bundle installation may trigger a warning on user devices (i.e. if installation size may be over a threshold, typically 100 MB).",
+                  "location": "query",
+                  "type": "boolean"
+                },
                 "editId": {
                   "description": "Unique identifier for this edit.",
                   "location": "path",
@@ -2221,7 +2226,7 @@
       }
     }
   },
-  "revision": "20180827",
+  "revision": "20181002",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {

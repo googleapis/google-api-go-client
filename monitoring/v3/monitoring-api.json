@@ -1452,7 +1452,7 @@
       }
     }
   },
-  "revision": "20180922",
+  "revision": "20180929",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2203,27 +2203,23 @@
       "type": "object"
     },
     "InternalChecker": {
-      "description": "Nimbus InternalCheckers.",
+      "description": "Nimbus InternalCheckers. The API currently only allows reading of internal checkers, creation of internal checkers is a manual process.",
       "id": "InternalChecker",
       "properties": {
-        "checkerId": {
-          "description": "The checker ID.",
-          "type": "string"
-        },
         "displayName": {
-          "description": "The checker's human-readable name.",
+          "description": "The checker's human-readable name. The display name should be unique within a Stackdriver Workspace in order to make it easier to identify; however, uniqueness is not enforced.",
           "type": "string"
         },
         "gcpZone": {
           "description": "The GCP zone the uptime check should egress from. Only respected for internal uptime checks, where internal_network is specified.",
           "type": "string"
         },
-        "network": {
-          "description": "The internal network to perform this uptime check on.",
+        "name": {
+          "description": "A unique resource name for this InternalChecker. The format is:projects/[PROJECT_ID]/internalCheckers/[CHECKER_ID].PROJECT_ID is the GCP project ID where the internal resource lives. Not necessarily the same as the project_id for the config.",
           "type": "string"
         },
-        "projectId": {
-          "description": "The GCP project ID. Not necessarily the same as the project_id for the config.",
+        "network": {
+          "description": "The GCP VPC network (https://cloud.google.com/vpc/docs/vpc) where the internal resource lives (ex: \"default\").",
           "type": "string"
         }
       },
@@ -3218,7 +3214,7 @@
           "type": "array"
         },
         "displayName": {
-          "description": "A human-friendly name for the uptime check configuration. The display name should be unique within a Stackdriver Account in order to make it easier to identify; however, uniqueness is not enforced. Required.",
+          "description": "A human-friendly name for the uptime check configuration. The display name should be unique within a Stackdriver Workspace in order to make it easier to identify; however, uniqueness is not enforced. Required.",
           "type": "string"
         },
         "httpCheck": {

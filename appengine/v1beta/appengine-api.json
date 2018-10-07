@@ -1572,7 +1572,7 @@
       }
     }
   },
-  "revision": "20180910",
+  "revision": "20181001",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -1675,7 +1675,7 @@
           "type": "string"
         },
         "dispatchRules": {
-          "description": "HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.@OutputOnly",
+          "description": "HTTP path dispatch rules for requests to the application that do not explicitly target a service or version. Rules are order-dependent. Up to 20 dispatch rules can be supported.",
           "items": {
             "$ref": "UrlDispatchRule"
           },

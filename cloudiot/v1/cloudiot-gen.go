@@ -361,6 +361,23 @@ type Device struct {
 	// minutes.
 	LastStateTime string `json:"lastStateTime,omitempty"`
 
+	// LogLevel: **Beta Feature**
+	//
+	// The logging verbosity for device activity. If
+	// unspecified,
+	// DeviceRegistry.log_level will be used.
+	//
+	// Possible values:
+	//   "LOG_LEVEL_UNSPECIFIED" - No logging specified. If not specified,
+	// logging will be disabled.
+	//   "NONE" - Disables logging.
+	//   "ERROR" - Error events will be logged.
+	//   "INFO" - Informational events will be logged, such as connections
+	// and
+	// disconnections.
+	//   "DEBUG" - All events will be logged.
+	LogLevel string `json:"logLevel,omitempty"`
+
 	// Metadata: The metadata key-value pairs assigned to the device. This
 	// metadata is not
 	// interpreted or indexed by Cloud IoT Core. It can be used to add
@@ -599,6 +616,23 @@ type DeviceRegistry struct {
 	// Id: The identifier of this device registry. For example,
 	// `myRegistry`.
 	Id string `json:"id,omitempty"`
+
+	// LogLevel: **Beta Feature**
+	//
+	// The default logging verbosity for activity from devices in this
+	// registry.
+	// The verbosity level can be overridden by Device.log_level.
+	//
+	// Possible values:
+	//   "LOG_LEVEL_UNSPECIFIED" - No logging specified. If not specified,
+	// logging will be disabled.
+	//   "NONE" - Disables logging.
+	//   "ERROR" - Error events will be logged.
+	//   "INFO" - Informational events will be logged, such as connections
+	// and
+	// disconnections.
+	//   "DEBUG" - All events will be logged.
+	LogLevel string `json:"logLevel,omitempty"`
 
 	// MqttConfig: The MQTT configuration for this device registry.
 	MqttConfig *MqttConfig `json:"mqttConfig,omitempty"`
@@ -1306,6 +1340,53 @@ func (s *RegistryCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod RegistryCredential
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SendCommandToDeviceRequest: Request for `SendCommandToDevice`.
+type SendCommandToDeviceRequest struct {
+	// BinaryData: The command data to send to the device.
+	BinaryData string `json:"binaryData,omitempty"`
+
+	// Subfolder: Optional subfolder for the command. If empty, the command
+	// will be delivered
+	// to the /devices/{device-id}/commands topic, otherwise it will be
+	// delivered
+	// to the /devices/{device-id}/commands/{subfolder} topic.
+	// Multi-level
+	// subfolders are allowed. This field must not have more than 256
+	// characters,
+	// and must not contain any MQTT wildcards ("+" or "#") or null
+	// characters.
+	Subfolder string `json:"subfolder,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BinaryData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BinaryData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SendCommandToDeviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SendCommandToDeviceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SendCommandToDeviceResponse: Response for `SendCommandToDevice`.
+type SendCommandToDeviceResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -3738,6 +3819,163 @@ func (c *ProjectsLocationsRegistriesDevicesPatchCall) Do(opts ...googleapi.CallO
 
 }
 
+// method id "cloudiot.projects.locations.registries.devices.sendCommandToDevice":
+
+type ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall struct {
+	s                          *Service
+	name                       string
+	sendcommandtodevicerequest *SendCommandToDeviceRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// SendCommandToDevice: Sends a command to the specified device. In
+// order for a device to be able
+// to receive commands, it must:
+// 1) be connected to Cloud IoT Core using the MQTT protocol, and
+// 2) be subscribed to the group of MQTT topics specified by
+//    /devices/{device-id}/commands/#. This subscription will receive
+// commands
+//    at the top-level topic /devices/{device-id}/commands as well as
+// commands
+//    for subfolders, like /devices/{device-id}/commands/subfolder.
+//    Note that subscribing to specific subfolders is not supported.
+// If the command could not be delivered to the device, this method
+// will
+// return an error; in particular, if the device is not subscribed,
+// this
+// method will return FAILED_PRECONDITION. Otherwise, this method
+// will
+// return OK. If the subscription is QoS 1, at least once delivery will
+// be
+// guaranteed; for QoS 0, no acknowledgment will be expected from the
+// device.
+func (r *ProjectsLocationsRegistriesDevicesService) SendCommandToDevice(name string, sendcommandtodevicerequest *SendCommandToDeviceRequest) *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall {
+	c := &ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.sendcommandtodevicerequest = sendcommandtodevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Context(ctx context.Context) *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sendcommandtodevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:sendCommandToDevice")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.devices.sendCommandToDevice" call.
+// Exactly one of *SendCommandToDeviceResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SendCommandToDeviceResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesDevicesSendCommandToDeviceCall) Do(opts ...googleapi.CallOption) (*SendCommandToDeviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SendCommandToDeviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sends a command to the specified device. In order for a device to be able\nto receive commands, it must:\n1) be connected to Cloud IoT Core using the MQTT protocol, and\n2) be subscribed to the group of MQTT topics specified by\n   /devices/{device-id}/commands/#. This subscription will receive commands\n   at the top-level topic /devices/{device-id}/commands as well as commands\n   for subfolders, like /devices/{device-id}/commands/subfolder.\n   Note that subscribing to specific subfolders is not supported.\nIf the command could not be delivered to the device, this method will\nreturn an error; in particular, if the device is not subscribed, this\nmethod will return FAILED_PRECONDITION. Otherwise, this method will\nreturn OK. If the subscription is QoS 1, at least once delivery will be\nguaranteed; for QoS 0, no acknowledgment will be expected from the device.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/devices/{devicesId}:sendCommandToDevice",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.devices.sendCommandToDevice",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:sendCommandToDevice",
+	//   "request": {
+	//     "$ref": "SendCommandToDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SendCommandToDeviceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
+}
+
 // method id "cloudiot.projects.locations.registries.devices.configVersions.list":
 
 type ProjectsLocationsRegistriesDevicesConfigVersionsListCall struct {
@@ -5159,6 +5397,163 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesPatchCall) Do(opts ...googleapi
 	//   },
 	//   "response": {
 	//     "$ref": "Device"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
+}
+
+// method id "cloudiot.projects.locations.registries.groups.devices.sendCommandToDevice":
+
+type ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall struct {
+	s                          *Service
+	name                       string
+	sendcommandtodevicerequest *SendCommandToDeviceRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// SendCommandToDevice: Sends a command to the specified device. In
+// order for a device to be able
+// to receive commands, it must:
+// 1) be connected to Cloud IoT Core using the MQTT protocol, and
+// 2) be subscribed to the group of MQTT topics specified by
+//    /devices/{device-id}/commands/#. This subscription will receive
+// commands
+//    at the top-level topic /devices/{device-id}/commands as well as
+// commands
+//    for subfolders, like /devices/{device-id}/commands/subfolder.
+//    Note that subscribing to specific subfolders is not supported.
+// If the command could not be delivered to the device, this method
+// will
+// return an error; in particular, if the device is not subscribed,
+// this
+// method will return FAILED_PRECONDITION. Otherwise, this method
+// will
+// return OK. If the subscription is QoS 1, at least once delivery will
+// be
+// guaranteed; for QoS 0, no acknowledgment will be expected from the
+// device.
+func (r *ProjectsLocationsRegistriesGroupsDevicesService) SendCommandToDevice(name string, sendcommandtodevicerequest *SendCommandToDeviceRequest) *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall {
+	c := &ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.sendcommandtodevicerequest = sendcommandtodevicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall) Context(ctx context.Context) *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.sendcommandtodevicerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:sendCommandToDevice")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.groups.devices.sendCommandToDevice" call.
+// Exactly one of *SendCommandToDeviceResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SendCommandToDeviceResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesGroupsDevicesSendCommandToDeviceCall) Do(opts ...googleapi.CallOption) (*SendCommandToDeviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SendCommandToDeviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sends a command to the specified device. In order for a device to be able\nto receive commands, it must:\n1) be connected to Cloud IoT Core using the MQTT protocol, and\n2) be subscribed to the group of MQTT topics specified by\n   /devices/{device-id}/commands/#. This subscription will receive commands\n   at the top-level topic /devices/{device-id}/commands as well as commands\n   for subfolders, like /devices/{device-id}/commands/subfolder.\n   Note that subscribing to specific subfolders is not supported.\nIf the command could not be delivered to the device, this method will\nreturn an error; in particular, if the device is not subscribed, this\nmethod will return FAILED_PRECONDITION. Otherwise, this method will\nreturn OK. If the subscription is QoS 1, at least once delivery will be\nguaranteed; for QoS 0, no acknowledgment will be expected from the device.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}/devices/{devicesId}:sendCommandToDevice",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.groups.devices.sendCommandToDevice",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the device. For example,\n`projects/p0/locations/us-central1/registries/registry0/devices/device0` or\n`projects/p0/locations/us-central1/registries/registry0/devices/{num_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+/devices/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:sendCommandToDevice",
+	//   "request": {
+	//     "$ref": "SendCommandToDeviceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SendCommandToDeviceResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

@@ -3223,6 +3223,11 @@ func (s *ListJobsResponse) MarshalJSON() ([]byte, error) {
 // which
 // depends on its output.
 type MapTask struct {
+	// CounterPrefix: Counter prefix that can be used to prefix counters.
+	// Not currently used in
+	// Dataflow.
+	CounterPrefix string `json:"counterPrefix,omitempty"`
+
 	// Instructions: The instructions in the MapTask.
 	Instructions []*ParallelInstruction `json:"instructions,omitempty"`
 
@@ -3235,7 +3240,7 @@ type MapTask struct {
 	// Unique across the workflow.
 	SystemName string `json:"systemName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Instructions") to
+	// ForceSendFields is a list of field names (e.g. "CounterPrefix") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3243,7 +3248,7 @@ type MapTask struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Instructions") to include
+	// NullFields is a list of field names (e.g. "CounterPrefix") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20181001",
+  "revision": "20181009",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -802,14 +802,14 @@
           "type": "string"
         },
         "logging": {
-          "description": "Option to specify the logging mode, which determines where the logs are stored.",
+          "description": "Option to specify the logging mode, which determines where the logs are\nstored.",
           "enum": [
             "LOGGING_UNSPECIFIED",
             "LEGACY",
             "GCS_ONLY"
           ],
           "enumDescriptions": [
-            "The service determines the logging mode. The default is `LEGACY`",
+            "The service determines the logging mode. The default is `LEGACY`. Do not\nrely on the default logging behavior as it may change in the future.",
             "Stackdriver logging and Cloud Storage logging are enabled.",
             "Only Cloud Storage logging is enabled."
           ],

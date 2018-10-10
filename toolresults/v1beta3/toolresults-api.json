@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Vg5_d1AHBADQwykv17Uutxlbsxo\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/O3e106vR__ZNwWepr33ILqsVEbI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1161,7 +1161,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20181008",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -2305,6 +2305,7 @@
             "fatalException",
             "inAppPurchases",
             "incompleteRoboScriptExecution",
+            "insufficientCoverage",
             "iosCrash",
             "iosException",
             "launcherActivityNotFound",
@@ -2318,6 +2319,7 @@
             "usedRoboDirective"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

@@ -21,6 +21,7 @@
   "description": "Creates and manages rules that determine when a Firebase Rules-enabled service should permit a request.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/storage/security",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -470,7 +471,7 @@
       }
     }
   },
-  "revision": "20180927",
+  "revision": "20181005",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {

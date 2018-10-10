@@ -5566,7 +5566,7 @@ func (r *EventsService) Delete(calendarId string, eventId string) *EventsDeleteC
 //
 // Whether to send notifications about the deletion of the event. Note
 // that some emails might still be sent even if you set the value to
-// false. The default is False.
+// false. The default is false.
 func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDeleteCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
@@ -5576,12 +5576,12 @@ func (c *EventsDeleteCall) SendNotifications(sendNotifications bool) *EventsDele
 // should receive notifications about the deletion of the event.
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsDeleteCall) SendUpdates(sendUpdates string) *EventsDeleteCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -5666,7 +5666,7 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the deletion of the event. Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the deletion of the event. Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5678,9 +5678,9 @@ func (c *EventsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -6105,7 +6105,7 @@ func (c *EventsInsertCall) MaxAttendees(maxAttendees int64) *EventsInsertCall {
 //
 // Whether to send notifications about the creation of the new event.
 // Note that some emails might still be sent even if you set the value
-// to false. The default is False.
+// to false. The default is false.
 func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInsertCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
@@ -6113,15 +6113,15 @@ func (c *EventsInsertCall) SendNotifications(sendNotifications bool) *EventsInse
 
 // SendUpdates sets the optional parameter "sendUpdates": Whether to
 // send notifications about the creation of the new event. Note that
-// some emails might still be sent. The default is False.
+// some emails might still be sent. The default is false.
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsInsertCall) SendUpdates(sendUpdates string) *EventsInsertCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -6251,21 +6251,21 @@ func (c *EventsInsertCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the new event. Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the new event. Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "sendUpdates": {
-	//       "description": "Whether to send notifications about the creation of the new event. Note that some emails might still be sent. The default is False.",
+	//       "description": "Whether to send notifications about the creation of the new event. Note that some emails might still be sent. The default is false.",
 	//       "enum": [
 	//         "all",
 	//         "externalOnly",
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7068,7 +7068,7 @@ func (r *EventsService) Move(calendarId string, eventId string, destinationid st
 //
 // Whether to send notifications about the change of the event's
 // organizer. Note that some emails might still be sent even if you set
-// the value to false. The default is False.
+// the value to false. The default is false.
 func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
@@ -7079,12 +7079,12 @@ func (c *EventsMoveCall) SendNotifications(sendNotifications bool) *EventsMoveCa
 // organizer.
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsMoveCall) SendUpdates(sendUpdates string) *EventsMoveCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7201,7 +7201,7 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the change of the event's organizer. Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the change of the event's organizer. Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7213,9 +7213,9 @@ func (c *EventsMoveCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7290,25 +7290,25 @@ func (c *EventsPatchCall) MaxAttendees(maxAttendees int64) *EventsPatchCall {
 // SendNotifications sets the optional parameter "sendNotifications":
 // Deprecated. Please use sendUpdates instead.
 //
-// Whether to send notifications about the event update (e.g.
+// Whether to send notifications about the event update (for example,
 // description changes, etc.). Note that some emails might still be sent
-// even if you set the value to false. The default is False.
+// even if you set the value to false. The default is false.
 func (c *EventsPatchCall) SendNotifications(sendNotifications bool) *EventsPatchCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
 // SendUpdates sets the optional parameter "sendUpdates": Guests who
-// should receive notifications about the event update (e.g., attendee
-// responses, title changes, etc.).
+// should receive notifications about the event update (for example,
+// title changes, etc.).
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsPatchCall) SendUpdates(sendUpdates string) *EventsPatchCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7451,21 +7451,21 @@ func (c *EventsPatchCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (e.g. description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (for example, description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "sendUpdates": {
-	//       "description": "Guests who should receive notifications about the event update (e.g., attendee responses, title changes, etc.).",
+	//       "description": "Guests who should receive notifications about the event update (for example, title changes, etc.).",
 	//       "enum": [
 	//         "all",
 	//         "externalOnly",
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7514,7 +7514,7 @@ func (r *EventsService) QuickAdd(calendarId string, text string) *EventsQuickAdd
 //
 // Whether to send notifications about the creation of the event. Note
 // that some emails might still be sent even if you set the value to
-// false. The default is False.
+// false. The default is false.
 func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQuickAddCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
@@ -7524,12 +7524,12 @@ func (c *EventsQuickAddCall) SendNotifications(sendNotifications bool) *EventsQu
 // should receive notifications about the creation of the new event.
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsQuickAddCall) SendUpdates(sendUpdates string) *EventsQuickAddCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7632,7 +7632,7 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "string"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the event. Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the creation of the event. Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7644,9 +7644,9 @@ func (c *EventsQuickAddCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
@@ -7727,25 +7727,25 @@ func (c *EventsUpdateCall) MaxAttendees(maxAttendees int64) *EventsUpdateCall {
 // SendNotifications sets the optional parameter "sendNotifications":
 // Deprecated. Please use sendUpdates instead.
 //
-// Whether to send notifications about the event update (e.g.
+// Whether to send notifications about the event update (for example,
 // description changes, etc.). Note that some emails might still be sent
-// even if you set the value to false. The default is False.
+// even if you set the value to false. The default is false.
 func (c *EventsUpdateCall) SendNotifications(sendNotifications bool) *EventsUpdateCall {
 	c.urlParams_.Set("sendNotifications", fmt.Sprint(sendNotifications))
 	return c
 }
 
 // SendUpdates sets the optional parameter "sendUpdates": Guests who
-// should receive notifications about the event update (e.g., attendee
-// responses, title changes, etc.).
+// should receive notifications about the event update (for example,
+// title changes, etc.).
 //
 // Possible values:
-//   "all" - Notifications will be sent to all guests.
-//   "externalOnly" - Notifications will be sent to non-Google Calendar
+//   "all" - Notifications are sent to all guests.
+//   "externalOnly" - Notifications are sent to non-Google Calendar
 // guests only.
-//   "none" - No notifications will be sent. This value should only be
-// used for migration use cases (note that in most migration cases the
-// import method should be used).
+//   "none" - No notifications are sent. This value should only be used
+// for migration use cases (note that in most migration cases the import
+// method should be used).
 func (c *EventsUpdateCall) SendUpdates(sendUpdates string) *EventsUpdateCall {
 	c.urlParams_.Set("sendUpdates", sendUpdates)
 	return c
@@ -7888,21 +7888,21 @@ func (c *EventsUpdateCall) Do(opts ...googleapi.CallOption) (*Event, error) {
 	//       "type": "integer"
 	//     },
 	//     "sendNotifications": {
-	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (e.g. description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is False.",
+	//       "description": "Deprecated. Please use sendUpdates instead.\n\nWhether to send notifications about the event update (for example, description changes, etc.). Note that some emails might still be sent even if you set the value to false. The default is false.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "sendUpdates": {
-	//       "description": "Guests who should receive notifications about the event update (e.g., attendee responses, title changes, etc.).",
+	//       "description": "Guests who should receive notifications about the event update (for example, title changes, etc.).",
 	//       "enum": [
 	//         "all",
 	//         "externalOnly",
 	//         "none"
 	//       ],
 	//       "enumDescriptions": [
-	//         "Notifications will be sent to all guests.",
-	//         "Notifications will be sent to non-Google Calendar guests only.",
-	//         "No notifications will be sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
+	//         "Notifications are sent to all guests.",
+	//         "Notifications are sent to non-Google Calendar guests only.",
+	//         "No notifications are sent. This value should only be used for migration use cases (note that in most migration cases the import method should be used)."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

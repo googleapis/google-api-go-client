@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20181001",
+  "revision": "20181008",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -477,7 +477,7 @@
           "description": "Required. Output configuration indicating where the results will be output\nto. All results will be in newline delimited JSON format."
         },
         "readTime": {
-          "description": "Timestamp to take an asset snapshot. This can only be set to a timestamp in\nthe past or of the current time. If not specified, the current time will be\nused. Due to delays in resource data collection and indexing, there is a\nvolatile window during which running the same query may get different\nresults.",
+          "description": "Timestamp to take an asset snapshot. This can only be set to a timestamp\nbetween 2018-10-02 UTC (inclusive) and the current time. If not specified,\nthe current time will be used. Due to delays in resource data collection\nand indexing, there is a volatile window during which running the same\nquery may get different results.",
           "format": "google-datetime",
           "type": "string"
         }

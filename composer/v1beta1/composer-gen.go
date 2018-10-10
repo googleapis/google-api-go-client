@@ -220,8 +220,9 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
-	// AirflowUri: The URI of the Apache Airflow Web UI hosted within this
-	// environment (see
+	// AirflowUri: Output only.
+	// The URI of the Apache Airflow Web UI hosted within this environment
+	// (see
 	// [Airflow web
 	// interface](/composer/docs/how-to/accessing/airflow-web-interface)).
 	AirflowUri string `json:"airflowUri,omitempty"`
@@ -703,22 +704,47 @@ type SoftwareConfig struct {
 	// * `SQL_USER`
 	EnvVariables map[string]string `json:"envVariables,omitempty"`
 
-	// ImageVersion: Output only.
-	// The version of the software running in the environment.
+	// ImageVersion: Immutable. The version of the software running in the
+	// environment.
 	// This encapsulates both the version of Cloud Composer functionality
 	// and the
 	// version of Apache Airflow. It must match the regular
 	// expression
-	// `composer-[0-9]+\.[0-9]+(\.[0-9]+)?-airflow-[0-9]+\.[0-9]+(
-	// \.[0-9]+.*)?`.
+	// `composer-([0-9]+\.[0-9]+(\.[0-9]+)?|latest)-airflow-[0-9]+
+	// \.[0-9]+(\.[0-9]+.*)?`.
+	// When used as input, the server will also check if the provided
+	// version is
+	// supported and deny the creation request for an unsupported
+	// version.
 	//
 	// The Cloud Composer portion of the version is a
-	// [semantic version](https://semver.org). The portion of the image
+	// [semantic version](https://semver.org) or `latest`. The patch
 	// version
-	// following <em>airflow-</em> is an official Apache Airflow
-	// repository
+	// can be omitted and the current Cloud Composer patch version
+	// will be selected.
+	// When `latest` is provided instead of an explicit version number,
+	// the server will replace `latest` with the current Cloud Composer
+	// version
+	// and store that version number in the same field.
+	//
+	// The portion of the image version that follows <em>airflow-</em> is an
+	// official
+	// Apache Airflow repository
 	// [release
 	// name](https://github.com/apache/incubator-airflow/releases).
+	//
+	// Supporte
+	// d values for input are:
+	// * `composer-latest-airflow-latest`
+	// * `composer-latest-airflow-1.10.0`
+	// * `composer-latest-airflow-1.9.0`
+	// * `composer-latest-airflow-1.10`
+	// * `composer-latest-airflow-1.9`
+	// * `composer-1.1.1-airflow-latest`
+	// * `composer-1.1.1-airflow-1.10.0`
+	// * `composer-1.1.1-airflow-1.9.0`
+	// * `composer-1.1.1-airflow-1.10`
+	// * `composer-1.1.1-airflow-1.9`
 	//
 	// See also [Release Notes](/composer/docs/release-notes).
 	ImageVersion string `json:"imageVersion,omitempty"`
@@ -736,6 +762,15 @@ type SoftwareConfig struct {
 	// string as
 	// the value.
 	PypiPackages map[string]string `json:"pypiPackages,omitempty"`
+
+	// PythonVersion: Optional. The major version of Python used to run the
+	// Apache Airflow
+	// scheduler, worker, and webserver processes.
+	//
+	// Can be set to '2' or '3'. If not specified, the default is '2'.
+	// Cannot be
+	// updated.
+	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AirflowConfigOverrides") to unconditionally include in API requests.

@@ -635,18 +635,24 @@ type CryptoKeyVersion struct {
 	// digest.
 	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
 	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
 	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
 	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA512 digest.
 	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
 	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA512" - RSAES-OAEP 4096 bit key with a
+	// SHA512 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
@@ -773,18 +779,24 @@ type CryptoKeyVersionTemplate struct {
 	// digest.
 	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
 	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
 	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
 	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA512 digest.
 	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
 	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA512" - RSAES-OAEP 4096 bit key with a
+	// SHA512 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
@@ -1527,18 +1539,24 @@ type PublicKey struct {
 	// digest.
 	//   "RSA_SIGN_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
 	// digest.
+	//   "RSA_SIGN_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
 	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
 	// key and a SHA256 digest.
 	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
 	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA512 digest.
 	//   "RSA_DECRYPT_OAEP_2048_SHA256" - RSAES-OAEP 2048 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_3072_SHA256" - RSAES-OAEP 3072 bit key with a
 	// SHA256 digest.
 	//   "RSA_DECRYPT_OAEP_4096_SHA256" - RSAES-OAEP 4096 bit key with a
 	// SHA256 digest.
+	//   "RSA_DECRYPT_OAEP_4096_SHA512" - RSAES-OAEP 4096 bit key with a
+	// SHA512 digest.
 	//   "EC_SIGN_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
 	// digest.
 	//   "EC_SIGN_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384

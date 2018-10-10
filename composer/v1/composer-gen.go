@@ -220,8 +220,9 @@ func (s *Environment) MarshalJSON() ([]byte, error) {
 
 // EnvironmentConfig: Configuration information for an environment.
 type EnvironmentConfig struct {
-	// AirflowUri: The URI of the Apache Airflow Web UI hosted within this
-	// environment (see
+	// AirflowUri: Output only.
+	// The URI of the Apache Airflow Web UI hosted within this environment
+	// (see
 	// [Airflow web
 	// interface](/composer/docs/how-to/accessing/airflow-web-interface)).
 	AirflowUri string `json:"airflowUri,omitempty"`

@@ -1226,6 +1226,10 @@ type FindDevicesByDeviceIdentifierResponse struct {
 	// results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// TotalSize: The total count of items in the list irrespective of
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1308,6 +1312,10 @@ type FindDevicesByOwnerResponse struct {
 	// Omitted if no further results are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// TotalSize: The total count of items in the list irrespective of
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1340,6 +1348,15 @@ func (s *FindDevicesByOwnerResponse) MarshalJSON() ([]byte, error) {
 type ListCustomersResponse struct {
 	// Customers: List of customers related to this reseller partner.
 	Customers []*Company `json:"customers,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Omitted
+	// if no further results
+	// are available.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: The total count of items in the list irrespective of
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1379,6 +1396,10 @@ type ListVendorCustomersResponse struct {
 	// are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// TotalSize: The total count of items in the list irrespective of
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1412,6 +1433,10 @@ type ListVendorsResponse struct {
 	// if no further results
 	// are available.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: The total count of items in the list irrespective of
+	// pagination.
+	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// Vendors: List of vendors of the reseller partner. Fields `name`,
 	// `companyId` and
@@ -3997,6 +4022,21 @@ func (r *PartnersCustomersService) List(partnerId int64) *PartnersCustomersListC
 	return c
 }
 
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to be returned. If not specified or 0, all
+// the records are returned.
+func (c *PartnersCustomersListCall) PageSize(pageSize int64) *PartnersCustomersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results returned by the server.
+func (c *PartnersCustomersListCall) PageToken(pageToken string) *PartnersCustomersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4100,6 +4140,17 @@ func (c *PartnersCustomersListCall) Do(opts ...googleapi.CallOption) (*ListCusto
 	//     "partnerId"
 	//   ],
 	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of results to be returned. If not specified or 0, all\nthe records are returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results returned by the server.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "partnerId": {
 	//       "description": "Required. The ID of the reseller partner.",
 	//       "format": "int64",
@@ -4115,6 +4166,27 @@ func (c *PartnersCustomersListCall) Do(opts ...googleapi.CallOption) (*ListCusto
 	//   }
 	// }
 
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PartnersCustomersListCall) Pages(ctx context.Context, f func(*ListCustomersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "androiddeviceprovisioning.partners.devices.claim":

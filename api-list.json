@@ -34,6 +34,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "accesscontextmanager:v1beta",
+   "name": "accesscontextmanager",
+   "version": "v1beta",
+   "title": "Access Context Manager API",
+   "description": "An API for setting attribute based access control to requests to GCP services.",
+   "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1beta",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "adexchangebuyer:v1.2",
    "name": "adexchangebuyer",
    "version": "v1.2",
@@ -191,6 +206,21 @@
    "labels": [
     "limited_availability"
    ],
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "alertcenter:v1beta1",
+   "name": "alertcenter",
+   "version": "v1beta1",
+   "title": "G Suite Alert Center API",
+   "description": "G Suite API for alerts managment.",
+   "discoveryRestUrl": "https://alertcenter.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://gsuite.google.com/products/alerts/",
    "preferred": true
   },
   {
@@ -1541,6 +1571,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://firebase.google.com/docs/dynamic-links/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "firebasehosting:v1beta1",
+   "name": "firebasehosting",
+   "version": "v1beta1",
+   "title": "Firebase Hosting API",
+   "description": "",
+   "discoveryRestUrl": "https://firebasehosting.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://firebase.google.com/docs/hosting/",
    "preferred": true
   },
   {

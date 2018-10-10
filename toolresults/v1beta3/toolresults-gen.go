@@ -2539,6 +2539,7 @@ type TestIssue struct {
 	//   "fatalException"
 	//   "inAppPurchases"
 	//   "incompleteRoboScriptExecution"
+	//   "insufficientCoverage"
 	//   "iosCrash"
 	//   "iosException"
 	//   "launcherActivityNotFound"

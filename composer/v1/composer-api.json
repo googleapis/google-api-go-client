@@ -360,7 +360,7 @@
       }
     }
   },
-  "revision": "20180915",
+  "revision": "20181001",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -430,7 +430,7 @@
       "id": "EnvironmentConfig",
       "properties": {
         "airflowUri": {
-          "description": "The URI of the Apache Airflow Web UI hosted within this environment (see\n[Airflow web interface](/composer/docs/how-to/accessing/airflow-web-interface)).",
+          "description": "Output only.\nThe URI of the Apache Airflow Web UI hosted within this environment (see\n[Airflow web interface](/composer/docs/how-to/accessing/airflow-web-interface)).",
           "type": "string"
         },
         "dagGcsPrefix": {

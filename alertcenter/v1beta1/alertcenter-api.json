@@ -3,9 +3,9 @@
   "baseUrl": "https://alertcenter.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "AlertCenter",
-  "description": "G Suite API for alerts managment.",
+  "description": "G Suite Alert Center API to view and manage alerts on issues affecting your domain.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://gsuite.google.com/products/alerts/",
+  "documentationLink": "https://developers.google.com/admin-sdk/alertcenter/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -252,7 +252,7 @@
       }
     }
   },
-  "revision": "20181005",
+  "revision": "20181010",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {

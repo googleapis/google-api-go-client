@@ -1525,7 +1525,7 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //     service Messaging {
 //       rpc GetMessage(GetMessageRequest) returns (Message) {
 //         option (google.api.http) = {
-//             get: "/v1/{name=messages/*"}"
+//             get: "/v1/{name=messages/*}"
 //         };
 //       }
 //     }

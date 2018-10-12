@@ -618,6 +618,9 @@ type AccountStatusAccountLevelIssue struct {
 	// Detail: Additional details about the issue.
 	Detail string `json:"detail,omitempty"`
 
+	// Documentation: The URL of a web page to help resolving this issue.
+	Documentation string `json:"documentation,omitempty"`
+
 	// Id: Issue identifier.
 	Id string `json:"id,omitempty"`
 

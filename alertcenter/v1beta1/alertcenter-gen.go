@@ -1,6 +1,6 @@
 // Package alertcenter provides access to the G Suite Alert Center API.
 //
-// See https://gsuite.google.com/products/alerts/
+// See https://developers.google.com/admin-sdk/alertcenter/
 //
 // Usage example:
 //

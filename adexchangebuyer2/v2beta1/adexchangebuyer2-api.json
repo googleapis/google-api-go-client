@@ -1413,7 +1413,7 @@
                       "type": "string"
                     },
                     "ownerName": {
-                      "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123/`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456/`",
+                      "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
                       "location": "path",
                       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
                       "required": true,
@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20180925",
+  "revision": "20181010",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {

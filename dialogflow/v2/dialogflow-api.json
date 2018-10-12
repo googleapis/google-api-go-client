@@ -927,7 +927,7 @@
                 "contexts": {
                   "methods": {
                     "create": {
-                      "description": "Creates a context.",
+                      "description": "Creates a context.\n\nIf the specified context already exists, overrides the context.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/contexts",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.sessions.contexts.create",
@@ -1079,7 +1079,7 @@
                 "entityTypes": {
                   "methods": {
                     "create": {
-                      "description": "Creates a session entity type.",
+                      "description": "Creates a session entity type.\n\nIf the specified session entity type already exists, overrides the session\nentity type.",
                       "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.sessions.entityTypes.create",
@@ -1202,7 +1202,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.",
+                          "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.\n\n`\u003cEntity Type Display Name\u003e` must be the display name of an existing entity\ntype in the same agent that will be overridden or supplemented.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
                           "required": true,
@@ -1264,7 +1264,7 @@
       }
     }
   },
-  "revision": "20180920",
+  "revision": "20181009",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1508,7 +1508,7 @@
       "id": "GoogleCloudDialogflowV2Context",
       "properties": {
         "lifespanCount": {
-          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 10 minutes even if there\nare no matching queries.",
+          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 20 minutes even if there\nare no matching queries.",
           "format": "int32",
           "type": "integer"
         },
@@ -1583,7 +1583,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "Required. The name of the entity.",
+          "description": "Required. The name of the entity type.",
           "type": "string"
         },
         "entities": {
@@ -2562,7 +2562,7 @@
           "type": "boolean"
         },
         "sessionEntityTypes": {
-          "description": "Optional. The collection of session entity types to replace or extend\ndeveloper entities with for this query only. The entity synonyms apply\nto all languages.",
+          "description": "Optional. Additional session entity types to replace or extend developer\nentity types with. The entity synonyms apply to all languages and persist\nfor the session of this query.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2SessionEntityType"
           },
@@ -2718,7 +2718,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.",
+          "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.\n\n`\u003cEntity Type Display Name\u003e` must be the display name of an existing entity\ntype in the same agent that will be overridden or supplemented.",
           "type": "string"
         }
       },
@@ -2878,7 +2878,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "Required. The name of the entity.",
+          "description": "Required. The name of the entity type.",
           "type": "string"
         },
         "entities": {

@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20181008",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -534,6 +534,7 @@
             "BILLING_DISABLED",
             "PROJECT_DELETED",
             "PROJECT_INVALID",
+            "CONSUMER_INVALID",
             "IP_ADDRESS_BLOCKED",
             "REFERER_BLOCKED",
             "CLIENT_APP_BLOCKED",
@@ -571,6 +572,7 @@
             "The consumer cannot access the service because billing is disabled.",
             "The consumer's project has been marked as deleted (soft deletion).",
             "The consumer's project number or id does not represent a valid project.",
+            "The input consumer info does not represent a valid consumer folder or\norganization.",
             "The IP address of the consumer is invalid for the specific consumer\nproject.",
             "The referer address of the consumer request is invalid for the specific\nconsumer project.",
             "The client application of the consumer request is invalid for the\nspecific consumer project.",

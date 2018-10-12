@@ -900,11 +900,10 @@ func (s *Condition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ContentMatcher: Used to perform string matching. Currently, this
-// matches on the exact content. In the future, it can be expanded to
-// allow for regular expressions and more complex matching.
+// ContentMatcher: Used to perform string matching. It allows substring
+// and regular expressions, together with their negations.
 type ContentMatcher struct {
-	// Content: String content to match (max 1024 bytes)
+	// Content: String or regex content to match (max 1024 bytes)
 	Content string `json:"content,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to

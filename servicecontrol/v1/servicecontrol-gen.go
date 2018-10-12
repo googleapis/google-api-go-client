@@ -573,6 +573,9 @@ type CheckError struct {
 	// deleted (soft deletion).
 	//   "PROJECT_INVALID" - The consumer's project number or id does not
 	// represent a valid project.
+	//   "CONSUMER_INVALID" - The input consumer info does not represent a
+	// valid consumer folder or
+	// organization.
 	//   "IP_ADDRESS_BLOCKED" - The IP address of the consumer is invalid
 	// for the specific consumer
 	// project.

@@ -155,6 +155,152 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// GoogleFirestoreAdminV1beta2ExportDocumentsMetadata: Metadata for
+// google.longrunning.Operation results
+// from
+// FirestoreAdmin.ExportDocuments.
+type GoogleFirestoreAdminV1beta2ExportDocumentsMetadata struct {
+	// CollectionIds: Which collection ids are being exported.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+
+	// EndTime: The time this operation completed. Will be unset if
+	// operation still in
+	// progress.
+	EndTime string `json:"endTime,omitempty"`
+
+	// OperationState: The state of the export operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after
+	// user called
+	// google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its
+	// finalization stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an
+	// error.
+	//   "CANCELLED" - Request has finished being cancelled after user
+	// called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+
+	// OutputUriPrefix: Where the entities are being exported to.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1beta2Progress `json:"progressBytes,omitempty"`
+
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1beta2Progress `json:"progressDocuments,omitempty"`
+
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta2ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1beta2ExportDocumentsRequest: The request for
+// FirestoreAdmin.ExportDocuments.
+type GoogleFirestoreAdminV1beta2ExportDocumentsRequest struct {
+	// CollectionIds: Which collection ids to export. Unspecified means all
+	// collections.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+
+	// OutputUriPrefix: The output URI. Currently only supports Google Cloud
+	// Storage URIs of the
+	// form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where `BUCKET_NAME` is the
+	// name
+	// of the Google Cloud Storage bucket and `NAMESPACE_PATH` is an
+	// optional
+	// Google Cloud Storage namespace path. When
+	// choosing a name, be sure to consider Google Cloud Storage
+	// naming
+	// guidelines: https://cloud.google.com/storage/docs/naming.
+	// If the URI is a bucket (without a namespace path), a prefix will
+	// be
+	// generated based on the start time.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1beta2ExportDocumentsResponse: Returned in the
+// google.longrunning.Operation response field.
+type GoogleFirestoreAdminV1beta2ExportDocumentsResponse struct {
+	// OutputUriPrefix: Location of the output files. This can be used to
+	// begin an import
+	// into Cloud Firestore (this project or another project) after the
+	// operation
+	// completes successfully.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta2ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1beta2Field: Represents a single field in the
 // database.
 //
@@ -307,6 +453,114 @@ type GoogleFirestoreAdminV1beta2FieldOperationMetadata struct {
 
 func (s *GoogleFirestoreAdminV1beta2FieldOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2FieldOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1beta2ImportDocumentsMetadata: Metadata for
+// google.longrunning.Operation results
+// from
+// FirestoreAdmin.ImportDocuments.
+type GoogleFirestoreAdminV1beta2ImportDocumentsMetadata struct {
+	// CollectionIds: Which collection ids are being imported.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+
+	// EndTime: The time this operation completed. Will be unset if
+	// operation still in
+	// progress.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InputUriPrefix: The location of the documents being imported.
+	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// OperationState: The state of the import operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after
+	// user called
+	// google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its
+	// finalization stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an
+	// error.
+	//   "CANCELLED" - Request has finished being cancelled after user
+	// called
+	// google.longrunning.Operations.CancelOperation.
+	OperationState string `json:"operationState,omitempty"`
+
+	// ProgressBytes: The progress, in bytes, of this operation.
+	ProgressBytes *GoogleFirestoreAdminV1beta2Progress `json:"progressBytes,omitempty"`
+
+	// ProgressDocuments: The progress, in documents, of this operation.
+	ProgressDocuments *GoogleFirestoreAdminV1beta2Progress `json:"progressDocuments,omitempty"`
+
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta2ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirestoreAdminV1beta2ImportDocumentsRequest: The request for
+// FirestoreAdmin.ImportDocuments.
+type GoogleFirestoreAdminV1beta2ImportDocumentsRequest struct {
+	// CollectionIds: Which collection ids to import. Unspecified means all
+	// collections included
+	// in the import.
+	CollectionIds []string `json:"collectionIds,omitempty"`
+
+	// InputUriPrefix: Location of the exported files.
+	// This must match the output_uri_prefix of an ExportDocumentsResponse
+	// from
+	// an export that has completed
+	// successfully.
+	// See:
+	// google.firestore.admin.v1beta2.ExportDocumentsRespo
+	// nse.output_uri_prefix.
+	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -933,6 +1187,303 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "firestore.projects.databases.exportDocuments":
+
+type ProjectsDatabasesExportDocumentsCall struct {
+	s                                                 *Service
+	name                                              string
+	googlefirestoreadminv1beta2exportdocumentsrequest *GoogleFirestoreAdminV1beta2ExportDocumentsRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// ExportDocuments: Exports a copy of all or a subset of documents from
+// Google Cloud Firestore
+// to another storage system, such as Google Cloud Storage. Recent
+// updates to
+// documents may not be reflected in the export. The export occurs in
+// the
+// background and its progress can be monitored and managed via
+// the
+// Operation resource that is created. The output of an export may only
+// be
+// used once the associated operation is done. If an export operation
+// is
+// cancelled before completion it may leave partial data behind in
+// Google
+// Cloud Storage.
+func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestoreadminv1beta2exportdocumentsrequest *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) *ProjectsDatabasesExportDocumentsCall {
+	c := &ProjectsDatabasesExportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1beta2exportdocumentsrequest = googlefirestoreadminv1beta2exportdocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesExportDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesExportDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesExportDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesExportDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2exportdocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:exportDocuments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.exportDocuments" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore\nto another storage system, such as Google Cloud Storage. Recent updates to\ndocuments may not be reflected in the export. The export occurs in the\nbackground and its progress can be monitored and managed via the\nOperation resource that is created. The output of an export may only be\nused once the associated operation is done. If an export operation is\ncancelled before completion it may leave partial data behind in Google\nCloud Storage.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}:exportDocuments",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.exportDocuments",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Database to export. Should be of the form:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:exportDocuments",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1beta2ExportDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
+}
+
+// method id "firestore.projects.databases.importDocuments":
+
+type ProjectsDatabasesImportDocumentsCall struct {
+	s                                                 *Service
+	name                                              string
+	googlefirestoreadminv1beta2importdocumentsrequest *GoogleFirestoreAdminV1beta2ImportDocumentsRequest
+	urlParams_                                        gensupport.URLParams
+	ctx_                                              context.Context
+	header_                                           http.Header
+}
+
+// ImportDocuments: Imports documents into Google Cloud Firestore.
+// Existing documents with the
+// same name are overwritten. The import occurs in the background and
+// its
+// progress can be monitored and managed via the Operation resource that
+// is
+// created. If an ImportDocuments operation is cancelled, it is
+// possible
+// that a subset of the data has already been imported to Cloud
+// Firestore.
+func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestoreadminv1beta2importdocumentsrequest *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) *ProjectsDatabasesImportDocumentsCall {
+	c := &ProjectsDatabasesImportDocumentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirestoreadminv1beta2importdocumentsrequest = googlefirestoreadminv1beta2importdocumentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDatabasesImportDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesImportDocumentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDatabasesImportDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesImportDocumentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2importdocumentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:importDocuments")
+	urls += "?" + c.urlParams_.Encode()
+	req, _ := http.NewRequest("POST", urls, body)
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firestore.projects.databases.importDocuments" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Imports documents into Google Cloud Firestore. Existing documents with the\nsame name are overwritten. The import occurs in the background and its\nprogress can be monitored and managed via the Operation resource that is\ncreated. If an ImportDocuments operation is cancelled, it is possible\nthat a subset of the data has already been imported to Cloud Firestore.",
+	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}:importDocuments",
+	//   "httpMethod": "POST",
+	//   "id": "firestore.projects.databases.importDocuments",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Database to import into. Should be of the form:\n`projects/{project_id}/databases/{database_id}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta2/{+name}:importDocuments",
+	//   "request": {
+	//     "$ref": "GoogleFirestoreAdminV1beta2ImportDocumentsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/datastore"
+	//   ]
+	// }
+
 }
 
 // method id "firestore.projects.databases.collectionGroups.fields.get":

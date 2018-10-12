@@ -279,6 +279,9 @@ type ListNodesResponse struct {
 	// Nodes: The listed nodes.
 	Nodes []*Node `json:"nodes,omitempty"`
 
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

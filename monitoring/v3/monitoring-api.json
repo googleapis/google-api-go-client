@@ -1452,7 +1452,7 @@
       }
     }
   },
-  "revision": "20180929",
+  "revision": "20181009",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -1801,11 +1801,11 @@
       "type": "object"
     },
     "ContentMatcher": {
-      "description": "Used to perform string matching. Currently, this matches on the exact content. In the future, it can be expanded to allow for regular expressions and more complex matching.",
+      "description": "Used to perform string matching. It allows substring and regular expressions, together with their negations.",
       "id": "ContentMatcher",
       "properties": {
         "content": {
-          "description": "String content to match (max 1024 bytes)",
+          "description": "String or regex content to match (max 1024 bytes)",
           "type": "string"
         }
       },

@@ -12,7 +12,7 @@
   "baseUrl": "https://serviceconsumermanagement.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Service Consumer Management",
-  "description": "Provides management methods for configuring service producer resources on Google Cloud.",
+  "description": "Manages the service consumers of a Service Infrastructure service.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/service-consumer-management/docs/overview",
   "fullyEncodeReservedExpansion": true,
@@ -429,7 +429,7 @@
       }
     }
   },
-  "revision": "20181004",
+  "revision": "20181010",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {

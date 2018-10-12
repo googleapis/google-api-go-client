@@ -665,7 +665,7 @@ type GoogleCloudDialogflowV2Context struct {
 	// after which the
 	// context expires. If set to `0` (the default) the context
 	// expires
-	// immediately. Contexts expire automatically after 10 minutes even if
+	// immediately. Contexts expire automatically after 20 minutes even if
 	// there
 	// are no matching queries.
 	LifespanCount int64 `json:"lifespanCount,omitempty"`
@@ -820,7 +820,7 @@ type GoogleCloudDialogflowV2EntityType struct {
 	// listed in the entity.
 	AutoExpansionMode string `json:"autoExpansionMode,omitempty"`
 
-	// DisplayName: Required. The name of the entity.
+	// DisplayName: Required. The name of the entity type.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Entities: Optional. The collection of entities associated with the
@@ -2756,11 +2756,11 @@ type GoogleCloudDialogflowV2QueryParameters struct {
 	// before the new ones are activated.
 	ResetContexts bool `json:"resetContexts,omitempty"`
 
-	// SessionEntityTypes: Optional. The collection of session entity types
-	// to replace or extend
-	// developer entities with for this query only. The entity synonyms
-	// apply
-	// to all languages.
+	// SessionEntityTypes: Optional. Additional session entity types to
+	// replace or extend developer
+	// entity types with. The entity synonyms apply to all languages and
+	// persist
+	// for the session of this query.
 	SessionEntityTypes []*GoogleCloudDialogflowV2SessionEntityType `json:"sessionEntityTypes,omitempty"`
 
 	// TimeZone: Optional. The time zone of this conversational query from
@@ -3067,6 +3067,10 @@ type GoogleCloudDialogflowV2SessionEntityType struct {
 	// `projects/<Project ID>/agent/sessions/<Session
 	// ID>/entityTypes/<Entity Type
 	// Display Name>`.
+	//
+	// `<Entity Type Display Name>` must be the display name of an existing
+	// entity
+	// type in the same agent that will be overridden or supplemented.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3403,7 +3407,7 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 	// listed in the entity.
 	AutoExpansionMode string `json:"autoExpansionMode,omitempty"`
 
-	// DisplayName: Required. The name of the entity.
+	// DisplayName: Required. The name of the entity type.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Entities: Optional. The collection of entities associated with the
@@ -9701,6 +9705,8 @@ type ProjectsAgentSessionsContextsCreateCall struct {
 }
 
 // Create: Creates a context.
+//
+// If the specified context already exists, overrides the context.
 func (r *ProjectsAgentSessionsContextsService) Create(parent string, googleclouddialogflowv2context *GoogleCloudDialogflowV2Context) *ProjectsAgentSessionsContextsCreateCall {
 	c := &ProjectsAgentSessionsContextsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9795,7 +9801,7 @@ func (c *ProjectsAgentSessionsContextsCreateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a context.",
+	//   "description": "Creates a context.\n\nIf the specified context already exists, overrides the context.",
 	//   "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/contexts",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.sessions.contexts.create",
@@ -10441,6 +10447,10 @@ type ProjectsAgentSessionsEntityTypesCreateCall struct {
 }
 
 // Create: Creates a session entity type.
+//
+// If the specified session entity type already exists, overrides the
+// session
+// entity type.
 func (r *ProjectsAgentSessionsEntityTypesService) Create(parent string, googleclouddialogflowv2sessionentitytype *GoogleCloudDialogflowV2SessionEntityType) *ProjectsAgentSessionsEntityTypesCreateCall {
 	c := &ProjectsAgentSessionsEntityTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10537,7 +10547,7 @@ func (c *ProjectsAgentSessionsEntityTypesCreateCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a session entity type.",
+	//   "description": "Creates a session entity type.\n\nIf the specified session entity type already exists, overrides the session\nentity type.",
 	//   "flatPath": "v2/projects/{projectsId}/agent/sessions/{sessionsId}/entityTypes",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.sessions.entityTypes.create",
@@ -11149,7 +11159,7 @@ func (c *ProjectsAgentSessionsEntityTypesPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.",
+	//       "description": "Required. The unique identifier of this session entity type. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/entityTypes/\u003cEntity Type\nDisplay Name\u003e`.\n\n`\u003cEntity Type Display Name\u003e` must be the display name of an existing entity\ntype in the same agent that will be overridden or supplemented.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/entityTypes/[^/]+$",
 	//       "required": true,

@@ -214,13 +214,13 @@
    "name": "alertcenter",
    "version": "v1beta1",
    "title": "G Suite Alert Center API",
-   "description": "G Suite API for alerts managment.",
+   "description": "G Suite Alert Center API to view and manage alerts on issues affecting your domain.",
    "discoveryRestUrl": "https://alertcenter.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://gsuite.google.com/products/alerts/",
+   "documentationLink": "https://developers.google.com/admin-sdk/alertcenter/",
    "preferred": true
   },
   {
@@ -322,7 +322,7 @@
    "name": "androidpublisher",
    "version": "v1",
    "title": "Google Play Developer API",
-   "description": "Lets Android application developers access their Google Play accounts.",
+   "description": "Accesses Android application developers' Google Play accounts.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v1/rest",
    "discoveryLink": "./apis/androidpublisher/v1/rest",
    "icons": {
@@ -338,7 +338,7 @@
    "name": "androidpublisher",
    "version": "v1.1",
    "title": "Google Play Developer API",
-   "description": "Lets Android application developers access their Google Play accounts.",
+   "description": "Accesses Android application developers' Google Play accounts.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v1.1/rest",
    "discoveryLink": "./apis/androidpublisher/v1.1/rest",
    "icons": {
@@ -354,7 +354,7 @@
    "name": "androidpublisher",
    "version": "v2",
    "title": "Google Play Developer API",
-   "description": "Lets Android application developers access their Google Play accounts.",
+   "description": "Accesses Android application developers' Google Play accounts.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v2/rest",
    "discoveryLink": "./apis/androidpublisher/v2/rest",
    "icons": {
@@ -370,7 +370,7 @@
    "name": "androidpublisher",
    "version": "v3",
    "title": "Google Play Developer API",
-   "description": "Lets Android application developers access their Google Play accounts.",
+   "description": "Accesses Android application developers' Google Play accounts.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/androidpublisher/v3/rest",
    "discoveryLink": "./apis/androidpublisher/v3/rest",
    "icons": {
@@ -1388,7 +1388,7 @@
    "name": "digitalassetlinks",
    "version": "v1",
    "title": "Digital Asset Links API",
-   "description": "API for discovering relationships between online assets such as web sites or mobile apps.",
+   "description": "Discovers relationships between online assets such as websites or mobile apps.",
    "discoveryRestUrl": "https://digitalassetlinks.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2619,7 +2619,7 @@
    "name": "serviceconsumermanagement",
    "version": "v1",
    "title": "Service Consumer Management API",
-   "description": "Provides management methods for configuring service producer resources on Google Cloud.",
+   "description": "Manages the service consumers of a Service Infrastructure service.",
    "discoveryRestUrl": "https://serviceconsumermanagement.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2634,7 +2634,7 @@
    "name": "servicecontrol",
    "version": "v1",
    "title": "Service Control API",
-   "description": "Google Service Control provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
+   "description": "Provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
    "discoveryRestUrl": "https://servicecontrol.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

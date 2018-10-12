@@ -4688,7 +4688,7 @@ func (r *EditsBundlesService) Upload(packageNameid string, editId string) *Edits
 
 // AckBundleInstallationWarning sets the optional parameter
 // "ackBundleInstallationWarning": Must be set to true if the bundle
-// installation may trigger a warning on user devices (i.e. if
+// installation may trigger a warning on user devices (for example, if
 // installation size may be over a threshold, typically 100 MB).
 func (c *EditsBundlesUploadCall) AckBundleInstallationWarning(ackBundleInstallationWarning bool) *EditsBundlesUploadCall {
 	c.urlParams_.Set("ackBundleInstallationWarning", fmt.Sprint(ackBundleInstallationWarning))
@@ -4870,7 +4870,7 @@ func (c *EditsBundlesUploadCall) Do(opts ...googleapi.CallOption) (*Bundle, erro
 	//   ],
 	//   "parameters": {
 	//     "ackBundleInstallationWarning": {
-	//       "description": "Must be set to true if the bundle installation may trigger a warning on user devices (i.e. if installation size may be over a threshold, typically 100 MB).",
+	//       "description": "Must be set to true if the bundle installation may trigger a warning on user devices (for example, if installation size may be over a threshold, typically 100 MB).",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

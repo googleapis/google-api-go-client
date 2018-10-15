@@ -246,7 +246,7 @@
       }
     }
   },
-  "revision": "20180920",
+  "revision": "20181003",
   "rootUrl": "https://videointelligence.googleapis.com/",
   "schemas": {
     "GoogleCloudVideointelligenceV1_AnnotateVideoProgress": {
@@ -1062,6 +1062,10 @@
             "$ref": "GoogleCloudVideointelligenceV1p1beta1_SpeechRecognitionAlternative"
           },
           "type": "array"
+        },
+        "languageCode": {
+          "description": "Output only. The\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag of the\nlanguage in this result. This language code was detected to have the most\nlikelihood of being spoken in the audio.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1457,18 +1461,6 @@
       "description": "Annotations related to one detected OCR text snippet. This will contain the\ncorresponding text, confidence value, and frame level information for each\ndetection.",
       "id": "GoogleCloudVideointelligenceV1p2beta1_TextAnnotation",
       "properties": {
-        "confidence": {
-          "description": "Confidence for the track of detected text. It is calculated as the highest\nover all frames where OCR detected text appears.",
-          "format": "float",
-          "type": "number"
-        },
-        "frames": {
-          "description": "Information related to the frames where OCR detected text appears.",
-          "items": {
-            "$ref": "GoogleCloudVideointelligenceV1p2beta1_TextFrame"
-          },
-          "type": "array"
-        },
         "segments": {
           "description": "All video segments where OCR detected text appears.",
           "items": {
@@ -1503,6 +1495,18 @@
       "description": "Video segment level annotation results for text detection.",
       "id": "GoogleCloudVideointelligenceV1p2beta1_TextSegment",
       "properties": {
+        "confidence": {
+          "description": "Confidence for the track of detected text. It is calculated as the highest\nover all frames where OCR detected text appears.",
+          "format": "float",
+          "type": "number"
+        },
+        "frames": {
+          "description": "Information related to the frames where OCR detected text appears.",
+          "items": {
+            "$ref": "GoogleCloudVideointelligenceV1p2beta1_TextFrame"
+          },
+          "type": "array"
+        },
         "segment": {
           "$ref": "GoogleCloudVideointelligenceV1p2beta1_VideoSegment",
           "description": "Video segment where a text snippet was detected."

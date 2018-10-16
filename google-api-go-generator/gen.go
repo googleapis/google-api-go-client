@@ -1877,7 +1877,8 @@ func (meth *Method) generateCode() {
 		pn("defer cleanup()")
 	}
 	pn("urls += \"?\" + c.urlParams_.Encode()")
-	pn("req, _ := http.NewRequest(%q, urls, body)", httpMethod)
+	pn("req, err := http.NewRequest(%q, urls, body)", httpMethod)
+	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {
 		pn("gensupport.SetGetBody(req, getBody)")
@@ -1985,7 +1986,10 @@ func (meth *Method) generateCode() {
 		pn("return ret, nil")
 	}
 
-	bs, _ := json.MarshalIndent(meth.m.JSONMap, "\t// ", "  ")
+	bs, err := json.MarshalIndent(meth.m.JSONMap, "\t// ", "  ")
+	if err != nil {
+		panic(err)
+	}
 	pn("// %s\n", string(bs))
 	pn("}")
 

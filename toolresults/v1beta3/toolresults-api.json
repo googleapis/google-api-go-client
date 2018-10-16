@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/O3e106vR__ZNwWepr33ILqsVEbI\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/_Esioxt9mNFRR9ecCLcn5NMiXF8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -304,7 +304,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists Histories for a given Project.\n\nThe executions are sorted by creation_time in descending order. The execution_id key will be used to order the executions with the same creation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the containing History does not exist",
+                  "description": "Lists Executions for a given History.\n\nThe executions are sorted by creation_time in descending order. The execution_id key will be used to order the executions with the same creation_time.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project - INVALID_ARGUMENT - if the request is malformed - NOT_FOUND - if the containing History does not exist",
                   "httpMethod": "GET",
                   "id": "toolresults.projects.histories.executions.list",
                   "parameterOrder": [
@@ -1161,7 +1161,7 @@
       }
     }
   },
-  "revision": "20181008",
+  "revision": "20181015",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {

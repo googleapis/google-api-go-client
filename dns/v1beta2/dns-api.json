@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/_oUZzFyuOEesD5Na8iKt70aSz6I\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/HVdRWYMYTooJOMx6OboAhJKcHz0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -760,7 +760,7 @@
       }
     }
   },
-  "revision": "20180808",
+  "revision": "20181015",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Change": {
@@ -1066,6 +1066,22 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "privateVisibilityConfig": {
+          "$ref": "ManagedZonePrivateVisibilityConfig",
+          "description": "For privately visible zones, the set of GCP resources that the zone is visible from."
+        },
+        "visibility": {
+          "description": "The zone's visibility: public zones are exposed to the Internet, while private zones are visible only to GCP resources.",
+          "enum": [
+            "private",
+            "public"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -1135,6 +1151,39 @@
             "$ref": "Operation"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePrivateVisibilityConfig": {
+      "id": "ManagedZonePrivateVisibilityConfig",
+      "properties": {
+        "kind": {
+          "default": "dns#managedZonePrivateVisibilityConfig",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePrivateVisibilityConfig\".",
+          "type": "string"
+        },
+        "networks": {
+          "description": "The list of GCE private network IDs that can see this zone.",
+          "items": {
+            "$ref": "ManagedZonePrivateVisibilityConfigNetwork"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePrivateVisibilityConfigNetwork": {
+      "id": "ManagedZonePrivateVisibilityConfigNetwork",
+      "properties": {
+        "kind": {
+          "default": "dns#managedZonePrivateVisibilityConfigNetwork",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePrivateVisibilityConfigNetwork\".",
+          "type": "string"
+        },
+        "networkUrl": {
+          "description": "The fully qualified URL of the GCE private network to bind to. This should be formatted like https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1281,6 +1330,16 @@
         },
         "managedZones": {
           "description": "Maximum allowed number of managed zones in the project.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "managedZonesPerNetwork": {
+          "description": "Maximum allowed number of managed zones which can be attached to a network.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "networksPerManagedZone": {
+          "description": "Maximum allowed number of networks to which a privately scoped zone can be attached.",
           "format": "int32",
           "type": "integer"
         },

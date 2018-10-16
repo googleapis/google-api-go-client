@@ -45,7 +45,7 @@
   "baseUrl": "https://script.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Script",
-  "description": "An API for managing and executing Google Apps Script projects.\n",
+  "description": "Manages and executes Google Apps Script projects.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/apps-script/api/",
   "fullyEncodeReservedExpansion": true,
@@ -750,7 +750,7 @@
       }
     }
   },
-  "revision": "20180802",
+  "revision": "20181013",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {

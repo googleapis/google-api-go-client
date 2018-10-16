@@ -302,7 +302,7 @@
       }
     }
   },
-  "revision": "20180716",
+  "revision": "20181010",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -2359,7 +2359,7 @@
             "A recolor effect that lightens the image using the page's forth available\ncolor from its color scheme.",
             "A recolor effect that lightens the image using the page's fifth available\ncolor from its color scheme.",
             "A recolor effect that lightens the image using the page's sixth available\ncolor from its color scheme.",
-            "A recolor effect that lightens the image using the page's seventh\navailable color from its color scheme.e.",
+            "A recolor effect that lightens the image using the page's seventh\navailable color from its color scheme.",
             "A recolor effect that lightens the image using the page's eighth\navailable color from its color scheme.",
             "A recolor effect that lightens the image using the page's ninth available\ncolor from its color scheme.",
             "A recolor effect that lightens the image using the page's tenth available\ncolor from its color scheme.",
@@ -2824,7 +2824,7 @@
       "id": "Shadow",
       "properties": {
         "alignment": {
-          "description": "The alignment point of the shadow, that sets the origin for translate,\nscale and skew of the shadow.",
+          "description": "The alignment point of the shadow, that sets the origin for translate,\nscale and skew of the shadow. This property is read-only.",
           "enum": [
             "RECTANGLE_POSITION_UNSPECIFIED",
             "TOP_LEFT",
@@ -2879,7 +2879,7 @@
           "type": "string"
         },
         "rotateWithShape": {
-          "description": "Whether the shadow should rotate with the shape.",
+          "description": "Whether the shadow should rotate with the shape. This property is\nread-only.",
           "type": "boolean"
         },
         "transform": {
@@ -2887,7 +2887,7 @@
           "description": "Transform that encodes the translate, scale, and skew of the shadow,\nrelative to the alignment position."
         },
         "type": {
-          "description": "The type of the shadow.",
+          "description": "The type of the shadow. This property is read-only.",
           "enum": [
             "SHADOW_TYPE_UNSPECIFIED",
             "OUTER"

@@ -3944,7 +3944,7 @@ type Recolor struct {
 	// color from its color scheme.
 	//   "LIGHT7" - A recolor effect that lightens the image using the
 	// page's seventh
-	// available color from its color scheme.e.
+	// available color from its color scheme.
 	//   "LIGHT8" - A recolor effect that lightens the image using the
 	// page's eighth
 	// available color from its color scheme.
@@ -4726,7 +4726,7 @@ func (s *RgbColor) UnmarshalJSON(data []byte) error {
 type Shadow struct {
 	// Alignment: The alignment point of the shadow, that sets the origin
 	// for translate,
-	// scale and skew of the shadow.
+	// scale and skew of the shadow. This property is read-only.
 	//
 	// Possible values:
 	//   "RECTANGLE_POSITION_UNSPECIFIED" - Unspecified.
@@ -4791,6 +4791,8 @@ type Shadow struct {
 	PropertyState string `json:"propertyState,omitempty"`
 
 	// RotateWithShape: Whether the shadow should rotate with the shape.
+	// This property is
+	// read-only.
 	RotateWithShape bool `json:"rotateWithShape,omitempty"`
 
 	// Transform: Transform that encodes the translate, scale, and skew of
@@ -4798,7 +4800,7 @@ type Shadow struct {
 	// relative to the alignment position.
 	Transform *AffineTransform `json:"transform,omitempty"`
 
-	// Type: The type of the shadow.
+	// Type: The type of the shadow. This property is read-only.
 	//
 	// Possible values:
 	//   "SHADOW_TYPE_UNSPECIFIED" - Unspecified shadow type.

@@ -598,7 +598,7 @@
       }
     }
   },
-  "revision": "20181008",
+  "revision": "20181013",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -652,7 +652,7 @@
           "type": "string"
         },
         "title": {
-          "description": "Human readable title. Does not affect behavior.",
+          "description": "Required. Human readable title. Does not affect behavior.",
           "type": "string"
         },
         "updateTime": {

@@ -894,7 +894,7 @@
       }
     }
   },
-  "revision": "20180731",
+  "revision": "20180919",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {
@@ -1497,6 +1497,10 @@
             "PST as export format"
           ],
           "type": "string"
+        },
+        "showConfidentialModeContent": {
+          "description": "Set to true to export confidential mode content",
+          "type": "boolean"
         }
       },
       "type": "object"

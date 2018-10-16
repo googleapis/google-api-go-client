@@ -12,7 +12,7 @@
   "baseUrl": "https://indexing.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Indexing",
-  "description": "The Indexing API allows developers to share the life cycle of a Web Document with Google.",
+  "description": "Notifies Google when your web pages change.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/search/apis/indexing-api/",
   "fullyEncodeReservedExpansion": true,
@@ -148,7 +148,7 @@
       }
     }
   },
-  "revision": "20180911",
+  "revision": "20181012",
   "rootUrl": "https://indexing.googleapis.com/",
   "schemas": {
     "PublishUrlNotificationResponse": {

@@ -1219,6 +1219,10 @@ type MailExportOptions struct {
 	//   "PST" - PST as export format
 	ExportFormat string `json:"exportFormat,omitempty"`
 
+	// ShowConfidentialModeContent: Set to true to export confidential mode
+	// content
+	ShowConfidentialModeContent bool `json:"showConfidentialModeContent,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

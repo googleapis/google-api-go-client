@@ -203,7 +203,7 @@ type AccessPolicy struct {
 	// `organizations/{organization_id}`
 	Parent string `json:"parent,omitempty"`
 
-	// Title: Human readable title. Does not affect behavior.
+	// Title: Required. Human readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
 
 	// UpdateTime: Output only. Time the `AccessPolicy` was updated in UTC.

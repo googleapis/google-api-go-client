@@ -1362,7 +1362,8 @@ type LogMetric struct {
 	BucketOptions *BucketOptions `json:"bucketOptions,omitempty"`
 
 	// Description: Optional. A description of this metric, which is used in
-	// documentation.
+	// documentation. The maximum length of the description is 8000
+	// characters.
 	Description string `json:"description,omitempty"`
 
 	// Filter: Required. An advanced logs filter which is used to match log

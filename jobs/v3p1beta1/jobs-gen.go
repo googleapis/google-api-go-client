@@ -2959,10 +2959,10 @@ type JobQuery struct {
 	// Boolean expressions (AND/OR/NOT) are supported up to 3 levels
 	// of
 	// nesting (for example, "((A AND B AND C) OR NOT D) AND E"), a maximum
-	// of 50
+	// of 100
 	// comparisons or functions are allowed in the expression. The
 	// expression
-	// must be < 3000 characters in length.
+	// must be < 3000 bytes in length.
 	//
 	// Sample Query:
 	// `(LOWER(driving_license)="class \"a\"" OR EMPTY(driving_license))
@@ -4735,8 +4735,10 @@ func (c *ProjectsCompleteCall) CompanyName(companyName string) *ProjectsComplete
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode":
-// Required.
+// LanguageCode sets the optional parameter "languageCode": Deprecated.
+// Use language_codes instead.
+//
+//
 //
 // The language of the query. This is
 // the BCP-47 language code, such as "en-US" or "sr-Latn".
@@ -4761,6 +4763,33 @@ func (c *ProjectsCompleteCall) CompanyName(companyName string) *ProjectsComplete
 // The maximum number of allowed characters is 255.
 func (c *ProjectsCompleteCall) LanguageCode(languageCode string) *ProjectsCompleteCall {
 	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// LanguageCodes sets the optional parameter "languageCodes": The list
+// of languages of the query. This is
+// the BCP-47 language code, such as "en-US" or "sr-Latn".
+// For more information, see
+// [Tags for Identifying
+// Languages](https://tools.ietf.org/html/bcp47).
+//
+// For CompletionType.JOB_TITLE type, only open jobs with
+// same
+// language_codes are returned.
+//
+// For CompletionType.COMPANY_NAME type,
+// only companies having open jobs with same language_codes
+// are
+// returned.
+//
+// For CompletionType.COMBINED type, only open jobs with
+// same
+// language_codes or companies having open jobs with same
+// language_codes are returned.
+//
+// The maximum number of allowed characters is 255.
+func (c *ProjectsCompleteCall) LanguageCodes(languageCodes ...string) *ProjectsCompleteCall {
+	c.urlParams_.SetMulti("languageCodes", append([]string{}, languageCodes...))
 	return c
 }
 
@@ -4922,8 +4951,14 @@ func (c *ProjectsCompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryR
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Required.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
+	//       "description": "Deprecated. Use language_codes instead.\n\nOptional.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "languageCodes": {
+	//       "description": "Optional.\n\nThe list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_codes or companies having open jobs with same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "name": {
@@ -5280,6 +5315,7 @@ type ProjectsCompaniesDeleteCall struct {
 }
 
 // Delete: Deletes specified company.
+// Prerequisite: The company has no jobs associated with it.
 func (r *ProjectsCompaniesService) Delete(name string) *ProjectsCompaniesDeleteCall {
 	c := &ProjectsCompaniesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5371,7 +5407,7 @@ func (c *ProjectsCompaniesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes specified company.",
+	//   "description": "Deletes specified company.\nPrerequisite: The company has no jobs associated with it.",
 	//   "flatPath": "v3p1beta1/projects/{projectsId}/companies/{companiesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "jobs.projects.companies.delete",

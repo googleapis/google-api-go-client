@@ -4,6 +4,9 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
+        },
+        "https://www.googleapis.com/auth/dialogflow": {
+          "description": "View, manage and query your Dialogflow agents"
         }
       }
     }
@@ -12,7 +15,7 @@
   "baseUrl": "https://dialogflow.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Dialogflow",
-  "description": "An end-to-end development suite for conversational interfaces (e.g., chatbots, voice-powered apps and devices).",
+  "description": "Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/dialogflow-enterprise/",
   "fullyEncodeReservedExpansion": true,
@@ -128,7 +131,8 @@
             "$ref": "GoogleCloudDialogflowV2beta1Agent"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/dialogflow"
           ]
         }
       },
@@ -160,7 +164,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "import": {
@@ -188,7 +193,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "restore": {
@@ -216,7 +222,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "search": {
@@ -252,7 +259,8 @@
                 "$ref": "GoogleCloudDialogflowV2beta1SearchAgentsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "train": {
@@ -280,7 +288,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             }
           },
@@ -312,7 +321,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "batchUpdate": {
@@ -340,7 +350,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "create": {
@@ -373,7 +384,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -398,7 +410,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -428,7 +441,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -469,7 +483,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1ListEntityTypesResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "patch": {
@@ -508,7 +523,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               },
@@ -540,7 +556,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "batchDelete": {
@@ -568,7 +585,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "batchUpdate": {
@@ -596,7 +614,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -631,7 +650,8 @@
                             "$ref": "GoogleProtobufEmpty"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         },
                         "detectIntent": {
@@ -659,7 +679,8 @@
                             "$ref": "GoogleCloudDialogflowV2beta1DetectIntentResponse"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         }
                       },
@@ -691,7 +712,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1Context"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "delete": {
@@ -716,7 +738,8 @@
                                 "$ref": "GoogleProtobufEmpty"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "get": {
@@ -741,7 +764,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1Context"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "list": {
@@ -777,7 +801,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1ListContextsResponse"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "patch": {
@@ -811,7 +836,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1Context"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             }
                           }
@@ -843,7 +869,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "delete": {
@@ -868,7 +895,8 @@
                                 "$ref": "GoogleProtobufEmpty"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "get": {
@@ -893,7 +921,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "list": {
@@ -929,7 +958,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             },
                             "patch": {
@@ -963,7 +993,8 @@
                                 "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                               },
                               "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/dialogflow"
                               ]
                             }
                           }
@@ -1001,7 +1032,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "batchUpdate": {
@@ -1029,7 +1061,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "create": {
@@ -1071,7 +1104,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -1096,7 +1130,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -1135,7 +1170,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -1185,7 +1221,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1ListIntentsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "patch": {
@@ -1233,7 +1270,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               }
@@ -1265,7 +1303,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1KnowledgeBase"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -1295,7 +1334,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -1320,7 +1360,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1KnowledgeBase"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -1356,7 +1397,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               },
@@ -1388,7 +1430,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "delete": {
@@ -1413,7 +1456,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "get": {
@@ -1438,7 +1482,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1Document"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "list": {
@@ -1474,7 +1519,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1ListDocumentsResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -1505,7 +1551,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "detectIntent": {
@@ -1533,7 +1580,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1DetectIntentResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               },
@@ -1565,7 +1613,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "delete": {
@@ -1590,7 +1639,8 @@
                         "$ref": "GoogleProtobufEmpty"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "get": {
@@ -1615,7 +1665,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "list": {
@@ -1651,7 +1702,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1ListContextsResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "patch": {
@@ -1685,7 +1737,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -1717,7 +1770,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "delete": {
@@ -1742,7 +1796,8 @@
                         "$ref": "GoogleProtobufEmpty"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "get": {
@@ -1767,7 +1822,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "list": {
@@ -1803,7 +1859,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "patch": {
@@ -1837,546 +1894,8 @@
                         "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "conversationProfiles": {
-          "methods": {
-            "create": {
-              "description": "Creates a conversation profile in the specified project.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversationProfiles",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.conversationProfiles.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. The project to create a conversation profile for.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/conversationProfiles",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "delete": {
-              "description": "Deletes the specified conversation profile.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversationProfiles/{conversationProfilesId}",
-              "httpMethod": "DELETE",
-              "id": "dialogflow.projects.conversationProfiles.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The name of the conversation profile to delete.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversation Profile\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversationProfiles/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Retrieves the specified conversation profile.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversationProfiles/{conversationProfilesId}",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.conversationProfiles.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The resource name of the conversation profile.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversation Profile\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversationProfiles/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Returns the list of all conversation profiles in the specified project.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversationProfiles",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.conversationProfiles.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page. By\ndefault 100 and at most 1000.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The project to list all conversation profiles from.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/conversationProfiles",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ListConversationProfilesResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the specified conversation profile.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversationProfiles/{conversationProfilesId}",
-              "httpMethod": "PATCH",
-              "id": "dialogflow.projects.conversationProfiles.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required for all methods except `create` (`create` populates the name\nautomatically).\nThe unique identifier of this conversation profile.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversation Profile\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversationProfiles/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "updateMask": {
-                  "description": "Required. The mask to control which fields to update.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
-        },
-        "conversations": {
-          "methods": {
-            "addConversationPhoneNumber": {
-              "description": "Sets a phone number for this converstion to connect to.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}:addConversationPhoneNumber",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.conversations.addConversationPhoneNumber",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "The name of this conversation.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}:addConversationPhoneNumber",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1AddConversationPhoneNumberRequest"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ConversationPhoneNumber"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "complete": {
-              "description": "Completes the specified conversation. Finished conversations are purged\nfrom the database after 30 days.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}:complete",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.conversations.complete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. Resource identifier of the conversation to close.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}:complete",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1CompleteConversationRequest"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1Conversation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "create": {
-              "description": "Creates a new conversation. Conversation are auto-completed after 24 hours.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversations",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.conversations.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. Resource identifier of the project creating the conversation.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/conversations",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1Conversation"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1Conversation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Retrieves the specific conversation.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.conversations.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The name of the conversation. Format:\n`projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1Conversation"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Returns the list of all conversations in the specified project.",
-              "flatPath": "v2beta1/projects/{projectsId}/conversations",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.conversations.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "filter": {
-                  "description": "A filter expression that filters conversations listed in the response. In\ngeneral, the expression must specify the field name, a comparison operator,\nand the value to use for filtering:\n\u003cul\u003e\n  \u003cli\u003eThe value must be a string, a number, or a boolean.\u003c/li\u003e\n  \u003cli\u003eThe comparison operator must be either `=`,`!=`, `\u003e`, or `\u003c`.\u003c/li\u003e\n  \u003cli\u003eTo filter on multiple expressions, separate the\n      expressions with `AND` or `OR` (omitting both implies `AND`).\u003c/li\u003e\n  \u003cli\u003eFor clarity, expressions can be enclosed in parentheses.\u003c/li\u003e\n\u003c/ul\u003e\nOnly `lifecycle_state` can be filtered on in this way. For example,\nthe following expression only returns `FINISHED` conversations:\n\n`lifecycle_state = \"FINISHED\"`",
-                  "location": "query",
-                  "type": "string"
-                },
-                "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page. By\ndefault 100 and at most 1000.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The project from which to list all conversation.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/conversations",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ListConversationsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          },
-          "resources": {
-            "messages": {
-              "methods": {
-                "list": {
-                  "description": "Lists messages that belong to a given conversation.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/messages",
-                  "httpMethod": "GET",
-                  "id": "dialogflow.projects.conversations.messages.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "Optional. The maximum number of items to return in a single page. By\ndefault 100 and at most 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Optional. The next_page_token value returned from a previous list request.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The name of the conversation to list messages for.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+parent}/messages",
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1ListMessagesResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              }
-            },
-            "participants": {
-              "methods": {
-                "analyzeContent": {
-                  "description": "Adds a text (chat, for example), or audio (phone recording, for example)\nmessage from a participan  into the conversation.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}:analyzeContent",
-                  "httpMethod": "POST",
-                  "id": "dialogflow.projects.conversations.participants.analyzeContent",
-                  "parameterOrder": [
-                    "participant"
-                  ],
-                  "parameters": {
-                    "participant": {
-                      "description": "Required. The name of the participant this text comes from.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/\u003cParticipant ID\u003e`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+/participants/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+participant}:analyzeContent",
-                  "request": {
-                    "$ref": "GoogleCloudDialogflowV2beta1AnalyzeContentRequest"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1AnalyzeContentResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "create": {
-                  "description": "Creates a new participant in a conversation.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants",
-                  "httpMethod": "POST",
-                  "id": "dialogflow.projects.conversations.participants.create",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Required. Resource identifier of the conversation adding the participant.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+parent}/participants",
-                  "request": {
-                    "$ref": "GoogleCloudDialogflowV2beta1Participant"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1Participant"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "get": {
-                  "description": "Retrieves a conversation participant.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}",
-                  "httpMethod": "GET",
-                  "id": "dialogflow.projects.conversations.participants.get",
-                  "parameterOrder": [
-                    "name"
-                  ],
-                  "parameters": {
-                    "name": {
-                      "description": "Required. The name of the participant. Format:\n`projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/\u003cParticipant ID\u003e`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+/participants/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+name}",
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1Participant"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "list": {
-                  "description": "Returns the list of all participants in the specified conversation.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants",
-                  "httpMethod": "GET",
-                  "id": "dialogflow.projects.conversations.participants.list",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "pageSize": {
-                      "description": "Optional. The maximum number of items to return in a single page. By\ndefault 100 and at most 1000.",
-                      "format": "int32",
-                      "location": "query",
-                      "type": "integer"
-                    },
-                    "pageToken": {
-                      "description": "Optional. The next_page_token value returned from a previous list request.",
-                      "location": "query",
-                      "type": "string"
-                    },
-                    "parent": {
-                      "description": "Required. The conversation to list all contexts from.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+parent}/participants",
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1ListParticipantsResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
-                "streamingAnalyzeContent": {
-                  "description": "Adds a text (chat, for example), or audio (phone recording, for example)\nmessage from a participan  into the conversation.\nNote: This method is only available through the gRPC API (not REST).\n\nThe top-level message sent to the client by the server is\n`StreamingAnalyzeContentResponse`. Multiple response messages can be\nreturned in order. The first one or more messages contain the\n`recognition_result` field. Each result represents a more complete\ntranscript of what the user said. The next message contains the\n`reply_text` field and potentially the `reply_audio` field. The message can\nalso contain the `automated_agent_reply` field.",
-                  "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}:streamingAnalyzeContent",
-                  "httpMethod": "POST",
-                  "id": "dialogflow.projects.conversations.participants.streamingAnalyzeContent",
-                  "parameterOrder": [
-                    "participant"
-                  ],
-                  "parameters": {
-                    "participant": {
-                      "description": "Required. The name of the participant this text comes from.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/\u003cParticipant ID\u003e`.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/conversations/[^/]+/participants/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+participant}:streamingAnalyzeContent",
-                  "request": {
-                    "$ref": "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentRequest"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              },
-              "resources": {
-                "suggestions": {
-                  "methods": {
-                    "list": {
-                      "description": "Retrieves suggestions for live agents.\n\nThis method should be used by human agent client software to fetch\nsuggestions in real-time, while the conversation with an end user is in\nprogress. The functionality is implemented in terms of the\n[list pagination](/apis/design/design_patterns#list_pagination)\ndesign pattern. The client app should use the `next_page_token` field\nto fetch the next batch of suggestions.",
-                      "flatPath": "v2beta1/projects/{projectsId}/conversations/{conversationsId}/participants/{participantsId}/suggestions",
-                      "httpMethod": "GET",
-                      "id": "dialogflow.projects.conversations.participants.suggestions.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "pageSize": {
-                          "description": "Optional. The maximum number of items to return in a single page. The\ndefault value is 100; the maximum value is 1000.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "Optional. The next_page_token value returned from a previous list request.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "Required. The name of the conversation participant for whom to fetch\nsuggestions.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/\u003cParticipant ID\u003e`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/conversations/[^/]+/participants/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v2beta1/{+parent}/suggestions",
-                      "response": {
-                        "$ref": "GoogleCloudDialogflowV2beta1ListSuggestionsResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -2413,7 +1932,8 @@
                         "$ref": "GoogleProtobufEmpty"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   },
@@ -2445,7 +1965,8 @@
                             "$ref": "GoogleCloudDialogflowV2beta1Context"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         },
                         "delete": {
@@ -2470,7 +1991,8 @@
                             "$ref": "GoogleProtobufEmpty"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         },
                         "get": {
@@ -2495,7 +2017,8 @@
                             "$ref": "GoogleCloudDialogflowV2beta1Context"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         },
                         "list": {
@@ -2531,7 +2054,8 @@
                             "$ref": "GoogleCloudDialogflowV2beta1ListContextsResponse"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         },
                         "patch": {
@@ -2565,7 +2089,8 @@
                             "$ref": "GoogleCloudDialogflowV2beta1Context"
                           },
                           "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/dialogflow"
                           ]
                         }
                       }
@@ -2573,186 +2098,6 @@
                   }
                 }
               }
-            }
-          }
-        },
-        "humanAgentAssistants": {
-          "methods": {
-            "compileSuggestions": {
-              "description": "Uses the specified human agent assistant to come up with suggestions\n(relevant articles and FAQs) on how to respond to a given conversation.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants/{humanAgentAssistantsId}:compileSuggestions",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.humanAgentAssistants.compileSuggestions",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The resource name of the agent assistant.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/humanAgentAssistants/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}:compileSuggestions",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1CompileSuggestionsRequest"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1CompileSuggestionsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "create": {
-              "description": "Creates a human agent assistant.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.humanAgentAssistants.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. The project to create a agent assistant for.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/humanAgentAssistants",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "delete": {
-              "description": "Deletes the specified human agent assistant.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants/{humanAgentAssistantsId}",
-              "httpMethod": "DELETE",
-              "id": "dialogflow.projects.humanAgentAssistants.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The resource name of the agent assistant.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/humanAgentAssistants/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Retrieves a human agent assistant.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants/{humanAgentAssistantsId}",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.humanAgentAssistants.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The resource name of the agent assistant.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/humanAgentAssistants/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Returns the list of all human agent assistants.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.humanAgentAssistants.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page.\nThe default value is 100; the maximum value is 1000.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The project to list all agent assistants from.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/humanAgentAssistants",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ListHumanAgentAssistantsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the specified human agent assistant.",
-              "flatPath": "v2beta1/projects/{projectsId}/humanAgentAssistants/{humanAgentAssistantsId}",
-              "httpMethod": "PATCH",
-              "id": "dialogflow.projects.humanAgentAssistants.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required for all methods except `create` (`create` populates the name\nautomatically).\nThe unique identifier of human agent assistant.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/humanAgentAssistants/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "updateMask": {
-                  "description": "Optional. The mask to specify which fields to update.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
             }
           }
         },
@@ -2783,7 +2128,8 @@
                 "$ref": "GoogleCloudDialogflowV2beta1KnowledgeBase"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "delete": {
@@ -2813,7 +2159,8 @@
                 "$ref": "GoogleProtobufEmpty"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "get": {
@@ -2838,7 +2185,8 @@
                 "$ref": "GoogleCloudDialogflowV2beta1KnowledgeBase"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "list": {
@@ -2874,7 +2222,8 @@
                 "$ref": "GoogleCloudDialogflowV2beta1ListKnowledgeBasesResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             }
           },
@@ -2906,7 +2255,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -2931,7 +2281,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -2956,7 +2307,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1Document"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -2992,7 +2344,8 @@
                     "$ref": "GoogleCloudDialogflowV2beta1ListDocumentsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               }
@@ -3023,294 +2376,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
-        },
-        "phoneNumberOrders": {
-          "methods": {
-            "cancel": {
-              "description": "Cancels an `PhoneNumberOrder`.\nReturns an error if the order is in state\nIN_PROGRESS or\nCOMPLETED.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumberOrders/{phoneNumberOrdersId}:cancel",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.phoneNumberOrders.cancel",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of the order to delete.\nFormat: `projects/\u003cProject ID\u003e/phoneNumberOrders/\u003cOrder ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumberOrders/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}:cancel",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1CancelPhoneNumberOrderRequest"
-              },
-              "response": {
-                "$ref": "GoogleProtobufEmpty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "create": {
-              "description": "Creates an order to request phone numbers be added to a project.\nThe initial `LifecycleState` of a newly created order is\nPENDING.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumberOrders",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.phoneNumberOrders.create",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Required. Resource identifier of the project requesting the orders.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/phoneNumberOrders",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "get": {
-              "description": "Returns a specific `PhoneNumberOrder`.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumberOrders/{phoneNumberOrdersId}",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.phoneNumberOrders.get",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of the order to retrieve.\nFormat: `projects/\u003cProject ID\u003e/phoneNumberOrders/\u003cOrder ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumberOrders/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Lists of all `PhoneNumberOrder` resources in the specified project.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumberOrders",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.phoneNumberOrders.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page.\nThe default value is 100. The maximum value is 1000.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The project to list all orders from.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/phoneNumberOrders",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ListPhoneNumberOrdersResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the specified `PhoneNumberOrder` resource.\nReturns an error if the order is in state\nIN_PROGRESS or\nCOMPLETED.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumberOrders/{phoneNumberOrdersId}",
-              "httpMethod": "PATCH",
-              "id": "dialogflow.projects.phoneNumberOrders.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of this order.\nFormat: `projects/\u003cProject ID\u003e/phoneNumberOrders/\u003cOrder ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumberOrders/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "updateMask": {
-                  "description": "Optional. The mask to control which fields get updated.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
-        },
-        "phoneNumbers": {
-          "methods": {
-            "delete": {
-              "description": "Requests deletion of a `PhoneNumber`. The `PhoneNumber` is moved into the\nDELETE_REQUESTED state\nimmediately, and is deleted approximately 30 days later. This method may\nonly be called on a `PhoneNumber` in the\nACTIVE state.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumbers/{phoneNumbersId}",
-              "httpMethod": "DELETE",
-              "id": "dialogflow.projects.phoneNumbers.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of the `PhoneNumber` to delete.\nFormat: `projects/\u003cProject ID\u003e/phoneNumbers/\u003cPhoneNumber ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumbers/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumber"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "list": {
-              "description": "Returns the list of all phone numbers in the specified project.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumbers",
-              "httpMethod": "GET",
-              "id": "dialogflow.projects.phoneNumbers.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of items to return in a single page.\nThe default value is 100. The maximum value is 1000.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. The next_page_token value returned from a previous list request.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The project to list all `PhoneNumber` resources from.\nFormat: `projects/\u003cProject ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "showDeleted": {
-                  "description": "Optional. Controls whether `PhoneNumber` resources in the\nDELETE_REQUESTED\nstate should be returned. Defaults to false.",
-                  "location": "query",
-                  "type": "boolean"
-                }
-              },
-              "path": "v2beta1/{+parent}/phoneNumbers",
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "patch": {
-              "description": "Updates the specified `PhoneNumber`.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumbers/{phoneNumbersId}",
-              "httpMethod": "PATCH",
-              "id": "dialogflow.projects.phoneNumbers.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of this phone number.\nFormat: `projects/\u003cProject ID\u003e/phoneNumbers/\u003cPhoneNumber ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumbers/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                },
-                "updateMask": {
-                  "description": "Optional. The mask to control which fields get updated.",
-                  "format": "google-fieldmask",
-                  "location": "query",
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumber"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumber"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
-            "undelete": {
-              "description": "Cancels the deletion request for a `PhoneNumber`. This method may only be\ncalled on a `PhoneNumber` in the\nDELETE_REQUESTED state.",
-              "flatPath": "v2beta1/projects/{projectsId}/phoneNumbers/{phoneNumbersId}:undelete",
-              "httpMethod": "POST",
-              "id": "dialogflow.projects.phoneNumbers.undelete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "Required. The unique identifier of the `PhoneNumber` to delete.\nFormat: `projects/\u003cProject ID\u003e/phoneNumbers/\u003cPhoneNumber ID\u003e`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/phoneNumbers/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+name}:undelete",
-              "request": {
-                "$ref": "GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest"
-              },
-              "response": {
-                "$ref": "GoogleCloudDialogflowV2beta1PhoneNumber"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             }
           }
@@ -3318,7 +2385,7 @@
       }
     }
   },
-  "revision": "20181009",
+  "revision": "20181017",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -4248,7 +3315,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`.",
+          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`.",
           "type": "string"
         }
       },
@@ -4293,12 +3360,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AddConversationPhoneNumberRequest": {
-      "description": "The request message for Conversations.AddConversationPhoneNumber.",
-      "id": "GoogleCloudDialogflowV2beta1AddConversationPhoneNumberRequest",
-      "properties": {},
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1Agent": {
@@ -4358,77 +3419,6 @@
         "timeZone": {
           "description": "Required. The time zone of this agent from the\n[time zone database](https://www.iana.org/time-zones), e.g.,\nAmerica/New_York, Europe/Paris.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AnalyzeContentRequest": {
-      "description": "The request message for Conversations.AnalyzeContent.",
-      "id": "GoogleCloudDialogflowV2beta1AnalyzeContentRequest",
-      "properties": {
-        "audio": {
-          "$ref": "GoogleCloudDialogflowV2beta1InputAudio",
-          "description": "The natural language speech audio to be processed."
-        },
-        "replyAudioConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1OutputAudioConfig",
-          "description": "Optional. Instructs the speech synthesizer how to generate the output\naudio."
-        },
-        "text": {
-          "$ref": "GoogleCloudDialogflowV2beta1InputText",
-          "description": "The natural language text to be processed."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AnalyzeContentResponse": {
-      "description": "The response message for Conversations.AnalyzeContent.",
-      "id": "GoogleCloudDialogflowV2beta1AnalyzeContentResponse",
-      "properties": {
-        "automatedAgentReply": {
-          "$ref": "GoogleCloudDialogflowV2beta1AutomatedAgentReply",
-          "description": "Optional. Only set if a Dialogflow automated agent has responded."
-        },
-        "replyAudio": {
-          "$ref": "GoogleCloudDialogflowV2beta1OutputAudio",
-          "description": "Optional. The audio data bytes encoded as specified in the request.\nThis field is set if:\n - `reply_audio_config` was specified in the request, or\n - The automated agent responded with audio to play to the user. In such\n   case, `reply_audio.config` contains settings used to synthesize the\n   speech."
-        },
-        "replyText": {
-          "description": "Output only. The output text content.\nThis field is set if the automated agent responded with text to show to\nthe user.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ArticleSuggestionConfig": {
-      "description": "Defines article suggestions that a human agent assistant can provide.",
-      "id": "GoogleCloudDialogflowV2beta1ArticleSuggestionConfig",
-      "properties": {
-        "knowledgeBaseName": {
-          "description": "Required. Settings for knowledge base, Format:\n`projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AutomatedAgentConfig": {
-      "description": "Defines the Automated Agent to connect to a conversation.",
-      "id": "GoogleCloudDialogflowV2beta1AutomatedAgentConfig",
-      "properties": {
-        "agent": {
-          "description": "Required. ID of the Dialogflow agent environment to use.\n\nThis project needs to either be the same project as the conversation or you\nneed to grant `service-\u003cConversation Project\nNumber\u003e@gcp-sa-dialogflow.iam.gserviceaccount.com` the `Dialogflow API\nService Agent` role in this project.\n\nFormat: `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID or '-'\u003e`\nIf environment is not specified, the default `draft` environment is\nused. Refer to\n[DetectIntentRequest](/dialogflow-enterprise/docs/reference/rpc/google.cloud.dialogflow.v2beta1#google.cloud.dialogflow.v2beta1.DetectIntentRequest)\nfor more details.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1AutomatedAgentReply": {
-      "description": "Represent a response from an automated agent.",
-      "id": "GoogleCloudDialogflowV2beta1AutomatedAgentReply",
-      "properties": {
-        "detectIntentResponse": {
-          "$ref": "GoogleCloudDialogflowV2beta1DetectIntentResponse",
-          "description": "Required. Response of the Dialogflow Sessions.DetectIntent call."
         }
       },
       "type": "object"
@@ -4608,46 +3598,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1CancelPhoneNumberOrderRequest": {
-      "description": "The request message for PhoneNumberOrders.CancelPhoneNumberOrder.",
-      "id": "GoogleCloudDialogflowV2beta1CancelPhoneNumberOrderRequest",
-      "properties": {},
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1CompileSuggestionsRequest": {
-      "description": "The request message for\nHumanAgentAssistants.RequestCompileSuggestions.",
-      "id": "GoogleCloudDialogflowV2beta1CompileSuggestionsRequest",
-      "properties": {
-        "messages": {
-          "description": "Required. List of messages in a conversation in chronological order.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Message"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1CompileSuggestionsResponse": {
-      "description": "The response message for\nHumanAgentAssistants.RequestCompileSuggestions",
-      "id": "GoogleCloudDialogflowV2beta1CompileSuggestionsResponse",
-      "properties": {
-        "suggestions": {
-          "description": "Required.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Suggestion"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1CompleteConversationRequest": {
-      "description": "The request message for Conversations.CompleteConversation.",
-      "id": "GoogleCloudDialogflowV2beta1CompleteConversationRequest",
-      "properties": {},
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1Context": {
       "description": "Represents a context.",
       "id": "GoogleCloudDialogflowV2beta1Context",
@@ -4672,87 +3622,33 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1Conversation": {
-      "description": "Represents a conversation.\nA conversation is an interaction between an agent, including live agents\nand Dialogflow agents, and a support customer. Conversations can\ninclude phone calls and text-based chat sessions.",
-      "id": "GoogleCloudDialogflowV2beta1Conversation",
+    "GoogleCloudDialogflowV2beta1ConversationEvent": {
+      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for conversation\nlifecycle events.",
+      "id": "GoogleCloudDialogflowV2beta1ConversationEvent",
       "properties": {
-        "conversationProfile": {
-          "description": "Required. The Conversation Profile to be used to configure this\nConversation. This field cannot be updated.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversation Profile\nID\u003e`.",
+        "conversation": {
+          "description": "Required. The unique identifier of the conversation this notification\nrefers to. Format: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
           "type": "string"
         },
-        "endTime": {
-          "description": "Output only. The time the conversation was finished.",
-          "format": "google-datetime",
-          "type": "string"
+        "errorStatus": {
+          "$ref": "GoogleRpcStatus",
+          "description": "Optional. More detailed information about an error. Only set for type\nUNRECOVERABLE_ERROR_IN_PHONE_CALL."
         },
-        "lifecycleState": {
-          "description": "Output only. The current state of the Conversation.",
+        "type": {
+          "description": "Required. The type of the event that this notification refers to.",
           "enum": [
-            "LIFECYCLE_STATE_UNSPECIFIED",
-            "IN_PROGRESS",
-            "COMPLETED"
+            "TYPE_UNSPECIFIED",
+            "CONVERSATION_STARTED",
+            "CONVERSATION_FINISHED",
+            "UNRECOVERABLE_ERROR"
           ],
           "enumDescriptions": [
-            "Unknown.",
-            "Conversation is currently open for media analysis.",
-            "Conversation has been completed."
+            "Type not set.",
+            "A new conversation has been opened. This is fired when a telephone call\nis answered, or a conversation is created via the API.",
+            "An existing conversation has closed. This is fired when a telephone call\nis terminated, or a conversation is closed via the API.",
+            "Unrecoverable error during a telephone call.\n\nIn general non-recoverable errors only occur if something was\nmisconfigured in the ConversationProfile corresponding to the call. After\na non-recoverable error, Dialogflow may stop responding.\n\nWe don't fire this event:\n* in an API call because we can directly return the error, or,\n* when we can recover from an error."
           ],
           "type": "string"
-        },
-        "name": {
-          "description": "The unique identifier of this conversation.\nRequired for all methods except `create` (`create` populates the name\nautomatically).\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-          "type": "string"
-        },
-        "phoneNumber": {
-          "$ref": "GoogleCloudDialogflowV2beta1ConversationPhoneNumber",
-          "description": "Output only. Required if the conversation is to be connected over\ntelephony."
-        },
-        "startTime": {
-          "description": "Output only. The time the conversation was started.",
-          "format": "google-datetime",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ConversationPhoneNumber": {
-      "description": "Represents a phone number for telephony integration. It allows for connecting\na particular conversation over telephony.",
-      "id": "GoogleCloudDialogflowV2beta1ConversationPhoneNumber",
-      "properties": {
-        "phoneNumber": {
-          "description": "Output only. The phone number to connect to this conversation.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ConversationProfile": {
-      "description": "Defines the services to connect to incoming Dialogflow conversations.",
-      "id": "GoogleCloudDialogflowV2beta1ConversationProfile",
-      "properties": {
-        "automatedAgentConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1AutomatedAgentConfig",
-          "description": "Optional. Configuration for an automated agent to use with this profile."
-        },
-        "displayName": {
-          "description": "Required. Human readable name for this profile. Max length 1024 bytes.",
-          "type": "string"
-        },
-        "humanAgentAssistantConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig",
-          "description": "Optional. Configuration for agent assistance to use with this profile."
-        },
-        "loggingConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1LoggingConfig",
-          "description": "Optional. Configuration for logging conversation lifecycle events."
-        },
-        "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically).\nThe unique identifier of this conversation profile.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversation Profile\nID\u003e`.",
-          "type": "string"
-        },
-        "notificationConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1NotificationConfig",
-          "description": "Optional. Configuration for publishing conversation lifecycle events."
         }
       },
       "type": "object"
@@ -4995,52 +3891,25 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1FaqAnswersConfig": {
-      "description": "Defines FAQ responses that a human agent assistant can provide.",
-      "id": "GoogleCloudDialogflowV2beta1FaqAnswersConfig",
+    "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent": {
+      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for\nagent assistant events in a specific conversation.",
+      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent",
       "properties": {
-        "knowledgeBaseName": {
-          "description": "Required. Settings for knowledge base, Format:\n`projects/\u003cProject ID\u003e/knowledgeBases/\u003cKnowledge Base ID\u003e`.",
+        "conversation": {
+          "description": "Required. The conversation this notification refers to.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
           "type": "string"
         },
-        "maxResults": {
-          "description": "Optional. Maximum number of results to return. If unset, defaults to 10.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1HumanAgentAssistant": {
-      "description": "Represents a human agent assistant that provides suggestions to help\nhuman agents to resolve customer issues. This defines the types of content\nthat the human agent assistant can present to a human agent.",
-      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistant",
-      "properties": {
-        "articleSuggestionConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1ArticleSuggestionConfig",
-          "description": "Optional. Settings for article suggestion."
-        },
-        "faqAnswersConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1FaqAnswersConfig",
-          "description": "Optional. Settings for knowledge service."
-        },
-        "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically).\nThe unique identifier of human agent assistant.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
+        "type": {
+          "description": "Required. The type of the event that this notification refers to.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "NEW_SUGGESTION"
+          ],
+          "enumDescriptions": [
+            "Type not set.",
+            "A new suggestion has been sent.\nThis is fired when a suggestion comes from an agent assistant."
+          ],
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig": {
-      "description": "Defines the Human Agent Assistant to connect to a conversation.",
-      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantConfig",
-      "properties": {
-        "name": {
-          "description": "Required. ID of the agent assistant to use.\nFormat: `projects/\u003cProject ID\u003e/humanAgentAssistants/\u003cHuman Agent Assistant\nID\u003e`.",
-          "type": "string"
-        },
-        "notificationConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1NotificationConfig",
-          "description": "Optional. Pub/Sub topic on which to publish new agent assistant events."
         }
       },
       "type": "object"
@@ -5057,22 +3926,6 @@
         "agentUri": {
           "description": "The URI to a Google Cloud Storage file containing the agent to import.\nNote: The URI must start with \"gs://\".",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1InputAudio": {
-      "description": "Represents the natural language speech audio to be processed.",
-      "id": "GoogleCloudDialogflowV2beta1InputAudio",
-      "properties": {
-        "audio": {
-          "description": "Required. The natural language speech audio to be processed.\nA single request can contain up to 1 minute of speech audio data.\nThe transcribed text cannot contain more than 256 bytes.",
-          "format": "byte",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "GoogleCloudDialogflowV2beta1InputAudioConfig",
-          "description": "Required. Instructs the speech recognizer how to process the speech audio."
         }
       },
       "type": "object"
@@ -5124,32 +3977,6 @@
           "description": "Required. Sample rate (in Hertz) of the audio content sent in the query.\nRefer to\n[Cloud Speech API\ndocumentation](https://cloud.google.com/speech-to-text/docs/basics) for\nmore details.",
           "format": "int32",
           "type": "integer"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1InputText": {
-      "description": "Represents the natural language text to be processed.",
-      "id": "GoogleCloudDialogflowV2beta1InputText",
-      "properties": {
-        "languageCode": {
-          "description": "Required. The language of this conversational query. See [Language\nSupport](https://dialogflow.com/docs/languages) for a list of the\ncurrently supported language codes.",
-          "type": "string"
-        },
-        "text": {
-          "description": "Required. The UTF-8 encoded natural language text to be processed.\nText length must not exceed 256 bytes.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1InputTextConfig": {
-      "description": "Defines the language used in the input text.",
-      "id": "GoogleCloudDialogflowV2beta1InputTextConfig",
-      "properties": {
-        "languageCode": {
-          "description": "Required. The language of this conversational query. See [Language\nSupport](https://dialogflow.com/docs/languages) for a list of the\ncurrently supported language codes.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -5986,42 +4813,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1ListConversationProfilesResponse": {
-      "description": "The response message for ConversationProfiles.ListConversationProfiles.",
-      "id": "GoogleCloudDialogflowV2beta1ListConversationProfilesResponse",
-      "properties": {
-        "conversationProfiles": {
-          "description": "The list of project conversation profiles. There is a maximum number\nof items returned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1ConversationProfile"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListConversationsResponse": {
-      "description": "The response message for Conversations.ListConversations.",
-      "id": "GoogleCloudDialogflowV2beta1ListConversationsResponse",
-      "properties": {
-        "conversations": {
-          "description": "The list of conversations. There will be a maximum number of items\nreturned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Conversation"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1ListDocumentsResponse": {
       "description": "Response message for Documents.ListDocuments.",
       "id": "GoogleCloudDialogflowV2beta1ListDocumentsResponse",
@@ -6053,24 +4844,6 @@
         },
         "nextPageToken": {
           "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListHumanAgentAssistantsResponse": {
-      "description": "The response message for HumanAgentAssistants.ListHumanAgentAssistants.",
-      "id": "GoogleCloudDialogflowV2beta1ListHumanAgentAssistantsResponse",
-      "properties": {
-        "humanAgentAssistants": {
-          "description": "The list of project agent assistants. There is a maximum number of\nitems returned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1HumanAgentAssistant"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results or empty if there are no\nmore results in the list.",
           "type": "string"
         }
       },
@@ -6112,78 +4885,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1ListMessagesResponse": {
-      "description": "The response message for Conversations.ListMessages.",
-      "id": "GoogleCloudDialogflowV2beta1ListMessagesResponse",
-      "properties": {
-        "messages": {
-          "description": "Required. The list of messages. There will be a maximum number of items\nreturned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Message"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "Optional. Token to retrieve the next page of results, or empty if there are\nno more results in the list.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListParticipantsResponse": {
-      "description": "The response message for Conversations.ListParticipants.",
-      "id": "GoogleCloudDialogflowV2beta1ListParticipantsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results or empty if there are no\nmore results in the list.",
-          "type": "string"
-        },
-        "participants": {
-          "description": "The list of participants. There is a maximum number of items\nreturned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Participant"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListPhoneNumberOrdersResponse": {
-      "description": "The response message for PhoneNumberOrders.ListPhoneNumberOrders.",
-      "id": "GoogleCloudDialogflowV2beta1ListPhoneNumberOrdersResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
-        },
-        "phoneNumberOrders": {
-          "description": "The list of orders. There is a maximum number of items returned based\non the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberOrder"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse": {
-      "description": "The response message for PhoneNumbers.ListPhoneNumbers.",
-      "id": "GoogleCloudDialogflowV2beta1ListPhoneNumbersResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
-          "type": "string"
-        },
-        "phoneNumbers": {
-          "description": "The list of `PhoneNumber` resources. There is a maximum number of items\nreturned based on the page_size field in the request.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1PhoneNumber"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse": {
       "description": "The response message for SessionEntityTypes.ListSessionEntityTypes.",
       "id": "GoogleCloudDialogflowV2beta1ListSessionEntityTypesResponse",
@@ -6198,85 +4899,6 @@
             "$ref": "GoogleCloudDialogflowV2beta1SessionEntityType"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1ListSuggestionsResponse": {
-      "description": "The response message for [Conversations.ListSuggestions]",
-      "id": "GoogleCloudDialogflowV2beta1ListSuggestionsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "Optional. Token to retrieve the next page of results or empty if there are\nno more results in the list.",
-          "type": "string"
-        },
-        "suggestions": {
-          "description": "Required.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1Suggestion"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1LoggingConfig": {
-      "description": "Defines logging behavior for conversation lifecycle events.",
-      "id": "GoogleCloudDialogflowV2beta1LoggingConfig",
-      "properties": {},
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1Message": {
-      "description": "Represents a message posted into a conversation.",
-      "id": "GoogleCloudDialogflowV2beta1Message",
-      "properties": {
-        "content": {
-          "description": "Required. The message content.",
-          "type": "string"
-        },
-        "createTime": {
-          "description": "Optional. The time when the message was sent.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "languageCode": {
-          "description": "Required. The message language.\nThis should be a [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt)\nlanguage tag. Example: \"en-US\".",
-          "type": "string"
-        },
-        "name": {
-          "description": "Required. The unique identifier of the message.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/messages/\u003cMessage ID\u003e`.",
-          "type": "string"
-        },
-        "participant": {
-          "description": "Required. The participant that said this message.",
-          "type": "string"
-        },
-        "participantRole": {
-          "description": "Optional. The role of the participant.",
-          "enum": [
-            "ROLE_UNSPECIFIED",
-            "HUMAN_AGENT",
-            "AUTOMATED_AGENT",
-            "END_USER"
-          ],
-          "enumDescriptions": [
-            "Participant role not set.",
-            "Participant is a human agent.",
-            "Participant is an automated agent, such as a Dialogflow agent.",
-            "Participant is an end user that has called or chatted with\nDialogflow services."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1NotificationConfig": {
-      "description": "Defines notification behavior for conversation lifecycle events.",
-      "id": "GoogleCloudDialogflowV2beta1NotificationConfig",
-      "properties": {
-        "topic": {
-          "description": "Optional. Name of the Cloud Pub/Sub topic to publish conversation\nevents like\nCONVERSATION_STARTED as\nserialized ConversationEvent protos.\n\nIf enable_notifications is\n`true` and no topic is supplied, a new topic is created and listed\nhere.\n\nNotification works for phone calls, if this topic either is in the same\nproject as the conversation or you grant `service-\u003cConversation Project\nNumber\u003e@gcp-sa-dialogflow.iam.gserviceaccount.com` the `Dialogflow Service\nAgent` role in the topic project.\n\nFormat: `projects/\u003cProject ID\u003e/topics/\u003cTopic ID\u003e`.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -6300,22 +4922,6 @@
         "version": {
           "description": "Optional. The version of the protocol used for this request.\nThis field is AoG-specific.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1OutputAudio": {
-      "description": "Represents the natural language speech audio to be played to the end user.",
-      "id": "GoogleCloudDialogflowV2beta1OutputAudio",
-      "properties": {
-        "audio": {
-          "description": "Required. The natural language speech audio.",
-          "format": "byte",
-          "type": "string"
-        },
-        "config": {
-          "$ref": "GoogleCloudDialogflowV2beta1OutputAudioConfig",
-          "description": "Required. Instructs the speech synthesizer how to generate the speech\naudio."
         }
       },
       "type": "object"
@@ -6348,139 +4954,6 @@
         "synthesizeSpeechConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig",
           "description": "Optional. Configuration of how speech should be synthesized."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1Participant": {
-      "description": "Represents a single side of the conversation.",
-      "id": "GoogleCloudDialogflowV2beta1Participant",
-      "properties": {
-        "name": {
-          "description": "Required. The unique identifier of this participant.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/\u003cParticipant ID\u003e`.",
-          "type": "string"
-        },
-        "role": {
-          "description": "Required. The role this participant plays in the conversation.",
-          "enum": [
-            "ROLE_UNSPECIFIED",
-            "HUMAN_AGENT",
-            "AUTOMATED_AGENT",
-            "END_USER"
-          ],
-          "enumDescriptions": [
-            "Participant role not set.",
-            "Participant is a human agent.",
-            "Participant is an automated agent, such as a Dialogflow agent.",
-            "Participant is an end user that has called or chatted with\nDialogflow services."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1PhoneNumber": {
-      "description": "Represents a phone number.\n`PhoneNumber` resources enable phone calls to be answered by Dialogflow\nservices and are added to a project through a `PhoneNumberOrder`.",
-      "id": "GoogleCloudDialogflowV2beta1PhoneNumber",
-      "properties": {
-        "conversationProfile": {
-          "description": "Optional. The conversation profile calls to this `PhoneNumber` should use.\nFormat: `projects/\u003cProject ID\u003e/conversationProfiles/\u003cConversationProfile\nID\u003e`.",
-          "type": "string"
-        },
-        "lifecycleState": {
-          "description": "Output only. The state of the `PhoneNumber`. Defaults to `ACTIVE`.\n`PhoneNumber` objects set to `DELETE_REQUESTED` always decline incoming\ncalls and can be removed completely within 30 days.",
-          "enum": [
-            "LIFECYCLE_STATE_UNSPECIFIED",
-            "ACTIVE",
-            "DELETE_REQUESTED"
-          ],
-          "enumDescriptions": [
-            "This value is never used.",
-            "Number is active and can receive phone calls.",
-            "Number is pending deletion, and cannot receive calls."
-          ],
-          "type": "string"
-        },
-        "name": {
-          "description": "Required. The unique identifier of this phone number.\nFormat: `projects/\u003cProject ID\u003e/phoneNumbers/\u003cPhoneNumber ID\u003e`.",
-          "type": "string"
-        },
-        "phoneNumber": {
-          "description": "Output only. Phone number in [E.164](https://en.wikipedia.org/wiki/E.164)\nformat. An example of a correctly formatted phone number: +15556767888.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1PhoneNumberOrder": {
-      "description": "Represents a phone number order.\nOrders can assign phone numbers to projects.",
-      "id": "GoogleCloudDialogflowV2beta1PhoneNumberOrder",
-      "properties": {
-        "createTime": {
-          "description": "Output only. The time this order was created.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "description": {
-          "description": "Optional. A description of the order, limit is 1024 bytes.",
-          "type": "string"
-        },
-        "lifecycleState": {
-          "description": "Output only. The current status of the order.",
-          "enum": [
-            "LIFECYCLE_STATE_UNSPECIFIED",
-            "PENDING",
-            "IN_PROGRESS",
-            "COMPLETED",
-            "CANCELLED"
-          ],
-          "enumDescriptions": [
-            "Unknown.",
-            "Order is awaiting action.",
-            "Order is being worked on, and is partially fulfilled.",
-            "Order has been fulfilled.",
-            "Order has been cancelled."
-          ],
-          "type": "string"
-        },
-        "name": {
-          "description": "Required. The unique identifier of this order.\nFormat: `projects/\u003cProject ID\u003e/phoneNumberOrders/\u003cOrder ID\u003e`.",
-          "type": "string"
-        },
-        "phoneNumberSpec": {
-          "$ref": "GoogleCloudDialogflowV2beta1PhoneNumberSpec",
-          "description": "Order is for new numbers."
-        },
-        "phoneNumbers": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Output only. A map of ordered numbers filled so far, keyed by their\nresource name. Key format:\n`projects/\u003cProject ID\u003e/phoneNumbers/\u003cPhoneNumber ID\u003e`.\nValue format: E.164 phone number. Output only.",
-          "type": "object"
-        },
-        "updateTime": {
-          "description": "Output only. The time this order was last updated.",
-          "format": "google-datetime",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1PhoneNumberSpec": {
-      "description": "Request for new numbers fitting a set of parameters.\nThe country code for newly requested numbers defaults to 1 (US) until the\nservice is available in other regions.",
-      "id": "GoogleCloudDialogflowV2beta1PhoneNumberSpec",
-      "properties": {
-        "count": {
-          "description": "Required. Total numbers requested, between 1 and 10 inclusive.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "preferredAreaCodes": {
-          "description": "Optional. Area codes to use. An empty list means 'any code'. Each value\nis treated as equally preferred. Each entry has a limit of 10 bytes.\n\"area code\" corresponds to \"National Destination Code\" described in\n[E.164](https://en.wikipedia.org/wiki/E.164) standard.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -6752,181 +5225,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentRequest": {
-      "description": "The top-level message sent by the client to the `StreamingAnalyzeContent`\nmethod.\n\nMultiple request messages must be sent in the following order:\n\n1.  The first message must contain `participant` and `config` fields. To\n    receive an audio response, the first message must also contain the\n    `reply_audio_config` field. The first message must not contain `input`.\n\n2.  All subsequent messages must contain only input data. Specifically:\n    - If the `config` in the first message was set to `audio_config`, then\n      all subsequent messages must contain only `input_audio`. It is a good\n      practice to split the input audio into short chunks and deliver each\n      chunk in a separate message.\n    - If the `config` in the first message was set to `text_config`, then\n      the second message must contain only `input_text`. Moreover, the\n      `input_text` field can be only sent once.\n    After all input is delivered, the client must half-close, or abort the\n    request stream.",
-      "id": "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentRequest",
-      "properties": {
-        "audioConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1InputAudioConfig",
-          "description": "Instructs the speech recognizer how to process the speech audio."
-        },
-        "inputAudio": {
-          "description": "The input audio content to be recognized. Must be sent if `audio_config`\nis set in the first message. The complete audio over all streaming\nmessages must not exceed 1 minute.",
-          "format": "byte",
-          "type": "string"
-        },
-        "inputText": {
-          "description": "The UTF-8 encoded natural language text to be processed. Must be sent if\n`text_config` is set in the first message. Text length must not exceed\n256 bytes. The `input_text` field can be only sent once.",
-          "type": "string"
-        },
-        "replyAudioConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1OutputAudioConfig",
-          "description": "Optional. Instructs the speech synthesizer how to generate the output\naudio."
-        },
-        "textConfig": {
-          "$ref": "GoogleCloudDialogflowV2beta1InputTextConfig",
-          "description": "The natural language text to be processed."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentResponse": {
-      "description": "The top-level message returned from the `StreamingAnalyzeContent` method.\n\nMultiple response messages can be returned in order:\n\n1.  If the input was set to streaming audio, the first one or more messages\n    contain `recognition_result`. Each `recognition_result` represents a more\n    complete transcript of what the user said. The last `recognition_result`\n    has `is_final` set to `true`.\n\n2.  The next message contains `reply_text` and optionally `reply_audio`\n    returned by an agent. This message may also contain\n    `automated_agent_reply`.",
-      "id": "GoogleCloudDialogflowV2beta1StreamingAnalyzeContentResponse",
-      "properties": {
-        "automatedAgentReply": {
-          "$ref": "GoogleCloudDialogflowV2beta1AutomatedAgentReply",
-          "description": "Optional. Only set if a Dialogflow automated agent has responded."
-        },
-        "recognitionResult": {
-          "$ref": "GoogleCloudDialogflowV2beta1StreamingRecognitionResult",
-          "description": "The result of speech recognition."
-        },
-        "replyAudio": {
-          "$ref": "GoogleCloudDialogflowV2beta1OutputAudio",
-          "description": "Optional. The audio data bytes encoded as specified in the request.\nThis field is set if:\n - The `reply_audio_config` field is specified in the request.\n - The automated agent, which this output comes from, responded with audio.\n   In such case, the `reply_audio.config` field contains settings used to\n   synthesize the speech."
-        },
-        "replyText": {
-          "description": "Optional. The output text content.\nThis field is set if an automated agent responded with a text for the user.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1StreamingRecognitionResult": {
-      "description": "Contains a speech recognition result corresponding to a portion of the audio\nthat is currently being processed or an indication that this is the end\nof the single requested utterance.\n\nExample:\n\n1.  transcript: \"tube\"\n\n2.  transcript: \"to be a\"\n\n3.  transcript: \"to be\"\n\n4.  transcript: \"to be or not to be\"\n    is_final: true\n\n5.  transcript: \" that's\"\n\n6.  transcript: \" that is\"\n\n7.  recognition_event_type: `RECOGNITION_EVENT_END_OF_SINGLE_UTTERANCE`\n\n8.  transcript: \" that is the question\"\n    is_final: true\n\nOnly two of the responses contain final results (#4 and #8 indicated by\n`is_final: true`). Concatenating these generates the full transcript: \"to be\nor not to be that is the question\".\n\nIn each response we populate:\n\n*  for `MESSAGE_TYPE_TRANSCRIPT`: `transcript` and possibly `is_final`.\n\n*  for `MESSAGE_TYPE_END_OF_SINGLE_UTTERANCE`: only `event_type`.",
-      "id": "GoogleCloudDialogflowV2beta1StreamingRecognitionResult",
-      "properties": {
-        "confidence": {
-          "description": "The Speech confidence between 0.0 and 1.0 for the current portion of audio.\nA higher number indicates an estimated greater likelihood that the\nrecognized words are correct. The default of 0.0 is a sentinel value\nindicating that confidence was not set.\n\nThis field is typically only provided if `is_final` is true and you should\nnot rely on it being accurate or even set.",
-          "format": "float",
-          "type": "number"
-        },
-        "isFinal": {
-          "description": "The default of 0.0 is a sentinel value indicating `confidence` was not set.\nIf `false`, the `StreamingRecognitionResult` represents an\ninterim result that may change. If `true`, the recognizer will not return\nany further hypotheses about this piece of the audio. May only be populated\nfor `event_type` = `RECOGNITION_EVENT_TRANSCRIPT`.",
-          "type": "boolean"
-        },
-        "messageType": {
-          "description": "Type of the result message.",
-          "enum": [
-            "MESSAGE_TYPE_UNSPECIFIED",
-            "TRANSCRIPT",
-            "END_OF_SINGLE_UTTERANCE"
-          ],
-          "enumDescriptions": [
-            "Not specified. Should never be used.",
-            "Message contains a (possibly partial) transcript.",
-            "Event indicates that the server has detected the end of the user's speech\nutterance and expects no additional speech. Therefore, the server will\nnot process additional audio (although it may subsequently return\nadditional results). The client should stop sending additional audio\ndata, half-close the gRPC connection, and wait for any additional results\nuntil the server closes the gRPC connection. This message is only sent if\n`single_utterance` was set to `true`, and is not used otherwise."
-          ],
-          "type": "string"
-        },
-        "transcript": {
-          "description": "Transcript text representing the words that the user spoke.\nPopulated if and only if `event_type` = `RECOGNITION_EVENT_TRANSCRIPT`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1Suggestion": {
-      "description": "Represents a suggestion for a human agent.",
-      "id": "GoogleCloudDialogflowV2beta1Suggestion",
-      "properties": {
-        "articles": {
-          "description": "Output only. Articles ordered by score in descending order.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1SuggestionArticle"
-          },
-          "type": "array"
-        },
-        "createTime": {
-          "description": "Output only. The time the suggestion was created.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "faqAnswers": {
-          "description": "Optional. Answers extracted from FAQ documents.",
-          "items": {
-            "$ref": "GoogleCloudDialogflowV2beta1SuggestionFaqAnswer"
-          },
-          "type": "array"
-        },
-        "name": {
-          "description": "Output only. The name of this suggestion. Format:\n`projects/\u003cProject ID\u003e/conversations/\u003cConversation\nID\u003e/participants/*/suggestions/\u003cSuggestion ID\u003e`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1SuggestionArticle": {
-      "description": "Represents suggested article.",
-      "id": "GoogleCloudDialogflowV2beta1SuggestionArticle",
-      "properties": {
-        "metadata": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Output only. A map that contains metadata about the answer and the\ndocument from which it originates.",
-          "type": "object"
-        },
-        "snippets": {
-          "description": "Output only. Article snippets.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "title": {
-          "description": "Output only. The article title.",
-          "type": "string"
-        },
-        "uri": {
-          "description": "Output only. The article URI.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1SuggestionFaqAnswer": {
-      "description": "Represents suggested answer from \"frequently asked questions\".",
-      "id": "GoogleCloudDialogflowV2beta1SuggestionFaqAnswer",
-      "properties": {
-        "answer": {
-          "description": "Output only. The piece of text from the `source` knowledge base document.",
-          "type": "string"
-        },
-        "confidence": {
-          "description": "The system's confidence score that this Knowledge answer is a good match\nfor this conversational query, range from 0.0 (completely uncertain)\nto 1.0 (completely certain).",
-          "format": "float",
-          "type": "number"
-        },
-        "metadata": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Output only. A map that contains metadata about the answer and the\ndocument from which it originates.",
-          "type": "object"
-        },
-        "question": {
-          "description": "Output only. The corresponding FAQ question.",
-          "type": "string"
-        },
-        "source": {
-          "description": "Output only. Indicates which Knowledge Document this answer was extracted\nfrom.\nFormat: `projects/\u003cProject ID\u003e/agent/knowledgeBases/\u003cKnowledge Base\nID\u003e/documents/\u003cDocument ID\u003e`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig": {
       "description": "Configuration of how speech should be synthesized.",
       "id": "GoogleCloudDialogflowV2beta1SynthesizeSpeechConfig",
@@ -6981,12 +5279,6 @@
       "properties": {},
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest": {
-      "description": "The request message for PhoneNumbers.UndeletePhoneNumber.",
-      "id": "GoogleCloudDialogflowV2beta1UndeletePhoneNumberRequest",
-      "properties": {},
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1VoiceSelectionParams": {
       "description": "Description of which voice to use for speech synthesis.",
       "id": "GoogleCloudDialogflowV2beta1VoiceSelectionParams",
@@ -7038,7 +5330,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`.",
+          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`.",
           "type": "string"
         }
       },

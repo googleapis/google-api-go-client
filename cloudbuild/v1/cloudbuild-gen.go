@@ -575,6 +575,12 @@ type BuildOptions struct {
 	// it is indicative of a build request with an incorrect configuration.
 	Volumes []*Volume `json:"volumes,omitempty"`
 
+	// WorkerPool: Option to specify a `WorkerPool` for the build. User
+	// specifies the pool
+	// with the format "[WORKERPOOL_PROJECT_ID]/[WORKERPOOL_NAME]".
+	// This is an experimental field.
+	WorkerPool string `json:"workerPool,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

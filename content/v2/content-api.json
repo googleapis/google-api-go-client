@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/utg1ejMUlji9a5_gHwUYaZ-gKog\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/SrhOH2xsTrrIa7fnXr9zDGqu4xk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1768,7 +1768,7 @@
           ]
         },
         "listtransactions": {
-          "description": "Retrieves a list of transactions for an disbursement from your Merchant Center account.",
+          "description": "Retrieves a list of transactions for a disbursement from your Merchant Center account.",
           "httpMethod": "GET",
           "id": "content.orderreports.listtransactions",
           "parameterOrder": [
@@ -3469,11 +3469,11 @@
       }
     }
   },
-  "revision": "20181009",
+  "revision": "20181016",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
-      "description": "Account data.",
+      "description": "Account data. After the creation of a new account it may take a few minutes before it is fully operational.",
       "id": "Account",
       "properties": {
         "adultContent": {
@@ -5243,6 +5243,26 @@
           "description": "The availability of the product.",
           "type": "string"
         },
+        "customLabel0": {
+          "description": "Custom label 0 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel1": {
+          "description": "Custom label 1 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel2": {
+          "description": "Custom label 2 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel3": {
+          "description": "Custom label 3 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel4": {
+          "description": "Custom label 3 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
         "installment": {
           "$ref": "Installment",
           "description": "Number and amount of installments to pay for an item. Brazil only."
@@ -5385,6 +5405,26 @@
       "properties": {
         "availability": {
           "description": "The availability of the product.",
+          "type": "string"
+        },
+        "customLabel0": {
+          "description": "Custom label 0 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel1": {
+          "description": "Custom label 1 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel2": {
+          "description": "Custom label 2 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel3": {
+          "description": "Custom label 3 for custom grouping of items in a Shopping campaign. Only supported for online products.",
+          "type": "string"
+        },
+        "customLabel4": {
+          "description": "Custom label 3 for custom grouping of items in a Shopping campaign. Only supported for online products.",
           "type": "string"
         },
         "installment": {

@@ -97,7 +97,6 @@ type ViolatingSitesService struct {
 }
 
 // SiteSummaryResponse: Response message for GetSiteSummary.
-// Do not confuse with same message in google.ads.experiencereport.v1
 type SiteSummaryResponse struct {
 	// AbusiveStatus: The status of the site reviewed for the abusive
 	// experiences.

@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20180922",
+  "revision": "20181013",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -3100,7 +3100,7 @@
           "description": "Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values."
         },
         "description": {
-          "description": "Optional. A description of this metric, which is used in documentation.",
+          "description": "Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.",
           "type": "string"
         },
         "filter": {

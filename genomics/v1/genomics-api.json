@@ -23,7 +23,7 @@
   "basePath": "",
   "baseUrl": "https://genomics.googleapis.com/",
   "batchPath": "batch",
-  "description": "Upload, process, query, and search Genomics data in the cloud.",
+  "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/genomics",
   "fullyEncodeReservedExpansion": true,
@@ -1604,7 +1604,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20181017",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Annotation": {

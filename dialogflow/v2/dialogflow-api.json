@@ -4,6 +4,9 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "View and manage your data across Google Cloud Platform services"
+        },
+        "https://www.googleapis.com/auth/dialogflow": {
+          "description": "View, manage and query your Dialogflow agents"
         }
       }
     }
@@ -12,7 +15,7 @@
   "baseUrl": "https://dialogflow.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Dialogflow",
-  "description": "An end-to-end development suite for conversational interfaces (e.g., chatbots, voice-powered apps and devices).",
+  "description": "Builds conversational interfaces (for example, chatbots, and voice-powered apps and devices).",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/dialogflow-enterprise/",
   "fullyEncodeReservedExpansion": true,
@@ -128,7 +131,8 @@
             "$ref": "GoogleCloudDialogflowV2Agent"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/dialogflow"
           ]
         }
       },
@@ -160,7 +164,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "import": {
@@ -188,7 +193,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "restore": {
@@ -216,7 +222,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "search": {
@@ -252,7 +259,8 @@
                 "$ref": "GoogleCloudDialogflowV2SearchAgentsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             },
             "train": {
@@ -280,7 +288,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             }
           },
@@ -312,7 +321,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "batchUpdate": {
@@ -340,7 +350,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "create": {
@@ -373,7 +384,8 @@
                     "$ref": "GoogleCloudDialogflowV2EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -398,7 +410,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -428,7 +441,8 @@
                     "$ref": "GoogleCloudDialogflowV2EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -469,7 +483,8 @@
                     "$ref": "GoogleCloudDialogflowV2ListEntityTypesResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "patch": {
@@ -508,7 +523,8 @@
                     "$ref": "GoogleCloudDialogflowV2EntityType"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               },
@@ -540,7 +556,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "batchDelete": {
@@ -568,7 +585,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "batchUpdate": {
@@ -596,7 +614,8 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -630,7 +649,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "batchUpdate": {
@@ -658,7 +678,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "create": {
@@ -700,7 +721,8 @@
                     "$ref": "GoogleCloudDialogflowV2Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "delete": {
@@ -725,7 +747,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "get": {
@@ -764,7 +787,8 @@
                     "$ref": "GoogleCloudDialogflowV2Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "list": {
@@ -814,7 +838,8 @@
                     "$ref": "GoogleCloudDialogflowV2ListIntentsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "patch": {
@@ -862,7 +887,8 @@
                     "$ref": "GoogleCloudDialogflowV2Intent"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               }
@@ -891,7 +917,8 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 },
                 "detectIntent": {
@@ -919,7 +946,8 @@
                     "$ref": "GoogleCloudDialogflowV2DetectIntentResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/dialogflow"
                   ]
                 }
               },
@@ -951,7 +979,8 @@
                         "$ref": "GoogleCloudDialogflowV2Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "delete": {
@@ -976,7 +1005,8 @@
                         "$ref": "GoogleProtobufEmpty"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "get": {
@@ -1001,7 +1031,8 @@
                         "$ref": "GoogleCloudDialogflowV2Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "list": {
@@ -1037,7 +1068,8 @@
                         "$ref": "GoogleCloudDialogflowV2ListContextsResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "patch": {
@@ -1071,7 +1103,8 @@
                         "$ref": "GoogleCloudDialogflowV2Context"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -1103,7 +1136,8 @@
                         "$ref": "GoogleCloudDialogflowV2SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "delete": {
@@ -1128,7 +1162,8 @@
                         "$ref": "GoogleProtobufEmpty"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "get": {
@@ -1153,7 +1188,8 @@
                         "$ref": "GoogleCloudDialogflowV2SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "list": {
@@ -1189,7 +1225,8 @@
                         "$ref": "GoogleCloudDialogflowV2ListSessionEntityTypesResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     },
                     "patch": {
@@ -1223,7 +1260,8 @@
                         "$ref": "GoogleCloudDialogflowV2SessionEntityType"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dialogflow"
                       ]
                     }
                   }
@@ -1256,7 +1294,8 @@
                 "$ref": "GoogleLongrunningOperation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/dialogflow"
               ]
             }
           }
@@ -1264,7 +1303,7 @@
       }
     }
   },
-  "revision": "20181009",
+  "revision": "20181017",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2762,7 +2801,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`.",
+          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`.",
           "type": "string"
         }
       },
@@ -2857,6 +2896,37 @@
           },
           "description": "Optional. The collection of parameters associated with this context.\nRefer to [this doc](https://dialogflow.com/docs/actions-and-parameters) for\nsyntax.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1ConversationEvent": {
+      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for conversation\nlifecycle events.",
+      "id": "GoogleCloudDialogflowV2beta1ConversationEvent",
+      "properties": {
+        "conversation": {
+          "description": "Required. The unique identifier of the conversation this notification\nrefers to. Format: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
+          "type": "string"
+        },
+        "errorStatus": {
+          "$ref": "GoogleRpcStatus",
+          "description": "Optional. More detailed information about an error. Only set for type\nUNRECOVERABLE_ERROR_IN_PHONE_CALL."
+        },
+        "type": {
+          "description": "Required. The type of the event that this notification refers to.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "CONVERSATION_STARTED",
+            "CONVERSATION_FINISHED",
+            "UNRECOVERABLE_ERROR"
+          ],
+          "enumDescriptions": [
+            "Type not set.",
+            "A new conversation has been opened. This is fired when a telephone call\nis answered, or a conversation is created via the API.",
+            "An existing conversation has closed. This is fired when a telephone call\nis terminated, or a conversation is closed via the API.",
+            "Unrecoverable error during a telephone call.\n\nIn general non-recoverable errors only occur if something was\nmisconfigured in the ConversationProfile corresponding to the call. After\na non-recoverable error, Dialogflow may stop responding.\n\nWe don't fire this event:\n* in an API call because we can directly return the error, or,\n* when we can recover from an error."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2961,6 +3031,29 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated\nonly if `agent_uri` is specified in `ExportAgentRequest`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent": {
+      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for\nagent assistant events in a specific conversation.",
+      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent",
+      "properties": {
+        "conversation": {
+          "description": "Required. The conversation this notification refers to.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. The type of the event that this notification refers to.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "NEW_SUGGESTION"
+          ],
+          "enumDescriptions": [
+            "Type not set.",
+            "A new suggestion has been sent.\nThis is fired when a suggestion comes from an agent assistant."
+          ],
           "type": "string"
         }
       },
@@ -3917,7 +4010,7 @@
           "type": "string"
         },
         "session": {
-          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`.",
+          "description": "The unique identifier of detectIntent request session.\nCan be used to identify end-user inside webhook implementation.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e`, or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`.",
           "type": "string"
         }
       },

@@ -918,7 +918,9 @@ type Project struct {
 	//
 	// Label values must be between 0 and 63 characters long and must
 	// conform
-	// to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?.
+	// to the regular expression (\[a-z\](\[-a-z0-9\]*\[a-z0-9\])?)?. A
+	// label
+	// value can be empty.
 	//
 	// No more than 256 labels can be associated with a given
 	// resource.

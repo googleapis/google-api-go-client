@@ -12,7 +12,7 @@
   "baseUrl": "https://adexperiencereport.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Ad Experience Report",
-  "description": "View Ad Experience Report data, and get a list of sites that have a significant number of annoying ads.",
+  "description": "Views Ad Experience Report data, and gets a list of sites that have a significant number of annoying ads.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/ad-experience-report/",
   "icons": {
@@ -152,7 +152,7 @@
       }
     }
   },
-  "revision": "20180911",
+  "revision": "20181017",
   "rootUrl": "https://adexperiencereport.googleapis.com/",
   "schemas": {
     "PlatformSummary": {

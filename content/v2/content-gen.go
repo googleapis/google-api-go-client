@@ -264,7 +264,8 @@ type ShippingsettingsService struct {
 	s *APIService
 }
 
-// Account: Account data.
+// Account: Account data. After the creation of a new account it may
+// take a few minutes before it is fully operational.
 type Account struct {
 	// AdultContent: Indicates whether the merchant sells adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
@@ -3072,6 +3073,26 @@ type Inventory struct {
 	// Availability: The availability of the product.
 	Availability string `json:"availability,omitempty"`
 
+	// CustomLabel0: Custom label 0 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel0 string `json:"customLabel0,omitempty"`
+
+	// CustomLabel1: Custom label 1 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel1 string `json:"customLabel1,omitempty"`
+
+	// CustomLabel2: Custom label 2 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel2 string `json:"customLabel2,omitempty"`
+
+	// CustomLabel3: Custom label 3 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel3 string `json:"customLabel3,omitempty"`
+
+	// CustomLabel4: Custom label 3 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel4 string `json:"customLabel4,omitempty"`
+
 	// Installment: Number and amount of installments to pay for an item.
 	// Brazil only.
 	Installment *Installment `json:"installment,omitempty"`
@@ -3314,6 +3335,26 @@ func (s *InventoryPickup) MarshalJSON() ([]byte, error) {
 type InventorySetRequest struct {
 	// Availability: The availability of the product.
 	Availability string `json:"availability,omitempty"`
+
+	// CustomLabel0: Custom label 0 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel0 string `json:"customLabel0,omitempty"`
+
+	// CustomLabel1: Custom label 1 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel1 string `json:"customLabel1,omitempty"`
+
+	// CustomLabel2: Custom label 2 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel2 string `json:"customLabel2,omitempty"`
+
+	// CustomLabel3: Custom label 3 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel3 string `json:"customLabel3,omitempty"`
+
+	// CustomLabel4: Custom label 3 for custom grouping of items in a
+	// Shopping campaign. Only supported for online products.
+	CustomLabel4 string `json:"customLabel4,omitempty"`
 
 	// Installment: Number and amount of installments to pay for an item.
 	// Brazil only.
@@ -18934,8 +18975,8 @@ type OrderreportsListtransactionsCall struct {
 	header_        http.Header
 }
 
-// Listtransactions: Retrieves a list of transactions for an
-// disbursement from your Merchant Center account.
+// Listtransactions: Retrieves a list of transactions for a disbursement
+// from your Merchant Center account.
 func (r *OrderreportsService) Listtransactions(merchantId uint64, disbursementId string, transactionStartDate string) *OrderreportsListtransactionsCall {
 	c := &OrderreportsListtransactionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -19066,7 +19107,7 @@ func (c *OrderreportsListtransactionsCall) Do(opts ...googleapi.CallOption) (*Or
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves a list of transactions for an disbursement from your Merchant Center account.",
+	//   "description": "Retrieves a list of transactions for a disbursement from your Merchant Center account.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orderreports.listtransactions",
 	//   "parameterOrder": [

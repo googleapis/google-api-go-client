@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20181009",
+  "revision": "20181018",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -883,6 +883,10 @@
             "$ref": "Volume"
           },
           "type": "array"
+        },
+        "workerPool": {
+          "description": "Option to specify a `WorkerPool` for the build. User specifies the pool\nwith the format \"[WORKERPOOL_PROJECT_ID]/[WORKERPOOL_NAME]\".\nThis is an experimental field.",
+          "type": "string"
         }
       },
       "type": "object"

@@ -252,7 +252,7 @@
       }
     }
   },
-  "revision": "20181010",
+  "revision": "20181018",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -294,6 +294,10 @@
           },
           "description": "Optional. Specific data associated with this alert.\ne.g. google.apps.alertcenter.type.DeviceCompromised.",
           "type": "object"
+        },
+        "deleted": {
+          "description": "Output only. Whether this alert has been marked for deletion.",
+          "type": "boolean"
         },
         "endTime": {
           "description": "Optional. The time this alert was no longer active. If provided, the\nend time must not be earlier than the start time. If not provided, the end\ntime will default to the start time.",
@@ -627,11 +631,11 @@
       "id": "LoginDetails",
       "properties": {
         "ipAddress": {
-          "description": "Required. Human readable IP address (e.g., 11.22.33.44) that is\nassociated with the warning event.",
+          "description": "Optional. Human readable IP address (e.g., 11.22.33.44) that is\nassociated with the warning event.",
           "type": "string"
         },
         "loginTime": {
-          "description": "Required. Login time that is associated with the warning event.",
+          "description": "Optional. Login time that is associated with the warning event.",
           "format": "google-datetime",
           "type": "string"
         }

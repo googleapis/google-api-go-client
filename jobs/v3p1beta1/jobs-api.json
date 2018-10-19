@@ -124,8 +124,14 @@
               "type": "string"
             },
             "languageCode": {
-              "description": "Required.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
+              "description": "Deprecated. Use language_codes instead.\n\nOptional.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
               "location": "query",
+              "type": "string"
+            },
+            "languageCodes": {
+              "description": "Optional.\n\nThe list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_codes or companies having open jobs with same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
+              "location": "query",
+              "repeated": true,
               "type": "string"
             },
             "name": {
@@ -244,7 +250,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes specified company.",
+              "description": "Deletes specified company.\nPrerequisite: The company has no jobs associated with it.",
               "flatPath": "v3p1beta1/projects/{projectsId}/companies/{companiesId}",
               "httpMethod": "DELETE",
               "id": "jobs.projects.companies.delete",
@@ -626,7 +632,7 @@
       }
     }
   },
-  "revision": "20180927",
+  "revision": "20181011",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -1957,7 +1963,7 @@
           "description": "Optional.\n\nThis search filter is applied only to\nJob.compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs meeting\nthese criteria are searched. If a filter isn't defined, all open jobs\nare searched."
         },
         "customAttributeFilter": {
-          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of SQL syntax.\n\nSupported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the\nleft of the operator is a custom field key and the right of the operator\nis a number or a quoted string. You must escape backslash (\\\\) and\nquote (\\\") characters.\n\nSupported functions are `LOWER([field_name])` to\nperform a case insensitive match and `EMPTY([field_name])` to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 50\ncomparisons or functions are allowed in the expression. The expression\nmust be \u003c 3000 characters in length.\n\nSample Query:\n`(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10`",
+          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes marked as `filterable`.\n\nThe syntax for this expression is a subset of SQL syntax.\n\nSupported operators are: `=`, `!=`, `\u003c`, `\u003c=`, `\u003e`, and `\u003e=` where the\nleft of the operator is a custom field key and the right of the operator\nis a number or a quoted string. You must escape backslash (\\\\) and\nquote (\\\") characters.\n\nSupported functions are `LOWER([field_name])` to\nperform a case insensitive match and `EMPTY([field_name])` to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (for example, \"((A AND B AND C) OR NOT D) AND E\"), a maximum of 100\ncomparisons or functions are allowed in the expression. The expression\nmust be \u003c 3000 bytes in length.\n\nSample Query:\n`(LOWER(driving_license)=\"class \\\"a\\\"\" OR EMPTY(driving_license)) AND\ndriving_years \u003e 10`",
           "type": "string"
         },
         "disableSpellCheck": {

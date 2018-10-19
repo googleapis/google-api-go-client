@@ -116,79 +116,6 @@
   },
   "protocol": "rest",
   "resources": {
-    "billingAccounts": {
-      "resources": {
-        "logs": {
-          "methods": {
-            "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
-              "flatPath": "v2beta1/billingAccounts/{billingAccountsId}/logs/{logsId}",
-              "httpMethod": "DELETE",
-              "id": "logging.billingAccounts.logs.delete",
-              "parameterOrder": [
-                "logName"
-              ],
-              "parameters": {
-                "logName": {
-                  "description": "Required. The resource name of the log to delete:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\n[LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
-                  "location": "path",
-                  "pattern": "^billingAccounts/[^/]+/logs/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+logName}",
-              "response": {
-                "$ref": "Empty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            },
-            "list": {
-              "description": "Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.",
-              "flatPath": "v2beta1/billingAccounts/{billingAccountsId}/logs",
-              "httpMethod": "GET",
-              "id": "logging.billingAccounts.logs.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
-                  "location": "path",
-                  "pattern": "^billingAccounts/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/logs",
-              "response": {
-                "$ref": "ListLogsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only",
-                "https://www.googleapis.com/auth/logging.admin",
-                "https://www.googleapis.com/auth/logging.read"
-              ]
-            }
-          }
-        }
-      }
-    },
     "entries": {
       "methods": {
         "list": {
@@ -268,150 +195,8 @@
         }
       }
     },
-    "organizations": {
-      "resources": {
-        "logs": {
-          "methods": {
-            "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
-              "flatPath": "v2beta1/organizations/{organizationsId}/logs/{logsId}",
-              "httpMethod": "DELETE",
-              "id": "logging.organizations.logs.delete",
-              "parameterOrder": [
-                "logName"
-              ],
-              "parameters": {
-                "logName": {
-                  "description": "Required. The resource name of the log to delete:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\n[LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+/logs/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+logName}",
-              "response": {
-                "$ref": "Empty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            },
-            "list": {
-              "description": "Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.",
-              "flatPath": "v2beta1/organizations/{organizationsId}/logs",
-              "httpMethod": "GET",
-              "id": "logging.organizations.logs.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/logs",
-              "response": {
-                "$ref": "ListLogsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only",
-                "https://www.googleapis.com/auth/logging.admin",
-                "https://www.googleapis.com/auth/logging.read"
-              ]
-            }
-          }
-        }
-      }
-    },
     "projects": {
       "resources": {
-        "logs": {
-          "methods": {
-            "delete": {
-              "description": "Deletes all the log entries in a log. The log reappears if it receives new entries. Log entries written shortly before the delete operation might not be deleted.",
-              "flatPath": "v2beta1/projects/{projectsId}/logs/{logsId}",
-              "httpMethod": "DELETE",
-              "id": "logging.projects.logs.delete",
-              "parameterOrder": [
-                "logName"
-              ],
-              "parameters": {
-                "logName": {
-                  "description": "Required. The resource name of the log to delete:\n\"projects/[PROJECT_ID]/logs/[LOG_ID]\"\n\"organizations/[ORGANIZATION_ID]/logs/[LOG_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]/logs/[LOG_ID]\"\n\"folders/[FOLDER_ID]/logs/[LOG_ID]\"\n[LOG_ID] must be URL-encoded. For example, \"projects/my-project-id/logs/syslog\", \"organizations/1234567890/logs/cloudresourcemanager.googleapis.com%2Factivity\". For more information about log names, see LogEntry.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/logs/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+logName}",
-              "response": {
-                "$ref": "Empty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/logging.admin"
-              ]
-            },
-            "list": {
-              "description": "Lists the logs in projects, organizations, folders, or billing accounts. Only logs that have entries are listed.",
-              "flatPath": "v2beta1/projects/{projectsId}/logs",
-              "httpMethod": "GET",
-              "id": "logging.projects.logs.list",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "pageSize": {
-                  "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
-                  "format": "int32",
-                  "location": "query",
-                  "type": "integer"
-                },
-                "pageToken": {
-                  "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
-                  "location": "query",
-                  "type": "string"
-                },
-                "parent": {
-                  "description": "Required. The resource name that owns the logs:\n\"projects/[PROJECT_ID]\"\n\"organizations/[ORGANIZATION_ID]\"\n\"billingAccounts/[BILLING_ACCOUNT_ID]\"\n\"folders/[FOLDER_ID]\"\n",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v2beta1/{+parent}/logs",
-              "response": {
-                "$ref": "ListLogsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform",
-                "https://www.googleapis.com/auth/cloud-platform.read-only",
-                "https://www.googleapis.com/auth/logging.admin",
-                "https://www.googleapis.com/auth/logging.read"
-              ]
-            }
-          }
-        },
         "metrics": {
           "methods": {
             "create": {
@@ -744,7 +529,7 @@
       }
     }
   },
-  "revision": "20180922",
+  "revision": "20181013",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -1006,24 +791,6 @@
       },
       "type": "object"
     },
-    "ListLogsResponse": {
-      "description": "Result returned from ListLogs.",
-      "id": "ListLogsResponse",
-      "properties": {
-        "logNames": {
-          "description": "A list of log names. For example, \"projects/my-project/syslog\" or \"organizations/123/cloudresourcemanager.googleapis.com%2Factivity\".",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "If there might be more results than those appearing in this response, then nextPageToken is included. To get the next set of results, call this method again using the value of nextPageToken as pageToken.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ListMonitoredResourceDescriptorsResponse": {
       "description": "Result returned from ListMonitoredResourceDescriptors.",
       "id": "ListMonitoredResourceDescriptorsResponse",
@@ -1268,7 +1035,7 @@
           "description": "Optional. The bucket_options are required when the logs-based metric is using a DISTRIBUTION value type and it describes the bucket boundaries used to create a histogram of the extracted values."
         },
         "description": {
-          "description": "Optional. A description of this metric, which is used in documentation.",
+          "description": "Optional. A description of this metric, which is used in documentation. The maximum length of the description is 8000 characters.",
           "type": "string"
         },
         "filter": {

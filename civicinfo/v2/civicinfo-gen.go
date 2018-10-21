@@ -1190,6 +1190,20 @@ type PollingLocation struct {
 	// that can be requested from the Request more link on the Quotas page.
 	Id string `json:"id,omitempty"`
 
+	// Latitude: Latitude of the location, in degrees north of the equator.
+	// Only some locations -- generally, ballot drop boxes for vote-by-mail
+	// elections -- will have this set; for others, use a geocoding service
+	// like the Google Maps API to resolve the address to a geographic
+	// point.
+	Latitude float64 `json:"latitude,omitempty"`
+
+	// Longitude: Longitude of the location, in degrees east of the Prime
+	// Meridian. Only some locations -- generally, ballot drop boxes for
+	// vote-by-mail elections -- will have this set; for others, use a
+	// geocoding service like the Google Maps API to resolve the address to
+	// a geographic point.
+	Longitude float64 `json:"longitude,omitempty"`
+
 	// Name: The name of the early vote site or drop off location. This
 	// field is not populated for polling locations.
 	Name string `json:"name,omitempty"`
@@ -1235,6 +1249,22 @@ func (s *PollingLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod PollingLocation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *PollingLocation) UnmarshalJSON(data []byte) error {
+	type NoMethod PollingLocation
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
 }
 
 type PostalAddress struct {

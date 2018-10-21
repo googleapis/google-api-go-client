@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20180927",
+  "revision": "20181011",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1605,7 +1605,7 @@
         },
         "requestMetadata": {
           "$ref": "RequestMetadata",
-          "description": "Meta information, such as `user_id`, collected from the job searcher or\nother entity conducting the job search, which is used to improve the search\nquality of the service. Users determine identifier values, which must be\nunique and consist."
+          "description": "Meta information, such as `user_id`, collected from the job searcher or\nother entity conducting a job search, is used to improve the service's\nsearch quality. Users determine identifier values, which must be\nunique and consist."
         },
         "searchTypes": {
           "description": "Required.\n\nA list of facets that specify the histogram data to be calculated\nagainst and returned.\n\nHistogram response times can be slow, and counts\ncan be approximations. This call may be temporarily or permanently removed\nprior to the production release of Cloud Talent Solution.",
@@ -2122,7 +2122,7 @@
         },
         "extendedCompensationInfo": {
           "$ref": "ExtendedCompensationInfo",
-          "description": "Deprecated. Always use compensation_info.\n\nOptional.\n\nJob compensation information.\n\nThis field replaces compensation_info."
+          "description": "Deprecated. Always use compensation_info.\n\nOptional.\n\nJob compensation information.\n\nThis field replaces compensation_info. Only\nCompensationInfo.entries or extended_compensation_info can be set,\notherwise an exception is thrown."
         },
         "filterableCustomFields": {
           "additionalProperties": {
@@ -2357,7 +2357,7 @@
           "description": "Optional.\n\nThis search filter is applied only to\nJob.compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs that meet\nthis criteria are searched. If a filter is not defined, all open jobs\nare searched."
         },
         "customAttributeFilter": {
-          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes that are marked as `filterable`.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: =, !=, \u003c, \u003c=, \u003e, \u003e= where the left of the operator\nis a custom field key and the right of the operator is a number or string\n(surrounded by quotes) value.\n\nSupported functions are LOWER(\u003cfield_name\u003e) to\nperform case insensitive match and EMPTY(\u003cfield_name\u003e) to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (For example, \"((A AND B AND C) OR NOT D) AND E\"), and there can\nbe a maximum of 50 comparisons/functions in the expression. The expression\nmust be \u003c 3000 characters in length.\n\nSample Query:\n(key1 = \"TEST\" OR LOWER(key1)=\"test\" OR NOT EMPTY(key1)) AND key2 \u003e 100",
+          "description": "Optional.\n\nThis filter specifies a structured syntax to match against the\nJob.custom_attributes that are marked as `filterable`.\n\nThe syntax for this expression is a subset of Google SQL syntax.\n\nSupported operators are: =, !=, \u003c, \u003c=, \u003e, \u003e= where the left of the operator\nis a custom field key and the right of the operator is a number or string\n(surrounded by quotes) value.\n\nSupported functions are LOWER(\u003cfield_name\u003e) to\nperform case insensitive match and EMPTY(\u003cfield_name\u003e) to filter on the\nexistence of a key.\n\nBoolean expressions (AND/OR/NOT) are supported up to 3 levels of\nnesting (For example, \"((A AND B AND C) OR NOT D) AND E\"), and there can\nbe a maximum of 100 comparisons/functions in the expression. The expression\nmust be \u003c 3000 bytes in length.\n\nSample Query:\n(key1 = \"TEST\" OR LOWER(key1)=\"test\" OR NOT EMPTY(key1)) AND key2 \u003e 100",
           "type": "string"
         },
         "customFieldFilters": {
@@ -3136,7 +3136,7 @@
         },
         "requestMetadata": {
           "$ref": "RequestMetadata",
-          "description": "Required.\n\nThe meta information collected about the job searcher, used to improve the\nsearch quality of the service.. The identifiers, (such as `user_id`) are\nprovided by users, and must be unique and consistent."
+          "description": "Required.\n\nThe meta information collected about the job searcher, used to improve the\nsearch quality of the service. The identifiers, (such as `user_id`) are\nprovided by users, and must be unique and consistent."
         },
         "sortBy": {
           "description": "Optional.\n\nThe criteria determining how search results are sorted.\nDefaults to SortBy.RELEVANCE_DESC if no value is specified.",

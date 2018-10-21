@@ -15,7 +15,7 @@
   "baseUrl": "https://servicecontrol.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Service Control",
-  "description": "Google Service Control provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
+  "description": "Provides control plane functionality to managed services, such as logging, monitoring, and status checks.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/service-control/",
   "fullyEncodeReservedExpansion": true,
@@ -280,7 +280,7 @@
       }
     }
   },
-  "revision": "20181008",
+  "revision": "20181015",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {

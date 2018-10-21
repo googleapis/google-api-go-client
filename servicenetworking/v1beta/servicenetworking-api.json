@@ -237,7 +237,7 @@
       }
     }
   },
-  "revision": "20181004",
+  "revision": "20181018",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -263,6 +263,10 @@
         },
         "region": {
           "description": "Required. Cloud [region](/compute/docs/reference/rest/v1/regions) for the new\nsubnetwork.",
+          "type": "string"
+        },
+        "requestedAddress": {
+          "description": "Optional. The starting address of a range. The address must be a valid\nIPv4 address in the x.x.x.x format. This value combined with the IP prefix\nrange is the CIDR range for the subnet. The range must be within the\nallocated range that is assigned to the private connection. If the CIDR\nrange isn't available, the call fails.",
           "type": "string"
         },
         "subnetwork": {

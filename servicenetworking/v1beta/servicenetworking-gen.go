@@ -153,6 +153,17 @@ type AddSubnetworkRequest struct {
 	// subnetwork.
 	Region string `json:"region,omitempty"`
 
+	// RequestedAddress: Optional. The starting address of a range. The
+	// address must be a valid
+	// IPv4 address in the x.x.x.x format. This value combined with the IP
+	// prefix
+	// range is the CIDR range for the subnet. The range must be within
+	// the
+	// allocated range that is assigned to the private connection. If the
+	// CIDR
+	// range isn't available, the call fails.
+	RequestedAddress string `json:"requestedAddress,omitempty"`
+
 	// Subnetwork: Required. Name for the new subnetwork.
 	// Must be a legal
 	// [subnetwork](compute/docs/reference/rest/v1/subnetworks)

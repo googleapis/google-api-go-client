@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/kNaWPiDorJ4a-XoVjJgcrtZLb_0\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/SZY-9_ScteTEtTSIjMIigLgnbt8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20181005",
+  "revision": "20181012",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -2191,7 +2191,7 @@
           "type": "string"
         },
         "location": {
-          "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
+          "description": "The geographic location of the job. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
           "type": "string"
         },
         "projectId": {
@@ -2880,6 +2880,11 @@
         },
         "numLongTermBytes": {
           "description": "[Output-only] The number of bytes in the table that are considered \"long-term storage\".",
+          "format": "int64",
+          "type": "string"
+        },
+        "numPhysicalBytes": {
+          "description": "[Output-only] [Experimental] The physical size of this table in bytes, excluding any data in the streaming buffer. This includes compression and storage used for time travel.",
           "format": "int64",
           "type": "string"
         },

@@ -2093,9 +2093,9 @@ type GetHistogramRequest struct {
 
 	// RequestMetadata: Meta information, such as `user_id`, collected from
 	// the job searcher or
-	// other entity conducting the job search, which is used to improve the
-	// search
-	// quality of the service. Users determine identifier values, which must
+	// other entity conducting a job search, is used to improve the
+	// service's
+	// search quality. Users determine identifier values, which must
 	// be
 	// unique and consist.
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`
@@ -2914,7 +2914,10 @@ type Job struct {
 	//
 	// Job compensation information.
 	//
-	// This field replaces compensation_info.
+	// This field replaces compensation_info. Only
+	// CompensationInfo.entries or extended_compensation_info can be
+	// set,
+	// otherwise an exception is thrown.
 	ExtendedCompensationInfo *ExtendedCompensationInfo `json:"extendedCompensationInfo,omitempty"`
 
 	// FilterableCustomFields: Deprecated. Use custom_attributes
@@ -3374,9 +3377,9 @@ type JobFilters struct {
 	// of
 	// nesting (For example, "((A AND B AND C) OR NOT D) AND E"), and there
 	// can
-	// be a maximum of 50 comparisons/functions in the expression. The
+	// be a maximum of 100 comparisons/functions in the expression. The
 	// expression
-	// must be < 3000 characters in length.
+	// must be < 3000 bytes in length.
 	//
 	// Sample Query:
 	// (key1 = "TEST" OR LOWER(key1)="test" OR NOT EMPTY(key1)) AND key2 >
@@ -5098,7 +5101,7 @@ type SearchJobsRequest struct {
 	//
 	// The meta information collected about the job searcher, used to
 	// improve the
-	// search quality of the service.. The identifiers, (such as `user_id`)
+	// search quality of the service. The identifiers, (such as `user_id`)
 	// are
 	// provided by users, and must be unique and consistent.
 	RequestMetadata *RequestMetadata `json:"requestMetadata,omitempty"`

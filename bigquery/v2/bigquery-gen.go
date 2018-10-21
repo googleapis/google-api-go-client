@@ -2088,9 +2088,8 @@ type JobReference struct {
 	// maximum length is 1,024 characters.
 	JobId string `json:"jobId,omitempty"`
 
-	// Location: The geographic location of the job. Required except for US
-	// and EU. See details at
-	// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
+	// Location: The geographic location of the job. See details at
+	// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 	Location string `json:"location,omitempty"`
 
 	// ProjectId: [Required] The ID of the project containing this job.
@@ -3098,6 +3097,11 @@ type Table struct {
 	// NumLongTermBytes: [Output-only] The number of bytes in the table that
 	// are considered "long-term storage".
 	NumLongTermBytes int64 `json:"numLongTermBytes,omitempty,string"`
+
+	// NumPhysicalBytes: [Output-only] [Experimental] The physical size of
+	// this table in bytes, excluding any data in the streaming buffer. This
+	// includes compression and storage used for time travel.
+	NumPhysicalBytes int64 `json:"numPhysicalBytes,omitempty,string"`
 
 	// NumRows: [Output-only] The number of rows of data in this table,
 	// excluding any data in the streaming buffer.

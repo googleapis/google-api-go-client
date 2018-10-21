@@ -2321,7 +2321,7 @@
    "name": "poly",
    "version": "v1",
    "title": "Poly API",
-   "description": "The Poly API provides read-only access to assets hosted on poly.google.com.",
+   "description": "The Poly API provides read access to assets hosted on poly.google.com to all, and upload access to poly.google.com for whitelisted accounts.",
    "discoveryRestUrl": "https://poly.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

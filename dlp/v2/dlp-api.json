@@ -1486,7 +1486,7 @@
       }
     }
   },
-  "revision": "20181002",
+  "revision": "20181023",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1598,6 +1598,13 @@
       "description": "Options defining BigQuery table and row identifiers.",
       "id": "GooglePrivacyDlpV2BigQueryOptions",
       "properties": {
+        "excludedFields": {
+          "description": "References to fields excluded from scanning. This allows you to skip\ninspection of entire columns which you know have no findings.",
+          "items": {
+            "$ref": "GooglePrivacyDlpV2FieldId"
+          },
+          "type": "array"
+        },
         "identifyingFields": {
           "description": "References to fields uniquely identifying rows within the table.\nNested fields in the format, like `person.birthdate.year`, are allowed.",
           "items": {
@@ -1898,7 +1905,7 @@
           "description": "The set of one or more files to scan."
         },
         "fileTypes": {
-          "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied.",
+          "description": "List of file type groups to include in the scan.\nIf empty, all files are scanned and available data format processors\nare applied. In addition, the binary content of the selected files\nis always scanned as well.",
           "enumDescriptions": [
             "Includes all files.",
             "Includes all file extensions not covered by text file types.",
@@ -2363,7 +2370,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2DateTime": {
-      "description": "Message for a date time object.",
+      "description": "Message for a date time object.\ne.g. 2018-01-01, 5th August.",
       "id": "GooglePrivacyDlpV2DateTime",
       "properties": {
         "date": {
@@ -3354,7 +3361,7 @@
           "type": "string"
         },
         "errors": {
-          "description": "A stream of errors encountered when the trigger was activated. Repeated\nerrors may result in the JobTrigger automaticaly being paused.\nWill return the last 100 errors. Whenever the JobTrigger is modified\nthis list will be cleared. Output only field.",
+          "description": "A stream of errors encountered when the trigger was activated. Repeated\nerrors may result in the JobTrigger automatically being paused.\nWill return the last 100 errors. Whenever the JobTrigger is modified\nthis list will be cleared. Output only field.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Error"
           },
@@ -3409,7 +3416,7 @@
       "properties": {
         "entityId": {
           "$ref": "GooglePrivacyDlpV2EntityId",
-          "description": "Optional message indicating that multiple rows might be associated to a\nsingle individual. If the same entity_id is associated to multiple\nquasi-identifier tuples over distict rows, we consider the entire\ncollection of tuples as the composite quasi-identifier. This collection\nis a multiset: the order in which the different tuples appear in the\ndataset is ignored, but their frequency is taken into account.\n\nImportant note: a maximum of 1000 rows can be associated to a single\nentity ID. If more rows are associated with the same entity ID, some\nmight be ignored."
+          "description": "Optional message indicating that multiple rows might be associated to a\nsingle individual. If the same entity_id is associated to multiple\nquasi-identifier tuples over distinct rows, we consider the entire\ncollection of tuples as the composite quasi-identifier. This collection\nis a multiset: the order in which the different tuples appear in the\ndataset is ignored, but their frequency is taken into account.\n\nImportant note: a maximum of 1000 rows can be associated to a single\nentity ID. If more rows are associated with the same entity ID, some\nmight be ignored."
         },
         "quasiIds": {
           "description": "Set of fields to compute k-anonymity over. When multiple fields are\nspecified, they are considered a single composite key. Structs and\nrepeated data types are not supported; however, nested fields are\nsupported so long as they are not structs themselves or nested within\na repeated field.",
@@ -3935,7 +3942,7 @@
       "id": "GooglePrivacyDlpV2OutputStorageConfig",
       "properties": {
         "outputSchema": {
-          "description": "Schema used for writing the findings for Inspect jobs. This field is only\nused for Inspect and must be unspecified for Risk jobs. Columns are derived\nfrom the `Finding` object. If appending to an existing table, any columns\nfrom the predefined schema that are missing will be added. No columns in\nthe existing table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table,\nand no changes will be made to an existing table.",
+          "description": "Schema used for writing the findings for Inspect jobs. This field is only\nused for Inspect and must be unspecified for Risk jobs. Columns are derived\nfrom the `Finding` object. If appending to an existing table, any columns\nfrom the predefined schema that are missing will be added. No columns in\nthe existing table will be deleted.\n\nIf unspecified, then all available columns will be used for a new table or\nan (existing) table with no schema, and no changes will be made to an\nexisting table that has a schema.",
           "enum": [
             "OUTPUT_SCHEMA_UNSPECIFIED",
             "BASIC_COLUMNS",
@@ -4146,7 +4153,8 @@
       "id": "GooglePrivacyDlpV2QuoteInfo",
       "properties": {
         "dateTime": {
-          "$ref": "GooglePrivacyDlpV2DateTime"
+          "$ref": "GooglePrivacyDlpV2DateTime",
+          "description": "The date time indicated by the quote."
         }
       },
       "type": "object"

@@ -431,6 +431,11 @@ func (s *GooglePrivacyDlpV2BigQueryKey) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2BigQueryOptions: Options defining BigQuery table
 // and row identifiers.
 type GooglePrivacyDlpV2BigQueryOptions struct {
+	// ExcludedFields: References to fields excluded from scanning. This
+	// allows you to skip
+	// inspection of entire columns which you know have no findings.
+	ExcludedFields []*GooglePrivacyDlpV2FieldId `json:"excludedFields,omitempty"`
+
 	// IdentifyingFields: References to fields uniquely identifying rows
 	// within the table.
 	// Nested fields in the format, like `person.birthdate.year`, are
@@ -467,15 +472,15 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// TableReference: Complete BigQuery table reference.
 	TableReference *GooglePrivacyDlpV2BigQueryTable `json:"tableReference,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IdentifyingFields")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ExcludedFields") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IdentifyingFields") to
+	// NullFields is a list of field names (e.g. "ExcludedFields") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -976,7 +981,8 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// FileTypes: List of file type groups to include in the scan.
 	// If empty, all files are scanned and available data format
 	// processors
-	// are applied.
+	// are applied. In addition, the binary content of the selected files
+	// is always scanned as well.
 	//
 	// Possible values:
 	//   "FILE_TYPE_UNSPECIFIED" - Includes all files.
@@ -2028,6 +2034,7 @@ func (s *GooglePrivacyDlpV2DateShiftConfig) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2DateTime: Message for a date time object.
+// e.g. 2018-01-01, 5th August.
 type GooglePrivacyDlpV2DateTime struct {
 	// Date: One or more of the following must be set. All fields are
 	// optional, but
@@ -4019,7 +4026,7 @@ type GooglePrivacyDlpV2JobTrigger struct {
 
 	// Errors: A stream of errors encountered when the trigger was
 	// activated. Repeated
-	// errors may result in the JobTrigger automaticaly being paused.
+	// errors may result in the JobTrigger automatically being paused.
 	// Will return the last 100 errors. Whenever the JobTrigger is
 	// modified
 	// this list will be cleared. Output only field.
@@ -4091,7 +4098,7 @@ type GooglePrivacyDlpV2KAnonymityConfig struct {
 	// associated to a
 	// single individual. If the same entity_id is associated to
 	// multiple
-	// quasi-identifier tuples over distict rows, we consider the
+	// quasi-identifier tuples over distinct rows, we consider the
 	// entire
 	// collection of tuples as the composite quasi-identifier. This
 	// collection
@@ -5181,8 +5188,10 @@ type GooglePrivacyDlpV2OutputStorageConfig struct {
 	// the existing table will be deleted.
 	//
 	// If unspecified, then all available columns will be used for a new
-	// table,
-	// and no changes will be made to an existing table.
+	// table or
+	// an (existing) table with no schema, and no changes will be made to
+	// an
+	// existing table that has a schema.
 	//
 	// Possible values:
 	//   "OUTPUT_SCHEMA_UNSPECIFIED"
@@ -5618,6 +5627,7 @@ func (s *GooglePrivacyDlpV2QuasiIdentifierField) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2QuoteInfo: Message for infoType-dependent details
 // parsed from quote.
 type GooglePrivacyDlpV2QuoteInfo struct {
+	// DateTime: The date time indicated by the quote.
 	DateTime *GooglePrivacyDlpV2DateTime `json:"dateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DateTime") to

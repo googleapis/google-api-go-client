@@ -2886,8 +2886,6 @@ type GoogleCloudDialogflowV2beta1DetectIntentResponse struct {
 	ResponseId string `json:"responseId,omitempty"`
 
 	// WebhookStatus: Specifies the status of the webhook request.
-	// `webhook_status`
-	// is never populated in webhook requests.
 	WebhookStatus *GoogleRpcStatus `json:"webhookStatus,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5971,13 +5969,18 @@ type GoogleCloudDialogflowV2beta1SessionEntityType struct {
 	//   "ENTITY_OVERRIDE_MODE_SUPPLEMENT" - The collection of session
 	// entities extends the collection of entities in
 	// the corresponding developer entity type.
-	// Calls to `ListSessionEntityTypes`,
-	// `GetSessionEntityType`,
-	// `CreateSessionEntityType` and `UpdateSessionEntityType` return the
-	// full
-	// collection of entities from the developer entity type in the
-	// agent's
-	// default language and the session entity type.
+	//
+	// Note: Even in this override mode calls to
+	// `ListSessionEntityTypes`,
+	// `GetSessionEntityType`, `CreateSessionEntityType`
+	// and
+	// `UpdateSessionEntityType` only return the additional entities added
+	// in
+	// this session entity type. If you want to get the supplemented
+	// list,
+	// please call EntityTypes.GetEntityType on the developer entity
+	// type
+	// and merge.
 	EntityOverrideMode string `json:"entityOverrideMode,omitempty"`
 
 	// Name: Required. The unique identifier of this session entity type.

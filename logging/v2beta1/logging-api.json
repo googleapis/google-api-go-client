@@ -529,7 +529,7 @@
       }
     }
   },
-  "revision": "20181013",
+  "revision": "20181020",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -1084,11 +1084,6 @@
           "description": "Required. The export destination:\n\"storage.googleapis.com/[GCS_BUCKET]\"\n\"bigquery.googleapis.com/projects/[PROJECT_ID]/datasets/[DATASET]\"\n\"pubsub.googleapis.com/projects/[PROJECT_ID]/topics/[TOPIC_ID]\"\nThe sink's writer_identity, set when the sink is created, must have permission to write to the destination or else the log entries are not exported. For more information, see Exporting Logs With Sinks.",
           "type": "string"
         },
-        "endTime": {
-          "description": "Deprecated. This field is ignored when creating or updating sinks.",
-          "format": "google-datetime",
-          "type": "string"
-        },
         "filter": {
           "description": "Optional. An advanced logs filter. The only exported log entries are those that are in the resource owning the sink and that match the filter. For example:\nlogName=\"projects/[PROJECT_ID]/logs/[LOG_ID]\" AND severity\u003e=ERROR\n",
           "type": "string"
@@ -1113,11 +1108,6 @@
             "LogEntry version 2 format.",
             "LogEntry version 1 format."
           ],
-          "type": "string"
-        },
-        "startTime": {
-          "description": "Deprecated. This field is ignored when creating or updating sinks.",
-          "format": "google-datetime",
           "type": "string"
         },
         "writerIdentity": {

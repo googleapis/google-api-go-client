@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20181022",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1600,7 +1600,7 @@
         },
         "webhookStatus": {
           "$ref": "GoogleRpcStatus",
-          "description": "Specifies the status of the webhook request. `webhook_status`\nis never populated in webhook requests."
+          "description": "Specifies the status of the webhook request."
         }
       },
       "type": "object"
@@ -2752,7 +2752,7 @@
           "enumDescriptions": [
             "Not specified. This value should be never used.",
             "The collection of session entities overrides the collection of entities\nin the corresponding developer entity type.",
-            "The collection of session entities extends the collection of entities in\nthe corresponding developer entity type.\nCalls to `ListSessionEntityTypes`, `GetSessionEntityType`,\n`CreateSessionEntityType` and `UpdateSessionEntityType` return the full\ncollection of entities from the developer entity type in the agent's\ndefault language and the session entity type."
+            "The collection of session entities extends the collection of entities in\nthe corresponding developer entity type.\n\nNote: Even in this override mode calls to `ListSessionEntityTypes`,\n`GetSessionEntityType`, `CreateSessionEntityType` and\n`UpdateSessionEntityType` only return the additional entities added in\nthis session entity type. If you want to get the supplemented list,\nplease call EntityTypes.GetEntityType on the developer entity type\nand merge."
           ],
           "type": "string"
         },

@@ -1150,10 +1150,6 @@ type LogSink struct {
 	// not exported. For more information, see Exporting Logs With Sinks.
 	Destination string `json:"destination,omitempty"`
 
-	// EndTime: Deprecated. This field is ignored when creating or updating
-	// sinks.
-	EndTime string `json:"endTime,omitempty"`
-
 	// Filter: Optional. An advanced logs filter. The only exported log
 	// entries are those that are in the resource owning the sink and that
 	// match the filter. For
@@ -1197,10 +1193,6 @@ type LogSink struct {
 	//   "V2" - LogEntry version 2 format.
 	//   "V1" - LogEntry version 1 format.
 	OutputVersionFormat string `json:"outputVersionFormat,omitempty"`
-
-	// StartTime: Deprecated. This field is ignored when creating or
-	// updating sinks.
-	StartTime string `json:"startTime,omitempty"`
 
 	// WriterIdentity: Output only. An IAM identity&mdash;a service account
 	// or group&mdash;under which Logging writes the exported log entries to

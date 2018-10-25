@@ -386,7 +386,7 @@
    "name": "appengine",
    "version": "v1alpha",
    "title": "App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "Provisions and manages developers' App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1alpha",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -401,7 +401,7 @@
    "name": "appengine",
    "version": "v1beta",
    "title": "App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "Provisions and manages developers' App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -416,7 +416,7 @@
    "name": "appengine",
    "version": "v1",
    "title": "App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "Provisions and manages developers' App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -431,7 +431,7 @@
    "name": "appengine",
    "version": "v1beta4",
    "title": "App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "Provisions and manages developers' App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta4",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -446,7 +446,7 @@
    "name": "appengine",
    "version": "v1beta5",
    "title": "App Engine Admin API",
-   "description": "The App Engine Admin API enables developers to provision and manage their App Engine applications.",
+   "description": "Provisions and manages developers' App Engine applications.",
    "discoveryRestUrl": "https://appengine.googleapis.com/$discovery/rest?version=v1beta5",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1734,7 +1734,7 @@
    "name": "genomics",
    "version": "v1alpha2",
    "title": "Genomics API",
-   "description": "Upload, process, query, and search Genomics data in the cloud.",
+   "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
    "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1alpha2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1749,7 +1749,7 @@
    "name": "genomics",
    "version": "v2alpha1",
    "title": "Genomics API",
-   "description": "Upload, process, query, and search Genomics data in the cloud.",
+   "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
    "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v2alpha1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1764,7 +1764,7 @@
    "name": "genomics",
    "version": "v1",
    "title": "Genomics API",
-   "description": "Upload, process, query, and search Genomics data in the cloud.",
+   "description": "Uploads, processes, queries, and searches Genomics data in the cloud.",
    "discoveryRestUrl": "https://genomics.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1963,7 +1963,7 @@
    "name": "language",
    "version": "v1",
    "title": "Cloud Natural Language API",
-   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
+   "description": "Provides natural language understanding technologies, such as sentiment analysis, entity recognition, entity sentiment analysis, and other text annotations, to developers.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1978,7 +1978,7 @@
    "name": "language",
    "version": "v1beta1",
    "title": "Cloud Natural Language API",
-   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
+   "description": "Provides natural language understanding technologies, such as sentiment analysis, entity recognition, entity sentiment analysis, and other text annotations, to developers.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1993,7 +1993,7 @@
    "name": "language",
    "version": "v1beta2",
    "title": "Cloud Natural Language API",
-   "description": "Provides natural language understanding technologies to developers. Examples include sentiment analysis, entity recognition, entity sentiment analysis, and text annotations.",
+   "description": "Provides natural language understanding technologies, such as sentiment analysis, entity recognition, entity sentiment analysis, and other text annotations, to developers.",
    "discoveryRestUrl": "https://language.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

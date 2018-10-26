@@ -12,7 +12,7 @@
   "baseUrl": "https://websecurityscanner.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "WebSecurityScanner",
-  "description": "Web Security Scanner API (under development).",
+  "description": "Scans your Compute and App Engine apps for common web vulnerabilities.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/security-scanner/",
   "fullyEncodeReservedExpansion": true,
@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20180906",
+  "revision": "20181024",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {

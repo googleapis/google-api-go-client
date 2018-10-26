@@ -265,6 +265,10 @@ type CloudFunction struct {
 	// is
 	// the short name of the network.
 	//
+	// This field is mutually exclusive with `vpc_connector` and will be
+	// replaced
+	// by it.
+	//
 	// See [the VPC
 	// documentation](https://cloud.google.com/compute/docs/vpc) for
 	// more information on connecting Cloud projects.
@@ -346,6 +350,26 @@ type CloudFunction struct {
 	// attempt
 	// results in a new version of a function being created.
 	VersionId int64 `json:"versionId,omitempty,string"`
+
+	// VpcConnector: The VPC Network Connector that this cloud function can
+	// connect to. It can
+	// be either the fully-qualified URI, or the short name of the
+	// network
+	// connector resource. The format of this field
+	// is
+	// `projects/*/locations/*/connectors/*`
+	//
+	// This field is mutually exclusive with `network` field and will
+	// eventually
+	// replace it.
+	//
+	// See [the VPC
+	// documentation](https://cloud.google.com/compute/docs/vpc) for
+	// more information on connecting Cloud projects.
+	//
+	// This feature is currently in alpha, available only for whitelisted
+	// users.
+	VpcConnector string `json:"vpcConnector,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

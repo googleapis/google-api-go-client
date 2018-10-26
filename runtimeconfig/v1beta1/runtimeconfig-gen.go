@@ -214,7 +214,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // reaches a
 // predefined number. For example, if you set a Cardinality condition
 // where
-// the `path` is set to `/foo` and the number of paths is set to 2,
+// the `path` is set to `/foo` and the number of paths is set to `2`,
 // the
 // following variables would meet the condition in a RuntimeConfig
 // resource:
@@ -223,9 +223,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // + `/foo/variable2 = "value2"
 // + `/bar/variable3 = "value3"
 //
-// It would not would not satisify the same condition with the `number`
-// set to
-// 3, however, because there is only 2 paths that start with
+// It would not satisfy the same condition with the `number` set to
+// `3`, however, because there is only 2 paths that start with
 // `/foo`.
 // Cardinality conditions are recursive; all subtrees under the
 // specific
@@ -1019,7 +1018,9 @@ type Variable struct {
 	// `text: "my text value". The string must be valid UTF-8.
 	Text string `json:"text,omitempty"`
 
-	// UpdateTime: Output only. The time of the last variable update.
+	// UpdateTime: Output only. The time of the last variable
+	// update.
+	// Timestamp will be UTC timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Value: The binary value of the variable. The length of the value must

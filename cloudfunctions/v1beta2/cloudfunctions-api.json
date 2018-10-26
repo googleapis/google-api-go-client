@@ -452,7 +452,7 @@
       }
     }
   },
-  "revision": "20180702",
+  "revision": "20181018",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {
@@ -534,7 +534,7 @@
           "type": "string"
         },
         "network": {
-          "description": "The VPC Network that this cloud function can connect to. It can be\neither the fully-qualified URI, or the short name of the network resource.\nIf the short network name is used, the network must belong to the same\nproject. Otherwise, it must belong to a project within the same\norganization. The format of this field is either\n`projects/{project}/global/networks/{network}` or `{network}`, where\n{project} is a project id where the network is defined, and {network} is\nthe short name of the network.\n\nSee [the VPC documentation](https://cloud.google.com/compute/docs/vpc) for\nmore information on connecting Cloud projects.\n\nThis feature is currently in alpha, available only for whitelisted users.",
+          "description": "The VPC Network that this cloud function can connect to. It can be\neither the fully-qualified URI, or the short name of the network resource.\nIf the short network name is used, the network must belong to the same\nproject. Otherwise, it must belong to a project within the same\norganization. The format of this field is either\n`projects/{project}/global/networks/{network}` or `{network}`, where\n{project} is a project id where the network is defined, and {network} is\nthe short name of the network.\n\nThis field is mutually exclusive with `vpc_connector` and will be replaced\nby it.\n\nSee [the VPC documentation](https://cloud.google.com/compute/docs/vpc) for\nmore information on connecting Cloud projects.\n\nThis feature is currently in alpha, available only for whitelisted users.",
           "type": "string"
         },
         "runtime": {
@@ -592,6 +592,10 @@
         "versionId": {
           "description": "Output only.\nThe version identifier of the Cloud Function. Each deployment attempt\nresults in a new version of a function being created.",
           "format": "int64",
+          "type": "string"
+        },
+        "vpcConnector": {
+          "description": "The VPC Network Connector that this cloud function can connect to. It can\nbe either the fully-qualified URI, or the short name of the network\nconnector resource. The format of this field is\n`projects/*/locations/*/connectors/*`\n\nThis field is mutually exclusive with `network` field and will eventually\nreplace it.\n\nSee [the VPC documentation](https://cloud.google.com/compute/docs/vpc) for\nmore information on connecting Cloud projects.\n\nThis feature is currently in alpha, available only for whitelisted users.",
           "type": "string"
         }
       },

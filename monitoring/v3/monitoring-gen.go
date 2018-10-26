@@ -1715,9 +1715,8 @@ func (s *HttpCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InternalChecker: Nimbus InternalCheckers. The API currently only
-// allows reading of internal checkers, creation of internal checkers is
-// a manual process.
+// InternalChecker: An internal checker allows uptime checks to run on
+// private/internal GCP resources.
 type InternalChecker struct {
 	// DisplayName: The checker's human-readable name. The display name
 	// should be unique within a Stackdriver Workspace in order to make it

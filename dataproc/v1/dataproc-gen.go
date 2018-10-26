@@ -2513,48 +2513,49 @@ type TemplateParameter struct {
 	// paths.A field path is similar in syntax to a
 	// google.protobuf.FieldMask. For example, a field path that references
 	// the zone field of a workflow template's cluster selector would be
-	// specified as <code>placement.clusterSelector.zone</code>.Also, field
-	// paths can reference fields using the following syntax:
-	// Values in maps can be referenced by key.
-	// Examples<br>
+	// specified as placement.clusterSelector.zone.Also, field paths can
+	// reference fields using the following syntax:
+	// Values in maps can be referenced by
+	// key:
 	// labels'key'
 	// placement.clusterSelector.clusterLabels'key'
-	//
-	// placement.managedCluster.labels'key'
-	// placement.clusterSelector.cluster
-	// Labels'key'
-	// jobsstep-id.labels'key'
-	// Jobs in the jobs list can be referenced by step-id.
-	// Examples:<br>
-	// jobsstep-id.hadoopJob.mainJarFileUri
-	// jobsstep-id.hiveJob
-	// .queryFileUri
-	// jobsstep-id.pySparkJob.mainPythonFileUri
-	// jobsstep-id.had
-	// oopJob.jarFileUris0
-	// jobsstep-id.hadoopJob.archiveUris0
-	// jobsstep-id.had
-	// oopJob.fileUris0
-	// jobsstep-id.pySparkJob.pythonFileUris0
-	// Items in repeated fields can be referenced by a zero-based index.
-	// Example:<br>
-	// jobsstep-id.sparkJob.args0
+	// placemen
+	// t.managedCluster.labels'key'
+	// placement.clusterSelector.clusterLabels'k
+	// ey'
+	// jobs'step-id'.labels'key'
+	// Jobs in the jobs list can be referenced by
+	// step-id:
+	// jobs'step-id'.hadoopJob.mainJarFileUri
+	// jobs'step-id'.hiveJob.
+	// queryFileUri
+	// jobs'step-id'.pySparkJob.mainPythonFileUri
+	// jobs'step-id'.
+	// hadoopJob.jarFileUris0
+	// jobs'step-id'.hadoopJob.archiveUris0
+	// jobs'step-
+	// id'.hadoopJob.fileUris0
+	// jobs'step-id'.pySparkJob.pythonFileUris0
+	// Items
+	//  in repeated fields can be referenced by a zero-based
+	// index:
+	// jobs'step-id'.sparkJob.args0
 	// Other
 	// examples:
-	// jobsstep-id.hadoopJob.properties'key'
-	// jobsstep-id.hadoopJob.
-	// args0
-	// jobsstep-id.hiveJob.scriptVariables'key'
-	// jobsstep-id.hadoopJob.m
-	// ainJarFileUri
+	// jobs'step-id'.hadoopJob.properties'key'
+	// jobs'step-id'.hadoop
+	// Job.args0
+	// jobs'step-id'.hiveJob.scriptVariables'key'
+	// jobs'step-id'.had
+	// oopJob.mainJarFileUri
 	// placement.clusterSelector.zoneIt may not be possible to parameterize
 	// maps and repeated fields in their entirety since only individual map
 	// values and individual items in repeated fields can be referenced. For
 	// example, the following field paths are
 	// invalid:
 	// placement.clusterSelector.clusterLabels
-	// jobsstep-id.sparkJob.
-	// args
+	// jobs'step-id'.sparkJo
+	// b.args
 	Fields []string `json:"fields,omitempty"`
 
 	// Name: Required. Parameter name. The parameter name is used as the

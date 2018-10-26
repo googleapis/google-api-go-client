@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/SrhOH2xsTrrIa7fnXr9zDGqu4xk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/XlIh_rA14oju-Cr_WDQ9UM5jkoQ\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3469,7 +3469,7 @@
       }
     }
   },
-  "revision": "20181016",
+  "revision": "20181023",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -4471,6 +4471,45 @@
       },
       "type": "object"
     },
+    "CustomAttribute": {
+      "id": "CustomAttribute",
+      "properties": {
+        "name": {
+          "description": "The name of the attribute. Underscores will be replaced by spaces upon insertion.",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of the attribute.",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Free-form unit of the attribute. Unit can only be used for values of type int, float, or price.",
+          "type": "string"
+        },
+        "value": {
+          "description": "The value of the attribute.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CustomGroup": {
+      "id": "CustomGroup",
+      "properties": {
+        "attributes": {
+          "description": "The sub-attributes.",
+          "items": {
+            "$ref": "CustomAttribute"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "The name of the group. Underscores will be replaced by spaces upon insertion.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CustomerReturnReason": {
       "id": "CustomerReturnReason",
       "properties": {
@@ -5267,6 +5306,10 @@
           "$ref": "Installment",
           "description": "Number and amount of installments to pay for an item. Brazil only."
         },
+        "instoreProductLocation": {
+          "description": "The instore product location. Supported only for local products.",
+          "type": "string"
+        },
         "kind": {
           "default": "content#inventory",
           "description": "Identifies what kind of resource this is. Value: the fixed string \"content#inventory\".",
@@ -5430,6 +5473,10 @@
         "installment": {
           "$ref": "Installment",
           "description": "Number and amount of installments to pay for an item. Brazil only."
+        },
+        "instoreProductLocation": {
+          "description": "The instore product location. Supported only for local products.",
+          "type": "string"
         },
         "loyaltyPoints": {
           "$ref": "LoyaltyPoints",
@@ -9056,14 +9103,14 @@
         "customAttributes": {
           "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"type\": \"text\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
           "items": {
-            "$ref": "ProductCustomAttribute"
+            "$ref": "CustomAttribute"
           },
           "type": "array"
         },
         "customGroups": {
           "description": "A list of custom (merchant-provided) custom attribute groups.",
           "items": {
-            "$ref": "ProductCustomGroup"
+            "$ref": "CustomGroup"
           },
           "type": "array"
         },
@@ -9363,45 +9410,6 @@
         },
         "intention": {
           "description": "Whether the aspect is required, excluded or should be validated.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ProductCustomAttribute": {
-      "id": "ProductCustomAttribute",
-      "properties": {
-        "name": {
-          "description": "The name of the attribute. Underscores will be replaced by spaces upon insertion.",
-          "type": "string"
-        },
-        "type": {
-          "description": "The type of the attribute.",
-          "type": "string"
-        },
-        "unit": {
-          "description": "Free-form unit of the attribute. Unit can only be used for values of type int, float, or price.",
-          "type": "string"
-        },
-        "value": {
-          "description": "The value of the attribute.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ProductCustomGroup": {
-      "id": "ProductCustomGroup",
-      "properties": {
-        "attributes": {
-          "description": "The sub-attributes.",
-          "items": {
-            "$ref": "ProductCustomAttribute"
-          },
-          "type": "array"
-        },
-        "name": {
-          "description": "The name of the group. Underscores will be replaced by spaces upon insertion.",
           "type": "string"
         }
       },

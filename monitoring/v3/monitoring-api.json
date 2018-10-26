@@ -1822,7 +1822,7 @@
       }
     }
   },
-  "revision": "20181015",
+  "revision": "20181022",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2573,7 +2573,7 @@
       "type": "object"
     },
     "InternalChecker": {
-      "description": "Nimbus InternalCheckers. The API currently only allows reading of internal checkers, creation of internal checkers is a manual process.",
+      "description": "An internal checker allows uptime checks to run on private/internal GCP resources.",
       "id": "InternalChecker",
       "properties": {
         "displayName": {

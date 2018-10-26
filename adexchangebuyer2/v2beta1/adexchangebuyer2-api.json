@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20181010",
+  "revision": "20181024",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -4050,6 +4050,21 @@
           "$ref": "AbsoluteDateRange",
           "description": "An absolute date range, defined by a start date and an end date.\nInterpreted relative to Pacific time zone."
         },
+        "breakdownDimensions": {
+          "description": "The set of dimensions along which to break down the response; may be empty.\nIf multiple dimensions are requested, the breakdown is along the Cartesian\nproduct of the requested dimensions.",
+          "enumDescriptions": [
+            "A placeholder for an unspecified dimension; should not be used.",
+            "The response should be broken down by publisher identifier.\nThis option is available only for Open Bidding buyers."
+          ],
+          "items": {
+            "enum": [
+              "BREAKDOWN_DIMENSION_UNSPECIFIED",
+              "PUBLISHER_IDENTIFIER"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "creativeId": {
           "description": "The ID of the creative on which to filter; optional. This field may be set\nonly for a filter set that accesses account-level troubleshooting data,\ni.e., one whose name matches the `bidders/*/accounts/*/filterSets/*`\npattern.",
           "type": "string"
@@ -5491,6 +5506,10 @@
       "description": "A response may include multiple rows, breaking down along various dimensions.\nEncapsulates the values of all dimensions for a given row.",
       "id": "RowDimensions",
       "properties": {
+        "publisherIdentifier": {
+          "description": "The publisher identifier for this row, if a breakdown by\nBreakdownDimension.PUBLISHER_IDENTIFIER\nwas requested.",
+          "type": "string"
+        },
         "timeInterval": {
           "$ref": "TimeInterval",
           "description": "The time interval that this row represents."

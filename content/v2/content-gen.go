@@ -1881,6 +1881,75 @@ func (s *CarriersCarrier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type CustomAttribute struct {
+	// Name: The name of the attribute. Underscores will be replaced by
+	// spaces upon insertion.
+	Name string `json:"name,omitempty"`
+
+	// Type: The type of the attribute.
+	Type string `json:"type,omitempty"`
+
+	// Unit: Free-form unit of the attribute. Unit can only be used for
+	// values of type int, float, or price.
+	Unit string `json:"unit,omitempty"`
+
+	// Value: The value of the attribute.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type CustomGroup struct {
+	// Attributes: The sub-attributes.
+	Attributes []*CustomAttribute `json:"attributes,omitempty"`
+
+	// Name: The name of the group. Underscores will be replaced by spaces
+	// upon insertion.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type CustomerReturnReason struct {
 	Description string `json:"description,omitempty"`
 
@@ -3097,6 +3166,10 @@ type Inventory struct {
 	// Brazil only.
 	Installment *Installment `json:"installment,omitempty"`
 
+	// InstoreProductLocation: The instore product location. Supported only
+	// for local products.
+	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`
+
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "content#inventory".
 	Kind string `json:"kind,omitempty"`
@@ -3359,6 +3432,10 @@ type InventorySetRequest struct {
 	// Installment: Number and amount of installments to pay for an item.
 	// Brazil only.
 	Installment *Installment `json:"installment,omitempty"`
+
+	// InstoreProductLocation: The instore product location. Supported only
+	// for local products.
+	InstoreProductLocation string `json:"instoreProductLocation,omitempty"`
 
 	// LoyaltyPoints: Loyalty points that users receive after purchasing the
 	// item. Japan only.
@@ -8858,11 +8935,11 @@ type Product struct {
 	// specification in its generic form (e.g., { "name": "size type",
 	// "type": "text", "value": "regular" }). This is useful for submitting
 	// attributes not explicitly exposed by the API.
-	CustomAttributes []*ProductCustomAttribute `json:"customAttributes,omitempty"`
+	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 
 	// CustomGroups: A list of custom (merchant-provided) custom attribute
 	// groups.
-	CustomGroups []*ProductCustomGroup `json:"customGroups,omitempty"`
+	CustomGroups []*CustomGroup `json:"customGroups,omitempty"`
 
 	// CustomLabel0: Custom label 0 for custom grouping of items in a
 	// Shopping campaign.
@@ -9157,75 +9234,6 @@ type ProductAspect struct {
 
 func (s *ProductAspect) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductAspect
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ProductCustomAttribute struct {
-	// Name: The name of the attribute. Underscores will be replaced by
-	// spaces upon insertion.
-	Name string `json:"name,omitempty"`
-
-	// Type: The type of the attribute.
-	Type string `json:"type,omitempty"`
-
-	// Unit: Free-form unit of the attribute. Unit can only be used for
-	// values of type int, float, or price.
-	Unit string `json:"unit,omitempty"`
-
-	// Value: The value of the attribute.
-	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ProductCustomAttribute) MarshalJSON() ([]byte, error) {
-	type NoMethod ProductCustomAttribute
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type ProductCustomGroup struct {
-	// Attributes: The sub-attributes.
-	Attributes []*ProductCustomAttribute `json:"attributes,omitempty"`
-
-	// Name: The name of the group. Underscores will be replaced by spaces
-	// upon insertion.
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ProductCustomGroup) MarshalJSON() ([]byte, error) {
-	type NoMethod ProductCustomGroup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

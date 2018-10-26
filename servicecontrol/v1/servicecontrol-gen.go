@@ -793,15 +793,32 @@ func (s *CheckResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConsumerInfo: `ConsumerInfo` provides information about the consumer
-// project.
+// ConsumerInfo: `ConsumerInfo` provides information about the consumer.
 type ConsumerInfo struct {
+	// ConsumerNumber: The consumer identity number, can be Google cloud
+	// project number, folder
+	// number or organization number e.g. 1234567890. A value of 0 indicates
+	// no
+	// consumer number is found.
+	ConsumerNumber int64 `json:"consumerNumber,omitempty,string"`
+
 	// ProjectNumber: The Google cloud project number, e.g. 1234567890. A
 	// value of 0 indicates
 	// no project number is found.
+	//
+	// NOTE: This field is deprecated after Chemist support flexible
+	// consumer
+	// id. New code should not depend on this field anymore.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
-	// ForceSendFields is a list of field names (e.g. "ProjectNumber") to
+	// Possible values:
+	//   "CONSUMER_TYPE_UNSPECIFIED"
+	//   "PROJECT"
+	//   "FOLDER"
+	//   "ORGANIZATION"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerNumber") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -809,12 +826,13 @@ type ConsumerInfo struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProjectNumber") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConsumerNumber") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2568,6 +2586,7 @@ type RequestMetadata struct {
 	// request attributes like request time and access levels associated
 	// with
 	// the request.
+	//
 	//
 	// To get the whole view of the attributes used in IAM
 	// condition evaluation, the user must also look

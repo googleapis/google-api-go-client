@@ -1451,6 +1451,9 @@ type File struct {
 	// Description: A short description of the file.
 	Description string `json:"description,omitempty"`
 
+	// DownloadUrl: Short lived download URL for the file. This field is
+	// only populated for files with content stored in Drive; it is not
+	// populated for Google Docs or shortcut files.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// Editable: Deprecated: use capabilities/canEdit.

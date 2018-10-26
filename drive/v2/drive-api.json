@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/IpWGMl9VbmiTG9s-ZaBZIrC4CgE\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/QXi8PEOVXIemCi7DbUUEhixdbRs\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -3080,7 +3080,7 @@
       }
     }
   },
-  "revision": "20180830",
+  "revision": "20181022",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4051,6 +4051,7 @@
           "type": "string"
         },
         "downloadUrl": {
+          "description": "Short lived download URL for the file. This field is only populated for files with content stored in Drive; it is not populated for Google Docs or shortcut files.",
           "type": "string"
         },
         "editable": {

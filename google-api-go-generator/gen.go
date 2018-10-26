@@ -808,6 +808,8 @@ var pointerFields = []fieldName{
 	{api: "androidpublisher:v3", schema: "ProductPurchase", field: "PurchaseType"},
 	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "CancelReason"},
 	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "PaymentState"},
+	{api: "androidpublisher:v2", schema: "SubscriptionPurchase", field: "PurchaseType"},
+	{api: "androidpublisher:v3", schema: "SubscriptionPurchase", field: "PurchaseType"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "BoolValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "DoubleValue"},
 	{api: "cloudmonitoring:v2beta2", schema: "Point", field: "Int64Value"},

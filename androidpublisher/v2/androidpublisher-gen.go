@@ -2003,7 +2003,7 @@ type SubscriptionPurchase struct {
 	// only set if this purchase was not made using the standard in-app
 	// billing flow. Possible values are:
 	// - Test (i.e. purchased from a license testing account)
-	PurchaseType int64 `json:"purchaseType,omitempty"`
+	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// StartTimeMillis: Time at which the subscription was granted, in
 	// milliseconds since the Epoch.

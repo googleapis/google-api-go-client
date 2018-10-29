@@ -2627,20 +2627,6 @@ type FilterSet struct {
 	// Interpreted relative to Pacific time zone.
 	AbsoluteDateRange *AbsoluteDateRange `json:"absoluteDateRange,omitempty"`
 
-	// BreakdownDimensions: The set of dimensions along which to break down
-	// the response; may be empty.
-	// If multiple dimensions are requested, the breakdown is along the
-	// Cartesian
-	// product of the requested dimensions.
-	//
-	// Possible values:
-	//   "BREAKDOWN_DIMENSION_UNSPECIFIED" - A placeholder for an
-	// unspecified dimension; should not be used.
-	//   "PUBLISHER_IDENTIFIER" - The response should be broken down by
-	// publisher identifier.
-	// This option is available only for Open Bidding buyers.
-	BreakdownDimensions []string `json:"breakdownDimensions,omitempty"`
-
 	// CreativeId: The ID of the creative on which to filter; optional. This
 	// field may be set
 	// only for a filter set that accesses account-level troubleshooting
@@ -5280,30 +5266,23 @@ type ResumeProposalRequest struct {
 // along various dimensions.
 // Encapsulates the values of all dimensions for a given row.
 type RowDimensions struct {
-	// PublisherIdentifier: The publisher identifier for this row, if a
-	// breakdown by
-	// BreakdownDimension.PUBLISHER_IDENTIFIER
-	// was requested.
-	PublisherIdentifier string `json:"publisherIdentifier,omitempty"`
-
 	// TimeInterval: The time interval that this row represents.
 	TimeInterval *TimeInterval `json:"timeInterval,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublisherIdentifier")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "TimeInterval") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublisherIdentifier") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "TimeInterval") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

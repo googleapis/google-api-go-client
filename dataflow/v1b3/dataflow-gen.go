@@ -2582,6 +2582,19 @@ type Job struct {
 	// callers cannot mutate it.
 	StageStates []*ExecutionStageState `json:"stageStates,omitempty"`
 
+	// StartTime: The timestamp when the job was started (transitioned to
+	// JOB_STATE_PENDING).
+	// Flexible resource scheduling jobs are started with some delay after
+	// job
+	// creation, so start_time is unset before start and is updated when
+	// the
+	// job is started by the Cloud Dataflow service. For other jobs,
+	// start_time
+	// always equals to create_time and is immutable and set by the Cloud
+	// Dataflow
+	// service.
+	StartTime string `json:"startTime,omitempty"`
+
 	// Steps: The top-level steps that constitute the entire job.
 	Steps []*Step `json:"steps,omitempty"`
 
@@ -5494,6 +5507,41 @@ func (s *StreamLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StreamingApplianceSnapshotConfig: Streaming appliance snapshot
+// configuration.
+type StreamingApplianceSnapshotConfig struct {
+	// ImportStateEndpoint: Indicates which endpoint is used to import
+	// appliance state.
+	ImportStateEndpoint string `json:"importStateEndpoint,omitempty"`
+
+	// SnapshotId: If set, indicates the snapshot id for the snapshot being
+	// performed.
+	SnapshotId string `json:"snapshotId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImportStateEndpoint")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImportStateEndpoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingApplianceSnapshotConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingApplianceSnapshotConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StreamingComputationConfig: Configuration information for a single
 // streaming computation.
 type StreamingComputationConfig struct {
@@ -5672,6 +5720,9 @@ type StreamingSetupTask struct {
 	// messages from
 	// other streaming computation workers.
 	ReceiveWorkPort int64 `json:"receiveWorkPort,omitempty"`
+
+	// SnapshotConfig: Configures streaming appliance snapshot.
+	SnapshotConfig *StreamingApplianceSnapshotConfig `json:"snapshotConfig,omitempty"`
 
 	// StreamingComputationTopology: The global topology of the streaming
 	// Dataflow job.

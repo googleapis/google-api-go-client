@@ -130,26 +130,6 @@
               "pattern": "^users/[^/]+$",
               "required": true,
               "type": "string"
-            },
-            "operatingSystemType": {
-              "description": "The type of operating system associated with the account.",
-              "enum": [
-                "OPERATING_SYSTEM_TYPE_UNSPECIFIED",
-                "LINUX",
-                "WINDOWS"
-              ],
-              "location": "query",
-              "type": "string"
-            },
-            "projectId": {
-              "description": "The project ID of the Google Cloud Platform project.",
-              "location": "query",
-              "type": "string"
-            },
-            "systemId": {
-              "description": "A system ID for filtering the results of the request.",
-              "location": "query",
-              "type": "string"
             }
           },
           "path": "v1alpha/{+name}/loginProfile",
@@ -333,7 +313,7 @@
       }
     }
   },
-  "revision": "20181023",
+  "revision": "20181008",
   "rootUrl": "https://oslogin.googleapis.com/",
   "schemas": {
     "Empty": {

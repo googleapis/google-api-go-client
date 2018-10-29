@@ -474,6 +474,13 @@ type AndroidModel struct {
 	// @OutputOnly
 	Id string `json:"id,omitempty"`
 
+	// LowFpsVideoRecording: True if and only if tests with this model are
+	// recorded by stitching
+	// together screenshots. See use_low_spec_video_recording in device
+	// config.
+	// @OutputOnly
+	LowFpsVideoRecording bool `json:"lowFpsVideoRecording,omitempty"`
+
 	// Manufacturer: The manufacturer of this device.
 	// @OutputOnly
 	Manufacturer string `json:"manufacturer,omitempty"`

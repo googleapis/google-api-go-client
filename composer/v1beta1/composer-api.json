@@ -360,7 +360,7 @@
       }
     }
   },
-  "revision": "20181001",
+  "revision": "20181019",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -652,7 +652,7 @@
           "type": "object"
         },
         "imageVersion": {
-          "description": "Immutable. The version of the software running in the environment.\nThis encapsulates both the version of Cloud Composer functionality and the\nversion of Apache Airflow. It must match the regular expression\n`composer-([0-9]+\\.[0-9]+(\\.[0-9]+)?|latest)-airflow-[0-9]+\\.[0-9]+(\\.[0-9]+.*)?`.\nWhen used as input, the server will also check if the provided version is\nsupported and deny the creation request for an unsupported version.\n\nThe Cloud Composer portion of the version is a\n[semantic version](https://semver.org) or `latest`. The patch version\ncan be omitted and the current Cloud Composer patch version\nwill be selected.\nWhen `latest` is provided instead of an explicit version number,\nthe server will replace `latest` with the current Cloud Composer version\nand store that version number in the same field.\n\nThe portion of the image version that follows \u003cem\u003eairflow-\u003c/em\u003e is an official\nApache Airflow repository\n[release name](https://github.com/apache/incubator-airflow/releases).\n\nSupported values for input are:\n* `composer-latest-airflow-latest`\n* `composer-latest-airflow-1.10.0`\n* `composer-latest-airflow-1.9.0`\n* `composer-latest-airflow-1.10`\n* `composer-latest-airflow-1.9`\n* `composer-1.1.1-airflow-latest`\n* `composer-1.1.1-airflow-1.10.0`\n* `composer-1.1.1-airflow-1.9.0`\n* `composer-1.1.1-airflow-1.10`\n* `composer-1.1.1-airflow-1.9`\n\nSee also [Release Notes](/composer/docs/release-notes).",
+          "description": "Immutable. The version of the software running in the environment.\nThis encapsulates both the version of Cloud Composer functionality and the\nversion of Apache Airflow. It must match the regular expression\n`composer-([0-9]+\\.[0-9]+\\.[0-9]+|latest)-airflow-[0-9]+\\.[0-9]+(\\.[0-9]+.*)?`.\nWhen used as input, the server will also check if the provided version is\nsupported and deny the creation request for an unsupported version.\n\nThe Cloud Composer portion of the version is a\n[semantic version](https://semver.org) or `latest`. The patch version\ncan be omitted and the current Cloud Composer patch version\nwill be selected.\nWhen `latest` is provided instead of an explicit version number,\nthe server will replace `latest` with the current Cloud Composer version\nand store that version number in the same field.\n\nThe portion of the image version that follows \u003cem\u003eairflow-\u003c/em\u003e is an official\nApache Airflow repository\n[release name](https://github.com/apache/incubator-airflow/releases).\n\nSupported values for input are:\n* `composer-latest-airflow-1.10.0`\n* `composer-latest-airflow-1.9.0`\n* `composer-latest-airflow-1.10`\n* `composer-latest-airflow-1.9`\n* `composer-1.3.0-airflow-1.10.0`\n* `composer-1.3.0-airflow-1.9.0`\n* `composer-1.3.0-airflow-1.10`\n* `composer-1.3.0-airflow-1.9`\n\nSee also [Release Notes](/composer/docs/release-notes).",
           "type": "string"
         },
         "pypiPackages": {

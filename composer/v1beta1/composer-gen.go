@@ -710,8 +710,8 @@ type SoftwareConfig struct {
 	// and the
 	// version of Apache Airflow. It must match the regular
 	// expression
-	// `composer-([0-9]+\.[0-9]+(\.[0-9]+)?|latest)-airflow-[0-9]+
-	// \.[0-9]+(\.[0-9]+.*)?`.
+	// `composer-([0-9]+\.[0-9]+\.[0-9]+|latest)-airflow-[0-9]+\.[
+	// 0-9]+(\.[0-9]+.*)?`.
 	// When used as input, the server will also check if the provided
 	// version is
 	// supported and deny the creation request for an unsupported
@@ -735,16 +735,14 @@ type SoftwareConfig struct {
 	//
 	// Supporte
 	// d values for input are:
-	// * `composer-latest-airflow-latest`
 	// * `composer-latest-airflow-1.10.0`
 	// * `composer-latest-airflow-1.9.0`
 	// * `composer-latest-airflow-1.10`
 	// * `composer-latest-airflow-1.9`
-	// * `composer-1.1.1-airflow-latest`
-	// * `composer-1.1.1-airflow-1.10.0`
-	// * `composer-1.1.1-airflow-1.9.0`
-	// * `composer-1.1.1-airflow-1.10`
-	// * `composer-1.1.1-airflow-1.9`
+	// * `composer-1.3.0-airflow-1.10.0`
+	// * `composer-1.3.0-airflow-1.9.0`
+	// * `composer-1.3.0-airflow-1.10`
+	// * `composer-1.3.0-airflow-1.9`
 	//
 	// See also [Release Notes](/composer/docs/release-notes).
 	ImageVersion string `json:"imageVersion,omitempty"`

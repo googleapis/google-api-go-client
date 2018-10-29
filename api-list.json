@@ -1274,22 +1274,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "dfareporting:v2.8",
-   "name": "dfareporting",
-   "version": "v2.8",
-   "title": "DCM/DFA Reporting And Trafficking API",
-   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/dfareporting/v2.8/rest",
-   "discoveryLink": "./apis/dfareporting/v2.8/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
-    "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
-   },
-   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "dfareporting:v3.0",
    "name": "dfareporting",
    "version": "v3.0",

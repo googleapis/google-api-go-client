@@ -35,6 +35,7 @@ func TestAPIs(t *testing.T) {
 		"blogger-3",
 		"floats",
 		"getwithoutbody",
+		"json-body",
 		"mapofany",
 		"mapofarrayofobjects",
 		"mapofint64strings",

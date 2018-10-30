@@ -1851,12 +1851,18 @@ func (meth *Method) generateCode() {
 	}
 	pn("var body io.Reader = nil")
 	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
-		style := "WithoutDataWrapper"
-		if a.needsDataWrapper() {
-			style = "WithDataWrapper"
+		if meth.m.ID == "ml.projects.predict" {
+			// Skip JSONReader for APIs that require clients to pass in JSON already.
+			pn("body = strings.NewReader(c.%s.HttpBody.Data)", ba.goname)
+		} else {
+			style := "WithoutDataWrapper"
+			if a.needsDataWrapper() {
+				style = "WithDataWrapper"
+			}
+			pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
+			pn("if err != nil { return nil, err }")
 		}
-		pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
-		pn("if err != nil { return nil, err }")
+
 		pn(`reqHeaders.Set("Content-Type", "application/json")`)
 	}
 	pn(`c.urlParams_.Set("alt", alt)`)
@@ -1985,7 +1991,16 @@ func (meth *Method) generateCode() {
 		} else {
 			pn("target := &ret")
 		}
-		pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+
+		if meth.m.ID == "ml.projects.predict" {
+			pn("var b bytes.Buffer")
+			pn("if _, err := io.Copy(&b, res.Body); err != nil { return nil, err }")
+			pn("if err := res.Body.Close(); err != nil { return nil, err }")
+			pn("if err := json.NewDecoder(bytes.NewReader(b.Bytes())).Decode(target); err != nil { return nil, err }")
+			pn("ret.Data = b.String()")
+		} else {
+			pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+		}
 		pn("return ret, nil")
 	}
 

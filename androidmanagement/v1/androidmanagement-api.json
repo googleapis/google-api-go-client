@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20181008",
+  "revision": "20181026",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2252,6 +2252,20 @@
             "The password must contain at least a letter, a numerical digit and a special symbol. Other password constraints, for example, password_minimum_letters are enforced."
           ],
           "type": "string"
+        },
+        "passwordScope": {
+          "description": "The scope that the password requirement applies to.",
+          "enum": [
+            "SCOPE_UNSPECIFIED",
+            "SCOPE_DEVICE",
+            "SCOPE_PROFILE"
+          ],
+          "enumDescriptions": [
+            "Scope is unspecified, will be profile scope in managed profile (work challenge) and device scope in managed device setup (device password).",
+            "The password requirements should only apply to the device.",
+            "The password requirements should only apply to the profile. Only applicable to devices with a managed profile."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2603,7 +2617,7 @@
         },
         "passwordRequirements": {
           "$ref": "PasswordRequirements",
-          "description": "Password requirements."
+          "description": "Password requirements. DEPRECATED - Use password_policies"
         },
         "permissionGrants": {
           "description": "Explicit permission or group grants or denials for all apps. These values override the default_permission_policy.",

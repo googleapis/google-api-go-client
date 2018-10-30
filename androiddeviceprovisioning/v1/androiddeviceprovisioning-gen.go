@@ -3915,9 +3915,11 @@ type PartnersCustomersCreateCall struct {
 // method returns
 // successfully, admin and owner roles can manage devices and EMM
 // configs
-// by calling API methods or using their zero-touch enrollment portal.
-// The API
-// doesn't notify the customer that they have access.
+// by calling API methods or using their zero-touch enrollment
+// portal.
+// The customer receives an email that welcomes them to zero-touch
+// enrollment
+// and explains how to sign into the portal.
 func (r *PartnersCustomersService) Create(parent string, createcustomerrequest *CreateCustomerRequest) *PartnersCustomersCreateCall {
 	c := &PartnersCustomersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4015,7 +4017,7 @@ func (c *PartnersCustomersCreateCall) Do(opts ...googleapi.CallOption) (*Company
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a customer for zero-touch enrollment. After the method returns\nsuccessfully, admin and owner roles can manage devices and EMM configs\nby calling API methods or using their zero-touch enrollment portal. The API\ndoesn't notify the customer that they have access.",
+	//   "description": "Creates a customer for zero-touch enrollment. After the method returns\nsuccessfully, admin and owner roles can manage devices and EMM configs\nby calling API methods or using their zero-touch enrollment portal.\nThe customer receives an email that welcomes them to zero-touch enrollment\nand explains how to sign into the portal.",
 	//   "flatPath": "v1/partners/{partnersId}/customers",
 	//   "httpMethod": "POST",
 	//   "id": "androiddeviceprovisioning.partners.customers.create",

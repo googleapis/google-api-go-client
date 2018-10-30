@@ -335,6 +335,20 @@ func (r *UsersService) GetLoginProfile(name string) *UsersGetLoginProfileCall {
 	return c
 }
 
+// ProjectId sets the optional parameter "projectId": The project ID of
+// the Google Cloud Platform project.
+func (c *UsersGetLoginProfileCall) ProjectId(projectId string) *UsersGetLoginProfileCall {
+	c.urlParams_.Set("projectId", projectId)
+	return c
+}
+
+// SystemId sets the optional parameter "systemId": A system ID for
+// filtering the results of the request.
+func (c *UsersGetLoginProfileCall) SystemId(systemId string) *UsersGetLoginProfileCall {
+	c.urlParams_.Set("systemId", systemId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -446,6 +460,16 @@ func (c *UsersGetLoginProfileCall) Do(opts ...googleapi.CallOption) (*LoginProfi
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project ID of the Google Cloud Platform project.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "systemId": {
+	//       "description": "A system ID for filtering the results of the request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

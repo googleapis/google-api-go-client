@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ZUowuDtavO6IK65oAdlyg4ocZ38\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Um_VoANUnurWZATZ_Sr1lgwofkU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -25241,7 +25241,7 @@
       }
     }
   },
-  "revision": "20180916",
+  "revision": "20181017",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -40837,6 +40837,8 @@
             "NVIDIA_P100_VWS_GPUS",
             "NVIDIA_P4_GPUS",
             "NVIDIA_P4_VWS_GPUS",
+            "NVIDIA_T4_GPUS",
+            "NVIDIA_T4_VWS_GPUS",
             "NVIDIA_V100_GPUS",
             "PREEMPTIBLE_CPUS",
             "PREEMPTIBLE_LOCAL_SSD_GB",
@@ -40845,6 +40847,8 @@
             "PREEMPTIBLE_NVIDIA_P100_VWS_GPUS",
             "PREEMPTIBLE_NVIDIA_P4_GPUS",
             "PREEMPTIBLE_NVIDIA_P4_VWS_GPUS",
+            "PREEMPTIBLE_NVIDIA_T4_GPUS",
+            "PREEMPTIBLE_NVIDIA_T4_VWS_GPUS",
             "PREEMPTIBLE_NVIDIA_V100_GPUS",
             "PRIVATE_V6_ACCESS_SUBNETWORKS",
             "REGIONAL_AUTOSCALERS",
@@ -40870,6 +40874,10 @@
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",

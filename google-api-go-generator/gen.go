@@ -572,29 +572,30 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("package %s // import %q", pkg, a.Target())
 	p("\n")
 	pn("import (")
+	for _, imp := range []string{
+		"bytes",
+		"encoding/json",
+		"errors",
+		"fmt",
+		"io",
+		"net/http",
+		"net/url",
+		"strconv",
+		"strings",
+	} {
+		pn("  %q", imp)
+	}
+	pn("")
 	for _, imp := range []struct {
 		pkg   string
 		lname string
 	}{
-		{"bytes", ""},
-		{"encoding/json", ""},
-		{"errors", ""},
-		{"fmt", ""},
-		{"io", ""},
-		{"net/http", ""},
-		{"net/url", ""},
-		{"strconv", ""},
-		{"strings", ""},
 		{*contextHTTPPkg, "ctxhttp"},
 		{*contextPkg, "context"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 	} {
-		if imp.lname == "" {
-			pn("  %q", imp.pkg)
-		} else {
-			pn("  %s %q", imp.lname, imp.pkg)
-		}
+		pn("  %s %q", imp.lname, imp.pkg)
 	}
 	pn(")")
 	pn("\n// Always reference these packages, just in case the auto-generated code")

@@ -16,15 +16,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
-	gensupport "google.golang.org/api/gensupport"
-	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -184,6 +185,10 @@ type AnnotateImageResponse struct {
 	// successfully.
 	LogoAnnotations []*EntityAnnotation `json:"logoAnnotations,omitempty"`
 
+	// ProductSearchResults: If present, product search has completed
+	// successfully.
+	ProductSearchResults *ProductSearchResults `json:"productSearchResults,omitempty"`
+
 	// SafeSearchAnnotation: If present, safe-search annotation has
 	// completed successfully.
 	SafeSearchAnnotation *SafeSearchAnnotation `json:"safeSearchAnnotation,omitempty"`
@@ -275,6 +280,62 @@ type AsyncBatchAnnotateFilesResponse struct {
 
 func (s *AsyncBatchAnnotateFilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AsyncBatchAnnotateFilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchOperationMetadata: Metadata for the batch operations such as the
+// current state.
+//
+// This is included in the `metadata` field of the `Operation` returned
+// by the
+// `GetOperation` call of the `google::longrunning::Operations` service.
+type BatchOperationMetadata struct {
+	// EndTime: The time when the batch request is finished
+	// and
+	// google.longrunning.Operation.done is set to true.
+	EndTime string `json:"endTime,omitempty"`
+
+	// State: The current state of the batch operation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Invalid.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "SUCCESSFUL" - The request is done and at least one item has been
+	// successfully
+	// processed.
+	//   "FAILED" - The request is done and no item has been successfully
+	// processed.
+	//   "CANCELLED" - The request is done after the
+	// longrunning.Operations.CancelOperation has
+	// been called by the user.  Any records that were processed before
+	// the
+	// cancel command are output as specified in the request.
+	State string `json:"state,omitempty"`
+
+	// SubmitTime: The time when the batch request was submitted to the
+	// server.
+	SubmitTime string `json:"submitTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchOperationMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1369,6 +1430,10 @@ type GoogleCloudVisionV1p1beta1AnnotateImageResponse struct {
 	// successfully.
 	LogoAnnotations []*GoogleCloudVisionV1p1beta1EntityAnnotation `json:"logoAnnotations,omitempty"`
 
+	// ProductSearchResults: If present, product search has completed
+	// successfully.
+	ProductSearchResults *GoogleCloudVisionV1p1beta1ProductSearchResults `json:"productSearchResults,omitempty"`
+
 	// SafeSearchAnnotation: If present, safe-search annotation has
 	// completed successfully.
 	SafeSearchAnnotation *GoogleCloudVisionV1p1beta1SafeSearchAnnotation `json:"safeSearchAnnotation,omitempty"`
@@ -2347,6 +2412,7 @@ type GoogleCloudVisionV1p1beta1Feature struct {
 	// image's dominant colors.
 	//   "CROP_HINTS" - Run crop hints.
 	//   "WEB_DETECTION" - Run web detection.
+	//   "PRODUCT_SEARCH" - Run Product Search.
 	//   "OBJECT_LOCALIZATION" - Run localizer for object detection.
 	Type string `json:"type,omitempty"`
 
@@ -2552,6 +2618,9 @@ type GoogleCloudVisionV1p1beta1ImageContext struct {
 
 	// LatLongRect: Not used.
 	LatLongRect *GoogleCloudVisionV1p1beta1LatLongRect `json:"latLongRect,omitempty"`
+
+	// ProductSearchParams: Parameters for product search.
+	ProductSearchParams *GoogleCloudVisionV1p1beta1ProductSearchParams `json:"productSearchParams,omitempty"`
 
 	// WebDetectionParams: Parameters for web detection.
 	WebDetectionParams *GoogleCloudVisionV1p1beta1WebDetectionParams `json:"webDetectionParams,omitempty"`
@@ -3100,6 +3169,299 @@ func (s *GoogleCloudVisionV1p1beta1Position) UnmarshalJSON(data []byte) error {
 	s.X = float64(s1.X)
 	s.Y = float64(s1.Y)
 	s.Z = float64(s1.Z)
+	return nil
+}
+
+// GoogleCloudVisionV1p1beta1Product: A Product contains
+// ReferenceImages.
+type GoogleCloudVisionV1p1beta1Product struct {
+	// Description: User-provided metadata to be stored with this product.
+	// Must be at most 4096
+	// characters long.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The user-provided name for this Product. Must not be
+	// empty. Must be at most
+	// 4096 characters long.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The resource name of the product.
+	//
+	// Format
+	// is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
+	//
+	// This field is ignored when creating a product.
+	Name string `json:"name,omitempty"`
+
+	// ProductCategory: The category for the product identified by the
+	// reference image. This should
+	// be either "homegoods", "apparel", or "toys".
+	//
+	// This field is immutable.
+	ProductCategory string `json:"productCategory,omitempty"`
+
+	// ProductLabels: Key-value pairs that can be attached to a product. At
+	// query time,
+	// constraints can be specified based on the product_labels.
+	//
+	// Note that integer values can be provided as strings, e.g. "1199".
+	// Only
+	// strings with integer values can match a range-based restriction which
+	// is
+	// to be supported soon.
+	//
+	// Multiple values can be assigned to the same key. One product may have
+	// up to
+	// 100 product_labels.
+	ProductLabels []*GoogleCloudVisionV1p1beta1ProductKeyValue `json:"productLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1Product) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductKeyValue: A product label
+// represented as a key-value pair.
+type GoogleCloudVisionV1p1beta1ProductKeyValue struct {
+	// Key: The key of the label attached to the product. Cannot be empty
+	// and cannot
+	// exceed 128 bytes.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the label attached to the product. Cannot be
+	// empty and
+	// cannot exceed 128 bytes.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductKeyValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductKeyValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductSearchParams: Parameters for a
+// product search request.
+type GoogleCloudVisionV1p1beta1ProductSearchParams struct {
+	// BoundingPoly: The bounding polygon around the area of interest in the
+	// image.
+	// Optional. If it is not specified, system discretion will be applied.
+	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// Filter: The filtering expression. This can be used to restrict search
+	// results based
+	// on Product labels. We currently support an AND of OR of
+	// key-value
+	// expressions, where each expression within an OR must have the same
+	// key.
+	//
+	// For example, "(color = red OR color = blue) AND brand = Google"
+	// is
+	// acceptable, but not "(color = red OR brand = Google)" or "color:
+	// red".
+	Filter string `json:"filter,omitempty"`
+
+	// ProductCategories: The list of product categories to search in.
+	// Currently, we only consider
+	// the first category, and either "homegoods", "apparel", or "toys"
+	// should be
+	// specified.
+	ProductCategories []string `json:"productCategories,omitempty"`
+
+	// ProductSet: The resource name of a ProductSet to be searched for
+	// similar images.
+	//
+	// Format
+	// is:
+	// `projects/PROJECT_ID/locations/LOC_ID/productSets/PRODUCT_SET_ID`.
+	ProductSet string `json:"productSet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductSearchResults: Results for a product
+// search request.
+type GoogleCloudVisionV1p1beta1ProductSearchResults struct {
+	// IndexTime: Timestamp of the index which provided these results.
+	// Changes made after
+	// this time are not reflected in the current results.
+	IndexTime string `json:"indexTime,omitempty"`
+
+	// ProductGroupedResults: List of results grouped by products detected
+	// in the query image. Each entry
+	// corresponds to one bounding polygon in the query image, and contains
+	// the
+	// matching products specific to that region. There may be duplicate
+	// product
+	// matches in the union of all the per-product results.
+	ProductGroupedResults []*GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*GoogleCloudVisionV1p1beta1ProductSearchResultsResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResults) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult:
+// Information about the products similar to a single product in a
+// query
+// image.
+type GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult struct {
+	// BoundingPoly: The bounding polygon around the product detected in the
+	// query image.
+	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*GoogleCloudVisionV1p1beta1ProductSearchResultsResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsGroupedResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p1beta1ProductSearchResultsResult: Information
+// about a product.
+type GoogleCloudVisionV1p1beta1ProductSearchResultsResult struct {
+	// Image: The resource name of the image from the product that is the
+	// closest match
+	// to the query.
+	Image string `json:"image,omitempty"`
+
+	// Product: The Product.
+	Product *GoogleCloudVisionV1p1beta1Product `json:"product,omitempty"`
+
+	// Score: A confidence level on the match, ranging from 0 (no
+	// confidence) to
+	// 1 (full confidence).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p1beta1ProductSearchResultsResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p1beta1ProductSearchResultsResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
 	return nil
 }
 
@@ -3962,6 +4324,10 @@ type GoogleCloudVisionV1p2beta1AnnotateImageResponse struct {
 	// LogoAnnotations: If present, logo detection has completed
 	// successfully.
 	LogoAnnotations []*GoogleCloudVisionV1p2beta1EntityAnnotation `json:"logoAnnotations,omitempty"`
+
+	// ProductSearchResults: If present, product search has completed
+	// successfully.
+	ProductSearchResults *GoogleCloudVisionV1p2beta1ProductSearchResults `json:"productSearchResults,omitempty"`
 
 	// SafeSearchAnnotation: If present, safe-search annotation has
 	// completed successfully.
@@ -5321,6 +5687,240 @@ func (s *GoogleCloudVisionV1p2beta1Position) UnmarshalJSON(data []byte) error {
 	s.X = float64(s1.X)
 	s.Y = float64(s1.Y)
 	s.Z = float64(s1.Z)
+	return nil
+}
+
+// GoogleCloudVisionV1p2beta1Product: A Product contains
+// ReferenceImages.
+type GoogleCloudVisionV1p2beta1Product struct {
+	// Description: User-provided metadata to be stored with this product.
+	// Must be at most 4096
+	// characters long.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The user-provided name for this Product. Must not be
+	// empty. Must be at most
+	// 4096 characters long.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The resource name of the product.
+	//
+	// Format
+	// is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
+	//
+	// This field is ignored when creating a product.
+	Name string `json:"name,omitempty"`
+
+	// ProductCategory: The category for the product identified by the
+	// reference image. This should
+	// be either "homegoods", "apparel", or "toys".
+	//
+	// This field is immutable.
+	ProductCategory string `json:"productCategory,omitempty"`
+
+	// ProductLabels: Key-value pairs that can be attached to a product. At
+	// query time,
+	// constraints can be specified based on the product_labels.
+	//
+	// Note that integer values can be provided as strings, e.g. "1199".
+	// Only
+	// strings with integer values can match a range-based restriction which
+	// is
+	// to be supported soon.
+	//
+	// Multiple values can be assigned to the same key. One product may have
+	// up to
+	// 100 product_labels.
+	ProductLabels []*GoogleCloudVisionV1p2beta1ProductKeyValue `json:"productLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1Product) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ProductKeyValue: A product label
+// represented as a key-value pair.
+type GoogleCloudVisionV1p2beta1ProductKeyValue struct {
+	// Key: The key of the label attached to the product. Cannot be empty
+	// and cannot
+	// exceed 128 bytes.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the label attached to the product. Cannot be
+	// empty and
+	// cannot exceed 128 bytes.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductKeyValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductKeyValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ProductSearchResults: Results for a product
+// search request.
+type GoogleCloudVisionV1p2beta1ProductSearchResults struct {
+	// IndexTime: Timestamp of the index which provided these results.
+	// Changes made after
+	// this time are not reflected in the current results.
+	IndexTime string `json:"indexTime,omitempty"`
+
+	// ProductGroupedResults: List of results grouped by products detected
+	// in the query image. Each entry
+	// corresponds to one bounding polygon in the query image, and contains
+	// the
+	// matching products specific to that region. There may be duplicate
+	// product
+	// matches in the union of all the per-product results.
+	ProductGroupedResults []*GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*GoogleCloudVisionV1p2beta1ProductSearchResultsResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResults) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult:
+// Information about the products similar to a single product in a
+// query
+// image.
+type GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult struct {
+	// BoundingPoly: The bounding polygon around the product detected in the
+	// query image.
+	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*GoogleCloudVisionV1p2beta1ProductSearchResultsResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsGroupedResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p2beta1ProductSearchResultsResult: Information
+// about a product.
+type GoogleCloudVisionV1p2beta1ProductSearchResultsResult struct {
+	// Image: The resource name of the image from the product that is the
+	// closest match
+	// to the query.
+	Image string `json:"image,omitempty"`
+
+	// Product: The Product.
+	Product *GoogleCloudVisionV1p2beta1Product `json:"product,omitempty"`
+
+	// Score: A confidence level on the match, ranging from 0 (no
+	// confidence) to
+	// 1 (full confidence).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p2beta1ProductSearchResultsResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p2beta1ProductSearchResultsResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
 	return nil
 }
 
@@ -7733,6 +8333,15 @@ type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 	// this time are not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
+	// ProductGroupedResults: List of results grouped by products detected
+	// in the query image. Each entry
+	// corresponds to one bounding polygon in the query image, and contains
+	// the
+	// matching products specific to that region. There may be duplicate
+	// product
+	// matches in the union of all the per-product results.
+	ProductGroupedResults []*GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult `json:"productGroupedResults,omitempty"`
+
 	// Results: List of results, one for each product match.
 	Results []*GoogleCloudVisionV1p3beta1ProductSearchResultsResult `json:"results,omitempty"`
 
@@ -7755,6 +8364,41 @@ type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 
 func (s *GoogleCloudVisionV1p3beta1ProductSearchResults) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudVisionV1p3beta1ProductSearchResults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult:
+// Information about the products similar to a single product in a
+// query
+// image.
+type GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult struct {
+	// BoundingPoly: The bounding polygon around the product detected in the
+	// query image.
+	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*GoogleCloudVisionV1p3beta1ProductSearchResultsResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p3beta1ProductSearchResultsGroupedResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8617,6 +9261,40 @@ func (s *GoogleCloudVisionV1p3beta1Word) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GroupedResult: Information about the products similar to a single
+// product in a query
+// image.
+type GroupedResult struct {
+	// BoundingPoly: The bounding polygon around the product detected in the
+	// query image.
+	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*Result `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPoly") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPoly") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GroupedResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GroupedResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ImageAnnotationContext: If an image was produced from a file (e.g. a
 // PDF), this message gives
 // information about the source of that image.
@@ -8681,6 +9359,54 @@ func (s *ImageProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImportProductSetsResponse: Response message for the
+// `ImportProductSets` method.
+//
+// This message is returned by
+// the
+// google.longrunning.Operations.GetOperation method in the
+// returned
+// google.longrunning.Operation.response field.
+type ImportProductSetsResponse struct {
+	// ReferenceImages: The list of reference_images that are imported
+	// successfully.
+	ReferenceImages []*ReferenceImage `json:"referenceImages,omitempty"`
+
+	// Statuses: The rpc status for each ImportProductSet request, including
+	// both successes
+	// and errors.
+	//
+	// The number of statuses here matches the number of lines in the csv
+	// file,
+	// and statuses[i] stores the success or failure status of processing
+	// the i-th
+	// line of the csv, starting from line 0.
+	Statuses []*Status `json:"statuses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ReferenceImages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ReferenceImages") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportProductSetsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportProductSetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InputConfig: The desired input location and metadata.
 type InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
@@ -8710,6 +9436,41 @@ type InputConfig struct {
 
 func (s *InputConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InputConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyValue: A product label represented as a key-value pair.
+type KeyValue struct {
+	// Key: The key of the label attached to the product. Cannot be empty
+	// and cannot
+	// exceed 128 bytes.
+	Key string `json:"key,omitempty"`
+
+	// Value: The value of the label attached to the product. Cannot be
+	// empty and
+	// cannot exceed 128 bytes.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyValue) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9326,6 +10087,114 @@ func (s *Position) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Product: A Product contains ReferenceImages.
+type Product struct {
+	// Description: User-provided metadata to be stored with this product.
+	// Must be at most 4096
+	// characters long.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: The user-provided name for this Product. Must not be
+	// empty. Must be at most
+	// 4096 characters long.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: The resource name of the product.
+	//
+	// Format
+	// is:
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID`.
+	//
+	// This field is ignored when creating a product.
+	Name string `json:"name,omitempty"`
+
+	// ProductCategory: The category for the product identified by the
+	// reference image. This should
+	// be either "homegoods", "apparel", or "toys".
+	//
+	// This field is immutable.
+	ProductCategory string `json:"productCategory,omitempty"`
+
+	// ProductLabels: Key-value pairs that can be attached to a product. At
+	// query time,
+	// constraints can be specified based on the product_labels.
+	//
+	// Note that integer values can be provided as strings, e.g. "1199".
+	// Only
+	// strings with integer values can match a range-based restriction which
+	// is
+	// to be supported soon.
+	//
+	// Multiple values can be assigned to the same key. One product may have
+	// up to
+	// 100 product_labels.
+	ProductLabels []*KeyValue `json:"productLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type NoMethod Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductSearchResults: Results for a product search request.
+type ProductSearchResults struct {
+	// IndexTime: Timestamp of the index which provided these results.
+	// Changes made after
+	// this time are not reflected in the current results.
+	IndexTime string `json:"indexTime,omitempty"`
+
+	// ProductGroupedResults: List of results grouped by products detected
+	// in the query image. Each entry
+	// corresponds to one bounding polygon in the query image, and contains
+	// the
+	// matching products specific to that region. There may be duplicate
+	// product
+	// matches in the union of all the per-product results.
+	ProductGroupedResults []*GroupedResult `json:"productGroupedResults,omitempty"`
+
+	// Results: List of results, one for each product match.
+	Results []*Result `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductSearchResults) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductSearchResults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Property: A `Property` consists of a user-supplied name/value pair.
 type Property struct {
 	// Name: Name of the property.
@@ -9358,6 +10227,118 @@ func (s *Property) MarshalJSON() ([]byte, error) {
 	type NoMethod Property
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReferenceImage: A `ReferenceImage` represents a product image and its
+// associated metadata,
+// such as bounding boxes.
+type ReferenceImage struct {
+	// BoundingPolys: Bounding polygons around the areas of interest in the
+	// reference image.
+	// Optional. If this field is empty, the system will try to detect
+	// regions of
+	// interest. At most 10 bounding polygons will be used.
+	//
+	// The provided shape is converted into a non-rotated rectangle.
+	// Once
+	// converted, the small edge of the rectangle must be greater than or
+	// equal
+	// to 300 pixels. The aspect ratio must be 1:4 or less (i.e. 1:3 is ok;
+	// 1:5
+	// is not).
+	BoundingPolys []*BoundingPoly `json:"boundingPolys,omitempty"`
+
+	// Name: The resource name of the reference image.
+	//
+	// Format
+	// is:
+	//
+	// `projects/PROJECT_ID/locations/LOC_ID/products/PRODUCT_ID/referen
+	// ceImages/IMAGE_ID`.
+	//
+	// This field is ignored when creating a reference image.
+	Name string `json:"name,omitempty"`
+
+	// Uri: The Google Cloud Storage URI of the reference image.
+	//
+	// The URI must start with `gs://`.
+	//
+	// Required.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoundingPolys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoundingPolys") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReferenceImage) MarshalJSON() ([]byte, error) {
+	type NoMethod ReferenceImage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Result: Information about a product.
+type Result struct {
+	// Image: The resource name of the image from the product that is the
+	// closest match
+	// to the query.
+	Image string `json:"image,omitempty"`
+
+	// Product: The Product.
+	Product *Product `json:"product,omitempty"`
+
+	// Score: A confidence level on the match, ranging from 0 (no
+	// confidence) to
+	// 1 (full confidence).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Image") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Image") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Result) MarshalJSON() ([]byte, error) {
+	type NoMethod Result
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Result) UnmarshalJSON(data []byte) error {
+	type NoMethod Result
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // SafeSearchAnnotation: Set of features pertaining to the image,

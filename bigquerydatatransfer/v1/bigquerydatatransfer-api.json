@@ -1145,7 +1145,7 @@
       }
     }
   },
-  "revision": "20181001",
+  "revision": "20181027",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1628,7 +1628,7 @@
             "State placeholder.",
             "Data transfer is scheduled and is waiting to be picked up by\ndata transfer backend.",
             "Data transfer is in progress.",
-            "Data transfer completed successsfully.",
+            "Data transfer completed successfully.",
             "Data transfer failed.",
             "Data transfer is cancelled."
           ],
@@ -1745,7 +1745,7 @@
             "State placeholder.",
             "Data transfer is scheduled and is waiting to be picked up by\ndata transfer backend.",
             "Data transfer is in progress.",
-            "Data transfer completed successsfully.",
+            "Data transfer completed successfully.",
             "Data transfer failed.",
             "Data transfer is cancelled."
           ],

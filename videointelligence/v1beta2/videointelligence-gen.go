@@ -16,15 +16,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
-	gensupport "google.golang.org/api/gensupport"
-	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -403,6 +404,111 @@ func (s *GoogleCloudVideointelligenceV1LabelSegment) UnmarshalJSON(data []byte) 
 	return nil
 }
 
+// GoogleCloudVideointelligenceV1SpeechRecognitionAlternative:
+// Alternative hypotheses (a.k.a. n-best list).
+type GoogleCloudVideointelligenceV1SpeechRecognitionAlternative struct {
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is typically provided only for the top
+	// hypothesis, and
+	// only for `is_final=true` results. Clients should not rely on
+	// the
+	// `confidence` field as it is not guaranteed to be accurate or
+	// consistent.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Transcript: Transcript text representing the words that the user
+	// spoke.
+	Transcript string `json:"transcript,omitempty"`
+
+	// Words: A list of word-specific information for each recognized word.
+	Words []*GoogleCloudVideointelligenceV1WordInfo `json:"words,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1SpeechRecognitionAlternative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1SpeechRecognitionAlternative
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// GoogleCloudVideointelligenceV1SpeechTranscription: A speech
+// recognition result corresponding to a portion of the audio.
+type GoogleCloudVideointelligenceV1SpeechTranscription struct {
+	// Alternatives: May contain one or more recognition hypotheses (up to
+	// the maximum specified
+	// in `max_alternatives`).  These alternatives are ordered in terms
+	// of
+	// accuracy, with the top (first) alternative being the most probable,
+	// as
+	// ranked by the recognizer.
+	Alternatives []*GoogleCloudVideointelligenceV1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
+
+	// LanguageCode: Output only.
+	// The
+	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+	// of the
+	// language in this result. This language code was detected to have the
+	// most
+	// likelihood of being spoken in the audio.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1SpeechTranscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1SpeechTranscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
@@ -476,6 +582,9 @@ type GoogleCloudVideointelligenceV1VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	ShotLabelAnnotations []*GoogleCloudVideointelligenceV1LabelAnnotation `json:"shotLabelAnnotations,omitempty"`
 
+	// SpeechTranscriptions: Speech transcription.
+	SpeechTranscriptions []*GoogleCloudVideointelligenceV1SpeechTranscription `json:"speechTranscriptions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -534,6 +643,91 @@ func (s *GoogleCloudVideointelligenceV1VideoSegment) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1WordInfo: Word-specific information for
+// recognized words. Word information is only
+// included in the response when certain request parameters are set,
+// such
+// as `enable_word_time_offsets`.
+type GoogleCloudVideointelligenceV1WordInfo struct {
+	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
+	// A higher number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is set only for the top alternative.
+	// This field is not guaranteed to be accurate and users should not rely
+	// on it
+	// to be always provided.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// EndTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the end of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	EndTime string `json:"endTime,omitempty"`
+
+	// SpeakerTag: Output only. A distinct integer value is assigned for
+	// every speaker within
+	// the audio. This field specifies which one of those speakers was
+	// detected to
+	// have spoken this word. Value ranges from 1 up to
+	// diarization_speaker_count,
+	// and is only set if speaker diarization is enabled.
+	SpeakerTag int64 `json:"speakerTag,omitempty"`
+
+	// StartTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the start of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Word: The word corresponding to this set of information.
+	Word string `json:"word,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1WordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1WordInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1WordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1WordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // GoogleCloudVideointelligenceV1beta2AnnotateVideoProgress: Video
 // annotation progress. Included in the `metadata`
 // field of the `Operation` returned by the `GetOperation`
@@ -578,6 +772,7 @@ type GoogleCloudVideointelligenceV1beta2AnnotateVideoRequest struct {
 	// flower.
 	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
 	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
 	Features []string `json:"features,omitempty"`
 
 	// InputContent: The video data bytes.
@@ -1053,6 +1248,256 @@ func (s *GoogleCloudVideointelligenceV1beta2ShotChangeDetectionConfig) MarshalJS
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1beta2SpeechContext: Provides "hints" to
+// the speech recognizer to favor specific words and phrases
+// in the results.
+type GoogleCloudVideointelligenceV1beta2SpeechContext struct {
+	// Phrases: *Optional* A list of strings containing words and phrases
+	// "hints" so that
+	// the speech recognition is more likely to recognize them. This can be
+	// used
+	// to improve the accuracy for specific words and phrases, for example,
+	// if
+	// specific commands are typically spoken by the user. This can also be
+	// used
+	// to add additional words to the vocabulary of the recognizer.
+	// See
+	// [usage limits](https://cloud.google.com/speech/limits#content).
+	Phrases []string `json:"phrases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Phrases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Phrases") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2SpeechContext) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2SpeechContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative:
+// Alternative hypotheses (a.k.a. n-best list).
+type GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative struct {
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is typically provided only for the top
+	// hypothesis, and
+	// only for `is_final=true` results. Clients should not rely on
+	// the
+	// `confidence` field as it is not guaranteed to be accurate or
+	// consistent.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Transcript: Transcript text representing the words that the user
+	// spoke.
+	Transcript string `json:"transcript,omitempty"`
+
+	// Words: A list of word-specific information for each recognized word.
+	Words []*GoogleCloudVideointelligenceV1beta2WordInfo `json:"words,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// GoogleCloudVideointelligenceV1beta2SpeechTranscription: A speech
+// recognition result corresponding to a portion of the audio.
+type GoogleCloudVideointelligenceV1beta2SpeechTranscription struct {
+	// Alternatives: May contain one or more recognition hypotheses (up to
+	// the maximum specified
+	// in `max_alternatives`).  These alternatives are ordered in terms
+	// of
+	// accuracy, with the top (first) alternative being the most probable,
+	// as
+	// ranked by the recognizer.
+	Alternatives []*GoogleCloudVideointelligenceV1beta2SpeechRecognitionAlternative `json:"alternatives,omitempty"`
+
+	// LanguageCode: Output only.
+	// The
+	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+	// of the
+	// language in this result. This language code was detected to have the
+	// most
+	// likelihood of being spoken in the audio.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2SpeechTranscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2SpeechTranscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1beta2SpeechTranscriptionConfig: Config
+// for SPEECH_TRANSCRIPTION.
+type GoogleCloudVideointelligenceV1beta2SpeechTranscriptionConfig struct {
+	// AudioTracks: *Optional* For file formats, such as MXF or MKV,
+	// supporting multiple audio
+	// tracks, specify up to two tracks. Default: track 0.
+	AudioTracks []int64 `json:"audioTracks,omitempty"`
+
+	// DiarizationSpeakerCount: *Optional*
+	// If set, specifies the estimated number of speakers in the
+	// conversation.
+	// If not set, defaults to '2'.
+	// Ignored unless enable_speaker_diarization is set to true.
+	DiarizationSpeakerCount int64 `json:"diarizationSpeakerCount,omitempty"`
+
+	// EnableAutomaticPunctuation: *Optional* If 'true', adds punctuation to
+	// recognition result hypotheses.
+	// This feature is only available in select languages. Setting this
+	// for
+	// requests in other languages has no effect at all. The default 'false'
+	// value
+	// does not add punctuation to result hypotheses. NOTE: "This is
+	// currently
+	// offered as an experimental service, complimentary to all users. In
+	// the
+	// future this may be exclusively available as a premium feature."
+	EnableAutomaticPunctuation bool `json:"enableAutomaticPunctuation,omitempty"`
+
+	// EnableSpeakerDiarization: *Optional* If 'true', enables speaker
+	// detection for each recognized word in
+	// the top alternative of the recognition result using a speaker_tag
+	// provided
+	// in the WordInfo.
+	// Note: When this is true, we send all the words from the beginning of
+	// the
+	// audio for the top alternative in every consecutive responses.
+	// This is done in order to improve our speaker tags as our models learn
+	// to
+	// identify the speakers in the conversation over time.
+	EnableSpeakerDiarization bool `json:"enableSpeakerDiarization,omitempty"`
+
+	// EnableWordConfidence: *Optional* If `true`, the top result includes a
+	// list of words and the
+	// confidence for those words. If `false`, no word-level
+	// confidence
+	// information is returned. The default is `false`.
+	EnableWordConfidence bool `json:"enableWordConfidence,omitempty"`
+
+	// FilterProfanity: *Optional* If set to `true`, the server will attempt
+	// to filter out
+	// profanities, replacing all but the initial character in each filtered
+	// word
+	// with asterisks, e.g. "f***". If set to `false` or omitted,
+	// profanities
+	// won't be filtered out.
+	FilterProfanity bool `json:"filterProfanity,omitempty"`
+
+	// LanguageCode: *Required* The language of the supplied audio as
+	// a
+	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language
+	// tag.
+	// Example: "en-US".
+	// See [Language
+	// Support](https://cloud.google.com/speech/docs/languages)
+	// for a list of the currently supported language codes.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// MaxAlternatives: *Optional* Maximum number of recognition hypotheses
+	// to be returned.
+	// Specifically, the maximum number of `SpeechRecognitionAlternative`
+	// messages
+	// within each `SpeechTranscription`. The server may return fewer
+	// than
+	// `max_alternatives`. Valid values are `0`-`30`. A value of `0` or `1`
+	// will
+	// return a maximum of one. If omitted, will return a maximum of one.
+	MaxAlternatives int64 `json:"maxAlternatives,omitempty"`
+
+	// SpeechContexts: *Optional* A means to provide context to assist the
+	// speech recognition.
+	SpeechContexts []*GoogleCloudVideointelligenceV1beta2SpeechContext `json:"speechContexts,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioTracks") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioTracks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2SpeechTranscriptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2SpeechTranscriptionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
@@ -1126,6 +1571,9 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	ShotLabelAnnotations []*GoogleCloudVideointelligenceV1beta2LabelAnnotation `json:"shotLabelAnnotations,omitempty"`
 
+	// SpeechTranscriptions: Speech transcription.
+	SpeechTranscriptions []*GoogleCloudVideointelligenceV1beta2SpeechTranscription `json:"speechTranscriptions,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Error") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1168,6 +1616,9 @@ type GoogleCloudVideointelligenceV1beta2VideoContext struct {
 
 	// ShotChangeDetectionConfig: Config for SHOT_CHANGE_DETECTION.
 	ShotChangeDetectionConfig *GoogleCloudVideointelligenceV1beta2ShotChangeDetectionConfig `json:"shotChangeDetectionConfig,omitempty"`
+
+	// SpeechTranscriptionConfig: Config for SPEECH_TRANSCRIPTION.
+	SpeechTranscriptionConfig *GoogleCloudVideointelligenceV1beta2SpeechTranscriptionConfig `json:"speechTranscriptionConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExplicitContentDetectionConfig") to unconditionally include in API
@@ -1227,6 +1678,91 @@ func (s *GoogleCloudVideointelligenceV1beta2VideoSegment) MarshalJSON() ([]byte,
 	type NoMethod GoogleCloudVideointelligenceV1beta2VideoSegment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1beta2WordInfo: Word-specific
+// information for recognized words. Word information is only
+// included in the response when certain request parameters are set,
+// such
+// as `enable_word_time_offsets`.
+type GoogleCloudVideointelligenceV1beta2WordInfo struct {
+	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
+	// A higher number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is set only for the top alternative.
+	// This field is not guaranteed to be accurate and users should not rely
+	// on it
+	// to be always provided.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// EndTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the end of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	EndTime string `json:"endTime,omitempty"`
+
+	// SpeakerTag: Output only. A distinct integer value is assigned for
+	// every speaker within
+	// the audio. This field specifies which one of those speakers was
+	// detected to
+	// have spoken this word. Value ranges from 1 up to
+	// diarization_speaker_count,
+	// and is only set if speaker diarization is enabled.
+	SpeakerTag int64 `json:"speakerTag,omitempty"`
+
+	// StartTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the start of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Word: The word corresponding to this set of information.
+	Word string `json:"word,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2WordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1beta2WordInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1beta2WordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1beta2WordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleCloudVideointelligenceV1p1beta1AnnotateVideoProgress: Video
@@ -2445,6 +2981,111 @@ func (s *GoogleCloudVideointelligenceV1p2beta1ObjectTrackingFrame) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative:
+// Alternative hypotheses (a.k.a. n-best list).
+type GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative struct {
+	// Confidence: The confidence estimate between 0.0 and 1.0. A higher
+	// number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is typically provided only for the top
+	// hypothesis, and
+	// only for `is_final=true` results. Clients should not rely on
+	// the
+	// `confidence` field as it is not guaranteed to be accurate or
+	// consistent.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Transcript: Transcript text representing the words that the user
+	// spoke.
+	Transcript string `json:"transcript,omitempty"`
+
+	// Words: A list of word-specific information for each recognized word.
+	Words []*GoogleCloudVideointelligenceV1p2beta1WordInfo `json:"words,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
+// GoogleCloudVideointelligenceV1p2beta1SpeechTranscription: A speech
+// recognition result corresponding to a portion of the audio.
+type GoogleCloudVideointelligenceV1p2beta1SpeechTranscription struct {
+	// Alternatives: May contain one or more recognition hypotheses (up to
+	// the maximum specified
+	// in `max_alternatives`).  These alternatives are ordered in terms
+	// of
+	// accuracy, with the top (first) alternative being the most probable,
+	// as
+	// ranked by the recognizer.
+	Alternatives []*GoogleCloudVideointelligenceV1p2beta1SpeechRecognitionAlternative `json:"alternatives,omitempty"`
+
+	// LanguageCode: Output only.
+	// The
+	// [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag
+	// of the
+	// language in this result. This language code was detected to have the
+	// most
+	// likelihood of being spoken in the audio.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Alternatives") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Alternatives") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1SpeechTranscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1SpeechTranscription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1p2beta1TextAnnotation: Annotations
 // related to one detected OCR text snippet. This will contain
 // the
@@ -2647,6 +3288,9 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationResults struct {
 	// There is exactly one element for each unique label.
 	ShotLabelAnnotations []*GoogleCloudVideointelligenceV1p2beta1LabelAnnotation `json:"shotLabelAnnotations,omitempty"`
 
+	// SpeechTranscriptions: Speech transcription.
+	SpeechTranscriptions []*GoogleCloudVideointelligenceV1p2beta1SpeechTranscription `json:"speechTranscriptions,omitempty"`
+
 	// TextAnnotations: OCR text detection and tracking.
 	// Annotations for list of detected text snippets. Each will have list
 	// of
@@ -2709,6 +3353,91 @@ func (s *GoogleCloudVideointelligenceV1p2beta1VideoSegment) MarshalJSON() ([]byt
 	type NoMethod GoogleCloudVideointelligenceV1p2beta1VideoSegment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1p2beta1WordInfo: Word-specific
+// information for recognized words. Word information is only
+// included in the response when certain request parameters are set,
+// such
+// as `enable_word_time_offsets`.
+type GoogleCloudVideointelligenceV1p2beta1WordInfo struct {
+	// Confidence: Output only. The confidence estimate between 0.0 and 1.0.
+	// A higher number
+	// indicates an estimated greater likelihood that the recognized words
+	// are
+	// correct. This field is set only for the top alternative.
+	// This field is not guaranteed to be accurate and users should not rely
+	// on it
+	// to be always provided.
+	// The default of 0.0 is a sentinel value indicating `confidence` was
+	// not set.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// EndTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the end of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	EndTime string `json:"endTime,omitempty"`
+
+	// SpeakerTag: Output only. A distinct integer value is assigned for
+	// every speaker within
+	// the audio. This field specifies which one of those speakers was
+	// detected to
+	// have spoken this word. Value ranges from 1 up to
+	// diarization_speaker_count,
+	// and is only set if speaker diarization is enabled.
+	SpeakerTag int64 `json:"speakerTag,omitempty"`
+
+	// StartTime: Time offset relative to the beginning of the audio,
+	// and
+	// corresponding to the start of the spoken word. This field is only set
+	// if
+	// `enable_word_time_offsets=true` and only in the top hypothesis. This
+	// is an
+	// experimental feature and the accuracy of the time offset can vary.
+	StartTime string `json:"startTime,omitempty"`
+
+	// Word: The word corresponding to this set of information.
+	Word string `json:"word,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1WordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1WordInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1p2beta1WordInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1p2beta1WordInfo
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running

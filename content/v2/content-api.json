@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/XlIh_rA14oju-Cr_WDQ9UM5jkoQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/kqiK7ItRiK15mvY7aRI-n1_7sqk\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3469,7 +3469,7 @@
       }
     }
   },
-  "revision": "20181023",
+  "revision": "20181029",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6403,6 +6403,13 @@
           "description": "The two-letter ISO 639-1 language code for the item.",
           "type": "string"
         },
+        "fees": {
+          "description": "Associated fees at order creation time.",
+          "items": {
+            "$ref": "OrderLineItemProductFee"
+          },
+          "type": "array"
+        },
         "gtin": {
           "description": "Global Trade Item Number (GTIN) of the item.",
           "type": "string"
@@ -6449,6 +6456,24 @@
             "$ref": "OrderLineItemProductVariantAttribute"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "OrderLineItemProductFee": {
+      "id": "OrderLineItemProductFee",
+      "properties": {
+        "amount": {
+          "$ref": "Price",
+          "description": "Amount of the fee."
+        },
+        "id": {
+          "description": "Case-insensitive fee ID.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the fee.",
+          "type": "string"
         }
       },
       "type": "object"

@@ -237,7 +237,7 @@
       }
     }
   },
-  "revision": "20181018",
+  "revision": "20181026",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -1719,6 +1719,10 @@
         },
         "name": {
           "description": "Subnetwork name.\nSee https://cloud.google.com/compute/docs/vpc/",
+          "type": "string"
+        },
+        "network": {
+          "description": "Shared VPC host project network peered with consumer network.\nFor example: projects/1234321/global/networks/host-network",
           "type": "string"
         }
       },

@@ -891,6 +891,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudsearch:v1",
+   "name": "cloudsearch",
+   "version": "v1",
+   "title": "Cloud Search API",
+   "description": "Cloud Search provides cloud-based search capabilities over G Suite data. The Cloud Search API allows indexing of non-G Suite data into Cloud Search.",
+   "discoveryRestUrl": "https://cloudsearch.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://gsuite.google.com/products/cloud-search/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudshell:v1alpha1",
    "name": "cloudshell",
    "version": "v1alpha1",

@@ -14,15 +14,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
-	gensupport "google.golang.org/api/gensupport"
-	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -335,13 +336,13 @@ type AdministratorWebTokenSpec struct {
 	// Permission: Deprecated. Use PlaySearch.approveApps.
 	Permission []string `json:"permission,omitempty"`
 
-	// PlaySearch: Options for displaying the Play Search page.
+	// PlaySearch: Options for displaying the managed Play Search apps page.
 	PlaySearch *AdministratorWebTokenSpecPlaySearch `json:"playSearch,omitempty"`
 
 	// PrivateApps: Options for displaying the Private Apps page.
 	PrivateApps *AdministratorWebTokenSpecPrivateApps `json:"privateApps,omitempty"`
 
-	// StoreBuilder: Options for displaying the Store Builder page.
+	// StoreBuilder: Options for displaying the Organize apps page.
 	StoreBuilder *AdministratorWebTokenSpecStoreBuilder `json:"storeBuilder,omitempty"`
 
 	// WebApps: Options for displaying the Web Apps page.
@@ -375,7 +376,8 @@ type AdministratorWebTokenSpecPlaySearch struct {
 	// false.
 	ApproveApps bool `json:"approveApps,omitempty"`
 
-	// Enabled: Whether the Play Search page is displayed. Default is true.
+	// Enabled: Whether the managed Play Search apps page is displayed.
+	// Default is true.
 	Enabled bool `json:"enabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApproveApps") to
@@ -429,7 +431,7 @@ func (s *AdministratorWebTokenSpecPrivateApps) MarshalJSON() ([]byte, error) {
 }
 
 type AdministratorWebTokenSpecStoreBuilder struct {
-	// Enabled: Whether the Store Builder page is displayed. Default is
+	// Enabled: Whether the Organize apps page is displayed. Default is
 	// true.
 	Enabled bool `json:"enabled,omitempty"`
 

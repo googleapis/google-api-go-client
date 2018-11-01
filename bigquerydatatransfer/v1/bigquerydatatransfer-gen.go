@@ -14,15 +14,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
-	gensupport "google.golang.org/api/gensupport"
-	googleapi "google.golang.org/api/googleapi"
 	"io"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	context "golang.org/x/net/context"
+	ctxhttp "golang.org/x/net/context/ctxhttp"
+	gensupport "google.golang.org/api/gensupport"
+	googleapi "google.golang.org/api/googleapi"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -1043,7 +1044,7 @@ type TransferConfig struct {
 	// up by
 	// data transfer backend.
 	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successsfully.
+	//   "SUCCEEDED" - Data transfer completed successfully.
 	//   "FAILED" - Data transfer failed.
 	//   "CANCELLED" - Data transfer is cancelled.
 	State string `json:"state,omitempty"`
@@ -1188,7 +1189,7 @@ type TransferRun struct {
 	// up by
 	// data transfer backend.
 	//   "RUNNING" - Data transfer is in progress.
-	//   "SUCCEEDED" - Data transfer completed successsfully.
+	//   "SUCCEEDED" - Data transfer completed successfully.
 	//   "FAILED" - Data transfer failed.
 	//   "CANCELLED" - Data transfer is cancelled.
 	State string `json:"state,omitempty"`

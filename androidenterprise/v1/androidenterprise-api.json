@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/4oEp_ERLhnN2ABk55KEAUwUycA4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/VlKYEVA-7U4oafD19kx3_U1-kTQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2758,7 +2758,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20181024",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2810,7 +2810,7 @@
         },
         "playSearch": {
           "$ref": "AdministratorWebTokenSpecPlaySearch",
-          "description": "Options for displaying the Play Search page."
+          "description": "Options for displaying the managed Play Search apps page."
         },
         "privateApps": {
           "$ref": "AdministratorWebTokenSpecPrivateApps",
@@ -2818,7 +2818,7 @@
         },
         "storeBuilder": {
           "$ref": "AdministratorWebTokenSpecStoreBuilder",
-          "description": "Options for displaying the Store Builder page."
+          "description": "Options for displaying the Organize apps page."
         },
         "webApps": {
           "$ref": "AdministratorWebTokenSpecWebApps",
@@ -2835,7 +2835,7 @@
           "type": "boolean"
         },
         "enabled": {
-          "description": "Whether the Play Search page is displayed. Default is true.",
+          "description": "Whether the managed Play Search apps page is displayed. Default is true.",
           "type": "boolean"
         }
       },
@@ -2855,7 +2855,7 @@
       "id": "AdministratorWebTokenSpecStoreBuilder",
       "properties": {
         "enabled": {
-          "description": "Whether the Store Builder page is displayed. Default is true.",
+          "description": "Whether the Organize apps page is displayed. Default is true.",
           "type": "boolean"
         }
       },

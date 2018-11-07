@@ -49,12 +49,29 @@ func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*
 	}
 
 	// Send request.
-	resp, err := client.Do(req.WithContext(ctx))
+	resp, err := send(ctx, client, req)
 
 	// Call returned funcs in reverse order.
 	for i := len(post) - 1; i >= 0; i-- {
 		if fn := post[i]; fn != nil {
 			fn(resp)
+		}
+	}
+	return resp, err
+}
+
+func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
+	if client == nil {
+		client = http.DefaultClient
+	}
+	resp, err := client.Do(req.WithContext(ctx))
+	// If we got an error, and the context has been canceled,
+	// the context's error is probably more useful.
+	if err != nil {
+		select {
+		case <-ctx.Done():
+			err = ctx.Err()
+		default:
 		}
 	}
 	return resp, err

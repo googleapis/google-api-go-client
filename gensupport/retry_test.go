@@ -15,14 +15,13 @@
 package gensupport
 
 import (
+	"context"
 	"errors"
 	"io"
 	"net"
 	"net/http"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 func TestRetry(t *testing.T) {

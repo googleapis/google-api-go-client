@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20181004",
+  "revision": "20181105",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -577,6 +577,11 @@
         },
         "minDeadline": {
           "description": "Minimum deadline in seconds needed for this method. Calls having deadline\nvalue lower than this will be rejected.",
+          "format": "double",
+          "type": "number"
+        },
+        "operationDeadline": {
+          "description": "The number of seconds to wait for the completion of a long running\noperation. The default is no deadline.",
           "format": "double",
           "type": "number"
         },

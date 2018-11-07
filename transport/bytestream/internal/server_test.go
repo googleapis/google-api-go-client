@@ -16,6 +16,7 @@ package internal
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -23,7 +24,6 @@ import (
 	"sync"
 	"testing"
 
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	pb "google.golang.org/genproto/googleapis/bytestream"

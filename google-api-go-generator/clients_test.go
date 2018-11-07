@@ -15,6 +15,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -26,8 +27,6 @@ import (
 	"strings"
 	"testing"
 	"testing/iotest"
-
-	"golang.org/x/net/context"
 
 	// If you add a client, add a matching go:generate line below.
 	dfa "google.golang.org/api/dfareporting/v2.8"

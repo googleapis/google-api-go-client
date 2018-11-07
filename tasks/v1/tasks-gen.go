@@ -11,6 +11,7 @@ package tasks // import "google.golang.org/api/tasks/v1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "tasks:v1"
 const apiName = "tasks"
@@ -48,7 +46,7 @@ const basePath = "https://www.googleapis.com/tasks/v1/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your tasks
+	// Create, edit, organize, and delete all your tasks
 	TasksScope = "https://www.googleapis.com/auth/tasks"
 
 	// View your tasks

@@ -18,10 +18,10 @@
 package grpc
 
 import (
+	"context"
 	"errors"
 	"log"
 
-	"golang.org/x/net/context"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"

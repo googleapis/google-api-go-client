@@ -18,10 +18,10 @@
 package http
 
 import (
+	"context"
 	"errors"
 	"net/http"
 
-	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"

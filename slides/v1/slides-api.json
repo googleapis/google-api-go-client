@@ -30,7 +30,7 @@
   "baseUrl": "https://slides.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Slides",
-  "description": "An API for creating and editing Google Slides presentations.",
+  "description": "Reads and writes Google Slides presentations.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/slides/",
   "icons": {
@@ -302,7 +302,7 @@
       }
     }
   },
-  "revision": "20181010",
+  "revision": "20181030",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {

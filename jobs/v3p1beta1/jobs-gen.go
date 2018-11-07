@@ -11,6 +11,7 @@ package jobs // import "google.golang.org/api/jobs/v3p1beta1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "jobs:v3p1beta1"
 const apiName = "jobs"
@@ -3387,7 +3385,7 @@ type Location struct {
 	// delivery location.
 	PostalAddress *PostalAddress `json:"postalAddress,omitempty"`
 
-	// RadiusInMiles: Radius in meters of the job location. This value is
+	// RadiusInMiles: Radius in miles of the job location. This value is
 	// derived from the
 	// location bounding box in which a circle with the specified
 	// radius

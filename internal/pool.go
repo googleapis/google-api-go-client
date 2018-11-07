@@ -16,6 +16,7 @@ package internal
 
 import (
 	"errors"
+
 	"google.golang.org/grpc/naming"
 )
 

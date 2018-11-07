@@ -15,12 +15,12 @@
 package grpc
 
 import (
+	"context"
 	"errors"
 	"net"
 	"testing"
 	"time"
 
-	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"

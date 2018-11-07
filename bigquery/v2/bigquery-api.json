@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/SZY-9_ScteTEtTSIjMIigLgnbt8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/jYrUubKKHFACpvSbIbPxYlukj5c\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20181012",
+  "revision": "20181025",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -2786,6 +2786,37 @@
       },
       "type": "object"
     },
+    "RangePartitioning": {
+      "id": "RangePartitioning",
+      "properties": {
+        "field": {
+          "description": "[Experimental] [Required] The table is partitioned by this field. The field must be a top-level NULLABLE/REQUIRED field. The only supported type is INTEGER/INT64.",
+          "type": "string"
+        },
+        "range": {
+          "description": "[Experimental] [Required] Defines the ranges for range partitioning.",
+          "properties": {
+            "end": {
+              "description": "[Experimental] [Required] The end of range partitioning, exclusive.",
+              "format": "int64",
+              "type": "string"
+            },
+            "interval": {
+              "description": "[Experimental] [Required] The width of each interval.",
+              "format": "int64",
+              "type": "string"
+            },
+            "start": {
+              "description": "[Experimental] [Required] The start of range partitioning, inclusive.",
+              "format": "int64",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "Streamingbuffer": {
       "id": "Streamingbuffer",
       "properties": {
@@ -2812,7 +2843,7 @@
       "properties": {
         "clustering": {
           "$ref": "Clustering",
-          "description": "[Beta] Clustering specification for the table. Must be specified with time-based partitioning, data in the table will be first partitioned and subsequently clustered."
+          "description": "[Experimental] Clustering specification for the table. Must be specified with partitioning, data in the table will be first partitioned and subsequently clustered."
         },
         "creationTime": {
           "description": "[Output-only] The time when this table was created, in milliseconds since the epoch.",
@@ -2893,6 +2924,15 @@
           "format": "uint64",
           "type": "string"
         },
+        "rangePartitioning": {
+          "$ref": "RangePartitioning",
+          "description": "[Experimental] Range partitioning specification for this table. Only one of timePartitioning and rangePartitioning should be specified."
+        },
+        "requirePartitionFilter": {
+          "default": "false",
+          "description": "[Experimental] [Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.",
+          "type": "boolean"
+        },
         "schema": {
           "$ref": "TableSchema",
           "description": "[Optional] Describes the schema of this table."
@@ -2911,7 +2951,7 @@
         },
         "timePartitioning": {
           "$ref": "TimePartitioning",
-          "description": "Time-based partitioning specification for this table."
+          "description": "Time-based partitioning specification for this table. Only one of timePartitioning and rangePartitioning should be specified."
         },
         "type": {
           "description": "[Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. EXTERNAL: A table that references data stored in an external storage system, such as Google Cloud Storage. The default value is TABLE.",

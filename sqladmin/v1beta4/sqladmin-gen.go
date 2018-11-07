@@ -11,6 +11,7 @@ package sqladmin // import "google.golang.org/api/sqladmin/v1beta4"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "sqladmin:v1beta4"
 const apiName = "sqladmin"
@@ -207,6 +205,37 @@ type AclEntry struct {
 
 func (s *AclEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod AclEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApiWarning: An Admin API warning message.
+type ApiWarning struct {
+	// Code: Code to uniquely identify the warning type.
+	Code string `json:"code,omitempty"`
+
+	// Message: The warning message.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApiWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiWarning
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -991,6 +1020,9 @@ func (s *ExportContextCsvExportOptions) MarshalJSON() ([]byte, error) {
 // ExportContextSqlExportOptions: Options for exporting data as SQL
 // statements.
 type ExportContextSqlExportOptions struct {
+	// MysqlExportOptions: Options for exporting from MySQL.
+	MysqlExportOptions *ExportContextSqlExportOptionsMysqlExportOptions `json:"mysqlExportOptions,omitempty"`
+
 	// SchemaOnly: Export only schemas.
 	SchemaOnly bool `json:"schemaOnly,omitempty"`
 
@@ -999,7 +1031,41 @@ type ExportContextSqlExportOptions struct {
 	// For PostgreSQL instances, you can specify only one table.
 	Tables []string `json:"tables,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "SchemaOnly") to
+	// ForceSendFields is a list of field names (e.g. "MysqlExportOptions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MysqlExportOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportContextSqlExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportContextSqlExportOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExportContextSqlExportOptionsMysqlExportOptions: Options for
+// exporting from MySQL.
+type ExportContextSqlExportOptionsMysqlExportOptions struct {
+	// MasterData: Option to include SQL statement required to set up
+	// replication. If set to 1, the dump file includes a CHANGE MASTER TO
+	// statement with the binary log coordinates. If set to 2, the CHANGE
+	// MASTER TO statement is written as a SQL comment, and has no effect.
+	// All other values are ignored.
+	MasterData int64 `json:"masterData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MasterData") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1007,7 +1073,7 @@ type ExportContextSqlExportOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "SchemaOnly") to include in
+	// NullFields is a list of field names (e.g. "MasterData") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1016,8 +1082,8 @@ type ExportContextSqlExportOptions struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *ExportContextSqlExportOptions) MarshalJSON() ([]byte, error) {
-	type NoMethod ExportContextSqlExportOptions
+func (s *ExportContextSqlExportOptionsMysqlExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportContextSqlExportOptionsMysqlExportOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1395,6 +1461,9 @@ type InstancesListResponse struct {
 	// next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
+	// Warnings: List of warnings that ocurred while handling the request.
+	Warnings []*ApiWarning `json:"warnings,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1563,7 +1632,10 @@ type IpConfiguration struct {
 	// not.
 	Ipv4Enabled bool `json:"ipv4Enabled,omitempty"`
 
-	// PrivateNetwork: Reserved for future use.
+	// PrivateNetwork: The resource link for the VPC network from which the
+	// Cloud SQL instance is accessible for private IP. For example,
+	// /projects/myProject/global/networks/default. This setting can be
+	// updated, but it cannot be removed after it is set.
 	PrivateNetwork string `json:"privateNetwork,omitempty"`
 
 	// RequireSsl: Whether SSL connections over IP should be enforced or
@@ -1678,7 +1750,7 @@ func (s *LocationPreference) MarshalJSON() ([]byte, error) {
 
 // MaintenanceWindow: Maintenance window. This specifies when a v2 Cloud
 // SQL instance should preferably be restarted for system maintenance
-// puruposes.
+// purposes.
 type MaintenanceWindow struct {
 	// Day: day of week (1-7), starting on Monday.
 	Day int64 `json:"day,omitempty"`

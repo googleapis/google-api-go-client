@@ -21,11 +21,11 @@ package bytestream
 // https://github.com/googleapis/googleapis/blob/master/google/bytestream/bytestream.proto
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 	"time"
 
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 
 	pb "google.golang.org/genproto/googleapis/bytestream"

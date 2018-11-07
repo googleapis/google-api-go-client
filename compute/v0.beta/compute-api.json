@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Gv1-JABGeCvkbre_T9kT5q8a9Io\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/At36vPKEZBFd0Uc10g70TlDzuwc\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -549,9 +549,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -873,9 +873,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1696,9 +1696,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -2122,7 +2122,7 @@
             "disk": {
               "description": "Name of the persistent disk to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2169,9 +2169,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2412,9 +2412,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2505,9 +2505,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2748,9 +2748,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -3171,9 +3171,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -3402,9 +3402,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -3674,9 +3674,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -4076,9 +4076,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -4353,9 +4353,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -4630,9 +4630,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -4786,7 +4786,7 @@
             "image": {
               "description": "Name of the image resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4859,9 +4859,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -4983,9 +4983,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -5055,9 +5055,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -5080,7 +5080,7 @@
     "instanceGroupManagers": {
       "methods": {
         "abandonInstances": {
-          "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances to be removed from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.abandonInstances",
           "parameterOrder": [
@@ -5220,7 +5220,7 @@
           ]
         },
         "deleteInstances": {
-          "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances in the managed instance group for immediate deletion. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.deleteInstances",
           "parameterOrder": [
@@ -5307,7 +5307,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
+          "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, instances in the group are created using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.insert",
           "parameterOrder": [
@@ -5513,7 +5513,7 @@
           ]
         },
         "recreateInstances": {
-          "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.recreateInstances",
           "parameterOrder": [
@@ -5560,7 +5560,7 @@
           ]
         },
         "resize": {
-          "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
+          "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nWhen resizing down, the instance group arbitrarily chooses the order in which VMs are deleted. The group takes into account some VM attributes when making the selection including:\n\n+ The status of the VM instance. + The health of the VM instance. + The instance template version the VM is based on. + For regional managed instance groups, the location of the VM instance.\n\nThis list is subject to change.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.resize",
           "parameterOrder": [
@@ -5817,9 +5817,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -6349,9 +6349,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -6469,9 +6469,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -6585,9 +6585,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -6621,9 +6621,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -6817,7 +6817,7 @@
             "instance": {
               "description": "Name of the instance resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -7075,9 +7075,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -7302,7 +7302,7 @@
           ]
         },
         "listReferrers": {
-          "description": "Retrieves the list of referrers to instances contained within the specified zone.",
+          "description": "Retrieves the list of referrers to instances contained within the specified zone. For more information, read Viewing Referrers to VM Instances.",
           "httpMethod": "GET",
           "id": "compute.instances.listReferrers",
           "parameterOrder": [
@@ -7404,6 +7404,55 @@
             }
           },
           "path": "{project}/zones/{zone}/instances/{instance}/reset",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "resume": {
+          "description": "Resumes an instance that was suspended using the instances().suspend method.",
+          "httpMethod": "POST",
+          "id": "compute.instances.resume",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance resource to resume.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/resume",
+          "request": {
+            "$ref": "InstancesResumeRequest"
+          },
           "response": {
             "$ref": "Operation"
           },
@@ -7543,9 +7592,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -7962,7 +8011,7 @@
           ]
         },
         "setTags": {
-          "description": "Sets tags for the specified instance to the data included in the request.",
+          "description": "Sets network tags for the specified instance to the data included in the request.",
           "httpMethod": "POST",
           "id": "compute.instances.setTags",
           "parameterOrder": [
@@ -8192,6 +8241,57 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
+        "suspend": {
+          "description": "This method suspends a running instance, saving its state to persistent storage, and allows you to resume the instance at a later time. Suspended instances incur reduced per-minute, virtual machine usage charges while they are suspended. Any resources the virtual machine is using, such as persistent disks and static IP addresses, will continue to be charged until they are deleted.",
+          "httpMethod": "POST",
+          "id": "compute.instances.suspend",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "discardLocalSsd": {
+              "description": "If true, discard the contents of any attached localSSD partitions. Default value is false (== preserve localSSD data).",
+              "location": "query",
+              "type": "boolean"
+            },
+            "instance": {
+              "description": "Name of the instance resource to suspend.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/suspend",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "testIamPermissions": {
           "description": "Returns permissions that a caller has on the specified resource.",
           "httpMethod": "POST",
@@ -8210,9 +8310,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -8760,9 +8860,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -9153,9 +9253,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -9935,9 +10035,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10298,9 +10398,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -10575,9 +10675,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10788,9 +10888,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10881,9 +10981,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -11074,9 +11174,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -11214,9 +11314,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -11258,9 +11358,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -12140,9 +12240,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -12515,9 +12615,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -13344,9 +13444,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -13369,7 +13469,7 @@
     "regionInstanceGroupManagers": {
       "methods": {
         "abandonInstances": {
-          "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances to be immediately removed from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.abandonInstances",
           "parameterOrder": [
@@ -13460,7 +13560,7 @@
           ]
         },
         "deleteInstances": {
-          "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances in the managed instance group to be immediately deleted. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. The deleteInstances operation is marked DONE if the deleteInstances request is successful. The underlying actions take additional time. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.deleteInstances",
           "parameterOrder": [
@@ -13547,7 +13647,7 @@
           ]
         },
         "insert": {
-          "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA regional managed instance group can contain up to 2000 instances.",
+          "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, instances in the group are created using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA regional managed instance group can contain up to 2000 instances.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.insert",
           "parameterOrder": [
@@ -13753,7 +13853,7 @@
           ]
         },
         "recreateInstances": {
-          "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+          "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.recreateInstances",
           "parameterOrder": [
@@ -13800,7 +13900,7 @@
           ]
         },
         "resize": {
-          "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
+          "description": "Changes the intended size of the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes one or more instances.\n\nThe resize operation is marked DONE if the resize request is successful. The underlying actions take additional time. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.resize",
           "parameterOrder": [
@@ -14018,9 +14118,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -14323,9 +14423,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -14835,9 +14935,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -15320,9 +15420,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -15564,9 +15664,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16056,9 +16156,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16137,7 +16237,7 @@
             "snapshot": {
               "description": "Name of the Snapshot resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16169,9 +16269,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16252,9 +16352,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16324,9 +16424,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16519,9 +16619,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -16801,9 +16901,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -17036,9 +17136,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -17274,9 +17374,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -17367,9 +17467,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -17603,9 +17703,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -17960,9 +18060,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18237,9 +18337,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -18824,9 +18924,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19182,9 +19282,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19755,9 +19855,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20032,9 +20132,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20442,9 +20542,9 @@
               "type": "string"
             },
             "resource": {
-              "description": "Name of the resource for this request.",
+              "description": "Name or id of the resource for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20693,7 +20793,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20181022",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -22392,7 +22492,7 @@
           "type": "string"
         },
         "group": {
-          "description": "The fully-qualified URL of a Instance Group resource. This instance group defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nNote that you must specify an Instance Group resource using the fully-qualified URL, rather than a partial URL.\n\nWhen the BackendService has load balancing scheme INTERNAL, the instance group must be within the same region as the BackendService.",
+          "description": "The fully-qualified URL of an Instance Group or Network Endpoint Group resource. In case of instance group this defines the list of instances that serve traffic. Member virtual machine instances from each instance group must live in the same zone as the instance group itself. No two backends in a backend service are allowed to use same Instance Group resource.\n\nFor Network Endpoint Groups this defines list of endpoints. All endpoints of Network Endpoint Group must be hosted on instances located in the same zone as the Network Endpoint Group.\n\nBackend service can not contain mix of Instance Group and Network Endpoint Group backends.\n\nNote that you must specify an Instance Group or Network Endpoint Group resource using the fully-qualified URL, rather than a partial URL.\n\nWhen the BackendService has load balancing scheme INTERNAL, the instance group must be within the same region as the BackendService. Network Endpoint Groups are not supported for INTERNAL load balancing scheme.",
           "type": "string"
         },
         "maxConnections": {
@@ -22903,6 +23003,7 @@
       "id": "BackendServiceGroupHealth",
       "properties": {
         "healthStatus": {
+          "description": "Health state of the backend instances or endpoints in requested instance or network endpoint group, determined based on configured health checks.",
           "items": {
             "$ref": "HealthStatus"
           },
@@ -25119,6 +25220,10 @@
           ],
           "type": "string"
         },
+        "allPorts": {
+          "description": "This field is used along with the backend_service field for internal load balancing or with the target field for internal TargetInstance. This field cannot be used with port or portRange fields.\n\nWhen the load balancing scheme is INTERNAL and protocol is TCP/UDP, specify this field to allow packets addressed to any ports will be forwarded to the backends configured with this forwarding rule.",
+          "type": "boolean"
+        },
         "backendService": {
           "description": "This field is only used for INTERNAL load balancing.\n\nFor internal load balancing, this field identifies the BackendService resource to receive the matched traffic.",
           "type": "string"
@@ -26850,6 +26955,9 @@
           },
           "type": "array"
         },
+        "hostname": {
+          "type": "string"
+        },
         "id": {
           "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
           "format": "uint64",
@@ -27970,7 +28078,7 @@
       "id": "InstanceGroupManagersResizeAdvancedRequest",
       "properties": {
         "noCreationRetries": {
-          "description": "If this flag is true, the managed instance group attempts to create all instances initiated by this resize request only once. If there is an error during creation, the managed instance group does not retry create this instance, and we will decrease the targetSize of the request instead. If the flag is false, the group attemps to recreate each instance continuously until it succeeds.\n\nThis flag matters only in the first attempt of creation of an instance. After an instance is successfully created while this flag is enabled, the instance behaves the same way as all the other instances created with a regular resize request. In particular, if a running instance dies unexpectedly at a later time and needs to be recreated, this mode does not affect the recreation behavior in that scenario.\n\nThis flag is applicable only to the current resize request. It does not influence other resize requests in any way.\n\nYou can see which instances is being creating in which mode by calling the get or listManagedInstances API.",
+          "description": "If this flag is true, the managed instance group attempts to create all instances initiated by this resize request only once. If there is an error during creation, the managed instance group does not retry create this instance, and we will decrease the targetSize of the request instead. If the flag is false, the group attempts to recreate each instance continuously until it succeeds.\n\nThis flag matters only in the first attempt of creation of an instance. After an instance is successfully created while this flag is enabled, the instance behaves the same way as all the other instances created with a regular resize request. In particular, if a running instance dies unexpectedly at a later time and needs to be recreated, this mode does not affect the recreation behavior in that scenario.\n\nThis flag is applicable only to the current resize request. It does not influence other resize requests in any way.\n\nYou can see which instances is being creating in which mode by calling the get or listManagedInstances API.",
           "type": "boolean"
         },
         "targetSize": {
@@ -28909,6 +29017,23 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "InstancesResumeRequest": {
+      "id": "InstancesResumeRequest",
+      "properties": {
+        "disks": {
+          "description": "Array of disks associated with this instance that are protected with a customer-supplied encryption key.\n\nIn order to resume the instance, the disk url and its corresponding key must be provided.\n\nIf the disk is not protected with a customer-supplied encryption key it should not be specified.",
+          "items": {
+            "$ref": "CustomerEncryptionKeyProtectedDisk"
+          },
+          "type": "array"
+        },
+        "instanceEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Decrypts data associated with an instance that is protected with a customer-supplied encryption key.\n\nIf the instance you are starting is protected with a customer-supplied encryption key, the correct key must be provided otherwise the instance resume will not succeed."
         }
       },
       "type": "object"
@@ -30684,7 +30809,7 @@
       "id": "LogConfigDataAccessOptions",
       "properties": {
         "logMode": {
-          "description": "Whether Gin logging should happen in a fail-closed manner at the caller. This is relevant only in the LocalIAM implementation, for now.",
+          "description": "Whether Gin logging should happen in a fail-closed manner at the caller. This is relevant only in the LocalIAM implementation, for now.\n\nNOTE: Logging to Gin in a fail-closed manner is currently unsupported while work is being done to satisfy the requirements of go/345. Currently, setting LOG_FAIL_CLOSED mode will have no effect, but still exists because there is active work being done to support it (b/115874152).",
           "enum": [
             "LOG_FAIL_CLOSED",
             "LOG_MODE_UNSPECIFIED"
@@ -32489,9 +32614,11 @@
             "CREATING",
             "DELETING",
             "INVALID",
-            "READY"
+            "READY",
+            "REPAIRING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -32763,7 +32890,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last charaicter, which cannot be a dash.",
+          "description": "The name of the resource, provided by the client when initially creating the resource. The resource name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "type": "string"
         },
         "nodeAffinityLabels": {
@@ -34064,7 +34191,7 @@
       "id": "PathMatcher",
       "properties": {
         "defaultService": {
-          "description": "The full or partial URL to the BackendService resource. This will be used if none of the pathRules defined by this PathMatcher is matched by the URL's path portion. For example, the following are all valid URLs to a BackendService resource:  \n- https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService \n- compute/v1/projects/project/global/backendServices/backendService \n- global/backendServices/backendService",
+          "description": "The full or partial URL to the BackendService resource. This will be used if none of the pathRules or routeRules defined by this PathMatcher are matched. For example, the following are all valid URLs to a BackendService resource:  \n- https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService \n- compute/v1/projects/project/global/backendServices/backendService \n- global/backendServices/backendService  \nUse defaultService instead of defaultRouteAction when simple routing to a backend service is desired and other advanced capabilities like traffic splitting and URL rewrites are not required.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect must be set.\nAuthorization requires one or more of the following Google IAM permissions on the specified resource default_service:  \n- compute.backendBuckets.use \n- compute.backendServices.use",
           "type": "string"
         },
         "description": {
@@ -34076,7 +34203,7 @@
           "type": "string"
         },
         "pathRules": {
-          "description": "The list of path rules.",
+          "description": "The list of path rules. Use this list instead of routeRules when routing based on simple path matching is all that's required. The order by which path rules are specified does not matter. Matches are always done on the longest-path-first basis.\nFor example: a pathRule with a path /a/b/c/* will match before /a/b/* irrespective of the order in which those paths appear in this list.\nOnly one of pathRules or routeRules must be set.",
           "items": {
             "$ref": "PathRule"
           },
@@ -34097,7 +34224,7 @@
           "type": "array"
         },
         "service": {
-          "description": "The URL of the BackendService resource if this rule is matched.",
+          "description": "The URL of the backend service resource if this rule is matched.\nUse service instead of routeAction when simple routing to a backend service is desired and other advanced capabilities like traffic splitting and rewrites are not required.\nOnly one of service, routeAction or urlRedirect should must be set.",
           "type": "string"
         }
       },
@@ -34387,9 +34514,11 @@
             "TARGET_TCP_PROXIES",
             "TARGET_VPN_GATEWAYS",
             "URL_MAPS",
+            "VPN_GATEWAYS",
             "VPN_TUNNELS"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -35467,7 +35596,7 @@
       "id": "ResourceGroupReference",
       "properties": {
         "group": {
-          "description": "A URI referencing one of the instance groups listed in the backend service.",
+          "description": "A URI referencing one of the instance groups or network endpoint groups listed in the backend service.",
           "type": "string"
         }
       },
@@ -35728,7 +35857,7 @@
       "type": "object"
     },
     "ResourcePolicyBackupSchedulePolicy": {
-      "description": "A backup schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these automatically created snapshot should be retained.",
+      "description": "A backup schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.",
       "id": "ResourcePolicyBackupSchedulePolicy",
       "properties": {
         "retentionPolicy": {
@@ -35741,19 +35870,33 @@
         },
         "snapshotProperties": {
           "$ref": "ResourcePolicyBackupSchedulePolicySnapshotProperties",
-          "description": "Properties with which snapshots are created such as lables, encryption keys."
+          "description": "Properties with which snapshots are created such as labels, encryption keys."
         }
       },
       "type": "object"
     },
     "ResourcePolicyBackupSchedulePolicyRetentionPolicy": {
-      "description": "Policy for retention of automatically created snapshots.",
+      "description": "Policy for retention of scheduled snapshots.",
       "id": "ResourcePolicyBackupSchedulePolicyRetentionPolicy",
       "properties": {
         "maxRetentionDays": {
           "description": "Maximum age of the snapshot that is allowed to be kept.",
           "format": "int32",
           "type": "integer"
+        },
+        "onSourceDiskDelete": {
+          "description": "Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.",
+          "enum": [
+            "APPLY_RETENTION_POLICY",
+            "KEEP_AUTO_SNAPSHOTS",
+            "UNSPECIFIED_ON_SOURCE_DISK_DELETE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -35775,7 +35918,7 @@
       "type": "object"
     },
     "ResourcePolicyBackupSchedulePolicySnapshotProperties": {
-      "description": "Specified snapshot properties for automatic snapshots created by this policy.",
+      "description": "Specified snapshot properties for scheduled snapshots created by this policy.",
       "id": "ResourcePolicyBackupSchedulePolicySnapshotProperties",
       "properties": {
         "guestFlush": {
@@ -35786,15 +35929,8 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Labels to apply to automatic snapshots. These can be later modified by the setLabels method. Label values may be empty.",
+          "description": "Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.",
           "type": "object"
-        },
-        "storageLocations": {
-          "description": "GCS bucket storage location of the auto snapshot (regional or multi-regional).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -35813,7 +35949,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-59] GMT.",
+          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-00] GMT.",
           "type": "string"
         }
       },
@@ -35833,7 +35969,7 @@
           "type": "integer"
         },
         "startTime": {
-          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-59] GMT.",
+          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-00] GMT.",
           "type": "string"
         }
       },
@@ -35999,7 +36135,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-59] GMT.",
+          "description": "Time within the window to start the operations. It must be in format \"HH:MM?, where HH : [00-23] and MM : [00-00] GMT.",
           "type": "string"
         }
       },
@@ -36057,6 +36193,10 @@
         },
         "nextHopGateway": {
           "description": "The URL to a gateway that should handle matching packets. You can only specify the internet gateway using a full or partial valid URL:  projects/\u003cproject-id\u003e/global/gateways/default-internet-gateway",
+          "type": "string"
+        },
+        "nextHopIlb": {
+          "description": "The URL to a forwarding rule of type loadBalancingScheme=INTERNAL that should handle matching packets. You can only specify the forwarding rule as a partial or full URL. For example, the following are all valid URLs:  \n- https://www.googleapis.com/compute/v1/projects/project/regions/region/forwardingRules/forwardingRule \n- regions/region/forwardingRules/forwardingRule  Note that this can only be used when the destination_range is a public (non-RFC 1918) IP CIDR range.",
           "type": "string"
         },
         "nextHopInstance": {
@@ -37562,13 +37702,6 @@
           "$ref": "Expr",
           "description": "User defined CEVAL expression. A CEVAL expression is used to specify match criteria such as origin.ip, source.region_code and contents in the request header."
         },
-        "srcIpRanges": {
-          "description": "CIDR IP address range.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
         "versionedExpr": {
           "description": "Preconfigured versioned expression. If this field is specified, config must also be specified. Available preconfigured expressions along with their requirements are: SRC_IPS_V1 - must specify the corresponding src_ip_range field in config.",
           "enum": [
@@ -37725,7 +37858,7 @@
       "id": "Snapshot",
       "properties": {
         "autoCreated": {
-          "description": "[Output Only] Set to true if snapshots are autoamtically by applying resource policy on the target disk.",
+          "description": "[Output Only] Set to true if snapshots are automatically by applying resource policy on the target disk.",
           "type": "boolean"
         },
         "creationTimestamp": {
@@ -39258,7 +39391,7 @@
           "type": "string"
         },
         "sslCertificates": {
-          "description": "URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. Currently, exactly one SSL certificate must be specified.",
+          "description": "URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates.",
           "items": {
             "type": "string"
           },
@@ -39816,7 +39949,7 @@
           "type": "string"
         },
         "sessionAffinity": {
-          "description": "Sesssion affinity option, must be one of the following values:\nNONE: Connections from the same client IP may go to any instance in the pool.\nCLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy.\nCLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.",
+          "description": "Session affinity option, must be one of the following values:\nNONE: Connections from the same client IP may go to any instance in the pool.\nCLIENT_IP: Connections from the same client IP will go to the same instance in the pool while that instance remains healthy.\nCLIENT_IP_PROTO: Connections from the same client IP with the same IP protocol will go to the same instance in the pool while that instance remains healthy.",
           "enum": [
             "CLIENT_IP",
             "CLIENT_IP_PORT_PROTO",
@@ -40321,7 +40454,7 @@
           "type": "string"
         },
         "sslCertificates": {
-          "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. Currently exactly one SSL certificate must be specified.",
+          "description": "URLs to SslCertificate resources that are used to authenticate connections to Backends. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates.",
           "items": {
             "type": "string"
           },
@@ -41101,7 +41234,7 @@
           "type": "string"
         },
         "defaultService": {
-          "description": "The URL of the BackendService resource if none of the hostRules match.",
+          "description": "The URL of the backendService resource if none of the hostRules match.\nUse defaultService instead of defaultRouteAction when simple routing to a backendService is desired and other advanced capabilities like traffic splitting and rewrites are not required.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect should must be set.",
           "type": "string"
         },
         "description": {

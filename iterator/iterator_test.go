@@ -15,12 +15,12 @@
 package iterator_test
 
 import (
+	"context"
 	"encoding/json"
 	"math"
 	"reflect"
 	"testing"
 
-	"golang.org/x/net/context"
 	"google.golang.org/api/iterator"
 	itest "google.golang.org/api/iterator/testing"
 )

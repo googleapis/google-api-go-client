@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20181011",
+  "revision": "20181029",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -2212,7 +2212,7 @@
           "description": "Postal address of the location that includes human readable information,\nsuch as postal delivery and payments addresses. Given a postal address,\na postal service can deliver items to a premises, P.O. Box, or other\ndelivery location."
         },
         "radiusInMiles": {
-          "description": "Radius in meters of the job location. This value is derived from the\nlocation bounding box in which a circle with the specified radius\ncentered from LatLng coves the area associated with the job location.\nFor example, currently, \"Mountain View, CA, USA\" has a radius of\n6.17 miles.",
+          "description": "Radius in miles of the job location. This value is derived from the\nlocation bounding box in which a circle with the specified radius\ncentered from LatLng coves the area associated with the job location.\nFor example, currently, \"Mountain View, CA, USA\" has a radius of\n6.17 miles.",
           "format": "double",
           "type": "number"
         }

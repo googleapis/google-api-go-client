@@ -13,6 +13,7 @@ package bigquery // import "google.golang.org/api/bigquery/v2"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -22,8 +23,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -41,7 +40,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "bigquery:v2"
 const apiName = "bigquery"
@@ -2985,6 +2983,76 @@ func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type RangePartitioning struct {
+	// Field: [Experimental] [Required] The table is partitioned by this
+	// field. The field must be a top-level NULLABLE/REQUIRED field. The
+	// only supported type is INTEGER/INT64.
+	Field string `json:"field,omitempty"`
+
+	// Range: [Experimental] [Required] Defines the ranges for range
+	// partitioning.
+	Range *RangePartitioningRange `json:"range,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RangePartitioning) MarshalJSON() ([]byte, error) {
+	type NoMethod RangePartitioning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RangePartitioningRange: [Experimental] [Required] Defines the ranges
+// for range partitioning.
+type RangePartitioningRange struct {
+	// End: [Experimental] [Required] The end of range partitioning,
+	// exclusive.
+	End int64 `json:"end,omitempty,string"`
+
+	// Interval: [Experimental] [Required] The width of each interval.
+	Interval int64 `json:"interval,omitempty,string"`
+
+	// Start: [Experimental] [Required] The start of range partitioning,
+	// inclusive.
+	Start int64 `json:"start,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RangePartitioningRange) MarshalJSON() ([]byte, error) {
+	type NoMethod RangePartitioningRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Streamingbuffer struct {
 	// EstimatedBytes: [Output-only] A lower-bound estimate of the number of
 	// bytes currently in the streaming buffer.
@@ -3024,9 +3092,9 @@ func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
 }
 
 type Table struct {
-	// Clustering: [Beta] Clustering specification for the table. Must be
-	// specified with time-based partitioning, data in the table will be
-	// first partitioned and subsequently clustered.
+	// Clustering: [Experimental] Clustering specification for the table.
+	// Must be specified with partitioning, data in the table will be first
+	// partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
 	// CreationTime: [Output-only] The time when this table was created, in
@@ -3108,6 +3176,16 @@ type Table struct {
 	// excluding any data in the streaming buffer.
 	NumRows uint64 `json:"numRows,omitempty,string"`
 
+	// RangePartitioning: [Experimental] Range partitioning specification
+	// for this table. Only one of timePartitioning and rangePartitioning
+	// should be specified.
+	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
+
+	// RequirePartitionFilter: [Experimental] [Optional] If set to true,
+	// queries over this table require a partition filter that can be used
+	// for partition elimination to be specified.
+	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
+
 	// Schema: [Optional] Describes the schema of this table.
 	Schema *TableSchema `json:"schema,omitempty"`
 
@@ -3125,7 +3203,8 @@ type Table struct {
 	TableReference *TableReference `json:"tableReference,omitempty"`
 
 	// TimePartitioning: Time-based partitioning specification for this
-	// table.
+	// table. Only one of timePartitioning and rangePartitioning should be
+	// specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
 	// Type: [Output-only] Describes the table type. The following values

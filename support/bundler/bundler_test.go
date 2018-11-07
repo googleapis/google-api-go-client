@@ -15,13 +15,12 @@
 package bundler
 
 import (
+	"context"
 	"fmt"
 	"reflect"
 	"sync"
 	"testing"
 	"time"
-
-	"golang.org/x/net/context"
 )
 
 func TestBundlerCount1(t *testing.T) {

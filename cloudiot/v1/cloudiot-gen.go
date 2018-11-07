@@ -11,6 +11,7 @@ package cloudiot // import "google.golang.org/api/cloudiot/v1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "cloudiot:v1"
 const apiName = "cloudiot"

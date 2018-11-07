@@ -20,10 +20,10 @@ package internal
 // Bytestream uses bidirectional streaming (http://grpc.io/docs/guides/concepts.html#bidirectional-streaming-rpc).
 
 import (
+	"context"
 	"fmt"
 	"io"
 
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 

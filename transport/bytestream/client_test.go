@@ -16,6 +16,7 @@ package bytestream
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"fmt"
 	"io"
@@ -23,7 +24,6 @@ import (
 	"net"
 	"testing"
 
-	"golang.org/x/net/context"
 	"google.golang.org/api/transport/bytestream/internal"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

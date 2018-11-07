@@ -1822,7 +1822,7 @@
       }
     }
   },
-  "revision": "20181022",
+  "revision": "20181027",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2585,11 +2585,15 @@
           "type": "string"
         },
         "name": {
-          "description": "A unique resource name for this InternalChecker. The format is:projects/[PROJECT_ID]/internalCheckers/[CHECKER_ID].PROJECT_ID is the GCP project ID where the internal resource lives. Not necessarily the same as the project_id for the config.",
+          "description": "A unique resource name for this InternalChecker. The format is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].PROJECT_ID is the stackdriver workspace project for the uptime check config associated with the internal checker.",
           "type": "string"
         },
         "network": {
           "description": "The GCP VPC network (https://cloud.google.com/vpc/docs/vpc) where the internal resource lives (ex: \"default\").",
+          "type": "string"
+        },
+        "peerProjectId": {
+          "description": "The GCP project_id where the internal checker lives. Not necessary the same as the workspace project.",
           "type": "string"
         }
       },
@@ -3592,14 +3596,14 @@
           "description": "Contains information needed to make an HTTP or HTTPS check."
         },
         "internalCheckers": {
-          "description": "The internal checkers that this check will egress from. If is_internal is true and this list is empty, the check will egress from all InternalCheckers configured for the project that owns this CheckConfig.",
+          "description": "The internal checkers that this check will egress from. If is_internal is true and this list is empty, the check will egress from all the InternalCheckers configured for the project that owns this CheckConfig.",
           "items": {
             "$ref": "InternalChecker"
           },
           "type": "array"
         },
         "isInternal": {
-          "description": "Denotes whether this is a check that egresses from InternalCheckers.",
+          "description": "If this is true, then checks are made only from the 'internal_checkers'. If it is false, then checks are made only from the 'selected_regions'. It is an error to provide 'selected_regions' when is_internal is true, or to provide 'internal_checkers' when is_internal is false.",
           "type": "boolean"
         },
         "monitoredResource": {
@@ -3620,7 +3624,7 @@
           "description": "The group resource associated with the configuration."
         },
         "selectedRegions": {
-          "description": "The list of regions from which the check will be run. If this field is specified, enough regions to include a minimum of 3 locations must be provided, or an error message is returned. Not specifying this field will result in uptime checks running from all regions.",
+          "description": "The list of regions from which the check will be run. Some regions contain one location, and others contain more than one. If this field is specified, enough regions to include a minimum of 3 locations must be provided, or an error message is returned. Not specifying this field will result in uptime checks running from all regions.",
           "enumDescriptions": [
             "Default value if no region is specified. Will result in uptime checks running from all regions.",
             "Allows checks to run from locations within the United States of America.",

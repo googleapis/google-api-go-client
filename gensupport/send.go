@@ -29,8 +29,9 @@ func RegisterHook(h Hook) {
 }
 
 // SendRequest sends a single HTTP request using the given client.
-// If ctx is non-nil, it calls all hooks, then sends the request and
-// calls any functions returned by the hooks in reverse order.
+// If ctx is non-nil, it calls all hooks, then sends the request with
+// req.WithContext, then calls any functions returned by the hooks in
+// reverse order.
 func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
 	// Disallow Accept-Encoding because it interferes with the automatic gzip handling
 	// done by the default http.Transport. See https://github.com/google/google-api-go-client/issues/219.
@@ -48,29 +49,12 @@ func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*
 	}
 
 	// Send request.
-	resp, err := send(ctx, client, req)
+	resp, err := client.Do(req.WithContext(ctx))
 
 	// Call returned funcs in reverse order.
 	for i := len(post) - 1; i >= 0; i-- {
 		if fn := post[i]; fn != nil {
 			fn(resp)
-		}
-	}
-	return resp, err
-}
-
-func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
-	if client == nil {
-		client = http.DefaultClient
-	}
-	resp, err := client.Do(req.WithContext(ctx))
-	// If we got an error, and the context has been canceled,
-	// the context's error is probably more useful.
-	if err != nil {
-		select {
-		case <-ctx.Done():
-			err = ctx.Err()
-		default:
 		}
 	}
 	return resp, err

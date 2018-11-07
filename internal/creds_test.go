@@ -15,10 +15,10 @@
 package internal
 
 import (
+	"context"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )

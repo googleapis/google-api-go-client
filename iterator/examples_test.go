@@ -16,6 +16,7 @@ package iterator_test
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"html/template"
 	"log"
@@ -24,7 +25,6 @@ import (
 	"sort"
 	"strconv"
 
-	"golang.org/x/net/context"
 	"google.golang.org/api/iterator"
 )
 

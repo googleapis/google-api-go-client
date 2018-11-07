@@ -16,11 +16,11 @@ package bytestream
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"io"
 	"log"
 
-	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 )
 

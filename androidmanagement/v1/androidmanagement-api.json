@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20181026",
+  "revision": "20181029",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -963,7 +963,7 @@
         },
         "managedConfigurationTemplate": {
           "$ref": "ManagedConfigurationTemplate",
-          "description": "The formulated managed configuration with the managed configuration template applied to the app. To generate a web token that identifies the enterprise use https://developers.google.com/android/management/reference/rest/v1/enterprises.webTokens This field is ignored if managed_configuration is set."
+          "description": "The managed configurations template for the app, saved from the managed configurations iframe. This field is ignored if managed_configuration is set."
         },
         "minimumVersionCode": {
           "description": "The minimum version of the app that runs on the device. If set, the device attempts to update the app to at least this version code. If the app is not up-to-date, the device will contain a NonComplianceDetail with non_compliance_reason set to APP_NOT_UPDATED. The app must already be published to Google Play with a version code greater than or equal to this value. At most 20 apps may specify a minimum version code per policy.",
@@ -1828,7 +1828,7 @@
       "type": "object"
     },
     "ManagedConfigurationTemplate": {
-      "description": "The formulated managed configuration with the managed configuration template applied to the app. To generate a web token that identifies the enterprise use https://developers.google.com/android/management/reference/rest/v1/enterprises.webTokens",
+      "description": "The managed configurations template for the app, saved from the managed configurations iframe.",
       "id": "ManagedConfigurationTemplate",
       "properties": {
         "configurationVariables": {
@@ -2261,9 +2261,9 @@
             "SCOPE_PROFILE"
           ],
           "enumDescriptions": [
-            "Scope is unspecified, will be profile scope in managed profile (work challenge) and device scope in managed device setup (device password).",
-            "The password requirements should only apply to the device.",
-            "The password requirements should only apply to the profile. Only applicable to devices with a managed profile."
+            "The scope is unspecified. The password requirements are applied to the work profile for work profile devices and the whole device for fully managed or dedicated devices.",
+            "The password requirements are only applied to the device.",
+            "The password requirements are only applied to the work profile."
           ],
           "type": "string"
         }
@@ -2609,7 +2609,7 @@
           "type": "boolean"
         },
         "passwordPolicies": {
-          "description": "Password policy that can apply to different scope e.g. at either a device or profile level. 'password_requirements' is overridden if this policy is set with default scope or with scope explicitly applying to the scope that 'password_requirements' applies to. If scope is not specified then restriction applies to the default scope i.e. profile in a managed profile. If an entry exists with unspecified scope and also an entry for the default scope with scope explicitly specified then the explicit restriction overrides the default scope restriction.",
+          "description": "Password requirement policies. Different policies can be set for work profile or fully managed devices by setting the password_scope field in the policy.",
           "items": {
             "$ref": "PasswordRequirements"
           },

@@ -11,6 +11,7 @@ package alertcenter // import "google.golang.org/api/alertcenter/v1beta1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "alertcenter:v1beta1"
 const apiName = "alertcenter"
@@ -93,15 +91,16 @@ type AlertsFeedbackService struct {
 
 // AccountWarning: Alerts for user account warning events.
 type AccountWarning struct {
-	// Email: Required. Email of the user that this event belongs to.
+	// Email: Required. The email of the user that this event belongs to.
 	Email string `json:"email,omitempty"`
 
 	// LoginDetails: Optional. Details of the login action associated with
 	// the warning event.
 	// This is only available for:
-	// Suspicious login
-	// Suspicious login (less secure app)
-	// User suspended (suspicious activity)
+	//
+	// * Suspicious login
+	// * Suspicious login (less secure app)
+	// * User suspended (suspicious activity)
 	LoginDetails *LoginDetails `json:"loginDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -133,74 +132,54 @@ type Alert struct {
 	// AlertId: Output only. The unique identifier for the alert.
 	AlertId string `json:"alertId,omitempty"`
 
-	// CreateTime: Output only. The time this alert was created. Assigned by
-	// the server.
+	// CreateTime: Output only. The time this alert was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CustomerId: Output only. The unique identifier of the Google account
 	// of the customer.
 	CustomerId string `json:"customerId,omitempty"`
 
-	// Data: Optional. Specific data associated with this alert.
-	// e.g. google.apps.alertcenter.type.DeviceCompromised.
+	// Data: Optional. The data associated with this alert, for
+	// example
+	// google.apps.alertcenter.type.DeviceCompromised.
 	Data googleapi.RawMessage `json:"data,omitempty"`
 
-	// Deleted: Output only. Whether this alert has been marked for
-	// deletion.
+	// Deleted: Output only. `True` if this alert is marked for deletion.
 	Deleted bool `json:"deleted,omitempty"`
 
-	// EndTime: Optional. The time this alert was no longer active. If
-	// provided, the
-	// end time must not be earlier than the start time. If not provided,
-	// the end
-	// time will default to the start time.
+	// EndTime: Optional. The time the event that caused this alert ceased
+	// being active.
+	// If provided, the end time must not be earlier than the start time.
+	// If not provided, the end time defaults to the start time.
 	EndTime string `json:"endTime,omitempty"`
 
-	// SecurityInvestigationToolLink: Output only. An optional Security
-	// Investigation Tool query for this
-	// alert.
+	// SecurityInvestigationToolLink: Output only. An optional
+	// [Security Investigation
+	// Tool](https://support.google.com/a/answer/7575955)
+	// query for this alert.
 	SecurityInvestigationToolLink string `json:"securityInvestigationToolLink,omitempty"`
 
 	// Source: Required. A unique identifier for the system that is reported
 	// the alert.
 	//
 	// Supported sources are any of the following:
-	//  * "Google Operations"
-	//  * "Mobile device management"
-	//  * "Gmail phishing"
-	//  * "Domain wide takeout"
-	//  * "Government attack warning"
-	//  * "Google identity"
+	//
+	// * Google Operations
+	// * Mobile device management
+	// * Gmail phishing
+	// * Domain wide takeout
+	// * Government attack warning
+	// * Google identity
 	Source string `json:"source,omitempty"`
 
-	// StartTime: Required. The time this alert became active.
+	// StartTime: Required. The time the event that caused this alert was
+	// started or
+	// detected.
 	StartTime string `json:"startTime,omitempty"`
 
 	// Type: Required. The type of the alert.
-	//
-	// Supported types are any of the following:
-	//  * "Google Operations"
-	//  * "Device compromised"
-	//  * "Suspicious activity"
-	//  * "User reported phishing"
-	//  * "Misconfigured whitelist"
-	//  * "Customer takeout initiated"
-	//  * "Government attack warning"
-	//  * "User reported spam spike"
-	//  * "Suspicious message reported"
-	//  * "Phishing reclassification"
-	//  * "Malware reclassification"
-	// LINT.IfChange
-	//  * "Suspicious login"
-	//  * "Suspicious login (less secure app)"
-	//  * "User suspended"
-	//  * "Leaked password"
-	//  * "User suspended (suspicious activity)"
-	//  * "User suspended (spam)"
-	//  * "User suspended (spam through
-	// relay)"
-	// LINT.ThenChange(//depot/google3/apps/albert/data/albert_enums.
-	// proto)
+	// For a list of available alert types see
+	// [G Suite Alert types](/admin-sdk/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -235,8 +214,7 @@ type AlertFeedback struct {
 	// AlertId: Output only. The alert identifier.
 	AlertId string `json:"alertId,omitempty"`
 
-	// CreateTime: Output only. The time this feedback was created. Assigned
-	// by the server.
+	// CreateTime: Output only. The time this feedback was created.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// CustomerId: Output only. The unique identifier of the Google account
@@ -246,18 +224,17 @@ type AlertFeedback struct {
 	// Email: Output only. The email of the user that provided the feedback.
 	Email string `json:"email,omitempty"`
 
-	// FeedbackId: Output only. A unique identifier for the feedback. When
-	// creating a new
-	// feedback the system will assign one.
+	// FeedbackId: Output only. The unique identifier for the feedback.
 	FeedbackId string `json:"feedbackId,omitempty"`
 
 	// Type: Required. The type of the feedback.
 	//
 	// Possible values:
-	//   "ALERT_FEEDBACK_TYPE_UNSPECIFIED" - Feedback type is not specified.
-	//   "NOT_USEFUL" - Alert report is not useful.
-	//   "SOMEWHAT_USEFUL" - Alert report is somewhat useful.
-	//   "VERY_USEFUL" - Alert report is very useful.
+	//   "ALERT_FEEDBACK_TYPE_UNSPECIFIED" - The feedback type is not
+	// specified.
+	//   "NOT_USEFUL" - The alert report is not useful.
+	//   "SOMEWHAT_USEFUL" - The alert report is somewhat useful.
+	//   "VERY_USEFUL" - The alert report is very useful.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -290,7 +267,7 @@ func (s *AlertFeedback) MarshalJSON() ([]byte, error) {
 // Attachment: Attachment with application-specific information about an
 // alert.
 type Attachment struct {
-	// Csv: CSV file attachment.
+	// Csv: A CSV file attachment.
 	Csv *Csv `json:"csv,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Csv") to
@@ -316,22 +293,23 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BadWhitelist: Alert for setting the domain or ip that malicious email
+// BadWhitelist: Alert for setting the domain or IP that malicious email
 // comes from as
-// whitelisted domain or ip in Gmail advanced settings.
+// whitelisted domain or IP in Gmail advanced settings.
 type BadWhitelist struct {
-	// DomainId: Domain id.
+	// DomainId: The domain ID.
 	DomainId *DomainId `json:"domainId,omitempty"`
 
-	// MaliciousEntity: Entity whose actions triggered a Gmail phishing
+	// MaliciousEntity: The entity whose actions triggered a Gmail phishing
 	// alert.
 	MaliciousEntity *MaliciousEntity `json:"maliciousEntity,omitempty"`
 
-	// Messages: Every alert could contain multiple messages.
+	// Messages: The list of messages contained by this alert.
 	Messages []*GmailMessageInfo `json:"messages,omitempty"`
 
-	// SourceIp: The source ip address of the malicious email. e.g.
-	// "127.0.0.1".
+	// SourceIp: The source IP address of the malicious email, for
+	// example,
+	// `127.0.0.1`.
 	SourceIp string `json:"sourceIp,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DomainId") to
@@ -357,16 +335,16 @@ func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Csv: Representation of a CSV file attachment, as a list of column
+// Csv: A representation of a CSV file attachment, as a list of column
 // headers and
 // a list of data rows.
 type Csv struct {
-	// DataRows: List of data rows in a CSV file, as string arrays rather
-	// than as a
+	// DataRows: The list of data rows in a CSV file, as string arrays
+	// rather than as a
 	// single comma-separated string.
 	DataRows []*CsvRow `json:"dataRows,omitempty"`
 
-	// Headers: List of headers for data columns in a CSV file.
+	// Headers: The list of headers for data columns in a CSV file.
 	Headers []string `json:"headers,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataRows") to
@@ -392,11 +370,11 @@ func (s *Csv) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CsvRow: Representation of a single data row in a CSV file.
+// CsvRow: A representation of a single data row in a CSV file.
 type CsvRow struct {
-	// Entries: Data entries in a CSV file row, as a string array rather
-	// than a single
-	// comma-separated string.
+	// Entries: The data entries in a CSV file row, as a string array rather
+	// than a
+	// single comma-separated string.
 	Entries []string `json:"entries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entries") to
@@ -428,7 +406,7 @@ type DeviceCompromised struct {
 	// Email: The email of the user this alert was created for.
 	Email string `json:"email,omitempty"`
 
-	// Events: Required. List of security events.
+	// Events: Required. The list of security events.
 	Events []*DeviceCompromisedSecurityDetail `json:"events,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -457,11 +435,12 @@ func (s *DeviceCompromised) MarshalJSON() ([]byte, error) {
 // DeviceCompromisedSecurityDetail: Detailed information of a single MDM
 // device compromised event.
 type DeviceCompromisedSecurityDetail struct {
-	// DeviceCompromisedState: Device compromised state includes:
-	// "Compromised" and "Not Compromised".
+	// DeviceCompromisedState: The device compromised state. Possible values
+	// are "Compromised" or
+	// "Not Compromised".
 	DeviceCompromisedState string `json:"deviceCompromisedState,omitempty"`
 
-	// DeviceId: Required. Device Info.
+	// DeviceId: Required. The device ID.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// DeviceModel: The model of the device.
@@ -470,10 +449,10 @@ type DeviceCompromisedSecurityDetail struct {
 	// DeviceType: The type of the device.
 	DeviceType string `json:"deviceType,omitempty"`
 
-	// IosVendorId: Required for IOS, empty for others.
+	// IosVendorId: Required for iOS, empty for others.
 	IosVendorId string `json:"iosVendorId,omitempty"`
 
-	// ResourceId: The device resource id.
+	// ResourceId: The device resource ID.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// SerialNumber: The serial number of the device.
@@ -504,7 +483,7 @@ func (s *DeviceCompromisedSecurityDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DomainId: Domain id of Gmail phishing alerts.
+// DomainId: Domain ID of Gmail phishing alerts.
 type DomainId struct {
 	// CustomerPrimaryDomain: The primary domain for the customer.
 	CustomerPrimaryDomain string `json:"customerPrimaryDomain,omitempty"`
@@ -538,10 +517,10 @@ func (s *DomainId) MarshalJSON() ([]byte, error) {
 // was initiated by an admin. Derived
 // from audit logs.
 type DomainWideTakeoutInitiated struct {
-	// Email: Email of the admin who initiated the takeout.
+	// Email: The email of the admin who initiated the takeout.
 	Email string `json:"email,omitempty"`
 
-	// TakeoutRequestId: takeout request id.
+	// TakeoutRequestId: The takeout request ID.
 	TakeoutRequestId string `json:"takeoutRequestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -587,31 +566,31 @@ type Empty struct {
 
 // GmailMessageInfo: Details of a message in phishing spike alert.
 type GmailMessageInfo struct {
-	// AttachmentsSha256Hash: SHA256 Hash of email's attachment and all MIME
-	// parts.
+	// AttachmentsSha256Hash: The `SHA256` hash of email's attachment and
+	// all MIME parts.
 	AttachmentsSha256Hash []string `json:"attachmentsSha256Hash,omitempty"`
 
 	// Date: The date the malicious email was sent.
 	Date string `json:"date,omitempty"`
 
-	// Md5HashMessageBody: Hash of message body text.
+	// Md5HashMessageBody: The hash of the message body text.
 	Md5HashMessageBody string `json:"md5HashMessageBody,omitempty"`
 
-	// Md5HashSubject: MD5 Hash of email's subject. (Only available for
+	// Md5HashSubject: The MD5 Hash of email's subject (only available for
 	// reported emails).
 	Md5HashSubject string `json:"md5HashSubject,omitempty"`
 
-	// MessageBodySnippet: Snippet of the message body text. (Only available
-	// for reported emails)
+	// MessageBodySnippet: The snippet of the message body text (only
+	// available for reported emails).
 	MessageBodySnippet string `json:"messageBodySnippet,omitempty"`
 
-	// MessageId: Message id.
+	// MessageId: The message ID.
 	MessageId string `json:"messageId,omitempty"`
 
-	// Recipient: Recipient of this email.
+	// Recipient: The recipient of this email.
 	Recipient string `json:"recipient,omitempty"`
 
-	// SubjectText: Email subject text. (Only available for reported
+	// SubjectText: The email subject text (only available for reported
 	// emails).
 	SubjectText string `json:"subjectText,omitempty"`
 
@@ -643,22 +622,22 @@ func (s *GmailMessageInfo) MarshalJSON() ([]byte, error) {
 // GoogleOperations: An incident reported by Google Operations for a G
 // Suite application.
 type GoogleOperations struct {
-	// AffectedUserEmails: List of emails which correspond to the users
+	// AffectedUserEmails: The list of emails which correspond to the users
 	// directly affected by the
 	// incident.
 	AffectedUserEmails []string `json:"affectedUserEmails,omitempty"`
 
-	// AttachmentData: Optional application-specific data for an incident,
+	// AttachmentData: Optional. Application-specific data for an incident,
 	// provided when the
 	// G Suite application which reported the incident cannot be
 	// completely
 	// restored to a valid state.
 	AttachmentData *Attachment `json:"attachmentData,omitempty"`
 
-	// Description: Detailed, freeform incident description.
+	// Description: A detailed, freeform incident description.
 	Description string `json:"description,omitempty"`
 
-	// Title: One-line incident description.
+	// Title: A one-line incident description.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AffectedUserEmails")
@@ -689,7 +668,8 @@ func (s *GoogleOperations) MarshalJSON() ([]byte, error) {
 // listing request.
 type ListAlertFeedbackResponse struct {
 	// Feedback: The list of alert feedback.
-	// Result is ordered descending by creation time.
+	// Feedback entries for each alert are ordered by creation time
+	// descending.
 	Feedback []*AlertFeedback `json:"feedback,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -724,11 +704,13 @@ type ListAlertsResponse struct {
 	// Alerts: The list of alerts.
 	Alerts []*Alert `json:"alerts,omitempty"`
 
-	// NextPageToken: If not empty, indicates that there may be more alerts
-	// that match the
-	// request; this value can be passed in a new ListAlertsRequest to get
-	// the
-	// next page of values.
+	// NextPageToken: The token for the next page. If not empty, indicates
+	// that there may be more
+	// alerts that match the listing request; this value can be used in
+	// a
+	// subsequent ListAlertsRequest to get alerts continuing from last
+	// result
+	// of the current list call.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -758,15 +740,16 @@ func (s *ListAlertsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// LoginDetails: Details of the login action
+// LoginDetails: The details of the login action.
 type LoginDetails struct {
-	// IpAddress: Optional. Human readable IP address (e.g., 11.22.33.44)
-	// that is
-	// associated with the warning event.
+	// IpAddress: Optional. The human-readable IP address (for
+	// example,
+	// `11.22.33.44`) that is associated with the warning event.
 	IpAddress string `json:"ipAddress,omitempty"`
 
-	// LoginTime: Optional. Login time that is associated with the warning
-	// event.
+	// LoginTime: Optional. The successful login time that is associated
+	// with the warning
+	// event. This will not be present for blocked login attempts.
 	LoginTime string `json:"loginTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
@@ -795,24 +778,25 @@ func (s *LoginDetails) MarshalJSON() ([]byte, error) {
 // MailPhishing: Proto for all phishing alerts with common
 // payload.
 // Supported types are any of the following:
-// User reported phishing
-// User reported spam spike
-// Suspicious message reported
-// Phishing reclassification
-// Malware reclassification
+//
+// * User reported phishing
+// * User reported spam spike
+// * Suspicious message reported
+// * Phishing reclassification
+// * Malware reclassification
 type MailPhishing struct {
-	// DomainId: Domain id.
+	// DomainId: The domain ID.
 	DomainId *DomainId `json:"domainId,omitempty"`
 
-	// IsInternal: If true, the email is originated from within the
+	// IsInternal: If `true`, the email originated from within the
 	// organization.
 	IsInternal bool `json:"isInternal,omitempty"`
 
-	// MaliciousEntity: Entity whose actions triggered a Gmail phishing
+	// MaliciousEntity: The entity whose actions triggered a Gmail phishing
 	// alert.
 	MaliciousEntity *MaliciousEntity `json:"maliciousEntity,omitempty"`
 
-	// Messages: Every alert could contain multiple messages.
+	// Messages: The list of messages contained by this alert.
 	Messages []*GmailMessageInfo `json:"messages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DomainId") to
@@ -841,7 +825,7 @@ func (s *MailPhishing) MarshalJSON() ([]byte, error) {
 // MaliciousEntity: Entity whose actions triggered a Gmail phishing
 // alert.
 type MaliciousEntity struct {
-	// FromHeader: Sender email address.
+	// FromHeader: The sender email address.
 	FromHeader string `json:"fromHeader,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FromHeader") to
@@ -868,20 +852,24 @@ func (s *MaliciousEntity) MarshalJSON() ([]byte, error) {
 }
 
 // PhishingSpike: Alert for a spike in user reported phishing.
-// This will be deprecated in favor of MailPhishing.
+// <aside class="warning"><b>Warning</b>: This type has been deprecated.
+// Use
+// [MailPhishing](/admin-sdk/alertcenter/reference/rest/v1beta1/MailP
+// hishing)
+// instead.</aside>
 type PhishingSpike struct {
-	// DomainId: Domain id.
+	// DomainId: The domain ID.
 	DomainId *DomainId `json:"domainId,omitempty"`
 
-	// IsInternal: If true, the email is originated from within the
+	// IsInternal: If `true`, the email originated from within the
 	// organization.
 	IsInternal bool `json:"isInternal,omitempty"`
 
-	// MaliciousEntity: Entity whose actions triggered a Gmail phishing
+	// MaliciousEntity: The entity whose actions triggered a Gmail phishing
 	// alert.
 	MaliciousEntity *MaliciousEntity `json:"maliciousEntity,omitempty"`
 
-	// Messages: Every alert could contain multiple messages.
+	// Messages: The list of messages contained by this alert.
 	Messages []*GmailMessageInfo `json:"messages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DomainId") to
@@ -907,7 +895,7 @@ func (s *PhishingSpike) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StateSponsoredAttack: A state sponsored attack alert. Derived from
+// StateSponsoredAttack: A state-sponsored attack alert. Derived from
 // audit logs.
 type StateSponsoredAttack struct {
 	// Email: The email of the user this incident was created for.
@@ -942,7 +930,7 @@ type SuspiciousActivity struct {
 	// Email: The email of the user this alert was created for.
 	Email string `json:"email,omitempty"`
 
-	// Events: Required. List of security events.
+	// Events: Required. The list of security events.
 	Events []*SuspiciousActivitySecurityDetail `json:"events,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to
@@ -971,28 +959,28 @@ func (s *SuspiciousActivity) MarshalJSON() ([]byte, error) {
 // SuspiciousActivitySecurityDetail: Detailed information of a single
 // MDM suspicious activity event.
 type SuspiciousActivitySecurityDetail struct {
-	// DeviceId: Required. Device Info.
+	// DeviceId: Required. The device ID.
 	DeviceId string `json:"deviceId,omitempty"`
 
 	// DeviceModel: The model of the device.
 	DeviceModel string `json:"deviceModel,omitempty"`
 
-	// DeviceProperty: Device property which is changed.
+	// DeviceProperty: The device property which was changed.
 	DeviceProperty string `json:"deviceProperty,omitempty"`
 
 	// DeviceType: The type of the device.
 	DeviceType string `json:"deviceType,omitempty"`
 
-	// IosVendorId: Required for IOS, empty for others.
+	// IosVendorId: Required for iOS, empty for others.
 	IosVendorId string `json:"iosVendorId,omitempty"`
 
-	// NewValue: New value of the device property after change.
+	// NewValue: The new value of the device property after the change.
 	NewValue string `json:"newValue,omitempty"`
 
-	// OldValue: Old value of the device property before change.
+	// OldValue: The old value of the device property before the change.
 	OldValue string `json:"oldValue,omitempty"`
 
-	// ResourceId: The device resource id.
+	// ResourceId: The device resource ID.
 	ResourceId string `json:"resourceId,omitempty"`
 
 	// SerialNumber: The serial number of the device.
@@ -1033,14 +1021,12 @@ type AlertsDeleteCall struct {
 
 // Delete: Marks the specified alert for deletion. An alert that has
 // been marked for
-// deletion will be excluded from the results of a List operation by
-// default,
-// and will be removed from the Alert Center after 30 days.
-// Marking an alert for deletion will have no effect on an alert which
+// deletion is removed from Alert Center after 30 days.
+// Marking an alert for deletion has no effect on an alert which
 // has
 // already been marked for deletion. Attempting to mark a nonexistent
 // alert
-// for deletion will return NOT_FOUND.
+// for deletion results in a `NOT_FOUND` error.
 func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 	c := &AlertsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -1048,11 +1034,9 @@ func (r *AlertsService) Delete(alertId string) *AlertsDeleteCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google account of the customer the
-// alert is associated with. This is obfuscated and not the plain
-// customer
-// ID as stored internally. Inferred from the caller identity if not
-// provided.
+// identifier of the G Suite organization account of the
+// customer the alert is associated with.
+// Inferred from the caller identity if not provided.
 func (c *AlertsDeleteCall) CustomerId(customerId string) *AlertsDeleteCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -1143,7 +1127,7 @@ func (c *AlertsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Marks the specified alert for deletion. An alert that has been marked for\ndeletion will be excluded from the results of a List operation by default,\nand will be removed from the Alert Center after 30 days.\nMarking an alert for deletion will have no effect on an alert which has\nalready been marked for deletion. Attempting to mark a nonexistent alert\nfor deletion will return NOT_FOUND.",
+	//   "description": "Marks the specified alert for deletion. An alert that has been marked for\ndeletion is removed from Alert Center after 30 days.\nMarking an alert for deletion has no effect on an alert which has\nalready been marked for deletion. Attempting to mark a nonexistent alert\nfor deletion results in a `NOT_FOUND` error.",
 	//   "flatPath": "v1beta1/alerts/{alertId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "alertcenter.alerts.delete",
@@ -1158,7 +1142,7 @@ func (c *AlertsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google account of the customer the\nalert is associated with. This is obfuscated and not the plain customer\nID as stored internally. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert is associated with.\nInferred from the caller identity if not provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1190,11 +1174,9 @@ func (r *AlertsService) Get(alertId string) *AlertsGetCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google account of the customer the
-// alert is associated with. This is obfuscated and not the plain
-// customer
-// ID as stored internally. Inferred from the caller identity if not
-// provided.
+// identifier of the G Suite organization account of the
+// customer the alert is associated with.
+// Inferred from the caller identity if not provided.
 func (c *AlertsGetCall) CustomerId(customerId string) *AlertsGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -1307,13 +1289,13 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The identifier of the alert to retrieve.",
+	//       "description": "Required. The identifier of the alert to retrieve.\nReturns a NOT_FOUND error if no such alert.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google account of the customer the\nalert is associated with. This is obfuscated and not the plain customer\nID as stored internally. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert is associated with.\nInferred from the caller identity if not provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1336,126 +1318,48 @@ type AlertsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the alerts for the current user and application.
+// List: Lists the alerts.
 func (r *AlertsService) List() *AlertsListCall {
 	c := &AlertsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google account of the customer the
-// alerts are associated with. This is obfuscated and not the
-// plain
-// customer ID as stored internally. Inferred from the caller identity
-// if not
-// provided.
+// identifier of the G Suite organization account of the
+// customer the alerts are associated with.
+// Inferred from the caller identity if not provided.
 func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// Filter sets the optional parameter "filter": Query string for
+// Filter sets the optional parameter "filter": A query string for
 // filtering alert results.
-// This string must be specified as an expression or list of
-// expressions,
-// using the following grammar:
-//
-// ### Expressions
-//
-// An expression has the general form `<field> <operator> <value>`.
-//
-// A field or value which contains a space or a colon must be enclosed
-// by
-// double quotes.
-//
-// #### Operators
-//
-// Operators follow the BNF specification:
-//
-// `<equalityOperator> ::= "=" | ":"
-//
-// `<relationalOperator> ::= "<" | ">" | "<=" | ">="
-//
-// Relational operators are defined only for timestamp fields.
-// Equality
-// operators are defined only for string fields.
-//
-// #### Timestamp fields
-//
-// The value supplied for a timestamp field must be an
-// [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time
-// string.
-//
-// Supported timestamp fields are `create_time`, `start_time`, and
-// `end_time`.
-//
-// #### String fields
-//
-// The value supplied for a string field may be an arbitrary
-// string.
-//
-// #### Examples
-//
-// To query for all alerts created on or after April 5,
-// 2018:
-//
-// `create_time >= "2018-04-05T00:00:00Z"
-//
-// To query for all alerts from the source "Gmail
-// phishing":
-//
-// `source:"Gmail phishing"
-//
-// ### Joining expressions
-//
-// Expressions may be joined to form a more complex query. The
-// BNF
-// specification is:
-//
-// `<expressionList> ::= <expression> | <expressionList>
-// <conjunction>
-// <expressionList> | <negation> <expressionList>`
-// `<conjunction> ::= "AND" | "OR" | ""
-// `<negation> ::= "NOT"
-//
-// Using the empty string as a conjunction acts as an implicit AND.
-//
-// The precedence of joining operations, from highest to lowest, is NOT,
-// AND,
-// OR.
-//
-// #### Examples
-//
-// To query for all alerts which started in 2017:
-//
-// `start_time >= "2017-01-01T00:00:00Z" AND start_time
-// <
-// "2018-01-01T00:00:00Z"
-//
-// To query for all user reported phishing alerts from the source
-// "Gmail phishing":
-//
-// `type:"User reported phishing" source:"Gmail phishing"
+// For more details, see
+// [Query
+// filters](/admin-sdk/alertcenter/guides/query-filters) and
+// [Supported
+// query filter fields](/admin-sdk/alertcenter/reference/filter-fields).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Sort the list results
-// by a certain order.
+// OrderBy sets the optional parameter "orderBy": The sort order of the
+// list results.
 // If not specified results may be returned in arbitrary order.
-// You can sort the results in a descending order based on the
+// You can sort the results in descending order based on the
 // creation
-// timestamp using order_by="create_time desc".
-// Currently, only sorting by create_time desc is supported.
+// timestamp using `order_by="create_time desc".
+// Currently, only sorting by `create_time desc` is supported.
 func (c *AlertsListCall) OrderBy(orderBy string) *AlertsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer items than
-// requested. If unspecified, server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": The requested page
+// size. Server may return fewer items than
+// requested. If unspecified, server picks an appropriate default.
 func (c *AlertsListCall) PageSize(pageSize int64) *AlertsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1465,8 +1369,8 @@ func (c *AlertsListCall) PageSize(pageSize int64) *AlertsListCall {
 // identifying a page of results the server should return.
 // If empty, a new iteration is started. To continue an iteration, pass
 // in
-// the value from the previous ListAlertsResponse's next_page_token
-// field.
+// the value from the previous ListAlertsResponse's
+// next_page_token field.
 func (c *AlertsListCall) PageToken(pageToken string) *AlertsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1567,35 +1471,35 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the alerts for the current user and application.",
+	//   "description": "Lists the alerts.",
 	//   "flatPath": "v1beta1/alerts",
 	//   "httpMethod": "GET",
 	//   "id": "alertcenter.alerts.list",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google account of the customer the\nalerts are associated with. This is obfuscated and not the plain\ncustomer ID as stored internally. Inferred from the caller identity if not\nprovided.",
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alerts are associated with.\nInferred from the caller identity if not provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. Query string for filtering alert results.\nThis string must be specified as an expression or list of expressions,\nusing the following grammar:\n\n### Expressions\n\nAn expression has the general form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n\nA field or value which contains a space or a colon must be enclosed by\ndouble quotes.\n\n#### Operators\n\nOperators follow the BNF specification:\n\n`\u003cequalityOperator\u003e ::= \"=\" | \":\"`\n\n`\u003crelationalOperator\u003e ::= \"\u003c\" | \"\u003e\" | \"\u003c=\" | \"\u003e=\"`\n\nRelational operators are defined only for timestamp fields. Equality\noperators are defined only for string fields.\n\n#### Timestamp fields\n\nThe value supplied for a timestamp field must be an\n[RFC 3339](https://tools.ietf.org/html/rfc3339) date-time string.\n\nSupported timestamp fields are `create_time`, `start_time`, and `end_time`.\n\n#### String fields\n\nThe value supplied for a string field may be an arbitrary string.\n\n#### Examples\n\nTo query for all alerts created on or after April 5, 2018:\n\n`create_time \u003e= \"2018-04-05T00:00:00Z\"`\n\nTo query for all alerts from the source \"Gmail phishing\":\n\n`source:\"Gmail phishing\"`\n\n### Joining expressions\n\nExpressions may be joined to form a more complex query. The BNF\nspecification is:\n\n`\u003cexpressionList\u003e ::= \u003cexpression\u003e | \u003cexpressionList\u003e \u003cconjunction\u003e\n\u003cexpressionList\u003e | \u003cnegation\u003e \u003cexpressionList\u003e`\n`\u003cconjunction\u003e ::= \"AND\" | \"OR\" | \"\"`\n`\u003cnegation\u003e ::= \"NOT\"`\n\nUsing the empty string as a conjunction acts as an implicit AND.\n\nThe precedence of joining operations, from highest to lowest, is NOT, AND,\nOR.\n\n#### Examples\n\nTo query for all alerts which started in 2017:\n\n`start_time \u003e= \"2017-01-01T00:00:00Z\" AND start_time \u003c\n\"2018-01-01T00:00:00Z\"`\n\nTo query for all user reported phishing alerts from the source\n\"Gmail phishing\":\n\n`type:\"User reported phishing\" source:\"Gmail phishing\"`",
+	//       "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Sort the list results by a certain order.\nIf not specified results may be returned in arbitrary order.\nYou can sort the results in a descending order based on the creation\ntimestamp using order_by=\"create_time desc\".\nCurrently, only sorting by create_time desc is supported.",
+	//       "description": "Optional. The sort order of the list results.\nIf not specified results may be returned in arbitrary order.\nYou can sort the results in descending order based on the creation\ntimestamp using `order_by=\"create_time desc\"`.\nCurrently, only sorting by `create_time desc` is supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer items than\nrequested. If unspecified, server will pick an appropriate default.",
+	//       "description": "Optional. The requested page size. Server may return fewer items than\nrequested. If unspecified, server picks an appropriate default.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return.\nIf empty, a new iteration is started. To continue an iteration, pass in\nthe value from the previous ListAlertsResponse's next_page_token field.",
+	//       "description": "Optional. A token identifying a page of results the server should return.\nIf empty, a new iteration is started. To continue an iteration, pass in\nthe value from the previous ListAlertsResponse's\nnext_page_token field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1640,7 +1544,7 @@ type AlertsFeedbackCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Creates a new alert feedback.
+// Create: Creates new feedback for an alert.
 func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedback) *AlertsFeedbackCreateCall {
 	c := &AlertsFeedbackCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -1649,12 +1553,9 @@ func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedb
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google account of the customer the
-// alert's feedback is associated with. This is obfuscated and not
-// the
-// plain customer ID as stored internally. Inferred from the caller
-// identity
-// if not provided.
+// identifier of the G Suite organization account of the
+// customer the alert is associated with.
+// Inferred from the caller identity if not provided.
 func (c *AlertsFeedbackCreateCall) CustomerId(customerId string) *AlertsFeedbackCreateCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -1750,7 +1651,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new alert feedback.",
+	//   "description": "Creates new feedback for an alert.",
 	//   "flatPath": "v1beta1/alerts/{alertId}/feedback",
 	//   "httpMethod": "POST",
 	//   "id": "alertcenter.alerts.feedback.create",
@@ -1759,13 +1660,13 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The identifier of the alert this feedback belongs to.\nReturns a NOT_FOUND error if no such alert.",
+	//       "description": "Required. The identifier of the alert this feedback belongs to.\nReturns a `NOT_FOUND` error if no such alert.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google account of the customer the\nalert's feedback is associated with. This is obfuscated and not the\nplain customer ID as stored internally. Inferred from the caller identity\nif not provided.",
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert is associated with.\nInferred from the caller identity if not provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1800,11 +1701,9 @@ func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 }
 
 // CustomerId sets the optional parameter "customerId": The unique
-// identifier of the Google account of the customer the
-// alert is associated with. This is obfuscated and not the plain
-// customer
-// ID as stored internally. Inferred from the caller identity if not
-// provided.
+// identifier of the G Suite organization account of the
+// customer the alert feedback are associated with.
+// Inferred from the caller identity if not provided.
 func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
@@ -1917,13 +1816,13 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The alert identifier.\nIf the alert does not exist returns a NOT_FOUND error.",
+	//       "description": "Required. The alert identifier.\nThe \"-\" wildcard could be used to represent all alerts.\nIf alert does not exist returns a `NOT_FOUND` error.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "customerId": {
-	//       "description": "Optional. The unique identifier of the Google account of the customer the\nalert is associated with. This is obfuscated and not the plain customer\nID as stored internally. Inferred from the caller identity if not provided.",
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert feedback are associated with.\nInferred from the caller identity if not provided.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

@@ -165,62 +165,6 @@
             "https://www.googleapis.com/auth/servicecontrol"
           ]
         },
-        "endReconciliation": {
-          "description": "Signals the quota controller that service ends the ongoing usage\nreconciliation.\n\nThis method requires the `servicemanagement.services.quota`\npermission on the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
-          "flatPath": "v1/services/{serviceName}:endReconciliation",
-          "httpMethod": "POST",
-          "id": "servicecontrol.services.endReconciliation",
-          "parameterOrder": [
-            "serviceName"
-          ],
-          "parameters": {
-            "serviceName": {
-              "description": "Name of the service as specified in the service configuration. For example,\n`\"pubsub.googleapis.com\"`.\n\nSee google.api.Service for the definition of a service name.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/services/{serviceName}:endReconciliation",
-          "request": {
-            "$ref": "EndReconciliationRequest"
-          },
-          "response": {
-            "$ref": "EndReconciliationResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/servicecontrol"
-          ]
-        },
-        "releaseQuota": {
-          "description": "Releases previously allocated quota done through AllocateQuota method.\n\nThis method requires the `servicemanagement.services.quota`\npermission on the specified service. For more information, see\n[Cloud IAM](https://cloud.google.com/iam).\n\n\n**NOTE:** The client **must** fail-open on server errors `INTERNAL`,\n`UNKNOWN`, `DEADLINE_EXCEEDED`, and `UNAVAILABLE`. To ensure system\nreliability, the server may inject these errors to prohibit any hard\ndependency on the quota functionality.",
-          "flatPath": "v1/services/{serviceName}:releaseQuota",
-          "httpMethod": "POST",
-          "id": "servicecontrol.services.releaseQuota",
-          "parameterOrder": [
-            "serviceName"
-          ],
-          "parameters": {
-            "serviceName": {
-              "description": "Name of the service as specified in the service configuration. For example,\n`\"pubsub.googleapis.com\"`.\n\nSee google.api.Service for the definition of a service name.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/services/{serviceName}:releaseQuota",
-          "request": {
-            "$ref": "ReleaseQuotaRequest"
-          },
-          "response": {
-            "$ref": "ReleaseQuotaResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/servicecontrol"
-          ]
-        },
         "report": {
           "description": "Reports operation results to Google Service Control, such as logs and\nmetrics. It should be called after an operation is completed.\n\nIf feasible, the client should aggregate reporting data for up to 5\nseconds to reduce API traffic. Limiting aggregation to 5 seconds is to\nreduce data loss during client crashes. Clients should carefully choose\nthe aggregation time window to avoid data loss risk more than 0.01%\nfor business and compliance reasons.\n\nNOTE: the ReportRequest has the size limit of 1MB.\n\nThis method requires the `servicemanagement.services.report` permission\non the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
           "flatPath": "v1/services/{serviceName}:report",
@@ -248,39 +192,11 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/servicecontrol"
           ]
-        },
-        "startReconciliation": {
-          "description": "Unlike rate quota, allocation quota does not get refilled periodically.\nSo, it is possible that the quota usage as seen by the service differs from\nwhat the One Platform considers the usage is. This is expected to happen\nonly rarely, but over time this can accumulate. Services can invoke\nStartReconciliation and EndReconciliation to correct this usage drift, as\ndescribed below:\n1. Service sends StartReconciliation with a timestamp in future for each\n   metric that needs to be reconciled. The timestamp being in future allows\n   to account for in-flight AllocateQuota and ReleaseQuota requests for the\n   same metric.\n2. One Platform records this timestamp and starts tracking subsequent\n   AllocateQuota and ReleaseQuota requests until EndReconciliation is\n   called.\n3. At or after the time specified in the StartReconciliation, service\n   sends EndReconciliation with the usage that needs to be reconciled to.\n4. One Platform adjusts its own record of usage for that metric to the\n   value specified in EndReconciliation by taking in to account any\n   allocation or release between StartReconciliation and EndReconciliation.\n\nSignals the quota controller that the service wants to perform a usage\nreconciliation as specified in the request.\n\nThis method requires the `servicemanagement.services.quota`\npermission on the specified service. For more information, see\n[Google Cloud IAM](https://cloud.google.com/iam).",
-          "flatPath": "v1/services/{serviceName}:startReconciliation",
-          "httpMethod": "POST",
-          "id": "servicecontrol.services.startReconciliation",
-          "parameterOrder": [
-            "serviceName"
-          ],
-          "parameters": {
-            "serviceName": {
-              "description": "Name of the service as specified in the service configuration. For example,\n`\"pubsub.googleapis.com\"`.\n\nSee google.api.Service for the definition of a service name.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/services/{serviceName}:startReconciliation",
-          "request": {
-            "$ref": "StartReconciliationRequest"
-          },
-          "response": {
-            "$ref": "StartReconciliationResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/servicecontrol"
-          ]
         }
       }
     }
   },
-  "revision": "20181022",
+  "revision": "20181029",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -760,50 +676,6 @@
           "description": "The sum of squared deviations from the mean:\n  Sum[i=1..count]((x_i - mean)^2)\nwhere each x_i is a sample values. If `count` is zero then this field\nmust be zero, otherwise validation of the request fails.",
           "format": "double",
           "type": "number"
-        }
-      },
-      "type": "object"
-    },
-    "EndReconciliationRequest": {
-      "description": "Request message for QuotaController.EndReconciliation.",
-      "id": "EndReconciliationRequest",
-      "properties": {
-        "reconciliationOperation": {
-          "$ref": "QuotaOperation",
-          "description": "Operation that describes the quota reconciliation."
-        },
-        "serviceConfigId": {
-          "description": "Specifies which version of service configuration should be used to process\nthe request. If unspecified or no matching version can be found, the latest\none will be used.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "EndReconciliationResponse": {
-      "description": "Response message for QuotaController.EndReconciliation.",
-      "id": "EndReconciliationResponse",
-      "properties": {
-        "operationId": {
-          "description": "The same operation_id value used in the EndReconciliationRequest. Used for\nlogging and diagnostics purposes.",
-          "type": "string"
-        },
-        "quotaMetrics": {
-          "description": "Metric values as tracked by One Platform before the adjustment was made.\nThe following metrics will be included:\n\n1. Per quota metric total usage will be specified using the following gauge\nmetric:\n  \"serviceruntime.googleapis.com/allocation/consumer/quota_used_count\"\n\n2. Value for each quota limit associated with the metrics will be specified\nusing the following gauge metric:\n  \"serviceruntime.googleapis.com/quota/limit\"\n\n3. Delta value of the usage after the reconciliation for limits associated\nwith the metrics will be specified using the following metric:\n  \"serviceruntime.googleapis.com/allocation/reconciliation_delta\"\nThe delta value is defined as:\n  new_usage_from_client - existing_value_in_spanner.\nThis metric is not defined in serviceruntime.yaml or in Cloud Monarch.\nThis metric is meant for callers' use only. Since this metric is not\ndefined in the monitoring backend, reporting on this metric will result in\nan error.",
-          "items": {
-            "$ref": "MetricValueSet"
-          },
-          "type": "array"
-        },
-        "reconciliationErrors": {
-          "description": "Indicates the decision of the reconciliation end.",
-          "items": {
-            "$ref": "QuotaError"
-          },
-          "type": "array"
-        },
-        "serviceConfigId": {
-          "description": "ID of the actual config used to process the request.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -1409,50 +1281,6 @@
       },
       "type": "object"
     },
-    "ReleaseQuotaRequest": {
-      "description": "Request message for the ReleaseQuota method.",
-      "id": "ReleaseQuotaRequest",
-      "properties": {
-        "releaseOperation": {
-          "$ref": "QuotaOperation",
-          "description": "Operation that describes the quota release."
-        },
-        "serviceConfigId": {
-          "description": "Specifies which version of service configuration should be used to process\nthe request. If unspecified or no matching version can be found, the latest\none will be used.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ReleaseQuotaResponse": {
-      "description": "Response message for the ReleaseQuota method.",
-      "id": "ReleaseQuotaResponse",
-      "properties": {
-        "operationId": {
-          "description": "The same operation_id value used in the ReleaseQuotaRequest. Used for\nlogging and diagnostics purposes.",
-          "type": "string"
-        },
-        "quotaMetrics": {
-          "description": "Quota metrics to indicate the result of release. Depending on the\nrequest, one or more of the following metrics will be included:\n\n1. For rate quota, per quota group or per quota metric released amount\nwill be specified using the following delta metric:\n  \"serviceruntime.googleapis.com/api/consumer/quota_refund_count\"\n\n2. For allocation quota, per quota metric total usage will be specified\nusing the following gauge metric:\n  \"serviceruntime.googleapis.com/allocation/consumer/quota_used_count\"\n\n3. For allocation quota, value for each quota limit associated with\nthe metrics will be specified using the following gauge metric:\n  \"serviceruntime.googleapis.com/quota/limit\"",
-          "items": {
-            "$ref": "MetricValueSet"
-          },
-          "type": "array"
-        },
-        "releaseErrors": {
-          "description": "Indicates the decision of the release.",
-          "items": {
-            "$ref": "QuotaError"
-          },
-          "type": "array"
-        },
-        "serviceConfigId": {
-          "description": "ID of the actual config used to process the request.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "ReportError": {
       "description": "Represents the processing error of one Operation in the request.",
       "id": "ReportError",
@@ -1679,50 +1507,6 @@
             "type": "string"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "StartReconciliationRequest": {
-      "description": "Request message for QuotaController.StartReconciliation.",
-      "id": "StartReconciliationRequest",
-      "properties": {
-        "reconciliationOperation": {
-          "$ref": "QuotaOperation",
-          "description": "Operation that describes the quota reconciliation."
-        },
-        "serviceConfigId": {
-          "description": "Specifies which version of service configuration should be used to process\nthe request. If unspecified or no matching version can be found, the latest\none will be used.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "StartReconciliationResponse": {
-      "description": "Response message for QuotaController.StartReconciliation.",
-      "id": "StartReconciliationResponse",
-      "properties": {
-        "operationId": {
-          "description": "The same operation_id value used in the StartReconciliationRequest. Used\nfor logging and diagnostics purposes.",
-          "type": "string"
-        },
-        "quotaMetrics": {
-          "description": "Metric values as tracked by One Platform before the start of\nreconciliation. The following metrics will be included:\n\n1. Per quota metric total usage will be specified using the following gauge\nmetric:\n  \"serviceruntime.googleapis.com/allocation/consumer/quota_used_count\"\n\n2. Value for each quota limit associated with the metrics will be specified\nusing the following gauge metric:\n  \"serviceruntime.googleapis.com/quota/limit\"",
-          "items": {
-            "$ref": "MetricValueSet"
-          },
-          "type": "array"
-        },
-        "reconciliationErrors": {
-          "description": "Indicates the decision of the reconciliation start.",
-          "items": {
-            "$ref": "QuotaError"
-          },
-          "type": "array"
-        },
-        "serviceConfigId": {
-          "description": "ID of the actual config used to process the request.",
-          "type": "string"
         }
       },
       "type": "object"

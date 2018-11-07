@@ -71,7 +71,7 @@ Some credentials types require you to specify scopes, and service entry points m
 
 ```go
 import (
-        "golang.org/x/net/context"
+        "context"
         "golang.org/x/oauth2/google"
         "google.golang.org/api/compute/v1"
 )

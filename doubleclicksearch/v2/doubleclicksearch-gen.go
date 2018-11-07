@@ -11,6 +11,7 @@ package doubleclicksearch // import "google.golang.org/api/doubleclicksearch/v2"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "doubleclicksearch:v2"
 const apiName = "doubleclicksearch"
@@ -659,7 +657,7 @@ type ReportRequest struct {
 	// Reports reference for the columns that are available for each type.
 	ReportType string `json:"reportType,omitempty"`
 
-	// RowCount: Synchronous report only. The maxinum number of rows to
+	// RowCount: Synchronous report only. The maximum number of rows to
 	// return; additional rows are dropped. Acceptable values are 0 to
 	// 10000, inclusive. Defaults to 10000.
 	//

@@ -49,10 +49,8 @@ var (
 	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
 	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
-	contextHTTPPkg = flag.String("ctxhttp_pkg", "golang.org/x/net/context/ctxhttp", "Go package path of the 'ctxhttp' package.")
-	contextPkg     = flag.String("context_pkg", "golang.org/x/net/context", "Go package path of the 'context' package.")
-	gensupportPkg  = flag.String("gensupport_pkg", "google.golang.org/api/gensupport", "Go package path of the 'api/gensupport' support package.")
-	googleapiPkg   = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
+	gensupportPkg = flag.String("gensupport_pkg", "google.golang.org/api/gensupport", "Go package path of the 'api/gensupport' support package.")
+	googleapiPkg  = flag.String("googleapi_pkg", "google.golang.org/api/googleapi", "Go package path of the 'api/googleapi' support package.")
 
 	serviceTypes = []string{"Service", "APIService"}
 )
@@ -574,6 +572,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("import (")
 	for _, imp := range []string{
 		"bytes",
+		"context",
 		"encoding/json",
 		"errors",
 		"fmt",
@@ -590,8 +589,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pkg   string
 		lname string
 	}{
-		{*contextHTTPPkg, "ctxhttp"},
-		{*contextPkg, "context"},
 		{*gensupportPkg, "gensupport"},
 		{*googleapiPkg, "googleapi"},
 	} {
@@ -611,7 +608,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = errors.New")
 	pn("var _ = strings.Replace")
 	pn("var _ = context.Canceled")
-	pn("var _ = ctxhttp.Do")
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
 	pn("const apiName = %q", a.doc.Name)

@@ -3,7 +3,7 @@
     "oauth2": {
       "scopes": {
         "https://mail.google.com/": {
-          "description": "Read, send, delete, and manage your email"
+          "description": "Read, compose, send, and permanently delete all your email from Gmail"
         },
         "https://www.googleapis.com/auth/gmail.compose": {
           "description": "Manage drafts and send emails"
@@ -41,7 +41,7 @@
   "description": "Access Gmail mailboxes including sending user email.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/gmail/api/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/6MVOLkrACdE8trspKIAVVfI4jS8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/x4D3RSeprBTpZ7qUUZRnzZsdMkA\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/googlemail-16.png",
     "x32": "https://www.google.com/images/icons/product/googlemail-32.png"
@@ -2502,7 +2502,7 @@
       }
     }
   },
-  "revision": "20180821",
+  "revision": "20180904",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AutoForwarding": {

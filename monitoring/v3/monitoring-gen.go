@@ -13,6 +13,7 @@ package monitoring // import "google.golang.org/api/monitoring/v3"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -22,8 +23,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -41,7 +40,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "monitoring:v3"
 const apiName = "monitoring"
@@ -1730,14 +1728,18 @@ type InternalChecker struct {
 	GcpZone string `json:"gcpZone,omitempty"`
 
 	// Name: A unique resource name for this InternalChecker. The format
-	// is:projects/[PROJECT_ID]/internalCheckers/[CHECKER_ID].PROJECT_ID is
-	// the GCP project ID where the internal resource lives. Not necessarily
-	// the same as the project_id for the config.
+	// is:projects/[PROJECT_ID]/internalCheckers/[INTERNAL_CHECKER_ID].PROJEC
+	// T_ID is the stackdriver workspace project for the uptime check config
+	// associated with the internal checker.
 	Name string `json:"name,omitempty"`
 
 	// Network: The GCP VPC network (https://cloud.google.com/vpc/docs/vpc)
 	// where the internal resource lives (ex: "default").
 	Network string `json:"network,omitempty"`
+
+	// PeerProjectId: The GCP project_id where the internal checker lives.
+	// Not necessary the same as the workspace project.
+	PeerProjectId string `json:"peerProjectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -3730,12 +3732,15 @@ type UptimeCheckConfig struct {
 
 	// InternalCheckers: The internal checkers that this check will egress
 	// from. If is_internal is true and this list is empty, the check will
-	// egress from all InternalCheckers configured for the project that owns
-	// this CheckConfig.
+	// egress from all the InternalCheckers configured for the project that
+	// owns this CheckConfig.
 	InternalCheckers []*InternalChecker `json:"internalCheckers,omitempty"`
 
-	// IsInternal: Denotes whether this is a check that egresses from
-	// InternalCheckers.
+	// IsInternal: If this is true, then checks are made only from the
+	// 'internal_checkers'. If it is false, then checks are made only from
+	// the 'selected_regions'. It is an error to provide 'selected_regions'
+	// when is_internal is true, or to provide 'internal_checkers' when
+	// is_internal is false.
 	IsInternal bool `json:"isInternal,omitempty"`
 
 	// MonitoredResource: The monitored resource
@@ -3762,7 +3767,8 @@ type UptimeCheckConfig struct {
 	ResourceGroup *ResourceGroup `json:"resourceGroup,omitempty"`
 
 	// SelectedRegions: The list of regions from which the check will be
-	// run. If this field is specified, enough regions to include a minimum
+	// run. Some regions contain one location, and others contain more than
+	// one. If this field is specified, enough regions to include a minimum
 	// of 3 locations must be provided, or an error message is returned. Not
 	// specifying this field will result in uptime checks running from all
 	// regions.

@@ -11,6 +11,7 @@ package gmail // import "google.golang.org/api/gmail/v1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "gmail:v1"
 const apiName = "gmail"
@@ -48,7 +46,7 @@ const basePath = "https://www.googleapis.com/gmail/v1/users/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Read, send, delete, and manage your email
+	// Read, compose, send, and permanently delete all your email from Gmail
 	MailGoogleComScope = "https://mail.google.com/"
 
 	// Manage drafts and send emails

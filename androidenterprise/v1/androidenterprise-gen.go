@@ -11,6 +11,7 @@ package androidenterprise // import "google.golang.org/api/androidenterprise/v1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "androidenterprise:v1"
 const apiName = "androidenterprise"
@@ -732,16 +730,15 @@ func (s *AppUpdateEvent) MarshalJSON() ([]byte, error) {
 
 // AppVersion: This represents a single version of the app.
 type AppVersion struct {
-	// IsProduction: True if this version is a production Apk.
+	// IsProduction: True if this version is a production APK.
 	IsProduction bool `json:"isProduction,omitempty"`
 
-	// Track: The track that this app was published in. For example if track
-	// is "alpha", this is an alpha version of the app. Deprecated, use
-	// track_id instead.
+	// Track: Deprecated, use trackId instead.
 	Track string `json:"track,omitempty"`
 
-	// TrackId: The track ids that this version was published in. This field
-	// supersedes track, but doesn't include the production track.
+	// TrackId: Track ids that the app version is published in. Replaces the
+	// track field (deprecated), but doesn't include the production track
+	// (see isProduction instead).
 	TrackId []string `json:"trackId,omitempty"`
 
 	// VersionCode: Unique increasing identifier for the app version.
@@ -2318,8 +2315,7 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 // to the full Google Play details page) is intended to allow a basic
 // representation of the product within an EMM user interface.
 type Product struct {
-	// AppTracks: The tracks that are visible to the enterprise with their
-	// user-friendly name.
+	// AppTracks: The tracks visible to the enterprise.
 	AppTracks []*TrackInfo `json:"appTracks,omitempty"`
 
 	// AppVersion: App versions currently available for this product.
@@ -2332,8 +2328,7 @@ type Product struct {
 	// AvailableCountries: The countries which this app is available in.
 	AvailableCountries []string `json:"availableCountries,omitempty"`
 
-	// AvailableTracks: The tracks that are visible to the enterprise.
-	// Deprecated, use app_tracks instead.
+	// AvailableTracks: Deprecated, use appTracks instead.
 	AvailableTracks []string `json:"availableTracks,omitempty"`
 
 	// Category: The app category (e.g. RACING, SOCIAL, etc.)
@@ -2592,29 +2587,12 @@ type ProductPolicy struct {
 	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`
 
-	// TrackIds: Grants visibility to the specified track(s) of the product
-	// to the device. The existing track ids can be obtained by calling
-	// Products.Get.
+	// TrackIds: Grants the device visibility to the specified product
+	// release track(s), identified by trackIds. The list of release tracks
+	// of a product can be obtained by calling Products.Get.
 	TrackIds []string `json:"trackIds,omitempty"`
 
-	// Tracks: Grants visibility to the specified track(s) of the product to
-	// the device. The track available to the device is based on the
-	// following order of preference: alpha, beta, production. For example,
-	// if an app has a prod version, a beta version and an alpha version and
-	// the enterprise has been granted visibility to both the alpha and beta
-	// tracks, if tracks is {"beta", "production"} then the beta version of
-	// the app is made available to the device. If there are no app versions
-	// in the specified track adding the "alpha" and "beta" values to the
-	// list of tracks will have no effect. Note that the enterprise requires
-	// access to alpha and/or beta tracks before users can be granted
-	// visibility to apps in those tracks.
-	//
-	// The allowed sets are: {} (considered equivalent to {"production"})
-	// {"production"} {"beta", "production"} {"alpha", "beta", "production"}
-	// The order of elements is not relevant. Any other set of tracks will
-	// be rejected with an error.
-	//
-	// This is deprecated. Use track_ids instead.
+	// Tracks: Deprecated. Use trackIds instead.
 	Tracks []string `json:"tracks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -2739,29 +2717,11 @@ type ProductVisibility struct {
 	// each item in the productVisibility list.
 	ProductId string `json:"productId,omitempty"`
 
-	// TrackIds: Grants visibility to the specified track(s) of the product
-	// to the user. This replaces the tracks field, and specifies the track
-	// by their unique id.
+	// TrackIds: Grants the user visibility to the specified product
+	// track(s), identified by trackIds.
 	TrackIds []string `json:"trackIds,omitempty"`
 
-	// Tracks: Grants visibility to the specified track(s) of the product to
-	// the user. The track available to the user is based on the following
-	// order of preference: alpha, beta, production. For example, if an app
-	// has a prod version, a beta version and an alpha version and the
-	// enterprise has been granted visibility to both the alpha and beta
-	// tracks, if tracks is {"beta", "production"} the user will be able to
-	// install the app and they will get the beta version of the app. If
-	// there are no app versions in the specified track adding the "alpha"
-	// and "beta" values to the list of tracks will have no effect. Note
-	// that the enterprise requires access to alpha and/or beta tracks
-	// before users can be granted visibility to apps in those tracks.
-	//
-	// The allowed sets are: {} (considered equivalent to {"production"})
-	// {"production"} {"beta", "production"} {"alpha", "beta", "production"}
-	// The order of elements is not relevant. Any other set of tracks will
-	// be rejected with an error.
-	//
-	// This is deprecated. Use track_ids instead.
+	// Tracks: Deprecated. Use trackIds instead.
 	Tracks []string `json:"tracks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProductId") to
@@ -3345,10 +3305,13 @@ func (s *TokenPagination) MarshalJSON() ([]byte, error) {
 
 // TrackInfo: Id to name association of a track.
 type TrackInfo struct {
-	// TrackAlias: A changeable, user-friendly name for a track.
+	// TrackAlias: A modifiable name for a track. This is the visible name
+	// in the play developer console.
 	TrackAlias string `json:"trackAlias,omitempty"`
 
-	// TrackId: A unique an unchangeable identifier of a test track.
+	// TrackId: Unmodifiable, unique track identifier. This identifier is
+	// the releaseTrackId in the url of the play developer console page that
+	// displays the track information.
 	TrackId string `json:"trackId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TrackAlias") to

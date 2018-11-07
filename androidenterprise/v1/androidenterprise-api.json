@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/VlKYEVA-7U4oafD19kx3_U1-kTQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/-WjiIAVNcRnZOqZ7_gp3nJhPcz4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2758,7 +2758,7 @@
       }
     }
   },
-  "revision": "20181024",
+  "revision": "20181105",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3012,15 +3012,15 @@
       "id": "AppVersion",
       "properties": {
         "isProduction": {
-          "description": "True if this version is a production Apk.",
+          "description": "True if this version is a production APK.",
           "type": "boolean"
         },
         "track": {
-          "description": "The track that this app was published in. For example if track is \"alpha\", this is an alpha version of the app. Deprecated, use track_id instead.",
+          "description": "Deprecated, use trackId instead.",
           "type": "string"
         },
         "trackId": {
-          "description": "The track ids that this version was published in. This field supersedes track, but doesn't include the production track.",
+          "description": "Track ids that the app version is published in. Replaces the track field (deprecated), but doesn't include the production track (see isProduction instead).",
           "items": {
             "type": "string"
           },
@@ -3814,7 +3814,7 @@
       "id": "Product",
       "properties": {
         "appTracks": {
-          "description": "The tracks that are visible to the enterprise with their user-friendly name.",
+          "description": "The tracks visible to the enterprise.",
           "items": {
             "$ref": "TrackInfo"
           },
@@ -3839,7 +3839,7 @@
           "type": "array"
         },
         "availableTracks": {
-          "description": "The tracks that are visible to the enterprise. Deprecated, use app_tracks instead.",
+          "description": "Deprecated, use appTracks instead.",
           "items": {
             "type": "string"
           },
@@ -4010,14 +4010,14 @@
           "type": "string"
         },
         "trackIds": {
-          "description": "Grants visibility to the specified track(s) of the product to the device. The existing track ids can be obtained by calling Products.Get.",
+          "description": "Grants the device visibility to the specified product release track(s), identified by trackIds. The list of release tracks of a product can be obtained by calling Products.Get.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "tracks": {
-          "description": "Grants visibility to the specified track(s) of the product to the device. The track available to the device is based on the following order of preference: alpha, beta, production. For example, if an app has a prod version, a beta version and an alpha version and the enterprise has been granted visibility to both the alpha and beta tracks, if tracks is {\"beta\", \"production\"} then the beta version of the app is made available to the device. If there are no app versions in the specified track adding the \"alpha\" and \"beta\" values to the list of tracks will have no effect. Note that the enterprise requires access to alpha and/or beta tracks before users can be granted visibility to apps in those tracks.\n\nThe allowed sets are: {} (considered equivalent to {\"production\"}) {\"production\"} {\"beta\", \"production\"} {\"alpha\", \"beta\", \"production\"} The order of elements is not relevant. Any other set of tracks will be rejected with an error.\n\nThis is deprecated. Use track_ids instead.",
+          "description": "Deprecated. Use trackIds instead.",
           "items": {
             "type": "string"
           },
@@ -4079,14 +4079,14 @@
           "type": "string"
         },
         "trackIds": {
-          "description": "Grants visibility to the specified track(s) of the product to the user. This replaces the tracks field, and specifies the track by their unique id.",
+          "description": "Grants the user visibility to the specified product track(s), identified by trackIds.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "tracks": {
-          "description": "Grants visibility to the specified track(s) of the product to the user. The track available to the user is based on the following order of preference: alpha, beta, production. For example, if an app has a prod version, a beta version and an alpha version and the enterprise has been granted visibility to both the alpha and beta tracks, if tracks is {\"beta\", \"production\"} the user will be able to install the app and they will get the beta version of the app. If there are no app versions in the specified track adding the \"alpha\" and \"beta\" values to the list of tracks will have no effect. Note that the enterprise requires access to alpha and/or beta tracks before users can be granted visibility to apps in those tracks.\n\nThe allowed sets are: {} (considered equivalent to {\"production\"}) {\"production\"} {\"beta\", \"production\"} {\"alpha\", \"beta\", \"production\"} The order of elements is not relevant. Any other set of tracks will be rejected with an error.\n\nThis is deprecated. Use track_ids instead.",
+          "description": "Deprecated. Use trackIds instead.",
           "items": {
             "type": "string"
           },
@@ -4371,11 +4371,11 @@
       "id": "TrackInfo",
       "properties": {
         "trackAlias": {
-          "description": "A changeable, user-friendly name for a track.",
+          "description": "A modifiable name for a track. This is the visible name in the play developer console.",
           "type": "string"
         },
         "trackId": {
-          "description": "A unique an unchangeable identifier of a test track.",
+          "description": "Unmodifiable, unique track identifier. This identifier is the releaseTrackId in the url of the play developer console page that displays the track information.",
           "type": "string"
         }
       },

@@ -71,9 +71,9 @@ func computeMain(client *http.Client, argv []string) {
 			},
 		},
 		NetworkInterfaces: []*compute.NetworkInterface{
-			&compute.NetworkInterface{
+			{
 				AccessConfigs: []*compute.AccessConfig{
-					&compute.AccessConfig{
+					{
 						Type: "ONE_TO_ONE_NAT",
 						Name: "External NAT",
 					},

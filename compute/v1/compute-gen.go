@@ -11,6 +11,7 @@ package compute // import "google.golang.org/api/compute/v1"
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -20,8 +21,6 @@ import (
 	"strconv"
 	"strings"
 
-	context "golang.org/x/net/context"
-	ctxhttp "golang.org/x/net/context/ctxhttp"
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
 )
@@ -39,7 +38,6 @@ var _ = googleapi.Version
 var _ = errors.New
 var _ = strings.Replace
 var _ = context.Canceled
-var _ = ctxhttp.Do
 
 const apiId = "compute:v1"
 const apiName = "compute"
@@ -3112,18 +3110,28 @@ type Backend struct {
 	// property when you create the resource.
 	Description string `json:"description,omitempty"`
 
-	// Group: The fully-qualified URL of a Instance Group resource. This
-	// instance group defines the list of instances that serve traffic.
-	// Member virtual machine instances from each instance group must live
-	// in the same zone as the instance group itself. No two backends in a
-	// backend service are allowed to use same Instance Group
-	// resource.
+	// Group: The fully-qualified URL of an Instance Group or Network
+	// Endpoint Group resource. In case of instance group this defines the
+	// list of instances that serve traffic. Member virtual machine
+	// instances from each instance group must live in the same zone as the
+	// instance group itself. No two backends in a backend service are
+	// allowed to use same Instance Group resource.
 	//
-	// Note that you must specify an Instance Group resource using the
-	// fully-qualified URL, rather than a partial URL.
+	// For Network Endpoint Groups this defines list of endpoints. All
+	// endpoints of Network Endpoint Group must be hosted on instances
+	// located in the same zone as the Network Endpoint Group.
+	//
+	// Backend service can not contain mix of Instance Group and Network
+	// Endpoint Group backends.
+	//
+	// Note that you must specify an Instance Group or Network Endpoint
+	// Group resource using the fully-qualified URL, rather than a partial
+	// URL.
 	//
 	// When the BackendService has load balancing scheme INTERNAL, the
 	// instance group must be within the same region as the BackendService.
+	// Network Endpoint Groups are not supported for INTERNAL load balancing
+	// scheme.
 	Group string `json:"group,omitempty"`
 
 	// MaxConnections: The max number of simultaneous connections for the
@@ -3851,6 +3859,9 @@ func (s *BackendServiceCdnPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type BackendServiceGroupHealth struct {
+	// HealthStatus: Health state of the backend instances or endpoints in
+	// requested instance or network endpoint group, determined based on
+	// configured health checks.
 	HealthStatus []*HealthStatus `json:"healthStatus,omitempty"`
 
 	// Kind: [Output Only] Type of resource. Always
@@ -9800,6 +9811,12 @@ type InstanceGroupManagerActionsSummary struct {
 	// being restarted.
 	Restarting int64 `json:"restarting,omitempty"`
 
+	// Verifying: [Output Only] The number of instances in the managed
+	// instance group that are being verified. See the
+	// managedInstances[].currentAction property in the listManagedInstances
+	// method documentation.
+	Verifying int64 `json:"verifying,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Abandoning") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -12846,6 +12863,208 @@ func (s *InterconnectCircuitInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InterconnectDiagnostics: Diagnostics information about interconnect,
+// contains detailed and current technical information about Google?s
+// side of the connection.
+type InterconnectDiagnostics struct {
+	// ArpCaches: A list of InterconnectDiagnostics.ARPEntry objects,
+	// describing individual neighbors currently seen by the Google router
+	// in the ARP cache for the Interconnect. This will be empty when the
+	// Interconnect is not bundled.
+	ArpCaches []*InterconnectDiagnosticsARPEntry `json:"arpCaches,omitempty"`
+
+	// Links: A list of InterconnectDiagnostics.LinkStatus objects,
+	// describing the status for each link on the Interconnect.
+	Links []*InterconnectDiagnosticsLinkStatus `json:"links,omitempty"`
+
+	// MacAddress: The MAC address of the Interconnect's bundle interface.
+	MacAddress string `json:"macAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArpCaches") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArpCaches") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectDiagnostics) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectDiagnostics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectDiagnosticsARPEntry: Describing the ARP neighbor entries
+// seen on this link
+type InterconnectDiagnosticsARPEntry struct {
+	// IpAddress: The IP address of this ARP neighbor.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// MacAddress: The MAC address of this ARP neighbor.
+	MacAddress string `json:"macAddress,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpAddress") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectDiagnosticsARPEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectDiagnosticsARPEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InterconnectDiagnosticsLinkLACPStatus struct {
+	// GoogleSystemId: System ID of the port on Google?s side of the LACP
+	// exchange.
+	GoogleSystemId string `json:"googleSystemId,omitempty"`
+
+	// NeighborSystemId: System ID of the port on the neighbor?s side of the
+	// LACP exchange.
+	NeighborSystemId string `json:"neighborSystemId,omitempty"`
+
+	// Possible values:
+	//   "ACTIVE"
+	//   "DETACHED"
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GoogleSystemId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GoogleSystemId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectDiagnosticsLinkLACPStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectDiagnosticsLinkLACPStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type InterconnectDiagnosticsLinkOpticalPower struct {
+	// Possible values:
+	//   "HIGH_ALARM"
+	//   "HIGH_WARNING"
+	//   "LOW_ALARM"
+	//   "LOW_WARNING"
+	//   "OK"
+	State string `json:"state,omitempty"`
+
+	// Value: Value of the current optical power, read in dBm.
+	Value float64 `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectDiagnosticsLinkOpticalPower) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectDiagnosticsLinkOpticalPower
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *InterconnectDiagnosticsLinkOpticalPower) UnmarshalJSON(data []byte) error {
+	type NoMethod InterconnectDiagnosticsLinkOpticalPower
+	var s1 struct {
+		Value gensupport.JSONFloat64 `json:"value"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Value = float64(s1.Value)
+	return nil
+}
+
+type InterconnectDiagnosticsLinkStatus struct {
+	// ArpCaches: A list of InterconnectDiagnostics.ARPEntry objects,
+	// describing the ARP neighbor entries seen on this link. This will be
+	// empty if the link is bundled
+	ArpCaches []*InterconnectDiagnosticsARPEntry `json:"arpCaches,omitempty"`
+
+	// CircuitId: The unique ID for this link assigned during turn up by
+	// Google.
+	CircuitId string `json:"circuitId,omitempty"`
+
+	// GoogleDemarc: The Demarc address assigned by Google and provided in
+	// the LoA.
+	GoogleDemarc string `json:"googleDemarc,omitempty"`
+
+	LacpStatus *InterconnectDiagnosticsLinkLACPStatus `json:"lacpStatus,omitempty"`
+
+	ReceivingOpticalPower *InterconnectDiagnosticsLinkOpticalPower `json:"receivingOpticalPower,omitempty"`
+
+	TransmittingOpticalPower *InterconnectDiagnosticsLinkOpticalPower `json:"transmittingOpticalPower,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArpCaches") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArpCaches") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectDiagnosticsLinkStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectDiagnosticsLinkStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InterconnectList: Response to the list request, and contains a list
 // of interconnects.
 type InterconnectList struct {
@@ -13372,6 +13591,38 @@ type InterconnectOutageNotification struct {
 
 func (s *InterconnectOutageNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod InterconnectOutageNotification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InterconnectsGetDiagnosticsResponse: Response for the
+// InterconnectsGetDiagnosticsRequest.
+type InterconnectsGetDiagnosticsResponse struct {
+	Result *InterconnectDiagnostics `json:"result,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Result") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InterconnectsGetDiagnosticsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectsGetDiagnosticsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14327,6 +14578,7 @@ type ManagedInstance struct {
 	//   "RECREATING"
 	//   "REFRESHING"
 	//   "RESTARTING"
+	//   "VERIFYING"
 	CurrentAction string `json:"currentAction,omitempty"`
 
 	// Id: [Output only] The unique identifier for this resource. This field
@@ -15481,6 +15733,7 @@ type NodeGroupNode struct {
 	//   "DELETING"
 	//   "INVALID"
 	//   "READY"
+	//   "REPAIRING"
 	Status string `json:"status,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Instances") to
@@ -15903,7 +16156,7 @@ type NodeTemplate struct {
 	// characters long and match the regular expression
 	// `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be
 	// a lowercase letter, and all following characters must be a dash,
-	// lowercase letter, or digit, except the last charaicter, which cannot
+	// lowercase letter, or digit, except the last character, which cannot
 	// be a dash.
 	Name string `json:"name,omitempty"`
 
@@ -17715,14 +17968,23 @@ func (s *OperationsScopedListWarningData) MarshalJSON() ([]byte, error) {
 // no rule was matched, the default service will be used.
 type PathMatcher struct {
 	// DefaultService: The full or partial URL to the BackendService
-	// resource. This will be used if none of the pathRules defined by this
-	// PathMatcher is matched by the URL's path portion. For example, the
-	// following are all valid URLs to a BackendService resource:
+	// resource. This will be used if none of the pathRules or routeRules
+	// defined by this PathMatcher are matched. For example, the following
+	// are all valid URLs to a BackendService resource:
 	// -
 	// https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService
 	// - compute/v1/projects/project/global/backendServices/backendService
 	//
 	// - global/backendServices/backendService
+	// Use defaultService instead of defaultRouteAction when simple routing
+	// to a backend service is desired and other advanced capabilities like
+	// traffic splitting and URL rewrites are not required.
+	// Only one of defaultService, defaultRouteAction or defaultUrlRedirect
+	// must be set.
+	// Authorization requires one or more of the following Google IAM
+	// permissions on the specified resource default_service:
+	// - compute.backendBuckets.use
+	// - compute.backendServices.use
 	DefaultService string `json:"defaultService,omitempty"`
 
 	// Description: An optional description of this resource. Provide this
@@ -17732,7 +17994,14 @@ type PathMatcher struct {
 	// Name: The name to which this PathMatcher is referred by the HostRule.
 	Name string `json:"name,omitempty"`
 
-	// PathRules: The list of path rules.
+	// PathRules: The list of path rules. Use this list instead of
+	// routeRules when routing based on simple path matching is all that's
+	// required. The order by which path rules are specified does not
+	// matter. Matches are always done on the longest-path-first basis.
+	// For example: a pathRule with a path /a/b/c/* will match before /a/b/*
+	// irrespective of the order in which those paths appear in this
+	// list.
+	// Only one of pathRules or routeRules must be set.
 	PathRules []*PathRule `json:"pathRules,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DefaultService") to
@@ -17768,8 +18037,12 @@ type PathRule struct {
 	// or #, and those chars are not allowed here.
 	Paths []string `json:"paths,omitempty"`
 
-	// Service: The URL of the BackendService resource if this rule is
+	// Service: The URL of the backend service resource if this rule is
 	// matched.
+	// Use service instead of routeAction when simple routing to a backend
+	// service is desired and other advanced capabilities like traffic
+	// splitting and rewrites are not required.
+	// Only one of service, routeAction or urlRedirect should must be set.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Paths") to
@@ -18118,6 +18391,7 @@ type Quota struct {
 	//   "TARGET_TCP_PROXIES"
 	//   "TARGET_VPN_GATEWAYS"
 	//   "URL_MAPS"
+	//   "VPN_GATEWAYS"
 	//   "VPN_TUNNELS"
 	Metric string `json:"metric,omitempty"`
 
@@ -19566,8 +19840,8 @@ func (s *ResourceCommitment) MarshalJSON() ([]byte, error) {
 }
 
 type ResourceGroupReference struct {
-	// Group: A URI referencing one of the instance groups listed in the
-	// backend service.
+	// Group: A URI referencing one of the instance groups or network
+	// endpoint groups listed in the backend service.
 	Group string `json:"group,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Group") to
@@ -20014,6 +20288,9 @@ type Router struct {
 	// characters must be a dash, lowercase letter, or digit, except the
 	// last character, which cannot be a dash.
 	Name string `json:"name,omitempty"`
+
+	// Nats: A list of Nat services created in this router.
+	Nats []*RouterNat `json:"nats,omitempty"`
 
 	// Network: URI of the network to which this router belongs.
 	Network string `json:"network,omitempty"`
@@ -20598,6 +20875,140 @@ func (s *RouterListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RouterNat: Represents a Nat resource. It enables the VMs within the
+// specified subnetworks to access Internet without external IP
+// addresses. It specifies a list of subnetworks (and the ranges within)
+// that want to use NAT. Customers can also provide the external IPs
+// that would be used for NAT. GCP would auto-allocate ephemeral IPs if
+// no external IPs are provided.
+type RouterNat struct {
+	// IcmpIdleTimeoutSec: Timeout (in seconds) for ICMP connections.
+	// Defaults to 30s if not set.
+	IcmpIdleTimeoutSec int64 `json:"icmpIdleTimeoutSec,omitempty"`
+
+	// MinPortsPerVm: Minimum number of ports allocated to a VM from this
+	// NAT config. If not set, a default number of ports is allocated to a
+	// VM. This gets rounded up to the nearest power of 2. Eg. if the value
+	// of this field is 50, at least 64 ports will be allocated to a VM.
+	MinPortsPerVm int64 `json:"minPortsPerVm,omitempty"`
+
+	// Name: Unique name of this Nat service. The name must be 1-63
+	// characters long and comply with RFC1035.
+	Name string `json:"name,omitempty"`
+
+	// NatIpAllocateOption: Specify the NatIpAllocateOption. If it is
+	// AUTO_ONLY, then nat_ip should be empty.
+	//
+	// Possible values:
+	//   "AUTO_ONLY"
+	//   "MANUAL_ONLY"
+	NatIpAllocateOption string `json:"natIpAllocateOption,omitempty"`
+
+	// NatIps: A list of URLs of the IP resources used for this Nat service.
+	// These IPs must be valid static external IP addresses assigned to the
+	// project. max_length is subject to change post alpha.
+	NatIps []string `json:"natIps,omitempty"`
+
+	// SourceSubnetworkIpRangesToNat: Specify the Nat option. If this field
+	// contains ALL_SUBNETWORKS_ALL_IP_RANGES or
+	// ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES, then there should not be any
+	// other Router.Nat section in any Router for this network in this
+	// region.
+	//
+	// Possible values:
+	//   "ALL_SUBNETWORKS_ALL_IP_RANGES"
+	//   "ALL_SUBNETWORKS_ALL_PRIMARY_IP_RANGES"
+	//   "LIST_OF_SUBNETWORKS"
+	SourceSubnetworkIpRangesToNat string `json:"sourceSubnetworkIpRangesToNat,omitempty"`
+
+	// Subnetworks: A list of Subnetwork resources whose traffic should be
+	// translated by NAT Gateway. It is used only when LIST_OF_SUBNETWORKS
+	// is selected for the SubnetworkIpRangeToNatOption above.
+	Subnetworks []*RouterNatSubnetworkToNat `json:"subnetworks,omitempty"`
+
+	// TcpEstablishedIdleTimeoutSec: Timeout (in seconds) for TCP
+	// established connections. Defaults to 1200s if not set.
+	TcpEstablishedIdleTimeoutSec int64 `json:"tcpEstablishedIdleTimeoutSec,omitempty"`
+
+	// TcpTransitoryIdleTimeoutSec: Timeout (in seconds) for TCP transitory
+	// connections. Defaults to 30s if not set.
+	TcpTransitoryIdleTimeoutSec int64 `json:"tcpTransitoryIdleTimeoutSec,omitempty"`
+
+	// UdpIdleTimeoutSec: Timeout (in seconds) for UDP connections. Defaults
+	// to 30s if not set.
+	UdpIdleTimeoutSec int64 `json:"udpIdleTimeoutSec,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IcmpIdleTimeoutSec")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IcmpIdleTimeoutSec") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RouterNat) MarshalJSON() ([]byte, error) {
+	type NoMethod RouterNat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RouterNatSubnetworkToNat: Defines the IP ranges that want to use NAT
+// for a subnetwork.
+type RouterNatSubnetworkToNat struct {
+	// Name: URL for the subnetwork resource to use NAT.
+	Name string `json:"name,omitempty"`
+
+	// SecondaryIpRangeNames: A list of the secondary ranges of the
+	// Subnetwork that are allowed to use NAT. This can be populated only if
+	// "LIST_OF_SECONDARY_IP_RANGES" is one of the values in
+	// source_ip_ranges_to_nat.
+	SecondaryIpRangeNames []string `json:"secondaryIpRangeNames,omitempty"`
+
+	// SourceIpRangesToNat: Specify the options for NAT ranges in the
+	// Subnetwork. All usages of single value are valid except
+	// NAT_IP_RANGE_OPTION_UNSPECIFIED. The only valid option with multiple
+	// values is: ["PRIMARY_IP_RANGE", "LIST_OF_SECONDARY_IP_RANGES"]
+	// Default: [ALL_IP_RANGES]
+	//
+	// Possible values:
+	//   "ALL_IP_RANGES"
+	//   "LIST_OF_SECONDARY_IP_RANGES"
+	//   "PRIMARY_IP_RANGE"
+	SourceIpRangesToNat []string `json:"sourceIpRangesToNat,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RouterNatSubnetworkToNat) MarshalJSON() ([]byte, error) {
+	type NoMethod RouterNatSubnetworkToNat
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type RouterStatus struct {
 	// BestRoutes: Best routes for this router's network.
 	BestRoutes []*Route `json:"bestRoutes,omitempty"`
@@ -20606,6 +21017,8 @@ type RouterStatus struct {
 	BestRoutesForRouter []*Route `json:"bestRoutesForRouter,omitempty"`
 
 	BgpPeerStatus []*RouterStatusBgpPeerStatus `json:"bgpPeerStatus,omitempty"`
+
+	NatStatus []*RouterStatusNatStatus `json:"natStatus,omitempty"`
 
 	// Network: URI of the network to which this router belongs.
 	Network string `json:"network,omitempty"`
@@ -20690,6 +21103,57 @@ type RouterStatusBgpPeerStatus struct {
 
 func (s *RouterStatusBgpPeerStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RouterStatusBgpPeerStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RouterStatusNatStatus: Status of a NAT contained in this router.
+type RouterStatusNatStatus struct {
+	// AutoAllocatedNatIps: A list of IPs auto-allocated for NAT. Example:
+	// ["1.1.1.1", "129.2.16.89"]
+	AutoAllocatedNatIps []string `json:"autoAllocatedNatIps,omitempty"`
+
+	// MinExtraNatIpsNeeded: The number of extra IPs to allocate. This will
+	// be greater than 0 only if user-specified IPs are NOT enough to allow
+	// all configured VMs to use NAT. This value is meaningful only when
+	// auto-allocation of NAT IPs is *not* used.
+	MinExtraNatIpsNeeded int64 `json:"minExtraNatIpsNeeded,omitempty"`
+
+	// Name: Unique name of this NAT.
+	Name string `json:"name,omitempty"`
+
+	// NumVmEndpointsWithNatMappings: Number of VM endpoints (i.e., Nics)
+	// that can use NAT.
+	NumVmEndpointsWithNatMappings int64 `json:"numVmEndpointsWithNatMappings,omitempty"`
+
+	// UserAllocatedNatIpResources: A list of fully qualified URLs of
+	// reserved IP address resources.
+	UserAllocatedNatIpResources []string `json:"userAllocatedNatIpResources,omitempty"`
+
+	// UserAllocatedNatIps: A list of IPs user-allocated for NAT. They will
+	// be raw IP strings like "179.12.26.133".
+	UserAllocatedNatIps []string `json:"userAllocatedNatIps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoAllocatedNatIps")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoAllocatedNatIps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RouterStatusNatStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RouterStatusNatStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -23585,8 +24049,9 @@ type TargetHttpsProxy struct {
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// SslCertificates: URLs to SslCertificate resources that are used to
-	// authenticate connections between users and the load balancer.
-	// Currently, exactly one SSL certificate must be specified.
+	// authenticate connections between users and the load balancer. At
+	// least one SSL certificate must be specified. Currently, you may
+	// specify up to 15 SSL certificates.
 	SslCertificates []string `json:"sslCertificates,omitempty"`
 
 	// SslPolicy: URL of SslPolicy resource that will be associated with the
@@ -24397,7 +24862,7 @@ type TargetPool struct {
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SessionAffinity: Sesssion affinity option, must be one of the
+	// SessionAffinity: Session affinity option, must be one of the
 	// following values:
 	// NONE: Connections from the same client IP may go to any instance in
 	// the pool.
@@ -25216,8 +25681,9 @@ type TargetSslProxy struct {
 	Service string `json:"service,omitempty"`
 
 	// SslCertificates: URLs to SslCertificate resources that are used to
-	// authenticate connections to Backends. Currently exactly one SSL
-	// certificate must be specified.
+	// authenticate connections to Backends. At least one SSL certificate
+	// must be specified. Currently, you may specify up to 15 SSL
+	// certificates.
 	SslCertificates []string `json:"sslCertificates,omitempty"`
 
 	// SslPolicy: URL of SslPolicy resource that will be associated with the
@@ -26330,8 +26796,13 @@ type UrlMap struct {
 	// format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
 
-	// DefaultService: The URL of the BackendService resource if none of the
+	// DefaultService: The URL of the backendService resource if none of the
 	// hostRules match.
+	// Use defaultService instead of defaultRouteAction when simple routing
+	// to a backendService is desired and other advanced capabilities like
+	// traffic splitting and rewrites are not required.
+	// Only one of defaultService, defaultRouteAction or defaultUrlRedirect
+	// should must be set.
 	DefaultService string `json:"defaultService,omitempty"`
 
 	// Description: An optional description of this resource. Provide this
@@ -26990,6 +27461,241 @@ type UsageExportLocation struct {
 
 func (s *UsageExportLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageExportLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmEndpointNatMappings: Contain information of Nat mapping for a VM
+// endpoint (i.e., NIC).
+type VmEndpointNatMappings struct {
+	// InstanceName: Name of the VM instance which the endpoint belongs to
+	InstanceName string `json:"instanceName,omitempty"`
+
+	InterfaceNatMappings []*VmEndpointNatMappingsInterfaceNatMappings `json:"interfaceNatMappings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstanceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstanceName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmEndpointNatMappings) MarshalJSON() ([]byte, error) {
+	type NoMethod VmEndpointNatMappings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmEndpointNatMappingsInterfaceNatMappings: Contain information of Nat
+// mapping for an interface of this endpoint.
+type VmEndpointNatMappingsInterfaceNatMappings struct {
+	// NatIpPortRanges: A list of all IP:port-range mappings assigned to
+	// this interface. These ranges are inclusive, that is, both the first
+	// and the last ports can be used for NAT. Example:
+	// ["2.2.2.2:12345-12355", "1.1.1.1:2234-2234"].
+	NatIpPortRanges []string `json:"natIpPortRanges,omitempty"`
+
+	// NumTotalNatPorts: Total number of ports across all NAT IPs allocated
+	// to this interface. It equals to the aggregated port number in the
+	// field nat_ip_port_ranges.
+	NumTotalNatPorts int64 `json:"numTotalNatPorts,omitempty"`
+
+	// SourceAliasIpRange: Alias IP range for this interface endpoint. It
+	// will be a private (RFC 1918) IP range. Examples: "10.33.4.55/32", or
+	// "192.168.5.0/24".
+	SourceAliasIpRange string `json:"sourceAliasIpRange,omitempty"`
+
+	// SourceVirtualIp: Primary IP of the VM for this NIC.
+	SourceVirtualIp string `json:"sourceVirtualIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NatIpPortRanges") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NatIpPortRanges") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmEndpointNatMappingsInterfaceNatMappings) MarshalJSON() ([]byte, error) {
+	type NoMethod VmEndpointNatMappingsInterfaceNatMappings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmEndpointNatMappingsList: Contains a list of VmEndpointNatMappings.
+type VmEndpointNatMappingsList struct {
+	// Id: [Output Only] The unique identifier for the resource. This
+	// identifier is defined by the server.
+	Id string `json:"id,omitempty"`
+
+	// Kind: [Output Only] Type of resource. Always
+	// compute#vmEndpointNatMappingsList for lists of Nat mappings of VM
+	// endpoints.
+	Kind string `json:"kind,omitempty"`
+
+	// NextPageToken: [Output Only] This token allows you to get the next
+	// page of results for list requests. If the number of results is larger
+	// than maxResults, use the nextPageToken as a value for the query
+	// parameter pageToken in the next list request. Subsequent list
+	// requests will have their own nextPageToken to continue paging through
+	// the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Result: [Output Only] A list of Nat mapping information of VM
+	// endpoints.
+	Result []*VmEndpointNatMappings `json:"result,omitempty"`
+
+	// SelfLink: [Output Only] Server-defined URL for this resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// Warning: [Output Only] Informational warning message.
+	Warning *VmEndpointNatMappingsListWarning `json:"warning,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmEndpointNatMappingsList) MarshalJSON() ([]byte, error) {
+	type NoMethod VmEndpointNatMappingsList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VmEndpointNatMappingsListWarning: [Output Only] Informational warning
+// message.
+type VmEndpointNatMappingsListWarning struct {
+	// Code: [Output Only] A warning code, if applicable. For example,
+	// Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in
+	// the response.
+	//
+	// Possible values:
+	//   "CLEANUP_FAILED"
+	//   "DEPRECATED_RESOURCE_USED"
+	//   "DEPRECATED_TYPE_USED"
+	//   "DISK_SIZE_LARGER_THAN_IMAGE_SIZE"
+	//   "EXPERIMENTAL_TYPE_USED"
+	//   "EXTERNAL_API_WARNING"
+	//   "FIELD_VALUE_OVERRIDEN"
+	//   "INJECTED_KERNELS_DEPRECATED"
+	//   "MISSING_TYPE_DEPENDENCY"
+	//   "NEXT_HOP_ADDRESS_NOT_ASSIGNED"
+	//   "NEXT_HOP_CANNOT_IP_FORWARD"
+	//   "NEXT_HOP_INSTANCE_NOT_FOUND"
+	//   "NEXT_HOP_INSTANCE_NOT_ON_NETWORK"
+	//   "NEXT_HOP_NOT_RUNNING"
+	//   "NOT_CRITICAL_ERROR"
+	//   "NO_RESULTS_ON_PAGE"
+	//   "REQUIRED_TOS_AGREEMENT"
+	//   "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING"
+	//   "RESOURCE_NOT_DELETED"
+	//   "SCHEMA_VALIDATION_IGNORED"
+	//   "SINGLE_INSTANCE_PROPERTY_TEMPLATE"
+	//   "UNDECLARED_PROPERTIES"
+	//   "UNREACHABLE"
+	Code string `json:"code,omitempty"`
+
+	// Data: [Output Only] Metadata about this warning in key: value format.
+	// For example:
+	// "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	Data []*VmEndpointNatMappingsListWarningData `json:"data,omitempty"`
+
+	// Message: [Output Only] A human-readable description of the warning
+	// code.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmEndpointNatMappingsListWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod VmEndpointNatMappingsListWarning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type VmEndpointNatMappingsListWarningData struct {
+	// Key: [Output Only] A key that provides more detail on the warning
+	// being returned. For example, for warnings where there are no results
+	// in a list request for a particular zone, this key might be scope and
+	// the key value might be the zone name. Other examples might be a key
+	// indicating a deprecated resource and a suggested replacement, or a
+	// warning about invalid network settings (for example, if an instance
+	// attempts to perform IP forwarding but is not enabled for IP
+	// forwarding).
+	Key string `json:"key,omitempty"`
+
+	// Value: [Output Only] A warning data value corresponding to the key.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Key") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Key") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VmEndpointNatMappingsListWarningData) MarshalJSON() ([]byte, error) {
+	type NoMethod VmEndpointNatMappingsListWarningData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -36036,7 +36742,7 @@ func (c *DisksGetCall) Do(opts ...googleapi.CallOption) (*Disk, error) {
 	//     "disk": {
 	//       "description": "Name of the persistent disk to return.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -45383,7 +46089,7 @@ func (c *ImagesGetCall) Do(opts ...googleapi.CallOption) (*Image, error) {
 	//     "image": {
 	//       "description": "Name of the image resource to return.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -46166,15 +46872,15 @@ type InstanceGroupManagersAbandonInstancesCall struct {
 	header_                                      http.Header
 }
 
-// AbandonInstances: Schedules a group action to remove the specified
-// instances from the managed instance group. Abandoning an instance
-// does not delete the instance, but it does remove the instance from
-// any target pools that are applied by the managed instance group. This
-// method reduces the targetSize of the managed instance group by the
-// number of instances that you abandon. This operation is marked as
-// DONE when the action is scheduled even if the instances have not yet
-// been removed from the group. You must separately verify the status of
-// the abandoning action with the listmanagedinstances method.
+// AbandonInstances: Flags the specified instances to be removed from
+// the managed instance group. Abandoning an instance does not delete
+// the instance, but it does remove the instance from any target pools
+// that are applied by the managed instance group. This method reduces
+// the targetSize of the managed instance group by the number of
+// instances that you abandon. This operation is marked as DONE when the
+// action is scheduled even if the instances have not yet been removed
+// from the group. You must separately verify the status of the
+// abandoning action with the listmanagedinstances method.
 //
 // If the group is part of a backend service that has enabled connection
 // draining, it can take up to 60 seconds after the connection draining
@@ -46303,7 +47009,7 @@ func (c *InstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances to be removed from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.abandonInstances",
 	//   "parameterOrder": [
@@ -46794,14 +47500,14 @@ type InstanceGroupManagersDeleteInstancesCall struct {
 	header_                                     http.Header
 }
 
-// DeleteInstances: Schedules a group action to delete the specified
-// instances in the managed instance group. The instances are also
-// removed from any target pools of which they were a member. This
-// method reduces the targetSize of the managed instance group by the
-// number of instances that you delete. This operation is marked as DONE
-// when the action is scheduled even if the instances are still being
-// deleted. You must separately verify the status of the deleting action
-// with the listmanagedinstances method.
+// DeleteInstances: Flags the specified instances in the managed
+// instance group for immediate deletion. The instances are also removed
+// from any target pools of which they were a member. This method
+// reduces the targetSize of the managed instance group by the number of
+// instances that you delete. This operation is marked as DONE when the
+// action is scheduled even if the instances are still being deleted.
+// You must separately verify the status of the deleting action with the
+// listmanagedinstances method.
 //
 // If the group is part of a backend service that has enabled connection
 // draining, it can take up to 60 seconds after the connection draining
@@ -46930,7 +47636,7 @@ func (c *InstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances in the managed instance group for immediate deletion. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [
@@ -47158,12 +47864,12 @@ type InstanceGroupManagersInsertCall struct {
 }
 
 // Insert: Creates a managed instance group using the information that
-// you specify in the request. After the group is created, it schedules
-// an action to create instances in the group using the specified
-// instance template. This operation is marked as DONE when the group is
-// created even if the instances in the group have not yet been created.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method.
+// you specify in the request. After the group is created, instances in
+// the group are created using the specified instance template. This
+// operation is marked as DONE when the group is created even if the
+// instances in the group have not yet been created. You must separately
+// verify the status of the individual instances with the
+// listmanagedinstances method.
 //
 // A managed instance group can have up to 1000 VM instances per group.
 // Please contact Cloud Support if you need an increase in this limit.
@@ -47285,7 +47991,7 @@ func (c *InstanceGroupManagersInsertCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
+	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, instances in the group are created using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA managed instance group can have up to 1000 VM instances per group. Please contact Cloud Support if you need an increase in this limit.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.insert",
 	//   "parameterOrder": [
@@ -47845,11 +48551,11 @@ type InstanceGroupManagersRecreateInstancesCall struct {
 	header_                                       http.Header
 }
 
-// RecreateInstances: Schedules a group action to recreate the specified
-// instances in the managed instance group. The instances are deleted
+// RecreateInstances: Flags the specified instances in the managed
+// instance group to be immediately recreated. The instances are deleted
 // and recreated using the current instance template for the managed
-// instance group. This operation is marked as DONE when the action is
-// scheduled even if the instances have not yet been recreated. You must
+// instance group. This operation is marked as DONE when the flag is set
+// even if the instances have not yet been recreated. You must
 // separately verify the status of the recreating action with the
 // listmanagedinstances method.
 //
@@ -47980,7 +48686,7 @@ func (c *InstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.recreateInstances",
 	//   "parameterOrder": [
@@ -48048,6 +48754,16 @@ type InstanceGroupManagersResizeCall struct {
 // if the group has not yet added or deleted any instances. You must
 // separately verify the status of the creating or deleting actions with
 // the listmanagedinstances method.
+//
+// When resizing down, the instance group arbitrarily chooses the order
+// in which VMs are deleted. The group takes into account some VM
+// attributes when making the selection including:
+//
+// + The status of the VM instance. + The health of the VM instance. +
+// The instance template version the VM is based on. + For regional
+// managed instance groups, the location of the VM instance.
+//
+// This list is subject to change.
 //
 // If the group is part of a backend service that has enabled connection
 // draining, it can take up to 60 seconds after the connection draining
@@ -48167,7 +48883,7 @@ func (c *InstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption) (*Ope
 	}
 	return ret, nil
 	// {
-	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
+	//   "description": "Resizes the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nWhen resizing down, the instance group arbitrarily chooses the order in which VMs are deleted. The group takes into account some VM attributes when making the selection including:\n\n+ The status of the VM instance. + The health of the VM instance. + The instance template version the VM is based on. + For regional managed instance groups, the location of the VM instance.\n\nThis list is subject to change.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instanceGroupManagers.resize",
 	//   "parameterOrder": [
@@ -51983,7 +52699,7 @@ func (c *InstancesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//     "instance": {
 	//       "description": "Name of the instance resource to delete.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -53239,7 +53955,8 @@ type InstancesListReferrersCall struct {
 }
 
 // ListReferrers: Retrieves the list of referrers to instances contained
-// within the specified zone.
+// within the specified zone. For more information, read Viewing
+// Referrers to VM Instances.
 func (r *InstancesService) ListReferrers(project string, zone string, instance string) *InstancesListReferrersCall {
 	c := &InstancesListReferrersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -53411,7 +54128,7 @@ func (c *InstancesListReferrersCall) Do(opts ...googleapi.CallOption) (*Instance
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the list of referrers to instances contained within the specified zone.",
+	//   "description": "Retrieves the list of referrers to instances contained within the specified zone. For more information, read Viewing Referrers to VM Instances.",
 	//   "httpMethod": "GET",
 	//   "id": "compute.instances.listReferrers",
 	//   "parameterOrder": [
@@ -55377,8 +56094,8 @@ type InstancesSetTagsCall struct {
 	header_    http.Header
 }
 
-// SetTags: Sets tags for the specified instance to the data included in
-// the request.
+// SetTags: Sets network tags for the specified instance to the data
+// included in the request.
 // For details, see https://cloud.google.com/compute/docs/reference/latest/instances/setTags
 func (r *InstancesService) SetTags(project string, zone string, instance string, tags *Tags) *InstancesSetTagsCall {
 	c := &InstancesSetTagsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -55500,7 +56217,7 @@ func (c *InstancesSetTagsCall) Do(opts ...googleapi.CallOption) (*Operation, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets tags for the specified instance to the data included in the request.",
+	//   "description": "Sets network tags for the specified instance to the data included in the request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.instances.setTags",
 	//   "parameterOrder": [
@@ -58586,6 +59303,163 @@ func (c *InterconnectsGetCall) Do(opts ...googleapi.CallOption) (*Interconnect, 
 
 }
 
+// method id "compute.interconnects.getDiagnostics":
+
+type InterconnectsGetDiagnosticsCall struct {
+	s            *Service
+	project      string
+	interconnect string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetDiagnostics: Returns the interconnectDiagnostics for the specified
+// interconnect.
+func (r *InterconnectsService) GetDiagnostics(project string, interconnect string) *InterconnectsGetDiagnosticsCall {
+	c := &InterconnectsGetDiagnosticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.interconnect = interconnect
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InterconnectsGetDiagnosticsCall) Fields(s ...googleapi.Field) *InterconnectsGetDiagnosticsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InterconnectsGetDiagnosticsCall) IfNoneMatch(entityTag string) *InterconnectsGetDiagnosticsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InterconnectsGetDiagnosticsCall) Context(ctx context.Context) *InterconnectsGetDiagnosticsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InterconnectsGetDiagnosticsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InterconnectsGetDiagnosticsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/global/interconnects/{interconnect}/getDiagnostics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":      c.project,
+		"interconnect": c.interconnect,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.interconnects.getDiagnostics" call.
+// Exactly one of *InterconnectsGetDiagnosticsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *InterconnectsGetDiagnosticsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InterconnectsGetDiagnosticsCall) Do(opts ...googleapi.CallOption) (*InterconnectsGetDiagnosticsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &InterconnectsGetDiagnosticsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns the interconnectDiagnostics for the specified interconnect.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.interconnects.getDiagnostics",
+	//   "parameterOrder": [
+	//     "project",
+	//     "interconnect"
+	//   ],
+	//   "parameters": {
+	//     "interconnect": {
+	//       "description": "Name of the interconnect resource to query.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/global/interconnects/{interconnect}/getDiagnostics",
+	//   "response": {
+	//     "$ref": "InterconnectsGetDiagnosticsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
 // method id "compute.interconnects.insert":
 
 type InterconnectsInsertCall struct {
@@ -59463,9 +60337,9 @@ func (c *LicenseCodesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -60357,9 +61231,9 @@ func (c *LicensesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Test
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -73564,9 +74438,9 @@ func (c *RegionDisksTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -73600,10 +74474,10 @@ type RegionInstanceGroupManagersAbandonInstancesCall struct {
 	header_                                            http.Header
 }
 
-// AbandonInstances: Schedules a group action to remove the specified
-// instances from the managed instance group. Abandoning an instance
-// does not delete the instance, but it does remove the instance from
-// any target pools that are applied by the managed instance group. This
+// AbandonInstances: Flags the specified instances to be immediately
+// removed from the managed instance group. Abandoning an instance does
+// not delete the instance, but it does remove the instance from any
+// target pools that are applied by the managed instance group. This
 // method reduces the targetSize of the managed instance group by the
 // number of instances that you abandon. This operation is marked as
 // DONE when the action is scheduled even if the instances have not yet
@@ -73737,7 +74611,7 @@ func (c *RegionInstanceGroupManagersAbandonInstancesCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to remove the specified instances from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances to be immediately removed from the managed instance group. Abandoning an instance does not delete the instance, but it does remove the instance from any target pools that are applied by the managed instance group. This method reduces the targetSize of the managed instance group by the number of instances that you abandon. This operation is marked as DONE when the action is scheduled even if the instances have not yet been removed from the group. You must separately verify the status of the abandoning action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.abandonInstances",
 	//   "parameterOrder": [
@@ -73973,14 +74847,15 @@ type RegionInstanceGroupManagersDeleteInstancesCall struct {
 	header_                                           http.Header
 }
 
-// DeleteInstances: Schedules a group action to delete the specified
-// instances in the managed instance group. The instances are also
+// DeleteInstances: Flags the specified instances in the managed
+// instance group to be immediately deleted. The instances are also
 // removed from any target pools of which they were a member. This
 // method reduces the targetSize of the managed instance group by the
-// number of instances that you delete. This operation is marked as DONE
-// when the action is scheduled even if the instances are still being
-// deleted. You must separately verify the status of the deleting action
-// with the listmanagedinstances method.
+// number of instances that you delete. The deleteInstances operation is
+// marked DONE if the deleteInstances request is successful. The
+// underlying actions take additional time. You must separately verify
+// the status of the deleting action with the listmanagedinstances
+// method.
 //
 // If the group is part of a backend service that has enabled connection
 // draining, it can take up to 60 seconds after the connection draining
@@ -74109,7 +74984,7 @@ func (c *RegionInstanceGroupManagersDeleteInstancesCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to delete the specified instances in the managed instance group. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. This operation is marked as DONE when the action is scheduled even if the instances are still being deleted. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances in the managed instance group to be immediately deleted. The instances are also removed from any target pools of which they were a member. This method reduces the targetSize of the managed instance group by the number of instances that you delete. The deleteInstances operation is marked DONE if the deleteInstances request is successful. The underlying actions take additional time. You must separately verify the status of the deleting action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.deleteInstances",
 	//   "parameterOrder": [
@@ -74336,12 +75211,12 @@ type RegionInstanceGroupManagersInsertCall struct {
 }
 
 // Insert: Creates a managed instance group using the information that
-// you specify in the request. After the group is created, it schedules
-// an action to create instances in the group using the specified
-// instance template. This operation is marked as DONE when the group is
-// created even if the instances in the group have not yet been created.
-// You must separately verify the status of the individual instances
-// with the listmanagedinstances method.
+// you specify in the request. After the group is created, instances in
+// the group are created using the specified instance template. This
+// operation is marked as DONE when the group is created even if the
+// instances in the group have not yet been created. You must separately
+// verify the status of the individual instances with the
+// listmanagedinstances method.
 //
 // A regional managed instance group can contain up to 2000 instances.
 func (r *RegionInstanceGroupManagersService) Insert(project string, region string, instancegroupmanager *InstanceGroupManager) *RegionInstanceGroupManagersInsertCall {
@@ -74462,7 +75337,7 @@ func (c *RegionInstanceGroupManagersInsertCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, it schedules an action to create instances in the group using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA regional managed instance group can contain up to 2000 instances.",
+	//   "description": "Creates a managed instance group using the information that you specify in the request. After the group is created, instances in the group are created using the specified instance template. This operation is marked as DONE when the group is created even if the instances in the group have not yet been created. You must separately verify the status of the individual instances with the listmanagedinstances method.\n\nA regional managed instance group can contain up to 2000 instances.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.insert",
 	//   "parameterOrder": [
@@ -75020,11 +75895,11 @@ type RegionInstanceGroupManagersRecreateInstancesCall struct {
 	header_                                    http.Header
 }
 
-// RecreateInstances: Schedules a group action to recreate the specified
-// instances in the managed instance group. The instances are deleted
+// RecreateInstances: Flags the specified instances in the managed
+// instance group to be immediately recreated. The instances are deleted
 // and recreated using the current instance template for the managed
-// instance group. This operation is marked as DONE when the action is
-// scheduled even if the instances have not yet been recreated. You must
+// instance group. This operation is marked as DONE when the flag is set
+// even if the instances have not yet been recreated. You must
 // separately verify the status of the recreating action with the
 // listmanagedinstances method.
 //
@@ -75155,7 +76030,7 @@ func (c *RegionInstanceGroupManagersRecreateInstancesCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Schedules a group action to recreate the specified instances in the managed instance group. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the action is scheduled even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
+	//   "description": "Flags the specified instances in the managed instance group to be immediately recreated. The instances are deleted and recreated using the current instance template for the managed instance group. This operation is marked as DONE when the flag is set even if the instances have not yet been recreated. You must separately verify the status of the recreating action with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.\n\nYou can specify a maximum of 1000 instances with this method per request.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.recreateInstances",
 	//   "parameterOrder": [
@@ -75216,14 +76091,15 @@ type RegionInstanceGroupManagersResizeCall struct {
 	header_              http.Header
 }
 
-// Resize: Changes the intended size for the managed instance group. If
-// you increase the size, the group schedules actions to create new
-// instances using the current instance template. If you decrease the
-// size, the group schedules delete actions on one or more instances.
-// The resize operation is marked DONE when the resize actions are
-// scheduled even if the group has not yet added or deleted any
-// instances. You must separately verify the status of the creating or
-// deleting actions with the listmanagedinstances method.
+// Resize: Changes the intended size of the managed instance group. If
+// you increase the size, the group creates new instances using the
+// current instance template. If you decrease the size, the group
+// deletes one or more instances.
+//
+// The resize operation is marked DONE if the resize request is
+// successful. The underlying actions take additional time. You must
+// separately verify the status of the creating or deleting actions with
+// the listmanagedinstances method.
 //
 // If the group is part of a backend service that has enabled connection
 // draining, it can take up to 60 seconds after the connection draining
@@ -75343,7 +76219,7 @@ func (c *RegionInstanceGroupManagersResizeCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Changes the intended size for the managed instance group. If you increase the size, the group schedules actions to create new instances using the current instance template. If you decrease the size, the group schedules delete actions on one or more instances. The resize operation is marked DONE when the resize actions are scheduled even if the group has not yet added or deleted any instances. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
+	//   "description": "Changes the intended size of the managed instance group. If you increase the size, the group creates new instances using the current instance template. If you decrease the size, the group deletes one or more instances.\n\nThe resize operation is marked DONE if the resize request is successful. The underlying actions take additional time. You must separately verify the status of the creating or deleting actions with the listmanagedinstances method.\n\nIf the group is part of a backend service that has enabled connection draining, it can take up to 60 seconds after the connection draining duration has elapsed before the VM instance is removed or deleted.",
 	//   "httpMethod": "POST",
 	//   "id": "compute.regionInstanceGroupManagers.resize",
 	//   "parameterOrder": [
@@ -78205,6 +79081,280 @@ func (c *RoutersGetCall) Do(opts ...googleapi.CallOption) (*Router, error) {
 	//   ]
 	// }
 
+}
+
+// method id "compute.routers.getNatMappingInfo":
+
+type RoutersGetNatMappingInfoCall struct {
+	s            *Service
+	project      string
+	region       string
+	router       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetNatMappingInfo: Retrieves runtime Nat mapping information of VM
+// endpoints.
+func (r *RoutersService) GetNatMappingInfo(project string, region string, router string) *RoutersGetNatMappingInfoCall {
+	c := &RoutersGetNatMappingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.router = router
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. The expression must specify
+// the field name, a comparison operator, and the value that you want to
+// use for filtering. The value must be a string, a number, or a
+// boolean. The comparison operator must be either =, !=, >, or <.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named example-instance by specifying name !=
+// example-instance.
+//
+// You can also filter nested fields. For example, you could specify
+// scheduling.automaticRestart = false to include instances only if they
+// are not scheduled for automatic restarts. You can use filtering on
+// nested fields to filter based on resource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within parentheses. For example, (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake"). By default, each expression is an
+// AND expression. However, you can include AND and OR expressions
+// explicitly. For example, (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND (scheduling.automaticRestart =
+// true).
+func (c *RoutersGetNatMappingInfoCall) Filter(filter string) *RoutersGetNatMappingInfoCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results per page that should be returned. If the number of
+// available results is larger than maxResults, Compute Engine returns a
+// nextPageToken that can be used to get the next page of results in
+// subsequent list requests. Acceptable values are 0 to 500, inclusive.
+// (Default: 500)
+func (c *RoutersGetNatMappingInfoCall) MaxResults(maxResults int64) *RoutersGetNatMappingInfoCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by
+// a certain order. By default, results are returned in alphanumerical
+// order based on the resource name.
+//
+// You can also sort results in descending order based on the creation
+// timestamp using orderBy="creationTimestamp desc". This sorts results
+// based on the creationTimestamp field in reverse chronological order
+// (newest result first). Use this to sort resources like operations so
+// that the newest operation is returned first.
+//
+// Currently, only sorting by name or creationTimestamp desc is
+// supported.
+func (c *RoutersGetNatMappingInfoCall) OrderBy(orderBy string) *RoutersGetNatMappingInfoCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page
+// token to use. Set pageToken to the nextPageToken returned by a
+// previous list request to get the next page of results.
+func (c *RoutersGetNatMappingInfoCall) PageToken(pageToken string) *RoutersGetNatMappingInfoCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoutersGetNatMappingInfoCall) Fields(s ...googleapi.Field) *RoutersGetNatMappingInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *RoutersGetNatMappingInfoCall) IfNoneMatch(entityTag string) *RoutersGetNatMappingInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoutersGetNatMappingInfoCall) Context(ctx context.Context) *RoutersGetNatMappingInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoutersGetNatMappingInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoutersGetNatMappingInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{project}/regions/{region}/routers/{router}/getNatMappingInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+		"router":  c.router,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.routers.getNatMappingInfo" call.
+// Exactly one of *VmEndpointNatMappingsList or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmEndpointNatMappingsList.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RoutersGetNatMappingInfoCall) Do(opts ...googleapi.CallOption) (*VmEndpointNatMappingsList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &VmEndpointNatMappingsList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves runtime Nat mapping information of VM endpoints.",
+	//   "httpMethod": "GET",
+	//   "id": "compute.routers.getNatMappingInfo",
+	//   "parameterOrder": [
+	//     "project",
+	//     "region",
+	//     "router"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "maxResults": {
+	//       "default": "500",
+	//       "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+	//       "format": "uint32",
+	//       "location": "query",
+	//       "minimum": "0",
+	//       "type": "integer"
+	//     },
+	//     "orderBy": {
+	//       "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageToken": {
+	//       "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Project ID for this request.",
+	//       "location": "path",
+	//       "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "region": {
+	//       "description": "Name of the region for this request.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "router": {
+	//       "description": "Name of the Router resource to query for Nat Mapping information of VM endpoints.",
+	//       "location": "path",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{project}/regions/{region}/routers/{router}/getNatMappingInfo",
+	//   "response": {
+	//     "$ref": "VmEndpointNatMappingsList"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *RoutersGetNatMappingInfoCall) Pages(ctx context.Context, f func(*VmEndpointNatMappingsList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "compute.routers.getRouterStatus":
@@ -81944,7 +83094,7 @@ func (c *SnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
 	//     "snapshot": {
 	//       "description": "Name of the Snapshot resource to return.",
 	//       "location": "path",
-	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }

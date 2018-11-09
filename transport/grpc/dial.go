@@ -22,6 +22,7 @@ import (
 	"errors"
 	"log"
 
+	"go.opencensus.io/plugin/ocgrpc"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
 	"google.golang.org/grpc"
@@ -90,4 +91,8 @@ func dial(ctx context.Context, insecure bool, opts []option.ClientOption) (*grpc
 		grpcOpts = append(grpcOpts, grpc.WithUserAgent(o.UserAgent))
 	}
 	return grpc.DialContext(ctx, o.Endpoint, grpcOpts...)
+}
+
+func addOCStatsHandler(opts []grpc.DialOption) []grpc.DialOption {
+	return append(opts, grpc.WithStatsHandler(&ocgrpc.ClientHandler{}))
 }

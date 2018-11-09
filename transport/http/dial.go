@@ -22,10 +22,12 @@ import (
 	"errors"
 	"net/http"
 
+	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/googleapi/transport"
 	"google.golang.org/api/internal"
 	"google.golang.org/api/option"
+	"google.golang.org/api/transport/http/internal/propagation"
 )
 
 // NewClient returns an HTTP client for use communicating with a Google cloud
@@ -135,4 +137,11 @@ func defaultBaseTransport(ctx context.Context) http.RoundTripper {
 		return appengineUrlfetchHook(ctx)
 	}
 	return http.DefaultTransport
+}
+
+func addOCTransport(trans http.RoundTripper) http.RoundTripper {
+	return &ochttp.Transport{
+		Base:        trans,
+		Propagation: &propagation.HTTPFormat{},
+	}
 }

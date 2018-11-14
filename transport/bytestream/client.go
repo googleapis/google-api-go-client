@@ -128,7 +128,7 @@ func (c *Client) NewReader(ctx context.Context, resourceName string) (*Reader, e
 	return c.NewReaderAt(ctx, resourceName, 0)
 }
 
-// NewReader creates a new Reader to read a resource from the given offset.
+// NewReaderAt creates a new Reader to read a resource from the given offset.
 func (c *Client) NewReaderAt(ctx context.Context, resourceName string, offset int64) (*Reader, error) {
 	// readClient is set up for Read(). ReadAt() will copy needed fields into its reentrantReader.
 	readClient, err := c.client.Read(ctx, &pb.ReadRequest{

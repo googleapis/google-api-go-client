@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package transport/http supports network connections to HTTP servers.
+// Package http supports network connections to HTTP servers.
 // This package is not intended for use by end developers. Use the
 // google.golang.org/api/option package to configure API clients.
 package http

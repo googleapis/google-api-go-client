@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package transport/grpc supports network connections to GRPC servers.
+// Package grpc supports network connections to GRPC servers.
 // This package is not intended for use by end developers. Use the
 // google.golang.org/api/option package to configure API clients.
 package grpc

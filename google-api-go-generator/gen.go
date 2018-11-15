@@ -158,7 +158,7 @@ func main() {
 	if len(errors) > 0 {
 		log.Printf("%d API(s) failed to generate or compile:", len(errors))
 		for _, ce := range errors {
-			log.Printf(ce.Error())
+			log.Println(ce.Error())
 		}
 		os.Exit(1)
 	}

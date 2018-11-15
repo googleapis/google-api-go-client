@@ -72,7 +72,7 @@ func TestRetry(t *testing.T) {
 			Strategy: NoPauseStrategy,
 		}
 
-		resp, err := Retry(nil, f, backoff)
+		resp, err := Retry(context.Background(), f, backoff)
 		if err != nil {
 			t.Errorf("%s: Retry returned err %v", tt.desc, err)
 		}
@@ -108,7 +108,7 @@ func TestRetryClosesBody(t *testing.T) {
 		return resp, nil
 	}
 
-	resp, err := Retry(nil, f, NoPauseStrategy)
+	resp, err := Retry(context.Background(), f, NoPauseStrategy)
 	if err != nil {
 		t.Fatalf("Retry returned error: %v", err)
 	}

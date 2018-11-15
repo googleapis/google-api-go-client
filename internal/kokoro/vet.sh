@@ -42,3 +42,7 @@ golint ./... 2>&1 | ( \
     grep -v "UnmarshalJSON should have comment or be unexported" | \
     grep -v "MarshalJSON should have comment or be unexported" | \
     grep -vE "\.pb\.go:" || true) | tee /dev/stderr | (! read)
+
+staticcheck -ignore '
+*:SA1019
+' ./...

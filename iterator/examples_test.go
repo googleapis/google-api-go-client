@@ -202,6 +202,7 @@ func (it *SieveIterator) calc(max int) {
 outer:
 	for x := it.pos; x < max; x++ {
 		sqrt := int(math.Sqrt(float64(x)))
+	inner:
 		for _, p := range it.p {
 			switch {
 			case x%p == 0:
@@ -209,7 +210,7 @@ outer:
 				continue outer
 			case p > sqrt:
 				// Only need to check up to sqrt.
-				break
+				break inner
 			}
 		}
 		it.p = append(it.p, x)

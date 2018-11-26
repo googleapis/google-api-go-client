@@ -1,3 +1,19 @@
+// Copyright 2018 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+// AUTO-GENERATED CODE. DO NOT EDIT.
+
 // Package cloudasset provides access to the Cloud Asset API.
 //
 // See https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview
@@ -538,12 +554,14 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 
 // GcsDestination: A Cloud Storage location.
 type GcsDestination struct {
-	// Uri: The path of the Cloud Storage objects. It's the same path that
-	// is used by
-	//  gsutil. For example: "gs://bucket_name/object_path". See [Viewing
-	// and Editing Object
-	// Metadata](https://cloud.google.com/storage/docs/viewing-editing-metada
-	// ta)
+	// Uri: The uri of the Cloud Storage object. It's the same uri that is
+	// used by
+	// gsutil. For example: "gs://bucket_name/object_name". See [Viewing
+	// and
+	// Editing
+	// Object
+	// Metadata](https://cloud.google.com/storage/docs/viewing-editing
+	// -metadata)
 	// for more information.
 	Uri string `json:"uri,omitempty"`
 

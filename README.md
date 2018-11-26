@@ -31,7 +31,6 @@ func main() {
 * For support, use the [golang-nuts](https://groups.google.com/group/golang-nuts) mailing list.
 
 ## Status
-[![Build Status](https://travis-ci.org/google/google-api-go-client.png)](https://travis-ci.org/google/google-api-go-client)
 [![GoDoc](https://godoc.org/google.golang.org/api?status.svg)](https://godoc.org/google.golang.org/api)
 
 These are auto-generated Go libraries from the Google Discovery Service's JSON description files of the available "new style" Google APIs.

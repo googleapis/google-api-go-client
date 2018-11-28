@@ -4522,7 +4522,7 @@ type LiveBroadcast struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Id: The ID that YouTube assigns to uniquely identify the broadcast.
-	Id string `json:"id,omitempty"`
+	Id string `json:"id"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
 	// string "youtube#liveBroadcast".
@@ -4600,7 +4600,7 @@ type LiveBroadcastContentDetails struct {
 
 	// EnableContentEncryption: This setting indicates whether YouTube
 	// should enable content encryption for the broadcast.
-	EnableContentEncryption bool `json:"enableContentEncryption,omitempty"`
+	EnableContentEncryption bool `json:"enableContentEncryption"`
 
 	// EnableDvr: This setting determines whether viewers can access DVR
 	// controls while watching the video. DVR controls enable the viewer to
@@ -4613,13 +4613,13 @@ type LiveBroadcastContentDetails struct {
 	// Important: You must set the value to true and also set the
 	// enableArchive property's value to true if you want to make playback
 	// available immediately after the broadcast ends.
-	EnableDvr bool `json:"enableDvr,omitempty"`
+	EnableDvr bool `json:"enableDvr"`
 
 	// EnableEmbed: This setting indicates whether the broadcast video can
 	// be played in an embedded player. If you choose to archive the video
 	// (using the enableArchive property), this setting will also apply to
 	// the archived video.
-	EnableEmbed bool `json:"enableEmbed,omitempty"`
+	EnableEmbed bool `json:"enableEmbed"`
 
 	// EnableLowLatency: Indicates whether this broadcast has low latency
 	// enabled.
@@ -4663,7 +4663,7 @@ type LiveBroadcastContentDetails struct {
 	// also set the enableDvr property to true, there may be a delay of
 	// around one day before the archived video will be available for
 	// playback.
-	RecordFromStart bool `json:"recordFromStart,omitempty"`
+	RecordFromStart bool `json:"recordFromStart"`
 
 	// StartWithSlate: This setting indicates whether the broadcast should
 	// automatically begin with an in-stream slate when you update the
@@ -4671,7 +4671,7 @@ type LiveBroadcastContentDetails struct {
 	// to send a liveCuepoints.insert request that sets the cuepoint's
 	// eventState to end to remove the in-stream slate and make your
 	// broadcast stream visible to viewers.
-	StartWithSlate bool `json:"startWithSlate,omitempty"`
+	StartWithSlate bool `json:"startWithSlate"`
 
 	// Possible values:
 	//   "left_right"
@@ -4799,7 +4799,7 @@ type LiveBroadcastSnippet struct {
 	// ScheduledStartTime: The date and time that the broadcast is scheduled
 	// to start. The value is specified in ISO 8601 (YYYY-MM-DDThh:mm:ss.sZ)
 	// format.
-	ScheduledStartTime string `json:"scheduledStartTime,omitempty"`
+	ScheduledStartTime string `json:"scheduledStartTime"`
 
 	// Thumbnails: A map of thumbnail images associated with the broadcast.
 	// For each nested object in this object, the key is the name of the
@@ -4811,7 +4811,7 @@ type LiveBroadcastSnippet struct {
 	// exactly one YouTube video. You can set this field by modifying the
 	// broadcast resource or by setting the title field of the corresponding
 	// video resource.
-	Title string `json:"title,omitempty"`
+	Title string `json:"title"`
 
 	// ForceSendFields is a list of field names (e.g. "ActualEndTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -4919,7 +4919,7 @@ type LiveBroadcastStatus struct {
 	//   "public"
 	//   "unlisted"
 	//   "unlisted_new"
-	PrivacyStatus string `json:"privacyStatus,omitempty"`
+	PrivacyStatus string `json:"privacyStatus"`
 
 	// RecordingStatus: The broadcast's recording status.
 	//
@@ -6194,7 +6194,7 @@ type MonitorStreamInfo struct {
 	// BroadcastStreamDelayMs: If you have set the enableMonitorStream
 	// property to true, then this property determines the length of the
 	// live broadcast delay.
-	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs,omitempty"`
+	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs"`
 
 	// EmbedHtml: HTML code that embeds a player that plays the monitor
 	// stream.
@@ -6212,7 +6212,7 @@ type MonitorStreamInfo struct {
 	//
 	// Note: This property cannot be updated once the broadcast is in the
 	// testing or live state.
-	EnableMonitorStream bool `json:"enableMonitorStream,omitempty"`
+	EnableMonitorStream bool `json:"enableMonitorStream"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "BroadcastStreamDelayMs") to unconditionally include in API requests.

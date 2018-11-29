@@ -302,6 +302,62 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "applyProjectConfig": {
+              "description": "Apply configuration to an existing tenant project.\nThis project must exist in active state and have the original owner\naccount. Caller must have the permission to add a project to the given\ntenancy unit. Configuration will be applied, but any existing settings on\nthe project will not be modified.\nSpecified policy bindings will be applied. Existing binding will not be\nmodified.\nSpecified services will be activated.   No service will be deactivated.\nNew billing configuration will be applied if specified.\nOmit billing configuration to keep the existing one.\nService account in the project will be created if previously non existing.\nOperation fails if any of the steps fail, but no rollback of already\napplied configuration changes is attempted.\nOperation\u003cresponse: Empty\u003e.",
+              "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:applyProjectConfig",
+              "httpMethod": "POST",
+              "id": "serviceconsumermanagement.services.tenancyUnits.applyProjectConfig",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Name of the tenancy unit.",
+                  "location": "path",
+                  "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:applyProjectConfig",
+              "request": {
+                "$ref": "ApplyTenantProjectConfigRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "attachProject": {
+              "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could be either the tenant project reserved by\ncalling AddTenantProject under tenancy unit for the producer project of\nservice, or from outside.\nCaller will be checked against the permission as if calling\nAddTenantProject on the same consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Please also make sure ServiceConsumerManagement service account is\nthe owner of that project. Note that these two requirements are already met\nif the project is reserved through AddTenantProject.\nOperation\u003cresponse: Empty\u003e.",
+              "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
+              "httpMethod": "POST",
+              "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Name of the tenancy unit that project will be attached to.",
+                  "location": "path",
+                  "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:attachProject",
+              "request": {
+                "$ref": "AttachTenantProjectRequest"
+              },
+              "response": {
+                "$ref": "Operation"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "create": {
               "description": "Creates a tenancy unit with no tenant resources.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits",
@@ -429,7 +485,7 @@
       }
     }
   },
-  "revision": "20181105",
+  "revision": "20181127",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -494,6 +550,40 @@
         },
         "version": {
           "description": "A version string for this interface. If specified, must have the form\n`major-version.minor-version`, as in `1.10`. If the minor version is\nomitted, it defaults to zero. If the entire version field is empty, the\nmajor version is derived from the package name, as outlined below. If the\nfield is not empty, the version in the package name will be verified to be\nconsistent with what is provided here.\n\nThe versioning schema uses [semantic\nversioning](http://semver.org) where the major version number\nindicates a breaking change and the minor version an additive,\nnon-breaking change. Both version numbers are signals to users\nwhat to expect from different versions, and should be carefully\nchosen based on the product plan.\n\nThe major version is also reflected in the package name of the\ninterface, which must end in `v\u003cmajor-version\u003e`, as in\n`google.feature.v1`. For major versions 0 and 1, the suffix can\nbe omitted. Zero major versions must only be used for\nexperimental, non-GA interfaces.\n",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ApplyTenantProjectConfigRequest": {
+      "description": "Request to apply configuration to an existing tenant project.",
+      "id": "ApplyTenantProjectConfigRequest",
+      "properties": {
+        "projectConfig": {
+          "$ref": "TenantProjectConfig",
+          "description": "Configuration that should be applied to the existing tenant project."
+        },
+        "tag": {
+          "description": "Tag of the project. Must be less than 128 characters. Required.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AttachTenantProjectRequest": {
+      "description": "Request to attach an existing project to the tenancy unit as a new tenant\nresource.",
+      "id": "AttachTenantProjectRequest",
+      "properties": {
+        "externalResource": {
+          "description": "When attaching an external project, this is in the format of\n`projects/{project_number}’.",
+          "type": "string"
+        },
+        "reservedResource": {
+          "description": "When attaching a reserved project already in Tenancy Units, this is the\ntag of tenant resource under the tenancy unit for the service's producer\nproject. The reserved tenant resource must be in active state.",
+          "type": "string"
+        },
+        "tag": {
+          "description": "Tag of the tenant resource after attachment.\nMust be less than 128 characters. Required.",
           "type": "string"
         }
       },

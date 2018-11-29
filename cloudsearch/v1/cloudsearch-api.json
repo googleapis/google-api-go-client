@@ -133,6 +133,71 @@
         "datasources": {
           "resources": {
             "items": {
+              "methods": {
+                "checkAccess": {
+                  "description": "Checks whether an item is accessible by specified principal.",
+                  "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess",
+                  "httpMethod": "POST",
+                  "id": "cloudsearch.debug.datasources.items.checkAccess",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "debugOptions.enableDebugging": {
+                      "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "description": "Item name, format:\ndatasources/{source_id}/items/{item_id}",
+                      "location": "path",
+                      "pattern": "^datasources/[^/]+/items/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/debug/{+name}:checkAccess",
+                  "request": {
+                    "$ref": "Principal"
+                  },
+                  "response": {
+                    "$ref": "CheckAccessResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud_search",
+                    "https://www.googleapis.com/auth/cloud_search.debug"
+                  ]
+                },
+                "searchByViewUrl": {
+                  "description": "Fetches the item whose viewUrl exactly matches that of the URL provided\nin the request.",
+                  "flatPath": "v1/debug/datasources/{datasourcesId}/items:searchByViewUrl",
+                  "httpMethod": "POST",
+                  "id": "cloudsearch.debug.datasources.items.searchByViewUrl",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Source name, format:\ndatasources/{source_id}",
+                      "location": "path",
+                      "pattern": "^datasources/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/debug/{+name}/items:searchByViewUrl",
+                  "request": {
+                    "$ref": "SearchItemsByViewUrlRequest"
+                  },
+                  "response": {
+                    "$ref": "SearchItemsByViewUrlResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud_search",
+                    "https://www.googleapis.com/auth/cloud_search.debug"
+                  ]
+                }
+              },
               "resources": {
                 "unmappedids": {
                   "methods": {
@@ -145,6 +210,11 @@
                         "parent"
                       ],
                       "parameters": {
+                        "debugOptions.enableDebugging": {
+                          "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+                          "location": "query",
+                          "type": "boolean"
+                        },
                         "pageSize": {
                           "description": "Maximum number of items to fetch in a request.\nDefaults to 100.",
                           "format": "int32",
@@ -192,6 +262,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "debugOptions.enableDebugging": {
+                      "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "groupResourceName": {
                       "location": "query",
                       "type": "string"
@@ -241,6 +316,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "debugOptions.enableDebugging": {
+                      "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "pageSize": {
                       "description": "Maximum number of items to fetch in a request.\nDefaults to 100.",
                       "format": "int32",
@@ -1349,7 +1429,7 @@
       }
     }
   },
-  "revision": "20181029",
+  "revision": "20181120",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1370,6 +1450,16 @@
         "operatorOptions": {
           "$ref": "BooleanOperatorOptions",
           "description": "If set, describes how the boolean should be used as a search operator."
+        }
+      },
+      "type": "object"
+    },
+    "CheckAccessResponse": {
+      "id": "CheckAccessResponse",
+      "properties": {
+        "hasAccess": {
+          "description": "Returns true if principal has access.  Returns false otherwise.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3591,6 +3681,40 @@
             "$ref": "SourceConfig"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchItemsByViewUrlRequest": {
+      "id": "SearchItemsByViewUrlRequest",
+      "properties": {
+        "debugOptions": {
+          "$ref": "DebugOptions",
+          "description": "Common debug options."
+        },
+        "pageToken": {
+          "description": "The next_page_token value returned from a previous request, if any.",
+          "type": "string"
+        },
+        "viewUrl": {
+          "description": "Specify the full view URL to find the corresponding item.\nThe maximum length is 2048 characters.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SearchItemsByViewUrlResponse": {
+      "id": "SearchItemsByViewUrlResponse",
+      "properties": {
+        "items": {
+          "items": {
+            "$ref": "Item"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
         }
       },
       "type": "object"

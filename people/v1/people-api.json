@@ -3,10 +3,10 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/contacts": {
-          "description": "Manage your contacts"
+          "description": "See, edit, download, and permanently delete your contacts"
         },
         "https://www.googleapis.com/auth/contacts.readonly": {
-          "description": "View your contacts"
+          "description": "See and download your contacts"
         },
         "https://www.googleapis.com/auth/plus.login": {
           "description": "Know the list of people in your circles, your age range, and language"
@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20181128",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

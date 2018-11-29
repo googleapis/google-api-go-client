@@ -539,13 +539,13 @@ type Debuggee struct {
 	// informational or an error status.
 	Status *StatusMessage `json:"status,omitempty"`
 
-	// Uniquifier: Uniquifier to further distiguish the application.
+	// Uniquifier: Uniquifier to further distinguish the application.
 	// It is possible that different applications might have identical
 	// values in
 	// the debuggee message, thus, incorrectly identified as a single
 	// application
-	// by the Controller service. This field adds salt to further distiguish
-	// the
+	// by the Controller service. This field adds salt to further
+	// distinguish the
 	// application. Agents should consider seeding this field with value
 	// that
 	// identifies the code, binary, configuration and environment.
@@ -970,7 +970,7 @@ func (s *RegisterDebuggeeRequest) MarshalJSON() ([]byte, error) {
 // RegisterDebuggeeResponse: Response for registering a debuggee.
 type RegisterDebuggeeResponse struct {
 	// Debuggee: Debuggee resource.
-	// The field `id` is guranteed to be set (in addition to the echoed
+	// The field `id` is guaranteed to be set (in addition to the echoed
 	// fields).
 	// If the field `is_disabled` is set to `true`, the agent should
 	// disable

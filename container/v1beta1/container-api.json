@@ -12,7 +12,7 @@
   "baseUrl": "https://container.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Container",
-  "description": "The Google Kubernetes Engine API is used for building and managing container based applications, powered by the open source Kubernetes technology.",
+  "description": "Builds and manages container-based applications, powered by the open source Kubernetes technology.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/container-engine/",
   "fullyEncodeReservedExpansion": true,
@@ -2435,7 +2435,7 @@
       }
     }
   },
-  "revision": "20180917",
+  "revision": "20181109",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2588,7 +2588,7 @@
           "type": "string"
         },
         "currentNodeCount": {
-          "description": "[Output only] The number of nodes currently in the cluster.",
+          "description": "[Output only]  The number of nodes currently in the cluster. Deprecated.\nCall Kubernetes API directly to retrieve node information.",
           "format": "int32",
           "type": "integer"
         },
@@ -2653,7 +2653,7 @@
           "type": "string"
         },
         "locations": {
-          "description": "The list of Google Compute Engine\n[locations](/compute/docs/zones#available) in which the cluster's nodes\nshould be located.",
+          "description": "The list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the cluster's nodes\nshould be located.",
           "items": {
             "type": "string"
           },
@@ -2669,7 +2669,7 @@
         },
         "masterAuth": {
           "$ref": "MasterAuth",
-          "description": "The authentication information for accessing the master endpoint."
+          "description": "The authentication information for accessing the master endpoint.\nIf unspecified, the defaults are used:\nFor clusters before v1.12, if master_auth is unspecified, `username` will\nbe set to \"admin\", a random password will be generated, and a client\ncertificate will be issued."
         },
         "masterAuthorizedNetworksConfig": {
           "$ref": "MasterAuthorizedNetworksConfig",
@@ -2776,6 +2776,10 @@
           "description": "[Output only] The IP address range of the Cloud TPUs in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`).",
           "type": "string"
         },
+        "verticalPodAutoscaling": {
+          "$ref": "VerticalPodAutoscaling",
+          "description": "Cluster-level Vertical Pod Autoscaling configuration."
+        },
         "zone": {
           "description": "[Output only] The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field is deprecated, use location instead.",
           "type": "string"
@@ -2822,7 +2826,7 @@
           "type": "string"
         },
         "desiredLocations": {
-          "description": "The desired list of Google Compute Engine\n[locations](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
+          "description": "The desired list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
           "items": {
             "type": "string"
           },
@@ -2859,6 +2863,10 @@
         "desiredPodSecurityPolicyConfig": {
           "$ref": "PodSecurityPolicyConfig",
           "description": "The desired configuration options for the PodSecurityPolicy feature."
+        },
+        "desiredVerticalPodAutoscaling": {
+          "$ref": "VerticalPodAutoscaling",
+          "description": "Cluster-level Vertical Pod Autoscaling configuration."
         }
       },
       "type": "object"
@@ -3228,7 +3236,7 @@
           "type": "string"
         },
         "username": {
-          "description": "The username to use for HTTP basic authentication to the master endpoint.\nFor clusters v1.6.0 and later, you can disable basic authentication by\nproviding an empty username.",
+          "description": "The username to use for HTTP basic authentication to the master endpoint.\nFor clusters v1.6.0 and later, basic authentication can be disabled by\nleaving username unspecified (or setting it to the empty string).",
           "type": "string"
         }
       },
@@ -3963,7 +3971,7 @@
           "type": "string"
         },
         "locations": {
-          "description": "The desired list of Google Compute Engine\n[locations](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
+          "description": "The desired list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
           "items": {
             "type": "string"
           },
@@ -4266,13 +4274,15 @@
             "UNKNOWN",
             "GCE_STOCKOUT",
             "GKE_SERVICE_ACCOUNT_DELETED",
-            "GCE_QUOTA_EXCEEDED"
+            "GCE_QUOTA_EXCEEDED",
+            "SET_BY_OPERATOR"
           ],
           "enumDescriptions": [
             "UNKNOWN indicates a generic condition.",
-            "GCE_STOCKOUT indicates a GCE stockout.",
+            "GCE_STOCKOUT indicates a Google Compute Engine stockout.",
             "GKE_SERVICE_ACCOUNT_DELETED indicates that the user deleted their robot\nservice account.",
-            "GCE quota was exceeded.\nMore codes TBA"
+            "Google Compute Engine quota was exceeded.",
+            "Cluster state was manually changed by an SRE due to a system logic error.\nMore codes TBA"
           ],
           "type": "string"
         },
@@ -4431,6 +4441,17 @@
             "IN_USE_MANAGED_POD denotes this range was created by GKE and is claimed\nfor pods. It cannot be used for other clusters."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VerticalPodAutoscaling": {
+      "description": "VerticalPodAutoscaling contains global, per-cluster information\nrequired by Vertical Pod Autoscaler to automatically adjust\nthe resources of pods controlled by it.",
+      "id": "VerticalPodAutoscaling",
+      "properties": {
+        "enabled": {
+          "description": "Enables vertical pod autoscaling.",
+          "type": "boolean"
         }
       },
       "type": "object"

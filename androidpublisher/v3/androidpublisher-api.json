@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/zcbRQkf_Tx0OoUkltp1uvxXyfHQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/lTkj66Di1eRkZoaLoAOUB9OKJfk\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2226,7 +2226,7 @@
       }
     }
   },
-  "revision": "20181009",
+  "revision": "20181126",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3051,6 +3051,11 @@
         "autoRenewing": {
           "description": "Whether the subscription will automatically be renewed when it reaches its current expiry time.",
           "type": "boolean"
+        },
+        "autoResumeTimeMillis": {
+          "description": "Time at which the subscription will be automatically resumed, in milliseconds since the Epoch. Only present if the user has requested to pause the subscription.",
+          "format": "int64",
+          "type": "string"
         },
         "cancelReason": {
           "description": "The reason why a subscription was canceled or is not auto-renewing. Possible values are:  \n- User canceled the subscription \n- Subscription was canceled by the system, for example because of a billing problem \n- Subscription was replaced with a new subscription \n- Subscription was canceled by the developer",

@@ -210,6 +210,50 @@ type ProjectsLocationsRegistriesGroupsDevicesStatesService struct {
 	s *Service
 }
 
+// BindDeviceToGatewayRequest: Request for `BindDeviceToGateway`.
+type BindDeviceToGatewayRequest struct {
+	// DeviceId: The device to associate with the specified gateway. The
+	// value of
+	// `device_id` can be either the device numeric ID or the user-defined
+	// device
+	// identifier.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// GatewayId: The value of `gateway_id` can be either the device numeric
+	// ID or the
+	// user-defined device identifier.
+	GatewayId string `json:"gatewayId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BindDeviceToGatewayRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BindDeviceToGatewayRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BindDeviceToGatewayResponse: Response for `BindDeviceToGateway`.
+type BindDeviceToGatewayResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: Unimplemented. The condition that is associated with this
@@ -315,6 +359,9 @@ type Device struct {
 	// the
 	// `DeviceRegistry.credentials` field.
 	Credentials []*DeviceCredential `json:"credentials,omitempty"`
+
+	// GatewayConfig: Gateway-related configuration and state.
+	GatewayConfig *GatewayConfig `json:"gatewayConfig,omitempty"`
 
 	// Id: The user-defined device identifier. The device ID must be
 	// unique
@@ -840,6 +887,71 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GatewayConfig: Gateway-related configuration and state.
+type GatewayConfig struct {
+	// GatewayAuthMethod: Indicates how to authorize and/or authenticate
+	// devices to access the
+	// gateway.
+	//
+	// Possible values:
+	//   "GATEWAY_AUTH_METHOD_UNSPECIFIED" - No authentication/authorization
+	// method specified. No devices are allowed to
+	// access the gateway.
+	//   "ASSOCIATION_ONLY" - The device is authenticated through the
+	// gateway association only. Device
+	// credentials are ignored even if provided.
+	//   "DEVICE_AUTH_TOKEN_ONLY" - The device is authenticated through its
+	// own credentials. Gateway
+	// association is not checked.
+	//   "ASSOCIATION_AND_DEVICE_AUTH_TOKEN" - The device is authenticated
+	// through both device credentials and gateway
+	// association. The device must be bound to the gateway and must provide
+	// its
+	// own credentials.
+	GatewayAuthMethod string `json:"gatewayAuthMethod,omitempty"`
+
+	// GatewayType: Indicates whether the device is a gateway.
+	//
+	// Possible values:
+	//   "GATEWAY_TYPE_UNSPECIFIED" - If unspecified, the device is
+	// considered a non-gateway device.
+	//   "GATEWAY" - The device is a gateway.
+	//   "NON_GATEWAY" - The device is not a gateway.
+	GatewayType string `json:"gatewayType,omitempty"`
+
+	// LastAccessedGatewayId: [Output only] The ID of the gateway the device
+	// accessed most recently.
+	LastAccessedGatewayId string `json:"lastAccessedGatewayId,omitempty"`
+
+	// LastAccessedGatewayTime: [Output only] The most recent time at which
+	// the device accessed the gateway
+	// specified in `last_accessed_gateway`.
+	LastAccessedGatewayTime string `json:"lastAccessedGatewayTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GatewayAuthMethod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GatewayAuthMethod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GatewayConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GatewayConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1658,6 +1770,52 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UnbindDeviceFromGatewayRequest: Request for
+// `UnbindDeviceFromGateway`.
+type UnbindDeviceFromGatewayRequest struct {
+	// DeviceId: The device to disassociate from the specified gateway. The
+	// value of
+	// `device_id` can be either the device numeric ID or the user-defined
+	// device
+	// identifier.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// GatewayId: The value of `gateway_id` can be either the device numeric
+	// ID or the
+	// user-defined device identifier.
+	GatewayId string `json:"gatewayId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UnbindDeviceFromGatewayRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnbindDeviceFromGatewayRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UnbindDeviceFromGatewayResponse: Response for
+// `UnbindDeviceFromGateway`.
+type UnbindDeviceFromGatewayResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // X509CertificateDetails: Details of an X.509 certificate. For
 // informational purposes only.
 type X509CertificateDetails struct {
@@ -1700,6 +1858,146 @@ func (s *X509CertificateDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod X509CertificateDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "cloudiot.projects.locations.registries.bindDeviceToGateway":
+
+type ProjectsLocationsRegistriesBindDeviceToGatewayCall struct {
+	s                          *Service
+	parent                     string
+	binddevicetogatewayrequest *BindDeviceToGatewayRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BindDeviceToGateway: Associates the device with the gateway.
+func (r *ProjectsLocationsRegistriesService) BindDeviceToGateway(parent string, binddevicetogatewayrequest *BindDeviceToGatewayRequest) *ProjectsLocationsRegistriesBindDeviceToGatewayCall {
+	c := &ProjectsLocationsRegistriesBindDeviceToGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.binddevicetogatewayrequest = binddevicetogatewayrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesBindDeviceToGatewayCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Context(ctx context.Context) *ProjectsLocationsRegistriesBindDeviceToGatewayCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.binddevicetogatewayrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:bindDeviceToGateway")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.bindDeviceToGateway" call.
+// Exactly one of *BindDeviceToGatewayResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BindDeviceToGatewayResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesBindDeviceToGatewayCall) Do(opts ...googleapi.CallOption) (*BindDeviceToGatewayResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BindDeviceToGatewayResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Associates the device with the gateway.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:bindDeviceToGateway",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.bindDeviceToGateway",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:bindDeviceToGateway",
+	//   "request": {
+	//     "$ref": "BindDeviceToGatewayRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BindDeviceToGatewayResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
 }
 
 // method id "cloudiot.projects.locations.registries.create":
@@ -2902,6 +3200,147 @@ func (c *ProjectsLocationsRegistriesTestIamPermissionsCall) Do(opts ...googleapi
 
 }
 
+// method id "cloudiot.projects.locations.registries.unbindDeviceFromGateway":
+
+type ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall struct {
+	s                              *Service
+	parent                         string
+	unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// UnbindDeviceFromGateway: Deletes the association between the device
+// and the gateway.
+func (r *ProjectsLocationsRegistriesService) UnbindDeviceFromGateway(parent string, unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest) *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall {
+	c := &ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.unbinddevicefromgatewayrequest = unbinddevicefromgatewayrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Context(ctx context.Context) *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unbinddevicefromgatewayrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:unbindDeviceFromGateway")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.unbindDeviceFromGateway" call.
+// Exactly one of *UnbindDeviceFromGatewayResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *UnbindDeviceFromGatewayResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesUnbindDeviceFromGatewayCall) Do(opts ...googleapi.CallOption) (*UnbindDeviceFromGatewayResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UnbindDeviceFromGatewayResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the association between the device and the gateway.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:unbindDeviceFromGateway",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.unbindDeviceFromGateway",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:unbindDeviceFromGateway",
+	//   "request": {
+	//     "$ref": "UnbindDeviceFromGatewayRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UnbindDeviceFromGatewayResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
+}
+
 // method id "cloudiot.projects.locations.registries.devices.create":
 
 type ProjectsLocationsRegistriesDevicesCreateCall struct {
@@ -3377,6 +3816,48 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) FieldMask(fieldMask string)
 	return c
 }
 
+// GatewayListOptionsAssociationsDeviceId sets the optional parameter
+// "gatewayListOptions.associationsDeviceId": If set, returns only the
+// gateways with which the specified device is
+// associated. The device ID can be numeric (`num_id`) or the
+// user-defined
+// string (`id`). For example, if `456` is specified, returns only
+// the
+// gateways to which the device with `num_id` 456 is bound.
+func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociationsDeviceId(gatewayListOptionsAssociationsDeviceId string) *ProjectsLocationsRegistriesDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.associationsDeviceId", gatewayListOptionsAssociationsDeviceId)
+	return c
+}
+
+// GatewayListOptionsAssociationsGatewayId sets the optional parameter
+// "gatewayListOptions.associationsGatewayId": If set, only devices
+// associated with the specified gateway are returned.
+// The gateway ID can be numeric (`num_id`) or the user-defined
+// string
+// (`id`). For example, if `123` is specified, only devices bound to
+// the
+// gateway with `num_id` 123 are returned.
+func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsAssociationsGatewayId(gatewayListOptionsAssociationsGatewayId string) *ProjectsLocationsRegistriesDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.associationsGatewayId", gatewayListOptionsAssociationsGatewayId)
+	return c
+}
+
+// GatewayListOptionsGatewayType sets the optional parameter
+// "gatewayListOptions.gatewayType": If `GATEWAY` is specified, only
+// gateways are returned. If `NON_GATEWAY`
+// is specified, only non-gateway devices are returned.
+// If
+// `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.
+//
+// Possible values:
+//   "GATEWAY_TYPE_UNSPECIFIED"
+//   "GATEWAY"
+//   "NON_GATEWAY"
+func (c *ProjectsLocationsRegistriesDevicesListCall) GatewayListOptionsGatewayType(gatewayListOptionsGatewayType string) *ProjectsLocationsRegistriesDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.gatewayType", gatewayListOptionsGatewayType)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
@@ -3520,6 +4001,26 @@ func (c *ProjectsLocationsRegistriesDevicesListCall) Do(opts ...googleapi.CallOp
 	//     "fieldMask": {
 	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.associationsDeviceId": {
+	//       "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.associationsGatewayId": {
+	//       "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.gatewayType": {
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+	//       "enum": [
+	//         "GATEWAY_TYPE_UNSPECIFIED",
+	//         "GATEWAY",
+	//         "NON_GATEWAY"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4360,6 +4861,146 @@ func (c *ProjectsLocationsRegistriesDevicesStatesListCall) Do(opts ...googleapi.
 
 }
 
+// method id "cloudiot.projects.locations.registries.groups.bindDeviceToGateway":
+
+type ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall struct {
+	s                          *Service
+	parent                     string
+	binddevicetogatewayrequest *BindDeviceToGatewayRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// BindDeviceToGateway: Associates the device with the gateway.
+func (r *ProjectsLocationsRegistriesGroupsService) BindDeviceToGateway(parent string, binddevicetogatewayrequest *BindDeviceToGatewayRequest) *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall {
+	c := &ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.binddevicetogatewayrequest = binddevicetogatewayrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall) Context(ctx context.Context) *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.binddevicetogatewayrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:bindDeviceToGateway")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.groups.bindDeviceToGateway" call.
+// Exactly one of *BindDeviceToGatewayResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *BindDeviceToGatewayResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesGroupsBindDeviceToGatewayCall) Do(opts ...googleapi.CallOption) (*BindDeviceToGatewayResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &BindDeviceToGatewayResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Associates the device with the gateway.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:bindDeviceToGateway",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.groups.bindDeviceToGateway",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:bindDeviceToGateway",
+	//   "request": {
+	//     "$ref": "BindDeviceToGatewayRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BindDeviceToGatewayResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
+}
+
 // method id "cloudiot.projects.locations.registries.groups.getIamPolicy":
 
 type ProjectsLocationsRegistriesGroupsGetIamPolicyCall struct {
@@ -4789,6 +5430,147 @@ func (c *ProjectsLocationsRegistriesGroupsTestIamPermissionsCall) Do(opts ...goo
 
 }
 
+// method id "cloudiot.projects.locations.registries.groups.unbindDeviceFromGateway":
+
+type ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall struct {
+	s                              *Service
+	parent                         string
+	unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// UnbindDeviceFromGateway: Deletes the association between the device
+// and the gateway.
+func (r *ProjectsLocationsRegistriesGroupsService) UnbindDeviceFromGateway(parent string, unbinddevicefromgatewayrequest *UnbindDeviceFromGatewayRequest) *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall {
+	c := &ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.unbinddevicefromgatewayrequest = unbinddevicefromgatewayrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall) Fields(s ...googleapi.Field) *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall) Context(ctx context.Context) *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.unbinddevicefromgatewayrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:unbindDeviceFromGateway")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudiot.projects.locations.registries.groups.unbindDeviceFromGateway" call.
+// Exactly one of *UnbindDeviceFromGatewayResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *UnbindDeviceFromGatewayResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRegistriesGroupsUnbindDeviceFromGatewayCall) Do(opts ...googleapi.CallOption) (*UnbindDeviceFromGatewayResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UnbindDeviceFromGatewayResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the association between the device and the gateway.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:unbindDeviceFromGateway",
+	//   "httpMethod": "POST",
+	//   "id": "cloudiot.projects.locations.registries.groups.unbindDeviceFromGateway",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}:unbindDeviceFromGateway",
+	//   "request": {
+	//     "$ref": "UnbindDeviceFromGatewayRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UnbindDeviceFromGatewayResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloudiot"
+	//   ]
+	// }
+
+}
+
 // method id "cloudiot.projects.locations.registries.groups.devices.get":
 
 type ProjectsLocationsRegistriesGroupsDevicesGetCall struct {
@@ -4994,6 +5776,48 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) FieldMask(fieldMask s
 	return c
 }
 
+// GatewayListOptionsAssociationsDeviceId sets the optional parameter
+// "gatewayListOptions.associationsDeviceId": If set, returns only the
+// gateways with which the specified device is
+// associated. The device ID can be numeric (`num_id`) or the
+// user-defined
+// string (`id`). For example, if `456` is specified, returns only
+// the
+// gateways to which the device with `num_id` 456 is bound.
+func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAssociationsDeviceId(gatewayListOptionsAssociationsDeviceId string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.associationsDeviceId", gatewayListOptionsAssociationsDeviceId)
+	return c
+}
+
+// GatewayListOptionsAssociationsGatewayId sets the optional parameter
+// "gatewayListOptions.associationsGatewayId": If set, only devices
+// associated with the specified gateway are returned.
+// The gateway ID can be numeric (`num_id`) or the user-defined
+// string
+// (`id`). For example, if `123` is specified, only devices bound to
+// the
+// gateway with `num_id` 123 are returned.
+func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsAssociationsGatewayId(gatewayListOptionsAssociationsGatewayId string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.associationsGatewayId", gatewayListOptionsAssociationsGatewayId)
+	return c
+}
+
+// GatewayListOptionsGatewayType sets the optional parameter
+// "gatewayListOptions.gatewayType": If `GATEWAY` is specified, only
+// gateways are returned. If `NON_GATEWAY`
+// is specified, only non-gateway devices are returned.
+// If
+// `GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.
+//
+// Possible values:
+//   "GATEWAY_TYPE_UNSPECIFIED"
+//   "GATEWAY"
+//   "NON_GATEWAY"
+func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) GatewayListOptionsGatewayType(gatewayListOptionsGatewayType string) *ProjectsLocationsRegistriesGroupsDevicesListCall {
+	c.urlParams_.Set("gatewayListOptions.gatewayType", gatewayListOptionsGatewayType)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of devices to return in the response. If this value
 // is zero, the service will select a default size. A call may return
@@ -5137,6 +5961,26 @@ func (c *ProjectsLocationsRegistriesGroupsDevicesListCall) Do(opts ...googleapi.
 	//     "fieldMask": {
 	//       "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.associationsDeviceId": {
+	//       "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.associationsGatewayId": {
+	//       "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "gatewayListOptions.gatewayType": {
+	//       "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+	//       "enum": [
+	//         "GATEWAY_TYPE_UNSPECIFIED",
+	//         "GATEWAY",
+	//         "NON_GATEWAY"
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },

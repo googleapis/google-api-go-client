@@ -447,6 +447,11 @@ type ExportAssetsRequest struct {
 	// For example:
 	// "google.compute.disk". If specified, only matching assets will be
 	// returned.
+	// See [Introduction to Cloud
+	// Asset
+	// Inventory](https://cloud.google.com/resource-manager/docs/cloud-
+	// asset-inventory/overview)
+	// for all supported asset types.
 	AssetTypes []string `json:"assetTypes,omitempty"`
 
 	// ContentType: Asset content type. If not specified, no content but the
@@ -1031,13 +1036,13 @@ func (s *TemporalAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TimeWindow: A time window of [start_time, end_time).
+// TimeWindow: A time window of (start_time, end_time].
 type TimeWindow struct {
-	// EndTime: End time of the time window (exclusive).
+	// EndTime: End time of the time window (inclusive).
 	// Current timestamp if not specified.
 	EndTime string `json:"endTime,omitempty"`
 
-	// StartTime: Start time of the time window (inclusive).
+	// StartTime: Start time of the time window (exclusive).
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to
@@ -1121,7 +1126,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) ContentType(contentType string)
 
 // ReadTimeWindowEndTime sets the optional parameter
 // "readTimeWindow.endTime": End time of the time window
-// (exclusive).
+// (inclusive).
 // Current timestamp if not specified.
 func (c *OrganizationsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTime string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.endTime", readTimeWindowEndTime)
@@ -1130,7 +1135,7 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeW
 
 // ReadTimeWindowStartTime sets the optional parameter
 // "readTimeWindow.startTime": Start time of the time window
-// (inclusive).
+// (exclusive).
 func (c *OrganizationsBatchGetAssetsHistoryCall) ReadTimeWindowStartTime(readTimeWindowStartTime string) *OrganizationsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.startTime", readTimeWindowStartTime)
 	return c
@@ -1266,13 +1271,13 @@ func (c *OrganizationsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.endTime": {
-	//       "description": "End time of the time window (exclusive).\nCurrent timestamp if not specified.",
+	//       "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.startTime": {
-	//       "description": "Start time of the time window (inclusive).",
+	//       "description": "Start time of the time window (exclusive).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
@@ -1638,7 +1643,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) ContentType(contentType string) *Pro
 
 // ReadTimeWindowEndTime sets the optional parameter
 // "readTimeWindow.endTime": End time of the time window
-// (exclusive).
+// (inclusive).
 // Current timestamp if not specified.
 func (c *ProjectsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindowEndTime string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.endTime", readTimeWindowEndTime)
@@ -1647,7 +1652,7 @@ func (c *ProjectsBatchGetAssetsHistoryCall) ReadTimeWindowEndTime(readTimeWindow
 
 // ReadTimeWindowStartTime sets the optional parameter
 // "readTimeWindow.startTime": Start time of the time window
-// (inclusive).
+// (exclusive).
 func (c *ProjectsBatchGetAssetsHistoryCall) ReadTimeWindowStartTime(readTimeWindowStartTime string) *ProjectsBatchGetAssetsHistoryCall {
 	c.urlParams_.Set("readTimeWindow.startTime", readTimeWindowStartTime)
 	return c
@@ -1783,13 +1788,13 @@ func (c *ProjectsBatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*B
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.endTime": {
-	//       "description": "End time of the time window (exclusive).\nCurrent timestamp if not specified.",
+	//       "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "readTimeWindow.startTime": {
-	//       "description": "Start time of the time window (inclusive).",
+	//       "description": "Start time of the time window (exclusive).",
 	//       "format": "google-datetime",
 	//       "location": "query",
 	//       "type": "string"

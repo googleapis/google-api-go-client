@@ -275,8 +275,9 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // use.
 // It is not subject to any SLA or deprecation policy.
 type CreateSnapshotRequest struct {
-	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
-	// labels</a>.
+	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
+	// Creating and
+	// managing labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Subscription: The subscription whose backlog the snapshot
@@ -332,6 +333,46 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// ExpirationPolicy: A policy that specifies the conditions for resource
+// expiration (i.e.,
+// automatic resource deletion).
+type ExpirationPolicy struct {
+	// Ttl: Specifies the "time-to-live" duration for an associated
+	// resource. The
+	// resource expires if it is not active for a period of `ttl`. The
+	// definition
+	// of "activity" depends on the type of the associated resource. The
+	// minimum
+	// and maximum allowed values for `ttl` depend on the type of the
+	// associated
+	// resource, as well. If `ttl` is not set, the associated resource
+	// never
+	// expires.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ttl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ttl") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExpirationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpirationPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents an expression text. Example:
@@ -840,6 +881,16 @@ func (s *PublishResponse) MarshalJSON() ([]byte, error) {
 // by subscribers. The
 // message must contain either a non-empty data field or at least one
 // attribute.
+// Note that client libraries represent this object
+// differently
+// depending on the language. See the corresponding
+// <a
+// href="https://cloud.google.com/pubsub/docs/reference/libraries">client
+//
+// library documentation</a> for more information. See
+// <a href="https://cloud.google.com/pubsub/quotas">Quotas and
+// limits</a>
+// for more information about message limits.
 type PubsubMessage struct {
 	// Attributes: Optional attributes for this message.
 	Attributes map[string]string `json:"attributes,omitempty"`
@@ -1161,8 +1212,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Snapshot: A snapshot resource. Snapshots are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -1194,8 +1247,9 @@ type Snapshot struct {
 	// snapshot that would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
 
-	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
-	// labels</a>.
+	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
+	// Creating and
+	// managing labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the snapshot.
@@ -1266,8 +1320,27 @@ type Subscription struct {
 	// system will eventually redeliver the message.
 	AckDeadlineSeconds int64 `json:"ackDeadlineSeconds,omitempty"`
 
-	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
-	// labels</a>.
+	// ExpirationPolicy: A policy that specifies the conditions for this
+	// subscription's expiration.
+	// A subscription is considered active as long as any connected
+	// subscriber is
+	// successfully consuming messages from the subscription or is
+	// issuing
+	// operations on the subscription. If `expiration_policy` is not set,
+	// a
+	// *default policy* with `ttl` of 31 days will be used. The minimum
+	// allowed
+	// value for `expiration_policy.ttl` is 1 day.
+	// <b>BETA:</b> This feature is part of a beta release. This API might
+	// be
+	// changed in backward-incompatible ways and is not recommended for
+	// production
+	// use. It is not subject to any SLA or deprecation policy.
+	ExpirationPolicy *ExpirationPolicy `json:"expirationPolicy,omitempty"`
+
+	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
+	// Creating and
+	// managing labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MessageRetentionDuration: How long to retain unacknowledged messages
@@ -1314,8 +1387,10 @@ type Subscription struct {
 	// acknowledged, until they fall out of the
 	// `message_retention_duration`
 	// window. This must be true if you would like to
-	// <a href="/pubsub/docs/replay-overview#seek_to_a_time">Seek to a
-	// timestamp</a>.
+	// <a
+	// href="https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_t
+	// ime">
+	// Seek to a timestamp</a>.
 	// <br><br>
 	// <b>BETA:</b> This feature is part of a beta release. This API might
 	// be
@@ -1432,8 +1507,9 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // Topic: A topic resource.
 type Topic struct {
-	// Labels: See <a href="/pubsub/docs/labels"> Creating and managing
-	// labels</a>.
+	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
+	// Creating and
+	// managing labels</a>.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: The name of the topic. It must have the
@@ -1601,8 +1677,10 @@ type ProjectsSnapshotsCreateCall struct {
 
 // Create: Creates a snapshot from the requested subscription. Snapshots
 // are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -1625,12 +1703,12 @@ type ProjectsSnapshotsCreateCall struct {
 // the request, the server will assign a random
 // name for this snapshot on the same project as the subscription,
 // conforming
-// to the [resource name
+// to the
+// [resource name
 // format](https://cloud.google.com/pubsub/docs/overview#names).
-// The generated
-// name is populated in the returned Snapshot object. Note that for REST
-// API
-// requests, you must specify a name in the request.
+// The generated name is populated in the returned Snapshot object. Note
+// that
+// for REST API requests, you must specify a name in the request.
 func (r *ProjectsSnapshotsService) Create(name string, createsnapshotrequest *CreateSnapshotRequest) *ProjectsSnapshotsCreateCall {
 	c := &ProjectsSnapshotsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1728,7 +1806,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\n\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\u003cbr\u003e\u003cbr\u003e\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the [resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated\nname is populated in the returned Snapshot object. Note that for REST API\nrequests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\n\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\u003cbr\u003e\u003cbr\u003e\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated name is populated in the returned Snapshot object. Note that\nfor REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -1737,7 +1815,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Optional user-provided name for this snapshot.\nIf the name is not provided in the request, the server will assign a random\nname for this snapshot on the same project as the subscription.\nNote that for REST API requests, you must specify a name.  See the\n\u003ca href=\"/pubsub/docs/admin#resource_names\"\u003eresource name rules\u003c/a\u003e.\nFormat is `projects/{project}/snapshots/{snap}`.",
+	//       "description": "Optional user-provided name for this snapshot.\nIf the name is not provided in the request, the server will assign a random\nname for this snapshot on the same project as the subscription.\nNote that for REST API requests, you must specify a name.  See the\n\u003ca href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e\nresource name rules\u003c/a\u003e.\nFormat is `projects/{project}/snapshots/{snap}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/snapshots/[^/]+$",
 	//       "required": true,
@@ -1770,8 +1848,10 @@ type ProjectsSnapshotsDeleteCall struct {
 }
 
 // Delete: Removes an existing snapshot. Snapshots are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -1881,7 +1961,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an existing snapshot. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
+	//   "description": "Removes an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.snapshots.delete",
@@ -1922,13 +2002,15 @@ type ProjectsSnapshotsGetCall struct {
 
 // Get: Gets the configuration details of a snapshot. Snapshots are used
 // in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
-// you to manage message acknowledgments in bulk. That is, you can set
-// the
-// acknowledgment state of messages in an existing subscription to the
-// state
-// captured by a snapshot.<br><br>
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow you to manage message acknowledgments in bulk.
+// That
+// is, you can set the acknowledgment state of messages in an
+// existing
+// subscription to the state captured by a
+// snapshot.<br><br>
 // <b>BETA:</b> This feature is part of a beta release. This API might
 // be
 // changed in backward-incompatible ways and is not recommended for
@@ -2038,7 +2120,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow you to manage message acknowledgments in bulk. That\nis, you can set the acknowledgment state of messages in an existing\nsubscription to the state captured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -2225,8 +2307,10 @@ type ProjectsSnapshotsListCall struct {
 }
 
 // List: Lists the existing snapshots. Snapshots are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -2358,7 +2442,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing snapshots. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Lists the existing snapshots. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.list",
@@ -2430,8 +2514,10 @@ type ProjectsSnapshotsPatchCall struct {
 }
 
 // Patch: Updates an existing snapshot. Snapshots are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -2540,7 +2626,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nNote that certain properties of a snapshot are not modifiable.",
+	//   "description": "Updates an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nNote that certain properties of a snapshot are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -3025,8 +3111,10 @@ type ProjectsSubscriptionsCreateCall struct {
 }
 
 // Create: Creates a subscription to a given topic. See the
-// <a href="/pubsub/docs/admin#resource_names"> resource name
-// rules</a>.
+// <a
+// href="https://cloud.google.com/pubsub/docs/admin#resource_names">
+// reso
+// urce name rules</a>.
 // If the subscription already exists, returns `ALREADY_EXISTS`.
 // If the corresponding topic doesn't exist, returns `NOT_FOUND`.
 //
@@ -3138,7 +3226,7 @@ func (c *ProjectsSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Sub
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a subscription to a given topic. See the\n\u003ca href=\"/pubsub/docs/admin#resource_names\"\u003e resource name rules\u003c/a\u003e.\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated name is populated in the returned Subscription object.\nNote that for REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a subscription to a given topic. See the\n\u003ca href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e\nresource name rules\u003c/a\u003e.\nIf the subscription already exists, returns `ALREADY_EXISTS`.\nIf the corresponding topic doesn't exist, returns `NOT_FOUND`.\n\nIf the name is not provided in the request, the server will assign a random\nname for this subscription on the same project as the topic, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/overview#names).\nThe generated name is populated in the returned Subscription object.\nNote that for REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.subscriptions.create",
@@ -4389,8 +4477,10 @@ type ProjectsSubscriptionsSeekCall struct {
 // Seek: Seeks an existing subscription to a point in time or to a given
 // snapshot,
 // whichever is provided in the request. Snapshots are used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -4500,7 +4590,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	}
 	return ret, nil
 	// {
-	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot. Note that both the subscription and the snapshot\nmust be on the same topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot. Note that both the subscription and the snapshot\nmust be on the same topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:seek",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.seek",
@@ -4835,7 +4925,10 @@ type ProjectsTopicsCreateCall struct {
 }
 
 // Create: Creates the given topic with the given name. See the
-// <a href="/pubsub/docs/admin#resource_names"> resource name rules</a>.
+// <a
+// href="https://cloud.google.com/pubsub/docs/admin#resource_names">
+// reso
+// urce name rules</a>.
 func (r *ProjectsTopicsService) Create(name string, topic *Topic) *ProjectsTopicsCreateCall {
 	c := &ProjectsTopicsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4933,7 +5026,7 @@ func (c *ProjectsTopicsCreateCall) Do(opts ...googleapi.CallOption) (*Topic, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates the given topic with the given name. See the\n\u003ca href=\"/pubsub/docs/admin#resource_names\"\u003e resource name rules\u003c/a\u003e.",
+	//   "description": "Creates the given topic with the given name. See the\n\u003ca href=\"https://cloud.google.com/pubsub/docs/admin#resource_names\"\u003e\nresource name rules\u003c/a\u003e.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.topics.create",
@@ -6175,8 +6268,10 @@ type ProjectsTopicsSnapshotsListCall struct {
 
 // List: Lists the names of the snapshots on this topic. Snapshots are
 // used in
-// <a href="/pubsub/docs/replay-overview">Seek</a> operations, which
-// allow
+// <a
+// href="https://cloud.google.com/pubsub/docs/replay-overview">Seek</a>
+// o
+// perations, which allow
 // you to manage message acknowledgments in bulk. That is, you can set
 // the
 // acknowledgment state of messages in an existing subscription to the
@@ -6308,7 +6403,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n\u003ca href=\"/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e operations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
+	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.snapshots.list",

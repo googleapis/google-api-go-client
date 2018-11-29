@@ -1634,7 +1634,7 @@
       }
     }
   },
-  "revision": "20181019",
+  "revision": "20181114",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2276,6 +2276,10 @@
         "hiveJob": {
           "$ref": "HiveJob",
           "description": "Job is a Hive job."
+        },
+        "jobUuid": {
+          "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
+          "type": "string"
         },
         "labels": {
           "additionalProperties": {

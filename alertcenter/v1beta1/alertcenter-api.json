@@ -162,7 +162,7 @@
               "type": "string"
             },
             "filter": {
-              "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields).",
+              "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
               "location": "query",
               "type": "string"
             },
@@ -240,6 +240,11 @@
                   "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert feedback are associated with.\nInferred from the caller identity if not provided.",
                   "location": "query",
                   "type": "string"
+                },
+                "filter": {
+                  "description": "Optional. A query string for filtering alert feedback results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1beta1/alerts/{alertId}/feedback",
@@ -252,7 +257,7 @@
       }
     }
   },
-  "revision": "20181103",
+  "revision": "20181121",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {

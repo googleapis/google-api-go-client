@@ -65,9 +65,6 @@ const (
 	// Share your Google+ profile information and view and manage your game
 	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
-
-	// Know the list of people in your circles, your age range, and language
-	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -942,8 +939,7 @@ func (c *AchievementsResetCall) Do(opts ...googleapi.CallOption) (*AchievementRe
 	//     "$ref": "AchievementResetResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1056,8 +1052,7 @@ func (c *AchievementsResetAllCall) Do(opts ...googleapi.CallOption) (*Achievemen
 	//     "$ref": "AchievementResetAllResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1142,8 +1137,7 @@ func (c *AchievementsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption)
 	//   "id": "gamesManagement.achievements.resetAllForAllPlayers",
 	//   "path": "achievements/resetAllForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1244,8 +1238,7 @@ func (c *AchievementsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) er
 	//   },
 	//   "path": "achievements/{achievementId}/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1340,8 +1333,7 @@ func (c *AchievementsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOp
 	//     "$ref": "AchievementResetMultipleForAllRequest"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1513,8 +1505,7 @@ func (c *ApplicationsListHiddenCall) Do(opts ...googleapi.CallOption) (*HiddenPl
 	//     "$ref": "HiddenPlayerList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1637,8 +1628,7 @@ func (c *EventsResetCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "events/{eventId}/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1724,8 +1714,7 @@ func (c *EventsResetAllCall) Do(opts ...googleapi.CallOption) error {
 	//   "id": "gamesManagement.events.resetAll",
 	//   "path": "events/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1810,8 +1799,7 @@ func (c *EventsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	//   "id": "gamesManagement.events.resetAllForAllPlayers",
 	//   "path": "events/resetAllForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -1913,8 +1901,7 @@ func (c *EventsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "events/{eventId}/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2010,8 +1997,7 @@ func (c *EventsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "EventsResetMultipleForAllRequest"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2122,8 +2108,7 @@ func (c *PlayersHideCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "applications/{applicationId}/players/hidden/{playerId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2234,8 +2219,7 @@ func (c *PlayersUnhideCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "applications/{applicationId}/players/hidden/{playerId}",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2336,8 +2320,7 @@ func (c *QuestsResetCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "quests/{questId}/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2422,8 +2405,7 @@ func (c *QuestsResetAllCall) Do(opts ...googleapi.CallOption) error {
 	//   "id": "gamesManagement.quests.resetAll",
 	//   "path": "quests/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2507,8 +2489,7 @@ func (c *QuestsResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	//   "id": "gamesManagement.quests.resetAllForAllPlayers",
 	//   "path": "quests/resetAllForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2609,8 +2590,7 @@ func (c *QuestsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "quests/{questId}/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2705,8 +2685,7 @@ func (c *QuestsResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "QuestsResetMultipleForAllRequest"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2791,8 +2770,7 @@ func (c *RoomsResetCall) Do(opts ...googleapi.CallOption) error {
 	//   "id": "gamesManagement.rooms.reset",
 	//   "path": "rooms/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -2877,8 +2855,7 @@ func (c *RoomsResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	//   "id": "gamesManagement.rooms.resetForAllPlayers",
 	//   "path": "rooms/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3007,8 +2984,7 @@ func (c *ScoresResetCall) Do(opts ...googleapi.CallOption) (*PlayerScoreResetRes
 	//     "$ref": "PlayerScoreResetResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3121,8 +3097,7 @@ func (c *ScoresResetAllCall) Do(opts ...googleapi.CallOption) (*PlayerScoreReset
 	//     "$ref": "PlayerScoreResetAllResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3207,8 +3182,7 @@ func (c *ScoresResetAllForAllPlayersCall) Do(opts ...googleapi.CallOption) error
 	//   "id": "gamesManagement.scores.resetAllForAllPlayers",
 	//   "path": "scores/resetAllForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3309,8 +3283,7 @@ func (c *ScoresResetForAllPlayersCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "leaderboards/{leaderboardId}/scores/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3406,8 +3379,7 @@ func (c *ScoresResetMultipleForAllPlayersCall) Do(opts ...googleapi.CallOption) 
 	//     "$ref": "ScoresResetMultipleForAllRequest"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3491,8 +3463,7 @@ func (c *TurnBasedMatchesResetCall) Do(opts ...googleapi.CallOption) error {
 	//   "id": "gamesManagement.turnBasedMatches.reset",
 	//   "path": "turnbasedmatches/reset",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 
@@ -3578,8 +3549,7 @@ func (c *TurnBasedMatchesResetForAllPlayersCall) Do(opts ...googleapi.CallOption
 	//   "id": "gamesManagement.turnBasedMatches.resetForAllPlayers",
 	//   "path": "turnbasedmatches/resetForAllPlayers",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games",
-	//     "https://www.googleapis.com/auth/plus.login"
+	//     "https://www.googleapis.com/auth/games"
 	//   ]
 	// }
 

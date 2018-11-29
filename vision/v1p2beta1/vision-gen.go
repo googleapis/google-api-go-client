@@ -390,7 +390,7 @@ type Block struct {
 	//         |    |
 	//         1----0
 	//
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -1543,7 +1543,7 @@ type GoogleCloudVisionV1p1beta1Block struct {
 	//         |    |
 	//         1----0
 	//
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -1596,23 +1596,27 @@ func (s *GoogleCloudVisionV1p1beta1Block) UnmarshalJSON(data []byte) error {
 // GoogleCloudVisionV1p1beta1BoundingPoly: A bounding polygon for the
 // detected image annotation.
 type GoogleCloudVisionV1p1beta1BoundingPoly struct {
+	// NormalizedVertices: The bounding polygon normalized vertices.
+	NormalizedVertices []*GoogleCloudVisionV1p1beta1NormalizedVertex `json:"normalizedVertices,omitempty"`
+
 	// Vertices: The bounding polygon vertices.
 	Vertices []*GoogleCloudVisionV1p1beta1Vertex `json:"vertices,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Vertices") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "NormalizedVertices")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Vertices") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NormalizedVertices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2444,6 +2448,57 @@ func (s *GoogleCloudVisionV1p1beta1LocationInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVisionV1p1beta1NormalizedVertex: A vertex represents a 2D
+// point in the image.
+// NOTE: the normalized vertex coordinates are relative to the original
+// image
+// and range from 0 to 1.
+type GoogleCloudVisionV1p1beta1NormalizedVertex struct {
+	// X: X coordinate.
+	X float64 `json:"x,omitempty"`
+
+	// Y: Y coordinate.
+	Y float64 `json:"y,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "X") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "X") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVisionV1p1beta1NormalizedVertex) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVisionV1p1beta1NormalizedVertex
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVisionV1p1beta1NormalizedVertex) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVisionV1p1beta1NormalizedVertex
+	var s1 struct {
+		X gensupport.JSONFloat64 `json:"x"`
+		Y gensupport.JSONFloat64 `json:"y"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.X = float64(s1.X)
+	s.Y = float64(s1.Y)
+	return nil
+}
+
 // GoogleCloudVisionV1p1beta1OperationMetadata: Contains metadata for
 // the BatchAnnotateImages operation.
 type GoogleCloudVisionV1p1beta1OperationMetadata struct {
@@ -2613,7 +2668,7 @@ type GoogleCloudVisionV1p1beta1Paragraph struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -3647,7 +3702,7 @@ type GoogleCloudVisionV1p1beta1Word struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -4086,7 +4141,7 @@ type GoogleCloudVisionV1p2beta1Block struct {
 	//         |    |
 	//         1----0
 	//
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -5509,7 +5564,7 @@ type GoogleCloudVisionV1p2beta1Paragraph struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -6633,7 +6688,7 @@ type GoogleCloudVisionV1p2beta1Word struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -6958,7 +7013,7 @@ type GoogleCloudVisionV1p3beta1Block struct {
 	//         |    |
 	//         1----0
 	//
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results on the block. Range [0, 1].
@@ -8131,7 +8186,7 @@ type GoogleCloudVisionV1p3beta1Paragraph struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -9225,7 +9280,7 @@ type GoogleCloudVisionV1p3beta1Word struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].
@@ -9996,7 +10051,7 @@ type Paragraph struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the paragraph. Range
@@ -11036,7 +11091,7 @@ type Word struct {
 	//      2----3
 	//      |    |
 	//      1----0
-	//   and the vertice order will still be (0, 1, 2, 3).
+	//   and the vertex order will still be (0, 1, 2, 3).
 	BoundingBox *BoundingPoly `json:"boundingBox,omitempty"`
 
 	// Confidence: Confidence of the OCR results for the word. Range [0, 1].

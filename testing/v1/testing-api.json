@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20181025",
+  "revision": "20181127",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -355,6 +355,10 @@
         "appApk": {
           "$ref": "FileReference",
           "description": "The APK for the application under test."
+        },
+        "appBundle": {
+          "$ref": "AppBundle",
+          "description": "A multi-apk app bundle for the application under test."
         },
         "appPackageId": {
           "description": "The java package for the application under test.\nOptional, default is determined by examining the application's manifest.",
@@ -524,10 +528,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "videoRecordingNotSupported": {
-          "description": "True if and only if tests with this model DO NOT have video output.\nSee also TestSpecification.disable_video_recording\n@OutputOnly",
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -539,6 +539,10 @@
         "appApk": {
           "$ref": "FileReference",
           "description": "The APK for the application under test."
+        },
+        "appBundle": {
+          "$ref": "AppBundle",
+          "description": "A multi-apk app bundle for the application under test."
         },
         "appInitialActivity": {
           "description": "The initial activity that should be used to start the app.\nOptional",
@@ -607,6 +611,10 @@
         "appApk": {
           "$ref": "FileReference",
           "description": "The APK for the application under test."
+        },
+        "appBundle": {
+          "$ref": "AppBundle",
+          "description": "A multi-apk app bundle for the application under test."
         },
         "appPackageId": {
           "description": "The java package for the application under test.\nOptional, default is determined by examining the application's manifest.",
@@ -721,6 +729,17 @@
         "packageName": {
           "description": "Full Java-style package name for this application, e.g.\n\"com.example.foo\".",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AppBundle": {
+      "description": "An Android App Bundle file format, containing a BundleConfig.pb file,\na base module directory, zero or more dynamic feature module directories.\n\u003cp\u003eSee https://developer.android.com/guide/app-bundle/build for guidance on\nbuilding App Bundles.",
+      "id": "AppBundle",
+      "properties": {
+        "bundleLocation": {
+          "$ref": "FileReference",
+          "description": ".aab file representing the app bundle under test."
         }
       },
       "type": "object"
@@ -1391,10 +1410,6 @@
             "type": "string"
           },
           "type": "array"
-        },
-        "videoRecordingDisabled": {
-          "description": "Indicates that video will not be recorded for this execution either because\nthe user chose to disable it or the device does not support it.\nSee AndroidModel.video_recording_not_supported\n@OutputOnly",
-          "type": "boolean"
         }
       },
       "type": "object"

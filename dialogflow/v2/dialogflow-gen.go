@@ -692,6 +692,10 @@ type GoogleCloudDialogflowV2Context struct {
 	// Format:
 	// `projects/<Project ID>/agent/sessions/<Session ID>/contexts/<Context
 	// ID>`.
+	//
+	// The `Context ID` is always converted to lowercase, may only
+	// contain
+	// characters in [a-zA-Z0-9_-%] and may be at most 250 bytes long.
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Optional. The collection of parameters associated with
@@ -3375,13 +3379,16 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// ID>`,
 	// or `projects/<Project ID>/agent/environments/<Environment
 	// ID>/users/<User
-	// ID>/sessions/<Session ID>/contexts/<Context ID>`. The `Context ID`
-	// is
-	// always converted to lowercase. If `Environment ID` is not specified,
-	// we
-	// assume default 'draft' environment. If `User ID` is not specified,
-	// we
-	// assume default '-' user.
+	// ID>/sessions/<Session ID>/contexts/<Context ID>`.
+	//
+	// The `Context ID` is always converted to lowercase, may only
+	// contain
+	// characters in a-zA-Z0-9_-% and may be at most 250 bytes long.
+	//
+	// If `Environment ID` is not specified, we assume default
+	// 'draft'
+	// environment. If `User ID` is not specified, we assume default '-'
+	// user.
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Optional. The collection of parameters associated with
@@ -10661,7 +10668,7 @@ func (c *ProjectsAgentSessionsContextsPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The unique identifier of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`.",
+	//       "description": "Required. The unique identifier of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`.\n\nThe `Context ID` is always converted to lowercase, may only contain\ncharacters in [a-zA-Z0-9_-%] and may be at most 250 bytes long.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/sessions/[^/]+/contexts/[^/]+$",
 	//       "required": true,

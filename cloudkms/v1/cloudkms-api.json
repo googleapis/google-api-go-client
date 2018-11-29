@@ -943,7 +943,7 @@
       }
     }
   },
-  "revision": "20181005",
+  "revision": "20181113",
   "rootUrl": "https://cloudkms.googleapis.com/",
   "schemas": {
     "AsymmetricDecryptRequest": {
@@ -1419,7 +1419,7 @@
             "CAVIUM_V1_COMPRESSED"
           ],
           "enumDescriptions": [
-            "",
+            "Not specified.",
             "Cavium HSM attestation compressed with gzip. Note that this format is\ndefined by Cavium and subject to change at any time."
           ],
           "type": "string"

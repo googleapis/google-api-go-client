@@ -991,7 +991,7 @@ type Variable struct {
 	//
 	// The `[PROJECT_ID]` must be a valid project ID, `[CONFIG_NAME]` must
 	// be a
-	// valid RuntimeConfig reource and `[VARIABLE_NAME]` follows Unix file
+	// valid RuntimeConfig resource and `[VARIABLE_NAME]` follows Unix file
 	// system
 	// file path naming.
 	//
@@ -1013,7 +1013,7 @@ type Variable struct {
 	// Once you create a variable, you cannot change the variable name.
 	Name string `json:"name,omitempty"`
 
-	// State: [Ouput only] The current state of the variable. The variable
+	// State: Output only. The current state of the variable. The variable
 	// state indicates
 	// the outcome of the `variables().watch` call and is visible through
 	// the

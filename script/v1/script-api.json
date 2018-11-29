@@ -3,13 +3,13 @@
     "oauth2": {
       "scopes": {
         "https://mail.google.com/": {
-          "description": "Read, send, delete, and manage your email"
+          "description": "Read, compose, send, and permanently delete all your email from Gmail"
         },
         "https://www.google.com/calendar/feeds": {
-          "description": "Manage your calendars"
+          "description": "See, edit, share, and permanently delete all the calendars you can access using Google Calendar"
         },
         "https://www.google.com/m8/feeds": {
-          "description": "Manage your contacts"
+          "description": "See, edit, download, and permanently delete your contacts"
         },
         "https://www.googleapis.com/auth/admin.directory.group": {
           "description": "View and manage the provisioning of groups on your domain"
@@ -21,7 +21,7 @@
           "description": "View and manage your Google Docs documents"
         },
         "https://www.googleapis.com/auth/drive": {
-          "description": "View and manage the files in your Google Drive"
+          "description": "See, edit, create, and delete all of your Google Drive files"
         },
         "https://www.googleapis.com/auth/forms": {
           "description": "View and manage your forms in Google Drive"
@@ -32,8 +32,26 @@
         "https://www.googleapis.com/auth/groups": {
           "description": "View and manage your Google Groups"
         },
+        "https://www.googleapis.com/auth/script.deployments": {
+          "description": "Create and update Google Apps Script deployments"
+        },
+        "https://www.googleapis.com/auth/script.deployments.readonly": {
+          "description": "View Google Apps Script deployments"
+        },
+        "https://www.googleapis.com/auth/script.metrics": {
+          "description": "View Google Apps Script project's metrics"
+        },
+        "https://www.googleapis.com/auth/script.processes": {
+          "description": "View Google Apps Script processes"
+        },
+        "https://www.googleapis.com/auth/script.projects": {
+          "description": "Create and update Google Apps Script projects"
+        },
+        "https://www.googleapis.com/auth/script.projects.readonly": {
+          "description": "View Google Apps Script projects"
+        },
         "https://www.googleapis.com/auth/spreadsheets": {
-          "description": "View and manage your spreadsheets in Google Drive"
+          "description": "See, edit, create, and delete your spreadsheets in Google Drive"
         },
         "https://www.googleapis.com/auth/userinfo.email": {
           "description": "View your email address"
@@ -240,7 +258,10 @@
           "path": "v1/processes",
           "response": {
             "$ref": "ListUserProcessesResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.processes"
+          ]
         },
         "listScriptProcesses": {
           "description": "List information about a script's executed processes, such as process type\nand current status.",
@@ -338,7 +359,10 @@
           "path": "v1/processes:listScriptProcesses",
           "response": {
             "$ref": "ListScriptProcessesResponse"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.processes"
+          ]
         }
       }
     },
@@ -357,7 +381,10 @@
           },
           "response": {
             "$ref": "Project"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.projects"
+          ]
         },
         "get": {
           "description": "Gets a script project's metadata.",
@@ -378,7 +405,11 @@
           "path": "v1/projects/{scriptId}",
           "response": {
             "$ref": "Project"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.projects",
+            "https://www.googleapis.com/auth/script.projects.readonly"
+          ]
         },
         "getContent": {
           "description": "Gets the content of the script project, including the code source and\nmetadata for each script file.",
@@ -405,7 +436,11 @@
           "path": "v1/projects/{scriptId}/content",
           "response": {
             "$ref": "Content"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.projects",
+            "https://www.googleapis.com/auth/script.projects.readonly"
+          ]
         },
         "getMetrics": {
           "description": "Get metrics data for scripts, such as number of executions and\nactive users.",
@@ -441,7 +476,10 @@
           "path": "v1/projects/{scriptId}/metrics",
           "response": {
             "$ref": "Metrics"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.metrics"
+          ]
         },
         "updateContent": {
           "description": "Updates the content of the specified script project.\nThis content is stored as the HEAD version, and is used when the script is\nexecuted as a trigger, in the script editor, in add-on preview mode, or as\na web app or Apps Script API in development mode. This clears all the\nexisting files in the project.",
@@ -465,7 +503,10 @@
           },
           "response": {
             "$ref": "Content"
-          }
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/script.projects"
+          ]
         }
       },
       "resources": {
@@ -493,7 +534,10 @@
               },
               "response": {
                 "$ref": "Deployment"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.deployments"
+              ]
             },
             "delete": {
               "description": "Deletes a deployment of an Apps Script project.",
@@ -521,7 +565,10 @@
               "path": "v1/projects/{scriptId}/deployments/{deploymentId}",
               "response": {
                 "$ref": "Empty"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.deployments"
+              ]
             },
             "get": {
               "description": "Gets a deployment of an Apps Script project.",
@@ -549,7 +596,11 @@
               "path": "v1/projects/{scriptId}/deployments/{deploymentId}",
               "response": {
                 "$ref": "Deployment"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.deployments",
+                "https://www.googleapis.com/auth/script.deployments.readonly"
+              ]
             },
             "list": {
               "description": "Lists the deployments of an Apps Script project.",
@@ -581,7 +632,11 @@
               "path": "v1/projects/{scriptId}/deployments",
               "response": {
                 "$ref": "ListDeploymentsResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.deployments",
+                "https://www.googleapis.com/auth/script.deployments.readonly"
+              ]
             },
             "update": {
               "description": "Updates a deployment of an Apps Script project.",
@@ -612,7 +667,10 @@
               },
               "response": {
                 "$ref": "Deployment"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.deployments"
+              ]
             }
           }
         },
@@ -640,7 +698,10 @@
               },
               "response": {
                 "$ref": "Version"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.projects"
+              ]
             },
             "get": {
               "description": "Gets a version of a script project.",
@@ -669,7 +730,11 @@
               "path": "v1/projects/{scriptId}/versions/{versionNumber}",
               "response": {
                 "$ref": "Version"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.projects",
+                "https://www.googleapis.com/auth/script.projects.readonly"
+              ]
             },
             "list": {
               "description": "List the versions of a script project.",
@@ -701,7 +766,11 @@
               "path": "v1/projects/{scriptId}/versions",
               "response": {
                 "$ref": "ListVersionsResponse"
-              }
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/script.projects",
+                "https://www.googleapis.com/auth/script.projects.readonly"
+              ]
             }
           }
         }
@@ -750,7 +819,7 @@
       }
     }
   },
-  "revision": "20181015",
+  "revision": "20181128",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {

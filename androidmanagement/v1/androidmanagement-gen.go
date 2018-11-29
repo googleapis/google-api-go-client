@@ -2594,7 +2594,7 @@ type Policy struct {
 	// disabled.
 	UsbFileTransferDisabled bool `json:"usbFileTransferDisabled,omitempty"`
 
-	// UsbMassStorageEnabled: Whether USB storage is enabled.
+	// UsbMassStorageEnabled: Whether USB storage is enabled. Deprecated.
 	UsbMassStorageEnabled bool `json:"usbMassStorageEnabled,omitempty"`
 
 	// Version: The version of the policy. This is a read-only field. The

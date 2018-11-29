@@ -223,7 +223,7 @@
       }
     }
   },
-  "revision": "20181002",
+  "revision": "20181127",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -473,11 +473,11 @@
           "description": "Desktop related information. See desktop related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually)."
         },
         "domainUriPrefix": {
-          "description": "E.g. https://maps.app.goo.gl, https://maps.page.link, https://g.co/maps\nMore examples can be found in description of getNormalizedUriPrefix in\nj/c/g/firebase/dynamiclinks/uri/DdlDomain.java",
+          "description": "E.g. https://maps.app.goo.gl, https://maps.page.link, https://g.co/maps\nMore examples can be found in description of getNormalizedUriPrefix in\nj/c/g/firebase/dynamiclinks/uri/DdlDomain.java\n\nWill fallback to dynamic_link_domain is this field is missing",
           "type": "string"
         },
         "dynamicLinkDomain": {
-          "description": "Dynamic Links domain that the project owns, e.g. abcd.app.goo.gl\n[Learn more](https://firebase.google.com/docs/dynamic-links/android/receive)\non how to set up Dynamic Link domain associated with your Firebase project.\n\nRequired.",
+          "description": "Dynamic Links domain that the project owns, e.g. abcd.app.goo.gl\n[Learn more](https://firebase.google.com/docs/dynamic-links/android/receive)\non how to set up Dynamic Link domain associated with your Firebase project.\n\nRequired if missing domain_uri_prefix.",
           "type": "string"
         },
         "iosInfo": {
@@ -871,6 +871,10 @@
         },
         "iosIpadFallbackLink": {
           "description": "If specified, this overrides the ios_fallback_link value on iPads.",
+          "type": "string"
+        },
+        "iosMinimumVersion": {
+          "description": "iOS minimum version.",
           "type": "string"
         }
       },

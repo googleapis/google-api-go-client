@@ -62,14 +62,14 @@ const basePath = "https://slides.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage the files in your Google Drive
+	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
 	// View and manage Google Drive files and folders that you have opened
 	// or created with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
-	// View the files in your Google Drive
+	// See and download all your Google Drive files
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
 	// View and manage your Google Slides presentations
@@ -78,7 +78,7 @@ const (
 	// View your Google Slides presentations
 	PresentationsReadonlyScope = "https://www.googleapis.com/auth/presentations.readonly"
 
-	// View and manage your spreadsheets in Google Drive
+	// See, edit, create, and delete your spreadsheets in Google Drive
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
 	// View your Google Spreadsheets
@@ -561,6 +561,31 @@ func (s *CreateImageResponse) MarshalJSON() ([]byte, error) {
 
 // CreateLineRequest: Creates a line.
 type CreateLineRequest struct {
+	// Category: The category of line to be created.
+	//
+	// The exact line type created is
+	// determined based on the category and how it's routed to connect to
+	// other
+	// page elements.
+	//
+	// If you specify both a `category` and a `line_category`, the
+	// `category`
+	// takes precedence.
+	//
+	// If you do not specify a value for `category`, but specify a value
+	// for
+	// `line_category`, then the specified `line_category` value is
+	// used.
+	//
+	// If you do not specify either, then STRAIGHT is used.
+	//
+	// Possible values:
+	//   "LINE_CATEGORY_UNSPECIFIED" - Unspecified line category.
+	//   "STRAIGHT" - Straight connectors, including straight connector 1.
+	//   "BENT" - Bent connectors, including bent connector 2 to 5.
+	//   "CURVED" - Curved connectors, including curved connector 2 to 5.
+	Category string `json:"category,omitempty"`
+
 	// ElementProperties: The element properties for the line.
 	ElementProperties *PageElementProperties `json:"elementProperties,omitempty"`
 
@@ -589,21 +614,20 @@ type CreateLineRequest struct {
 	// If you don't specify an ID, a unique one is generated.
 	ObjectId string `json:"objectId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ElementProperties")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ElementProperties") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2573,6 +2597,19 @@ func (s *LayoutReference) MarshalJSON() ([]byte, error) {
 // non-connector line, straight connector, curved connector, or bent
 // connector.
 type Line struct {
+	// LineCategory: The category of the line.
+	//
+	// It matches the `category` specified in CreateLineRequest, and can be
+	// updated with
+	// UpdateLineCategoryRequest.
+	//
+	// Possible values:
+	//   "LINE_CATEGORY_UNSPECIFIED" - Unspecified line category.
+	//   "STRAIGHT" - Straight connectors, including straight connector 1.
+	//   "BENT" - Bent connectors, including bent connector 2 to 5.
+	//   "CURVED" - Curved connectors, including curved connector 2 to 5.
+	LineCategory string `json:"lineCategory,omitempty"`
+
 	// LineProperties: The properties of the line.
 	LineProperties *LineProperties `json:"lineProperties,omitempty"`
 
@@ -2612,7 +2649,7 @@ type Line struct {
 	// type is not a connector.
 	LineType string `json:"lineType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "LineProperties") to
+	// ForceSendFields is a list of field names (e.g. "LineCategory") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2620,7 +2657,63 @@ type Line struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "LineProperties") to
+	// NullFields is a list of field names (e.g. "LineCategory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Line) MarshalJSON() ([]byte, error) {
+	type NoMethod Line
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LineConnection: The properties for one end of a Line
+// connection.
+type LineConnection struct {
+	// ConnectedObjectId: The object ID of the connected page element.
+	//
+	// Some page elements, such as groups, tables, and lines
+	// do not have connection sites and therefore cannot be connected to
+	// a
+	// connector line.
+	ConnectedObjectId string `json:"connectedObjectId,omitempty"`
+
+	// ConnectionSiteIndex: The index of the connection site on the
+	// connected page element.
+	//
+	// In most cases, it corresponds to the predefined connection site index
+	// from
+	// the ECMA-376 standard. More information on those connection sites can
+	// be
+	// found in the description of the "cnx" attribute in section 20.1.9.9
+	// and
+	// Annex H. "Predefined DrawingML Shape and Text Geometries" of "Office
+	// Open
+	// XML File Formats-Fundamentals and Markup Language Reference", part 1
+	// of
+	// [ECMA-376 5th
+	// edition]
+	// (http://www.ecma-international.org/publications/standards/Ecm
+	// a-376.htm).
+	//
+	// The position of each connection site can also be viewed from Slides
+	// editor.
+	ConnectionSiteIndex int64 `json:"connectionSiteIndex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectedObjectId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectedObjectId") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2630,8 +2723,8 @@ type Line struct {
 	NullFields []string `json:"-"`
 }
 
-func (s *Line) MarshalJSON() ([]byte, error) {
-	type NoMethod Line
+func (s *LineConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod LineConnection
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2713,6 +2806,13 @@ type LineProperties struct {
 	//   "OPEN_DIAMOND" - Hollow diamond.
 	EndArrow string `json:"endArrow,omitempty"`
 
+	// EndConnection: The connection at the end of the line. If unset, there
+	// is no connection.
+	//
+	// Only lines with a Type indicating it is
+	// a "connector" can have an `end_connection`.
+	EndConnection *LineConnection `json:"endConnection,omitempty"`
+
 	// LineFill: The fill of the line. The default line fill matches the
 	// defaults for new
 	// lines created in the Slides editor.
@@ -2742,6 +2842,14 @@ type LineProperties struct {
 	//   "OPEN_SQUARE" - Hollow square.
 	//   "OPEN_DIAMOND" - Hollow diamond.
 	StartArrow string `json:"startArrow,omitempty"`
+
+	// StartConnection: The connection at the beginning of the line. If
+	// unset, there is no
+	// connection.
+	//
+	// Only lines with a Type indicating it is
+	// a "connector" can have a `start_connection`.
+	StartConnection *LineConnection `json:"startConnection,omitempty"`
 
 	// Weight: The thickness of the line.
 	Weight *Dimension `json:"weight,omitempty"`
@@ -4534,6 +4642,10 @@ type Request struct {
 	// ReplaceImage: Replaces an existing image with a new image.
 	ReplaceImage *ReplaceImageRequest `json:"replaceImage,omitempty"`
 
+	// RerouteLine: Reroutes a line such that it's connected
+	// at the two closest connection sites on the connected page elements.
+	RerouteLine *RerouteLineRequest `json:"rerouteLine,omitempty"`
+
 	// UngroupObjects: Ungroups objects, such as groups.
 	UngroupObjects *UngroupObjectsRequest `json:"ungroupObjects,omitempty"`
 
@@ -4542,6 +4654,9 @@ type Request struct {
 
 	// UpdateImageProperties: Updates the properties of an Image.
 	UpdateImageProperties *UpdateImagePropertiesRequest `json:"updateImageProperties,omitempty"`
+
+	// UpdateLineCategory: Updates the category of a line
+	UpdateLineCategory *UpdateLineCategoryRequest `json:"updateLineCategory,omitempty"`
 
 	// UpdateLineProperties: Updates the properties of a Line.
 	UpdateLineProperties *UpdateLinePropertiesRequest `json:"updateLineProperties,omitempty"`
@@ -4553,6 +4668,9 @@ type Request struct {
 
 	// UpdatePageElementTransform: Updates the transform of a page element.
 	UpdatePageElementTransform *UpdatePageElementTransformRequest `json:"updatePageElementTransform,omitempty"`
+
+	// UpdatePageElementsZOrder: Updates the Z-order of page elements.
+	UpdatePageElementsZOrder *UpdatePageElementsZOrderRequest `json:"updatePageElementsZOrder,omitempty"`
 
 	// UpdatePageProperties: Updates the properties of a Page.
 	UpdatePageProperties *UpdatePagePropertiesRequest `json:"updatePageProperties,omitempty"`
@@ -4608,6 +4726,41 @@ type Request struct {
 
 func (s *Request) MarshalJSON() ([]byte, error) {
 	type NoMethod Request
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RerouteLineRequest: Reroutes a line such that it's connected at
+// the
+// two closest connection sites on the connected page elements.
+type RerouteLineRequest struct {
+	// ObjectId: The object ID of the line to reroute.
+	//
+	// Only a line with a category
+	// indicating it is a "connector" can be rerouted. The start and
+	// end
+	// connections of the line must be on different page elements.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ObjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ObjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RerouteLineRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RerouteLineRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6802,6 +6955,53 @@ func (s *UpdateImagePropertiesRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpdateLineCategoryRequest: Updates the category of a line.
+type UpdateLineCategoryRequest struct {
+	// LineCategory: The line category to update to.
+	//
+	// The exact line type is determined based
+	// on the category to update to and how it's routed to connect to other
+	// page
+	// elements.
+	//
+	// Possible values:
+	//   "LINE_CATEGORY_UNSPECIFIED" - Unspecified line category.
+	//   "STRAIGHT" - Straight connectors, including straight connector 1.
+	//   "BENT" - Bent connectors, including bent connector 2 to 5.
+	//   "CURVED" - Curved connectors, including curved connector 2 to 5.
+	LineCategory string `json:"lineCategory,omitempty"`
+
+	// ObjectId: The object ID of the line the update is applied to.
+	//
+	// Only a line with a category
+	// indicating it is a "connector" can be updated.
+	//
+	// The line may be rerouted after updating its category.
+	ObjectId string `json:"objectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LineCategory") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LineCategory") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateLineCategoryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateLineCategoryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UpdateLinePropertiesRequest: Updates the properties of a Line.
 type UpdateLinePropertiesRequest struct {
 	// Fields: The fields that should be updated.
@@ -6945,6 +7145,62 @@ type UpdatePageElementTransformRequest struct {
 
 func (s *UpdatePageElementTransformRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdatePageElementTransformRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdatePageElementsZOrderRequest: Updates the Z-order of page
+// elements. Z-order is an ordering of the elements
+// on the page from back to front. The page element in the front may
+// cover the
+// elements that are behind it.
+type UpdatePageElementsZOrderRequest struct {
+	// Operation: The Z-order operation to apply on the page elements.
+	//
+	// When applying the operation on multiple page elements, the
+	// relative
+	// Z-orders within these page elements before the operation is
+	// maintained.
+	//
+	// Possible values:
+	//   "Z_ORDER_OPERATION_UNSPECIFIED" - Unspecified operation.
+	//   "BRING_TO_FRONT" - Brings the page elements to the front of the
+	// page.
+	//   "BRING_FORWARD" - Brings the page elements forward on the page by
+	// one element relative to the
+	// forwardmost one in the specified page elements.
+	//   "SEND_BACKWARD" - Sends the page elements backward on the page by
+	// one element relative to the
+	// furthest behind one in the specified page elements.
+	//   "SEND_TO_BACK" - Sends the page elements to the back of the page.
+	Operation string `json:"operation,omitempty"`
+
+	// PageElementObjectIds: The object IDs of the page elements to
+	// update.
+	//
+	// All the page elements must be on the same page and must not be
+	// grouped.
+	PageElementObjectIds []string `json:"pageElementObjectIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Operation") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdatePageElementsZOrderRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatePageElementsZOrderRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

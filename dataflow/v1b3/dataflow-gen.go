@@ -2340,6 +2340,11 @@ type Job struct {
 	// Cloud Dataflow service.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CreatedFromSnapshotId: If this is specified, the job's initial state
+	// is populated from the given
+	// snapshot.
+	CreatedFromSnapshotId string `json:"createdFromSnapshotId,omitempty"`
+
 	// CurrentState: The current state of the job.
 	//
 	// Jobs are created in the `JOB_STATE_STOPPED` state unless
@@ -2610,8 +2615,14 @@ type Job struct {
 	// service.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Steps: The top-level steps that constitute the entire job.
+	// Steps: Exactly one of step or steps_location should be
+	// specified.
+	//
+	// The top-level steps that constitute the entire job.
 	Steps []*Step `json:"steps,omitempty"`
+
+	// StepsLocation: The GCS location where the steps are stored.
+	StepsLocation string `json:"stepsLocation,omitempty"`
 
 	// TempFiles: A set of files the system should be aware of that are
 	// used
@@ -4657,6 +4668,82 @@ type Sink struct {
 
 func (s *Sink) MarshalJSON() ([]byte, error) {
 	type NoMethod Sink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Snapshot: Represents a snapshot of a job.
+type Snapshot struct {
+	// CreationTime: The time this snapshot was created.
+	CreationTime string `json:"creationTime,omitempty"`
+
+	// Id: The unique ID of this snapshot.
+	Id string `json:"id,omitempty"`
+
+	// ProjectId: The project this snapshot belongs to.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// SourceJobId: The job this snapshot was created from.
+	SourceJobId string `json:"sourceJobId,omitempty"`
+
+	// Ttl: The time after which this snapshot will be automatically
+	// deleted.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreationTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Snapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod Snapshot
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SnapshotJobRequest: Request to create a snapshot of a job.
+type SnapshotJobRequest struct {
+	// Location: The location that contains this job.
+	Location string `json:"location,omitempty"`
+
+	// Ttl: TTL for the snapshot.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SnapshotJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SnapshotJobRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8326,6 +8413,157 @@ func (c *ProjectsJobsListCall) Pages(ctx context.Context, f func(*ListJobsRespon
 	}
 }
 
+// method id "dataflow.projects.jobs.snapshot":
+
+type ProjectsJobsSnapshotCall struct {
+	s                  *Service
+	projectId          string
+	jobId              string
+	snapshotjobrequest *SnapshotJobRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Snapshot: Snapshot the state of a streaming job.
+func (r *ProjectsJobsService) Snapshot(projectId string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsJobsSnapshotCall {
+	c := &ProjectsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.jobId = jobId
+	c.snapshotjobrequest = snapshotjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobsSnapshotCall) Fields(s ...googleapi.Field) *ProjectsJobsSnapshotCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobsSnapshotCall) Context(ctx context.Context) *ProjectsJobsSnapshotCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsJobsSnapshotCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.snapshotjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/jobs/{jobId}:snapshot")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.jobs.snapshot" call.
+// Exactly one of *Snapshot or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Snapshot.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsJobsSnapshotCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Snapshot{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Snapshot the state of a streaming job.",
+	//   "flatPath": "v1b3/projects/{projectId}/jobs/{jobId}:snapshot",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.jobs.snapshot",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "The job to be snapshotted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project which owns the job to be snapshotted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/jobs/{jobId}:snapshot",
+	//   "request": {
+	//     "$ref": "SnapshotJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Snapshot"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "dataflow.projects.jobs.update":
 
 type ProjectsJobsUpdateCall struct {
@@ -10328,6 +10566,167 @@ func (c *ProjectsLocationsJobsListCall) Pages(ctx context.Context, f func(*ListJ
 	}
 }
 
+// method id "dataflow.projects.locations.jobs.snapshot":
+
+type ProjectsLocationsJobsSnapshotCall struct {
+	s                  *Service
+	projectId          string
+	location           string
+	jobId              string
+	snapshotjobrequest *SnapshotJobRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Snapshot: Snapshot the state of a streaming job.
+func (r *ProjectsLocationsJobsService) Snapshot(projectId string, location string, jobId string, snapshotjobrequest *SnapshotJobRequest) *ProjectsLocationsJobsSnapshotCall {
+	c := &ProjectsLocationsJobsSnapshotCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.location = location
+	c.jobId = jobId
+	c.snapshotjobrequest = snapshotjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsSnapshotCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsSnapshotCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsSnapshotCall) Context(ctx context.Context) *ProjectsLocationsJobsSnapshotCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsSnapshotCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsSnapshotCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.snapshotjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"location":  c.location,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.jobs.snapshot" call.
+// Exactly one of *Snapshot or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Snapshot.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsSnapshotCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Snapshot{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Snapshot the state of a streaming job.",
+	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot",
+	//   "httpMethod": "POST",
+	//   "id": "dataflow.projects.locations.jobs.snapshot",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "location",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "The job to be snapshotted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The location that contains this job.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project which owns the job to be snapshotted.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}:snapshot",
+	//   "request": {
+	//     "$ref": "SnapshotJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Snapshot"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "dataflow.projects.locations.jobs.update":
 
 type ProjectsLocationsJobsUpdateCall struct {
@@ -11581,7 +11980,7 @@ func (r *ProjectsLocationsTemplatesService) Get(projectId string, location strin
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
 // Storage path to the template from which to
 // create the job.
-// Must be a valid Cloud Storage URL, beginning with `gs://`.
+// Must be valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsLocationsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesGetCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -11706,7 +12105,7 @@ func (c *ProjectsLocationsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -11766,8 +12165,26 @@ func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location st
 	return c
 }
 
-// GcsPath sets the optional parameter "gcsPath": Required. A Cloud
-// Storage path to the template from which to create
+// DynamicTemplateGcsPath sets the optional parameter
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
+// GCS.
+// The file must be a Json serialized DynamicTemplateFieSpec object.
+func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsLocationsTemplatesLaunchCall {
+	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
+	return c
+}
+
+// DynamicTemplateStagingLocation sets the optional parameter
+// "dynamicTemplate.stagingLocation": Cloud Storage path for staging
+// dependencies.
+// Must be a valid Cloud Storage URL, beginning with `gs://`.
+func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateStagingLocation(dynamicTemplateStagingLocation string) *ProjectsLocationsTemplatesLaunchCall {
+	c.urlParams_.Set("dynamicTemplate.stagingLocation", dynamicTemplateStagingLocation)
+	return c
+}
+
+// GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
+// to the template from which to create
 // the job.
 // Must be valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsLocationsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesLaunchCall {
@@ -11883,8 +12300,18 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//     "location"
 	//   ],
 	//   "parameters": {
+	//     "dynamicTemplate.gcsPath": {
+	//       "description": "Path to dynamic template spec file on GCS.\nThe file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dynamicTemplate.stagingLocation": {
+	//       "description": "Cloud Storage path for staging dependencies.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12085,7 +12512,7 @@ func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCa
 // GcsPath sets the optional parameter "gcsPath": Required. A Cloud
 // Storage path to the template from which to
 // create the job.
-// Must be a valid Cloud Storage URL, beginning with `gs://`.
+// Must be valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsTemplatesGetCall) GcsPath(gcsPath string) *ProjectsTemplatesGetCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -12215,7 +12642,7 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GetTemplat
 	//   ],
 	//   "parameters": {
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "description": "Required. A Cloud Storage path to the template from which to\ncreate the job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12272,8 +12699,26 @@ func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparame
 	return c
 }
 
-// GcsPath sets the optional parameter "gcsPath": Required. A Cloud
-// Storage path to the template from which to create
+// DynamicTemplateGcsPath sets the optional parameter
+// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
+// GCS.
+// The file must be a Json serialized DynamicTemplateFieSpec object.
+func (c *ProjectsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsTemplatesLaunchCall {
+	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
+	return c
+}
+
+// DynamicTemplateStagingLocation sets the optional parameter
+// "dynamicTemplate.stagingLocation": Cloud Storage path for staging
+// dependencies.
+// Must be a valid Cloud Storage URL, beginning with `gs://`.
+func (c *ProjectsTemplatesLaunchCall) DynamicTemplateStagingLocation(dynamicTemplateStagingLocation string) *ProjectsTemplatesLaunchCall {
+	c.urlParams_.Set("dynamicTemplate.stagingLocation", dynamicTemplateStagingLocation)
+	return c
+}
+
+// GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
+// to the template from which to create
 // the job.
 // Must be valid Cloud Storage URL, beginning with 'gs://'.
 func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplatesLaunchCall {
@@ -12394,8 +12839,18 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+	//     "dynamicTemplate.gcsPath": {
+	//       "description": "Path to dynamic template spec file on GCS.\nThe file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "dynamicTemplate.stagingLocation": {
+	//       "description": "Cloud Storage path for staging dependencies.\nMust be a valid Cloud Storage URL, beginning with `gs://`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "gcsPath": {
-	//       "description": "Required. A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template from which to create\nthe job.\nMust be valid Cloud Storage URL, beginning with 'gs://'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

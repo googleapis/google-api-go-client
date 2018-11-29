@@ -113,6 +113,35 @@
           "resources": {
             "registries": {
               "methods": {
+                "bindDeviceToGateway": {
+                  "description": "Associates the device with the gateway.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:bindDeviceToGateway",
+                  "httpMethod": "POST",
+                  "id": "cloudiot.projects.locations.registries.bindDeviceToGateway",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}:bindDeviceToGateway",
+                  "request": {
+                    "$ref": "BindDeviceToGatewayRequest"
+                  },
+                  "response": {
+                    "$ref": "BindDeviceToGatewayResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudiot"
+                  ]
+                },
                 "create": {
                   "description": "Creates a device registry that contains devices.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries",
@@ -352,6 +381,35 @@
                     "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/cloudiot"
                   ]
+                },
+                "unbindDeviceFromGateway": {
+                  "description": "Deletes the association between the device and the gateway.",
+                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}:unbindDeviceFromGateway",
+                  "httpMethod": "POST",
+                  "id": "cloudiot.projects.locations.registries.unbindDeviceFromGateway",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1/{+parent}:unbindDeviceFromGateway",
+                  "request": {
+                    "$ref": "UnbindDeviceFromGatewayRequest"
+                  },
+                  "response": {
+                    "$ref": "UnbindDeviceFromGatewayResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/cloudiot"
+                  ]
                 }
               },
               "resources": {
@@ -469,6 +527,26 @@
                         "fieldMask": {
                           "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
                           "format": "google-fieldmask",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "gatewayListOptions.associationsDeviceId": {
+                          "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "gatewayListOptions.associationsGatewayId": {
+                          "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "gatewayListOptions.gatewayType": {
+                          "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+                          "enum": [
+                            "GATEWAY_TYPE_UNSPECIFIED",
+                            "GATEWAY",
+                            "NON_GATEWAY"
+                          ],
                           "location": "query",
                           "type": "string"
                         },
@@ -671,6 +749,35 @@
                 },
                 "groups": {
                   "methods": {
+                    "bindDeviceToGateway": {
+                      "description": "Associates the device with the gateway.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:bindDeviceToGateway",
+                      "httpMethod": "POST",
+                      "id": "cloudiot.projects.locations.registries.groups.bindDeviceToGateway",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}:bindDeviceToGateway",
+                      "request": {
+                        "$ref": "BindDeviceToGatewayRequest"
+                      },
+                      "response": {
+                        "$ref": "BindDeviceToGatewayResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloudiot"
+                      ]
+                    },
                     "getIamPolicy": {
                       "description": "Gets the access control policy for a resource.\nReturns an empty policy if the resource exists and does not have a policy\nset.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:getIamPolicy",
@@ -757,6 +864,35 @@
                         "https://www.googleapis.com/auth/cloud-platform",
                         "https://www.googleapis.com/auth/cloudiot"
                       ]
+                    },
+                    "unbindDeviceFromGateway": {
+                      "description": "Deletes the association between the device and the gateway.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/registries/{registriesId}/groups/{groupsId}:unbindDeviceFromGateway",
+                      "httpMethod": "POST",
+                      "id": "cloudiot.projects.locations.registries.groups.unbindDeviceFromGateway",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "The name of the registry. For example,\n`projects/example-project/locations/us-central1/registries/my-registry`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/registries/[^/]+/groups/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+parent}:unbindDeviceFromGateway",
+                      "request": {
+                        "$ref": "UnbindDeviceFromGatewayRequest"
+                      },
+                      "response": {
+                        "$ref": "UnbindDeviceFromGatewayResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloudiot"
+                      ]
                     }
                   },
                   "resources": {
@@ -819,6 +955,26 @@
                             "fieldMask": {
                               "description": "The fields of the `Device` resource to be returned in the response. The\nfields `id` and `num_id` are always returned, along with any\nother fields specified.",
                               "format": "google-fieldmask",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "gatewayListOptions.associationsDeviceId": {
+                              "description": "If set, returns only the gateways with which the specified device is\nassociated. The device ID can be numeric (`num_id`) or the user-defined\nstring (`id`). For example, if `456` is specified, returns only the\ngateways to which the device with `num_id` 456 is bound.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "gatewayListOptions.associationsGatewayId": {
+                              "description": "If set, only devices associated with the specified gateway are returned.\nThe gateway ID can be numeric (`num_id`) or the user-defined string\n(`id`). For example, if `123` is specified, only devices bound to the\ngateway with `num_id` 123 are returned.",
+                              "location": "query",
+                              "type": "string"
+                            },
+                            "gatewayListOptions.gatewayType": {
+                              "description": "If `GATEWAY` is specified, only gateways are returned. If `NON_GATEWAY`\nis specified, only non-gateway devices are returned. If\n`GATEWAY_TYPE_UNSPECIFIED` is specified, all devices are returned.",
+                              "enum": [
+                                "GATEWAY_TYPE_UNSPECIFIED",
+                                "GATEWAY",
+                                "NON_GATEWAY"
+                              ],
                               "location": "query",
                               "type": "string"
                             },
@@ -1028,9 +1184,30 @@
       }
     }
   },
-  "revision": "20180926",
+  "revision": "20181120",
   "rootUrl": "https://cloudiot.googleapis.com/",
   "schemas": {
+    "BindDeviceToGatewayRequest": {
+      "description": "Request for `BindDeviceToGateway`.",
+      "id": "BindDeviceToGatewayRequest",
+      "properties": {
+        "deviceId": {
+          "description": "The device to associate with the specified gateway. The value of\n`device_id` can be either the device numeric ID or the user-defined device\nidentifier.",
+          "type": "string"
+        },
+        "gatewayId": {
+          "description": "The value of `gateway_id` can be either the device numeric ID or the\nuser-defined device identifier.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BindDeviceToGatewayResponse": {
+      "description": "Response for `BindDeviceToGateway`.",
+      "id": "BindDeviceToGatewayResponse",
+      "properties": {},
+      "type": "object"
+    },
     "Binding": {
       "description": "Associates `members` with a `role`.",
       "id": "Binding",
@@ -1071,6 +1248,10 @@
             "$ref": "DeviceCredential"
           },
           "type": "array"
+        },
+        "gatewayConfig": {
+          "$ref": "GatewayConfig",
+          "description": "Gateway-related configuration and state."
         },
         "id": {
           "description": "The user-defined device identifier. The device ID must be unique\nwithin a device registry.",
@@ -1309,6 +1490,52 @@
         },
         "title": {
           "description": "An optional title for the expression, i.e. a short string describing\nits purpose. This can be used e.g. in UIs which allow to enter the\nexpression.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GatewayConfig": {
+      "description": "Gateway-related configuration and state.",
+      "id": "GatewayConfig",
+      "properties": {
+        "gatewayAuthMethod": {
+          "description": "Indicates how to authorize and/or authenticate devices to access the\ngateway.",
+          "enum": [
+            "GATEWAY_AUTH_METHOD_UNSPECIFIED",
+            "ASSOCIATION_ONLY",
+            "DEVICE_AUTH_TOKEN_ONLY",
+            "ASSOCIATION_AND_DEVICE_AUTH_TOKEN"
+          ],
+          "enumDescriptions": [
+            "No authentication/authorization method specified. No devices are allowed to\naccess the gateway.",
+            "The device is authenticated through the gateway association only. Device\ncredentials are ignored even if provided.",
+            "The device is authenticated through its own credentials. Gateway\nassociation is not checked.",
+            "The device is authenticated through both device credentials and gateway\nassociation. The device must be bound to the gateway and must provide its\nown credentials."
+          ],
+          "type": "string"
+        },
+        "gatewayType": {
+          "description": "Indicates whether the device is a gateway.",
+          "enum": [
+            "GATEWAY_TYPE_UNSPECIFIED",
+            "GATEWAY",
+            "NON_GATEWAY"
+          ],
+          "enumDescriptions": [
+            "If unspecified, the device is considered a non-gateway device.",
+            "The device is a gateway.",
+            "The device is not a gateway."
+          ],
+          "type": "string"
+        },
+        "lastAccessedGatewayId": {
+          "description": "[Output only] The ID of the gateway the device accessed most recently.",
+          "type": "string"
+        },
+        "lastAccessedGatewayTime": {
+          "description": "[Output only] The most recent time at which the device accessed the gateway\nspecified in `last_accessed_gateway`.",
+          "format": "google-datetime",
           "type": "string"
         }
       },
@@ -1631,6 +1858,27 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "UnbindDeviceFromGatewayRequest": {
+      "description": "Request for `UnbindDeviceFromGateway`.",
+      "id": "UnbindDeviceFromGatewayRequest",
+      "properties": {
+        "deviceId": {
+          "description": "The device to disassociate from the specified gateway. The value of\n`device_id` can be either the device numeric ID or the user-defined device\nidentifier.",
+          "type": "string"
+        },
+        "gatewayId": {
+          "description": "The value of `gateway_id` can be either the device numeric ID or the\nuser-defined device identifier.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UnbindDeviceFromGatewayResponse": {
+      "description": "Response for `UnbindDeviceFromGateway`.",
+      "id": "UnbindDeviceFromGatewayResponse",
+      "properties": {},
       "type": "object"
     },
     "X509CertificateDetails": {

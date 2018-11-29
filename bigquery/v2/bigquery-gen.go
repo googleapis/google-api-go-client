@@ -1684,6 +1684,11 @@ type JobConfigurationLoad struct {
 	// Default: "
 	Quote *string `json:"quote,omitempty"`
 
+	// RangePartitioning: [Experimental] Range partitioning specification
+	// for this table. Only one of timePartitioning and rangePartitioning
+	// should be specified.
+	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
+
 	// Schema: [Optional] The schema for the destination table. The schema
 	// can be omitted if the destination table already exists, or if you're
 	// loading data from Google Cloud Datastore.
@@ -1735,14 +1740,14 @@ type JobConfigurationLoad struct {
 	SourceUris []string `json:"sourceUris,omitempty"`
 
 	// TimePartitioning: Time-based partitioning specification for the
-	// destination table.
+	// destination table. Only one of timePartitioning and rangePartitioning
+	// should be specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
-	// UseAvroLogicalTypes: If sourceFormat is set to "AVRO", indicates
-	// whether to enable interpreting logical types into their corresponding
-	// types (ie. TIMESTAMP), instead of only using their raw types (ie.
-	// INTEGER). The default value will be true once this feature launches,
-	// but can be set now in preparation.
+	// UseAvroLogicalTypes: [Optional] If sourceFormat is set to "AVRO",
+	// indicates whether to enable interpreting logical types into their
+	// corresponding types (ie. TIMESTAMP), instead of only using their raw
+	// types (ie. INTEGER).
 	UseAvroLogicalTypes bool `json:"useAvroLogicalTypes,omitempty"`
 
 	// WriteDisposition: [Optional] Specifies the action that occurs if the
@@ -1862,6 +1867,11 @@ type JobConfigurationQuery struct {
 	// QueryParameters: Query parameters for standard SQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
+	// RangePartitioning: [Experimental] Range partitioning specification
+	// for this table. Only one of timePartitioning and rangePartitioning
+	// should be specified.
+	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
+
 	// SchemaUpdateOptions: Allows the schema of the destination table to be
 	// updated as a side effect of the query job. Schema update options are
 	// supported in two cases: when writeDisposition is WRITE_APPEND; when
@@ -1880,7 +1890,8 @@ type JobConfigurationQuery struct {
 	TableDefinitions map[string]ExternalDataConfiguration `json:"tableDefinitions,omitempty"`
 
 	// TimePartitioning: Time-based partitioning specification for the
-	// destination table.
+	// destination table. Only one of timePartitioning and rangePartitioning
+	// should be specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL dialect

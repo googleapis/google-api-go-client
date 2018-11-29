@@ -167,6 +167,46 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/service.management"
           ]
+        },
+        "patch": {
+          "description": "Allocated ranges specified for the connection may be updated.\nOperation\u003cresponse: Connection\u003e.",
+          "flatPath": "v1beta/services/{servicesId}",
+          "httpMethod": "PATCH",
+          "id": "servicenetworking.services.patch",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "force": {
+              "description": "If a previously defined allocated range is removed, force flag must be\nset to true.",
+              "location": "query",
+              "type": "boolean"
+            },
+            "name": {
+              "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+              "location": "path",
+              "pattern": "^services/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "The update mask. If this is omitted, it defaults to \"*\".   Only reserved\npeering ranges list may be updated.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1beta/{+name}",
+          "request": {
+            "$ref": "Connection"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
         }
       },
       "resources": {
@@ -216,7 +256,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+                  "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.\nFor \"-\" all configured public peering services will be queried.",
                   "location": "path",
                   "pattern": "^services/[^/]+$",
                   "required": true,
@@ -237,7 +277,7 @@
       }
     }
   },
-  "revision": "20181105",
+  "revision": "20181128",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -529,6 +569,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "service": {
+          "description": "Output only.\nName of the peering service associated with this connection.\n\"services/{service name}",
+          "type": "string"
         }
       },
       "type": "object"

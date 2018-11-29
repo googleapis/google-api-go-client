@@ -632,6 +632,16 @@ type ExportOptions struct {
 	// MailOptions: Option available for mail export.
 	MailOptions *MailExportOptions `json:"mailOptions,omitempty"`
 
+	// Region: The requested export location.
+	//
+	// Possible values:
+	//   "EXPORT_REGION_UNSPECIFIED" - The region is unspecified. Will be
+	// treated the same as ANY.
+	//   "ANY" - Any region.
+	//   "US" - US region.
+	//   "EUROPE" - Europe region.
+	Region string `json:"region,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DriveOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1283,10 +1293,6 @@ type MailExportOptions struct {
 	//   "MBOX" - MBOX as export format.
 	//   "PST" - PST as export format
 	ExportFormat string `json:"exportFormat,omitempty"`
-
-	// ShowConfidentialModeContent: Set to true to export confidential mode
-	// content
-	ShowConfidentialModeContent bool `json:"showConfidentialModeContent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with

@@ -786,21 +786,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "cloudiot:v1beta1",
-   "name": "cloudiot",
-   "version": "v1beta1",
-   "title": "Cloud IoT API",
-   "description": "Registers and manages IoT (Internet of Things) devices that connect to the Google Cloud Platform.",
-   "discoveryRestUrl": "https://cloudiot.googleapis.com/$discovery/rest?version=v1beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/iot",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "cloudkms:v1",
    "name": "cloudkms",
    "version": "v1",
@@ -888,6 +873,21 @@
    },
    "documentationLink": "https://cloud.google.com/resource-manager",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudscheduler:v1beta1",
+   "name": "cloudscheduler",
+   "version": "v1beta1",
+   "title": "Cloud Scheduler API",
+   "description": "Creates and manages jobs run on a regular recurring schedule.",
+   "discoveryRestUrl": "https://cloudscheduler.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/scheduler/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",
@@ -1524,6 +1524,21 @@
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
    },
    "documentationLink": "https://developers.google.com/drive/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "driveactivity:v2",
+   "name": "driveactivity",
+   "version": "v2",
+   "title": "Drive Activity API",
+   "description": "Provides a historical view of activity in Google Drive.",
+   "discoveryRestUrl": "https://driveactivity.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://developers.google.com/drive/activity/",
    "preferred": true
   },
   {
@@ -2234,6 +2249,22 @@
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
    },
    "documentationLink": "https://developers.google.com/speed/docs/insights/v4/getting-started",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "pagespeedonline:v5",
+   "name": "pagespeedonline",
+   "version": "v5",
+   "title": "PageSpeed Insights API",
+   "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
+   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/pagespeedonline/v5/rest",
+   "discoveryLink": "./apis/pagespeedonline/v5/rest",
+   "icons": {
+    "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
+    "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
+   },
+   "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
    "preferred": true
   },
   {
@@ -2723,7 +2754,7 @@
    "name": "slides",
    "version": "v1",
    "title": "Google Slides API",
-   "description": "An API for creating and editing Google Slides presentations.",
+   "description": "Reads and writes Google Slides presentations.",
    "discoveryRestUrl": "https://slides.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2764,6 +2795,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "speech:v1p1beta1",
+   "name": "speech",
+   "version": "v1p1beta1",
+   "title": "Cloud Speech API",
+   "description": "Converts audio to text by applying powerful neural network models.",
+   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1p1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "speech:v1",
    "name": "speech",
    "version": "v1",
@@ -2776,21 +2822,6 @@
    },
    "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
    "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "speech:v1beta1",
-   "name": "speech",
-   "version": "v1beta1",
-   "title": "Cloud Speech API",
-   "description": "Converts audio to text by applying powerful neural network models.",
-   "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/speech-to-text/docs/quickstart-protocol",
-   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

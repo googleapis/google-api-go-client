@@ -1864,6 +1864,11 @@ type SubscriptionPurchase struct {
 	// when it reaches its current expiry time.
 	AutoRenewing bool `json:"autoRenewing,omitempty"`
 
+	// AutoResumeTimeMillis: Time at which the subscription will be
+	// automatically resumed, in milliseconds since the Epoch. Only present
+	// if the user has requested to pause the subscription.
+	AutoResumeTimeMillis int64 `json:"autoResumeTimeMillis,omitempty,string"`
+
 	// CancelReason: The reason why a subscription was canceled or is not
 	// auto-renewing. Possible values are:
 	// - User canceled the subscription

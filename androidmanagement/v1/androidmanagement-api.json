@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20181029",
+  "revision": "20181113",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2743,7 +2743,7 @@
           "type": "boolean"
         },
         "usbMassStorageEnabled": {
-          "description": "Whether USB storage is enabled.",
+          "description": "Whether USB storage is enabled. Deprecated.",
           "type": "boolean"
         },
         "version": {

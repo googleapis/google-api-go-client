@@ -1231,6 +1231,11 @@ type Job struct {
 	// HiveJob: Job is a Hive job.
 	HiveJob *HiveJob `json:"hiveJob,omitempty"`
 
+	// JobUuid: Output only. A UUID that uniquely identifies a job within
+	// the project over time. This is in contrast to a user-settable
+	// reference.job_id that may be reused over time.
+	JobUuid string `json:"jobUuid,omitempty"`
+
 	// Labels: Optional. The labels to associate with this job. Label keys
 	// must contain 1 to 63 characters, and must conform to RFC 1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,

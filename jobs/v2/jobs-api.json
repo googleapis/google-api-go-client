@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20181011",
+  "revision": "20181126",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -705,7 +705,7 @@
           "type": "string"
         },
         "roadTraffic": {
-          "description": "Optional.\n\nSpecifies the traffic density to use when caculating commute time.\nMust not be present if departure_hour_local is specified.",
+          "description": "Optional.\n\nSpecifies the traffic density to use when calculating commute time.\nMust not be present if departure_hour_local is specified.",
           "enum": [
             "ROAD_TRAFFIC_UNSPECIFIED",
             "TRAFFIC_FREE",
@@ -2416,7 +2416,7 @@
           "type": "array"
         },
         "locationFilters": {
-          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value is not specified, jobs are be retrieved\nfrom all locations.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations, and, if different values are specified\nfor the LocationFilter.distance_in_miles parameter, the maximum\nprovided distance is used for all locations.\n\nAt most 5 location filters are allowed.",
+          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value is not specified, jobs are retrieved\nfrom all locations.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations. If different values are specified for the\nLocationFilter.distance_in_miles parameter, the maximum provided\ndistance is used for all locations.\n\nAt most 5 location filters are allowed.",
           "items": {
             "$ref": "LocationFilter"
           },
@@ -2676,7 +2676,7 @@
           "type": "array"
         },
         "locationFilters": {
-          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn't specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations, and, if different values are specified\nfor the LocationFilter.distance_in_miles parameter, the maximum\nprovided distance is used for all locations.\n\nAt most 5 location filters are allowed.",
+          "description": "Optional.\n\nThe location filter specifies geo-regions containing the jobs to\nsearch against. See LocationFilter for more information.\n\nIf a location value isn't specified, jobs fitting the other search\ncriteria are retrieved regardless of where they're located.\n\nIf multiple values are specified, jobs are retrieved from any of the\nspecified locations. If different values are specified for the\nLocationFilter.distance_in_miles parameter, the maximum provided\ndistance is used for all locations.\n\nAt most 5 location filters are allowed.",
           "items": {
             "$ref": "LocationFilter"
           },
@@ -3037,7 +3037,7 @@
       "id": "SearchJobsRequest",
       "properties": {
         "disableRelevanceThresholding": {
-          "description": "Deprecated. Any value provided in this field is ignored.\n\nOptional.\n\nControls whether to disable relevance thresholding. Relevance\nthresholding removes jobs that have low relevance in search results,\nfor example, removing \"Assistant to the CEO\" positions from the search\nresults of a search for \"CEO\".\n\nDisabling relevance thresholding improves the accuracy of subsequent\nsearch requests.\n\nDefaults to false.",
+          "description": "Optional.\n\nControls whether to disable relevance thresholding. Relevance\nthresholding removes jobs that have low relevance in search results,\nfor example, removing \"Assistant to the CEO\" positions from the search\nresults of a search for \"CEO\".\n\nDisabling relevance thresholding improves the accuracy of subsequent\nsearch requests.\n\nDefaults to false.",
           "type": "boolean"
         },
         "enableBroadening": {

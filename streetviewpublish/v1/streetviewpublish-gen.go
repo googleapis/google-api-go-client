@@ -573,6 +573,19 @@ type Photo struct {
 	// PhotoView.INCLUDE_DOWNLOAD_URL.
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
+	// MapsPublishStatus: Output only. Status in Google Maps, whether this
+	// photo was published, or
+	// rejected for a possibly specified reason.
+	//
+	// Possible values:
+	//   "UNSPECIFIED_MAPS_PUBLISH_STATUS" - The status of the photo is
+	// unknown.
+	//   "PUBLISHED" - The photo is published to the public through Google
+	// Maps.
+	//   "REJECTED_UNKNOWN" - The photo has been rejected for an unknown
+	// reason.
+	MapsPublishStatus string `json:"mapsPublishStatus,omitempty"`
+
 	// PhotoId: Required when updating a photo. Output only when creating a
 	// photo.
 	// Identifier for the photo, which is unique among all photos in
@@ -591,6 +604,26 @@ type Photo struct {
 	// ThumbnailUrl: Output only. The thumbnail URL for showing a preview of
 	// the given photo.
 	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+
+	// TransferStatus: Output only. Status of rights transfer on this photo.
+	//
+	// Possible values:
+	//   "TRANSFER_STATUS_UNKNOWN" - The status of this transfer is
+	// unspecified.
+	//   "NEVER_TRANSFERRED" - This photo has never been in a transfer.
+	//   "PENDING" - This photo transfer has been initiated, but the
+	// receiver has not yet
+	// responded.
+	//   "COMPLETED" - The photo transfer has been completed, and this photo
+	// has been
+	// transferred to the recipient.
+	//   "REJECTED" - The recipient rejected this photo transfer.
+	//   "EXPIRED" - The photo transfer expired before the recipient took
+	// any action.
+	//   "CANCELLED" - The sender cancelled this photo transfer.
+	//   "RECEIVED_VIA_TRANSFER" - The recipient owns this photo due to a
+	// rights transfer.
+	TransferStatus string `json:"transferStatus,omitempty"`
 
 	// UploadReference: Required when creating a photo. Input only. The
 	// resource URL where the
@@ -696,12 +729,21 @@ func (s *PhotoResponse) MarshalJSON() ([]byte, error) {
 
 // Place: Place metadata for an entity.
 type Place struct {
+	// LanguageCode: Output-only. The language_code that the name is
+	// localized with. This should
+	// be the language_code specified in the request, but may be a fallback.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// Name: Output-only. The name of the place, localized to the
+	// language_code.
+	Name string `json:"name,omitempty"`
+
 	// PlaceId: Place identifier, as described
 	// in
 	// https://developers.google.com/places/place-id.
 	PlaceId string `json:"placeId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PlaceId") to
+	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -709,10 +751,10 @@ type Place struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PlaceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "LanguageCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1361,6 +1403,20 @@ func (r *PhotoService) Get(photoId string) *PhotoGetCall {
 	return c
 }
 
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code, such as "en-US" or "sr-Latn". For more
+// information,
+// see
+// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+// If
+//  language_code is unspecified, the user's language preference for
+// Google
+// services will be used.
+func (c *PhotoGetCall) LanguageCode(languageCode string) *PhotoGetCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
 // View sets the optional parameter "view": Specifies if a download URL
 // for the photo bytes should be returned in the
 // Photo response.
@@ -1479,6 +1535,11 @@ func (c *PhotoGetCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//     "photoId"
 	//   ],
 	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "photoId": {
 	//       "description": "Required. ID of the Photo.",
 	//       "location": "path",
@@ -2037,6 +2098,20 @@ func (r *PhotosService) BatchGet() *PhotosBatchGetCall {
 	return c
 }
 
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code, such as "en-US" or "sr-Latn". For more
+// information,
+// see
+// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+// If
+//  language_code is unspecified, the user's language preference for
+// Google
+// services will be used.
+func (c *PhotosBatchGetCall) LanguageCode(languageCode string) *PhotosBatchGetCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
 // PhotoIds sets the optional parameter "photoIds": Required. IDs of the
 // Photos. For HTTP
 // GET requests, the URL query parameter should
@@ -2160,6 +2235,11 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 	//   "id": "streetviewpublish.photos.batchGet",
 	//   "parameterOrder": [],
 	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "photoIds": {
 	//       "description": "Required. IDs of the Photos. For HTTP\nGET requests, the URL query parameter should be\n`photoIds=\u003cid1\u003e\u0026photoIds=\u003cid2\u003e\u0026...`.",
 	//       "location": "query",
@@ -2374,6 +2454,20 @@ func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 	return c
 }
 
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code, such as "en-US" or "sr-Latn". For more
+// information,
+// see
+// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
+// If
+//  language_code is unspecified, the user's language preference for
+// Google
+// services will be used.
+func (c *PhotosListCall) LanguageCode(languageCode string) *PhotosListCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of photos to return.
 // `pageSize` must be non-negative. If `pageSize` is zero or is not
@@ -2514,6 +2608,11 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "The filter expression. For example: `placeId=ChIJj61dQgK6j4AR4GeTYWZsKWw`.\n\nThe only filter supported at the moment is `placeId`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

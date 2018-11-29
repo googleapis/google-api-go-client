@@ -1355,7 +1355,8 @@ func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 // [Query
 // filters](/admin-sdk/alertcenter/guides/query-filters) and
 // [Supported
-// query filter fields](/admin-sdk/alertcenter/reference/filter-fields).
+// query filter
+// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1499,7 +1500,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields).",
+	//       "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1725,6 +1726,20 @@ func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackLi
 	return c
 }
 
+// Filter sets the optional parameter "filter": A query string for
+// filtering alert feedback results.
+// For more details, see
+// [Query
+// filters](/admin-sdk/alertcenter/guides/query-filters) and
+// [Supported
+// query filter
+// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback
+// .list).
+func (c *AlertsFeedbackListCall) Filter(filter string) *AlertsFeedbackListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1839,6 +1854,11 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//     },
 	//     "customerId": {
 	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert feedback are associated with.\nInferred from the caller identity if not provided.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Optional. A query string for filtering alert feedback results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

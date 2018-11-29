@@ -431,6 +431,38 @@ func (s *BooleanPropertyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type CheckAccessResponse struct {
+	// HasAccess: Returns true if principal has access.  Returns false
+	// otherwise.
+	HasAccess bool `json:"hasAccess,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "HasAccess") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HasAccess") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckAccessResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckAccessResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type CompositeFilter struct {
 	// LogicOperator: The logic operator of the sub filter.
 	//
@@ -4839,6 +4871,77 @@ func (s *SearchApplication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type SearchItemsByViewUrlRequest struct {
+	// DebugOptions: Common debug options.
+	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
+
+	// PageToken: The next_page_token value returned from a previous
+	// request, if any.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// ViewUrl: Specify the full view URL to find the corresponding
+	// item.
+	// The maximum length is 2048 characters.
+	ViewUrl string `json:"viewUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DebugOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DebugOptions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchItemsByViewUrlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchItemsByViewUrlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type SearchItemsByViewUrlResponse struct {
+	Items []*Item `json:"items,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results, or empty
+	// if there are no
+	// more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Items") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchItemsByViewUrlResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchItemsByViewUrlResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SearchQualityMetadata: Additional search quality metadata of the
 // item.
 type SearchQualityMetadata struct {
@@ -6249,6 +6352,324 @@ func (s *ValueFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "cloudsearch.debug.datasources.items.checkAccess":
+
+type DebugDatasourcesItemsCheckAccessCall struct {
+	s          *Service
+	name       string
+	principal  *Principal
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// CheckAccess: Checks whether an item is accessible by specified
+// principal.
+func (r *DebugDatasourcesItemsService) CheckAccess(name string, principal *Principal) *DebugDatasourcesItemsCheckAccessCall {
+	c := &DebugDatasourcesItemsCheckAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.principal = principal
+	return c
+}
+
+// DebugOptionsEnableDebugging sets the optional parameter
+// "debugOptions.enableDebugging": If set, the request will enable
+// debugging features of Cloud Search.
+// Only turn on this field, if asked by Google to help with debugging.
+func (c *DebugDatasourcesItemsCheckAccessCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugDatasourcesItemsCheckAccessCall {
+	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DebugDatasourcesItemsCheckAccessCall) Fields(s ...googleapi.Field) *DebugDatasourcesItemsCheckAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DebugDatasourcesItemsCheckAccessCall) Context(ctx context.Context) *DebugDatasourcesItemsCheckAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DebugDatasourcesItemsCheckAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DebugDatasourcesItemsCheckAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.principal)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/debug/{+name}:checkAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.debug.datasources.items.checkAccess" call.
+// Exactly one of *CheckAccessResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CheckAccessResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DebugDatasourcesItemsCheckAccessCall) Do(opts ...googleapi.CallOption) (*CheckAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &CheckAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Checks whether an item is accessible by specified principal.",
+	//   "flatPath": "v1/debug/datasources/{datasourcesId}/items/{itemsId}:checkAccess",
+	//   "httpMethod": "POST",
+	//   "id": "cloudsearch.debug.datasources.items.checkAccess",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "debugOptions.enableDebugging": {
+	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Item name, format:\ndatasources/{source_id}/items/{item_id}",
+	//       "location": "path",
+	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/debug/{+name}:checkAccess",
+	//   "request": {
+	//     "$ref": "Principal"
+	//   },
+	//   "response": {
+	//     "$ref": "CheckAccessResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.debug"
+	//   ]
+	// }
+
+}
+
+// method id "cloudsearch.debug.datasources.items.searchByViewUrl":
+
+type DebugDatasourcesItemsSearchByViewUrlCall struct {
+	s                           *Service
+	name                        string
+	searchitemsbyviewurlrequest *SearchItemsByViewUrlRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// SearchByViewUrl: Fetches the item whose viewUrl exactly matches that
+// of the URL provided
+// in the request.
+func (r *DebugDatasourcesItemsService) SearchByViewUrl(name string, searchitemsbyviewurlrequest *SearchItemsByViewUrlRequest) *DebugDatasourcesItemsSearchByViewUrlCall {
+	c := &DebugDatasourcesItemsSearchByViewUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.searchitemsbyviewurlrequest = searchitemsbyviewurlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) Fields(s ...googleapi.Field) *DebugDatasourcesItemsSearchByViewUrlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) Context(ctx context.Context) *DebugDatasourcesItemsSearchByViewUrlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchitemsbyviewurlrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/debug/{+name}/items:searchByViewUrl")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudsearch.debug.datasources.items.searchByViewUrl" call.
+// Exactly one of *SearchItemsByViewUrlResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SearchItemsByViewUrlResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) Do(opts ...googleapi.CallOption) (*SearchItemsByViewUrlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &SearchItemsByViewUrlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Fetches the item whose viewUrl exactly matches that of the URL provided\nin the request.",
+	//   "flatPath": "v1/debug/datasources/{datasourcesId}/items:searchByViewUrl",
+	//   "httpMethod": "POST",
+	//   "id": "cloudsearch.debug.datasources.items.searchByViewUrl",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Source name, format:\ndatasources/{source_id}",
+	//       "location": "path",
+	//       "pattern": "^datasources/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/debug/{+name}/items:searchByViewUrl",
+	//   "request": {
+	//     "$ref": "SearchItemsByViewUrlRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SearchItemsByViewUrlResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud_search",
+	//     "https://www.googleapis.com/auth/cloud_search.debug"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *DebugDatasourcesItemsSearchByViewUrlCall) Pages(ctx context.Context, f func(*SearchItemsByViewUrlResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchitemsbyviewurlrequest.PageToken = pt }(c.searchitemsbyviewurlrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchitemsbyviewurlrequest.PageToken = x.NextPageToken
+	}
+}
+
 // method id "cloudsearch.debug.datasources.items.unmappedids.list":
 
 type DebugDatasourcesItemsUnmappedidsListCall struct {
@@ -6264,6 +6685,15 @@ type DebugDatasourcesItemsUnmappedidsListCall struct {
 func (r *DebugDatasourcesItemsUnmappedidsService) List(parent string) *DebugDatasourcesItemsUnmappedidsListCall {
 	c := &DebugDatasourcesItemsUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// DebugOptionsEnableDebugging sets the optional parameter
+// "debugOptions.enableDebugging": If set, the request will enable
+// debugging features of Cloud Search.
+// Only turn on this field, if asked by Google to help with debugging.
+func (c *DebugDatasourcesItemsUnmappedidsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugDatasourcesItemsUnmappedidsListCall {
+	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
 }
 
@@ -6388,6 +6818,11 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Do(opts ...googleapi.CallOpti
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "debugOptions.enableDebugging": {
+	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum number of items to fetch in a request.\nDefaults to 100.",
 	//       "format": "int32",
@@ -6456,6 +6891,15 @@ type DebugIdentitysourcesItemsListForunmappedidentityCall struct {
 func (r *DebugIdentitysourcesItemsService) ListForunmappedidentity(parent string) *DebugIdentitysourcesItemsListForunmappedidentityCall {
 	c := &DebugIdentitysourcesItemsListForunmappedidentityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// DebugOptionsEnableDebugging sets the optional parameter
+// "debugOptions.enableDebugging": If set, the request will enable
+// debugging features of Cloud Search.
+// Only turn on this field, if asked by Google to help with debugging.
+func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugIdentitysourcesItemsListForunmappedidentityCall {
+	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
 }
 
@@ -6594,6 +7038,11 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Do(opts ...google
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "debugOptions.enableDebugging": {
+	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "groupResourceName": {
 	//       "location": "query",
 	//       "type": "string"
@@ -6669,6 +7118,15 @@ type DebugIdentitysourcesUnmappedidsListCall struct {
 func (r *DebugIdentitysourcesUnmappedidsService) List(parent string) *DebugIdentitysourcesUnmappedidsListCall {
 	c := &DebugIdentitysourcesUnmappedidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// DebugOptionsEnableDebugging sets the optional parameter
+// "debugOptions.enableDebugging": If set, the request will enable
+// debugging features of Cloud Search.
+// Only turn on this field, if asked by Google to help with debugging.
+func (c *DebugIdentitysourcesUnmappedidsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugIdentitysourcesUnmappedidsListCall {
+	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
 }
 
@@ -6808,6 +7266,11 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Do(opts ...googleapi.CallOptio
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "debugOptions.enableDebugging": {
+	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "pageSize": {
 	//       "description": "Maximum number of items to fetch in a request.\nDefaults to 100.",
 	//       "format": "int32",

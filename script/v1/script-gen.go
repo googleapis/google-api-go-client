@@ -62,13 +62,14 @@ const basePath = "https://script.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Read, send, delete, and manage your email
+	// Read, compose, send, and permanently delete all your email from Gmail
 	MailGoogleComScope = "https://mail.google.com/"
 
-	// Manage your calendars
+	// See, edit, share, and permanently delete all the calendars you can
+	// access using Google Calendar
 	WwwGoogleComCalendarFeedsScope = "https://www.google.com/calendar/feeds"
 
-	// Manage your contacts
+	// See, edit, download, and permanently delete your contacts
 	WwwGoogleComM8FeedsScope = "https://www.google.com/m8/feeds"
 
 	// View and manage the provisioning of groups on your domain
@@ -80,7 +81,7 @@ const (
 	// View and manage your Google Docs documents
 	DocumentsScope = "https://www.googleapis.com/auth/documents"
 
-	// View and manage the files in your Google Drive
+	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
 	// View and manage your forms in Google Drive
@@ -92,7 +93,25 @@ const (
 	// View and manage your Google Groups
 	GroupsScope = "https://www.googleapis.com/auth/groups"
 
-	// View and manage your spreadsheets in Google Drive
+	// Create and update Google Apps Script deployments
+	ScriptDeploymentsScope = "https://www.googleapis.com/auth/script.deployments"
+
+	// View Google Apps Script deployments
+	ScriptDeploymentsReadonlyScope = "https://www.googleapis.com/auth/script.deployments.readonly"
+
+	// View Google Apps Script project's metrics
+	ScriptMetricsScope = "https://www.googleapis.com/auth/script.metrics"
+
+	// View Google Apps Script processes
+	ScriptProcessesScope = "https://www.googleapis.com/auth/script.processes"
+
+	// Create and update Google Apps Script projects
+	ScriptProjectsScope = "https://www.googleapis.com/auth/script.projects"
+
+	// View Google Apps Script projects
+	ScriptProjectsReadonlyScope = "https://www.googleapis.com/auth/script.projects.readonly"
+
+	// See, edit, create, and delete your spreadsheets in Google Drive
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
 	// View your email address
@@ -1872,7 +1891,10 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//   "path": "v1/processes",
 	//   "response": {
 	//     "$ref": "ListUserProcessesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.processes"
+	//   ]
 	// }
 
 }
@@ -2222,7 +2244,10 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//   "path": "v1/processes:listScriptProcesses",
 	//   "response": {
 	//     "$ref": "ListScriptProcessesResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.processes"
+	//   ]
 	// }
 
 }
@@ -2366,7 +2391,10 @@ func (c *ProjectsCreateCall) Do(opts ...googleapi.CallOption) (*Project, error) 
 	//   },
 	//   "response": {
 	//     "$ref": "Project"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects"
+	//   ]
 	// }
 
 }
@@ -2505,7 +2533,11 @@ func (c *ProjectsGetCall) Do(opts ...googleapi.CallOption) (*Project, error) {
 	//   "path": "v1/projects/{scriptId}",
 	//   "response": {
 	//     "$ref": "Project"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects",
+	//     "https://www.googleapis.com/auth/script.projects.readonly"
+	//   ]
 	// }
 
 }
@@ -2661,7 +2693,11 @@ func (c *ProjectsGetContentCall) Do(opts ...googleapi.CallOption) (*Content, err
 	//   "path": "v1/projects/{scriptId}/content",
 	//   "response": {
 	//     "$ref": "Content"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects",
+	//     "https://www.googleapis.com/auth/script.projects.readonly"
+	//   ]
 	// }
 
 }
@@ -2837,7 +2873,10 @@ func (c *ProjectsGetMetricsCall) Do(opts ...googleapi.CallOption) (*Metrics, err
 	//   "path": "v1/projects/{scriptId}/metrics",
 	//   "response": {
 	//     "$ref": "Metrics"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.metrics"
+	//   ]
 	// }
 
 }
@@ -2980,7 +3019,10 @@ func (c *ProjectsUpdateContentCall) Do(opts ...googleapi.CallOption) (*Content, 
 	//   },
 	//   "response": {
 	//     "$ref": "Content"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects"
+	//   ]
 	// }
 
 }
@@ -3115,7 +3157,10 @@ func (c *ProjectsDeploymentsCreateCall) Do(opts ...googleapi.CallOption) (*Deplo
 	//   },
 	//   "response": {
 	//     "$ref": "Deployment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.deployments"
+	//   ]
 	// }
 
 }
@@ -3250,7 +3295,10 @@ func (c *ProjectsDeploymentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   "path": "v1/projects/{scriptId}/deployments/{deploymentId}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.deployments"
+	//   ]
 	// }
 
 }
@@ -3399,7 +3447,11 @@ func (c *ProjectsDeploymentsGetCall) Do(opts ...googleapi.CallOption) (*Deployme
 	//   "path": "v1/projects/{scriptId}/deployments/{deploymentId}",
 	//   "response": {
 	//     "$ref": "Deployment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.deployments",
+	//     "https://www.googleapis.com/auth/script.deployments.readonly"
+	//   ]
 	// }
 
 }
@@ -3565,7 +3617,11 @@ func (c *ProjectsDeploymentsListCall) Do(opts ...googleapi.CallOption) (*ListDep
 	//   "path": "v1/projects/{scriptId}/deployments",
 	//   "response": {
 	//     "$ref": "ListDeploymentsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.deployments",
+	//     "https://www.googleapis.com/auth/script.deployments.readonly"
+	//   ]
 	// }
 
 }
@@ -3731,7 +3787,10 @@ func (c *ProjectsDeploymentsUpdateCall) Do(opts ...googleapi.CallOption) (*Deplo
 	//   },
 	//   "response": {
 	//     "$ref": "Deployment"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.deployments"
+	//   ]
 	// }
 
 }
@@ -3868,7 +3927,10 @@ func (c *ProjectsVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Version,
 	//   },
 	//   "response": {
 	//     "$ref": "Version"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects"
+	//   ]
 	// }
 
 }
@@ -4018,7 +4080,11 @@ func (c *ProjectsVersionsGetCall) Do(opts ...googleapi.CallOption) (*Version, er
 	//   "path": "v1/projects/{scriptId}/versions/{versionNumber}",
 	//   "response": {
 	//     "$ref": "Version"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects",
+	//     "https://www.googleapis.com/auth/script.projects.readonly"
+	//   ]
 	// }
 
 }
@@ -4184,7 +4250,11 @@ func (c *ProjectsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersio
 	//   "path": "v1/projects/{scriptId}/versions",
 	//   "response": {
 	//     "$ref": "ListVersionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/script.projects",
+	//     "https://www.googleapis.com/auth/script.projects.readonly"
+	//   ]
 	// }
 
 }

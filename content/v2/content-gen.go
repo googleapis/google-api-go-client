@@ -4821,7 +4821,10 @@ type OrderLineItem struct {
 	// $10 are purchased, the total price will be $20.
 	Price *Price `json:"price,omitempty"`
 
-	// Product: Product data from the time of the order placement.
+	// Product: Product data as seen by customer from the time of the order
+	// placement. Note that certain attributes values (e.g. title or gtin)
+	// might be reformatted and no longer match values submitted via product
+	// feed.
 	Product *OrderLineItemProduct `json:"product,omitempty"`
 
 	// QuantityCanceled: Number of items canceled.
@@ -4959,9 +4962,6 @@ func (s *OrderLineItemProduct) MarshalJSON() ([]byte, error) {
 type OrderLineItemProductFee struct {
 	// Amount: Amount of the fee.
 	Amount *Price `json:"amount,omitempty"`
-
-	// Id: Case-insensitive fee ID.
-	Id string `json:"id,omitempty"`
 
 	// Name: Name of the fee.
 	Name string `json:"name,omitempty"`
@@ -5385,7 +5385,7 @@ func (s *OrderReturn) MarshalJSON() ([]byte, error) {
 type OrderShipment struct {
 	// Carrier: The carrier handling the shipment.
 	//
-	// Acceptable values are:
+	// Acceptable values for US are:
 	// - "gsx"
 	// - "ups"
 	// - "usps"
@@ -5402,6 +5402,10 @@ type OrderShipment struct {
 	// - "lasership"
 	// - "mpx"
 	// - "uds"
+	//
+	// Acceptable values for FR are:
+	// - "colissimo"
+	// - "chronopost"
 	Carrier string `json:"carrier,omitempty"`
 
 	// CreationDate: Date on which the shipment has been created, in ISO
@@ -9375,10 +9379,6 @@ func (s *ProductShipping) MarshalJSON() ([]byte, error) {
 
 type ProductShippingDimension struct {
 	// Unit: The unit of value.
-	//
-	// Acceptable values are:
-	// - "cm"
-	// - "in"
 	Unit string `json:"unit,omitempty"`
 
 	// Value: The dimension of the product used to calculate the shipping
@@ -17086,16 +17086,10 @@ type LiasettingsRequestgmbaccessCall struct {
 
 // Requestgmbaccess: Requests access to a specified Google My Business
 // account.
-func (r *LiasettingsService) Requestgmbaccess(merchantId uint64, accountId uint64) *LiasettingsRequestgmbaccessCall {
+func (r *LiasettingsService) Requestgmbaccess(merchantId uint64, accountId uint64, gmbEmail string) *LiasettingsRequestgmbaccessCall {
 	c := &LiasettingsRequestgmbaccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
 	c.accountId = accountId
-	return c
-}
-
-// GmbEmail sets the optional parameter "gmbEmail": The email of the
-// Google My Business account.
-func (c *LiasettingsRequestgmbaccessCall) GmbEmail(gmbEmail string) *LiasettingsRequestgmbaccessCall {
 	c.urlParams_.Set("gmbEmail", gmbEmail)
 	return c
 }
@@ -17192,7 +17186,8 @@ func (c *LiasettingsRequestgmbaccessCall) Do(opts ...googleapi.CallOption) (*Lia
 	//   "id": "content.liasettings.requestgmbaccess",
 	//   "parameterOrder": [
 	//     "merchantId",
-	//     "accountId"
+	//     "accountId",
+	//     "gmbEmail"
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
@@ -17205,6 +17200,7 @@ func (c *LiasettingsRequestgmbaccessCall) Do(opts ...googleapi.CallOption) (*Lia
 	//     "gmbEmail": {
 	//       "description": "The email of the Google My Business account.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
@@ -17391,37 +17387,13 @@ type LiasettingsSetinventoryverificationcontactCall struct {
 
 // Setinventoryverificationcontact: Sets the inventory verification
 // contract for the specified country.
-func (r *LiasettingsService) Setinventoryverificationcontact(merchantId uint64, accountId uint64) *LiasettingsSetinventoryverificationcontactCall {
+func (r *LiasettingsService) Setinventoryverificationcontact(merchantId uint64, accountId uint64, contactEmail string, contactName string, country string, language string) *LiasettingsSetinventoryverificationcontactCall {
 	c := &LiasettingsSetinventoryverificationcontactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
 	c.accountId = accountId
-	return c
-}
-
-// ContactEmail sets the optional parameter "contactEmail": The email of
-// the inventory verification contact.
-func (c *LiasettingsSetinventoryverificationcontactCall) ContactEmail(contactEmail string) *LiasettingsSetinventoryverificationcontactCall {
 	c.urlParams_.Set("contactEmail", contactEmail)
-	return c
-}
-
-// ContactName sets the optional parameter "contactName": The name of
-// the inventory verification contact.
-func (c *LiasettingsSetinventoryverificationcontactCall) ContactName(contactName string) *LiasettingsSetinventoryverificationcontactCall {
 	c.urlParams_.Set("contactName", contactName)
-	return c
-}
-
-// Country sets the optional parameter "country": The country for which
-// inventory verification is requested.
-func (c *LiasettingsSetinventoryverificationcontactCall) Country(country string) *LiasettingsSetinventoryverificationcontactCall {
 	c.urlParams_.Set("country", country)
-	return c
-}
-
-// Language sets the optional parameter "language": The language for
-// which inventory verification is requested.
-func (c *LiasettingsSetinventoryverificationcontactCall) Language(language string) *LiasettingsSetinventoryverificationcontactCall {
 	c.urlParams_.Set("language", language)
 	return c
 }
@@ -17519,7 +17491,11 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Do(opts ...googleapi.Ca
 	//   "id": "content.liasettings.setinventoryverificationcontact",
 	//   "parameterOrder": [
 	//     "merchantId",
-	//     "accountId"
+	//     "accountId",
+	//     "contactEmail",
+	//     "contactName",
+	//     "country",
+	//     "language"
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
@@ -17532,21 +17508,25 @@ func (c *LiasettingsSetinventoryverificationcontactCall) Do(opts ...googleapi.Ca
 	//     "contactEmail": {
 	//       "description": "The email of the inventory verification contact.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "contactName": {
 	//       "description": "The name of the inventory verification contact.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "country": {
 	//       "description": "The country for which inventory verification is requested.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "language": {
 	//       "description": "The language for which inventory verification is requested.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "merchantId": {
@@ -17581,16 +17561,10 @@ type LiasettingsSetposdataproviderCall struct {
 
 // Setposdataprovider: Sets the POS data provider for the specified
 // country.
-func (r *LiasettingsService) Setposdataprovider(merchantId uint64, accountId uint64) *LiasettingsSetposdataproviderCall {
+func (r *LiasettingsService) Setposdataprovider(merchantId uint64, accountId uint64, country string) *LiasettingsSetposdataproviderCall {
 	c := &LiasettingsSetposdataproviderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
 	c.accountId = accountId
-	return c
-}
-
-// Country sets the optional parameter "country": The country for which
-// the POS data provider is selected.
-func (c *LiasettingsSetposdataproviderCall) Country(country string) *LiasettingsSetposdataproviderCall {
 	c.urlParams_.Set("country", country)
 	return c
 }
@@ -17702,7 +17676,8 @@ func (c *LiasettingsSetposdataproviderCall) Do(opts ...googleapi.CallOption) (*L
 	//   "id": "content.liasettings.setposdataprovider",
 	//   "parameterOrder": [
 	//     "merchantId",
-	//     "accountId"
+	//     "accountId",
+	//     "country"
 	//   ],
 	//   "parameters": {
 	//     "accountId": {
@@ -17715,6 +17690,7 @@ func (c *LiasettingsSetposdataproviderCall) Do(opts ...googleapi.CallOption) (*L
 	//     "country": {
 	//       "description": "The country for which the POS data provider is selected.",
 	//       "location": "query",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "merchantId": {

@@ -303,6 +303,9 @@ type AndroidInstrumentationTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
 
+	// AppBundle: A multi-apk app bundle for the application under test.
+	AppBundle *AppBundle `json:"appBundle,omitempty"`
+
 	// AppPackageId: The java package for the application under
 	// test.
 	// Optional, default is determined by examining the application's
@@ -544,12 +547,6 @@ type AndroidModel struct {
 	// Examples: "default", "preview", "deprecated"
 	Tags []string `json:"tags,omitempty"`
 
-	// VideoRecordingNotSupported: True if and only if tests with this model
-	// DO NOT have video output.
-	// See also TestSpecification.disable_video_recording
-	// @OutputOnly
-	VideoRecordingNotSupported bool `json:"videoRecordingNotSupported,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Brand") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -579,6 +576,9 @@ func (s *AndroidModel) MarshalJSON() ([]byte, error) {
 type AndroidRoboTest struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
+
+	// AppBundle: A multi-apk app bundle for the application under test.
+	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
 	// AppInitialActivity: The initial activity that should be used to start
 	// the app.
@@ -689,6 +689,9 @@ func (s *AndroidRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 type AndroidTestLoop struct {
 	// AppApk: The APK for the application under test.
 	AppApk *FileReference `json:"appApk,omitempty"`
+
+	// AppBundle: A multi-apk app bundle for the application under test.
+	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
 	// AppPackageId: The java package for the application under
 	// test.
@@ -905,6 +908,41 @@ type ApkManifest struct {
 
 func (s *ApkManifest) MarshalJSON() ([]byte, error) {
 	type NoMethod ApkManifest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppBundle: An Android App Bundle file format, containing a
+// BundleConfig.pb file,
+// a base module directory, zero or more dynamic feature module
+// directories.
+// <p>See https://developer.android.com/guide/app-bundle/build for
+// guidance on
+// building App Bundles.
+type AppBundle struct {
+	// BundleLocation: .aab file representing the app bundle under test.
+	BundleLocation *FileReference `json:"bundleLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BundleLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BundleLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppBundle) MarshalJSON() ([]byte, error) {
+	type NoMethod AppBundle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2268,13 +2306,6 @@ type TestDetails struct {
 	// to the end of progress_messages.
 	// @OutputOnly
 	ProgressMessages []string `json:"progressMessages,omitempty"`
-
-	// VideoRecordingDisabled: Indicates that video will not be recorded for
-	// this execution either because
-	// the user chose to disable it or the device does not support it.
-	// See AndroidModel.video_recording_not_supported
-	// @OutputOnly
-	VideoRecordingDisabled bool `json:"videoRecordingDisabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
 	// unconditionally include in API requests. By default, fields with

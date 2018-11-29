@@ -62,10 +62,10 @@ const basePath = "https://people.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Manage your contacts
+	// See, edit, download, and permanently delete your contacts
 	ContactsScope = "https://www.googleapis.com/auth/contacts"
 
-	// View your contacts
+	// See and download your contacts
 	ContactsReadonlyScope = "https://www.googleapis.com/auth/contacts.readonly"
 
 	// Know the list of people in your circles, your age range, and language

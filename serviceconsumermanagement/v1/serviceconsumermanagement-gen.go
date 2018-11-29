@@ -257,6 +257,83 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ApplyTenantProjectConfigRequest: Request to apply configuration to an
+// existing tenant project.
+type ApplyTenantProjectConfigRequest struct {
+	// ProjectConfig: Configuration that should be applied to the existing
+	// tenant project.
+	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
+
+	// Tag: Tag of the project. Must be less than 128 characters. Required.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplyTenantProjectConfigRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplyTenantProjectConfigRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AttachTenantProjectRequest: Request to attach an existing project to
+// the tenancy unit as a new tenant
+// resource.
+type AttachTenantProjectRequest struct {
+	// ExternalResource: When attaching an external project, this is in the
+	// format of
+	// `projects/{project_number}’.
+	ExternalResource string `json:"externalResource,omitempty"`
+
+	// ReservedResource: When attaching a reserved project already in
+	// Tenancy Units, this is the
+	// tag of tenant resource under the tenancy unit for the service's
+	// producer
+	// project. The reserved tenant resource must be in active state.
+	ReservedResource string `json:"reservedResource,omitempty"`
+
+	// Tag: Tag of the tenant resource after attachment.
+	// Must be less than 128 characters. Required.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExternalResource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExternalResource") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AttachTenantProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AttachTenantProjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuthProvider: Configuration for an anthentication provider, including
 // support for
 // [JSON Web Token
@@ -5565,6 +5642,323 @@ func (c *ServicesTenancyUnitsAddProjectCall) Do(opts ...googleapi.CallOption) (*
 	//   "path": "v1/{+parent}:addProject",
 	//   "request": {
 	//     "$ref": "AddTenantProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "serviceconsumermanagement.services.tenancyUnits.applyProjectConfig":
+
+type ServicesTenancyUnitsApplyProjectConfigCall struct {
+	s                               *APIService
+	name                            string
+	applytenantprojectconfigrequest *ApplyTenantProjectConfigRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// ApplyProjectConfig: Apply configuration to an existing tenant
+// project.
+// This project must exist in active state and have the original
+// owner
+// account. Caller must have the permission to add a project to the
+// given
+// tenancy unit. Configuration will be applied, but any existing
+// settings on
+// the project will not be modified.
+// Specified policy bindings will be applied. Existing binding will not
+// be
+// modified.
+// Specified services will be activated.   No service will be
+// deactivated.
+// New billing configuration will be applied if specified.
+// Omit billing configuration to keep the existing one.
+// Service account in the project will be created if previously non
+// existing.
+// Operation fails if any of the steps fail, but no rollback of
+// already
+// applied configuration changes is attempted.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) ApplyProjectConfig(name string, applytenantprojectconfigrequest *ApplyTenantProjectConfigRequest) *ServicesTenancyUnitsApplyProjectConfigCall {
+	c := &ServicesTenancyUnitsApplyProjectConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.applytenantprojectconfigrequest = applytenantprojectconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsApplyProjectConfigCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsApplyProjectConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsApplyProjectConfigCall) Context(ctx context.Context) *ServicesTenancyUnitsApplyProjectConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsApplyProjectConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsApplyProjectConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.applytenantprojectconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:applyProjectConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.applyProjectConfig" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsApplyProjectConfigCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Apply configuration to an existing tenant project.\nThis project must exist in active state and have the original owner\naccount. Caller must have the permission to add a project to the given\ntenancy unit. Configuration will be applied, but any existing settings on\nthe project will not be modified.\nSpecified policy bindings will be applied. Existing binding will not be\nmodified.\nSpecified services will be activated.   No service will be deactivated.\nNew billing configuration will be applied if specified.\nOmit billing configuration to keep the existing one.\nService account in the project will be created if previously non existing.\nOperation fails if any of the steps fail, but no rollback of already\napplied configuration changes is attempted.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:applyProjectConfig",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.applyProjectConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:applyProjectConfig",
+	//   "request": {
+	//     "$ref": "ApplyTenantProjectConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "serviceconsumermanagement.services.tenancyUnits.attachProject":
+
+type ServicesTenancyUnitsAttachProjectCall struct {
+	s                          *APIService
+	name                       string
+	attachtenantprojectrequest *AttachTenantProjectRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// AttachProject: Attach an existing project to the tenancy unit as a
+// new tenant
+// resource. The project could be either the tenant project reserved
+// by
+// calling AddTenantProject under tenancy unit for the producer project
+// of
+// service, or from outside.
+// Caller will be checked against the permission as if
+// calling
+// AddTenantProject on the same consumer.
+// To trigger the attachement, the targeted tenant project must be in
+// a
+// folder. Please also make sure ServiceConsumerManagement service
+// account is
+// the owner of that project. Note that these two requirements are
+// already met
+// if the project is reserved through
+// AddTenantProject.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) AttachProject(name string, attachtenantprojectrequest *AttachTenantProjectRequest) *ServicesTenancyUnitsAttachProjectCall {
+	c := &ServicesTenancyUnitsAttachProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.attachtenantprojectrequest = attachtenantprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsAttachProjectCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsAttachProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsAttachProjectCall) Context(ctx context.Context) *ServicesTenancyUnitsAttachProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsAttachProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsAttachProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.attachtenantprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:attachProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.attachProject" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could be either the tenant project reserved by\ncalling AddTenantProject under tenancy unit for the producer project of\nservice, or from outside.\nCaller will be checked against the permission as if calling\nAddTenantProject on the same consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Please also make sure ServiceConsumerManagement service account is\nthe owner of that project. Note that these two requirements are already met\nif the project is reserved through AddTenantProject.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit that project will be attached to.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:attachProject",
+	//   "request": {
+	//     "$ref": "AttachTenantProjectRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

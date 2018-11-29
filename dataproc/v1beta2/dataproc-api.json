@@ -1629,7 +1629,7 @@
       }
     }
   },
-  "revision": "20181019",
+  "revision": "20181114",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1644,6 +1644,39 @@
         "acceleratorTypeUri": {
           "description": "Full URL, partial URI, or short name of the accelerator type resource to expose to this instance. See Compute Engine AcceleratorTypes( /compute/docs/reference/beta/acceleratorTypes)Examples * https://www.googleapis.com/compute/beta/projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 * projects/[project_id]/zones/us-east1-a/acceleratorTypes/nvidia-tesla-k80 * nvidia-tesla-k80Auto Zone Exception: If you are using the Cloud Dataproc Auto Zone Placement feature, you must use the short name of the accelerator type resource, for example, nvidia-tesla-k80.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AllocationAffinity": {
+      "description": "Allocation Affinity for consuming Zonal allocation.",
+      "id": "AllocationAffinity",
+      "properties": {
+        "consumeAllocationType": {
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "NO_ALLOCATION",
+            "ANY_ALLOCATION",
+            "SPECIFIC_ALLOCATION"
+          ],
+          "enumDescriptions": [
+            "",
+            "Do not consume from any allocated capacity.",
+            "Consume any allocation available.",
+            "Must consume from a specific allocation. Must specify key value fields for specifying the allocations."
+          ],
+          "type": "string"
+        },
+        "key": {
+          "description": "Corresponds to the label key of Allocation resource.",
+          "type": "string"
+        },
+        "values": {
+          "description": "Corresponds to the label values of allocation resource.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2043,6 +2076,10 @@
       "description": "Common config settings for resources of Compute Engine cluster instances, applicable to all instances in the cluster.",
       "id": "GceClusterConfig",
       "properties": {
+        "allocationAffinity": {
+          "$ref": "AllocationAffinity",
+          "description": "Allocation Affinity for consuming Zonal allocation."
+        },
         "internalIpOnly": {
           "description": "Optional. If true, all instances in the cluster will only have internal IP addresses. By default, clusters are not restricted to internal IP addresses, and will have ephemeral external IP addresses assigned to each instance. This internal_ip_only restriction can only be enabled for subnetwork enabled networks, and all off-cluster dependencies must be configured to be accessible without external IP addresses.",
           "type": "boolean"
@@ -2284,6 +2321,10 @@
           "$ref": "HiveJob",
           "description": "Job is a Hive job."
         },
+        "jobUuid": {
+          "description": "Output only. A UUID that uniquely identifies a job within the project over time. This is in contrast to a user-settable reference.job_id that may be reused over time.",
+          "type": "string"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -2315,6 +2356,10 @@
           "$ref": "SparkJob",
           "description": "Job is a Spark job."
         },
+        "sparkRJob": {
+          "$ref": "SparkRJob",
+          "description": "Job is a SparkR job."
+        },
         "sparkSqlJob": {
           "$ref": "SparkSqlJob",
           "description": "Job is a SparkSql job."
@@ -2329,6 +2374,10 @@
             "$ref": "JobStatus"
           },
           "type": "array"
+        },
+        "submittedBy": {
+          "description": "Output only. The email address of the user submitting the job. For jobs submitted on the cluster, the address is \u003ccode\u003eusername@hostname\u003c/code\u003e.",
+          "type": "string"
         },
         "yarnApplications": {
           "description": "Output only. The collection of YARN applications spun up by this job.Beta Feature: This report is available for testing purposes only. It may be changed before final release.",
@@ -2969,6 +3018,49 @@
             "type": "string"
           },
           "description": "Optional. A mapping of property names to values, used to configure Spark. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "SparkRJob": {
+      "description": "A Cloud Dataproc job for running Apache SparkR (https://spark.apache.org/docs/latest/sparkr.html) applications on YARN.",
+      "id": "SparkRJob",
+      "properties": {
+        "archiveUris": {
+          "description": "Optional. HCFS URIs of archives to be extracted in the working directory of Spark drivers and tasks. Supported file types: .jar, .tar, .tar.gz, .tgz, and .zip.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "args": {
+          "description": "Optional. The arguments to pass to the driver. Do not include arguments, such as --conf, that can be set as job properties, since a collision may occur that causes an incorrect job submission.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fileUris": {
+          "description": "Optional. HCFS URIs of files to be copied to the working directory of R drivers and distributed tasks. Useful for naively parallel tasks.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "loggingConfig": {
+          "$ref": "LoggingConfig",
+          "description": "Optional. The runtime log config for job execution."
+        },
+        "mainRFileUri": {
+          "description": "Required. The HCFS URI of the main R file to use as the driver. Must be a .R file.",
+          "type": "string"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. A mapping of property names to values, used to configure SparkR. Properties that conflict with values set by the Cloud Dataproc API may be overwritten. Can include properties set in /etc/spark/conf/spark-defaults.conf and classes in user code.",
           "type": "object"
         }
       },

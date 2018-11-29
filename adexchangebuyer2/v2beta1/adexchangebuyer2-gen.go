@@ -1363,6 +1363,8 @@ type Creative struct {
 	// left.
 	//   "EXPANDING_DIRECTION_DOWN_RIGHT" - The creative expands down and
 	// right.
+	//   "CREATIVE_TYPE_HTML" - The creative type is HTML.
+	//   "CREATIVE_TYPE_VAST_VIDEO" - The creative type is VAST video.
 	//   "EXPANDING_DIRECTION_UP_OR_DOWN" - The creative expands up or down.
 	//   "EXPANDING_DIRECTION_LEFT_OR_RIGHT" - The creative expands left or
 	// right.
@@ -1372,16 +1374,21 @@ type Creative struct {
 	// rolled over.
 	//   "INSTREAM_VAST_VIDEO_TYPE_VPAID_FLASH" - The instream vast video
 	// type is vpaid flash.
-	//   "RICH_MEDIA_CAPABILITY_TYPE_MRAID" - The creative is MRAID
+	//   "RICH_MEDIA_CAPABILITY_TYPE_MRAID" - The creative is MRAID.
+	//   "RICH_MEDIA_CAPABILITY_TYPE_FLASH" - The creative is Flash.
+	//   "RICH_MEDIA_CAPABILITY_TYPE_HTML5" - The creative is HTML5.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_SSL" - The creative is SSL.
+	//   "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL" - The creative is non-SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL" - The creative is an
 	// interstitial.
 	//   "NATIVE_ELIGIBILITY_ELIGIBLE" - The creative is eligible for
 	// native.
 	//   "NATIVE_ELIGIBILITY_NOT_ELIGIBLE" - The creative is not eligible
 	// for native.
+	//   "IN_BANNER_VIDEO" - The video type is in-banner video.
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.
+	//   "OMSDK_1_0" - The open measurement SDK is supported.
 	Attributes []string `json:"attributes,omitempty"`
 
 	// ClickThroughUrls: The set of destination URLs for the creative.
@@ -5296,8 +5303,11 @@ type ResumeProposalRequest struct {
 // Encapsulates the values of all dimensions for a given row.
 type RowDimensions struct {
 	// PublisherIdentifier: The publisher identifier for this row, if a
-	// breakdown by
-	// BreakdownDimension.PUBLISHER_IDENTIFIER
+	// breakdown
+	// by
+	// [BreakdownDimension.PUBLISHER_IDENTIFIER](https://developers.google
+	// .com/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.fi
+	// lterSets#FilterSet.BreakdownDimension)
 	// was requested.
 	PublisherIdentifier string `json:"publisherIdentifier,omitempty"`
 

@@ -139,13 +139,13 @@
               "type": "string"
             },
             "readTimeWindow.endTime": {
-              "description": "End time of the time window (exclusive).\nCurrent timestamp if not specified.",
+              "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
               "format": "google-datetime",
               "location": "query",
               "type": "string"
             },
             "readTimeWindow.startTime": {
-              "description": "Start time of the time window (inclusive).",
+              "description": "Start time of the time window (exclusive).",
               "format": "google-datetime",
               "location": "query",
               "type": "string"
@@ -255,13 +255,13 @@
               "type": "string"
             },
             "readTimeWindow.endTime": {
-              "description": "End time of the time window (exclusive).\nCurrent timestamp if not specified.",
+              "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
               "format": "google-datetime",
               "location": "query",
               "type": "string"
             },
             "readTimeWindow.startTime": {
-              "description": "Start time of the time window (inclusive).",
+              "description": "Start time of the time window (exclusive).",
               "format": "google-datetime",
               "location": "query",
               "type": "string"
@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20181008",
+  "revision": "20181112",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -452,7 +452,7 @@
       "id": "ExportAssetsRequest",
       "properties": {
         "assetTypes": {
-          "description": "A list of asset types of which to take a snapshot for. For example:\n\"google.compute.disk\". If specified, only matching assets will be returned.",
+          "description": "A list of asset types of which to take a snapshot for. For example:\n\"google.compute.disk\". If specified, only matching assets will be returned.\nSee [Introduction to Cloud Asset\nInventory](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/overview)\nfor all supported asset types.",
           "items": {
             "type": "string"
           },
@@ -512,7 +512,7 @@
       "id": "GcsDestination",
       "properties": {
         "uri": {
-          "description": "The path of the Cloud Storage objects. It's the same path that is used by\n gsutil. For example: \"gs://bucket_name/object_path\". See [Viewing and Editing Object Metadata](https://cloud.google.com/storage/docs/viewing-editing-metadata)\nfor more information.",
+          "description": "The uri of the Cloud Storage object. It's the same uri that is used by\ngsutil. For example: \"gs://bucket_name/object_name\". See [Viewing and\nEditing Object\nMetadata](https://cloud.google.com/storage/docs/viewing-editing-metadata)\nfor more information.",
           "type": "string"
         }
       },
@@ -677,16 +677,16 @@
       "type": "object"
     },
     "TimeWindow": {
-      "description": "A time window of [start_time, end_time).",
+      "description": "A time window of (start_time, end_time].",
       "id": "TimeWindow",
       "properties": {
         "endTime": {
-          "description": "End time of the time window (exclusive).\nCurrent timestamp if not specified.",
+          "description": "End time of the time window (inclusive).\nCurrent timestamp if not specified.",
           "format": "google-datetime",
           "type": "string"
         },
         "startTime": {
-          "description": "Start time of the time window (inclusive).",
+          "description": "Start time of the time window (exclusive).",
           "format": "google-datetime",
           "type": "string"
         }

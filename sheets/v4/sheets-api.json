@@ -3,16 +3,16 @@
     "oauth2": {
       "scopes": {
         "https://www.googleapis.com/auth/drive": {
-          "description": "View and manage the files in your Google Drive"
+          "description": "See, edit, create, and delete all of your Google Drive files"
         },
         "https://www.googleapis.com/auth/drive.file": {
           "description": "View and manage Google Drive files and folders that you have opened or created with this app"
         },
         "https://www.googleapis.com/auth/drive.readonly": {
-          "description": "View the files in your Google Drive"
+          "description": "See and download all your Google Drive files"
         },
         "https://www.googleapis.com/auth/spreadsheets": {
-          "description": "View and manage your spreadsheets in Google Drive"
+          "description": "See, edit, create, and delete your spreadsheets in Google Drive"
         },
         "https://www.googleapis.com/auth/spreadsheets.readonly": {
           "description": "View your Google Spreadsheets"
@@ -808,7 +808,7 @@
       }
     }
   },
-  "revision": "20180727",
+  "revision": "20181116",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {

@@ -558,6 +558,8 @@ type DynamicLinkInfo struct {
 	// More examples can be found in description of getNormalizedUriPrefix
 	// in
 	// j/c/g/firebase/dynamiclinks/uri/DdlDomain.java
+	//
+	// Will fallback to dynamic_link_domain is this field is missing
 	DomainUriPrefix string `json:"domainUriPrefix,omitempty"`
 
 	// DynamicLinkDomain: Dynamic Links domain that the project owns, e.g.
@@ -568,7 +570,7 @@ type DynamicLinkInfo struct {
 	// on how to set up Dynamic Link domain associated with your Firebase
 	// project.
 	//
-	// Required.
+	// Required if missing domain_uri_prefix.
 	DynamicLinkDomain string `json:"dynamicLinkDomain,omitempty"`
 
 	// IosInfo: iOS related information. See iOS related parameters in
@@ -1179,6 +1181,9 @@ type IosInfo struct {
 	// IosIpadFallbackLink: If specified, this overrides the
 	// ios_fallback_link value on iPads.
 	IosIpadFallbackLink string `json:"iosIpadFallbackLink,omitempty"`
+
+	// IosMinimumVersion: iOS minimum version.
+	IosMinimumVersion string `json:"iosMinimumVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IosAppStoreId") to
 	// unconditionally include in API requests. By default, fields with

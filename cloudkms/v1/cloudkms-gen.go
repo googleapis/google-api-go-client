@@ -1113,7 +1113,7 @@ type KeyOperationAttestation struct {
 	// Format: Output only. The format of the attestation data.
 	//
 	// Possible values:
-	//   "ATTESTATION_FORMAT_UNSPECIFIED"
+	//   "ATTESTATION_FORMAT_UNSPECIFIED" - Not specified.
 	//   "CAVIUM_V1_COMPRESSED" - Cavium HSM attestation compressed with
 	// gzip. Note that this format is
 	// defined by Cavium and subject to change at any time.

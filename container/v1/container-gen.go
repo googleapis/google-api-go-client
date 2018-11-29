@@ -452,6 +452,9 @@ type Cluster struct {
 	// one automatically chosen or specify a `/14` block in `10.0.0.0/8`.
 	ClusterIpv4Cidr string `json:"clusterIpv4Cidr,omitempty"`
 
+	// Conditions: Which conditions caused the current cluster state.
+	Conditions []*StatusCondition `json:"conditions,omitempty"`
+
 	// CreateTime: [Output only] The time the cluster was created,
 	// in
 	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt) text format.
@@ -461,8 +464,9 @@ type Cluster struct {
 	// the master endpoint.
 	CurrentMasterVersion string `json:"currentMasterVersion,omitempty"`
 
-	// CurrentNodeCount: [Output only] The number of nodes currently in the
-	// cluster.
+	// CurrentNodeCount: [Output only]  The number of nodes currently in the
+	// cluster. Deprecated.
+	// Call Kubernetes API directly to retrieve node information.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 
 	// CurrentNodeVersion: [Output only] Deprecated,
@@ -568,7 +572,7 @@ type Cluster struct {
 
 	// Locations: The list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located.
 	Locations []string `json:"locations,omitempty"`
@@ -587,6 +591,12 @@ type Cluster struct {
 
 	// MasterAuth: The authentication information for accessing the master
 	// endpoint.
+	// If unspecified, the defaults are used:
+	// For clusters before v1.12, if master_auth is unspecified, `username`
+	// will
+	// be set to "admin", a random password will be generated, and a
+	// client
+	// certificate will be issued.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
 
 	// MasterAuthorizedNetworksConfig: The configuration options for master
@@ -765,7 +775,7 @@ type ClusterUpdate struct {
 
 	// DesiredLocations: The desired list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located. Changing the locations a cluster is in will
 	// result
@@ -1568,9 +1578,9 @@ type MasterAuth struct {
 
 	// Username: The username to use for HTTP basic authentication to the
 	// master endpoint.
-	// For clusters v1.6.0 and later, you can disable basic authentication
+	// For clusters v1.6.0 and later, basic authentication can be disabled
 	// by
-	// providing an empty username.
+	// leaving username unspecified (or setting it to the empty string).
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientCertificate")
@@ -1901,6 +1911,14 @@ type NodeConfig struct {
 	// must comply with RFC1035.
 	Tags []string `json:"tags,omitempty"`
 
+	// Taints: List of kubernetes taints to be applied to each node.
+	//
+	// For more information, including usage and the valid values,
+	// see:
+	// https://kubernetes.io/docs/concepts/configuration/taint-and-toler
+	// ation/
+	Taints []*NodeTaint `json:"taints,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1986,6 +2004,9 @@ type NodePool struct {
 	// is enabled
 	// only if a valid configuration is present.
 	Autoscaling *NodePoolAutoscaling `json:"autoscaling,omitempty"`
+
+	// Conditions: Which conditions caused the current node pool state.
+	Conditions []*StatusCondition `json:"conditions,omitempty"`
 
 	// Config: The node configuration of the pool.
 	Config *NodeConfig `json:"config,omitempty"`
@@ -2117,10 +2138,61 @@ func (s *NodePoolAutoscaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// NodeTaint: Kubernetes taint is comprised of three fields: key, value,
+// and effect. Effect
+// can only be one of three types:  NoSchedule, PreferNoSchedule or
+// NoExecute.
+//
+// For more information, including usage and the valid values,
+// see:
+// https://kubernetes.io/docs/concepts/configuration/taint-and-toler
+// ation/
+type NodeTaint struct {
+	// Effect: Effect for taint.
+	//
+	// Possible values:
+	//   "EFFECT_UNSPECIFIED" - Not set
+	//   "NO_SCHEDULE" - NoSchedule
+	//   "PREFER_NO_SCHEDULE" - PreferNoSchedule
+	//   "NO_EXECUTE" - NoExecute
+	Effect string `json:"effect,omitempty"`
+
+	// Key: Key for taint.
+	Key string `json:"key,omitempty"`
+
+	// Value: Value for taint.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Effect") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Effect") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeTaint) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeTaint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This operation resource represents operations that may
 // have happened or are
 // happening on the cluster. All fields are output only.
 type Operation struct {
+	// ClusterConditions: Which conditions caused the current cluster state.
+	ClusterConditions []*StatusCondition `json:"clusterConditions,omitempty"`
+
 	// Detail: Detailed operation progress, if available.
 	Detail string `json:"detail,omitempty"`
 
@@ -2140,6 +2212,10 @@ type Operation struct {
 
 	// Name: The server-assigned ID for the operation.
 	Name string `json:"name,omitempty"`
+
+	// NodepoolConditions: Which conditions caused the current node pool
+	// state.
+	NodepoolConditions []*StatusCondition `json:"nodepoolConditions,omitempty"`
 
 	// OperationType: The operation type.
 	//
@@ -2199,20 +2275,21 @@ type Operation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Detail") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "ClusterConditions")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Detail") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClusterConditions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2570,7 +2647,7 @@ type SetLocationsRequest struct {
 
 	// Locations: The desired list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located. Changing the locations a cluster is in will
 	// result
@@ -3142,6 +3219,51 @@ type StartIPRotationRequest struct {
 
 func (s *StartIPRotationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartIPRotationRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StatusCondition: StatusCondition describes why a cluster or a node
+// pool has a certain status
+// (e.g., ERROR or DEGRADED).
+type StatusCondition struct {
+	// Code: Machine-friendly representation of the condition
+	//
+	// Possible values:
+	//   "UNKNOWN" - UNKNOWN indicates a generic condition.
+	//   "GCE_STOCKOUT" - GCE_STOCKOUT indicates a Google Compute Engine
+	// stockout.
+	//   "GKE_SERVICE_ACCOUNT_DELETED" - GKE_SERVICE_ACCOUNT_DELETED
+	// indicates that the user deleted their robot
+	// service account.
+	//   "GCE_QUOTA_EXCEEDED" - Google Compute Engine quota was exceeded.
+	//   "SET_BY_OPERATOR" - Cluster state was manually changed by an SRE
+	// due to a system logic error.
+	// More codes TBA
+	Code string `json:"code,omitempty"`
+
+	// Message: Human-friendly representation of the condition
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatusCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod StatusCondition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

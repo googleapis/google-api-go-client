@@ -524,8 +524,9 @@ type Cluster struct {
 	// the master endpoint.
 	CurrentMasterVersion string `json:"currentMasterVersion,omitempty"`
 
-	// CurrentNodeCount: [Output only] The number of nodes currently in the
-	// cluster.
+	// CurrentNodeCount: [Output only]  The number of nodes currently in the
+	// cluster. Deprecated.
+	// Call Kubernetes API directly to retrieve node information.
 	CurrentNodeCount int64 `json:"currentNodeCount,omitempty"`
 
 	// CurrentNodeVersion: [Output only] Deprecated,
@@ -640,7 +641,7 @@ type Cluster struct {
 
 	// Locations: The list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located.
 	Locations []string `json:"locations,omitempty"`
@@ -659,6 +660,12 @@ type Cluster struct {
 
 	// MasterAuth: The authentication information for accessing the master
 	// endpoint.
+	// If unspecified, the defaults are used:
+	// For clusters before v1.12, if master_auth is unspecified, `username`
+	// will
+	// be set to "admin", a random password will be generated, and a
+	// client
+	// certificate will be issued.
 	MasterAuth *MasterAuth `json:"masterAuth,omitempty"`
 
 	// MasterAuthorizedNetworksConfig: The configuration options for master
@@ -821,6 +828,10 @@ type Cluster struct {
 	// notation (e.g. `1.2.3.4/29`).
 	TpuIpv4CidrBlock string `json:"tpuIpv4CidrBlock,omitempty"`
 
+	// VerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
+	// configuration.
+	VerticalPodAutoscaling *VerticalPodAutoscaling `json:"verticalPodAutoscaling,omitempty"`
+
 	// Zone: [Output only] The name of the Google Compute
 	// Engine
 	// [zone](/compute/docs/zones#available) in which the
@@ -919,7 +930,7 @@ type ClusterUpdate struct {
 
 	// DesiredLocations: The desired list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located. Changing the locations a cluster is in will
 	// result
@@ -1007,6 +1018,10 @@ type ClusterUpdate struct {
 	// DesiredPodSecurityPolicyConfig: The desired configuration options for
 	// the PodSecurityPolicy feature.
 	DesiredPodSecurityPolicyConfig *PodSecurityPolicyConfig `json:"desiredPodSecurityPolicyConfig,omitempty"`
+
+	// DesiredVerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
+	// configuration.
+	DesiredVerticalPodAutoscaling *VerticalPodAutoscaling `json:"desiredVerticalPodAutoscaling,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DesiredAddonsConfig")
 	// to unconditionally include in API requests. By default, fields with
@@ -1917,9 +1932,9 @@ type MasterAuth struct {
 
 	// Username: The username to use for HTTP basic authentication to the
 	// master endpoint.
-	// For clusters v1.6.0 and later, you can disable basic authentication
+	// For clusters v1.6.0 and later, basic authentication can be disabled
 	// by
-	// providing an empty username.
+	// leaving username unspecified (or setting it to the empty string).
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientCertificate")
@@ -3193,7 +3208,7 @@ type SetLocationsRequest struct {
 
 	// Locations: The desired list of Google Compute
 	// Engine
-	// [locations](/compute/docs/zones#available) in which the cluster's
+	// [zones](/compute/docs/zones#available) in which the cluster's
 	// nodes
 	// should be located. Changing the locations a cluster is in will
 	// result
@@ -3777,11 +3792,14 @@ type StatusCondition struct {
 	//
 	// Possible values:
 	//   "UNKNOWN" - UNKNOWN indicates a generic condition.
-	//   "GCE_STOCKOUT" - GCE_STOCKOUT indicates a GCE stockout.
+	//   "GCE_STOCKOUT" - GCE_STOCKOUT indicates a Google Compute Engine
+	// stockout.
 	//   "GKE_SERVICE_ACCOUNT_DELETED" - GKE_SERVICE_ACCOUNT_DELETED
 	// indicates that the user deleted their robot
 	// service account.
-	//   "GCE_QUOTA_EXCEEDED" - GCE quota was exceeded.
+	//   "GCE_QUOTA_EXCEEDED" - Google Compute Engine quota was exceeded.
+	//   "SET_BY_OPERATOR" - Cluster state was manually changed by an SRE
+	// due to a system logic error.
 	// More codes TBA
 	Code string `json:"code,omitempty"`
 
@@ -4107,6 +4125,37 @@ type UsableSubnetworkSecondaryRange struct {
 
 func (s *UsableSubnetworkSecondaryRange) MarshalJSON() ([]byte, error) {
 	type NoMethod UsableSubnetworkSecondaryRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// VerticalPodAutoscaling: VerticalPodAutoscaling contains global,
+// per-cluster information
+// required by Vertical Pod Autoscaler to automatically adjust
+// the resources of pods controlled by it.
+type VerticalPodAutoscaling struct {
+	// Enabled: Enables vertical pod autoscaling.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VerticalPodAutoscaling) MarshalJSON() ([]byte, error) {
+	type NoMethod VerticalPodAutoscaling
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

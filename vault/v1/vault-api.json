@@ -1024,7 +1024,7 @@
       }
     }
   },
-  "revision": "20181106",
+  "revision": "20181128",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {
@@ -1300,6 +1300,22 @@
         "mailOptions": {
           "$ref": "MailExportOptions",
           "description": "Option available for mail export."
+        },
+        "region": {
+          "description": "The requested export location.",
+          "enum": [
+            "EXPORT_REGION_UNSPECIFIED",
+            "ANY",
+            "US",
+            "EUROPE"
+          ],
+          "enumDescriptions": [
+            "The region is unspecified. Will be treated the same as ANY.",
+            "Any region.",
+            "US region.",
+            "Europe region."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -1645,10 +1661,6 @@
             "PST as export format"
           ],
           "type": "string"
-        },
-        "showConfidentialModeContent": {
-          "description": "Set to true to export confidential mode content",
-          "type": "boolean"
         }
       },
       "type": "object"

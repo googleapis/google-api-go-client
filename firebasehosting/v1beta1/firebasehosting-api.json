@@ -114,6 +114,71 @@
   "protocol": "rest",
   "resources": {
     "sites": {
+      "methods": {
+        "getConfig": {
+          "description": "Gets the Hosting metadata for a specific site.",
+          "flatPath": "v1beta1/sites/{sitesId}/config",
+          "httpMethod": "GET",
+          "id": "firebasehosting.sites.getConfig",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The site for which to get the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+              "location": "path",
+              "pattern": "^sites/[^/]+/config$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/{+name}",
+          "response": {
+            "$ref": "SiteConfig"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only",
+            "https://www.googleapis.com/auth/firebase",
+            "https://www.googleapis.com/auth/firebase.readonly"
+          ]
+        },
+        "updateConfig": {
+          "description": "Sets the Hosting metadata for a specific site.",
+          "flatPath": "v1beta1/sites/{sitesId}/config",
+          "httpMethod": "PATCH",
+          "id": "firebasehosting.sites.updateConfig",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. The site for which to update the SiteConfig, in the format:\n\u003ccode\u003esites/\u003cvar\u003esite-name\u003c/var\u003e/config\u003c/code\u003e",
+              "location": "path",
+              "pattern": "^sites/[^/]+/config$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "A set of field names from your [site configuration](../sites.SiteConfig)\nthat you want to update.\n\u003cbr\u003eA field will be overwritten if, and only if, it's in the mask.\n\u003cbr\u003eIf a mask is not provided then a default mask of only\n[`max_versions`](../sites.SiteConfig.max_versions) will be used.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/{+name}",
+          "request": {
+            "$ref": "SiteConfig"
+          },
+          "response": {
+            "$ref": "SiteConfig"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/firebase"
+          ]
+        }
+      },
       "resources": {
         "domains": {
           "methods": {
@@ -539,7 +604,7 @@
       }
     }
   },
-  "revision": "20181004",
+  "revision": "20181116",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -984,6 +1049,18 @@
             "Trailing slashes are _added_ to directory indexes as well as to any URL\npath not ending in a file extension.",
             "Trailing slashes are _removed_ from directory indexes as well as from any\nURL path not ending in a file extension."
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SiteConfig": {
+      "description": "A `SiteConfig` contains metadata associated with a specific site that\ncontrols Firebase Hosting serving behavior",
+      "id": "SiteConfig",
+      "properties": {
+        "maxVersions": {
+          "description": "The number of FINALIZED versions that will be held for a site before\nautomatic deletion. When a new version is deployed, content for versions\nin storage in excess of this number will be deleted, and will no longer be\nbilled for storage usage. Oldest versions will be deleted first; sites are\ncreated with an unlimited number of max_versions by default.",
+          "format": "int64",
           "type": "string"
         }
       },

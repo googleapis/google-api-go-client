@@ -1118,10 +1118,8 @@ type Deployment struct {
 	Build *BuildInfo `json:"build,omitempty"`
 
 	// CloudBuildOptions: Options for any Google Cloud Build builds created
-	// as a part of this deployment.Note that this is orthogonal to the
-	// build parameter, where the deployment depends on an already existing
-	// cloud build. These options will only be used if a new build is
-	// created, such as when deploying to the App Engine flexible
+	// as a part of this deployment.These options will only be used if a new
+	// build is created, such as when deploying to the App Engine flexible
 	// environment using files or zip.
 	CloudBuildOptions *CloudBuildOptions `json:"cloudBuildOptions,omitempty"`
 

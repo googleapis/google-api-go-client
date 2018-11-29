@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/kqiK7ItRiK15mvY7aRI-n1_7sqk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/PNLk-OC6JYKJ3ygPuumcyHEfVVQ\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1294,7 +1294,8 @@
           "id": "content.liasettings.requestgmbaccess",
           "parameterOrder": [
             "merchantId",
-            "accountId"
+            "accountId",
+            "gmbEmail"
           ],
           "parameters": {
             "accountId": {
@@ -1307,6 +1308,7 @@
             "gmbEmail": {
               "description": "The email of the Google My Business account.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "merchantId": {
@@ -1370,7 +1372,11 @@
           "id": "content.liasettings.setinventoryverificationcontact",
           "parameterOrder": [
             "merchantId",
-            "accountId"
+            "accountId",
+            "contactEmail",
+            "contactName",
+            "country",
+            "language"
           ],
           "parameters": {
             "accountId": {
@@ -1383,21 +1389,25 @@
             "contactEmail": {
               "description": "The email of the inventory verification contact.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "contactName": {
               "description": "The name of the inventory verification contact.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "country": {
               "description": "The country for which inventory verification is requested.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "language": {
               "description": "The language for which inventory verification is requested.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "merchantId": {
@@ -1422,7 +1432,8 @@
           "id": "content.liasettings.setposdataprovider",
           "parameterOrder": [
             "merchantId",
-            "accountId"
+            "accountId",
+            "country"
           ],
           "parameters": {
             "accountId": {
@@ -1435,6 +1446,7 @@
             "country": {
               "description": "The country for which the POS data provider is selected.",
               "location": "query",
+              "required": true,
               "type": "string"
             },
             "merchantId": {
@@ -3469,7 +3481,7 @@
       }
     }
   },
-  "revision": "20181029",
+  "revision": "20181129",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6330,7 +6342,7 @@
         },
         "product": {
           "$ref": "OrderLineItemProduct",
-          "description": "Product data from the time of the order placement."
+          "description": "Product data as seen by customer from the time of the order placement. Note that certain attributes values (e.g. title or gtin) might be reformatted and no longer match values submitted via product feed."
         },
         "quantityCanceled": {
           "description": "Number of items canceled.",
@@ -6466,10 +6478,6 @@
         "amount": {
           "$ref": "Price",
           "description": "Amount of the fee."
-        },
-        "id": {
-          "description": "Case-insensitive fee ID.",
-          "type": "string"
         },
         "name": {
           "description": "Name of the fee.",
@@ -6771,7 +6779,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\"",
           "type": "string"
         },
         "creationDate": {
@@ -9493,7 +9501,7 @@
       "id": "ProductShippingDimension",
       "properties": {
         "unit": {
-          "description": "The unit of value.\n\nAcceptable values are:  \n- \"cm\" \n- \"in\"",
+          "description": "The unit of value.",
           "type": "string"
         },
         "value": {

@@ -827,6 +827,12 @@ type Connection struct {
 	// producer subnetworks.
 	ReservedPeeringRanges []string `json:"reservedPeeringRanges,omitempty"`
 
+	// Service: Output only.
+	// Name of the peering service associated with this
+	// connection.
+	// "services/{service name}
+	Service string `json:"service,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Network") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4507,6 +4513,175 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 
 }
 
+// method id "servicenetworking.services.patch":
+
+type ServicesPatchCall struct {
+	s          *APIService
+	name       string
+	connection *Connection
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Allocated ranges specified for the connection may be
+// updated.
+// Operation<response: Connection>.
+func (r *ServicesService) Patch(name string, connection *Connection) *ServicesPatchCall {
+	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.connection = connection
+	return c
+}
+
+// Force sets the optional parameter "force": If a previously defined
+// allocated range is removed, force flag must be
+// set to true.
+func (c *ServicesPatchCall) Force(force bool) *ServicesPatchCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask.
+// If this is omitted, it defaults to "*".   Only reserved
+// peering ranges list may be updated.
+func (c *ServicesPatchCall) UpdateMask(updateMask string) *ServicesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesPatchCall) Fields(s ...googleapi.Field) *ServicesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesPatchCall) Context(ctx context.Context) *ServicesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.connection)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Allocated ranges specified for the connection may be updated.\nOperation\u003cresponse: Connection\u003e.",
+	//   "flatPath": "v1beta/services/{servicesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "servicenetworking.services.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "If a previously defined allocated range is removed, force flag must be\nset to true.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The update mask. If this is omitted, it defaults to \"*\".   Only reserved\npeering ranges list may be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "request": {
+	//     "$ref": "Connection"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
 // method id "servicenetworking.services.connections.create":
 
 type ServicesConnectionsCreateCall struct {
@@ -4807,7 +4982,7 @@ func (c *ServicesConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListCon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.\nFor \"-\" all configured public peering services will be queried.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,

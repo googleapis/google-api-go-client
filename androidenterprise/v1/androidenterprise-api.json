@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/-WjiIAVNcRnZOqZ7_gp3nJhPcz4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/_41XhMkjmqptXD-fYNmY575w21g\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2427,7 +2427,7 @@
           ]
         },
         "generateAuthenticationToken": {
-          "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nThis call only works with EMM-managed accounts.",
+          "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nYou can provision a maximum of 10 devices per user.\n\nThis call only works with EMM-managed accounts.",
           "httpMethod": "POST",
           "id": "androidenterprise.users.generateAuthenticationToken",
           "parameterOrder": [
@@ -2756,9 +2756,185 @@
           ]
         }
       }
+    },
+    "webapps": {
+      "methods": {
+        "delete": {
+          "description": "Deletes an existing web app.",
+          "httpMethod": "DELETE",
+          "id": "androidenterprise.webapps.delete",
+          "parameterOrder": [
+            "enterpriseId",
+            "webAppId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "webAppId": {
+              "description": "The ID of the web app.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        },
+        "get": {
+          "description": "Gets an existing web app.",
+          "httpMethod": "GET",
+          "id": "androidenterprise.webapps.get",
+          "parameterOrder": [
+            "enterpriseId",
+            "webAppId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "webAppId": {
+              "description": "The ID of the web app.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+          "response": {
+            "$ref": "WebApp"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        },
+        "insert": {
+          "description": "Creates a new web app for the enterprise.",
+          "httpMethod": "POST",
+          "id": "androidenterprise.webapps.insert",
+          "parameterOrder": [
+            "enterpriseId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps",
+          "request": {
+            "$ref": "WebApp"
+          },
+          "response": {
+            "$ref": "WebApp"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        },
+        "list": {
+          "description": "Retrieves the details of all web apps for a given enterprise.",
+          "httpMethod": "GET",
+          "id": "androidenterprise.webapps.list",
+          "parameterOrder": [
+            "enterpriseId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps",
+          "response": {
+            "$ref": "WebAppsListResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        },
+        "patch": {
+          "description": "Updates an existing web app. This method supports patch semantics.",
+          "httpMethod": "PATCH",
+          "id": "androidenterprise.webapps.patch",
+          "parameterOrder": [
+            "enterpriseId",
+            "webAppId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "webAppId": {
+              "description": "The ID of the web app.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+          "request": {
+            "$ref": "WebApp"
+          },
+          "response": {
+            "$ref": "WebApp"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        },
+        "update": {
+          "description": "Updates an existing web app.",
+          "httpMethod": "PUT",
+          "id": "androidenterprise.webapps.update",
+          "parameterOrder": [
+            "enterpriseId",
+            "webAppId"
+          ],
+          "parameters": {
+            "enterpriseId": {
+              "description": "The ID of the enterprise.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "webAppId": {
+              "description": "The ID of the web app.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+          "request": {
+            "$ref": "WebApp"
+          },
+          "response": {
+            "$ref": "WebApp"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidenterprise"
+          ]
+        }
+      }
     }
   },
-  "revision": "20181105",
+  "revision": "20181121",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -4482,6 +4658,75 @@
         "userValue": {
           "description": "The value of the placeholder, specific to the user.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebApp": {
+      "description": "WebApp resource info.",
+      "id": "WebApp",
+      "properties": {
+        "displayMode": {
+          "description": "The display mode of the web app.",
+          "type": "string"
+        },
+        "icons": {
+          "description": "A list of icons representing this website. Must have at least one element.",
+          "items": {
+            "$ref": "WebAppIcon"
+          },
+          "type": "array"
+        },
+        "isPublished": {
+          "description": "A flag whether the app has been published to the Play store yet.",
+          "type": "boolean"
+        },
+        "startUrl": {
+          "description": "The start URL, i.e. the URL that should load when the user opens the application.",
+          "type": "string"
+        },
+        "title": {
+          "description": "The title of the web application as displayed to the user (e.g., amongst a list of other applications, or as a label for an icon).",
+          "type": "string"
+        },
+        "versionCode": {
+          "description": "The current version of the app.\n\n\nNote that the version can automatically increase during the lifetime of the web app, while Google does internal housekeeping to keep the web app up-to-date.",
+          "format": "int64",
+          "type": "string"
+        },
+        "webAppId": {
+          "description": "The ID of the application.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebAppIcon": {
+      "description": "Icon for a web app.",
+      "id": "WebAppIcon",
+      "properties": {
+        "imageData": {
+          "description": "The actual bytes of the image in a base64url encoded string (c.f. RFC4648, section 5 \"Base 64 Encoding with URL and Filename Safe Alphabet\").  \n- The image type can be png or jpg.\n- The image should ideally be square.\n- The image should ideally have a size of 512x512.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "WebAppsListResponse": {
+      "description": "The web app details for an enterprise.",
+      "id": "WebAppsListResponse",
+      "properties": {
+        "kind": {
+          "default": "androidenterprise#webAppsListResponse",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#webAppsListResponse\".",
+          "type": "string"
+        },
+        "webApp": {
+          "description": "The manifest describing a web app.",
+          "items": {
+            "$ref": "WebApp"
+          },
+          "type": "array"
         }
       },
       "type": "object"

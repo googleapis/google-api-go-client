@@ -86,6 +86,7 @@ func New(client *http.Client) (*Service, error) {
 	s.Storelayoutclusters = NewStorelayoutclustersService(s)
 	s.Storelayoutpages = NewStorelayoutpagesService(s)
 	s.Users = NewUsersService(s)
+	s.Webapps = NewWebappsService(s)
 	return s, nil
 }
 
@@ -123,6 +124,8 @@ type Service struct {
 	Storelayoutpages *StorelayoutpagesService
 
 	Users *UsersService
+
+	Webapps *WebappsService
 }
 
 func (s *Service) userAgent() string {
@@ -264,6 +267,15 @@ func NewUsersService(s *Service) *UsersService {
 }
 
 type UsersService struct {
+	s *Service
+}
+
+func NewWebappsService(s *Service) *WebappsService {
+	rs := &WebappsService{s: s}
+	return rs
+}
+
+type WebappsService struct {
 	s *Service
 }
 
@@ -3545,6 +3557,135 @@ type VariableSet struct {
 
 func (s *VariableSet) MarshalJSON() ([]byte, error) {
 	type NoMethod VariableSet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebApp: WebApp resource info.
+type WebApp struct {
+	// DisplayMode: The display mode of the web app.
+	DisplayMode string `json:"displayMode,omitempty"`
+
+	// Icons: A list of icons representing this website. Must have at least
+	// one element.
+	Icons []*WebAppIcon `json:"icons,omitempty"`
+
+	// IsPublished: A flag whether the app has been published to the Play
+	// store yet.
+	IsPublished bool `json:"isPublished,omitempty"`
+
+	// StartUrl: The start URL, i.e. the URL that should load when the user
+	// opens the application.
+	StartUrl string `json:"startUrl,omitempty"`
+
+	// Title: The title of the web application as displayed to the user
+	// (e.g., amongst a list of other applications, or as a label for an
+	// icon).
+	Title string `json:"title,omitempty"`
+
+	// VersionCode: The current version of the app.
+	//
+	//
+	// Note that the version can automatically increase during the lifetime
+	// of the web app, while Google does internal housekeeping to keep the
+	// web app up-to-date.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// WebAppId: The ID of the application.
+	WebAppId string `json:"webAppId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebApp) MarshalJSON() ([]byte, error) {
+	type NoMethod WebApp
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebAppIcon: Icon for a web app.
+type WebAppIcon struct {
+	// ImageData: The actual bytes of the image in a base64url encoded
+	// string (c.f. RFC4648, section 5 "Base 64 Encoding with URL and
+	// Filename Safe Alphabet").
+	// - The image type can be png or jpg.
+	// - The image should ideally be square.
+	// - The image should ideally have a size of 512x512.
+	ImageData string `json:"imageData,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageData") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebAppIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod WebAppIcon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WebAppsListResponse: The web app details for an enterprise.
+type WebAppsListResponse struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "androidenterprise#webAppsListResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// WebApp: The manifest describing a web app.
+	WebApp []*WebApp `json:"webApp,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WebAppsListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod WebAppsListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13979,6 +14120,8 @@ type UsersGenerateAuthenticationTokenCall struct {
 // user account on a device. The generated token is single-use and
 // expires after a few minutes.
 //
+// You can provision a maximum of 10 devices per user.
+//
 // This call only works with EMM-managed accounts.
 func (r *UsersService) GenerateAuthenticationToken(enterpriseId string, userId string) *UsersGenerateAuthenticationTokenCall {
 	c := &UsersGenerateAuthenticationTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -14073,7 +14216,7 @@ func (c *UsersGenerateAuthenticationTokenCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nThis call only works with EMM-managed accounts.",
+	//   "description": "Generates an authentication token which the device policy client can use to provision the given EMM-managed user account on a device. The generated token is single-use and expires after a few minutes.\n\nYou can provision a maximum of 10 devices per user.\n\nThis call only works with EMM-managed accounts.",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.users.generateAuthenticationToken",
 	//   "parameterOrder": [
@@ -15514,6 +15657,839 @@ func (c *UsersUpdateCall) Do(opts ...googleapi.CallOption) (*User, error) {
 	//   },
 	//   "response": {
 	//     "$ref": "User"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.delete":
+
+type WebappsDeleteCall struct {
+	s            *Service
+	enterpriseId string
+	webAppId     string
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Delete: Deletes an existing web app.
+func (r *WebappsService) Delete(enterpriseId string, webAppId string) *WebappsDeleteCall {
+	c := &WebappsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.webAppId = webAppId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsDeleteCall) Fields(s ...googleapi.Field) *WebappsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsDeleteCall) Context(ctx context.Context) *WebappsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"webAppId":     c.webAppId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.delete" call.
+func (c *WebappsDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes an existing web app.",
+	//   "httpMethod": "DELETE",
+	//   "id": "androidenterprise.webapps.delete",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "webAppId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webAppId": {
+	//       "description": "The ID of the web app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.get":
+
+type WebappsGetCall struct {
+	s            *Service
+	enterpriseId string
+	webAppId     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an existing web app.
+func (r *WebappsService) Get(enterpriseId string, webAppId string) *WebappsGetCall {
+	c := &WebappsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.webAppId = webAppId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsGetCall) Fields(s ...googleapi.Field) *WebappsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *WebappsGetCall) IfNoneMatch(entityTag string) *WebappsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsGetCall) Context(ctx context.Context) *WebappsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"webAppId":     c.webAppId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.get" call.
+// Exactly one of *WebApp or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *WebApp.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *WebappsGetCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WebApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an existing web app.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.webapps.get",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "webAppId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webAppId": {
+	//       "description": "The ID of the web app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "response": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.insert":
+
+type WebappsInsertCall struct {
+	s            *Service
+	enterpriseId string
+	webapp       *WebApp
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Insert: Creates a new web app for the enterprise.
+func (r *WebappsService) Insert(enterpriseId string, webapp *WebApp) *WebappsInsertCall {
+	c := &WebappsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.webapp = webapp
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsInsertCall) Fields(s ...googleapi.Field) *WebappsInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsInsertCall) Context(ctx context.Context) *WebappsInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.insert" call.
+// Exactly one of *WebApp or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *WebApp.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *WebappsInsertCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WebApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new web app for the enterprise.",
+	//   "httpMethod": "POST",
+	//   "id": "androidenterprise.webapps.insert",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps",
+	//   "request": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "response": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.list":
+
+type WebappsListCall struct {
+	s            *Service
+	enterpriseId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves the details of all web apps for a given enterprise.
+func (r *WebappsService) List(enterpriseId string) *WebappsListCall {
+	c := &WebappsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsListCall) Fields(s ...googleapi.Field) *WebappsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *WebappsListCall) IfNoneMatch(entityTag string) *WebappsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsListCall) Context(ctx context.Context) *WebappsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.list" call.
+// Exactly one of *WebAppsListResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *WebAppsListResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *WebappsListCall) Do(opts ...googleapi.CallOption) (*WebAppsListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WebAppsListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the details of all web apps for a given enterprise.",
+	//   "httpMethod": "GET",
+	//   "id": "androidenterprise.webapps.list",
+	//   "parameterOrder": [
+	//     "enterpriseId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps",
+	//   "response": {
+	//     "$ref": "WebAppsListResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.patch":
+
+type WebappsPatchCall struct {
+	s            *Service
+	enterpriseId string
+	webAppId     string
+	webapp       *WebApp
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an existing web app. This method supports patch
+// semantics.
+func (r *WebappsService) Patch(enterpriseId string, webAppId string, webapp *WebApp) *WebappsPatchCall {
+	c := &WebappsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.webAppId = webAppId
+	c.webapp = webapp
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsPatchCall) Fields(s ...googleapi.Field) *WebappsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsPatchCall) Context(ctx context.Context) *WebappsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"webAppId":     c.webAppId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.patch" call.
+// Exactly one of *WebApp or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *WebApp.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *WebappsPatchCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WebApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing web app. This method supports patch semantics.",
+	//   "httpMethod": "PATCH",
+	//   "id": "androidenterprise.webapps.patch",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "webAppId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webAppId": {
+	//       "description": "The ID of the web app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "request": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "response": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidenterprise"
+	//   ]
+	// }
+
+}
+
+// method id "androidenterprise.webapps.update":
+
+type WebappsUpdateCall struct {
+	s            *Service
+	enterpriseId string
+	webAppId     string
+	webapp       *WebApp
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Update: Updates an existing web app.
+func (r *WebappsService) Update(enterpriseId string, webAppId string, webapp *WebApp) *WebappsUpdateCall {
+	c := &WebappsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.enterpriseId = enterpriseId
+	c.webAppId = webAppId
+	c.webapp = webapp
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *WebappsUpdateCall) Fields(s ...googleapi.Field) *WebappsUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *WebappsUpdateCall) Context(ctx context.Context) *WebappsUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *WebappsUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *WebappsUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.webapp)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "enterprises/{enterpriseId}/webApps/{webAppId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"enterpriseId": c.enterpriseId,
+		"webAppId":     c.webAppId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidenterprise.webapps.update" call.
+// Exactly one of *WebApp or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *WebApp.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *WebappsUpdateCall) Do(opts ...googleapi.CallOption) (*WebApp, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &WebApp{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an existing web app.",
+	//   "httpMethod": "PUT",
+	//   "id": "androidenterprise.webapps.update",
+	//   "parameterOrder": [
+	//     "enterpriseId",
+	//     "webAppId"
+	//   ],
+	//   "parameters": {
+	//     "enterpriseId": {
+	//       "description": "The ID of the enterprise.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "webAppId": {
+	//       "description": "The ID of the web app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "enterprises/{enterpriseId}/webApps/{webAppId}",
+	//   "request": {
+	//     "$ref": "WebApp"
+	//   },
+	//   "response": {
+	//     "$ref": "WebApp"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidenterprise"

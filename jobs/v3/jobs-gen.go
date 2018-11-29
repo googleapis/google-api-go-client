@@ -349,7 +349,7 @@ type CommuteFilter struct {
 
 	// RoadTraffic: Optional.
 	//
-	// Specifies the traffic density to use when caculating commute time.
+	// Specifies the traffic density to use when calculating commute time.
 	//
 	// Possible values:
 	//   "ROAD_TRAFFIC_UNSPECIFIED" - Road traffic situation is not
@@ -2575,10 +2575,11 @@ type JobQuery struct {
 	//
 	// If multiple values are specified, jobs are retrieved from any of
 	// the
-	// specified locations, and, if different values are specified
-	// for the LocationFilter.distance_in_miles parameter, the
-	// maximum
-	// provided distance is used for all locations.
+	// specified locations. If different values are specified for
+	// the
+	// LocationFilter.distance_in_miles parameter, the maximum
+	// provided
+	// distance is used for all locations.
 	//
 	// At most 5 location filters are allowed.
 	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
@@ -2819,7 +2820,7 @@ type Location struct {
 	// derived from the
 	// location bounding box in which a circle with the specified
 	// radius
-	// centered from LatLng coves the area associated with the job
+	// centered from LatLng covers the area associated with the job
 	// location.
 	// For example, currently, "Mountain View, CA, USA" has a radius of
 	// 6.17 miles.
@@ -3844,7 +3845,7 @@ type SearchJobsResponse struct {
 
 	// TotalSize: The precise result count, which is available only if the
 	// client set
-	// enable_precise_result_size to `true` or if the response
+	// enable_precise_result_size to `true`, or if the response
 	// is the last page of results. Otherwise, the value is `-1`.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
@@ -4118,18 +4119,19 @@ func (c *ProjectsCompleteCall) CompanyName(companyName string) *ProjectsComplete
 // [Tags for Identifying
 // Languages](https://tools.ietf.org/html/bcp47).
 //
-// For CompletionType.JOB_TITLE type, only open jobs with
+// For CompletionType.JOB_TITLE type, only open jobs with the
 // same
 // language_code are returned.
 //
 // For CompletionType.COMPANY_NAME type,
-// only companies having open jobs with same language_code
+// only companies having open jobs with the same language_code
 // are
 // returned.
 //
-// For CompletionType.COMBINED type, only open jobs with
+// For CompletionType.COMBINED type, only open jobs with the
 // same
-// language_code or companies having open jobs with same
+// language_code or companies having open jobs with the
+// same
 // language_code are returned.
 //
 // The maximum number of allowed characters is 255.
@@ -4145,18 +4147,19 @@ func (c *ProjectsCompleteCall) LanguageCode(languageCode string) *ProjectsComple
 // [Tags for Identifying
 // Languages](https://tools.ietf.org/html/bcp47).
 //
-// For CompletionType.JOB_TITLE type, only open jobs with
+// For CompletionType.JOB_TITLE type, only open jobs with the
 // same
 // language_codes are returned.
 //
 // For CompletionType.COMPANY_NAME type,
-// only companies having open jobs with same language_codes
+// only companies having open jobs with the same language_codes
 // are
 // returned.
 //
-// For CompletionType.COMBINED type, only open jobs with
+// For CompletionType.COMBINED type, only open jobs with the
 // same
-// language_codes or companies having open jobs with same
+// language_codes or companies having open jobs with the
+// same
 // language_codes are returned.
 //
 // The maximum number of allowed characters is 255.
@@ -4323,12 +4326,12 @@ func (c *ProjectsCompleteCall) Do(opts ...googleapi.CallOption) (*CompleteQueryR
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Deprecated. Use language_codes instead.\n\nOptional.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_code or companies having open jobs with same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
+	//       "description": "Deprecated. Use language_codes instead.\n\nOptional.\n\nThe language of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with the same\nlanguage_code are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with the same language_code are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with the same\nlanguage_code or companies having open jobs with the same\nlanguage_code are returned.\n\nThe maximum number of allowed characters is 255.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "languageCodes": {
-	//       "description": "Optional.\n\nThe list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with same\nlanguage_codes or companies having open jobs with same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
+	//       "description": "Optional.\n\nThe list of languages of the query. This is\nthe BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nFor CompletionType.JOB_TITLE type, only open jobs with the same\nlanguage_codes are returned.\n\nFor CompletionType.COMPANY_NAME type,\nonly companies having open jobs with the same language_codes are\nreturned.\n\nFor CompletionType.COMBINED type, only open jobs with the same\nlanguage_codes or companies having open jobs with the same\nlanguage_codes are returned.\n\nThe maximum number of allowed characters is 255.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

@@ -228,10 +228,8 @@ type CloudFunction struct {
 	// in `source_location`.
 	EntryPoint string `json:"entryPoint,omitempty"`
 
-	// EnvironmentVariables: **Beta Feature**
-	//
-	// Environment variables that shall be available during function
-	// execution.
+	// EnvironmentVariables: Environment variables that shall be available
+	// during function execution.
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
 
 	// EventTrigger: A source that fires events in response to a condition
@@ -908,7 +906,7 @@ type OperationMetadataV1 struct {
 
 	// VersionId: Version id of the function created or updated by an API
 	// call.
-	// This field is only pupulated for Create and Update operations.
+	// This field is only populated for Create and Update operations.
 	VersionId int64 `json:"versionId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Request") to
@@ -958,7 +956,7 @@ type OperationMetadataV1Beta2 struct {
 
 	// VersionId: Version id of the function created or updated by an API
 	// call.
-	// This field is only pupulated for Create and Update operations.
+	// This field is only populated for Create and Update operations.
 	VersionId int64 `json:"versionId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Request") to

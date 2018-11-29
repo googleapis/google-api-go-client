@@ -989,12 +989,12 @@ type CourseWork struct {
 	// than 30,000 characters.
 	Description string `json:"description,omitempty"`
 
-	// DueDate: Optional date, in UTC, that submissions for this this course
-	// work are due.
+	// DueDate: Optional date, in UTC, that submissions for this course work
+	// are due.
 	// This must be specified if `due_time` is specified.
 	DueDate *Date `json:"dueDate,omitempty"`
 
-	// DueTime: Optional time of day, in UTC, that submissions for this this
+	// DueTime: Optional time of day, in UTC, that submissions for this
 	// course work
 	// are due.
 	// This must be specified if `due_date` is specified.
@@ -1066,9 +1066,9 @@ type CourseWork struct {
 	// Possible values:
 	//   "SUBMISSION_MODIFICATION_MODE_UNSPECIFIED" - No modification mode
 	// specified. This is never returned.
-	//   "MODIFIABLE_UNTIL_TURNED_IN" - Submisisons can be modified before
+	//   "MODIFIABLE_UNTIL_TURNED_IN" - Submissions can be modified before
 	// being turned in.
-	//   "MODIFIABLE" - Submisisons can be modified at any time.
+	//   "MODIFIABLE" - Submissions can be modified at any time.
 	SubmissionModificationMode string `json:"submissionModificationMode,omitempty"`
 
 	// Title: Title of this course work.
@@ -7716,7 +7716,7 @@ type CoursesCourseWorkStudentSubmissionsReclaimCall struct {
 //
 // Reclaiming a student submission transfers ownership of attached
 // Drive
-// files to the student and update the submission state.
+// files to the student and updates the submission state.
 //
 // Only the student that owns the requested student submission may call
 // this
@@ -7843,7 +7843,7 @@ func (c *CoursesCourseWorkStudentSubmissionsReclaimCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Reclaims a student submission on behalf of the student that owns it.\n\nReclaiming a student submission transfers ownership of attached Drive\nfiles to the student and update the submission state.\n\nOnly the student that owns the requested student submission may call this\nmethod, and only for a student submission that has been turned in.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, unsubmit the requested student submission,\nor for access errors.\n* `FAILED_PRECONDITION` if the student submission has not been turned in.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
+	//   "description": "Reclaims a student submission on behalf of the student that owns it.\n\nReclaiming a student submission transfers ownership of attached Drive\nfiles to the student and updates the submission state.\n\nOnly the student that owns the requested student submission may call this\nmethod, and only for a student submission that has been turned in.\n\nThis request must be made by the Developer Console project of the\n[OAuth client ID](https://support.google.com/cloud/answer/6158849) used to\ncreate the corresponding course work item.\n\nThis method returns the following error codes:\n\n* `PERMISSION_DENIED` if the requesting user is not permitted to access the\nrequested course or course work, unsubmit the requested student submission,\nor for access errors.\n* `FAILED_PRECONDITION` if the student submission has not been turned in.\n* `INVALID_ARGUMENT` if the request is malformed.\n* `NOT_FOUND` if the requested course, course work, or student submission\ndoes not exist.",
 	//   "flatPath": "v1/courses/{courseId}/courseWork/{courseWorkId}/studentSubmissions/{id}:reclaim",
 	//   "httpMethod": "POST",
 	//   "id": "classroom.courses.courseWork.studentSubmissions.reclaim",

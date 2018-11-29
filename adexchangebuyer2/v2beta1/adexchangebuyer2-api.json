@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20181026",
+  "revision": "20181127",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -3008,17 +3008,24 @@
             "The creative expands up and right.",
             "The creative expands down and left.",
             "The creative expands down and right.",
+            "The creative type is HTML.",
+            "The creative type is VAST video.",
             "The creative expands up or down.",
             "The creative expands left or right.",
             "The creative expands on any diagonal.",
             "The creative expands when rolled over.",
             "The instream vast video type is vpaid flash.",
-            "The creative is MRAID",
+            "The creative is MRAID.",
+            "The creative is Flash.",
+            "The creative is HTML5.",
             "The creative is SSL.",
+            "The creative is non-SSL.",
             "The creative is an interstitial.",
             "The creative is eligible for native.",
             "The creative is not eligible for native.",
-            "The creative can dynamically resize to fill a variety of slot sizes."
+            "The video type is in-banner video.",
+            "The creative can dynamically resize to fill a variety of slot sizes.",
+            "The open measurement SDK is supported."
           ],
           "items": {
             "enum": [
@@ -3035,17 +3042,24 @@
               "EXPANDING_DIRECTION_UP_RIGHT",
               "EXPANDING_DIRECTION_DOWN_LEFT",
               "EXPANDING_DIRECTION_DOWN_RIGHT",
+              "CREATIVE_TYPE_HTML",
+              "CREATIVE_TYPE_VAST_VIDEO",
               "EXPANDING_DIRECTION_UP_OR_DOWN",
               "EXPANDING_DIRECTION_LEFT_OR_RIGHT",
               "EXPANDING_DIRECTION_ANY_DIAGONAL",
               "EXPANDING_ACTION_ROLLOVER_TO_EXPAND",
               "INSTREAM_VAST_VIDEO_TYPE_VPAID_FLASH",
               "RICH_MEDIA_CAPABILITY_TYPE_MRAID",
+              "RICH_MEDIA_CAPABILITY_TYPE_FLASH",
+              "RICH_MEDIA_CAPABILITY_TYPE_HTML5",
               "RICH_MEDIA_CAPABILITY_TYPE_SSL",
+              "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL",
               "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL",
               "NATIVE_ELIGIBILITY_ELIGIBLE",
               "NATIVE_ELIGIBILITY_NOT_ELIGIBLE",
-              "RENDERING_SIZELESS_ADX"
+              "IN_BANNER_VIDEO",
+              "RENDERING_SIZELESS_ADX",
+              "OMSDK_1_0"
             ],
             "type": "string"
           },
@@ -5507,7 +5521,7 @@
       "id": "RowDimensions",
       "properties": {
         "publisherIdentifier": {
-          "description": "The publisher identifier for this row, if a breakdown by\nBreakdownDimension.PUBLISHER_IDENTIFIER\nwas requested.",
+          "description": "The publisher identifier for this row, if a breakdown by\n[BreakdownDimension.PUBLISHER_IDENTIFIER](https://developers.google.com/authorized-buyers/apis/reference/rest/v2beta1/bidders.accounts.filterSets#FilterSet.BreakdownDimension)\nwas requested.",
           "type": "string"
         },
         "timeInterval": {

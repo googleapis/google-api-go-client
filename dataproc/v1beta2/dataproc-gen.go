@@ -225,6 +225,48 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AllocationAffinity: Allocation Affinity for consuming Zonal
+// allocation.
+type AllocationAffinity struct {
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "NO_ALLOCATION" - Do not consume from any allocated capacity.
+	//   "ANY_ALLOCATION" - Consume any allocation available.
+	//   "SPECIFIC_ALLOCATION" - Must consume from a specific allocation.
+	// Must specify key value fields for specifying the allocations.
+	ConsumeAllocationType string `json:"consumeAllocationType,omitempty"`
+
+	// Key: Corresponds to the label key of Allocation resource.
+	Key string `json:"key,omitempty"`
+
+	// Values: Corresponds to the label values of allocation resource.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConsumeAllocationType") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumeAllocationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllocationAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod AllocationAffinity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates members with a role.
 type Binding struct {
 	// Condition: Unimplemented. The condition that is associated with this
@@ -858,6 +900,10 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GceClusterConfig: Common config settings for resources of Compute
 // Engine cluster instances, applicable to all instances in the cluster.
 type GceClusterConfig struct {
+	// AllocationAffinity: Allocation Affinity for consuming Zonal
+	// allocation.
+	AllocationAffinity *AllocationAffinity `json:"allocationAffinity,omitempty"`
+
 	// InternalIpOnly: Optional. If true, all instances in the cluster will
 	// only have internal IP addresses. By default, clusters are not
 	// restricted to internal IP addresses, and will have ephemeral external
@@ -943,15 +989,15 @@ type GceClusterConfig struct {
 	// us-central1-f
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InternalIpOnly") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AllocationAffinity")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InternalIpOnly") to
+	// NullFields is a list of field names (e.g. "AllocationAffinity") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1236,6 +1282,11 @@ type Job struct {
 	// HiveJob: Job is a Hive job.
 	HiveJob *HiveJob `json:"hiveJob,omitempty"`
 
+	// JobUuid: Output only. A UUID that uniquely identifies a job within
+	// the project over time. This is in contrast to a user-settable
+	// reference.job_id that may be reused over time.
+	JobUuid string `json:"jobUuid,omitempty"`
+
 	// Labels: Optional. The labels to associate with this job. Label keys
 	// must contain 1 to 63 characters, and must conform to RFC 1035
 	// (https://www.ietf.org/rfc/rfc1035.txt). Label values may be empty,
@@ -1266,6 +1317,9 @@ type Job struct {
 	// SparkJob: Job is a Spark job.
 	SparkJob *SparkJob `json:"sparkJob,omitempty"`
 
+	// SparkRJob: Job is a SparkR job.
+	SparkRJob *SparkRJob `json:"sparkRJob,omitempty"`
+
 	// SparkSqlJob: Job is a SparkSql job.
 	SparkSqlJob *SparkSqlJob `json:"sparkSqlJob,omitempty"`
 
@@ -1276,6 +1330,11 @@ type Job struct {
 
 	// StatusHistory: Output only. The previous job status.
 	StatusHistory []*JobStatus `json:"statusHistory,omitempty"`
+
+	// SubmittedBy: Output only. The email address of the user submitting
+	// the job. For jobs submitted on the cluster, the address is
+	// <code>username@hostname</code>.
+	SubmittedBy string `json:"submittedBy,omitempty"`
 
 	// YarnApplications: Output only. The collection of YARN applications
 	// spun up by this job.Beta Feature: This report is available for
@@ -2408,6 +2467,61 @@ type SparkJob struct {
 
 func (s *SparkJob) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SparkRJob: A Cloud Dataproc job for running Apache SparkR
+// (https://spark.apache.org/docs/latest/sparkr.html) applications on
+// YARN.
+type SparkRJob struct {
+	// ArchiveUris: Optional. HCFS URIs of archives to be extracted in the
+	// working directory of Spark drivers and tasks. Supported file types:
+	// .jar, .tar, .tar.gz, .tgz, and .zip.
+	ArchiveUris []string `json:"archiveUris,omitempty"`
+
+	// Args: Optional. The arguments to pass to the driver. Do not include
+	// arguments, such as --conf, that can be set as job properties, since a
+	// collision may occur that causes an incorrect job submission.
+	Args []string `json:"args,omitempty"`
+
+	// FileUris: Optional. HCFS URIs of files to be copied to the working
+	// directory of R drivers and distributed tasks. Useful for naively
+	// parallel tasks.
+	FileUris []string `json:"fileUris,omitempty"`
+
+	// LoggingConfig: Optional. The runtime log config for job execution.
+	LoggingConfig *LoggingConfig `json:"loggingConfig,omitempty"`
+
+	// MainRFileUri: Required. The HCFS URI of the main R file to use as the
+	// driver. Must be a .R file.
+	MainRFileUri string `json:"mainRFileUri,omitempty"`
+
+	// Properties: Optional. A mapping of property names to values, used to
+	// configure SparkR. Properties that conflict with values set by the
+	// Cloud Dataproc API may be overwritten. Can include properties set in
+	// /etc/spark/conf/spark-defaults.conf and classes in user code.
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveUris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArchiveUris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SparkRJob) MarshalJSON() ([]byte, error) {
+	type NoMethod SparkRJob
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

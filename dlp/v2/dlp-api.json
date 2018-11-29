@@ -1486,7 +1486,7 @@
       }
     }
   },
-  "revision": "20181030",
+  "revision": "20181121",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4794,7 +4794,7 @@
         },
         "infoType": {
           "$ref": "GooglePrivacyDlpV2InfoType",
-          "description": "Set if the transformation was limited to a specific info_type."
+          "description": "Set if the transformation was limited to a specific InfoType."
         },
         "recordSuppress": {
           "$ref": "GooglePrivacyDlpV2RecordSuppression",

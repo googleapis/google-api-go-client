@@ -339,7 +339,7 @@ type CommutePreference struct {
 
 	// RoadTraffic: Optional.
 	//
-	// Specifies the traffic density to use when caculating commute
+	// Specifies the traffic density to use when calculating commute
 	// time.
 	// Must not be present if departure_hour_local is specified.
 	//
@@ -3520,15 +3520,16 @@ type JobFilters struct {
 	// to
 	// search against. See LocationFilter for more information.
 	//
-	// If a location value is not specified, jobs are be retrieved
+	// If a location value is not specified, jobs are retrieved
 	// from all locations.
 	//
 	// If multiple values are specified, jobs are retrieved from any of
 	// the
-	// specified locations, and, if different values are specified
-	// for the LocationFilter.distance_in_miles parameter, the
-	// maximum
-	// provided distance is used for all locations.
+	// specified locations. If different values are specified for
+	// the
+	// LocationFilter.distance_in_miles parameter, the maximum
+	// provided
+	// distance is used for all locations.
 	//
 	// At most 5 location filters are allowed.
 	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
@@ -4006,10 +4007,11 @@ type JobQuery struct {
 	//
 	// If multiple values are specified, jobs are retrieved from any of
 	// the
-	// specified locations, and, if different values are specified
-	// for the LocationFilter.distance_in_miles parameter, the
-	// maximum
-	// provided distance is used for all locations.
+	// specified locations. If different values are specified for
+	// the
+	// LocationFilter.distance_in_miles parameter, the maximum
+	// provided
+	// distance is used for all locations.
 	//
 	// At most 5 location filters are allowed.
 	LocationFilters []*LocationFilter `json:"locationFilters,omitempty"`
@@ -4911,10 +4913,7 @@ func (s *ResponseMetadata) MarshalJSON() ([]byte, error) {
 //
 // The Request body of the `SearchJobs` call.
 type SearchJobsRequest struct {
-	// DisableRelevanceThresholding: Deprecated. Any value provided in this
-	// field is ignored.
-	//
-	// Optional.
+	// DisableRelevanceThresholding: Optional.
 	//
 	// Controls whether to disable relevance thresholding.
 	// Relevance

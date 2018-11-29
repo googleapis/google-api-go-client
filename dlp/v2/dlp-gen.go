@@ -6962,7 +6962,7 @@ type GooglePrivacyDlpV2TransformationSummary struct {
 	FieldTransformations []*GooglePrivacyDlpV2FieldTransformation `json:"fieldTransformations,omitempty"`
 
 	// InfoType: Set if the transformation was limited to a specific
-	// info_type.
+	// InfoType.
 	InfoType *GooglePrivacyDlpV2InfoType `json:"infoType,omitempty"`
 
 	// RecordSuppress: The specific suppression option these stats apply to.

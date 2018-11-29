@@ -748,6 +748,15 @@ type SoftwareConfig struct {
 	// the value.
 	PypiPackages map[string]string `json:"pypiPackages,omitempty"`
 
+	// PythonVersion: Optional. The major version of Python used to run the
+	// Apache Airflow
+	// scheduler, worker, and webserver processes.
+	//
+	// Can be set to '2' or '3'. If not specified, the default is '2'.
+	// Cannot be
+	// updated.
+	PythonVersion string `json:"pythonVersion,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AirflowConfigOverrides") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.

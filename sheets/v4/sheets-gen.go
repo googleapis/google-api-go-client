@@ -62,17 +62,17 @@ const basePath = "https://sheets.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage the files in your Google Drive
+	// See, edit, create, and delete all of your Google Drive files
 	DriveScope = "https://www.googleapis.com/auth/drive"
 
 	// View and manage Google Drive files and folders that you have opened
 	// or created with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 
-	// View the files in your Google Drive
+	// See and download all your Google Drive files
 	DriveReadonlyScope = "https://www.googleapis.com/auth/drive.readonly"
 
-	// View and manage your spreadsheets in Google Drive
+	// See, edit, create, and delete your spreadsheets in Google Drive
 	SpreadsheetsScope = "https://www.googleapis.com/auth/spreadsheets"
 
 	// View your Google Spreadsheets

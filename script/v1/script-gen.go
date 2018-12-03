@@ -1,16 +1,6 @@
-// Copyright 2018 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright 2018 Google Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
 
 // AUTO-GENERATED CODE. DO NOT EDIT.
 
@@ -882,6 +872,7 @@ type GoogleAppsScriptTypeProcess struct {
 	//   "SIMPLE_TRIGGER" - The process was started from a G Suite simple
 	// trigger.
 	//   "MENU" - The process was started from a G Suite menu item.
+	//   "BATCH_TASK" - The process was started as a task in a batch job.
 	ProcessType string `json:"processType,omitempty"`
 
 	// ProjectName: Name of the script being executed.
@@ -1675,6 +1666,7 @@ func (c *ProcessesListCall) UserProcessFilterStatuses(userProcessFilterStatuses 
 //   "EDITOR"
 //   "SIMPLE_TRIGGER"
 //   "MENU"
+//   "BATCH_TASK"
 func (c *ProcessesListCall) UserProcessFilterTypes(userProcessFilterTypes ...string) *ProcessesListCall {
 	c.urlParams_.SetMulti("userProcessFilter.types", append([]string{}, userProcessFilterTypes...))
 	return c
@@ -1868,7 +1860,8 @@ func (c *ProcessesListCall) Do(opts ...googleapi.CallOption) (*ListUserProcesses
 	//         "WEBAPP",
 	//         "EDITOR",
 	//         "SIMPLE_TRIGGER",
-	//         "MENU"
+	//         "MENU",
+	//         "BATCH_TASK"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -2033,6 +2026,7 @@ func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterStatuses(scriptPro
 //   "EDITOR"
 //   "SIMPLE_TRIGGER"
 //   "MENU"
+//   "BATCH_TASK"
 func (c *ProcessesListScriptProcessesCall) ScriptProcessFilterTypes(scriptProcessFilterTypes ...string) *ProcessesListScriptProcessesCall {
 	c.urlParams_.SetMulti("scriptProcessFilter.types", append([]string{}, scriptProcessFilterTypes...))
 	return c
@@ -2221,7 +2215,8 @@ func (c *ProcessesListScriptProcessesCall) Do(opts ...googleapi.CallOption) (*Li
 	//         "WEBAPP",
 	//         "EDITOR",
 	//         "SIMPLE_TRIGGER",
-	//         "MENU"
+	//         "MENU",
+	//         "BATCH_TASK"
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

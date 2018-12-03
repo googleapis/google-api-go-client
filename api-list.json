@@ -1867,6 +1867,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "iap:v1",
+   "name": "iap",
+   "version": "v1",
+   "title": "Cloud Identity-Aware Proxy API",
+   "description": "Controls access to cloud applications running on Google Cloud Platform.",
+   "discoveryRestUrl": "https://iap.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/iap",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "iap:v1beta1",
    "name": "iap",
    "version": "v1beta1",
@@ -1878,7 +1893,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/iap",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -2426,7 +2441,7 @@
    "name": "redis",
    "version": "v1",
    "title": "Google Cloud Memorystore for Redis API",
-   "description": "The Google Cloud Memorystore for Redis API is used for creating and managing Redis instances on the Google Cloud Platform.",
+   "description": "Creates and manages Redis instances on the Google Cloud Platform.",
    "discoveryRestUrl": "https://redis.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2441,7 +2456,7 @@
    "name": "redis",
    "version": "v1beta1",
    "title": "Google Cloud Memorystore for Redis API",
-   "description": "The Google Cloud Memorystore for Redis API is used for creating and managing Redis instances on the Google Cloud Platform.",
+   "description": "Creates and manages Redis instances on the Google Cloud Platform.",
    "discoveryRestUrl": "https://redis.googleapis.com/$discovery/rest?version=v1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3132,7 +3147,7 @@
    "name": "videointelligence",
    "version": "v1p1beta1",
    "title": "Cloud Video Intelligence API",
-   "description": "Cloud Video Intelligence API.",
+   "description": "Detects objects, explicit content, and scene changes in videos. It also specifies the region for annotation and transcribes speech to text.",
    "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1p1beta1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3147,7 +3162,7 @@
    "name": "videointelligence",
    "version": "v1",
    "title": "Cloud Video Intelligence API",
-   "description": "Cloud Video Intelligence API.",
+   "description": "Detects objects, explicit content, and scene changes in videos. It also specifies the region for annotation and transcribes speech to text.",
    "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3162,7 +3177,7 @@
    "name": "videointelligence",
    "version": "v1beta2",
    "title": "Cloud Video Intelligence API",
-   "description": "Cloud Video Intelligence API.",
+   "description": "Detects objects, explicit content, and scene changes in videos. It also specifies the region for annotation and transcribes speech to text.",
    "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1beta2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

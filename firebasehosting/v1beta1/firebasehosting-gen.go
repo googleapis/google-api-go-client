@@ -1,16 +1,6 @@
-// Copyright 2018 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright 2018 Google Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
 
 // AUTO-GENERATED CODE. DO NOT EDIT.
 
@@ -473,14 +463,14 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Header: A `Header` defines custom headers to add to a response should
-// the request
-// URL path match the pattern.
+// Header: A [`header`](/docs/hosting/full-config#headers) defines
+// custom headers to
+// add to a response should the request URL path match the pattern.
 type Header struct {
 	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#section-glob) to match
-	// against
-	// the request URL path.
+	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// match
+	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Headers: Required. The additional headers to add to the response.
@@ -695,21 +685,23 @@ func (s *PopulateVersionFilesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Redirect: A `Redirect` represents the configuration for returning an
-// HTTP redirect
-// response given a matching request URL path.
+// Redirect: A [`redirect`](/docs/hosting/full-config#redirects)
+// represents the
+// configuration for returning an HTTP redirect response given a
+// matching
+// request URL path.
 type Redirect struct {
 	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#section-glob) to match
-	// against
-	// the request URL path.
+	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// match
+	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Location: Required. The value to put in the HTTP location header of
 	// the response.
 	// <br>The location can contain capture group values from the pattern
-	// using a
-	// ":" prefix to identify the segment and an optional "*" to capture
+	// using
+	// a `:` prefix to identify the segment and an optional `*` to capture
 	// the
 	// rest of the URL.
 	// For example:
@@ -822,11 +814,13 @@ func (s *Release) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Rewrite: A `Rewrite` represents an internal content rewrite on the
-// version. If the
-// pattern matches, the request will be handled as if it were to
+// Rewrite: A [`rewrite`](/docs/hosting/full-config#rewrites) represents
+// an internal
+// content rewrite on the version. If the pattern matches, the request
+// will be
+// handled as if it were to the destination path specified in
 // the
-// destination path specified in the configuration.
+// configuration.
 type Rewrite struct {
 	// DynamicLinks: The request will be forwarded to Firebase Dynamic
 	// Links.
@@ -838,9 +832,9 @@ type Rewrite struct {
 	Function string `json:"function,omitempty"`
 
 	// Glob: Required. The user-supplied
-	// [glob pattern](/docs/hosting/full-config#section-glob) to match
-	// against
-	// the request URL path.
+	// [glob pattern](/docs/hosting/full-config#glob_pattern_matching) to
+	// match
+	// against the request URL path.
 	Glob string `json:"glob,omitempty"`
 
 	// Path: The URL path to rewrite the request to.
@@ -874,8 +868,7 @@ func (s *Rewrite) MarshalJSON() ([]byte, error) {
 // processed before serving content. The patterns are matched and
 // applied
 // according to a specific
-// [priority
-// order](/docs/hosting/url-redirects-rewrites#section-priorities).
+// [priority order](/docs/hosting/full-config#hosting_priority_order).
 type ServingConfig struct {
 	// AppAssociation: How to handle well known App Association files.
 	//

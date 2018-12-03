@@ -1,16 +1,6 @@
-// Copyright 2018 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright 2018 Google Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
 
 // AUTO-GENERATED CODE. DO NOT EDIT.
 
@@ -561,7 +551,7 @@ func (s *CreateImageResponse) MarshalJSON() ([]byte, error) {
 
 // CreateLineRequest: Creates a line.
 type CreateLineRequest struct {
-	// Category: The category of line to be created.
+	// Category: The category of the line to be created.
 	//
 	// The exact line type created is
 	// determined based on the category and how it's routed to connect to
@@ -589,7 +579,19 @@ type CreateLineRequest struct {
 	// ElementProperties: The element properties for the line.
 	ElementProperties *PageElementProperties `json:"elementProperties,omitempty"`
 
-	// LineCategory: The category of line to be created.
+	// LineCategory: The category of the line to be
+	// created.
+	//
+	// <b>Deprecated</b>: use `category` instead.
+	//
+	// The exact line type created is
+	// determined based on the category and how it's routed to connect to
+	// other
+	// page elements.
+	//
+	// If you specify both a `category` and a `line_category`, the
+	// `category`
+	// takes precedence.
 	//
 	// Possible values:
 	//   "STRAIGHT" - Straight connectors, including straight connector 1.
@@ -4255,7 +4257,8 @@ type ReplaceAllShapesWithImageRequest struct {
 	PageObjectIds []string `json:"pageObjectIds,omitempty"`
 
 	// ReplaceMethod: The replace method.
-	// Deprecated: use `image_replace_method` instead.
+	//
+	// <b>Deprecated</b>: use `image_replace_method` instead.
 	//
 	// If you specify both a `replace_method` and an `image_replace_method`,
 	// the
@@ -4655,7 +4658,7 @@ type Request struct {
 	// UpdateImageProperties: Updates the properties of an Image.
 	UpdateImageProperties *UpdateImagePropertiesRequest `json:"updateImageProperties,omitempty"`
 
-	// UpdateLineCategory: Updates the category of a line
+	// UpdateLineCategory: Updates the category of a line.
 	UpdateLineCategory *UpdateLineCategoryRequest `json:"updateLineCategory,omitempty"`
 
 	// UpdateLineProperties: Updates the properties of a Line.
@@ -8167,11 +8170,13 @@ type PresentationsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new presentation using the title given in the
+// Create: Creates a blank presentation using the title given in the
 // request. If a
-// presentationId is provided, uses it as the ID of the new
+// `presentationId` is provided, it is used as the ID of the new
 // presentation.
-// Otherwise, a new presentationId is generated.
+// Otherwise, a new ID is generated. Other fields in the request,
+// including
+// any provided content, are ignored.
 // Returns the created presentation.
 func (r *PresentationsService) Create(presentation *Presentation) *PresentationsCreateCall {
 	c := &PresentationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -8266,7 +8271,7 @@ func (c *PresentationsCreateCall) Do(opts ...googleapi.CallOption) (*Presentatio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new presentation using the title given in the request. If a\npresentationId is provided, uses it as the ID of the new presentation.\nOtherwise, a new presentationId is generated.\nReturns the created presentation.",
+	//   "description": "Creates a blank presentation using the title given in the request. If a\n`presentationId` is provided, it is used as the ID of the new presentation.\nOtherwise, a new ID is generated. Other fields in the request, including\nany provided content, are ignored.\nReturns the created presentation.",
 	//   "flatPath": "v1/presentations",
 	//   "httpMethod": "POST",
 	//   "id": "slides.presentations.create",

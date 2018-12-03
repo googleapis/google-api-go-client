@@ -156,7 +156,7 @@
           ]
         },
         "create": {
-          "description": "Creates a new presentation using the title given in the request. If a\npresentationId is provided, uses it as the ID of the new presentation.\nOtherwise, a new presentationId is generated.\nReturns the created presentation.",
+          "description": "Creates a blank presentation using the title given in the request. If a\n`presentationId` is provided, it is used as the ID of the new presentation.\nOtherwise, a new ID is generated. Other fields in the request, including\nany provided content, are ignored.\nReturns the created presentation.",
           "flatPath": "v1/presentations",
           "httpMethod": "POST",
           "id": "slides.presentations.create",
@@ -302,7 +302,7 @@
       }
     }
   },
-  "revision": "20181116",
+  "revision": "20181127",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -517,7 +517,7 @@
       "id": "CreateLineRequest",
       "properties": {
         "category": {
-          "description": "The category of line to be created.\n\nThe exact line type created is\ndetermined based on the category and how it's routed to connect to other\npage elements.\n\nIf you specify both a `category` and a `line_category`, the `category`\ntakes precedence.\n\nIf you do not specify a value for `category`, but specify a value for\n`line_category`, then the specified `line_category` value is used.\n\nIf you do not specify either, then STRAIGHT is used.",
+          "description": "The category of the line to be created.\n\nThe exact line type created is\ndetermined based on the category and how it's routed to connect to other\npage elements.\n\nIf you specify both a `category` and a `line_category`, the `category`\ntakes precedence.\n\nIf you do not specify a value for `category`, but specify a value for\n`line_category`, then the specified `line_category` value is used.\n\nIf you do not specify either, then STRAIGHT is used.",
           "enum": [
             "LINE_CATEGORY_UNSPECIFIED",
             "STRAIGHT",
@@ -537,7 +537,7 @@
           "description": "The element properties for the line."
         },
         "lineCategory": {
-          "description": "The category of line to be created.",
+          "description": "The category of the line to be created.\n\n\u003cb\u003eDeprecated\u003c/b\u003e: use `category` instead.\n\nThe exact line type created is\ndetermined based on the category and how it's routed to connect to other\npage elements.\n\nIf you specify both a `category` and a `line_category`, the `category`\ntakes precedence.",
           "enum": [
             "STRAIGHT",
             "BENT",
@@ -2491,7 +2491,7 @@
           "type": "array"
         },
         "replaceMethod": {
-          "description": "The replace method.\nDeprecated: use `image_replace_method` instead.\n\nIf you specify both a `replace_method` and an `image_replace_method`, the\n`image_replace_method` takes precedence.",
+          "description": "The replace method.\n\n\u003cb\u003eDeprecated\u003c/b\u003e: use `image_replace_method` instead.\n\nIf you specify both a `replace_method` and an `image_replace_method`, the\n`image_replace_method` takes precedence.",
           "enum": [
             "CENTER_INSIDE",
             "CENTER_CROP"
@@ -2749,7 +2749,7 @@
         },
         "updateLineCategory": {
           "$ref": "UpdateLineCategoryRequest",
-          "description": "Updates the category of a line"
+          "description": "Updates the category of a line."
         },
         "updateLineProperties": {
           "$ref": "UpdateLinePropertiesRequest",

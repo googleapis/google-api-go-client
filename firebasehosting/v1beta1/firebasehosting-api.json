@@ -21,7 +21,7 @@
   "baseUrl": "https://firebasehosting.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Firebase Hosting",
-  "description": "",
+  "description": "The Firebase Hosting REST API enables programmatic custom deployment for releasing versions of your Firebase hosted content and configuration files.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/hosting/",
   "fullyEncodeReservedExpansion": true,
@@ -604,7 +604,7 @@
       }
     }
   },
-  "revision": "20181116",
+  "revision": "20181129",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -811,11 +811,11 @@
       "type": "object"
     },
     "Header": {
-      "description": "A `Header` defines custom headers to add to a response should the request\nURL path match the pattern.",
+      "description": "A [`header`](/docs/hosting/full-config#headers) defines custom headers to\nadd to a response should the request URL path match the pattern.",
       "id": "Header",
       "properties": {
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#section-glob) to match against\nthe request URL path.",
+          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "headers": {
@@ -910,15 +910,15 @@
       "type": "object"
     },
     "Redirect": {
-      "description": "A `Redirect` represents the configuration for returning an HTTP redirect\nresponse given a matching request URL path.",
+      "description": "A [`redirect`](/docs/hosting/full-config#redirects) represents the\nconfiguration for returning an HTTP redirect response given a matching\nrequest URL path.",
       "id": "Redirect",
       "properties": {
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#section-glob) to match against\nthe request URL path.",
+          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "location": {
-          "description": "Required. The value to put in the HTTP location header of the response.\n\u003cbr\u003eThe location can contain capture group values from the pattern using a\n`\":\"` prefix to identify the segment and an optional `\"*\"` to capture the\nrest of the URL.\nFor example:\n\u003ccode\u003e\"glob\": \"/:capture*\",\n\u003cbr\u003e\"statusCode\": 301,\n\u003cbr\u003e\"location\": \"https://example.com/foo/:capture\"\u003c/code\u003e",
+          "description": "Required. The value to put in the HTTP location header of the response.\n\u003cbr\u003eThe location can contain capture group values from the pattern using\na `:` prefix to identify the segment and an optional `*` to capture the\nrest of the URL.\nFor example:\n\u003ccode\u003e\"glob\": \"/:capture*\",\n\u003cbr\u003e\"statusCode\": 301,\n\u003cbr\u003e\"location\": \"https://example.com/foo/:capture\"\u003c/code\u003e",
           "type": "string"
         },
         "statusCode": {
@@ -974,7 +974,7 @@
       "type": "object"
     },
     "Rewrite": {
-      "description": "A `Rewrite` represents an internal content rewrite on the version. If the\npattern matches, the request will be handled as if it were to the\ndestination path specified in the configuration.",
+      "description": "A [`rewrite`](/docs/hosting/full-config#rewrites) represents an internal\ncontent rewrite on the version. If the pattern matches, the request will be\nhandled as if it were to the destination path specified in the\nconfiguration.",
       "id": "Rewrite",
       "properties": {
         "dynamicLinks": {
@@ -986,7 +986,7 @@
           "type": "string"
         },
         "glob": {
-          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#section-glob) to match against\nthe request URL path.",
+          "description": "Required. The user-supplied\n[glob pattern](/docs/hosting/full-config#glob_pattern_matching) to match\nagainst the request URL path.",
           "type": "string"
         },
         "path": {
@@ -997,7 +997,7 @@
       "type": "object"
     },
     "ServingConfig": {
-      "description": "The configuration for how incoming requests to a site should be routed and\nprocessed before serving content. The patterns are matched and applied\naccording to a specific\n[priority order](/docs/hosting/url-redirects-rewrites#section-priorities).",
+      "description": "The configuration for how incoming requests to a site should be routed and\nprocessed before serving content. The patterns are matched and applied\naccording to a specific\n[priority order](/docs/hosting/full-config#hosting_priority_order).",
       "id": "ServingConfig",
       "properties": {
         "appAssociation": {

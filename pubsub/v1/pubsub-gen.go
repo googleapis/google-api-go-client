@@ -1,16 +1,6 @@
-// Copyright 2018 Google LLC
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     https://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
+// Copyright 2018 Google Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
 
 // AUTO-GENERATED CODE. DO NOT EDIT.
 
@@ -1288,15 +1278,15 @@ func (s *Snapshot) MarshalJSON() ([]byte, error) {
 
 // Subscription: A subscription resource.
 type Subscription struct {
-	// AckDeadlineSeconds: This value is the maximum time after a subscriber
-	// receives a message
-	// before the subscriber should acknowledge the message. After
-	// message
-	// delivery but before the ack deadline expires and before the message
-	// is
-	// acknowledged, it is an outstanding message and will not be
-	// delivered
-	// again during that time (on a best-effort basis).
+	// AckDeadlineSeconds: The approximate amount of time (on a best-effort
+	// basis) Pub/Sub waits for
+	// the subscriber to acknowledge receipt before resending the message.
+	// In the
+	// interval after the message is delivered and before it is
+	// acknowledged, it
+	// is considered to be <i>outstanding</i>. During that time period,
+	// the
+	// message will not be redelivered (on a best-effort basis).
 	//
 	// For pull subscriptions, this value is used as the initial value for
 	// the ack

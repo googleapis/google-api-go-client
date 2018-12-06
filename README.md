@@ -42,7 +42,7 @@ These client libraries are officially supported by Google.  However, the librari
 
 If you're working with Google Cloud Platform APIs such as Datastore or Pub/Sub,
 consider using the
-[Cloud Client Libraries for Go](https://github.com/GoogleCloudPlatform/google-cloud-go)
+[Cloud Client Libraries for Go](https://github.com/googleapis/google-cloud-go)
 instead. These are the new and
 idiomatic Go libraries targeted specifically at Google Cloud Platform Services.
 

@@ -29,6 +29,7 @@ func main() {
 * For a longer tutorial, see the [Getting Started guide](https://github.com/google/google-api-go-client/blob/master/GettingStarted.md).
 * For examples, see the [examples directory](https://github.com/google/google-api-go-client/tree/master/examples).
 * For support, use the [golang-nuts](https://groups.google.com/group/golang-nuts) mailing list.
+* The code review instance may be found [here](https://code-review.googlesource.com).
 
 ## Status
 [![GoDoc](https://godoc.org/google.golang.org/api?status.svg)](https://godoc.org/google.golang.org/api)

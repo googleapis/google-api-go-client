@@ -249,13 +249,6 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 // spun up in the
 // cluster, enabling additional functionality.
 type AddonsConfig struct {
-	// CloudRunConfig: Configuration for the Cloud Run addon. The
-	// `IstioConfig` addon must be
-	// enabled in order to enable Cloud Run addon. This option can only be
-	// enabled
-	// at cluster creation time.
-	CloudRunConfig *CloudRunConfig `json:"cloudRunConfig,omitempty"`
-
 	// HorizontalPodAutoscaling: Configuration for the horizontal pod
 	// autoscaling feature, which
 	// increases or decreases the number of replica pods a replication
@@ -269,11 +262,6 @@ type AddonsConfig struct {
 	// cluster.
 	HttpLoadBalancing *HttpLoadBalancing `json:"httpLoadBalancing,omitempty"`
 
-	// IstioConfig: Configuration for Istio, an open platform to connect,
-	// manage, and secure
-	// microservices.
-	IstioConfig *IstioConfig `json:"istioConfig,omitempty"`
-
 	// KubernetesDashboard: Configuration for the Kubernetes Dashboard.
 	KubernetesDashboard *KubernetesDashboard `json:"kubernetesDashboard,omitempty"`
 
@@ -284,18 +272,19 @@ type AddonsConfig struct {
 	// is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "HorizontalPodAutoscaling") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CloudRunConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "HorizontalPodAutoscaling")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -345,35 +334,6 @@ type AutoUpgradeOptions struct {
 
 func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoUpgradeOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// BigQueryDestination: Parameters for using BigQuery as the destination
-// of resource usage export.
-type BigQueryDestination struct {
-	// DatasetId: The ID of a BigQuery Dataset.
-	DatasetId string `json:"datasetId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DatasetId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DatasetId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
-	type NoMethod BigQueryDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -517,34 +477,6 @@ type ClientCertificateConfig struct {
 
 func (s *ClientCertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientCertificateConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// CloudRunConfig: Configuration options for the Cloud Run feature.
-type CloudRunConfig struct {
-	// Disabled: Whether Cloud Run addon is enabled for this cluster.
-	Disabled bool `json:"disabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Disabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Disabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *CloudRunConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudRunConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -827,11 +759,6 @@ type Cluster struct {
 	// Google Compute Engine resources.
 	ResourceLabels map[string]string `json:"resourceLabels,omitempty"`
 
-	// ResourceUsageExportConfig: Configuration for exporting resource
-	// usages. Resource usage export is
-	// disabled when this config unspecified.
-	ResourceUsageExportConfig *ResourceUsageExportConfig `json:"resourceUsageExportConfig,omitempty"`
-
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
@@ -1081,10 +1008,6 @@ type ClusterUpdate struct {
 	// DesiredPodSecurityPolicyConfig: The desired configuration options for
 	// the PodSecurityPolicy feature.
 	DesiredPodSecurityPolicyConfig *PodSecurityPolicyConfig `json:"desiredPodSecurityPolicyConfig,omitempty"`
-
-	// DesiredResourceUsageExportConfig: The desired configuration for
-	// exporting resource usage.
-	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
 
 	// DesiredVerticalPodAutoscaling: Cluster-level Vertical Pod Autoscaling
 	// configuration.
@@ -1584,41 +1507,6 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IstioConfig: Configuration options for Istio addon.
-type IstioConfig struct {
-	// Auth: The specified Istio auth mode, either none, or mutual TLS.
-	//
-	// Possible values:
-	//   "AUTH_NONE" - auth not enabled
-	//   "AUTH_MUTUAL_TLS" - auth mutual TLS enabled
-	Auth string `json:"auth,omitempty"`
-
-	// Disabled: Whether Istio is enabled for this cluster.
-	Disabled bool `json:"disabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Auth") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Auth") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *IstioConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod IstioConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // KubernetesDashboard: Configuration for the Kubernetes Dashboard.
 type KubernetesDashboard struct {
 	// Disabled: Whether the Kubernetes Dashboard is enabled for this
@@ -1892,8 +1780,12 @@ type Location struct {
 	// Specified in the format 'projects/*/locations/*'.
 	Name string `json:"name,omitempty"`
 
-	// Recommended: Whether the location is recomended for GKE cluster
-	// scheduling.
+	// Recommended: Recommended is a bool combining the drain state of the
+	// location (ie- has
+	// the region been drained manually?), and the stockout status of any
+	// zone
+	// according to Zone Advisor. This will be internal only for use by
+	// pantheon.
 	Recommended bool `json:"recommended,omitempty"`
 
 	// Type: Contains the type of location this Location is for.
@@ -3009,43 +2901,6 @@ type ResourceLimit struct {
 
 func (s *ResourceLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceLimit
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ResourceUsageExportConfig: Configuration for exporting cluster
-// resource usages.
-type ResourceUsageExportConfig struct {
-	// BigqueryDestination: Configuration to use BigQuery as usage export
-	// destination.
-	BigqueryDestination *BigQueryDestination `json:"bigqueryDestination,omitempty"`
-
-	// EnableNetworkEgressMetering: Whether to enable network egress
-	// metering for this cluster. If enabled, a
-	// daemonset will be created in the cluster to meter network egress
-	// traffic.
-	EnableNetworkEgressMetering bool `json:"enableNetworkEgressMetering,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BigqueryDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ResourceUsageExportConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod ResourceUsageExportConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4742,7 +4597,7 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Used to fetch locations that offer GKE.
+// List:
 func (r *ProjectsLocationsService) List(parent string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4847,7 +4702,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 	}
 	return ret, nil
 	// {
-	//   "description": "Used to fetch locations that offer GKE.",
+	//   "description": "",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.list",

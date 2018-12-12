@@ -282,7 +282,7 @@ func TestConcurrentFlush(t *testing.T) {
 
 	var wg sync.WaitGroup
 	defer wg.Wait()
-	for i := 0; i < 50; i++ {
+	for i := 0; i < 5000; i++ {
 		b.Add(i, 1)
 		if i%100 == 0 {
 			i := i

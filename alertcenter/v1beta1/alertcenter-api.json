@@ -1,13 +1,4 @@
 {
-  "auth": {
-    "oauth2": {
-      "scopes": {
-        "https://www.googleapis.com/auth/apps.alerts": {
-          "description": "See and delete your domain's G Suite alerts, and send alert feedback"
-        }
-      }
-    }
-  },
   "basePath": "",
   "baseUrl": "https://alertcenter.googleapis.com/",
   "batchPath": "batch",
@@ -130,10 +121,7 @@
           "path": "v1beta1/alerts/{alertId}",
           "response": {
             "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/apps.alerts"
-          ]
+          }
         },
         "get": {
           "description": "Gets the specified alert.",
@@ -159,10 +147,7 @@
           "path": "v1beta1/alerts/{alertId}",
           "response": {
             "$ref": "Alert"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/apps.alerts"
-          ]
+          }
         },
         "list": {
           "description": "Lists the alerts.",
@@ -201,37 +186,7 @@
           "path": "v1beta1/alerts",
           "response": {
             "$ref": "ListAlertsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/apps.alerts"
-          ]
-        },
-        "undelete": {
-          "description": "Restores, or \"undeletes\", an alert that was marked for deletion within the\npast 30 days. Attempting to undelete an alert which was marked for deletion\nover 30 days ago (which has been removed from the Alert Center database) or\na nonexistent alert returns a `NOT_FOUND` error. Attempting to\nundelete an alert which has not been marked for deletion has no effect.",
-          "flatPath": "v1beta1/alerts/{alertId}:undelete",
-          "httpMethod": "POST",
-          "id": "alertcenter.alerts.undelete",
-          "parameterOrder": [
-            "alertId"
-          ],
-          "parameters": {
-            "alertId": {
-              "description": "Required. The identifier of the alert to undelete.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1beta1/alerts/{alertId}:undelete",
-          "request": {
-            "$ref": "UndeleteAlertRequest"
-          },
-          "response": {
-            "$ref": "Alert"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/apps.alerts"
-          ]
+          }
         }
       },
       "resources": {
@@ -264,10 +219,7 @@
               },
               "response": {
                 "$ref": "AlertFeedback"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/apps.alerts"
-              ]
+              }
             },
             "list": {
               "description": "Lists all the feedback for an alert.",
@@ -298,17 +250,14 @@
               "path": "v1beta1/alerts/{alertId}/feedback",
               "response": {
                 "$ref": "ListAlertFeedbackResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/apps.alerts"
-              ]
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20181121",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -828,17 +777,6 @@
         },
         "serialNumber": {
           "description": "The serial number of the device.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "UndeleteAlertRequest": {
-      "description": "A request to undelete a specific alert that was marked for deletion.",
-      "id": "UndeleteAlertRequest",
-      "properties": {
-        "customerId": {
-          "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert is associated with.\nInferred from the caller identity if not provided.",
           "type": "string"
         }
       },

@@ -1629,7 +1629,7 @@
       }
     }
   },
-  "revision": "20181130",
+  "revision": "20181114",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2945,9 +2945,7 @@
             "The Jupyter Notebook.",
             "The Hive Web HCatalog (the REST service for accessing HCatalog).",
             "The Zeppelin notebook.",
-            "The Anaconda python distribution.",
-            "The Presto query engine.",
-            "The Kerberos security feature."
+            "The Anaconda python distribution."
           ],
           "items": {
             "enum": [
@@ -2955,9 +2953,7 @@
               "JUPYTER",
               "HIVE_WEBHCAT",
               "ZEPPELIN",
-              "ANACONDA",
-              "PRESTO",
-              "KERBEROS"
+              "ANACONDA"
             ],
             "type": "string"
           },
@@ -3239,11 +3235,7 @@
       "id": "WorkflowMetadata",
       "properties": {
         "clusterName": {
-          "description": "Output only. The name of the target cluster.",
-          "type": "string"
-        },
-        "clusterUuid": {
-          "description": "Output only. The UUID of target cluster.",
+          "description": "Output only. The name of the managed cluster.",
           "type": "string"
         },
         "createCluster": {

@@ -1146,7 +1146,6 @@ type DriveMimeTypeRestrict struct {
 	//   "VIDEO"
 	//   "FOLDER"
 	//   "ARCHIVE"
-	//   "SITE"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1784,7 +1783,7 @@ type FreshnessOptions struct {
 	// object in the index.
 	// If set, this property must be a top-level property within
 	// the
-	// property definitions
+	// PropertyDefinitions
 	// and it must be a
 	// timestamp type
 	// or

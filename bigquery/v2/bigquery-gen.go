@@ -539,7 +539,7 @@ type Dataset struct {
 
 	// Location: The geographic location where the dataset should reside.
 	// The default value is US. See details at
-	// https://cloud.google.com/bigquery/docs/locations.
+	// https://cloud.google.com/bigquery/docs/dataset-locations.
 	Location string `json:"location,omitempty"`
 
 	// SelfLink: [Output-only] A URL that can be used to access the resource
@@ -695,7 +695,8 @@ type DatasetListDatasets struct {
 	// organize and group your datasets.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: The geographic location where the data resides.
+	// Location: [Experimental] The geographic location where the data
+	// resides.
 	Location string `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
@@ -1252,9 +1253,7 @@ func (s *GetServiceAccountResponse) MarshalJSON() ([]byte, error) {
 
 type GoogleSheetsOptions struct {
 	// Range: [Beta] [Optional] Range of a sheet to query from. Only used
-	// when non-empty. Typical format:
-	// sheet_name!top_left_cell_id:bottom_right_cell_id For example:
-	// sheet1!A1:B20
+	// when non-empty. Typical format: !:
 	Range string `json:"range,omitempty"`
 
 	// SkipLeadingRows: [Optional] The number of rows at the top of a sheet
@@ -1675,7 +1674,7 @@ type JobConfigurationLoad struct {
 	// Default: "
 	Quote *string `json:"quote,omitempty"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
+	// RangePartitioning: [Experimental] Range partitioning specification
 	// for this table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
@@ -1858,7 +1857,7 @@ type JobConfigurationQuery struct {
 	// QueryParameters: Query parameters for standard SQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
+	// RangePartitioning: [Experimental] Range partitioning specification
 	// for this table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
@@ -2285,14 +2284,6 @@ type JobStatistics2 struct {
 	// TotalBytesProcessed: [Output-only] Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
-	// TotalBytesProcessedAccuracy: [Output-only] For dry-run jobs,
-	// totalBytesProcessed is an estimate and this field specifies the
-	// accuracy of the estimate. Possible values can be: UNKNOWN: accuracy
-	// of the estimate is unknown. PRECISE: estimate is precise.
-	// LOWER_BOUND: estimate is lower bound of what the query would cost.
-	// UPPER_BOUND: estiamte is upper bound of what the query would cost.
-	TotalBytesProcessedAccuracy string `json:"totalBytesProcessedAccuracy,omitempty"`
-
 	// TotalPartitionsProcessed: [Output-only] Total number of partitions
 	// processed from all partitioned tables referenced in the job.
 	TotalPartitionsProcessed int64 `json:"totalPartitionsProcessed,omitempty,string"`
@@ -2476,38 +2467,6 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 }
 
 type JsonValue interface{}
-
-type MaterializedViewDefinition struct {
-	// LastRefreshTime: [Output-only] [TrustedTester] The time when this
-	// materialized view was last modified, in milliseconds since the epoch.
-	LastRefreshTime int64 `json:"lastRefreshTime,omitempty,string"`
-
-	// Query: [Required] A query whose result is persisted.
-	Query string `json:"query,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "LastRefreshTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LastRefreshTime") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *MaterializedViewDefinition) MarshalJSON() ([]byte, error) {
-	type NoMethod MaterializedViewDefinition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
 
 type ModelDefinition struct {
 	// ModelOptions: [Output-only, Beta] Model options used for the first
@@ -2841,9 +2800,8 @@ type QueryRequest struct {
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
-	// Location: The geographic location where the job should run. See
-	// details at
-	// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+	// Location: The geographic location where the job should run. Required
+	// except for US and EU.
 	Location string `json:"location,omitempty"`
 
 	// MaxResults: [Optional] The maximum number of rows of data to return
@@ -3043,12 +3001,12 @@ func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
 }
 
 type RangePartitioning struct {
-	// Field: [TrustedTester] [Required] The table is partitioned by this
+	// Field: [Experimental] [Required] The table is partitioned by this
 	// field. The field must be a top-level NULLABLE/REQUIRED field. The
 	// only supported type is INTEGER/INT64.
 	Field string `json:"field,omitempty"`
 
-	// Range: [TrustedTester] [Required] Defines the ranges for range
+	// Range: [Experimental] [Required] Defines the ranges for range
 	// partitioning.
 	Range *RangePartitioningRange `json:"range,omitempty"`
 
@@ -3075,17 +3033,17 @@ func (s *RangePartitioning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RangePartitioningRange: [TrustedTester] [Required] Defines the ranges
+// RangePartitioningRange: [Experimental] [Required] Defines the ranges
 // for range partitioning.
 type RangePartitioningRange struct {
-	// End: [TrustedTester] [Required] The end of range partitioning,
+	// End: [Experimental] [Required] The end of range partitioning,
 	// exclusive.
 	End int64 `json:"end,omitempty,string"`
 
-	// Interval: [TrustedTester] [Required] The width of each interval.
+	// Interval: [Experimental] [Required] The width of each interval.
 	Interval int64 `json:"interval,omitempty,string"`
 
-	// Start: [TrustedTester] [Required] The start of range partitioning,
+	// Start: [Experimental] [Required] The start of range partitioning,
 	// inclusive.
 	Start int64 `json:"start,omitempty,string"`
 
@@ -3151,8 +3109,8 @@ func (s *Streamingbuffer) MarshalJSON() ([]byte, error) {
 }
 
 type Table struct {
-	// Clustering: [Beta] Clustering specification for the table. Must be
-	// specified with partitioning, data in the table will be first
+	// Clustering: [Experimental] Clustering specification for the table.
+	// Must be specified with partitioning, data in the table will be first
 	// partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
@@ -3213,9 +3171,6 @@ type Table struct {
 	// resides. This value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
 
-	// MaterializedView: [Optional] Materialized view definition.
-	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
-
 	// Model: [Output-only, Beta] Present iff this table represents a ML
 	// model. Describes the training information for the model, and it is
 	// required to run 'PREDICT' queries.
@@ -3229,7 +3184,7 @@ type Table struct {
 	// are considered "long-term storage".
 	NumLongTermBytes int64 `json:"numLongTermBytes,omitempty,string"`
 
-	// NumPhysicalBytes: [Output-only] [TrustedTester] The physical size of
+	// NumPhysicalBytes: [Output-only] [Experimental] The physical size of
 	// this table in bytes, excluding any data in the streaming buffer. This
 	// includes compression and storage used for time travel.
 	NumPhysicalBytes int64 `json:"numPhysicalBytes,omitempty,string"`
@@ -3238,14 +3193,14 @@ type Table struct {
 	// excluding any data in the streaming buffer.
 	NumRows uint64 `json:"numRows,omitempty,string"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
+	// RangePartitioning: [Experimental] Range partitioning specification
 	// for this table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 
-	// RequirePartitionFilter: [Beta] [Optional] If set to true, queries
-	// over this table require a partition filter that can be used for
-	// partition elimination to be specified.
+	// RequirePartitionFilter: [Experimental] [Optional] If set to true,
+	// queries over this table require a partition filter that can be used
+	// for partition elimination to be specified.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
 	// Schema: [Optional] Describes the schema of this table.
@@ -3271,10 +3226,9 @@ type Table struct {
 
 	// Type: [Output-only] Describes the table type. The following values
 	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
-	// defined by a SQL query. [TrustedTester] MATERIALIZED_VIEW: SQL query
-	// whose result is persisted. EXTERNAL: A table that references data
-	// stored in an external storage system, such as Google Cloud Storage.
-	// The default value is TABLE.
+	// defined by a SQL query. EXTERNAL: A table that references data stored
+	// in an external storage system, such as Google Cloud Storage. The
+	// default value is TABLE.
 	Type string `json:"type,omitempty"`
 
 	// View: [Optional] The view definition.
@@ -3350,10 +3304,11 @@ type TableDataInsertAllRequest struct {
 	// entire request to fail if any invalid rows exist.
 	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
 
-	// TemplateSuffix: If specified, treats the destination table as a base
-	// template, and inserts the rows into an instance table named
-	// "{destination}{templateSuffix}". BigQuery will manage creation of the
-	// instance table, using the schema of the base template table. See
+	// TemplateSuffix: [Experimental] If specified, treats the destination
+	// table as a base template, and inserts the rows into an instance table
+	// named "{destination}{templateSuffix}". BigQuery will manage creation
+	// of the instance table, using the schema of the base template table.
+	// See
 	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables for considerations when working with templates
 	// tables.
 	TemplateSuffix string `json:"templateSuffix,omitempty"`
@@ -4992,9 +4947,10 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	return c
 }
 
-// Location sets the optional parameter "location": The geographic
-// location of the job. Required except for US and EU. See details at
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location of the job. Required except for US and EU. See
+// details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -5101,7 +5057,7 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5146,9 +5102,10 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	return c
 }
 
-// Location sets the optional parameter "location": The geographic
-// location of the job. Required except for US and EU. See details at
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location of the job. Required except for US and EU. See
+// details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -5268,7 +5225,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "[Experimental] The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5312,10 +5269,10 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 	return c
 }
 
-// Location sets the optional parameter "location": The geographic
-// location where the job should run. Required except for US and EU. See
-// details at
-// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+// Location sets the optional parameter "location": [Experimental] The
+// geographic location where the job should run. Required except for US
+// and EU. See details at
+// https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("location", location)
 	return c
@@ -5465,7 +5422,7 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location where the job should run. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "[Experimental] The geographic location where the job should run. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/dataset-locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

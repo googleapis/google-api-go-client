@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/tMaVzrS3bfofushgFgZQxWOjUOk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/PNLk-OC6JYKJ3ygPuumcyHEfVVQ\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3481,11 +3481,11 @@
       }
     }
   },
-  "revision": "20181203",
+  "revision": "20181129",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
-      "description": "Account data. After the creation of a new account it may take a few minutes before it is fully operational. The methods delete, insert, patch, and update require the admin role.",
+      "description": "Account data. After the creation of a new account it may take a few minutes before it is fully operational.",
       "id": "Account",
       "properties": {
         "adultContent": {
@@ -3919,7 +3919,7 @@
       "type": "object"
     },
     "AccountTax": {
-      "description": "The tax settings of a merchant account. All methods require the admin role.",
+      "description": "The tax settings of a merchant account.",
       "id": "AccountTax",
       "properties": {
         "accountId": {
@@ -5689,7 +5689,6 @@
       "type": "object"
     },
     "LiaSettings": {
-      "description": "Local Inventory ads (LIA) settings. All methods except listposdataproviders require the admin role.",
       "id": "LiaSettings",
       "properties": {
         "accountId": {
@@ -6028,7 +6027,6 @@
       "type": "object"
     },
     "Order": {
-      "description": "Order. All methods require the order manager role.",
       "id": "Order",
       "properties": {
         "acknowledged": {
@@ -6681,7 +6679,6 @@
       "type": "object"
     },
     "OrderReportDisbursement": {
-      "description": "Order disbursement. All methods require the payment analyst role.",
       "id": "OrderReportDisbursement",
       "properties": {
         "disbursementAmount": {
@@ -9047,7 +9044,7 @@
       "type": "object"
     },
     "Product": {
-      "description": "Product data. After inserting, updating, or deleting a product, it may take several minutes before changes take effect.",
+      "description": "Product data.",
       "id": "Product",
       "properties": {
         "additionalImageLinks": {
@@ -10170,7 +10167,7 @@
       "type": "object"
     },
     "ShippingSettings": {
-      "description": "The merchant account's shipping settings. All methods except getsupportedcarriers and getsupportedholidays require the admin role.",
+      "description": "The merchant account's shipping settings.",
       "id": "ShippingSettings",
       "properties": {
         "accountId": {

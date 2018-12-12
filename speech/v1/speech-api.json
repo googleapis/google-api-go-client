@@ -118,7 +118,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^[^/]+$",
               "required": true,
               "type": "string"
             }
@@ -211,7 +211,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20180914",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -232,28 +232,6 @@
       },
       "type": "object"
     },
-    "LongRunningRecognizeMetadata": {
-      "description": "Describes the progress of a long-running `LongRunningRecognize` call. It is\nincluded in the `metadata` field of the `Operation` returned by the\n`GetOperation` call of the `google::longrunning::Operations` service.",
-      "id": "LongRunningRecognizeMetadata",
-      "properties": {
-        "lastUpdateTime": {
-          "description": "Time of the most recent processing update.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "progressPercent": {
-          "description": "Approximate percentage of audio processed thus far. Guaranteed to be 100\nwhen the audio is fully processed and the results are available.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "startTime": {
-          "description": "Time when the request was received.",
-          "format": "google-datetime",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "LongRunningRecognizeRequest": {
       "description": "The top-level message sent by the client for the `LongRunningRecognize`\nmethod.",
       "id": "LongRunningRecognizeRequest",
@@ -265,20 +243,6 @@
         "config": {
           "$ref": "RecognitionConfig",
           "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request."
-        }
-      },
-      "type": "object"
-    },
-    "LongRunningRecognizeResponse": {
-      "description": "The only message returned to the client by the `LongRunningRecognize` method.\nIt contains the result as zero or more sequential `SpeechRecognitionResult`\nmessages. It is included in the `result.response` field of the `Operation`\nreturned by the `GetOperation` call of the `google::longrunning::Operations`\nservice.",
-      "id": "LongRunningRecognizeResponse",
-      "properties": {
-        "results": {
-          "description": "Output only. Sequential list of transcription results corresponding to\nsequential portions of audio.",
-          "items": {
-            "$ref": "SpeechRecognitionResult"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -521,6 +485,11 @@
           "description": "Output only. Time offset relative to the beginning of the audio,\nand corresponding to the end of the spoken word.\nThis field is only set if `enable_word_time_offsets=true` and only\nin the top hypothesis.\nThis is an experimental feature and the accuracy of the time offset can\nvary.",
           "format": "google-duration",
           "type": "string"
+        },
+        "speakerTag": {
+          "description": "Output only. A distinct integer value is assigned for every speaker within\nthe audio. This field specifies which one of those speakers was detected to\nhave spoken this word. Value ranges from '1' to diarization_speaker_count.\nspeaker_tag is set if enable_speaker_diarization = 'true' and only in the\ntop alternative.",
+          "format": "int32",
+          "type": "integer"
         },
         "startTime": {
           "description": "Output only. Time offset relative to the beginning of the audio,\nand corresponding to the start of the spoken word.\nThis field is only set if `enable_word_time_offsets=true` and only\nin the top hypothesis.\nThis is an experimental feature and the accuracy of the time offset can\nvary.",

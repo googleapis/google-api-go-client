@@ -233,7 +233,7 @@ type AuthProvider struct {
 	//                bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
 
-	// AuthorizationUrl: Redirect URL if JWT token is required but not
+	// AuthorizationUrl: Redirect URL if JWT token is required but no
 	// present or is expired.
 	// Implement authorizationUrl of securityDefinitions in OpenAPI spec.
 	AuthorizationUrl string `json:"authorizationUrl,omitempty"`

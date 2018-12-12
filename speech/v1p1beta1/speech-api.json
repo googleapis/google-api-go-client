@@ -118,7 +118,7 @@
             "name": {
               "description": "The name of the operation resource.",
               "location": "path",
-              "pattern": "^.+$",
+              "pattern": "^[^/]+$",
               "required": true,
               "type": "string"
             }
@@ -130,43 +130,313 @@
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform"
           ]
-        },
-        "list": {
-          "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
-          "flatPath": "v1p1beta1/operations",
-          "httpMethod": "GET",
-          "id": "speech.operations.list",
-          "parameterOrder": [],
-          "parameters": {
-            "filter": {
-              "description": "The standard list filter.",
-              "location": "query",
-              "type": "string"
+        }
+      }
+    },
+    "projects": {
+      "resources": {
+        "locations": {
+          "resources": {
+            "datasets": {
+              "methods": {
+                "create": {
+                  "description": "Performs asynchronous data upload for AutoML: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `Dataset` message.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/datasets",
+                  "httpMethod": "POST",
+                  "id": "speech.projects.locations.datasets.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Resource name of the parent. Has the format :-\n\"projects/{project_id}/locations/{location_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+parent}/datasets",
+                  "request": {
+                    "$ref": "Dataset"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Get the dataset associated with the dataset resource.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}",
+                  "httpMethod": "GET",
+                  "id": "speech.projects.locations.datasets.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "includeModelInfo": {
+                      "description": "If true then also include information about the models built using this\ndataset.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "name": {
+                      "description": "The resource name of the dataset to retrieve. Form :-\n'/projects/{project_number}/locations/{location_id}/datasets/{dataset_id}'",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+name}",
+                  "response": {
+                    "$ref": "Dataset"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Fetch the list of dataset associated with this project.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/datasets",
+                  "httpMethod": "GET",
+                  "id": "speech.projects.locations.datasets.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Filter the response based on display_name of the dataset. For e.g\ndisplay_name=Foo The filter string is case sensitive",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "includeModelInfo": {
+                      "description": "If true then also include information about the models built using the\ndatasets.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "pageSize": {
+                      "description": "The maximum number of items to return.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous List request, if any.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the parent. Has the format :-\n\"projects/{project_id}/locations/{location_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+parent}/datasets",
+                  "response": {
+                    "$ref": "ListDatasetsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "refreshData": {
+                  "description": "Refresh data for a dataset.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}:refreshData",
+                  "httpMethod": "POST",
+                  "id": "speech.projects.locations.datasets.refreshData",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The resource name of the destination dataset.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+name}:refreshData",
+                  "request": {
+                    "$ref": "RefreshDataRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             },
-            "name": {
-              "description": "The name of the operation's parent resource.",
-              "location": "query",
-              "type": "string"
+            "log_data_stats": {
+              "methods": {
+                "list": {
+                  "description": "List all log data stats associated with this project.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/log_data_stats",
+                  "httpMethod": "GET",
+                  "id": "speech.projects.locations.log_data_stats.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. Resource name of the parent. Has the format :-\n\"projects/{project_id}/locations/{location_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+parent}/log_data_stats",
+                  "response": {
+                    "$ref": "ListLogDataStatsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             },
-            "pageSize": {
-              "description": "The standard list page size.",
-              "format": "int32",
-              "location": "query",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "The standard list page token.",
-              "location": "query",
-              "type": "string"
+            "models": {
+              "methods": {
+                "create": {
+                  "description": "Performs asynchronous model training for AutoML: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains a `Model`\nmessage.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/models",
+                  "httpMethod": "POST",
+                  "id": "speech.projects.locations.models.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Resource name of the dataset being used to create the model.\n'/projects/{project_id}/locations/{location_id}/datasets/{dataset_id}'",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the parent. Has the format :-\n\"projects/{project_id}/locations/{location_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+parent}/models",
+                  "request": {
+                    "$ref": "Model"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "deploy": {
+                  "description": "Performs asynchronous model deployment of the model: receive results\nvia the google.longrunning.Operations interface. After the operation is\ncompleted this returns either an `Operation.error` in case of error or\na `google.protobuf.Empty` if the deployment was successful.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/models/{modelsId}:deploy",
+                  "httpMethod": "POST",
+                  "id": "speech.projects.locations.models.deploy",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Resource name of the model.\nFormat: \"projects/{project_id}/locations/{location_id}/models/{model_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+name}:deploy",
+                  "request": {
+                    "$ref": "DeployModelRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "evaluate": {
+                  "description": "Performs asynchronous evaluation of the model: receive results\nvia the google.longrunning.Operations interface. After the operation is\ncompleted this returns either an `Operation.error` in case of error or\na `EvaluateModelResponse` with the evaluation results.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/models/{modelsId}:evaluate",
+                  "httpMethod": "POST",
+                  "id": "speech.projects.locations.models.evaluate",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Resource name of the model.\nFormat: \"projects/{project_id}/locations/{location_id}/models/{model_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/models/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+name}:evaluate",
+                  "request": {
+                    "$ref": "EvaluateModelRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Fetch the list of models associated with this project.",
+                  "flatPath": "v1p1beta1/projects/{projectsId}/locations/{locationsId}/models",
+                  "httpMethod": "GET",
+                  "id": "speech.projects.locations.models.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "filter": {
+                      "description": "Filter the response based on display_name of the model. For e.g\ndisplay_name=Foo The filter string is case sensitive",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "pageSize": {
+                      "description": "The maximum number of items to return.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "pageToken": {
+                      "description": "The next_page_token value returned from a previous List request, if any.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "parent": {
+                      "description": "Required. Resource name of the parent. Has the format :-\n\"projects/{project_id}/locations/{location_id}\"",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1p1beta1/{+parent}/models",
+                  "response": {
+                    "$ref": "ListModelsResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
-          },
-          "path": "v1p1beta1/operations",
-          "response": {
-            "$ref": "ListOperationsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
+          }
         }
       }
     },
@@ -211,45 +481,248 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20181107",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
-    "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "id": "ListOperationsResponse",
+    "DataErrors": {
+      "description": "Different types of dataset errors and the stats associated with each error.",
+      "id": "DataErrors",
       "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
+        "count": {
+          "description": "Number of records having errors associated with the enum.",
+          "format": "int32",
+          "type": "integer"
         },
-        "operations": {
-          "description": "A list of operations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Operation"
-          },
-          "type": "array"
+        "errorType": {
+          "description": "Type of the error.",
+          "enum": [
+            "ERROR_TYPE_UNSPECIFIED",
+            "UNSUPPORTED_AUDIO_FORMAT",
+            "FILE_EXTENSION_MISMATCH_WITH_AUDIO_FORMAT",
+            "FILE_TOO_LARGE"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Audio format not in the formats supported by the cloud speech API",
+            "File format different from what is specified in the file name extension",
+            "File too large. Maximum allowed size is 50 MB."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
     },
-    "LongRunningRecognizeMetadata": {
-      "description": "Describes the progress of a long-running `LongRunningRecognize` call. It is\nincluded in the `metadata` field of the `Operation` returned by the\n`GetOperation` call of the `google::longrunning::Operations` service.",
-      "id": "LongRunningRecognizeMetadata",
+    "DataStats": {
+      "description": "Contains stats about the data which was uploaded and preprocessed to be\nuse by downstream pipelines like training, evals pipelines.",
+      "id": "DataStats",
       "properties": {
-        "lastUpdateTime": {
-          "description": "Time of the most recent processing update.",
-          "format": "google-datetime",
-          "type": "string"
+        "dataErrors": {
+          "description": "Different types of data errors and the counts associated with them.",
+          "items": {
+            "$ref": "DataErrors"
+          },
+          "type": "array"
         },
-        "progressPercent": {
-          "description": "Approximate percentage of audio processed thus far. Guaranteed to be 100\nwhen the audio is fully processed and the results are available.",
+        "testExampleCount": {
+          "description": "The number of examples used for testing.",
           "format": "int32",
           "type": "integer"
         },
-        "startTime": {
-          "description": "Time when the request was received.",
+        "trainingExampleCount": {
+          "description": "The number of examples used for training.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "Dataset": {
+      "description": "Specifies the parameters needed for creating a dataset. In addition this\nis also the message returned to the client by the `CreateDataset` method.\nIt is included in the `result.response` field of the `Operation`\nreturned by the `GetOperation` call of the `google::longrunning::Operations`\nservice.",
+      "id": "Dataset",
+      "properties": {
+        "blockingOperationIds": {
+          "description": "Output only. All the blocking operations associated with this dataset.\nLike (pre-processing, training-model, testing-model)",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "bucketName": {
+          "description": "If set, the log data to be used in this dataset is restricted to the\nbucket specified. This field is only applicable if use_logged_data is true.\nIf use_logged_data is true, but this field is not set, then all logs will\nbe used for training the models. See: RecognitionMetadata for information\non setting up data logs.",
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The timestamp this dataset is created.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "dataProcessingRegion": {
+          "description": "Location where the data should be processed. If not specified then we will\npick a location on behalf of the user for storing and processing the data.\nCurrently only us-central is supported.",
+          "type": "string"
+        },
+        "dataStats": {
+          "$ref": "DataStats",
+          "description": "Output only. Stats assoiated with the data."
+        },
+        "displayName": {
+          "description": "Required. Name of the data set for display.",
+          "type": "string"
+        },
+        "hasSufficientData": {
+          "description": "Output only. True if the data is sufficient to create custom models.",
+          "type": "boolean"
+        },
+        "languageCode": {
+          "description": "Required. The language of the supplied audio as a\n[BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag.\nExample: \"en-US\".\nSee [Language Support](/speech-to-text/docs/languages)\nfor a list of the currently supported language codes.",
+          "type": "string"
+        },
+        "models": {
+          "description": "All the models (including models pending training) built using the dataset.",
+          "items": {
+            "$ref": "Model"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Output only. Resource name of the dataset. Form :-\n'/projects/{project_number}/locations/{location_id}/datasets/{dataset_id}'",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. The timestamp this dataset is last updated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "uri": {
+          "description": "URI that points to a file in csv file where each row has following format.\n\u003cgs_path_to_audio\u003e,\u003cgs_path_to_transcript\u003e,\u003clabel\u003e\nlabel can be HUMAN_TRANSCRIBED or MACHINE_TRANSCRIBED. To be valid, rows\nmust do the following:\n1. Each row must have at least a label and \u003cgs_path_to_transcript\u003e\n2. If a row is marked HUMAN_TRANSCRIBED, then you must specify both\n\u003cgs_path_to_audio\u003e and \u003cgs_path_to_transcript\u003e. Only WAV file formats\nwhich encode linear 16-bit pulse-code modulation (PCM) audio format are\nsupported. The maximum audio file size is 50 MB. Also note that the audio\nhas to be single channel audio.\n3. There has to be at least 500 rows labelled HUMAN_TRANSCRIBED covering\nat least ~10K words in order to get reliable word error rate results.\n4. To create a language model, you should provide at least 100,000 words\nin your transcriptions as training data if you have conversational and\ncaptions type of data. You should provide at least 10,000 words if you\nhave short utterances like voice commands and search type of use cases.\nCurrently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats will be ignored).\nFor more information, see\n[Request URIs](/storage/docs/reference-uris).",
+          "type": "string"
+        },
+        "useLoggedData": {
+          "description": "If this is true, then use the previously logged data (for the project)\nThe logs data for this project will be preprocessed and prepared for\ndownstream pipelines (like training)",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "DeployModelRequest": {
+      "description": "Message sent by the client for the `DeployModel` method.",
+      "id": "DeployModelRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "EvaluateModelRequest": {
+      "description": "Message sent by the client for the `EvaluateModel` method.",
+      "id": "EvaluateModelRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "EvaluateModelResponse": {
+      "description": "The only message returned to the client by the `EvaluateModel` method. This\nis also returned as part of the Dataset message returned to the client by\nthe CreateDataset method. It is included in the `result.response` field of\nthe `Operation` returned by the `GetOperation` call of the\n`google::longrunning::Operations` service.",
+      "id": "EvaluateModelResponse",
+      "properties": {
+        "isEnhancedModel": {
+          "description": "If true then it means we are referring to the results of an enhanced\nversion of the model_type. Currently only PHONE_CALL model_type has an\nenhanced version.",
+          "type": "boolean"
+        },
+        "modelType": {
+          "description": "Required. The type of model used in this evaluation.",
+          "enum": [
+            "MODEL_TYPE_UNSPECIFIED",
+            "DEFAULT",
+            "COMMAND_AND_SEARCH",
+            "PHONE_CALL",
+            "VIDEO"
+          ],
+          "enumDescriptions": [
+            "",
+            "Model for audio that is not one of the specific models below. This is\na generic model and can be used in various scenarios but is not\nnecessarily the best in any particular scenario.",
+            "Model for audio from short queries like voice commands or voice search",
+            "Model for phone call conversation type op audio.",
+            "Model for audio that originated from from video or includes multiple\nspeakers."
+          ],
+          "type": "string"
+        },
+        "wordCount": {
+          "description": "Number of words used in the word_error_rate computation.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "wordErrorRate": {
+          "description": "Word error rate metric computed on the test set using the AutoML model.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "ListDatasetsResponse": {
+      "id": "ListDatasetsResponse",
+      "properties": {
+        "datasets": {
+          "description": "Repeated list of data sets containing details about each data set.",
+          "items": {
+            "$ref": "Dataset"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ListLogDataStatsResponse": {
+      "description": "Message received by the client for the `ListLogDataStats` method.",
+      "id": "ListLogDataStatsResponse",
+      "properties": {
+        "logDataEnabled": {
+          "description": "Output only. True if user has opted in for log data collection.",
+          "type": "boolean"
+        },
+        "logDataStats": {
+          "description": "The stats for each bucket.",
+          "items": {
+            "$ref": "LogBucketStats"
+          },
+          "type": "array"
+        },
+        "totalCount": {
+          "description": "The overall count for log data (including all bucket data).",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ListModelsResponse": {
+      "id": "ListModelsResponse",
+      "properties": {
+        "models": {
+          "description": "Repeated list of models containing details about each model.",
+          "items": {
+            "$ref": "Model"
+          },
+          "type": "array"
+        },
+        "nextPageToken": {
+          "description": "Token to retrieve the next page of results, or empty if there are no\nmore results in the list.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LogBucketStats": {
+      "description": "Stats for log data within a bucket.",
+      "id": "LogBucketStats",
+      "properties": {
+        "bucketName": {
+          "description": "The display name for the bucket in which logs are collected.",
+          "type": "string"
+        },
+        "count": {
+          "description": "Number of audio samples that have been collected in this bucket.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -269,16 +742,43 @@
       },
       "type": "object"
     },
-    "LongRunningRecognizeResponse": {
-      "description": "The only message returned to the client by the `LongRunningRecognize` method.\nIt contains the result as zero or more sequential `SpeechRecognitionResult`\nmessages. It is included in the `result.response` field of the `Operation`\nreturned by the `GetOperation` call of the `google::longrunning::Operations`\nservice.",
-      "id": "LongRunningRecognizeResponse",
+    "Model": {
+      "description": "Specifies the model parameters needed for training a model. In addition this\nis also the message returned to the client by the `CreateModel` method.\nIt is included in the `result.response` field of the `Operation`\nreturned by the `GetOperation` call of the `google::longrunning::Operations`\nservice.",
+      "id": "Model",
       "properties": {
-        "results": {
-          "description": "Output only. Sequential list of transcription results corresponding to\nsequential portions of audio.",
+        "createTime": {
+          "description": "Output only. Timestamp when this model was created.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Required. Display name of the model to be trained.",
+          "type": "string"
+        },
+        "evaluateModelResponses": {
+          "description": "Output only. Evaluation results associated with this model. A model can\ncontain multiple sub-models in which case the evaluation results for\nall of those are available. If there are no sub models then there would\nbe just a single EvaluateModelResponse.",
           "items": {
-            "$ref": "SpeechRecognitionResult"
+            "$ref": "EvaluateModelResponse"
           },
           "type": "array"
+        },
+        "name": {
+          "description": "Output only. Resource name of the model.\nFormat: \"projects/{project_id}/locations/{location_id}/models/{model_id}\"",
+          "type": "string"
+        },
+        "trainingType": {
+          "description": "Required. Type of the training to perform.",
+          "enum": [
+            "TRAINING_TYPE_UNSPECIFIED",
+            "CUSTOM_ADAPTATION_LANGUAGE_MODEL",
+            "PREBUILT_MODEL"
+          ],
+          "enumDescriptions": [
+            "",
+            "Build adaptation language model based on the users data. These models are\nbuilt on top of the existing prebuilt models (like phone_call, video\netc.).",
+            "Output only. This is set to indicate that the model we are talking about\nis a prebuilt model (for e.g in the context of evaluations)."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -350,12 +850,8 @@
           "format": "int32",
           "type": "integer"
         },
-        "diarizationConfig": {
-          "$ref": "SpeakerDiarizationConfig",
-          "description": "*Optional* Config to enable speaker diarization and set additional\nparameters to make diarization better suited for your application.\nNote: When this is enabled, we send all the words from the beginning of the\naudio for the top alternative in every consecutive STREAMING responses.\nThis is done in order to improve our speaker tags as our models learn to\nidentify the speakers in the conversation over time.\nFor non-streaming requests, the diarization results will be provided only\nin the top alternative of the FINAL SpeechRecognitionResult."
-        },
         "diarizationSpeakerCount": {
-          "description": "*Optional*\nIf set, specifies the estimated number of speakers in the conversation.\nIf not set, defaults to '2'.\nIgnored unless enable_speaker_diarization is set to true.\"\nNote: Use diarization_config instead. This field will be DEPRECATED soon.",
+          "description": "*Optional*\nIf set, specifies the estimated number of speakers in the conversation.\nIf not set, defaults to '2'.\nIgnored unless enable_speaker_diarization is set to true.\"",
           "format": "int32",
           "type": "integer"
         },
@@ -368,7 +864,7 @@
           "type": "boolean"
         },
         "enableSpeakerDiarization": {
-          "description": "*Optional* If 'true', enables speaker detection for each recognized word in\nthe top alternative of the recognition result using a speaker_tag provided\nin the WordInfo.\nNote: Use diarization_config instead. This field will be DEPRECATED soon.",
+          "description": "*Optional* If 'true', enables speaker detection for each recognized word in\nthe top alternative of the recognition result using a speaker_tag provided\nin the WordInfo.\nNote: When this is true, we send all the words from the beginning of the\naudio for the top alternative in every consecutive STREAMING responses.\nThis is done in order to improve our speaker tags as our models learn to\nidentify the speakers in the conversation over time.\nFor non-streaming requests, the diarization results will be provided only\nin the top alternative of the FINAL SpeechRecognitionResult.",
           "type": "boolean"
         },
         "enableWordConfidence": {
@@ -546,6 +1042,13 @@
             "Speech was recorded indoors."
           ],
           "type": "string"
+        },
+        "tags": {
+          "description": "A freeform field to tag this input sample with. This can be used for\ngrouping the logs into separate buckets. This enables selective purging of\ndata based on the tags, and also for training models in AutoML.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -579,22 +1082,13 @@
       },
       "type": "object"
     },
-    "SpeakerDiarizationConfig": {
-      "id": "SpeakerDiarizationConfig",
+    "RefreshDataRequest": {
+      "description": "Message sent by the client to refresh data in a existing dataset.",
+      "id": "RefreshDataRequest",
       "properties": {
-        "enableSpeakerDiarization": {
-          "description": "*Optional* If 'true', enables speaker detection for each recognized word in\nthe top alternative of the recognition result using a speaker_tag provided\nin the WordInfo.",
-          "type": "boolean"
-        },
-        "maxSpeakerCount": {
-          "description": "*Optional* Only used if diarization_speaker_count is not set.\nMaximum number of speakers in the conversation. This range gives you more\nflexibility by allowing the system to automatically determine the correct\nnumber of speakers. If not set, the default value is 6.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "minSpeakerCount": {
-          "description": "*Optional* Only used if diarization_speaker_count is not set.\nMinimum number of speakers in the conversation. This range gives you more\nflexibility by allowing the system to automatically determine the correct\nnumber of speakers. If not set, the default value is 2.",
-          "format": "int32",
-          "type": "integer"
+        "uri": {
+          "description": "URI that points to a file in csv file where each row has following format.\n\u003cgs_path_to_audio\u003e,\u003cgs_path_to_transcript\u003e,\u003clabel\u003e\nlabel can be HUMAN_TRANSCRIBED or MACHINE_TRANSCRIBED. Few rules for a row\nto be considered valid are :-\n1. Each row must have at least a label and \u003cgs_path_to_transcript\u003e\n2. If a row is marked HUMAN_TRANSCRIBED, then both \u003cgs_path_to_audio\u003e\nand \u003cgs_path_to_transcript\u003e needs to be specified.\n3. There has to be minimum 500 number of rows labelled HUMAN_TRANSCRIBED if\nevaluation stats are required.\n4. If use_logged_data_for_training is set to true, then we ignore the rows\nlabelled as MACHINE_TRANSCRIBED.\n5. There has to be minimum 100,000 words in the transcripts in order to\nprovide sufficient textual training data for the language model.\nCurrently, only Google Cloud Storage URIs are\nsupported, which must be specified in the following format:\n`gs://bucket_name/object_name` (other URI formats will be ignored).\nFor more information, see\n[Request URIs](https://cloud.google.com/storage/docs/reference-uris).",
+          "type": "string"
         }
       },
       "type": "object"
@@ -609,6 +1103,22 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "strength": {
+          "description": "Hint strength to use (high, medium or low). If you use a high strength then\nyou are more likely to see those phrases in the results. If strength is not\nspecified then by default medium strength will be used. If you'd like\ndifferent phrases to have different strengths, you can specify multiple\nspeech_contexts.",
+          "enum": [
+            "STRENGTH_UNSPECIFIED",
+            "LOW",
+            "MEDIUM",
+            "HIGH"
+          ],
+          "enumDescriptions": [
+            "",
+            "Low strength",
+            "Medium strength",
+            "High strength"
+          ],
+          "type": "string"
         }
       },
       "type": "object"

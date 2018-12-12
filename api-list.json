@@ -1131,22 +1131,6 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/shopping-content",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "content:v2.1",
-   "name": "content",
-   "version": "v2.1",
-   "title": "Content API for Shopping",
-   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/content/v2.1/rest",
-   "discoveryLink": "./apis/content/v2.1/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/shopping-content",
    "preferred": true
   },
   {

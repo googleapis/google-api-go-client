@@ -1452,7 +1452,7 @@
       }
     }
   },
-  "revision": "20181205",
+  "revision": "20181126",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -2224,20 +2224,6 @@
         },
         "peerProjectId": {
           "description": "The GCP project_id where the internal checker lives. Not necessary the same as the workspace project.",
-          "type": "string"
-        },
-        "state": {
-          "description": "The current operational state of the internal checker.",
-          "enum": [
-            "UNSPECIFIED",
-            "CREATING",
-            "RUNNING"
-          ],
-          "enumDescriptions": [
-            "An internal checker should never be in the unspecified state.",
-            "The checker is being created, provisioned, and configured. A checker in this state can be returned by ListInternalCheckers or GetInternalChecker, as well as by examining the longrunning.Operation that created it.",
-            "The checker is running and available for use. A checker in this state can be returned by ListInternalCheckers or GetInternalChecker as well as by examining the longrunning.Operation that created it. If a checker is being torn down, it is neither visible nor usable, so there is no \"deleting\" or \"down\" state."
-          ],
           "type": "string"
         }
       },

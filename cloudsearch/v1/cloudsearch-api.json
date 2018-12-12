@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20181120",
+  "revision": "20181203",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1795,9 +1795,11 @@
             "AUDIO",
             "VIDEO",
             "FOLDER",
-            "ARCHIVE"
+            "ARCHIVE",
+            "SITE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -2071,7 +2073,7 @@
           "type": "string"
         },
         "freshnessProperty": {
-          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nPropertyDefinitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.",
+          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nproperty definitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.",
           "type": "string"
         }
       },

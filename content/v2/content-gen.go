@@ -270,7 +270,8 @@ type ShippingsettingsService struct {
 }
 
 // Account: Account data. After the creation of a new account it may
-// take a few minutes before it is fully operational.
+// take a few minutes before it is fully operational. The methods
+// delete, insert, patch, and update require the admin role.
 type Account struct {
 	// AdultContent: Indicates whether the merchant sells adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
@@ -884,7 +885,8 @@ func (s *AccountStatusStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountTax: The tax settings of a merchant account.
+// AccountTax: The tax settings of a merchant account. All methods
+// require the admin role.
 type AccountTax struct {
 	// AccountId: The ID of the account to which these account tax settings
 	// belong.
@@ -3797,6 +3799,8 @@ func (s *LiaPosDataProvider) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LiaSettings: Local Inventory ads (LIA) settings. All methods except
+// listposdataproviders require the admin role.
 type LiaSettings struct {
 	// AccountId: The ID of the account to which these LIA settings belong.
 	// Ignored upon update, always present in get request responses.
@@ -4401,6 +4405,7 @@ func (s *MerchantOrderReturnItem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Order: Order. All methods require the order manager role.
 type Order struct {
 	// Acknowledged: Whether the order was acknowledged.
 	Acknowledged bool `json:"acknowledged,omitempty"`
@@ -5237,6 +5242,8 @@ func (s *OrderRefund) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OrderReportDisbursement: Order disbursement. All methods require the
+// payment analyst role.
 type OrderReportDisbursement struct {
 	// DisbursementAmount: The disbursement amount.
 	DisbursementAmount *Price `json:"disbursementAmount,omitempty"`
@@ -8921,7 +8928,8 @@ func (s *Price) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Product: Product data.
+// Product: Product data. After inserting, updating, or deleting a
+// product, it may take several minutes before changes take effect.
 type Product struct {
 	// AdditionalImageLinks: Additional URLs of images of the item.
 	AdditionalImageLinks []string `json:"additionalImageLinks,omitempty"`
@@ -10499,7 +10507,9 @@ func (s *ShipmentTrackingInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ShippingSettings: The merchant account's shipping settings.
+// ShippingSettings: The merchant account's shipping settings. All
+// methods except getsupportedcarriers and getsupportedholidays require
+// the admin role.
 type ShippingSettings struct {
 	// AccountId: The ID of the account to which these account shipping
 	// settings belong. Ignored upon update, always present in get request

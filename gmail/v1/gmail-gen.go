@@ -373,9 +373,9 @@ func (s *BatchModifyMessagesRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Delegate: Settings for a delegate. Delegates can read, send, and
-// delete messages, as well as manage contacts, for the delegator's
-// account. See "Set up mail delegation" for more information about
-// delegates.
+// delete messages, as well as view and add contacts, for the
+// delegator's account. See "Set up mail delegation" for more
+// information about delegates.
 type Delegate struct {
 	// DelegateEmail: The email address of the delegate.
 	DelegateEmail string `json:"delegateEmail,omitempty"`

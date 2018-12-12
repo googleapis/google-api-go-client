@@ -1644,7 +1644,7 @@
       }
     }
   },
-  "revision": "20181116",
+  "revision": "20181130",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {
@@ -1698,6 +1698,11 @@
       "properties": {
         "fractionConsumed": {
           "description": "A fraction at which to split the work item, from 0.0 (beginning of the\ninput) to 1.0 (end of the input).",
+          "format": "double",
+          "type": "number"
+        },
+        "fractionOfRemainder": {
+          "description": "The fraction of the remainder of work to split the work item at, from 0.0\n(split at the current position) to 1.0 (end of the input).",
           "format": "double",
           "type": "number"
         },
@@ -3885,6 +3890,13 @@
           },
           "type": "array"
         },
+        "additionalUserLabels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Additional user labels attached to the job.",
+          "type": "object"
+        },
         "bypassTempDirValidation": {
           "description": "Whether to bypass the safety checks for the job's temporary directory.\nUse with caution.",
           "type": "boolean"
@@ -3901,6 +3913,11 @@
         "network": {
           "description": "Network to which VMs will be assigned.  If empty or unspecified,\nthe service will use the network \"default\".",
           "type": "string"
+        },
+        "numWorkers": {
+          "description": "The initial number of Google Compute Engine instnaces for the job.",
+          "format": "int32",
+          "type": "integer"
         },
         "serviceAccountEmail": {
           "description": "The email address of the service account to run the job as.",

@@ -13142,9 +13142,9 @@ type ProjectsLocationsProductSetsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Permanently deletes a ProductSet. All Products and
+// Delete: Permanently deletes a ProductSet. Products and
 // ReferenceImages in the
-// ProductSet will be deleted.
+// ProductSet are not deleted.
 //
 // The actual image files are not deleted from Google Cloud
 // Storage.
@@ -13243,7 +13243,7 @@ func (c *ProjectsLocationsProductSetsDeleteCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a ProductSet. All Products and ReferenceImages in the\nProductSet will be deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
+	//   "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the\nProductSet are not deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "vision.projects.locations.productSets.delete",

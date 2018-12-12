@@ -1486,7 +1486,7 @@
       }
     }
   },
-  "revision": "20181121",
+  "revision": "20181204",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2181,7 +2181,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CryptoHashConfig": {
-      "description": "Pseudonymization method that generates surrogates via cryptographic hashing.\nUses SHA-256.\nThe key size must be either 32 or 64 bytes.\nOutputs a 32 byte digest as an uppercase hex string\n(for example, 41D1567F7F99F1DC2A5FAB886DEE5BEE).\nCurrently, only string and integer values can be hashed.",
+      "description": "Pseudonymization method that generates surrogates via cryptographic hashing.\nUses SHA-256.\nThe key size must be either 32 or 64 bytes.\nOutputs a base64 encoded representation of the hashed output\n(for example, L7k0BHmF1ha5U3NfGykjro4xWi1MPVQPjhMAZbSV9mM=).\nCurrently, only string and integer values can be hashed.",
       "id": "GooglePrivacyDlpV2CryptoHashConfig",
       "properties": {
         "cryptoKey": {

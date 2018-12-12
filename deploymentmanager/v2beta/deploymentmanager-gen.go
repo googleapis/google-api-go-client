@@ -408,11 +408,10 @@ func (s *BasicAuth) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: The condition that is associated with this binding. NOTE:
-	// an unsatisfied condition will not allow user access via current
-	// binding. Different bindings, including their conditions, are examined
-	// independently. This field is only visible as GOOGLE_INTERNAL or
-	// CONDITION_TRUSTED_TESTER.
+	// Condition: Unimplemented. The condition that is associated with this
+	// binding. NOTE: an unsatisfied condition will not allow user access
+	// via current binding. Different bindings, including their conditions,
+	// are examined independently.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -509,12 +508,9 @@ type CompositeType struct {
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
-	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: Output only. Timestamp when the composite type was
-	// created, in RFC3339 text format.
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Labels: Map of labels; provided by the client when the resource is
@@ -533,7 +529,7 @@ type CompositeType struct {
 	// currently running, on this composite type.
 	Operation *Operation `json:"operation,omitempty"`
 
-	// SelfLink: Output only. Self link for the type provider.
+	// SelfLink: Output only. Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	Status string `json:"status,omitempty"`
@@ -758,12 +754,9 @@ type Deployment struct {
 	// fingerprint value, perform a get() request to a deployment.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
-	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: Output only. Timestamp when the deployment was created,
-	// in RFC3339 text format .
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Labels: Map of labels; provided by the client when the resource is
@@ -791,7 +784,7 @@ type Deployment struct {
 	// currently running, on this deployment.
 	Operation *Operation `json:"operation,omitempty"`
 
-	// SelfLink: Output only. Self link for the deployment.
+	// SelfLink: Output only. Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Target: [Input Only] The parameters that define your deployment,
@@ -802,6 +795,9 @@ type Deployment struct {
 	// previewing an update to this deployment, the updated configuration
 	// appears here.
 	Update *DeploymentUpdate `json:"update,omitempty"`
+
+	// UpdateTime: Output only. Update timestamp in RFC3339 text format.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1120,7 +1116,7 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 }
 
 type GlobalSetPolicyRequest struct {
-	// Bindings: Flatten Policy to create a backwacd compatible wire-format.
+	// Bindings: Flatten Policy to create a backward compatible wire-format.
 	// Deprecated. Use 'policy' to specify bindings.
 	Bindings []*Binding `json:"bindings,omitempty"`
 
@@ -1305,18 +1301,21 @@ func (s *LogConfigCloudAuditOptions) MarshalJSON() ([]byte, error) {
 // Field names correspond to IAM request parameters and field values are
 // their respective values.
 //
-// At present the only supported field names are - "iam_principal",
-// corresponding to IAMContext.principal; - "" (empty string), resulting
-// in one aggretated counter with no field.
+// Supported field names: - "authority", which is "[token]" if
+// IAMContext.token is present, otherwise the value of
+// IAMContext.authority_selector if present, and otherwise a
+// representation of IAMContext.principal; or - "iam_principal", a
+// representation of IAMContext.principal even if a token or authority
+// selector is present; or - "" (empty string), resulting in a counter
+// with no fields.
 //
 // Examples: counter { metric: "/debug_access_count" field:
 // "iam_principal" } ==> increment counter
 // /iam/policy/backend_debug_access_count {iam_principal=[value of
 // IAMContext.principal]}
 //
-// At this time we do not support: * multiple field names (though this
-// may be supported in the future) * decrementing the counter *
-// incrementing it by anything other than 1
+// At this time we do not support multiple field names (though this may
+// be supported in the future).
 type LogConfigCounterOptions struct {
 	// Field: The field value to attribute.
 	Field string `json:"field,omitempty"`
@@ -1352,6 +1351,12 @@ type LogConfigDataAccessOptions struct {
 	// LogMode: Whether Gin logging should happen in a fail-closed manner at
 	// the caller. This is relevant only in the LocalIAM implementation, for
 	// now.
+	//
+	// NOTE: Logging to Gin in a fail-closed manner is currently unsupported
+	// while work is being done to satisfy the requirements of go/345.
+	// Currently, setting LOG_FAIL_CLOSED mode will have no effect, but
+	// still exists because there is active work being done to support it
+	// (b/115874152).
 	LogMode string `json:"logMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogMode") to
@@ -1385,15 +1390,12 @@ type Manifest struct {
 	// including any templates and references.
 	ExpandedConfig string `json:"expandedConfig,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
-	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
 	// Imports: Output only. The imported files for this manifest.
 	Imports []*ImportFile `json:"imports,omitempty"`
 
-	// InsertTime: Output only. Timestamp when the manifest was created, in
-	// RFC3339 text format.
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Layout: Output only. The YAML layout for this manifest.
@@ -1975,12 +1977,9 @@ type Resource struct {
 	// resource with references expanded. Returned as serialized YAML.
 	FinalProperties string `json:"finalProperties,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
-	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: Output only. Timestamp when the resource was created or
-	// acquired, in RFC3339 text format .
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Manifest: Output only. URL of the manifest representing the current
@@ -2005,8 +2004,7 @@ type Resource struct {
 	// appears here.
 	Update *ResourceUpdate `json:"update,omitempty"`
 
-	// UpdateTime: Output only. Timestamp when the resource was updated, in
-	// RFC3339 text format .
+	// UpdateTime: Output only. Update timestamp in RFC3339 text format.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// Url: Output only. The URL of the actual resource.
@@ -2604,12 +2602,9 @@ type Type struct {
 	// provided by the client when the resource is created.
 	Description string `json:"description,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
-	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: Output only. Timestamp when the type was created, in
-	// RFC3339 text format.
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Labels: Map of labels; provided by the client when the resource is
@@ -2627,7 +2622,7 @@ type Type struct {
 	// currently running, on this type.
 	Operation *Operation `json:"operation,omitempty"`
 
-	// SelfLink: Output only. Self link for the type.
+	// SelfLink: Output only. Server defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Base") to
@@ -2653,8 +2648,8 @@ func (s *Type) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TypeInfo: Contains detailed information about a composite type, base
-// type, or base type with specific collection.
+// TypeInfo: Type Information. Contains detailed information about a
+// composite type, base type, or base type with specific collection.
 type TypeInfo struct {
 	// Description: The description of the type.
 	Description string `json:"description,omitempty"`
@@ -2674,7 +2669,7 @@ type TypeInfo struct {
 	// documentation link For template types, we return only a schema
 	Schema *TypeInfoSchemaInfo `json:"schema,omitempty"`
 
-	// SelfLink: Output only. Server-defined URL for the resource.
+	// SelfLink: Output only. Self link for the type provider.
 	SelfLink string `json:"selfLink,omitempty"`
 
 	// Title: The title on the API descriptor URL provided.
@@ -2785,12 +2780,11 @@ type TypeProvider struct {
 	// DescriptorUrl: Descriptor Url for the this type provider.
 	DescriptorUrl string `json:"descriptorUrl,omitempty"`
 
-	// Id: Output only. Unique identifier for the resource; defined by the
+	// Id: Output only. Unique identifier for the resource defined by the
 	// server.
 	Id uint64 `json:"id,omitempty,string"`
 
-	// InsertTime: Output only. Timestamp when the type provider was
-	// created, in RFC3339 text format.
+	// InsertTime: Output only. Creation timestamp in RFC3339 text format.
 	InsertTime string `json:"insertTime,omitempty"`
 
 	// Labels: Map of labels; provided by the client when the resource is
@@ -4616,9 +4610,9 @@ func (c *DeploymentsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5429,9 +5423,9 @@ func (c *DeploymentsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy,
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "[a-z0-9](?:[-a-z0-9_]{0,61}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -5732,9 +5726,9 @@ func (c *DeploymentsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*T
 	//       "type": "string"
 	//     },
 	//     "resource": {
-	//       "description": "Name of the resource for this request.",
+	//       "description": "Name or id of the resource for this request.",
 	//       "location": "path",
-	//       "pattern": "(?:[-a-z0-9_]{0,62}[a-z0-9])?",
+	//       "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
 	//       "required": true,
 	//       "type": "string"
 	//     }

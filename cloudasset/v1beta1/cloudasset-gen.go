@@ -129,7 +129,7 @@ type ProjectsOperationsService struct {
 // resources,
 // Cloud IAM policies, and other non-GCP assets.
 type Asset struct {
-	// AssetType: Type of the asset. Example: "google.compute.disk".
+	// AssetType: Type of the asset. Example: "google.compute.Disk".
 	AssetType string `json:"assetType,omitempty"`
 
 	// IamPolicy: Representation of the actual Cloud IAM policy set on a
@@ -435,7 +435,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 type ExportAssetsRequest struct {
 	// AssetTypes: A list of asset types of which to take a snapshot for.
 	// For example:
-	// "google.compute.disk". If specified, only matching assets will be
+	// "google.compute.Disk". If specified, only matching assets will be
 	// returned.
 	// See [Introduction to Cloud
 	// Asset

@@ -1713,6 +1713,22 @@ type InternalChecker struct {
 	// Not necessary the same as the workspace project.
 	PeerProjectId string `json:"peerProjectId,omitempty"`
 
+	// State: The current operational state of the internal checker.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - An internal checker should never be in the
+	// unspecified state.
+	//   "CREATING" - The checker is being created, provisioned, and
+	// configured. A checker in this state can be returned by
+	// ListInternalCheckers or GetInternalChecker, as well as by examining
+	// the longrunning.Operation that created it.
+	//   "RUNNING" - The checker is running and available for use. A checker
+	// in this state can be returned by ListInternalCheckers or
+	// GetInternalChecker as well as by examining the longrunning.Operation
+	// that created it. If a checker is being torn down, it is neither
+	// visible nor usable, so there is no "deleting" or "down" state.
+	State string `json:"state,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

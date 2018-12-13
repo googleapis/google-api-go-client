@@ -128,9 +128,9 @@ type TestEnvironmentCatalogService struct {
 	s *Service
 }
 
-// Account: Identifies an account and how to log into it
+// Account: Identifies an account and how to log into it.
 type Account struct {
-	// GoogleAuto: An automatic google login account
+	// GoogleAuto: An automatic google login account.
 	GoogleAuto *GoogleAuto `json:"googleAuto,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogleAuto") to
@@ -158,28 +158,23 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 
 // AndroidDevice: A single Android device.
 type AndroidDevice struct {
-	// AndroidModelId: The id of the Android device to be used.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// AndroidModelId: Required. The id of the Android device to be
+	// used.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidModelId string `json:"androidModelId,omitempty"`
 
-	// AndroidVersionId: The id of the Android OS version to be used.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// AndroidVersionId: Required. The id of the Android OS version to be
+	// used.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidVersionId string `json:"androidVersionId,omitempty"`
 
-	// Locale: The locale the test device used for testing.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// Locale: Required. The locale the test device used for testing.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Locale string `json:"locale,omitempty"`
 
-	// Orientation: How the device is oriented during the test.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// Orientation: Required. How the device is oriented during the
+	// test.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Orientation string `json:"orientation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelId") to
@@ -209,16 +204,12 @@ func (s *AndroidDevice) MarshalJSON() ([]byte, error) {
 // AndroidDeviceCatalog: The currently supported Android devices.
 type AndroidDeviceCatalog struct {
 	// Models: The set of supported Android device models.
-	// @OutputOnly
 	Models []*AndroidModel `json:"models,omitempty"`
 
-	// RuntimeConfiguration: The set of supported runtime
-	// configurations.
-	// @OutputOnly
+	// RuntimeConfiguration: The set of supported runtime configurations.
 	RuntimeConfiguration *AndroidRuntimeConfiguration `json:"runtimeConfiguration,omitempty"`
 
 	// Versions: The set of supported Android OS versions.
-	// @OutputOnly
 	Versions []*AndroidVersion `json:"versions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Models") to
@@ -247,8 +238,7 @@ func (s *AndroidDeviceCatalog) MarshalJSON() ([]byte, error) {
 // AndroidDeviceList: A list of Android device configurations in which
 // the test is to be executed.
 type AndroidDeviceList struct {
-	// AndroidDevices: A list of Android devices
-	// Required
+	// AndroidDevices: Required. A list of Android devices.
 	AndroidDevices []*AndroidDevice `json:"androidDevices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidDevices") to
@@ -296,9 +286,8 @@ type AndroidInstrumentationTest struct {
 	// AppBundle: A multi-apk app bundle for the application under test.
 	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
-	// AppPackageId: The java package for the application under
-	// test.
-	// Optional, default is determined by examining the application's
+	// AppPackageId: The java package for the application under test.
+	// The default value is determined by examining the application's
 	// manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
@@ -319,7 +308,7 @@ type AndroidInstrumentationTest struct {
 	// .html#using-android-test-orchestrator>
 	// for more information about Android Test Orchestrator.
 	//
-	// Optional. If not set, the test will be run without the orchestrator.
+	// If not set, the test will be run without the orchestrator.
 	//
 	// Possible values:
 	//   "ORCHESTRATOR_OPTION_UNSPECIFIED" - Default value: the server will
@@ -336,18 +325,16 @@ type AndroidInstrumentationTest struct {
 	//   "DO_NOT_USE_ORCHESTRATOR" - Run test without using orchestrator.
 	OrchestratorOption string `json:"orchestratorOption,omitempty"`
 
-	// TestApk: The APK containing the test code to be executed.
-	// Required
+	// TestApk: Required. The APK containing the test code to be executed.
 	TestApk *FileReference `json:"testApk,omitempty"`
 
-	// TestPackageId: The java package for the test to be
-	// executed.
-	// Optional, default is determined by examining the application's
+	// TestPackageId: The java package for the test to be executed.
+	// The default value is determined by examining the application's
 	// manifest.
 	TestPackageId string `json:"testPackageId,omitempty"`
 
 	// TestRunnerClass: The InstrumentationTestRunner class.
-	// Optional, default is determined by examining the application's
+	// The default value is determined by examining the application's
 	// manifest.
 	TestRunnerClass string `json:"testRunnerClass,omitempty"`
 
@@ -358,7 +345,7 @@ type AndroidInstrumentationTest struct {
 	//  - "class package_name.class_name"
 	//  - "class package_name.class_name#method_name"
 	//
-	// Optional, if empty, all targets in the module will be run.
+	// If empty, all targets in the module will be run.
 	TestTargets []string `json:"testTargets,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AppApk") to
@@ -386,7 +373,7 @@ func (s *AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
 
 // AndroidMatrix: A set of Android device configuration permutations is
 // defined by the
-// the cross-product of the given axes.  Internally, the given
+// the cross-product of the given axes. Internally, the given
 // AndroidMatrix
 // will be expanded into a set of AndroidDevices.
 //
@@ -394,30 +381,23 @@ func (s *AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
 // permutations
 // (e.g., incompatible models/versions) are ignored.
 type AndroidMatrix struct {
-	// AndroidModelIds: The ids of the set of Android device to be used.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// AndroidModelIds: Required. The ids of the set of Android device to be
+	// used.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidModelIds []string `json:"androidModelIds,omitempty"`
 
-	// AndroidVersionIds: The ids of the set of Android OS version to be
-	// used.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// AndroidVersionIds: Required. The ids of the set of Android OS version
+	// to be used.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidVersionIds []string `json:"androidVersionIds,omitempty"`
 
-	// Locales: The set of locales the test device will enable for
+	// Locales: Required. The set of locales the test device will enable for
 	// testing.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Locales []string `json:"locales,omitempty"`
 
-	// Orientations: The set of orientations to test with.
-	// Use the EnvironmentDiscoveryService to get supported
-	// options.
-	// Required
+	// Orientations: Required. The set of orientations to test with.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Orientations []string `json:"orientations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelIds") to
@@ -447,71 +427,60 @@ func (s *AndroidMatrix) MarshalJSON() ([]byte, error) {
 // AndroidModel: A description of an Android device tests may be run on.
 type AndroidModel struct {
 	// Brand: The company that this device is branded with.
-	// Example: "Google", "Samsung"
-	// @OutputOnly
+	// Example: "Google", "Samsung".
 	Brand string `json:"brand,omitempty"`
 
 	// Codename: The name of the industrial design.
-	// This corresponds to android.os.Build.DEVICE
-	// @OutputOnly
+	// This corresponds to android.os.Build.DEVICE.
 	Codename string `json:"codename,omitempty"`
 
 	// Form: Whether this device is virtual or physical.
-	// @OutputOnly
 	//
 	// Possible values:
 	//   "DEVICE_FORM_UNSPECIFIED" - Do not use.  For proto versioning only.
-	//   "VIRTUAL" - A software stack that simulates the device
-	//   "PHYSICAL" - Actual hardware
+	//   "VIRTUAL" - A software stack that simulates the device.
+	//   "PHYSICAL" - Actual hardware.
 	Form string `json:"form,omitempty"`
 
-	// FormFactor: Whether this device is a phone, tablet, wearable,
-	// etc.
-	// @OutputOnly
+	// FormFactor: Whether this device is a phone, tablet, wearable, etc.
 	//
 	// Possible values:
 	//   "DEVICE_FORM_FACTOR_UNSPECIFIED" - Do not use. For proto versioning
 	// only.
-	//   "PHONE" - This device has the shape of a phone
-	//   "TABLET" - This device has the shape of a tablet
-	//   "WEARABLE" - This device has the shape of a watch or other wearable
+	//   "PHONE" - This device has the shape of a phone.
+	//   "TABLET" - This device has the shape of a tablet.
+	//   "WEARABLE" - This device has the shape of a watch or other
+	// wearable.
 	FormFactor string `json:"formFactor,omitempty"`
 
 	// Id: The unique opaque id for this model.
 	// Use this for invoking the TestExecutionService.
-	// @OutputOnly
 	Id string `json:"id,omitempty"`
 
 	// LowFpsVideoRecording: True if and only if tests with this model are
 	// recorded by stitching
 	// together screenshots. See use_low_spec_video_recording in device
 	// config.
-	// @OutputOnly
 	LowFpsVideoRecording bool `json:"lowFpsVideoRecording,omitempty"`
 
 	// Manufacturer: The manufacturer of this device.
-	// @OutputOnly
 	Manufacturer string `json:"manufacturer,omitempty"`
 
 	// Name: The human-readable marketing name for this device
 	// model.
-	// Examples: "Nexus 5", "Galaxy S5"
-	// @OutputOnly
+	// Examples: "Nexus 5", "Galaxy S5".
 	Name string `json:"name,omitempty"`
 
 	// ScreenDensity: Screen density in DPI.
 	// This corresponds to ro.sf.lcd_density
-	// @OutputOnly
 	ScreenDensity int64 `json:"screenDensity,omitempty"`
 
 	// ScreenX: Screen size in the horizontal (X) dimension measured in
 	// pixels.
-	// @OutputOnly
 	ScreenX int64 `json:"screenX,omitempty"`
 
 	// ScreenY: Screen size in the vertical (Y) dimension measured in
 	// pixels.
-	// @OutputOnly
 	ScreenY int64 `json:"screenY,omitempty"`
 
 	// SupportedAbis: The list of supported ABIs for this device.
@@ -525,16 +494,14 @@ type AndroidModel struct {
 	// the id of an AndroidVersion), denoting an ABI that is supported only
 	// on
 	// a particular version.
-	// @OutputOnly
 	SupportedAbis []string `json:"supportedAbis,omitempty"`
 
 	// SupportedVersionIds: The set of Android versions this device
 	// supports.
-	// @OutputOnly
 	SupportedVersionIds []string `json:"supportedVersionIds,omitempty"`
 
 	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated"
+	// Examples: "default", "preview", "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
@@ -572,12 +539,10 @@ type AndroidRoboTest struct {
 
 	// AppInitialActivity: The initial activity that should be used to start
 	// the app.
-	// Optional
 	AppInitialActivity string `json:"appInitialActivity,omitempty"`
 
-	// AppPackageId: The java package for the application under
-	// test.
-	// Optional, default is determined by examining the application's
+	// AppPackageId: The java package for the application under test.
+	// The default value is determined by examining the application's
 	// manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
@@ -585,12 +550,10 @@ type AndroidRoboTest struct {
 	// Needs to be at least
 	// 2 to make Robo explore the app beyond the first activity.
 	// Default is 50.
-	// Optional
 	MaxDepth int64 `json:"maxDepth,omitempty"`
 
 	// MaxSteps: The max number of steps Robo can execute.
 	// Default is no limit.
-	// Optional
 	MaxSteps int64 `json:"maxSteps,omitempty"`
 
 	// RoboDirectives: A set of directives Robo should apply during the
@@ -598,13 +561,11 @@ type AndroidRoboTest struct {
 	// This allows users to customize the crawl. For example, the username
 	// and
 	// password for a test account can be provided.
-	// Optional
 	RoboDirectives []*RoboDirective `json:"roboDirectives,omitempty"`
 
 	// RoboScript: A JSON file with a sequence of actions Robo should
 	// perform as a prologue
 	// for the crawl.
-	// Optional
 	RoboScript *FileReference `json:"roboScript,omitempty"`
 
 	// StartingIntents: The intents used to launch the app for the crawl.
@@ -641,11 +602,9 @@ func (s *AndroidRoboTest) MarshalJSON() ([]byte, error) {
 // selected at the time a test is run.
 type AndroidRuntimeConfiguration struct {
 	// Locales: The set of available locales.
-	// @OutputOnly
 	Locales []*Locale `json:"locales,omitempty"`
 
 	// Orientations: The set of available orientations.
-	// @OutputOnly
 	Orientations []*Orientation `json:"orientations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Locales") to
@@ -673,8 +632,8 @@ func (s *AndroidRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 
 // AndroidTestLoop: A test of an Android Application with a Test
 // Loop.
-// The intent <intent-name> will be implicitly added, since Games is the
-// only
+// The intent \<intent-name\> will be implicitly added, since Games is
+// the only
 // user of this api, for the time being.
 type AndroidTestLoop struct {
 	// AppApk: The APK for the application under test.
@@ -683,10 +642,8 @@ type AndroidTestLoop struct {
 	// AppBundle: A multi-apk app bundle for the application under test.
 	AppBundle *AppBundle `json:"appBundle,omitempty"`
 
-	// AppPackageId: The java package for the application under
-	// test.
-	// Optional, default is determined by examining the application's
-	// manifest.
+	// AppPackageId: The java package for the application under test.
+	// The default is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
 
 	// ScenarioLabels: The list of scenario labels that should be run during
@@ -700,12 +657,12 @@ type AndroidTestLoop struct {
 	// manifest with the com.google.test.loops.player_experience name to
 	// the
 	// execution.
-	// Optional. Scenarios can also be specified in the scenarios field.
+	// Scenarios can also be specified in the scenarios field.
 	ScenarioLabels []string `json:"scenarioLabels,omitempty"`
 
 	// Scenarios: The list of scenarios that should be run during the
 	// test.
-	// Optional, default is all test loops, derived from the
+	// The default is all test loops, derived from the
 	// application's
 	// manifest.
 	Scenarios []int64 `json:"scenarios,omitempty"`
@@ -733,40 +690,34 @@ func (s *AndroidTestLoop) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AndroidVersion: A version of the Android OS
+// AndroidVersion: A version of the Android OS.
 type AndroidVersion struct {
 	// ApiLevel: The API level for this Android version.
-	// Examples: 18, 19
-	// @OutputOnly
+	// Examples: 18, 19.
 	ApiLevel int64 `json:"apiLevel,omitempty"`
 
 	// CodeName: The code name for this Android version.
-	// Examples: "JellyBean", "KitKat"
-	// @OutputOnly
+	// Examples: "JellyBean", "KitKat".
 	CodeName string `json:"codeName,omitempty"`
 
 	// Distribution: Market share for this version.
-	// @OutputOnly
 	Distribution *Distribution `json:"distribution,omitempty"`
 
 	// Id: An opaque id for this Android version.
 	// Use this id to invoke the TestExecutionService.
-	// @OutputOnly
 	Id string `json:"id,omitempty"`
 
 	// ReleaseDate: The date this Android version became available in the
 	// market.
-	// @OutputOnly
 	ReleaseDate *Date `json:"releaseDate,omitempty"`
 
 	// Tags: Tags for this dimension.
-	// Examples: "default", "preview", "deprecated"
+	// Examples: "default", "preview", "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// VersionString: A string representing this version of the Android
 	// OS.
-	// Examples: "4.3", "4.4"
-	// @OutputOnly
+	// Examples: "4.3", "4.4".
 	VersionString string `json:"versionString,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApiLevel") to
@@ -796,12 +747,10 @@ func (s *AndroidVersion) MarshalJSON() ([]byte, error) {
 type Apk struct {
 	// Location: The path to an APK to be installed on the device before the
 	// test begins.
-	// Optional
 	Location *FileReference `json:"location,omitempty"`
 
 	// PackageName: The java package for the APK to be installed.
-	// Optional, value is determined by examining the application's
-	// manifest.
+	// Value is determined by examining the application's manifest.
 	PackageName string `json:"packageName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Location") to
@@ -829,7 +778,7 @@ func (s *Apk) MarshalJSON() ([]byte, error) {
 
 // ApkDetail: Android application details based on application manifest
 // and apk archive
-// contents
+// contents.
 type ApkDetail struct {
 	ApkManifest *ApkManifest `json:"apkManifest,omitempty"`
 
@@ -1027,8 +976,7 @@ type ClientInfo struct {
 	// ClientInfoDetails: The list of detailed information about client.
 	ClientInfoDetails []*ClientInfoDetail `json:"clientInfoDetails,omitempty"`
 
-	// Name: Client name, such as gcloud.
-	// Required
+	// Name: Required. Client name, such as gcloud.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientInfoDetails")
@@ -1057,14 +1005,12 @@ func (s *ClientInfo) MarshalJSON() ([]byte, error) {
 
 // ClientInfoDetail: Key-value pair of detailed information about the
 // client which invoked the
-// test. For example {'Version', '1.0'}, {'Release Track', 'BETA'}
+// test. Examples: {'Version', '1.0'}, {'Release Track', 'BETA'}.
 type ClientInfoDetail struct {
-	// Key: The key of detailed client information.
-	// Required
+	// Key: Required. The key of detailed client information.
 	Key string `json:"key,omitempty"`
 
-	// Value: The value of detailed client information.
-	// Required
+	// Value: Required. The value of detailed client information.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1181,13 +1127,13 @@ func (s *DeviceFile) MarshalJSON() ([]byte, error) {
 // a
 // given configuration of the Android platform.
 type Distribution struct {
-	// MarketShare: The estimated fraction (0-1) of the total market with
-	// this configuration.
-	// @OutputOnly
+	// MarketShare: Output only. The estimated fraction (0-1) of the total
+	// market with this
+	// configuration.
 	MarketShare float64 `json:"marketShare,omitempty"`
 
-	// MeasurementTime: The time this distribution was measured.
-	// @OutputOnly
+	// MeasurementTime: Output only. The time this distribution was
+	// measured.
 	MeasurementTime string `json:"measurementTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MarketShare") to
@@ -1298,12 +1244,12 @@ func (s *EnvironmentMatrix) MarshalJSON() ([]byte, error) {
 }
 
 // EnvironmentVariable: A key-value pair passed as an environment
-// variable to the test
+// variable to the test.
 type EnvironmentVariable struct {
-	// Key: Key for the environment variable
+	// Key: Key for the environment variable.
 	Key string `json:"key,omitempty"`
 
-	// Value: Value for the environment variable
+	// Value: Value for the environment variable.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -1408,12 +1354,12 @@ type GoogleAuto struct {
 // GoogleCloudStorage: A storage location within Google cloud storage
 // (GCS).
 type GoogleCloudStorage struct {
-	// GcsPath: The path to a directory in GCS that will
+	// GcsPath: Required. The path to a directory in GCS that
+	// will
 	// eventually contain the results for this test.
 	// The requesting user must have write access on the bucket in the
 	// supplied
 	// path.
-	// Required
 	GcsPath string `json:"gcsPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcsPath") to
@@ -1444,13 +1390,13 @@ func (s *GoogleCloudStorage) MarshalJSON() ([]byte, error) {
 // https://developer.android.com/guide/topics/manifest/intent-filter
 // -element.html
 type IntentFilter struct {
-	// ActionNames: The android:name value of the <action> tag
+	// ActionNames: The android:name value of the <action> tag.
 	ActionNames []string `json:"actionNames,omitempty"`
 
-	// CategoryNames: The android:name value of the <category> tag
+	// CategoryNames: The android:name value of the <category> tag.
 	CategoryNames []string `json:"categoryNames,omitempty"`
 
-	// MimeType: The android:mimeType value of the <data> tag
+	// MimeType: The android:mimeType value of the <data> tag.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionNames") to
@@ -1521,17 +1467,16 @@ func (s *IosDevice) MarshalJSON() ([]byte, error) {
 
 // IosDeviceCatalog: The currently supported iOS devices.
 type IosDeviceCatalog struct {
-	// Models: Output only. The set of supported iOS device models.
+	// Models: The set of supported iOS device models.
 	Models []*IosModel `json:"models,omitempty"`
 
-	// RuntimeConfiguration: Output only. The set of supported runtime
-	// configurations.
+	// RuntimeConfiguration: The set of supported runtime configurations.
 	RuntimeConfiguration *IosRuntimeConfiguration `json:"runtimeConfiguration,omitempty"`
 
-	// Versions: Output only. The set of supported iOS software versions.
+	// Versions: The set of supported iOS software versions.
 	Versions []*IosVersion `json:"versions,omitempty"`
 
-	// XcodeVersions: Output only. The set of supported Xcode versions.
+	// XcodeVersions: The set of supported Xcode versions.
 	XcodeVersions []*XcodeVersion `json:"xcodeVersions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Models") to
@@ -1560,7 +1505,7 @@ func (s *IosDeviceCatalog) MarshalJSON() ([]byte, error) {
 // IosDeviceList: A list of iOS device configurations in which the test
 // is to be executed.
 type IosDeviceList struct {
-	// IosDevices: Required. A list of iOS devices
+	// IosDevices: Required. A list of iOS devices.
 	IosDevices []*IosDevice `json:"iosDevices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IosDevices") to
@@ -1588,7 +1533,7 @@ func (s *IosDeviceList) MarshalJSON() ([]byte, error) {
 
 // IosModel: A description of an iOS device tests may be run on.
 type IosModel struct {
-	// DeviceCapabilities: Output only. Device capabilities.
+	// DeviceCapabilities: Device capabilities.
 	// Copied
 	// from
 	// https://developer.apple.com/library/archive/documentation/DeviceI
@@ -1596,33 +1541,31 @@ type IosModel struct {
 	// DeviceCompatibilityMatrix.html
 	DeviceCapabilities []string `json:"deviceCapabilities,omitempty"`
 
-	// FormFactor: Whether this device is a phone, tablet, wearable,
-	// etc.
-	// @OutputOnly
+	// FormFactor: Whether this device is a phone, tablet, wearable, etc.
 	//
 	// Possible values:
 	//   "DEVICE_FORM_FACTOR_UNSPECIFIED" - Do not use. For proto versioning
 	// only.
-	//   "PHONE" - This device has the shape of a phone
-	//   "TABLET" - This device has the shape of a tablet
-	//   "WEARABLE" - This device has the shape of a watch or other wearable
+	//   "PHONE" - This device has the shape of a phone.
+	//   "TABLET" - This device has the shape of a tablet.
+	//   "WEARABLE" - This device has the shape of a watch or other
+	// wearable.
 	FormFactor string `json:"formFactor,omitempty"`
 
-	// Id: Output only. The unique opaque id for this model.
+	// Id: The unique opaque id for this model.
 	// Use this for invoking the TestExecutionService.
 	Id string `json:"id,omitempty"`
 
-	// Name: Output only. The human-readable name for this device
-	// model.
-	// Examples: "iPhone 4s", "iPad Mini 2"
+	// Name: The human-readable name for this device model.
+	// Examples: "iPhone 4s", "iPad Mini 2".
 	Name string `json:"name,omitempty"`
 
-	// SupportedVersionIds: Output only. The set of iOS major software
-	// versions this device supports.
+	// SupportedVersionIds: The set of iOS major software versions this
+	// device supports.
 	SupportedVersionIds []string `json:"supportedVersionIds,omitempty"`
 
-	// Tags: Output only. Tags for this dimension.
-	// Examples: "default", "preview", "deprecated"
+	// Tags: Tags for this dimension.
+	// Examples: "default", "preview", "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeviceCapabilities")
@@ -1652,10 +1595,10 @@ func (s *IosModel) MarshalJSON() ([]byte, error) {
 // IosRuntimeConfiguration: iOS configuration that can be selected at
 // the time a test is run.
 type IosRuntimeConfiguration struct {
-	// Locales: Output only. The set of available locales.
+	// Locales: The set of available locales.
 	Locales []*Locale `json:"locales,omitempty"`
 
-	// Orientations: Output only. The set of available orientations.
+	// Orientations: The set of available orientations.
 	Orientations []*Orientation `json:"orientations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Locales") to
@@ -1684,8 +1627,8 @@ func (s *IosRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 // IosTestSetup: A description of how to set up an iOS device prior to a
 // test.
 type IosTestSetup struct {
-	// NetworkProfile: Optional. The network traffic profile used for
-	// running the test.
+	// NetworkProfile: The network traffic profile used for running the
+	// test.
 	// Available network profiles can be queried by using
 	// the
 	// NETWORK_CONFIGURATION environment type when
@@ -1717,28 +1660,28 @@ func (s *IosTestSetup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IosVersion: An iOS version
+// IosVersion: An iOS version.
 type IosVersion struct {
-	// Id: Output only. An opaque id for this iOS version.
+	// Id: An opaque id for this iOS version.
 	// Use this id to invoke the TestExecutionService.
 	Id string `json:"id,omitempty"`
 
-	// MajorVersion: Output only. An integer representing the major iOS
+	// MajorVersion: An integer representing the major iOS
 	// version.
-	// Examples: "8", "9"
+	// Examples: "8", "9".
 	MajorVersion int64 `json:"majorVersion,omitempty"`
 
-	// MinorVersion: Output only. An integer representing the minor iOS
+	// MinorVersion: An integer representing the minor iOS
 	// version.
-	// Examples: "1", "2"
+	// Examples: "1", "2".
 	MinorVersion int64 `json:"minorVersion,omitempty"`
 
-	// SupportedXcodeVersionIds: Output only. The available Xcode versions
-	// for this version.
+	// SupportedXcodeVersionIds: The available Xcode versions for this
+	// version.
 	SupportedXcodeVersionIds []string `json:"supportedXcodeVersionIds,omitempty"`
 
-	// Tags: Output only. Tags for this dimension.
-	// Examples: "default", "preview", "deprecated"
+	// Tags: Tags for this dimension.
+	// Examples: "default", "preview", "deprecated".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1784,15 +1727,14 @@ type IosXcTest struct {
 	// specified.
 	TestsZip *FileReference `json:"testsZip,omitempty"`
 
-	// XcodeVersion: Optional. The Xcode version that should be used for the
-	// test.
+	// XcodeVersion: The Xcode version that should be used for the test.
 	// Use the EnvironmentDiscoveryService to get supported
 	// options.
 	// Defaults to the latest Xcode version Firebase Test Lab supports.
 	XcodeVersion string `json:"xcodeVersion,omitempty"`
 
-	// Xctestrun: Optional. An .xctestrun file that will override the
-	// .xctestrun file in the
+	// Xctestrun: An .xctestrun file that will override the .xctestrun file
+	// in the
 	// tests zip. Because the .xctestrun file contains environment variables
 	// along
 	// with test methods to run and/or ignore, this can be useful for
@@ -1831,24 +1773,20 @@ type LauncherActivityIntent struct {
 // Locale: A location/region designation for language.
 type Locale struct {
 	// Id: The id for this locale.
-	// Example: "en_US"
-	// @OutputOnly
+	// Example: "en_US".
 	Id string `json:"id,omitempty"`
 
 	// Name: A human-friendly name for this language/locale.
-	// Example: "English"
-	// @OutputOnly
+	// Example: "English".
 	Name string `json:"name,omitempty"`
 
-	// Region: A human-friendly string representing the region for this
-	// locale.
-	// Example: "United States"
-	// Not present for every locale.
-	// @OutputOnly
+	// Region: A human-friendly string representing the region for
+	// this
+	// locale. Example: "United States". Not present for every locale.
 	Region string `json:"region,omitempty"`
 
 	// Tags: Tags for this dimension.
-	// Examples: "default"
+	// Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -1875,15 +1813,13 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 }
 
 type NetworkConfiguration struct {
-	// DownRule: The emulation rule applying to the download traffic
+	// DownRule: The emulation rule applying to the download traffic.
 	DownRule *TrafficRule `json:"downRule,omitempty"`
 
-	// Id: The unique opaque id for this network traffic
-	// configuration
-	// @OutputOnly
+	// Id: The unique opaque id for this network traffic configuration.
 	Id string `json:"id,omitempty"`
 
-	// UpRule: The emulation rule applying to the upload traffic
+	// UpRule: The emulation rule applying to the upload traffic.
 	UpRule *TrafficRule `json:"upRule,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DownRule") to
@@ -1937,21 +1873,19 @@ func (s *NetworkConfigurationCatalog) MarshalJSON() ([]byte, error) {
 }
 
 // ObbFile: An opaque binary blob file to install on the device before
-// the test starts
+// the test starts.
 type ObbFile struct {
-	// Obb: Opaque Binary Blob (OBB) file(s) to install on the
-	// device
-	// Required
+	// Obb: Required. Opaque Binary Blob (OBB) file(s) to install on the
+	// device.
 	Obb *FileReference `json:"obb,omitempty"`
 
-	// ObbFileName: OBB file name which must conform to the format as
-	// specified by
+	// ObbFileName: Required. OBB file name which must conform to the format
+	// as specified by
 	// Android
 	// e.g. [main|patch].0300110.com.example.android.obb
 	// which will be installed into
-	//   <shared-storage>/Android/obb/<package-name>/
-	// on the device
-	// Required
+	//   \<shared-storage\>/Android/obb/\<package-name\>/
+	// on the device.
 	ObbFileName string `json:"obbFileName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Obb") to
@@ -1980,17 +1914,15 @@ func (s *ObbFile) MarshalJSON() ([]byte, error) {
 // Orientation: Screen orientation of the device.
 type Orientation struct {
 	// Id: The id for this orientation.
-	// Example: "portrait"
-	// @OutputOnly
+	// Example: "portrait".
 	Id string `json:"id,omitempty"`
 
 	// Name: A human-friendly name for this orientation.
-	// Example: "portrait"
-	// @OutputOnly
+	// Example: "portrait".
 	Name string `json:"name,omitempty"`
 
 	// Tags: Tags for this dimension.
-	// Examples: "default"
+	// Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Id") to
@@ -2020,8 +1952,9 @@ func (s *Orientation) MarshalJSON() ([]byte, error) {
 // on the devices under test.
 type ProvidedSoftwareCatalog struct {
 	// OrchestratorVersion: A string representing the current version of
-	// Android Test Orchestrator that
-	// is provided by TestExecutionService. Example: "1.0.2 beta"
+	// Android Test
+	// Orchestrator that is provided by TestExecutionService.
+	// Example: "1.0.2 beta".
 	OrchestratorVersion string `json:"orchestratorVersion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OrchestratorVersion")
@@ -2049,14 +1982,14 @@ func (s *ProvidedSoftwareCatalog) MarshalJSON() ([]byte, error) {
 }
 
 // RegularFile: A file or directory to install on the device before the
-// test starts
+// test starts.
 type RegularFile struct {
-	// Content: Required
+	// Content: Required. The source file.
 	Content *FileReference `json:"content,omitempty"`
 
-	// DevicePath: Where to put the content on the device. Must be an
-	// absolute, whitelisted
-	// path. If the file exists, it will be replaced.
+	// DevicePath: Required. Where to put the content on the device. Must be
+	// an absolute,
+	// whitelisted path. If the file exists, it will be replaced.
 	// The following device-side directories and any of their subdirectories
 	// are
 	// whitelisted:
@@ -2080,7 +2013,6 @@ type RegularFile struct {
 	// Environment API</a> in app and test code to access files on the
 	// device in a
 	// portable way.
-	// Required
 	DevicePath string `json:"devicePath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -2112,17 +2044,15 @@ type ResultStorage struct {
 	// GoogleCloudStorage: Required.
 	GoogleCloudStorage *GoogleCloudStorage `json:"googleCloudStorage,omitempty"`
 
-	// ToolResultsExecution: The tool results execution that results are
-	// written to.
-	// @OutputOnly
+	// ToolResultsExecution: Output only. The tool results execution that
+	// results are written to.
 	ToolResultsExecution *ToolResultsExecution `json:"toolResultsExecution,omitempty"`
 
 	// ToolResultsHistory: The tool results history that contains the tool
 	// results execution that
 	// results are written to.
 	//
-	// Optional, if not provided the service will choose an appropriate
-	// value.
+	// If not provided, the service will choose an appropriate value.
 	ToolResultsHistory *ToolResultsHistory `json:"toolResultsHistory,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GoogleCloudStorage")
@@ -2154,9 +2084,9 @@ func (s *ResultStorage) MarshalJSON() ([]byte, error) {
 // during the crawl. Currently, Robo can perform text entry or element
 // click.
 type RoboDirective struct {
-	// ActionType: The type of action that Robo should perform on the
-	// specified element.
-	// Required.
+	// ActionType: Required. The type of action that Robo should perform on
+	// the specified
+	// element.
 	//
 	// Possible values:
 	//   "ACTION_TYPE_UNSPECIFIED" - DO NOT USE. For proto versioning only.
@@ -2170,21 +2100,19 @@ type RoboDirective struct {
 
 	// InputText: The text that Robo is directed to set. If left empty, the
 	// directive will be
-	// treated as a CLICK on the element matching the
-	// resource_name.
-	// Optional
+	// treated as a CLICK on the element matching the resource_name.
 	InputText string `json:"inputText,omitempty"`
 
-	// ResourceName: The android resource name of the target UI element
+	// ResourceName: Required. The android resource name of the target UI
+	// element.
 	// For example,
 	//    in Java: R.string.foo
 	//    in xml: @string/foo
-	// Only the “foo” part is needed.
+	// Only the "foo" part is needed.
 	// Reference
 	// doc:
 	// https://developer.android.com/guide/topics/resources/accessing-re
 	// sources.html
-	// Required
 	ResourceName string `json:"resourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
@@ -2211,7 +2139,7 @@ func (s *RoboDirective) MarshalJSON() ([]byte, error) {
 }
 
 // RoboStartingIntent: Message for specifying the start activities to
-// crawl
+// crawl.
 type RoboStartingIntent struct {
 	LauncherActivity *LauncherActivityIntent `json:"launcherActivity,omitempty"`
 
@@ -2249,11 +2177,9 @@ type StartActivityIntent struct {
 	Action string `json:"action,omitempty"`
 
 	// Categories: Intent categories to set on the intent.
-	// Optional.
 	Categories []string `json:"categories,omitempty"`
 
 	// Uri: URI for the action.
-	// Optional.
 	Uri string `json:"uri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Action") to
@@ -2282,19 +2208,17 @@ func (s *StartActivityIntent) MarshalJSON() ([]byte, error) {
 // TestDetails: Additional details about the progress of the running
 // test.
 type TestDetails struct {
-	// ErrorMessage: If the TestState is ERROR, then this string will
-	// contain human-readable
-	// details about the error.
-	// @OutputOnly
+	// ErrorMessage: Output only. If the TestState is ERROR, then this
+	// string will contain
+	// human-readable details about the error.
 	ErrorMessage string `json:"errorMessage,omitempty"`
 
-	// ProgressMessages: Human-readable, detailed descriptions of the test's
-	// progress.
+	// ProgressMessages: Output only. Human-readable, detailed descriptions
+	// of the test's progress.
 	// For example: "Provisioning a device", "Starting Test".
 	//
 	// During the course of execution new data may be appended
 	// to the end of progress_messages.
-	// @OutputOnly
 	ProgressMessages []string `json:"progressMessages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
@@ -2322,14 +2246,13 @@ func (s *TestDetails) MarshalJSON() ([]byte, error) {
 
 // TestEnvironmentCatalog: A description of a test environment.
 type TestEnvironmentCatalog struct {
-	// AndroidDeviceCatalog: Android devices suitable for running Android
-	// Instrumentation Tests.
+	// AndroidDeviceCatalog: Supported Android devices.
 	AndroidDeviceCatalog *AndroidDeviceCatalog `json:"androidDeviceCatalog,omitempty"`
 
-	// IosDeviceCatalog: Supported iOS devices
+	// IosDeviceCatalog: Supported iOS devices.
 	IosDeviceCatalog *IosDeviceCatalog `json:"iosDeviceCatalog,omitempty"`
 
-	// NetworkConfigurationCatalog: Supported network configurations
+	// NetworkConfigurationCatalog: Supported network configurations.
 	NetworkConfigurationCatalog *NetworkConfigurationCatalog `json:"networkConfigurationCatalog,omitempty"`
 
 	// SoftwareCatalog: The software test environment provided by
@@ -2368,26 +2291,22 @@ func (s *TestEnvironmentCatalog) MarshalJSON() ([]byte, error) {
 // TestExecution: Specifies a single test to be executed in a single
 // environment.
 type TestExecution struct {
-	// Environment: How the host machine(s) are configured.
-	// @OutputOnly
+	// Environment: Output only. How the host machine(s) are configured.
 	Environment *Environment `json:"environment,omitempty"`
 
-	// Id: Unique id set by the backend.
-	// @OutputOnly
+	// Id: Output only. Unique id set by the backend.
 	Id string `json:"id,omitempty"`
 
-	// MatrixId: Id of the containing TestMatrix.
-	// @OutputOnly
+	// MatrixId: Output only. Id of the containing TestMatrix.
 	MatrixId string `json:"matrixId,omitempty"`
 
-	// ProjectId: The cloud project that owns the test
+	// ProjectId: Output only. The cloud project that owns the test
 	// execution.
-	// @OutputOnly
 	ProjectId string `json:"projectId,omitempty"`
 
-	// State: Indicates the current progress of the test execution (e.g.,
-	// FINISHED).
-	// @OutputOnly
+	// State: Output only. Indicates the current progress of the test
+	// execution
+	// (e.g., FINISHED).
 	//
 	// Possible values:
 	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
@@ -2439,22 +2358,18 @@ type TestExecution struct {
 	// was flagged as malware
 	State string `json:"state,omitempty"`
 
-	// TestDetails: Additional details about the running test.
-	// @OutputOnly
+	// TestDetails: Output only. Additional details about the running test.
 	TestDetails *TestDetails `json:"testDetails,omitempty"`
 
-	// TestSpecification: How to run the test.
-	// @OutputOnly
+	// TestSpecification: Output only. How to run the test.
 	TestSpecification *TestSpecification `json:"testSpecification,omitempty"`
 
-	// Timestamp: The time this test execution was initially
+	// Timestamp: Output only. The time this test execution was initially
 	// created.
-	// @OutputOnly
 	Timestamp string `json:"timestamp,omitempty"`
 
-	// ToolResultsStep: Where the results for this execution are
-	// written.
-	// @OutputOnly
+	// ToolResultsStep: Output only. Where the results for this execution
+	// are written.
 	ToolResultsStep *ToolResultsStep `json:"toolResultsStep,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
@@ -2484,19 +2399,15 @@ func (s *TestExecution) MarshalJSON() ([]byte, error) {
 // a
 // product of values over a pre-defined set of axes.
 type TestMatrix struct {
-	// ClientInfo: Information about the client which invoked the
-	// test.
-	// Optional
+	// ClientInfo: Information about the client which invoked the test.
 	ClientInfo *ClientInfo `json:"clientInfo,omitempty"`
 
-	// EnvironmentMatrix: How the host machine(s) are configured.
-	// Required
+	// EnvironmentMatrix: Required. How the host machine(s) are configured.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
 
-	// InvalidMatrixDetails: Describes why the matrix is considered
-	// invalid.
+	// InvalidMatrixDetails: Output only. Describes why the matrix is
+	// considered invalid.
 	// Only useful for matrices in the INVALID state.
-	// @OutputOnly
 	//
 	// Possible values:
 	//   "INVALID_MATRIX_DETAILS_UNSPECIFIED" - Do not use. For proto
@@ -2567,9 +2478,9 @@ type TestMatrix struct {
 	//   "PLIST_CANNOT_BE_PARSED" - An Info.plist file in the XCTest zip
 	// could not be parsed.
 	//   "TEST_ONLY_APK" - The APK is marked as "testOnly".
-	// NOT USED
+	// Deprecated and not currently used.
 	//   "MALFORMED_IPA" - The input IPA could not be parsed.
-	// NOT USED
+	// Deprecated and not currently used.
 	//   "NO_CODE_APK" - APK contains no code.
 	// See
 	// also
@@ -2585,16 +2496,15 @@ type TestMatrix struct {
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
 	// ProjectId: The cloud project that owns the test matrix.
-	// @OutputOnly
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ResultStorage: Where the results for the matrix are written.
-	// Required
+	// ResultStorage: Required. Where the results for the matrix are
+	// written.
 	ResultStorage *ResultStorage `json:"resultStorage,omitempty"`
 
-	// State: Indicates the current progress of the test matrix (e.g.,
-	// FINISHED)
-	// @OutputOnly
+	// State: Output only. Indicates the current progress of the test
+	// matrix
+	// (e.g., FINISHED).
 	//
 	// Possible values:
 	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
@@ -2646,22 +2556,19 @@ type TestMatrix struct {
 	// was flagged as malware
 	State string `json:"state,omitempty"`
 
-	// TestExecutions: The list of test executions that the service creates
-	// for this matrix.
-	// @OutputOnly
+	// TestExecutions: Output only. The list of test executions that the
+	// service creates for
+	// this matrix.
 	TestExecutions []*TestExecution `json:"testExecutions,omitempty"`
 
-	// TestMatrixId: Unique id set by the service.
-	// @OutputOnly
+	// TestMatrixId: Output only. Unique id set by the service.
 	TestMatrixId string `json:"testMatrixId,omitempty"`
 
-	// TestSpecification: How to run the test.
-	// Required
+	// TestSpecification: Required. How to run the test.
 	TestSpecification *TestSpecification `json:"testSpecification,omitempty"`
 
-	// Timestamp: The time this test matrix was initially
+	// Timestamp: Output only. The time this test matrix was initially
 	// created.
-	// @OutputOnly
 	Timestamp string `json:"timestamp,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2696,13 +2603,11 @@ func (s *TestMatrix) MarshalJSON() ([]byte, error) {
 type TestSetup struct {
 	// Account: The device will be logged in on this account for the
 	// duration of the test.
-	// Optional
 	Account *Account `json:"account,omitempty"`
 
 	// AdditionalApks: APKs to install in addition to those being directly
 	// tested.
 	// Currently capped at 100.
-	// Optional
 	AdditionalApks []*Apk `json:"additionalApks,omitempty"`
 
 	// DirectoriesToPull: List of directories on the device to upload to GCS
@@ -2718,8 +2623,6 @@ type TestSetup struct {
 	// not map to external storage, the system will replace it with the
 	// external
 	// storage path prefix for that device.
-	//
-	// Optional
 	DirectoriesToPull []string `json:"directoriesToPull,omitempty"`
 
 	// EnvironmentVariables: Environment variables to set for the test (only
@@ -2729,12 +2632,10 @@ type TestSetup struct {
 
 	// FilesToPush: List of files to push to the device before starting the
 	// test.
-	//
-	// Optional
 	FilesToPush []*DeviceFile `json:"filesToPush,omitempty"`
 
-	// NetworkProfile: Optional. The network traffic profile used for
-	// running the test.
+	// NetworkProfile: The network traffic profile used for running the
+	// test.
 	// Available network profiles can be queried by using
 	// the
 	// NETWORK_CONFIGURATION environment type when
@@ -2773,7 +2674,7 @@ type TestSpecification struct {
 	// AndroidRoboTest: An Android robo test.
 	AndroidRoboTest *AndroidRoboTest `json:"androidRoboTest,omitempty"`
 
-	// AndroidTestLoop: An Android Application with a Test Loop
+	// AndroidTestLoop: An Android Application with a Test Loop.
 	AndroidTestLoop *AndroidTestLoop `json:"androidTestLoop,omitempty"`
 
 	// AutoGoogleLogin: Enables automatic Google account login.
@@ -2788,7 +2689,6 @@ type TestSpecification struct {
 	// generated
 	// accounts allows testing more functionalities.
 	// Default is false.
-	// Optional
 	AutoGoogleLogin bool `json:"autoGoogleLogin,omitempty"`
 
 	// DisablePerformanceMetrics: Disables performance metrics recording;
@@ -2799,22 +2699,21 @@ type TestSpecification struct {
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
 
-	// IosTestSetup: Optional. Test setup requirements for iOS.
+	// IosTestSetup: Test setup requirements for iOS.
 	IosTestSetup *IosTestSetup `json:"iosTestSetup,omitempty"`
 
-	// IosXcTest: An iOS XCTest, via an .xctestrun file
+	// IosXcTest: An iOS XCTest, via an .xctestrun file.
 	IosXcTest *IosXcTest `json:"iosXcTest,omitempty"`
 
 	// TestSetup: Test setup requirements for Android e.g. files to install,
 	// bootstrap
 	// scripts.
-	// Optional
 	TestSetup *TestSetup `json:"testSetup,omitempty"`
 
 	// TestTimeout: Max time a test execution is allowed to run before it
 	// is
 	// automatically cancelled.
-	// Optional, default is 5 min.
+	// The default value is 5 min.
 	TestTimeout string `json:"testTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -2847,17 +2746,14 @@ func (s *TestSpecification) MarshalJSON() ([]byte, error) {
 //
 // This has the results of a TestMatrix.
 type ToolResultsExecution struct {
-	// ExecutionId: A tool results execution ID.
-	// @OutputOnly
+	// ExecutionId: Output only. A tool results execution ID.
 	ExecutionId string `json:"executionId,omitempty"`
 
-	// HistoryId: A tool results history ID.
-	// @OutputOnly
+	// HistoryId: Output only. A tool results history ID.
 	HistoryId string `json:"historyId,omitempty"`
 
-	// ProjectId: The cloud project that owns the tool results
+	// ProjectId: Output only. The cloud project that owns the tool results
 	// execution.
-	// @OutputOnly
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
@@ -2885,13 +2781,11 @@ func (s *ToolResultsExecution) MarshalJSON() ([]byte, error) {
 
 // ToolResultsHistory: Represents a tool results history resource.
 type ToolResultsHistory struct {
-	// HistoryId: A tool results history ID.
-	// Required
+	// HistoryId: Required. A tool results history ID.
 	HistoryId string `json:"historyId,omitempty"`
 
-	// ProjectId: The cloud project that owns the tool results
+	// ProjectId: Required. The cloud project that owns the tool results
 	// history.
-	// Required
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HistoryId") to
@@ -2921,21 +2815,17 @@ func (s *ToolResultsHistory) MarshalJSON() ([]byte, error) {
 //
 // This has the results of a TestExecution.
 type ToolResultsStep struct {
-	// ExecutionId: A tool results execution ID.
-	// @OutputOnly
+	// ExecutionId: Output only. A tool results execution ID.
 	ExecutionId string `json:"executionId,omitempty"`
 
-	// HistoryId: A tool results history ID.
-	// @OutputOnly
+	// HistoryId: Output only. A tool results history ID.
 	HistoryId string `json:"historyId,omitempty"`
 
-	// ProjectId: The cloud project that owns the tool results
+	// ProjectId: Output only. The cloud project that owns the tool results
 	// step.
-	// @OutputOnly
 	ProjectId string `json:"projectId,omitempty"`
 
-	// StepId: A tool results step ID.
-	// @OutputOnly
+	// StepId: Output only. A tool results step ID.
 	StepId string `json:"stepId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExecutionId") to
@@ -2961,21 +2851,21 @@ func (s *ToolResultsStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TrafficRule: Network emulation parameters
+// TrafficRule: Network emulation parameters.
 type TrafficRule struct {
-	// Bandwidth: Bandwidth in kbits/second
+	// Bandwidth: Bandwidth in kbits/second.
 	Bandwidth float64 `json:"bandwidth,omitempty"`
 
-	// Burst: Burst size in kbits
+	// Burst: Burst size in kbits.
 	Burst float64 `json:"burst,omitempty"`
 
-	// Delay: Packet delay, must be >= 0
+	// Delay: Packet delay, must be >= 0.
 	Delay string `json:"delay,omitempty"`
 
-	// PacketDuplicationRatio: Packet duplication ratio (0.0 - 1.0)
+	// PacketDuplicationRatio: Packet duplication ratio (0.0 - 1.0).
 	PacketDuplicationRatio float64 `json:"packetDuplicationRatio,omitempty"`
 
-	// PacketLossRatio: Packet loss ratio (0.0 - 1.0)
+	// PacketLossRatio: Packet loss ratio (0.0 - 1.0).
 	PacketLossRatio float64 `json:"packetLossRatio,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bandwidth") to
@@ -3024,12 +2914,12 @@ func (s *TrafficRule) UnmarshalJSON(data []byte) error {
 // XcodeVersion: An Xcode version that an iOS version is compatible
 // with.
 type XcodeVersion struct {
-	// Tags: Output only. Tags for this Xcode version.
-	// Examples: "default"
+	// Tags: Tags for this Xcode version.
+	// Example: "default".
 	Tags []string `json:"tags,omitempty"`
 
-	// Version: Output only. The id for this version.
-	// Example: "9.2"
+	// Version: The id for this version.
+	// Example: "9.2".
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Tags") to
@@ -3065,7 +2955,7 @@ type ApplicationDetailServiceGetApkDetailsCall struct {
 	header_       http.Header
 }
 
-// GetApkDetails: Request the details of an Android application APK.
+// GetApkDetails: Gets the details of an Android application APK.
 func (r *ApplicationDetailServiceService) GetApkDetails(filereference *FileReference) *ApplicationDetailServiceGetApkDetailsCall {
 	c := &ApplicationDetailServiceGetApkDetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.filereference = filereference
@@ -3159,7 +3049,7 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Request the details of an Android application APK.",
+	//   "description": "Gets the details of an Android application APK.",
 	//   "flatPath": "v1/applicationDetailService/getApkDetails",
 	//   "httpMethod": "POST",
 	//   "id": "testing.applicationDetailService.getApkDetails",
@@ -3338,7 +3228,7 @@ type ProjectsTestMatricesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Request to run a matrix of tests according to the given
+// Create: Creates and runs a matrix of tests according to the given
 // specifications.
 // Unsupported environments will be returned in the state
 // UNSUPPORTED.
@@ -3460,7 +3350,7 @@ func (c *ProjectsTestMatricesCreateCall) Do(opts ...googleapi.CallOption) (*Test
 	}
 	return ret, nil
 	// {
-	//   "description": "Request to run a matrix of tests according to the given specifications.\nUnsupported environments will be returned in the state UNSUPPORTED.\nMatrices are limited to at most 200 supported executions.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed or if the matrix expands\n                     to more than 200 supported executions",
+	//   "description": "Creates and runs a matrix of tests according to the given specifications.\nUnsupported environments will be returned in the state UNSUPPORTED.\nMatrices are limited to at most 200 supported executions.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to write to project\n- INVALID_ARGUMENT - if the request is malformed or if the matrix expands\n                     to more than 200 supported executions",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices",
 	//   "httpMethod": "POST",
 	//   "id": "testing.projects.testMatrices.create",
@@ -3506,7 +3396,7 @@ type ProjectsTestMatricesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Check the status of a test matrix.
+// Get: Checks the status of a test matrix.
 //
 // May return any of the following canonical error codes:
 //
@@ -3619,7 +3509,7 @@ func (c *ProjectsTestMatricesGetCall) Do(opts ...googleapi.CallOption) (*TestMat
 	}
 	return ret, nil
 	// {
-	//   "description": "Check the status of a test matrix.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Test Matrix does not exist",
+	//   "description": "Checks the status of a test matrix.\n\nMay return any of the following canonical error codes:\n\n- PERMISSION_DENIED - if the user is not authorized to read project\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the Test Matrix does not exist",
 	//   "flatPath": "v1/projects/{projectId}/testMatrices/{testMatrixId}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.projects.testMatrices.get",
@@ -3664,7 +3554,7 @@ type TestEnvironmentCatalogGetCall struct {
 	header_         http.Header
 }
 
-// Get: Get the catalog of supported test environments.
+// Get: Gets the catalog of supported test environments.
 //
 // May return any of the following canonical error codes:
 //
@@ -3679,7 +3569,6 @@ func (r *TestEnvironmentCatalogService) Get(environmentType string) *TestEnviron
 
 // ProjectId sets the optional parameter "projectId": For authorization,
 // the cloud project requesting the TestEnvironmentCatalog.
-// Optional
 func (c *TestEnvironmentCatalogGetCall) ProjectId(projectId string) *TestEnvironmentCatalogGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -3783,7 +3672,7 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	}
 	return ret, nil
 	// {
-	//   "description": "Get the catalog of supported test environments.\n\nMay return any of the following canonical error codes:\n\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the environment type does not exist\n- INTERNAL - if an internal error occurred",
+	//   "description": "Gets the catalog of supported test environments.\n\nMay return any of the following canonical error codes:\n\n- INVALID_ARGUMENT - if the request is malformed\n- NOT_FOUND - if the environment type does not exist\n- INTERNAL - if an internal error occurred",
 	//   "flatPath": "v1/testEnvironmentCatalog/{environmentType}",
 	//   "httpMethod": "GET",
 	//   "id": "testing.testEnvironmentCatalog.get",
@@ -3792,7 +3681,7 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	//   ],
 	//   "parameters": {
 	//     "environmentType": {
-	//       "description": "The type of environment that should be listed.\nRequired",
+	//       "description": "Required. The type of environment that should be listed.",
 	//       "enum": [
 	//         "ENVIRONMENT_TYPE_UNSPECIFIED",
 	//         "ANDROID",
@@ -3805,7 +3694,7 @@ func (c *TestEnvironmentCatalogGetCall) Do(opts ...googleapi.CallOption) (*TestE
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "For authorization, the cloud project requesting the TestEnvironmentCatalog.\nOptional",
+	//       "description": "For authorization, the cloud project requesting the TestEnvironmentCatalog.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

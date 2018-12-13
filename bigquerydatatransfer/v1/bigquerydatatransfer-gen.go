@@ -1005,8 +1005,8 @@ type TransferConfig struct {
 	// Name: The resource name of the transfer config.
 	// Transfer config names have the form
 	// of
-	// `projects/{project_id}/location/{region}/transferConfigs/{config_id
-	// }`.
+	// `projects/{project_id}/locations/{region}/transferConfigs/{config_i
+	// d}`.
 	// The name is automatically generated based on the config_id specified
 	// in
 	// CreateTransferConfigRequest along with project_id and region. If
@@ -1057,14 +1057,8 @@ type TransferConfig struct {
 	// server on input.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// UserId: Output only. Unique ID of the user on whose behalf transfer
-	// is done.
-	// Applicable only to data sources that do not support service
-	// accounts.
-	// When set to 0, the data source service account credentials are
-	// used.
-	// May be negative. Note, that this identifier is not stable.
-	// It may change over time even for the same user.
+	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is
+	// done.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1202,14 +1196,8 @@ type TransferRun struct {
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// UserId: Output only. Unique ID of the user on whose behalf transfer
-	// is done.
-	// Applicable only to data sources that do not support service
-	// accounts.
-	// When set to 0, the data source service account credentials are
-	// used.
-	// May be negative. Note, that this identifier is not stable.
-	// It may change over time even for the same user.
+	// UserId: Deprecated. Unique ID of the user on whose behalf transfer is
+	// done.
 	UserId int64 `json:"userId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3396,7 +3384,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -5130,7 +5118,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+	//       "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,

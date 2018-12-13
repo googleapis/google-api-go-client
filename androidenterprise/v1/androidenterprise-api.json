@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/_41XhMkjmqptXD-fYNmY575w21g\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/IZCjgGDDKedFiNKgpvDS2HRk648\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2934,7 +2934,7 @@
       }
     }
   },
-  "revision": "20181121",
+  "revision": "20181205",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3242,6 +3242,52 @@
         "token": {
           "description": "The authentication token to be passed to the device policy client on the device where it can be used to provision the account for which this token was generated.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutoInstallConstraint": {
+      "description": "The Auto install constraint. Defines a set of restrictions for installation. At least one of the fields must be set.",
+      "id": "AutoInstallConstraint",
+      "properties": {
+        "chargingStateConstraint": {
+          "description": "Charging state to constrain on.",
+          "type": "string"
+        },
+        "deviceIdleStateConstraint": {
+          "description": "The idle state of the device to constrain on.",
+          "type": "string"
+        },
+        "networkTypeConstraint": {
+          "description": "Network type to constrain on.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AutoInstallPolicy": {
+      "id": "AutoInstallPolicy",
+      "properties": {
+        "autoInstallConstraint": {
+          "description": "The constraints for the install. Currently there can be at most one constraint.",
+          "items": {
+            "$ref": "AutoInstallConstraint"
+          },
+          "type": "array"
+        },
+        "autoInstallMode": {
+          "description": "The auto install mode. If unset defaults to AVAILABLE.",
+          "type": "string"
+        },
+        "autoInstallPriority": {
+          "description": "The priority of the install, as an unsigned integer. Lower number means higher priority.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minimumVersionCode": {
+          "description": "The minimum version of the app. If a lower version of the app is installed then the app will be auto-updated according to the auto-install constraints, instead of waiting for the regular auto-update.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -4181,6 +4227,10 @@
       "description": "The policy for a product.",
       "id": "ProductPolicy",
       "properties": {
+        "autoInstallPolicy": {
+          "$ref": "AutoInstallPolicy",
+          "description": "The auto install policy for the product."
+        },
         "productId": {
           "description": "The ID of the product. For example, \"app:com.google.android.gm\".",
           "type": "string"

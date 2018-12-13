@@ -2486,25 +2486,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "replicapoolupdater:v1beta1",
-   "name": "replicapoolupdater",
-   "version": "v1beta1",
-   "title": "Google Compute Engine Instance Group Updater API",
-   "description": "[Deprecated. Please use compute.instanceGroupManagers.update method. replicapoolupdater API will be disabled after December 30th, 2016] Updates groups of Compute Engine instances.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/replicapoolupdater/v1beta1/rest",
-   "discoveryLink": "./apis/replicapoolupdater/v1beta1/rest",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/compute/docs/instance-groups/manager/#applying_rolling_updates_using_the_updater_service",
-   "labels": [
-    "limited_availability"
-   ],
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "reseller:v1",
    "name": "reseller",
    "version": "v1",

@@ -389,11 +389,6 @@ type ApproximateSplitRequest struct {
 	// input) to 1.0 (end of the input).
 	FractionConsumed float64 `json:"fractionConsumed,omitempty"`
 
-	// FractionOfRemainder: The fraction of the remainder of work to split
-	// the work item at, from 0.0
-	// (split at the current position) to 1.0 (end of the input).
-	FractionOfRemainder float64 `json:"fractionOfRemainder,omitempty"`
-
 	// Position: A Position at which to split the work item.
 	Position *Position `json:"position,omitempty"`
 
@@ -424,8 +419,7 @@ func (s *ApproximateSplitRequest) MarshalJSON() ([]byte, error) {
 func (s *ApproximateSplitRequest) UnmarshalJSON(data []byte) error {
 	type NoMethod ApproximateSplitRequest
 	var s1 struct {
-		FractionConsumed    gensupport.JSONFloat64 `json:"fractionConsumed"`
-		FractionOfRemainder gensupport.JSONFloat64 `json:"fractionOfRemainder"`
+		FractionConsumed gensupport.JSONFloat64 `json:"fractionConsumed"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -433,7 +427,6 @@ func (s *ApproximateSplitRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.FractionConsumed = float64(s1.FractionConsumed)
-	s.FractionOfRemainder = float64(s1.FractionOfRemainder)
 	return nil
 }
 
@@ -4262,9 +4255,6 @@ type RuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
 
-	// AdditionalUserLabels: Additional user labels attached to the job.
-	AdditionalUserLabels map[string]string `json:"additionalUserLabels,omitempty"`
-
 	// BypassTempDirValidation: Whether to bypass the safety checks for the
 	// job's temporary directory.
 	// Use with caution.
@@ -4284,10 +4274,6 @@ type RuntimeEnvironment struct {
 	// unspecified,
 	// the service will use the network "default".
 	Network string `json:"network,omitempty"`
-
-	// NumWorkers: The initial number of Google Compute Engine instnaces for
-	// the job.
-	NumWorkers int64 `json:"numWorkers,omitempty"`
 
 	// ServiceAccountEmail: The email address of the service account to run
 	// the job as.

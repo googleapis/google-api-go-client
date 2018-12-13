@@ -531,7 +531,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+                      "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
                       "required": true,
@@ -911,7 +911,7 @@
                   "type": "string"
                 },
                 "name": {
-                  "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+                  "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
                   "location": "path",
                   "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
                   "required": true,
@@ -1145,7 +1145,7 @@
       }
     }
   },
-  "revision": "20181027",
+  "revision": "20181211",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1594,7 +1594,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/location/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
+          "description": "The resource name of the transfer config.\nTransfer config names have the form of\n`projects/{project_id}/locations/{region}/transferConfigs/{config_id}`.\nThe name is automatically generated based on the config_id specified in\nCreateTransferConfigRequest along with project_id and region. If config_id\nis not provided, usually a uuid, even though it is not guaranteed or\nrequired, will be generated for config_id.",
           "type": "string"
         },
         "nextRunTime": {
@@ -1640,7 +1640,7 @@
           "type": "string"
         },
         "userId": {
-          "description": "Output only. Unique ID of the user on whose behalf transfer is done.\nApplicable only to data sources that do not support service accounts.\nWhen set to 0, the data source service account credentials are used.\nMay be negative. Note, that this identifier is not stable.\nIt may change over time even for the same user.",
+          "description": "Deprecated. Unique ID of the user on whose behalf transfer is done.",
           "format": "int64",
           "type": "string"
         }
@@ -1757,7 +1757,7 @@
           "type": "string"
         },
         "userId": {
-          "description": "Output only. Unique ID of the user on whose behalf transfer is done.\nApplicable only to data sources that do not support service accounts.\nWhen set to 0, the data source service account credentials are used.\nMay be negative. Note, that this identifier is not stable.\nIt may change over time even for the same user.",
+          "description": "Deprecated. Unique ID of the user on whose behalf transfer is done.",
           "format": "int64",
           "type": "string"
         }

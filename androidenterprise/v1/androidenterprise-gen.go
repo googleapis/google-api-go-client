@@ -863,6 +863,89 @@ func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutoInstallConstraint: The Auto install constraint. Defines a set of
+// restrictions for installation. At least one of the fields must be
+// set.
+type AutoInstallConstraint struct {
+	// ChargingStateConstraint: Charging state to constrain on.
+	ChargingStateConstraint string `json:"chargingStateConstraint,omitempty"`
+
+	// DeviceIdleStateConstraint: The idle state of the device to constrain
+	// on.
+	DeviceIdleStateConstraint string `json:"deviceIdleStateConstraint,omitempty"`
+
+	// NetworkTypeConstraint: Network type to constrain on.
+	NetworkTypeConstraint string `json:"networkTypeConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ChargingStateConstraint") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChargingStateConstraint")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoInstallConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoInstallConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AutoInstallPolicy struct {
+	// AutoInstallConstraint: The constraints for the install. Currently
+	// there can be at most one constraint.
+	AutoInstallConstraint []*AutoInstallConstraint `json:"autoInstallConstraint,omitempty"`
+
+	// AutoInstallMode: The auto install mode. If unset defaults to
+	// AVAILABLE.
+	AutoInstallMode string `json:"autoInstallMode,omitempty"`
+
+	// AutoInstallPriority: The priority of the install, as an unsigned
+	// integer. Lower number means higher priority.
+	AutoInstallPriority int64 `json:"autoInstallPriority,omitempty"`
+
+	// MinimumVersionCode: The minimum version of the app. If a lower
+	// version of the app is installed then the app will be auto-updated
+	// according to the auto-install constraints, instead of waiting for the
+	// regular auto-update.
+	MinimumVersionCode int64 `json:"minimumVersionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoInstallConstraint") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoInstallConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoInstallPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoInstallPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ConfigurationVariables: A configuration variables resource contains
 // the managed configuration settings ID to be applied to a single user,
 // as well as the variable set that is attributed to the user. The
@@ -2601,6 +2684,9 @@ func (s *ProductPermissions) MarshalJSON() ([]byte, error) {
 
 // ProductPolicy: The policy for a product.
 type ProductPolicy struct {
+	// AutoInstallPolicy: The auto install policy for the product.
+	AutoInstallPolicy *AutoInstallPolicy `json:"autoInstallPolicy,omitempty"`
+
 	// ProductId: The ID of the product. For example,
 	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`
@@ -2613,20 +2699,21 @@ type ProductPolicy struct {
 	// Tracks: Deprecated. Use trackIds instead.
 	Tracks []string `json:"tracks,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ProductId") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AutoInstallPolicy")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProductId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutoInstallPolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

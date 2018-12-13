@@ -4971,14 +4971,14 @@ type GoogleCloudDialogflowV2beta1KnowledgeAnswersAnswer struct {
 
 	// MatchConfidence: The system's confidence score that this Knowledge
 	// answer is a good match
-	// for this converstational query, range from 0.0 (completely
-	// uncertain)
-	// to 1.0 (completely certain).
+	// for this conversational query.
+	// The range is from 0.0 (completely uncertain) to 1.0 (completely
+	// certain).
 	// Note: The confidence score is likely to vary somewhat (possibly even
 	// for
 	// identical requests), as the underlying model is under
 	// constant
-	// improvement, we may deprecate it in the future. We recommend
+	// improvement. It may be deprecated in the future. We recommend
 	// using
 	// `match_confidence_level` which should be generally more stable.
 	MatchConfidence float64 `json:"matchConfidence,omitempty"`

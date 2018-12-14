@@ -177,6 +177,19 @@ type withAPIKey string
 
 func (w withAPIKey) Apply(o *internal.DialSettings) { o.APIKey = string(w) }
 
+// WithAudiences returns a ClientOption that specifies an audience to be used
+// as the audience field ("aud") for the JWT token authentication.
+func WithAudiences(audience ...string) ClientOption {
+	return withAudiences(audience)
+}
+
+type withAudiences []string
+
+func (w withAudiences) Apply(o *internal.DialSettings) {
+	o.Audiences = make([]string, len(w))
+	copy(o.Audiences, w)
+}
+
 // WithoutAuthentication returns a ClientOption that specifies that no
 // authentication should be used. It is suitable only for testing and for
 // accessing public resources, like public Google Cloud Storage buckets.

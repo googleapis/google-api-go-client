@@ -5,7 +5,7 @@
   "description": "Analyzes the performance of a web page and provides tailored suggestions to make that page faster.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/TcQxi2v-Wt2cGft_7rpYVhPQGtA\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/NtoJIO0Mp0BYbtnKoGvOvVKCYHs\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/pagespeed-16.png",
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
@@ -137,7 +137,7 @@
       }
     }
   },
-  "revision": "20181120",
+  "revision": "20181127",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "GoogleprotobufValue": {
@@ -250,11 +250,29 @@
           "type": "object"
         },
         "categories": {
-          "additionalProperties": {
-            "$ref": "LighthouseCategoryV5",
-            "description": "A category of audits and their combined weighted score. Keyed by category id."
-          },
           "description": "Map of categories in the LHR.",
+          "properties": {
+            "accessibility": {
+              "$ref": "LighthouseCategoryV5",
+              "description": "The accessibility category, containing all accessibility related audits."
+            },
+            "best-practices": {
+              "$ref": "LighthouseCategoryV5",
+              "description": "The best practices category, containing all web best practice related audits."
+            },
+            "performance": {
+              "$ref": "LighthouseCategoryV5",
+              "description": "The performance category, containing all performance related audits."
+            },
+            "pwa": {
+              "$ref": "LighthouseCategoryV5",
+              "description": "The Progressive-Web-App (PWA) category, containing all pwa related audits."
+            },
+            "seo": {
+              "$ref": "LighthouseCategoryV5",
+              "description": "The Search-Engine-Optimization (SEO) category, containing all seo related audits."
+            }
+          },
           "type": "object"
         },
         "categoryGroups": {

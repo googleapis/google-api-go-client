@@ -599,7 +599,7 @@
       }
     }
   },
-  "revision": "20181126",
+  "revision": "20181210",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -2267,6 +2267,20 @@
         "disableKeywordMatch": {
           "description": "Optional.\n\nControls whether to disable exact keyword match on Job.job_title,\nJob.description, Job.company_display_name, Job.locations,\nJob.qualifications. When disable keyword match is turned off, a\nkeyword match returns jobs that do not match given category filters when\nthere are matching keywords. For example, the query \"program manager,\" a\nresult is returned even if the job posting has the title \"software\ndeveloper,\" which does not fall into \"program manager\" ontology, but does\nhave \"program manager\" appearing in its description.\n\nFor queries like \"cloud\" that does not contain title or\nlocation specific ontology, jobs with \"cloud\" keyword matches are returned\nregardless of this flag's value.\n\nPlease use Company.keyword_searchable_custom_fields or\nCompany.keyword_searchable_custom_attributes if company specific\nglobally matched custom field/attribute string values is needed. Enabling\nkeyword match improves recall of subsequent search requests.\n\nDefaults to false.",
           "type": "boolean"
+        },
+        "diversificationLevel": {
+          "description": "Optional.\n\nControls whether highly similar jobs are returned next to each other in\nthe search results. Jobs are identified as highly similar based on\ntheir titles, job categories, and locations. Highly similar results are\nclustered so that only one representative job of the cluster is\ndisplayed to the job seeker higher up in the results, with the other jobs\nbeing displayed lower down in the results.\n\nDefaults to DiversificationLevel.SIMPLE if no value\nis specified.",
+          "enum": [
+            "DIVERSIFICATION_LEVEL_UNSPECIFIED",
+            "DISABLED",
+            "SIMPLE"
+          ],
+          "enumDescriptions": [
+            "The diversification level isn't specified.",
+            "Disables diversification. Jobs that would normally be pushed to the last\npage would not have their positions altered. This may result in highly\nsimilar jobs appearing in sequence in the search results.",
+            "Default diversifying behavior. The result list is ordered so that\nhighly similar results are pushed to the end of the last page of search\nresults."
+          ],
+          "type": "string"
         },
         "enableBroadening": {
           "description": "Optional.\n\nControls whether to broaden the search when it produces sparse results.\nBroadened queries append results to the end of the matching results\nlist.\n\nDefaults to false.",

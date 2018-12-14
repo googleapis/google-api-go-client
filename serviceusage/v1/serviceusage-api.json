@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20181105",
+  "revision": "20181207",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -457,7 +457,7 @@
           "type": "string"
         },
         "authorizationUrl": {
-          "description": "Redirect URL if JWT token is required but no present or is expired.\nImplement authorizationUrl of securityDefinitions in OpenAPI spec.",
+          "description": "Redirect URL if JWT token is required but not present or is expired.\nImplement authorizationUrl of securityDefinitions in OpenAPI spec.",
           "type": "string"
         },
         "id": {

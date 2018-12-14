@@ -1486,7 +1486,7 @@
       }
     }
   },
-  "revision": "20181121",
+  "revision": "20181211",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2181,7 +2181,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CryptoHashConfig": {
-      "description": "Pseudonymization method that generates surrogates via cryptographic hashing.\nUses SHA-256.\nThe key size must be either 32 or 64 bytes.\nOutputs a 32 byte digest as an uppercase hex string\n(for example, 41D1567F7F99F1DC2A5FAB886DEE5BEE).\nCurrently, only string and integer values can be hashed.",
+      "description": "Pseudonymization method that generates surrogates via cryptographic hashing.\nUses SHA-256.\nThe key size must be either 32 or 64 bytes.\nOutputs a base64 encoded representation of the hashed output\n(for example, L7k0BHmF1ha5U3NfGykjro4xWi1MPVQPjhMAZbSV9mM=).\nCurrently, only string and integer values can be hashed.",
       "id": "GooglePrivacyDlpV2CryptoHashConfig",
       "properties": {
         "cryptoKey": {
@@ -2854,7 +2854,7 @@
           "description": "The regex-filtered set of files to scan. Exactly one of `url` or\n`regex_file_set` must be set."
         },
         "url": {
-          "description": "The Cloud Storage url of the file(s) to scan, in the format\n`gs://\u003cbucket\u003e/\u003cpath\u003e`. Trailing wildcard in the path is allowed. Exactly\none of `url` or `regex_file_set` must be set.",
+          "description": "The Cloud Storage url of the file(s) to scan, in the format\n`gs://\u003cbucket\u003e/\u003cpath\u003e`. Trailing wildcard in the path is allowed.\n\nIf the url ends in a trailing slash, the bucket or directory represented\nby the url will be scanned non-recursively (content in sub-directories\nwill not be scanned). This means that `gs://mybucket/` is equivalent to\n`gs://mybucket/*`, and `gs://mybucket/directory/` is equivalent to\n`gs://mybucket/directory/*`.\n\nExactly one of `url` or `regex_file_set` must be set.",
           "type": "string"
         }
       },

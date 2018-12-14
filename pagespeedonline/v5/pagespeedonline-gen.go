@@ -235,7 +235,7 @@ type LighthouseResultV5 struct {
 	Audits map[string]LighthouseAuditResultV5 `json:"audits,omitempty"`
 
 	// Categories: Map of categories in the LHR.
-	Categories map[string]LighthouseCategoryV5 `json:"categories,omitempty"`
+	Categories *LighthouseResultV5Categories `json:"categories,omitempty"`
 
 	// CategoryGroups: Map of category groups in the LHR.
 	CategoryGroups map[string]LighthouseResultV5CategoryGroups `json:"categoryGroups,omitempty"`
@@ -298,6 +298,51 @@ type LighthouseResultV5 struct {
 
 func (s *LighthouseResultV5) MarshalJSON() ([]byte, error) {
 	type NoMethod LighthouseResultV5
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LighthouseResultV5Categories: Map of categories in the LHR.
+type LighthouseResultV5Categories struct {
+	// Accessibility: The accessibility category, containing all
+	// accessibility related audits.
+	Accessibility *LighthouseCategoryV5 `json:"accessibility,omitempty"`
+
+	// BestPractices: The best practices category, containing all web best
+	// practice related audits.
+	BestPractices *LighthouseCategoryV5 `json:"best-practices,omitempty"`
+
+	// Performance: The performance category, containing all performance
+	// related audits.
+	Performance *LighthouseCategoryV5 `json:"performance,omitempty"`
+
+	// Pwa: The Progressive-Web-App (PWA) category, containing all pwa
+	// related audits.
+	Pwa *LighthouseCategoryV5 `json:"pwa,omitempty"`
+
+	// Seo: The Search-Engine-Optimization (SEO) category, containing all
+	// seo related audits.
+	Seo *LighthouseCategoryV5 `json:"seo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accessibility") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accessibility") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LighthouseResultV5Categories) MarshalJSON() ([]byte, error) {
+	type NoMethod LighthouseResultV5Categories
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

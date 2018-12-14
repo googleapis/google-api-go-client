@@ -1634,7 +1634,7 @@
       }
     }
   },
-  "revision": "20181114",
+  "revision": "20181207",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3097,7 +3097,11 @@
       "id": "WorkflowMetadata",
       "properties": {
         "clusterName": {
-          "description": "Output only. The name of the managed cluster.",
+          "description": "Output only. The name of the target cluster.",
+          "type": "string"
+        },
+        "clusterUuid": {
+          "description": "Output only. The UUID of target cluster.",
           "type": "string"
         },
         "createCluster": {

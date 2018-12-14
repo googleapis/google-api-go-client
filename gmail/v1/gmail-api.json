@@ -41,7 +41,7 @@
   "description": "Access Gmail mailboxes including sending user email.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/gmail/api/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/x4D3RSeprBTpZ7qUUZRnzZsdMkA\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/SsO65dTSi1aclXM9UeYU18wFhYg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/googlemail-16.png",
     "x32": "https://www.google.com/images/icons/product/googlemail-32.png"
@@ -2502,7 +2502,7 @@
       }
     }
   },
-  "revision": "20180904",
+  "revision": "20181202",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AutoForwarding": {
@@ -2579,7 +2579,7 @@
       "type": "object"
     },
     "Delegate": {
-      "description": "Settings for a delegate. Delegates can read, send, and delete messages, as well as manage contacts, for the delegator's account. See \"Set up mail delegation\" for more information about delegates.",
+      "description": "Settings for a delegate. Delegates can read, send, and delete messages, as well as view and add contacts, for the delegator's account. See \"Set up mail delegation\" for more information about delegates.",
       "id": "Delegate",
       "properties": {
         "delegateEmail": {

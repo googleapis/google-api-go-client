@@ -119,43 +119,41 @@ type ServicesConnectionsService struct {
 // AddSubnetworkRequest: Request to create a subnetwork in a previously
 // peered service network.
 type AddSubnetworkRequest struct {
-	// Consumer: Required. Resource representing service consumer. It may be
-	// different from
-	// the project number in consumer network parameter in case of that
-	// network
-	// being a shared VPC network. In that case, Service Networking will
-	// validate
-	// that this resource belongs to that shared VPC.
-	// For example 'projects/123456'.
+	// Consumer: Required. A resource that represents the service consumer,
+	// such as
+	// `projects/123456`. The project number can be different from the
+	// value in the consumer network parameter. For example, the network
+	// might be
+	// part of a Shared VPC network. In those cases, Service Networking
+	// validates
+	// that this resource belongs to that Shared VPC.
 	Consumer string `json:"consumer,omitempty"`
 
-	// ConsumerNetwork: Required. Network name in the consumer project.
-	// This network must have been
-	// already peered with a shared VPC network using
-	// CreateConnection
-	// method.
-	// Must be in a form
-	// 'projects/{project}/global/networks/{network}'.
-	// {project} is a project number, as in '12345'
-	// {network} is network name.
+	// ConsumerNetwork: Required. The name of the service consumer's VPC
+	// network. The network
+	// must have an existing private connection that was provisioned through
+	// the
+	// connections.create method. The name must be in the following
+	// format:
+	// `projects/{project}/global/networks/{network}`, where {project}
+	// is a project number, such as `12345`. {network} is the name of a
+	// VPC network in the project.
 	ConsumerNetwork string `json:"consumerNetwork,omitempty"`
 
-	// Description: Optional. Description of the subnetwork.
+	// Description: An optional description of the subnet.
 	Description string `json:"description,omitempty"`
 
-	// IpPrefixLength: Required. The prefix length of the IP range.
-	// Use usual CIDR range notation.
-	// For example, '30' to provision subnet with x.x.x.x/30 CIDR
-	// range.
-	// Actual range will be determined using allocated range for the
-	// consumer
-	// peered network and returned in the result.
+	// IpPrefixLength: Required. The prefix length of the subnet's IP
+	// address range.  Use CIDR
+	// range notation, such as `30` to provision a subnet with
+	// an
+	// `x.x.x.x/30` CIDR range. The IP address range is drawn from a
+	// pool of available ranges in the service consumer's allocated range.
 	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
 
-	// Region: Required. Cloud
-	// [region](/compute/docs/reference/rest/v1/regions) for the
-	// new
-	// subnetwork.
+	// Region: Required. The name of a
+	// [region](/compute/docs/regions-zones)
+	// for the subnet, such `europe-west1`.
 	Region string `json:"region,omitempty"`
 
 	// RequestedAddress: Optional. The starting address of a range. The
@@ -169,15 +167,16 @@ type AddSubnetworkRequest struct {
 	// range isn't available, the call fails.
 	RequestedAddress string `json:"requestedAddress,omitempty"`
 
-	// Subnetwork: Required. Name for the new subnetwork.
-	// Must be a legal
-	// [subnetwork](compute/docs/reference/rest/v1/subnetworks)
-	// name.
+	// Subnetwork: Required. A name for the new subnet. For information
+	// about the naming
+	// requirements, see
+	// [subnetwork](/compute/docs/reference/rest/v1/subnetworks)
+	// in the Compute API documentation.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// SubnetworkUsers: Optional. List of members that will be granted
-	// 'compute.networkUser' role
-	// on the newly added subnetwork.
+	// SubnetworkUsers: A list of members that are granted the
+	// `compute.networkUser`
+	// role on the subnet.
 	SubnetworkUsers []string `json:"subnetworkUsers,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Consumer") to
@@ -329,7 +328,7 @@ type AuthProvider struct {
 	//                bookstore_web.apps.googleusercontent.com
 	Audiences string `json:"audiences,omitempty"`
 
-	// AuthorizationUrl: Redirect URL if JWT token is required but no
+	// AuthorizationUrl: Redirect URL if JWT token is required but not
 	// present or is expired.
 	// Implement authorizationUrl of securityDefinitions in OpenAPI spec.
 	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
@@ -792,24 +791,32 @@ func (s *BillingDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Connection: Message returning the created service connection.
+// Connection: Represents a private connection resource. A private
+// connection is implemented
+// as a VPC Network Peering connection between a service producer's VPC
+// network
+// and a service consumer's VPC network.
 type Connection struct {
-	// Network: Name of VPC network connected with service producer
-	// network.
-	// Must be in a form
-	// 'projects/{project}/global/networks/{network}'.
-	// {project} is a project number, as in '12345'
-	// {network} is a network name.
+	// Network: The name of service consumer's VPC network that's connected
+	// with service
+	// producer network, in the following
+	// format:
+	// `projects/{project}/global/networks/{network}`.
+	// `{project}` is a project number, such as in `12345` that includes
+	// the VPC service consumer's VPC network. `{network}` is the name of
+	// the
+	// service consumer's VPC network.
 	Network string `json:"network,omitempty"`
 
 	// Peering: Output only.
-	// Name of the peering connection that is created by the peering
-	// service.
+	// The name of the VPC Network Peering connection that was created by
+	// the
+	// service producer.
 	Peering string `json:"peering,omitempty"`
 
-	// ReservedPeeringRanges: Named IP address range(s) of PEERING type
-	// allocated for this service
-	// provider.
+	// ReservedPeeringRanges: The name of one or more allocated IP address
+	// ranges for this service
+	// producer of type `PEERING`.
 	// Note that invoking this method with a different range when connection
 	// is
 	// already established will not modify already provisioned
@@ -818,9 +825,9 @@ type Connection struct {
 	ReservedPeeringRanges []string `json:"reservedPeeringRanges,omitempty"`
 
 	// Service: Output only.
-	// Name of the peering service associated with this
-	// connection.
-	// "services/{service name}
+	// The name of the peering service that's associated with this
+	// connection, in
+	// the following format: `services/{service name}`.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -3461,6 +3468,52 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchRangeRequest: Request to search for an unused range within
+// allocated ranges.
+type SearchRangeRequest struct {
+	// IpPrefixLength: Required. The prefix length of the IP range.
+	// Use usual CIDR range notation.
+	// For example, '30' to find unused x.x.x.x/30 CIDR range.
+	// Actual range will be determined using allocated range for the
+	// consumer
+	// peered network and returned in the result.
+	IpPrefixLength int64 `json:"ipPrefixLength,omitempty"`
+
+	// Network: Network name in the consumer project.   This network must
+	// have been
+	// already peered with a shared VPC network using
+	// CreateConnection
+	// method.
+	// Must be in a form
+	// 'projects/{project}/global/networks/{network}'.
+	// {project} is a project number, as in '12345'
+	// {network} is network name.
+	Network string `json:"network,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpPrefixLength") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpPrefixLength") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SearchRangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchRangeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Service: `Service` is the root object of Google service configuration
 // schema. It
 // describes basic information about a service, such as the name and
@@ -3830,18 +3883,20 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subnetwork: Message returning the created service subnetwork.
+// Subnetwork: Represents a subnet that was created by a peered service.
 type Subnetwork struct {
-	// IpCidrRange: Subnetwork CIDR range in "10.x.x.x/y" format.
+	// IpCidrRange: Subnetwork CIDR range in `10.x.x.x/y` format.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
 
 	// Name: Subnetwork name.
 	// See https://cloud.google.com/compute/docs/vpc/
 	Name string `json:"name,omitempty"`
 
-	// Network: Shared VPC host project network peered with consumer
-	// network.
-	// For example: projects/1234321/global/networks/host-network
+	// Network: In the Shared VPC host project, the VPC network that's
+	// peered with the
+	// consumer network. For
+	// example:
+	// `projects/1234321/global/networks/host-network`
 	Network string `json:"network,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
@@ -4362,19 +4417,24 @@ type ServicesAddSubnetworkCall struct {
 	header_              http.Header
 }
 
-// AddSubnetwork: Service producers use this method to provision a new
-// subnet in
-// peered service shared VPC network.
-// It will validate previously provided allocated ranges,
-// find
-// non-conflicting sub-range of requested size (expressed in
-// number of leading bits of ipv4 network mask, as in CIDR
-// range
-// notation). It will then create a subnetwork in the request
-// region. The subsequent call will try to reuse the
-// subnetwork previously created if subnetwork name, region and
-// prefix length of the IP range match.
-// Operation<response: Subnetwork>
+// AddSubnetwork: For service producers, provisions a new subnet in
+// a
+// peered service's shared VPC network in the requested region and with
+// the
+// requested size that's expressed as a CIDR range (number of leading
+// bits of
+// ipV4 network mask). The method checks against the assigned allocated
+// ranges
+// to find a non-conflicting IP address range. The method will reuse a
+// subnet
+// if subsequent calls contain the same subnet name, region, prefix
+// length.
+// This method will make producer's tenant project to be a shared VPC
+// service
+// project as needed.
+// The response from the `get` operation will be of type `Subnetwork` if
+// the
+// operation successfully completes.
 func (r *ServicesService) AddSubnetwork(parent string, addsubnetworkrequest *AddSubnetworkRequest) *ServicesAddSubnetworkCall {
 	c := &ServicesAddSubnetworkCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4472,7 +4532,7 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "Service producers use this method to provision a new subnet in\npeered service shared VPC network.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation). It will then create a subnetwork in the request\nregion. The subsequent call will try to reuse the\nsubnetwork previously created if subnetwork name, region and\nprefix length of the IP range match.\nOperation\u003cresponse: Subnetwork\u003e",
+	//   "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
 	//   "flatPath": "v1beta/services/{servicesId}/{servicesId1}/{servicesId2}:addSubnetwork",
 	//   "httpMethod": "POST",
 	//   "id": "servicenetworking.services.addSubnetwork",
@@ -4481,7 +4541,7 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. This is a 'tenant' project in the service producer organization.\nservices/{service}/{collection-id}/{resource-id}\n{collection id} is the cloud resource collection type representing the\ntenant project. Only 'projects' are currently supported.\n{resource id} is the tenant project numeric id: '123456'.\n{service} the name of the peering service, for example\n'service-peering.example.com'. This service must be activated.\nin the consumer project.",
+	//       "description": "Required. A tenant project in the service producer organization, in the\nfollowing format: services/{service}/{collection-id}/{resource-id}.\n{collection-id} is the cloud resource collection type that represents the\ntenant project. Only `projects` are supported.\n{resource-id} is the tenant project numeric id, such as\n`123456`. {service} the name of the peering service, such as\n`service-peering.example.com`. This service must already be\nenabled in the service consumer's project.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -4514,9 +4574,11 @@ type ServicesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Allocated ranges specified for the connection may be
-// updated.
-// Operation<response: Connection>.
+// Patch: Updates the allocated ranges that are assigned to a
+// connection.
+// The response from the `get` operation will be of type `Connection` if
+// the
+// operation successfully completes.
 func (r *ServicesService) Patch(name string, connection *Connection) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4533,8 +4595,8 @@ func (c *ServicesPatchCall) Force(force bool) *ServicesPatchCall {
 }
 
 // UpdateMask sets the optional parameter "updateMask": The update mask.
-// If this is omitted, it defaults to "*".   Only reserved
-// peering ranges list may be updated.
+// If this is omitted, it defaults to "*". You can only
+// update the listed peering ranges.
 func (c *ServicesPatchCall) UpdateMask(updateMask string) *ServicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4630,7 +4692,7 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Allocated ranges specified for the connection may be updated.\nOperation\u003cresponse: Connection\u003e.",
+	//   "description": "Updates the allocated ranges that are assigned to a connection.\nThe response from the `get` operation will be of type `Connection` if the\noperation successfully completes.",
 	//   "flatPath": "v1beta/services/{servicesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "servicenetworking.services.patch",
@@ -4644,14 +4706,14 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+	//       "description": "The service producer peering service that is managing peering connectivity\nfor a service producer organization.\nFor Google services that support this functionality, this is\n`services/servicenetworking.googleapis.com`.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "The update mask. If this is omitted, it defaults to \"*\".   Only reserved\npeering ranges list may be updated.",
+	//       "description": "The update mask. If this is omitted, it defaults to \"*\". You can only\nupdate the listed peering ranges.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -4660,6 +4722,157 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//   "path": "v1beta/{+name}",
 	//   "request": {
 	//     "$ref": "Connection"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/service.management"
+	//   ]
+	// }
+
+}
+
+// method id "servicenetworking.services.searchRange":
+
+type ServicesSearchRangeCall struct {
+	s                  *APIService
+	parent             string
+	searchrangerequest *SearchRangeRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// SearchRange: Service producers can use this method to find a
+// currently unused range
+// within consumer allocated ranges.   This returned range is not
+// reserved,
+// and not guaranteed to remain unused.
+// It will validate previously provided allocated ranges,
+// find
+// non-conflicting sub-range of requested size (expressed in
+// number of leading bits of ipv4 network mask, as in CIDR
+// range
+// notation).
+// Operation<response: Range>
+func (r *ServicesService) SearchRange(parent string, searchrangerequest *SearchRangeRequest) *ServicesSearchRangeCall {
+	c := &ServicesSearchRangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.searchrangerequest = searchrangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesSearchRangeCall) Fields(s ...googleapi.Field) *ServicesSearchRangeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesSearchRangeCall) Context(ctx context.Context) *ServicesSearchRangeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesSearchRangeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesSearchRangeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.searchrangerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}:searchRange")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "servicenetworking.services.searchRange" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesSearchRangeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Service producers can use this method to find a currently unused range\nwithin consumer allocated ranges.   This returned range is not reserved,\nand not guaranteed to remain unused.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation).\nOperation\u003cresponse: Range\u003e",
+	//   "flatPath": "v1beta/services/{servicesId}:searchRange",
+	//   "httpMethod": "POST",
+	//   "id": "servicenetworking.services.searchRange",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. This is in a form services/{service}.\n{service} the name of the private access management service, for example\n'service-peering.example.com'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}:searchRange",
+	//   "request": {
+	//     "$ref": "SearchRangeRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -4683,21 +4896,23 @@ type ServicesConnectionsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: To connect service to a VPC network peering connection
-// must be established prior to service provisioning.
-// This method must be invoked by the consumer VPC network
-// administrator
-// It will establish a permanent peering connection with a
-// shared
-// network created in the service producer organization and register
-// a
-// allocated IP range(s) to be used for service subnetwork
-// provisioning.
-// This connection will be used for all supported services in the
-// service
-// producer organization, so it only needs to be invoked
-// once.
-// Operation<response: Connection>.
+// Create: Creates a private connection that establishes a VPC Network
+// Peering
+// connection to a VPC network in the service producer's
+// organization.
+// The administrator of the service consumer's VPC network invokes
+// this
+// method. The administrator must assign one or more allocated IP ranges
+// for
+// provisioning subnetworks in the service producer's VPC network.
+// This
+// connection is used for all supported services in the service
+// producer's
+// organization, so it only needs to be invoked once. The response from
+// the
+// `get` operation will be of type `Connection` if the operation
+// successfully
+// completes.
 func (r *ServicesConnectionsService) Create(parent string, connection *Connection) *ServicesConnectionsCreateCall {
 	c := &ServicesConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4795,7 +5010,7 @@ func (c *ServicesConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "To connect service to a VPC network peering connection\nmust be established prior to service provisioning.\nThis method must be invoked by the consumer VPC network administrator\nIt will establish a permanent peering connection with a shared\nnetwork created in the service producer organization and register a\nallocated IP range(s) to be used for service subnetwork provisioning.\nThis connection will be used for all supported services in the service\nproducer organization, so it only needs to be invoked once.\nOperation\u003cresponse: Connection\u003e.",
+	//   "description": "Creates a private connection that establishes a VPC Network Peering\nconnection to a VPC network in the service producer's organization.\nThe administrator of the service consumer's VPC network invokes this\nmethod. The administrator must assign one or more allocated IP ranges for\nprovisioning subnetworks in the service producer's VPC network. This\nconnection is used for all supported services in the service producer's\norganization, so it only needs to be invoked once. The response from the\n`get` operation will be of type `Connection` if the operation successfully\ncompletes.",
 	//   "flatPath": "v1beta/services/{servicesId}/connections",
 	//   "httpMethod": "POST",
 	//   "id": "servicenetworking.services.connections.create",
@@ -4804,7 +5019,7 @@ func (c *ServicesConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+	//       "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,
@@ -4837,24 +5052,27 @@ type ServicesConnectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Service consumers use this method to list configured peering
-// connection for
-// the given service and consumer network.
+// List: List the private connections that are configured in a service
+// consumer's
+// VPC network.
 func (r *ServicesConnectionsService) List(parent string) *ServicesConnectionsListCall {
 	c := &ServicesConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Network sets the optional parameter "network": Network name in the
-// consumer project.   This network must have been
-// already peered with a shared VPC network using
-// CreateConnection
-// method.
-// Must be in a form
-// 'projects/{project}/global/networks/{network}'.
-// {project} is a project number, as in '12345'
-// {network} is network name.
+// Network sets the optional parameter "network": The name of service
+// consumer's VPC network that's connected with service
+// producer network through a private connection. The network name must
+// be in
+// the following format:
+// `projects/{project}/global/networks/{network}`. {project} is
+// a
+// project number, such as in `12345` that includes the VPC
+// service
+// consumer's VPC network. {network} is the name of the service
+// consumer's VPC
+// network.
 func (c *ServicesConnectionsListCall) Network(network string) *ServicesConnectionsListCall {
 	c.urlParams_.Set("network", network)
 	return c
@@ -4958,7 +5176,7 @@ func (c *ServicesConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListCon
 	}
 	return ret, nil
 	// {
-	//   "description": "Service consumers use this method to list configured peering connection for\nthe given service and consumer network.",
+	//   "description": "List the private connections that are configured in a service consumer's\nVPC network.",
 	//   "flatPath": "v1beta/services/{servicesId}/connections",
 	//   "httpMethod": "GET",
 	//   "id": "servicenetworking.services.connections.list",
@@ -4967,12 +5185,12 @@ func (c *ServicesConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListCon
 	//   ],
 	//   "parameters": {
 	//     "network": {
-	//       "description": "Network name in the consumer project.   This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is network name.",
+	//       "description": "The name of service consumer's VPC network that's connected with service\nproducer network through a private connection. The network name must be in\nthe following format:\n`projects/{project}/global/networks/{network}`. {project} is a\nproject number, such as in `12345` that includes the VPC service\nconsumer's VPC network. {network} is the name of the service consumer's VPC\nnetwork.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.\nFor \"-\" all configured public peering services will be queried.",
+	//       "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.\nIf you specify `-` as the parameter value, all configured public peering\nservices are listed.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+$",
 	//       "required": true,

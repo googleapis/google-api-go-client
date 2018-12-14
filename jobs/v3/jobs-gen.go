@@ -3575,6 +3575,38 @@ type SearchJobsRequest struct {
 	// Defaults to false.
 	DisableKeywordMatch bool `json:"disableKeywordMatch,omitempty"`
 
+	// DiversificationLevel: Optional.
+	//
+	// Controls whether highly similar jobs are returned next to each other
+	// in
+	// the search results. Jobs are identified as highly similar based
+	// on
+	// their titles, job categories, and locations. Highly similar results
+	// are
+	// clustered so that only one representative job of the cluster
+	// is
+	// displayed to the job seeker higher up in the results, with the other
+	// jobs
+	// being displayed lower down in the results.
+	//
+	// Defaults to DiversificationLevel.SIMPLE if no value
+	// is specified.
+	//
+	// Possible values:
+	//   "DIVERSIFICATION_LEVEL_UNSPECIFIED" - The diversification level
+	// isn't specified.
+	//   "DISABLED" - Disables diversification. Jobs that would normally be
+	// pushed to the last
+	// page would not have their positions altered. This may result in
+	// highly
+	// similar jobs appearing in sequence in the search results.
+	//   "SIMPLE" - Default diversifying behavior. The result list is
+	// ordered so that
+	// highly similar results are pushed to the end of the last page of
+	// search
+	// results.
+	DiversificationLevel string `json:"diversificationLevel,omitempty"`
+
 	// EnableBroadening: Optional.
 	//
 	// Controls whether to broaden the search when it produces sparse

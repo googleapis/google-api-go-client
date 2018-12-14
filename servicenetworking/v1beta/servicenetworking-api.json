@@ -140,7 +140,7 @@
     "services": {
       "methods": {
         "addSubnetwork": {
-          "description": "Service producers use this method to provision a new subnet in\npeered service shared VPC network.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation). It will then create a subnetwork in the request\nregion. The subsequent call will try to reuse the\nsubnetwork previously created if subnetwork name, region and\nprefix length of the IP range match.\nOperation\u003cresponse: Subnetwork\u003e",
+          "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
           "flatPath": "v1beta/services/{servicesId}/{servicesId1}/{servicesId2}:addSubnetwork",
           "httpMethod": "POST",
           "id": "servicenetworking.services.addSubnetwork",
@@ -149,7 +149,7 @@
           ],
           "parameters": {
             "parent": {
-              "description": "Required. This is a 'tenant' project in the service producer organization.\nservices/{service}/{collection-id}/{resource-id}\n{collection id} is the cloud resource collection type representing the\ntenant project. Only 'projects' are currently supported.\n{resource id} is the tenant project numeric id: '123456'.\n{service} the name of the peering service, for example\n'service-peering.example.com'. This service must be activated.\nin the consumer project.",
+              "description": "Required. A tenant project in the service producer organization, in the\nfollowing format: services/{service}/{collection-id}/{resource-id}.\n{collection-id} is the cloud resource collection type that represents the\ntenant project. Only `projects` are supported.\n{resource-id} is the tenant project numeric id, such as\n`123456`. {service} the name of the peering service, such as\n`service-peering.example.com`. This service must already be\nenabled in the service consumer's project.",
               "location": "path",
               "pattern": "^services/[^/]+/[^/]+/[^/]+$",
               "required": true,
@@ -169,7 +169,7 @@
           ]
         },
         "patch": {
-          "description": "Allocated ranges specified for the connection may be updated.\nOperation\u003cresponse: Connection\u003e.",
+          "description": "Updates the allocated ranges that are assigned to a connection.\nThe response from the `get` operation will be of type `Connection` if the\noperation successfully completes.",
           "flatPath": "v1beta/services/{servicesId}",
           "httpMethod": "PATCH",
           "id": "servicenetworking.services.patch",
@@ -183,14 +183,14 @@
               "type": "boolean"
             },
             "name": {
-              "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+              "description": "The service producer peering service that is managing peering connectivity\nfor a service producer organization.\nFor Google services that support this functionality, this is\n`services/servicenetworking.googleapis.com`.",
               "location": "path",
               "pattern": "^services/[^/]+$",
               "required": true,
               "type": "string"
             },
             "updateMask": {
-              "description": "The update mask. If this is omitted, it defaults to \"*\".   Only reserved\npeering ranges list may be updated.",
+              "description": "The update mask. If this is omitted, it defaults to \"*\". You can only\nupdate the listed peering ranges.",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -207,13 +207,42 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/service.management"
           ]
+        },
+        "searchRange": {
+          "description": "Service producers can use this method to find a currently unused range\nwithin consumer allocated ranges.   This returned range is not reserved,\nand not guaranteed to remain unused.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation).\nOperation\u003cresponse: Range\u003e",
+          "flatPath": "v1beta/services/{servicesId}:searchRange",
+          "httpMethod": "POST",
+          "id": "servicenetworking.services.searchRange",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. This is in a form services/{service}.\n{service} the name of the private access management service, for example\n'service-peering.example.com'.",
+              "location": "path",
+              "pattern": "^services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta/{+parent}:searchRange",
+          "request": {
+            "$ref": "SearchRangeRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
         }
       },
       "resources": {
         "connections": {
           "methods": {
             "create": {
-              "description": "To connect service to a VPC network peering connection\nmust be established prior to service provisioning.\nThis method must be invoked by the consumer VPC network administrator\nIt will establish a permanent peering connection with a shared\nnetwork created in the service producer organization and register a\nallocated IP range(s) to be used for service subnetwork provisioning.\nThis connection will be used for all supported services in the service\nproducer organization, so it only needs to be invoked once.\nOperation\u003cresponse: Connection\u003e.",
+              "description": "Creates a private connection that establishes a VPC Network Peering\nconnection to a VPC network in the service producer's organization.\nThe administrator of the service consumer's VPC network invokes this\nmethod. The administrator must assign one or more allocated IP ranges for\nprovisioning subnetworks in the service producer's VPC network. This\nconnection is used for all supported services in the service producer's\norganization, so it only needs to be invoked once. The response from the\n`get` operation will be of type `Connection` if the operation successfully\ncompletes.",
               "flatPath": "v1beta/services/{servicesId}/connections",
               "httpMethod": "POST",
               "id": "servicenetworking.services.connections.create",
@@ -222,7 +251,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.",
+                  "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.",
                   "location": "path",
                   "pattern": "^services/[^/]+$",
                   "required": true,
@@ -242,7 +271,7 @@
               ]
             },
             "list": {
-              "description": "Service consumers use this method to list configured peering connection for\nthe given service and consumer network.",
+              "description": "List the private connections that are configured in a service consumer's\nVPC network.",
               "flatPath": "v1beta/services/{servicesId}/connections",
               "httpMethod": "GET",
               "id": "servicenetworking.services.connections.list",
@@ -251,12 +280,12 @@
               ],
               "parameters": {
                 "network": {
-                  "description": "Network name in the consumer project.   This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is network name.",
+                  "description": "The name of service consumer's VPC network that's connected with service\nproducer network through a private connection. The network name must be in\nthe following format:\n`projects/{project}/global/networks/{network}`. {project} is a\nproject number, such as in `12345` that includes the VPC service\nconsumer's VPC network. {network} is the name of the service consumer's VPC\nnetwork.",
                   "location": "query",
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Provider peering service that is managing peering connectivity for a\nservice provider organization.\nFor Google services that support this functionality it is\n'services/servicenetworking.googleapis.com'.\nFor \"-\" all configured public peering services will be queried.",
+                  "description": "The service that is managing peering connectivity for a service producer's\norganization. For Google services that support this functionality, this\nvalue is `services/servicenetworking.googleapis.com`.\nIf you specify `-` as the parameter value, all configured public peering\nservices are listed.",
                   "location": "path",
                   "pattern": "^services/[^/]+$",
                   "required": true,
@@ -277,7 +306,7 @@
       }
     }
   },
-  "revision": "20181128",
+  "revision": "20181207",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -285,24 +314,24 @@
       "id": "AddSubnetworkRequest",
       "properties": {
         "consumer": {
-          "description": "Required. Resource representing service consumer. It may be different from\nthe project number in consumer network parameter in case of that network\nbeing a shared VPC network. In that case, Service Networking will validate\nthat this resource belongs to that shared VPC.\nFor example 'projects/123456'.",
+          "description": "Required. A resource that represents the service consumer, such as\n`projects/123456`. The project number can be different from the\nvalue in the consumer network parameter. For example, the network might be\npart of a Shared VPC network. In those cases, Service Networking validates\nthat this resource belongs to that Shared VPC.",
           "type": "string"
         },
         "consumerNetwork": {
-          "description": "Required. Network name in the consumer project.   This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is network name.",
+          "description": "Required. The name of the service consumer's VPC network. The network\nmust have an existing private connection that was provisioned through the\nconnections.create method. The name must be in the following format:\n`projects/{project}/global/networks/{network}`, where {project}\nis a project number, such as `12345`. {network} is the name of a\nVPC network in the project.",
           "type": "string"
         },
         "description": {
-          "description": "Optional. Description of the subnetwork.",
+          "description": "An optional description of the subnet.",
           "type": "string"
         },
         "ipPrefixLength": {
-          "description": "Required. The prefix length of the IP range.\nUse usual CIDR range notation.\nFor example, '30' to provision subnet with x.x.x.x/30 CIDR range.\nActual range will be determined using allocated range for the consumer\npeered network and returned in the result.",
+          "description": "Required. The prefix length of the subnet's IP address range.  Use CIDR\nrange notation, such as `30` to provision a subnet with an\n`x.x.x.x/30` CIDR range. The IP address range is drawn from a\npool of available ranges in the service consumer's allocated range.",
           "format": "int32",
           "type": "integer"
         },
         "region": {
-          "description": "Required. Cloud [region](/compute/docs/reference/rest/v1/regions) for the new\nsubnetwork.",
+          "description": "Required. The name of a [region](/compute/docs/regions-zones)\nfor the subnet, such `europe-west1`.",
           "type": "string"
         },
         "requestedAddress": {
@@ -310,11 +339,11 @@
           "type": "string"
         },
         "subnetwork": {
-          "description": "Required. Name for the new subnetwork.\nMust be a legal [subnetwork](compute/docs/reference/rest/v1/subnetworks)\nname.",
+          "description": "Required. A name for the new subnet. For information about the naming\nrequirements, see [subnetwork](/compute/docs/reference/rest/v1/subnetworks)\nin the Compute API documentation.",
           "type": "string"
         },
         "subnetworkUsers": {
-          "description": "Optional. List of members that will be granted 'compute.networkUser' role\non the newly added subnetwork.",
+          "description": "A list of members that are granted the `compute.networkUser`\nrole on the subnet.",
           "items": {
             "type": "string"
           },
@@ -384,7 +413,7 @@
           "type": "string"
         },
         "authorizationUrl": {
-          "description": "Redirect URL if JWT token is required but no present or is expired.\nImplement authorizationUrl of securityDefinitions in OpenAPI spec.",
+          "description": "Redirect URL if JWT token is required but not present or is expired.\nImplement authorizationUrl of securityDefinitions in OpenAPI spec.",
           "type": "string"
         },
         "id": {
@@ -552,26 +581,26 @@
       "type": "object"
     },
     "Connection": {
-      "description": "Message returning the created service connection.",
+      "description": "Represents a private connection resource. A private connection is implemented\nas a VPC Network Peering connection between a service producer's VPC network\nand a service consumer's VPC network.",
       "id": "Connection",
       "properties": {
         "network": {
-          "description": "Name of VPC network connected with service producer network.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is a network name.",
+          "description": "The name of service consumer's VPC network that's connected with service\nproducer network, in the following format:\n`projects/{project}/global/networks/{network}`.\n`{project}` is a project number, such as in `12345` that includes\nthe VPC service consumer's VPC network. `{network}` is the name of the\nservice consumer's VPC network.",
           "type": "string"
         },
         "peering": {
-          "description": "Output only.\nName of the peering connection that is created by the peering service.",
+          "description": "Output only.\nThe name of the VPC Network Peering connection that was created by the\nservice producer.",
           "type": "string"
         },
         "reservedPeeringRanges": {
-          "description": "Named IP address range(s) of PEERING type allocated for this service\nprovider.\nNote that invoking this method with a different range when connection is\nalready established will not modify already provisioned service\nproducer subnetworks.",
+          "description": "The name of one or more allocated IP address ranges for this service\nproducer of type `PEERING`.\nNote that invoking this method with a different range when connection is\nalready established will not modify already provisioned service\nproducer subnetworks.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "service": {
-          "description": "Output only.\nName of the peering service associated with this connection.\n\"services/{service name}",
+          "description": "Output only.\nThe name of the peering service that's associated with this connection, in\nthe following format: `services/{service name}`.",
           "type": "string"
         }
       },
@@ -1558,6 +1587,22 @@
       },
       "type": "object"
     },
+    "SearchRangeRequest": {
+      "description": "Request to search for an unused range within allocated ranges.",
+      "id": "SearchRangeRequest",
+      "properties": {
+        "ipPrefixLength": {
+          "description": "Required. The prefix length of the IP range.\nUse usual CIDR range notation.\nFor example, '30' to find unused x.x.x.x/30 CIDR range.\nActual range will be determined using allocated range for the consumer\npeered network and returned in the result.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "network": {
+          "description": "Network name in the consumer project.   This network must have been\nalready peered with a shared VPC network using CreateConnection\nmethod.\nMust be in a form 'projects/{project}/global/networks/{network}'.\n{project} is a project number, as in '12345'\n{network} is network name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Service": {
       "description": "`Service` is the root object of Google service configuration schema. It\ndescribes basic information about a service, such as the name and the\ntitle, and delegates other aspects to sub-sections. Each sub-section is\neither a proto message or a repeated proto message that configures a\nspecific aspect, such as auth. See each proto message definition for details.\n\nExample:\n\n    type: google.api.Service\n    config_version: 3\n    name: calendar.googleapis.com\n    title: Google Calendar API\n    apis:\n    - name: google.calendar.v3.Calendar\n    authentication:\n      providers:\n      - id: google_calendar_auth\n        jwks_uri: https://www.googleapis.com/oauth2/v1/certs\n        issuer: https://securetoken.google.com\n      rules:\n      - selector: \"*\"\n        requirements:\n          provider_id: google_calendar_auth",
       "id": "Service",
@@ -1759,11 +1804,11 @@
       "type": "object"
     },
     "Subnetwork": {
-      "description": "Message returning the created service subnetwork.",
+      "description": "Represents a subnet that was created by a peered service.",
       "id": "Subnetwork",
       "properties": {
         "ipCidrRange": {
-          "description": "Subnetwork CIDR range in \"10.x.x.x/y\" format.",
+          "description": "Subnetwork CIDR range in `10.x.x.x/y` format.",
           "type": "string"
         },
         "name": {
@@ -1771,7 +1816,7 @@
           "type": "string"
         },
         "network": {
-          "description": "Shared VPC host project network peered with consumer network.\nFor example: projects/1234321/global/networks/host-network",
+          "description": "In the Shared VPC host project, the VPC network that's peered with the\nconsumer network. For example:\n`projects/1234321/global/networks/host-network`",
           "type": "string"
         }
       },

@@ -2726,8 +2726,11 @@ func (s *WorkflowGraph) MarshalJSON() ([]byte, error) {
 
 // WorkflowMetadata: A Cloud Dataproc workflow template resource.
 type WorkflowMetadata struct {
-	// ClusterName: Output only. The name of the managed cluster.
+	// ClusterName: Output only. The name of the target cluster.
 	ClusterName string `json:"clusterName,omitempty"`
+
+	// ClusterUuid: Output only. The UUID of target cluster.
+	ClusterUuid string `json:"clusterUuid,omitempty"`
 
 	// CreateCluster: Output only. The create cluster operation metadata.
 	CreateCluster *ClusterOperation `json:"createCluster,omitempty"`

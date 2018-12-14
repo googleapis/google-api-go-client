@@ -384,7 +384,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Permanently deletes a ProductSet. All Products and ReferenceImages in the\nProductSet will be deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
+                  "description": "Permanently deletes a ProductSet. Products and ReferenceImages in the\nProductSet are not deleted.\n\nThe actual image files are not deleted from Google Cloud Storage.\n\nPossible errors:\n\n* Returns NOT_FOUND if the ProductSet does not exist.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/productSets/{productSetsId}",
                   "httpMethod": "DELETE",
                   "id": "vision.projects.locations.productSets.delete",
@@ -906,7 +906,7 @@
       }
     }
   },
-  "revision": "20181112",
+  "revision": "20181210",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {

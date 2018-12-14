@@ -1743,9 +1743,13 @@ type ProjectsLocationsFunctionsCallCall struct {
 	header_             http.Header
 }
 
-// Call: Invokes synchronously deployed function. To be used for
-// testing, very
-// limited traffic allowed.
+// Call: Synchronously invokes a deployed Cloud Function. To be used for
+// testing
+// purposes as very limited traffic is allowed. For more information
+// on
+// the actual limits refer to [API
+// Calls](
+// https://cloud.google.com/functions/quotas#rate_limits).
 func (r *ProjectsLocationsFunctionsService) Call(name string, callfunctionrequest *CallFunctionRequest) *ProjectsLocationsFunctionsCallCall {
 	c := &ProjectsLocationsFunctionsCallCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1843,7 +1847,7 @@ func (c *ProjectsLocationsFunctionsCallCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Invokes synchronously deployed function. To be used for testing, very\nlimited traffic allowed.",
+	//   "description": "Synchronously invokes a deployed Cloud Function. To be used for testing\npurposes as very limited traffic is allowed. For more information on\nthe actual limits refer to [API Calls](\nhttps://cloud.google.com/functions/quotas#rate_limits).",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:call",
 	//   "httpMethod": "POST",
 	//   "id": "cloudfunctions.projects.locations.functions.call",

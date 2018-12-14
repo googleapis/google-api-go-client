@@ -140,6 +140,47 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LongRunningRecognizeMetadata: Describes the progress of a
+// long-running `LongRunningRecognize` call. It is
+// included in the `metadata` field of the `Operation` returned by
+// the
+// `GetOperation` call of the `google::longrunning::Operations` service.
+type LongRunningRecognizeMetadata struct {
+	// LastUpdateTime: Time of the most recent processing update.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// ProgressPercent: Approximate percentage of audio processed thus far.
+	// Guaranteed to be 100
+	// when the audio is fully processed and the results are available.
+	ProgressPercent int64 `json:"progressPercent,omitempty"`
+
+	// StartTime: Time when the request was received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastUpdateTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LongRunningRecognizeMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LongRunningRecognizeMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LongRunningRecognizeRequest: The top-level message sent by the client
 // for the `LongRunningRecognize`
 // method.
@@ -171,6 +212,44 @@ type LongRunningRecognizeRequest struct {
 
 func (s *LongRunningRecognizeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LongRunningRecognizeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LongRunningRecognizeResponse: The only message returned to the client
+// by the `LongRunningRecognize` method.
+// It contains the result as zero or more sequential
+// `SpeechRecognitionResult`
+// messages. It is included in the `result.response` field of the
+// `Operation`
+// returned by the `GetOperation` call of the
+// `google::longrunning::Operations`
+// service.
+type LongRunningRecognizeResponse struct {
+	// Results: Output only. Sequential list of transcription results
+	// corresponding to
+	// sequential portions of audio.
+	Results []*SpeechRecognitionResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LongRunningRecognizeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LongRunningRecognizeResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -863,17 +942,6 @@ type WordInfo struct {
 	// vary.
 	EndTime string `json:"endTime,omitempty"`
 
-	// SpeakerTag: Output only. A distinct integer value is assigned for
-	// every speaker within
-	// the audio. This field specifies which one of those speakers was
-	// detected to
-	// have spoken this word. Value ranges from '1' to
-	// diarization_speaker_count.
-	// speaker_tag is set if enable_speaker_diarization = 'true' and only in
-	// the
-	// top alternative.
-	SpeakerTag int64 `json:"speakerTag,omitempty"`
-
 	// StartTime: Output only. Time offset relative to the beginning of the
 	// audio,
 	// and corresponding to the start of the spoken word.
@@ -1041,7 +1109,7 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "name": {
 	//       "description": "The name of the operation resource.",
 	//       "location": "path",
-	//       "pattern": "^[^/]+$",
+	//       "pattern": "^.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }

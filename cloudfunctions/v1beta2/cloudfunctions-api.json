@@ -220,7 +220,7 @@
             "functions": {
               "methods": {
                 "call": {
-                  "description": "Invokes synchronously deployed function. To be used for testing, very\nlimited traffic allowed.",
+                  "description": "Synchronously invokes a deployed Cloud Function. To be used for testing\npurposes as very limited traffic is allowed. For more information on\nthe actual limits refer to [API Calls](\nhttps://cloud.google.com/functions/quotas#rate_limits).",
                   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:call",
                   "httpMethod": "POST",
                   "id": "cloudfunctions.projects.locations.functions.call",
@@ -452,7 +452,7 @@
       }
     }
   },
-  "revision": "20181121",
+  "revision": "20181202",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {

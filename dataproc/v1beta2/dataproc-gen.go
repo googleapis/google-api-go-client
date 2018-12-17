@@ -3019,7 +3019,7 @@ type WorkflowTemplate struct {
 	// Id: Required. The template id.The id must contain only letters (a-z,
 	// A-Z), numbers (0-9), underscores (_), and hyphens (-). Cannot begin
 	// or end with underscore or hyphen. Must consist of between 3 and 50
-	// characters.
+	// characters..
 	Id string `json:"id,omitempty"`
 
 	// Jobs: Required. The Directed Acyclic Graph of Jobs to submit.

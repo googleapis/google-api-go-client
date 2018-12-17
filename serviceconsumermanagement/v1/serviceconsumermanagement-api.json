@@ -387,7 +387,7 @@
               ]
             },
             "delete": {
-              "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resources in it.\nOperation\u003cresponse: Empty\u003e.",
+              "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resources in it not in DELETED state.\nOperation\u003cresponse: Empty\u003e.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}",
               "httpMethod": "DELETE",
               "id": "serviceconsumermanagement.services.tenancyUnits.delete",
@@ -453,7 +453,7 @@
               ]
             },
             "removeProject": {
-              "description": "Removes specified project resource identified by tenant resource tag.\nIt will remove project lien with 'TenantManager' origin if that was added.\nIt will then attempt to delete the project.\nIf that operation fails, this method fails.\nOperation\u003cresponse: Empty\u003e.",
+              "description": "Removes specified project resource identified by tenant resource tag.\nIt will remove project lien with 'TenantManager' origin if that was added.\nIt will then attempt to delete the project. If that operation fails, this\nmethod fails.\nAfter the project has been deleted, or if was already in DELETED state,\nresource metadata is permanently removed from the tenancy unit.\nOperation\u003cresponse: Empty\u003e.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:removeProject",
               "httpMethod": "POST",
               "id": "serviceconsumermanagement.services.tenancyUnits.removeProject",
@@ -485,7 +485,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20181213",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -2215,14 +2215,16 @@
             "PENDING_CREATE",
             "ACTIVE",
             "PENDING_DELETE",
-            "FAILED"
+            "FAILED",
+            "DELETED"
           ],
           "enumDescriptions": [
             "Unspecified status is the default unset value.",
             "Creation of the tenant resource is ongoing.",
             "Active resource.",
             "Deletion of the resource is ongoing.",
-            "Tenant resource creation or deletion has failed."
+            "Tenant resource creation or deletion has failed.",
+            "Tenant resource has been deleted."
           ],
           "type": "string"
         },

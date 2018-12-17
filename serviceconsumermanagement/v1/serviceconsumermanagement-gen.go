@@ -4402,6 +4402,7 @@ type TenantResource struct {
 	//   "ACTIVE" - Active resource.
 	//   "PENDING_DELETE" - Deletion of the resource is ongoing.
 	//   "FAILED" - Tenant resource creation or deletion has failed.
+	//   "DELETED" - Tenant resource has been deleted.
 	Status string `json:"status,omitempty"`
 
 	// Tag: Unique per single tenancy unit.
@@ -6111,7 +6112,7 @@ type ServicesTenancyUnitsDeleteCall struct {
 
 // Delete: Delete a tenancy unit.  Before the tenancy unit is deleted,
 // there should be
-// no tenant resources in it.
+// no tenant resources in it not in DELETED state.
 // Operation<response: Empty>.
 func (r *ServicesTenancyUnitsService) Delete(name string) *ServicesTenancyUnitsDeleteCall {
 	c := &ServicesTenancyUnitsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6204,7 +6205,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resources in it.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resources in it not in DELETED state.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.delete",
@@ -6455,8 +6456,13 @@ type ServicesTenancyUnitsRemoveProjectCall struct {
 // tenant resource tag.
 // It will remove project lien with 'TenantManager' origin if that was
 // added.
-// It will then attempt to delete the project.
-// If that operation fails, this method fails.
+// It will then attempt to delete the project. If that operation fails,
+// this
+// method fails.
+// After the project has been deleted, or if was already in DELETED
+// state,
+// resource metadata is permanently removed from the tenancy
+// unit.
 // Operation<response: Empty>.
 func (r *ServicesTenancyUnitsService) RemoveProject(name string, removetenantprojectrequest *RemoveTenantProjectRequest) *ServicesTenancyUnitsRemoveProjectCall {
 	c := &ServicesTenancyUnitsRemoveProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6555,7 +6561,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes specified project resource identified by tenant resource tag.\nIt will remove project lien with 'TenantManager' origin if that was added.\nIt will then attempt to delete the project.\nIf that operation fails, this method fails.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Removes specified project resource identified by tenant resource tag.\nIt will remove project lien with 'TenantManager' origin if that was added.\nIt will then attempt to delete the project. If that operation fails, this\nmethod fails.\nAfter the project has been deleted, or if was already in DELETED state,\nresource metadata is permanently removed from the tenancy unit.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:removeProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.removeProject",

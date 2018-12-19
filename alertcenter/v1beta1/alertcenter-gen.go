@@ -62,6 +62,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Alerts = NewAlertsService(s)
+	s.V1beta1 = NewV1beta1Service(s)
 	return s, nil
 }
 
@@ -71,6 +72,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Alerts *AlertsService
+
+	V1beta1 *V1beta1Service
 }
 
 func (s *Service) userAgent() string {
@@ -98,6 +101,15 @@ func NewAlertsFeedbackService(s *Service) *AlertsFeedbackService {
 }
 
 type AlertsFeedbackService struct {
+	s *Service
+}
+
+func NewV1beta1Service(s *Service) *V1beta1Service {
+	rs := &V1beta1Service{s: s}
+	return rs
+}
+
+type V1beta1Service struct {
 	s *Service
 }
 
@@ -171,7 +183,7 @@ type Alert struct {
 	// query for this alert.
 	SecurityInvestigationToolLink string `json:"securityInvestigationToolLink,omitempty"`
 
-	// Source: Required. A unique identifier for the system that is reported
+	// Source: Required. A unique identifier for the system that reported
 	// the alert.
 	//
 	// Supported sources are any of the following:
@@ -343,6 +355,52 @@ type BadWhitelist struct {
 
 func (s *BadWhitelist) MarshalJSON() ([]byte, error) {
 	type NoMethod BadWhitelist
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudPubsubTopic: A reference to a Cloud Pubsub topic.
+//
+// To register for notifications, the owner of the topic must
+// grant
+// `alerts-api-push-notifications@system.gserviceaccount.com` the
+//  `projects.topics.publish` permission.
+type CloudPubsubTopic struct {
+	// PayloadFormat: Optional. The format of the payload that would be
+	// sent.
+	// If not specified the format will be JSON.
+	//
+	// Possible values:
+	//   "PAYLOAD_FORMAT_UNSPECIFIED" - Payload format is not specified
+	// (will use JSON as default).
+	//   "JSON" - Use JSON.
+	PayloadFormat string `json:"payloadFormat,omitempty"`
+
+	// TopicName: The `name` field of a Cloud Pubsub
+	// [Topic]
+	// (https://cloud.google.com/pubsub/docs/reference/rest/v1/projec
+	// ts.topics#Topic).
+	TopicName string `json:"topicName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PayloadFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PayloadFormat") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudPubsubTopic) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudPubsubTopic
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -863,6 +921,38 @@ func (s *MaliciousEntity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Notification: Settings for callback notifications.
+// For more details see [G Suite
+// Alert
+// Notification](/admin-sdk/alertcenter/guides/notifications).
+type Notification struct {
+	// CloudPubsubTopic: A Google Cloud Pub/sub topic destination.
+	CloudPubsubTopic *CloudPubsubTopic `json:"cloudPubsubTopic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudPubsubTopic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudPubsubTopic") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Notification) MarshalJSON() ([]byte, error) {
+	type NoMethod Notification
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PhishingSpike: Alert for a spike in user reported phishing.
 // <aside class="warning"><b>Warning</b>: This type has been deprecated.
 // Use
@@ -903,6 +993,38 @@ type PhishingSpike struct {
 
 func (s *PhishingSpike) MarshalJSON() ([]byte, error) {
 	type NoMethod PhishingSpike
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Settings: Customer-level settings.
+type Settings struct {
+	// Notifications: The list of notifications.
+	Notifications []*Notification `json:"notifications,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Notifications") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Notifications") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Settings) MarshalJSON() ([]byte, error) {
+	type NoMethod Settings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2053,6 +2175,288 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//   "path": "v1beta1/alerts/{alertId}/feedback",
 	//   "response": {
 	//     "$ref": "ListAlertFeedbackResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.alerts"
+	//   ]
+	// }
+
+}
+
+// method id "alertcenter.getSettings":
+
+type V1beta1GetSettingsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSettings: Returns customer-level settings.
+func (r *V1beta1Service) GetSettings() *V1beta1GetSettingsCall {
+	c := &V1beta1GetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": The unique
+// identifier of the G Suite organization account of the
+// customer the alert settings are associated with.
+// Inferred from the caller identity if not provided.
+func (c *V1beta1GetSettingsCall) CustomerId(customerId string) *V1beta1GetSettingsCall {
+	c.urlParams_.Set("customerId", customerId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1beta1GetSettingsCall) Fields(s ...googleapi.Field) *V1beta1GetSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *V1beta1GetSettingsCall) IfNoneMatch(entityTag string) *V1beta1GetSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1beta1GetSettingsCall) Context(ctx context.Context) *V1beta1GetSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1beta1GetSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1beta1GetSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/settings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alertcenter.getSettings" call.
+// Exactly one of *Settings or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Settings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1beta1GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Settings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns customer-level settings.",
+	//   "flatPath": "v1beta1/settings",
+	//   "httpMethod": "GET",
+	//   "id": "alertcenter.getSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert settings are associated with.\nInferred from the caller identity if not provided.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/settings",
+	//   "response": {
+	//     "$ref": "Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/apps.alerts"
+	//   ]
+	// }
+
+}
+
+// method id "alertcenter.updateSettings":
+
+type V1beta1UpdateSettingsCall struct {
+	s          *Service
+	settings   *Settings
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// UpdateSettings: Update the customer-level settings.
+func (r *V1beta1Service) UpdateSettings(settings *Settings) *V1beta1UpdateSettingsCall {
+	c := &V1beta1UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.settings = settings
+	return c
+}
+
+// CustomerId sets the optional parameter "customerId": The unique
+// identifier of the G Suite organization account of the
+// customer the alert settings are associated with.
+// Inferred from the caller identity if not provided.
+func (c *V1beta1UpdateSettingsCall) CustomerId(customerId string) *V1beta1UpdateSettingsCall {
+	c.urlParams_.Set("customerId", customerId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *V1beta1UpdateSettingsCall) Fields(s ...googleapi.Field) *V1beta1UpdateSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *V1beta1UpdateSettingsCall) Context(ctx context.Context) *V1beta1UpdateSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *V1beta1UpdateSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1beta1UpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.settings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/settings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "alertcenter.updateSettings" call.
+// Exactly one of *Settings or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Settings.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V1beta1UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Settings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the customer-level settings.",
+	//   "flatPath": "v1beta1/settings",
+	//   "httpMethod": "PATCH",
+	//   "id": "alertcenter.updateSettings",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "customerId": {
+	//       "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert settings are associated with.\nInferred from the caller identity if not provided.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta1/settings",
+	//   "request": {
+	//     "$ref": "Settings"
+	//   },
+	//   "response": {
+	//     "$ref": "Settings"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/apps.alerts"

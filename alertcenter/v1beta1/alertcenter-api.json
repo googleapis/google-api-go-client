@@ -306,9 +306,58 @@
           }
         }
       }
+    },
+    "v1beta1": {
+      "methods": {
+        "getSettings": {
+          "description": "Returns customer-level settings.",
+          "flatPath": "v1beta1/settings",
+          "httpMethod": "GET",
+          "id": "alertcenter.getSettings",
+          "parameterOrder": [],
+          "parameters": {
+            "customerId": {
+              "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert settings are associated with.\nInferred from the caller identity if not provided.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/settings",
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.alerts"
+          ]
+        },
+        "updateSettings": {
+          "description": "Update the customer-level settings.",
+          "flatPath": "v1beta1/settings",
+          "httpMethod": "PATCH",
+          "id": "alertcenter.updateSettings",
+          "parameterOrder": [],
+          "parameters": {
+            "customerId": {
+              "description": "Optional. The unique identifier of the G Suite organization account of the\ncustomer the alert settings are associated with.\nInferred from the caller identity if not provided.",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v1beta1/settings",
+          "request": {
+            "$ref": "Settings"
+          },
+          "response": {
+            "$ref": "Settings"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/apps.alerts"
+          ]
+        }
+      }
     }
   },
-  "revision": "20181207",
+  "revision": "20181215",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -365,7 +414,7 @@
           "type": "string"
         },
         "source": {
-          "description": "Required. A unique identifier for the system that is reported the alert.\n\nSupported sources are any of the following:\n\n* Google Operations\n* Mobile device management\n* Gmail phishing\n* Domain wide takeout\n* Government attack warning\n* Google identity",
+          "description": "Required. A unique identifier for the system that reported the alert.\n\nSupported sources are any of the following:\n\n* Google Operations\n* Mobile device management\n* Gmail phishing\n* Domain wide takeout\n* Government attack warning\n* Google identity",
           "type": "string"
         },
         "startTime": {
@@ -456,6 +505,29 @@
         },
         "sourceIp": {
           "description": "The source IP address of the malicious email, for example,\n`127.0.0.1`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudPubsubTopic": {
+      "description": "A reference to a Cloud Pubsub topic.\n\nTo register for notifications, the owner of the topic must grant\n`alerts-api-push-notifications@system.gserviceaccount.com` the\n `projects.topics.publish` permission.",
+      "id": "CloudPubsubTopic",
+      "properties": {
+        "payloadFormat": {
+          "description": "Optional. The format of the payload that would be sent.\nIf not specified the format will be JSON.",
+          "enum": [
+            "PAYLOAD_FORMAT_UNSPECIFIED",
+            "JSON"
+          ],
+          "enumDescriptions": [
+            "Payload format is not specified (will use JSON as default).",
+            "Use JSON."
+          ],
+          "type": "string"
+        },
+        "topicName": {
+          "description": "The `name` field of a Cloud Pubsub [Topic]\n(https://cloud.google.com/pubsub/docs/reference/rest/v1/projects.topics#Topic).",
           "type": "string"
         }
       },
@@ -735,6 +807,17 @@
       },
       "type": "object"
     },
+    "Notification": {
+      "description": "Settings for callback notifications.\nFor more details see [G Suite Alert\nNotification](/admin-sdk/alertcenter/guides/notifications).",
+      "id": "Notification",
+      "properties": {
+        "cloudPubsubTopic": {
+          "$ref": "CloudPubsubTopic",
+          "description": "A Google Cloud Pub/sub topic destination."
+        }
+      },
+      "type": "object"
+    },
     "PhishingSpike": {
       "description": "Alert for a spike in user reported phishing.\n\u003caside class=\"warning\"\u003e\u003cb\u003eWarning\u003c/b\u003e: This type has been deprecated. Use\n[MailPhishing](/admin-sdk/alertcenter/reference/rest/v1beta1/MailPhishing)\ninstead.\u003c/aside\u003e",
       "id": "PhishingSpike",
@@ -755,6 +838,20 @@
           "description": "The list of messages contained by this alert.",
           "items": {
             "$ref": "GmailMessageInfo"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Settings": {
+      "description": "Customer-level settings.",
+      "id": "Settings",
+      "properties": {
+        "notifications": {
+          "description": "The list of notifications.",
+          "items": {
+            "$ref": "Notification"
           },
           "type": "array"
         }

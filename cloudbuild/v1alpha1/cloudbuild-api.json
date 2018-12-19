@@ -244,7 +244,7 @@
       }
     }
   },
-  "revision": "20181213",
+  "revision": "20181218",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -993,18 +993,18 @@
           "description": "List of regions to create the `WorkerPool`. Regions can’t be empty.\nIf Cloud Build adds a new GCP region in the future, the existing\n`WorkerPool` will not be enabled in the new region automatically;\nyou must add the new region to the `regions` field to enable the\n`WorkerPool` in that region.",
           "enumDescriptions": [
             "no region",
-            "us-central-1 region",
-            "us-west-1 region",
-            "us-east-1 region",
-            "us-east-4 region"
+            "us-central1 region",
+            "us-west1 region",
+            "us-east1 region",
+            "us-east4 region"
           ],
           "items": {
             "enum": [
               "REGION_UNSPECIFIED",
-              "US_CENTRAL_1",
-              "US_WEST_1",
-              "US_EAST_1",
-              "US_EAST_4"
+              "US_CENTRAL1",
+              "US_WEST1",
+              "US_EAST1",
+              "US_EAST4"
             ],
             "type": "string"
           },

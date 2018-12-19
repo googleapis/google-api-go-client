@@ -1414,10 +1414,10 @@ type WorkerPool struct {
 	//
 	// Possible values:
 	//   "REGION_UNSPECIFIED" - no region
-	//   "US_CENTRAL_1" - us-central-1 region
-	//   "US_WEST_1" - us-west-1 region
-	//   "US_EAST_1" - us-east-1 region
-	//   "US_EAST_4" - us-east-4 region
+	//   "US_CENTRAL1" - us-central1 region
+	//   "US_WEST1" - us-west1 region
+	//   "US_EAST1" - us-east1 region
+	//   "US_EAST4" - us-east4 region
 	Regions []string `json:"regions,omitempty"`
 
 	// ServiceAccountEmail: Output only. The service account used to manage

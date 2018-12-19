@@ -298,6 +298,7 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
+	//   "NVIDIA_TESLA_T4" - Nvidia Tesla T4 GPU.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -413,6 +414,7 @@ type GoogleCloudMlV1__Capability struct {
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
+	//   "NVIDIA_TESLA_T4" - Nvidia Tesla T4 GPU.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:
@@ -1298,7 +1300,7 @@ func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__PredictionInput: Represents input parameters for a
-// prediction job. Next field: 19
+// prediction job. Next field: 20
 type GoogleCloudMlV1__PredictionInput struct {
 	// Accelerator: Optional. The type and number of accelerators to be
 	// attached to each
@@ -1373,9 +1375,9 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// for ML Engine services.
 	Region string `json:"region,omitempty"`
 
-	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
+	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
 	// for this batch
-	// prediction. If not set, Google Cloud ML will pick the runtime version
+	// prediction. If not set, Cloud ML Engine will pick the runtime version
 	// used
 	// during the CreateVersion request for this model version, or choose
 	// the
@@ -1668,8 +1670,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// not set, the default
 	// version is '2.7'. Python '3.5' is available when `runtime_version` is
 	// set
-	// to '1.4' and above. Python '2.7' works with all supported runtime
-	// versions.
+	// to '1.4' and above. Python '2.7' works with all supported
+	// <a href="/ml-engine/docs/runtime-version-list">runtime versions</a>.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
 	// Region: Required. The Google Compute Engine region to run the
@@ -1679,11 +1681,16 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// for ML Engine services.
 	Region string `json:"region,omitempty"`
 
-	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
-	// for training.  If not
-	// set, Google Cloud ML will choose a stable version, which is defined
-	// in the
-	// documentation of runtime version list.
+	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
+	// for training. If not
+	// set, Cloud ML Engine uses the default stable version, 1.0. For
+	// more
+	// information, see the
+	// <a href="/ml-engine/docs/runtime-version-list">runtime version
+	// list</a>
+	// and
+	// <a href="/ml-engine/docs/versioning">how to manage runtime
+	// versions</a>.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// ScaleTier: Required. Specifies the machine types, the number of
@@ -1988,9 +1995,13 @@ type GoogleCloudMlV1__Version struct {
 	// versions.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
-	// RuntimeVersion: Optional. The Google Cloud ML runtime version to use
+	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
 	// for this deployment.
-	// If not set, Google Cloud ML will choose a version.
+	// If not set, Cloud ML Engine uses the default stable version, 1.0. For
+	// more
+	// information, see the
+	// [runtime version list](/ml-engine/docs/runtime-version-list) and
+	// [how to manage runtime versions](/ml-engine/docs/versioning).
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
 	// State: Output only. The state of a version.

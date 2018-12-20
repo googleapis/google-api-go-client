@@ -742,6 +742,14 @@ func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	return c
 }
 
+// OrgUnitID sets the optional parameter "orgUnitID": the organizational
+// unit's(OU) ID to filter activities from users belonging to a specific
+// OU or one of its sub-OU(s)
+func (c *ActivitiesListCall) OrgUnitID(orgUnitID string) *ActivitiesListCall {
+	c.urlParams_.Set("orgUnitID", orgUnitID)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Token to specify
 // next page.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
@@ -906,6 +914,13 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//       "minimum": "1",
 	//       "type": "integer"
 	//     },
+	//     "orgUnitID": {
+	//       "default": "",
+	//       "description": "the organizational unit's(OU) ID to filter activities from users belonging to a specific OU or one of its sub-OU(s)",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+)",
+	//       "type": "string"
+	//     },
 	//     "pageToken": {
 	//       "description": "Token to specify next page.",
 	//       "location": "query",
@@ -1019,6 +1034,14 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 // activity records to be shown in each page.
 func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrgUnitID sets the optional parameter "orgUnitID": the organizational
+// unit's(OU) ID to filter activities from users belonging to a specific
+// OU or one of its sub-OU(s)
+func (c *ActivitiesWatchCall) OrgUnitID(orgUnitID string) *ActivitiesWatchCall {
+	c.urlParams_.Set("orgUnitID", orgUnitID)
 	return c
 }
 
@@ -1177,6 +1200,13 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//       "maximum": "1000",
 	//       "minimum": "1",
 	//       "type": "integer"
+	//     },
+	//     "orgUnitID": {
+	//       "default": "",
+	//       "description": "the organizational unit's(OU) ID to filter activities from users belonging to a specific OU or one of its sub-OU(s)",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+)",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Token to specify next page.",
@@ -1802,6 +1832,14 @@ func (c *UserUsageReportGetCall) MaxResults(maxResults int64) *UserUsageReportGe
 	return c
 }
 
+// OrgUnitID sets the optional parameter "orgUnitID": the organizational
+// unit's ID to filter usage parameters from users belonging to a
+// specific OU or one of its sub-OU(s).
+func (c *UserUsageReportGetCall) OrgUnitID(orgUnitID string) *UserUsageReportGetCall {
+	c.urlParams_.Set("orgUnitID", orgUnitID)
+	return c
+}
+
 // PageToken sets the optional parameter "pageToken": Token to specify
 // next page.
 func (c *UserUsageReportGetCall) PageToken(pageToken string) *UserUsageReportGetCall {
@@ -1949,6 +1987,13 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 	//       "location": "query",
 	//       "maximum": "1000",
 	//       "type": "integer"
+	//     },
+	//     "orgUnitID": {
+	//       "default": "",
+	//       "description": "the organizational unit's ID to filter usage parameters from users belonging to a specific OU or one of its sub-OU(s).",
+	//       "location": "query",
+	//       "pattern": "(id:[a-z0-9]+)",
+	//       "type": "string"
 	//     },
 	//     "pageToken": {
 	//       "description": "Token to specify next page.",

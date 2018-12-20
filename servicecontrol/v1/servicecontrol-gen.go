@@ -464,17 +464,6 @@ type AuthenticationInfo struct {
 	// with a "permission denied" error.
 	PrincipalEmail string `json:"principalEmail,omitempty"`
 
-	// ServiceAccountKeyName: The name of the service account key used to
-	// create or exchange
-	// credentials for authenticating the service account making the
-	// request.
-	// This is a scheme-less URI full resource name. For
-	// example:
-	//
-	// "//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/
-	// {ACCOUNT}/keys/{key}"
-	ServiceAccountKeyName string `json:"serviceAccountKeyName,omitempty"`
-
 	// ThirdPartyPrincipal: The third party identification (if any) of the
 	// authenticated user making
 	// the request.
@@ -633,14 +622,8 @@ type CheckError struct {
 	// project is unavailable.
 	//   "CLOUD_RESOURCE_MANAGER_BACKEND_UNAVAILABLE" - Cloud Resource
 	// Manager backend server is unavailable.
-	//   "SECURITY_POLICY_BACKEND_UNAVAILABLE" - NOTE: for customers in the
-	// scope of Beta/GA of
-	// https://cloud.google.com/vpc-service-controls, this error
-	// is no longer returned. If the security backend is unavailable,
-	// rpc
-	// UNAVAILABLE status will be returned instead. It should be ignored
-	// and
-	// should not be used to reject client requests.
+	//   "SECURITY_POLICY_BACKEND_UNAVAILABLE" - Backend server for
+	// evaluating security policy is unavailable.
 	//   "LOCATION_POLICY_BACKEND_UNAVAILABLE" - Backend server for
 	// evaluating location policy is unavailable.
 	Code string `json:"code,omitempty"`

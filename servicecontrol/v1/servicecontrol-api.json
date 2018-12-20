@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20181214",
+  "revision": "20181210",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -396,10 +396,6 @@
           "description": "The email address of the authenticated user (or service account on behalf\nof third party principal) making the request. For privacy reasons, the\nprincipal email address is redacted for all read-only operations that fail\nwith a \"permission denied\" error.",
           "type": "string"
         },
-        "serviceAccountKeyName": {
-          "description": "The name of the service account key used to create or exchange\ncredentials for authenticating the service account making the request.\nThis is a scheme-less URI full resource name. For example:\n\n\"//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}\"",
-          "type": "string"
-        },
         "thirdPartyPrincipal": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -513,7 +509,7 @@
             "The backend server for checking quota limits is unavailable.",
             "The Spanner for looking up LOAS project is unavailable.",
             "Cloud Resource Manager backend server is unavailable.",
-            "NOTE: for customers in the scope of Beta/GA of\nhttps://cloud.google.com/vpc-service-controls, this error\nis no longer returned. If the security backend is unavailable, rpc\nUNAVAILABLE status will be returned instead. It should be ignored and\nshould not be used to reject client requests.",
+            "Backend server for evaluating security policy is unavailable.",
             "Backend server for evaluating location policy is unavailable."
           ],
           "type": "string"

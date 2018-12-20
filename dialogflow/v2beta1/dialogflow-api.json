@@ -2003,203 +2003,6 @@
             }
           }
         },
-        "environments": {
-          "resources": {
-            "users": {
-              "resources": {
-                "conversations": {
-                  "methods": {
-                    "deleteContexts": {
-                      "description": "Deletes all active contexts in the specified session.",
-                      "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts",
-                      "httpMethod": "DELETE",
-                      "id": "dialogflow.projects.environments.users.conversations.deleteContexts",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Required. The name of the session to delete all contexts from. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e` or `projects/\u003cProject\nID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser ID\u003e/sessions/\u003cSession\nID\u003e`. If `Environment ID` is not specified we assume default 'draft'\nenvironment. If `User ID` is not specified, we assume default '-' user.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v2beta1/{+parent}/contexts",
-                      "response": {
-                        "$ref": "GoogleProtobufEmpty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/dialogflow"
-                      ]
-                    }
-                  },
-                  "resources": {
-                    "contexts": {
-                      "methods": {
-                        "create": {
-                          "description": "Creates a context.\n\nIf the specified context already exists, overrides the context.",
-                          "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts",
-                          "httpMethod": "POST",
-                          "id": "dialogflow.projects.environments.users.conversations.contexts.create",
-                          "parameterOrder": [
-                            "parent"
-                          ],
-                          "parameters": {
-                            "parent": {
-                              "description": "Required. The session to create a context for.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e` or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we assume\ndefault '-' user.",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            }
-                          },
-                          "path": "v2beta1/{+parent}/contexts",
-                          "request": {
-                            "$ref": "GoogleCloudDialogflowV2beta1Context"
-                          },
-                          "response": {
-                            "$ref": "GoogleCloudDialogflowV2beta1Context"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform",
-                            "https://www.googleapis.com/auth/dialogflow"
-                          ]
-                        },
-                        "delete": {
-                          "description": "Deletes the specified context.",
-                          "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts/{contextsId}",
-                          "httpMethod": "DELETE",
-                          "id": "dialogflow.projects.environments.users.conversations.contexts.delete",
-                          "parameterOrder": [
-                            "name"
-                          ],
-                          "parameters": {
-                            "name": {
-                              "description": "Required. The name of the context to delete. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`\nor `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`. If `Environment ID` is\nnot specified, we assume default 'draft' environment. If `User ID` is not\nspecified, we assume default '-' user.",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+/contexts/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            }
-                          },
-                          "path": "v2beta1/{+name}",
-                          "response": {
-                            "$ref": "GoogleProtobufEmpty"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform",
-                            "https://www.googleapis.com/auth/dialogflow"
-                          ]
-                        },
-                        "get": {
-                          "description": "Retrieves the specified context.",
-                          "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts/{contextsId}",
-                          "httpMethod": "GET",
-                          "id": "dialogflow.projects.environments.users.conversations.contexts.get",
-                          "parameterOrder": [
-                            "name"
-                          ],
-                          "parameters": {
-                            "name": {
-                              "description": "Required. The name of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`\nor `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`. If `Environment ID` is\nnot specified, we assume default 'draft' environment. If `User ID` is not\nspecified, we assume default '-' user.",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+/contexts/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            }
-                          },
-                          "path": "v2beta1/{+name}",
-                          "response": {
-                            "$ref": "GoogleCloudDialogflowV2beta1Context"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform",
-                            "https://www.googleapis.com/auth/dialogflow"
-                          ]
-                        },
-                        "list": {
-                          "description": "Returns the list of all contexts in the specified session.",
-                          "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts",
-                          "httpMethod": "GET",
-                          "id": "dialogflow.projects.environments.users.conversations.contexts.list",
-                          "parameterOrder": [
-                            "parent"
-                          ],
-                          "parameters": {
-                            "pageSize": {
-                              "description": "Optional. The maximum number of items to return in a single page. By\ndefault 100 and at most 1000.",
-                              "format": "int32",
-                              "location": "query",
-                              "type": "integer"
-                            },
-                            "pageToken": {
-                              "description": "Optional. The next_page_token value returned from a previous list request.",
-                              "location": "query",
-                              "type": "string"
-                            },
-                            "parent": {
-                              "description": "Required. The session to list all contexts from.\nFormat: `projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e` or\n`projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e`. If `Environment ID` is not specified, we assume\ndefault 'draft' environment. If `User ID` is not specified, we assume\ndefault '-' user.",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            }
-                          },
-                          "path": "v2beta1/{+parent}/contexts",
-                          "response": {
-                            "$ref": "GoogleCloudDialogflowV2beta1ListContextsResponse"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform",
-                            "https://www.googleapis.com/auth/dialogflow"
-                          ]
-                        },
-                        "patch": {
-                          "description": "Updates the specified context.",
-                          "flatPath": "v2beta1/projects/{projectsId}/environments/{environmentsId}/users/{usersId}/conversations/{conversationsId}/contexts/{contextsId}",
-                          "httpMethod": "PATCH",
-                          "id": "dialogflow.projects.environments.users.conversations.contexts.patch",
-                          "parameterOrder": [
-                            "name"
-                          ],
-                          "parameters": {
-                            "name": {
-                              "description": "Required. The unique identifier of the context. Format:\n`projects/\u003cProject ID\u003e/agent/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`,\nor `projects/\u003cProject ID\u003e/agent/environments/\u003cEnvironment ID\u003e/users/\u003cUser\nID\u003e/sessions/\u003cSession ID\u003e/contexts/\u003cContext ID\u003e`.\n\nThe `Context ID` is always converted to lowercase, may only contain\ncharacters in a-zA-Z0-9_-% and may be at most 250 bytes long.\n\nIf `Environment ID` is not specified, we assume default 'draft'\nenvironment. If `User ID` is not specified, we assume default '-' user.",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/environments/[^/]+/users/[^/]+/conversations/[^/]+/contexts/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            },
-                            "updateMask": {
-                              "description": "Optional. The mask to control which fields get updated.",
-                              "format": "google-fieldmask",
-                              "location": "query",
-                              "type": "string"
-                            }
-                          },
-                          "path": "v2beta1/{+name}",
-                          "request": {
-                            "$ref": "GoogleCloudDialogflowV2beta1Context"
-                          },
-                          "response": {
-                            "$ref": "GoogleCloudDialogflowV2beta1Context"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform",
-                            "https://www.googleapis.com/auth/dialogflow"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
         "knowledgeBases": {
           "methods": {
             "create": {
@@ -2583,7 +2386,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20181215",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3430,7 +3233,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field\ncould contain webhook call latency.",
+          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
           "type": "object"
         },
         "fulfillmentMessages": {
@@ -3820,37 +3623,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1ConversationEvent": {
-      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for conversation\nlifecycle events.",
-      "id": "GoogleCloudDialogflowV2beta1ConversationEvent",
-      "properties": {
-        "conversation": {
-          "description": "Required. The unique identifier of the conversation this notification\nrefers to. Format: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-          "type": "string"
-        },
-        "errorStatus": {
-          "$ref": "GoogleRpcStatus",
-          "description": "Optional. More detailed information about an error. Only set for type\nUNRECOVERABLE_ERROR_IN_PHONE_CALL."
-        },
-        "type": {
-          "description": "Required. The type of the event that this notification refers to.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "CONVERSATION_STARTED",
-            "CONVERSATION_FINISHED",
-            "UNRECOVERABLE_ERROR"
-          ],
-          "enumDescriptions": [
-            "Type not set.",
-            "A new conversation has been opened. This is fired when a telephone call\nis answered, or a conversation is created via the API.",
-            "An existing conversation has closed. This is fired when a telephone call\nis terminated, or a conversation is closed via the API.",
-            "Unrecoverable error during a telephone call.\n\nIn general non-recoverable errors only occur if something was\nmisconfigured in the ConversationProfile corresponding to the call. After\na non-recoverable error, Dialogflow may stop responding.\n\nWe don't fire this event:\n* in an API call because we can directly return the error, or,\n* when we can recover from an error."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1DetectIntentRequest": {
       "description": "The request to detect user's intent.",
       "id": "GoogleCloudDialogflowV2beta1DetectIntentRequest",
@@ -4084,29 +3856,6 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated\nonly if `agent_uri` is specified in `ExportAgentRequest`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent": {
-      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for\nagent assistant events in a specific conversation.",
-      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent",
-      "properties": {
-        "conversation": {
-          "description": "Required. The conversation this notification refers to.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-          "type": "string"
-        },
-        "type": {
-          "description": "Required. The type of the event that this notification refers to.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "NEW_SUGGESTION"
-          ],
-          "enumDescriptions": [
-            "Type not set.",
-            "A new suggestion has been sent.\nThis is fired when a suggestion comes from an agent assistant."
-          ],
           "type": "string"
         }
       },
@@ -5244,7 +4993,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field\ncould contain webhook call latency.",
+          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
           "type": "object"
         },
         "fulfillmentMessages": {
@@ -5471,7 +5220,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The UTF-8 encoded natural language text to be processed.\nText length must not exceed 256 bytes.",
+          "description": "Required. The UTF-8 encoded natural language text to be processed.\nText length must not exceed 256 characters.",
           "type": "string"
         }
       },

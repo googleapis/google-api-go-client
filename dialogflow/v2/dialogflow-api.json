@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20181215",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -2631,7 +2631,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field\ncould contain webhook call latency.",
+          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
           "type": "object"
         },
         "fulfillmentMessages": {
@@ -2772,7 +2772,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The UTF-8 encoded natural language text to be processed.\nText length must not exceed 256 bytes.",
+          "description": "Required. The UTF-8 encoded natural language text to be processed.\nText length must not exceed 256 characters.",
           "type": "string"
         }
       },
@@ -2900,37 +2900,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDialogflowV2beta1ConversationEvent": {
-      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for conversation\nlifecycle events.",
-      "id": "GoogleCloudDialogflowV2beta1ConversationEvent",
-      "properties": {
-        "conversation": {
-          "description": "Required. The unique identifier of the conversation this notification\nrefers to. Format: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-          "type": "string"
-        },
-        "errorStatus": {
-          "$ref": "GoogleRpcStatus",
-          "description": "Optional. More detailed information about an error. Only set for type\nUNRECOVERABLE_ERROR_IN_PHONE_CALL."
-        },
-        "type": {
-          "description": "Required. The type of the event that this notification refers to.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "CONVERSATION_STARTED",
-            "CONVERSATION_FINISHED",
-            "UNRECOVERABLE_ERROR"
-          ],
-          "enumDescriptions": [
-            "Type not set.",
-            "A new conversation has been opened. This is fired when a telephone call\nis answered, or a conversation is created via the API.",
-            "An existing conversation has closed. This is fired when a telephone call\nis terminated, or a conversation is closed via the API.",
-            "Unrecoverable error during a telephone call.\n\nIn general non-recoverable errors only occur if something was\nmisconfigured in the ConversationProfile corresponding to the call. After\na non-recoverable error, Dialogflow may stop responding.\n\nWe don't fire this event:\n* in an API call because we can directly return the error, or,\n* when we can recover from an error."
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDialogflowV2beta1EntityType": {
       "description": "Represents an entity type.\nEntity types serve as a tool for extracting parameter values from natural\nlanguage queries.",
       "id": "GoogleCloudDialogflowV2beta1EntityType",
@@ -3031,29 +3000,6 @@
         },
         "agentUri": {
           "description": "The URI to a file containing the exported agent. This field is populated\nonly if `agent_uri` is specified in `ExportAgentRequest`.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent": {
-      "description": "Represents a notification sent to Cloud Pub/Sub subscribers for\nagent assistant events in a specific conversation.",
-      "id": "GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent",
-      "properties": {
-        "conversation": {
-          "description": "Required. The conversation this notification refers to.\nFormat: `projects/\u003cProject ID\u003e/conversations/\u003cConversation ID\u003e`.",
-          "type": "string"
-        },
-        "type": {
-          "description": "Required. The type of the event that this notification refers to.",
-          "enum": [
-            "TYPE_UNSPECIFIED",
-            "NEW_SUGGESTION"
-          ],
-          "enumDescriptions": [
-            "Type not set.",
-            "A new suggestion has been sent.\nThis is fired when a suggestion comes from an agent assistant."
-          ],
           "type": "string"
         }
       },
@@ -3884,7 +3830,7 @@
             "description": "Properties of the object.",
             "type": "any"
           },
-          "description": "The free-form diagnostic info. For example, this field\ncould contain webhook call latency.",
+          "description": "The free-form diagnostic info. For example, this field could contain\nwebhook call latency. The string keys of the Struct's fields map can change\nwithout notice.",
           "type": "object"
         },
         "fulfillmentMessages": {

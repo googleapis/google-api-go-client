@@ -702,6 +702,9 @@ type File struct {
 	// opposed to recursively trashed from a parent folder.
 	ExplicitlyTrashed bool `json:"explicitlyTrashed,omitempty"`
 
+	// ExportLinks: Links for exporting Google Docs to specific formats.
+	ExportLinks map[string]string `json:"exportLinks,omitempty"`
+
 	// FileExtension: The final component of fullFileExtension. This is only
 	// available for files with binary content in Drive.
 	FileExtension string `json:"fileExtension,omitempty"`
@@ -1727,6 +1730,9 @@ func (s *ReplyList) MarshalJSON() ([]byte, error) {
 
 // Revision: The metadata for a revision to a file.
 type Revision struct {
+	// ExportLinks: Links for exporting Google Docs to specific formats.
+	ExportLinks map[string]string `json:"exportLinks,omitempty"`
+
 	// Id: The ID of the revision.
 	Id string `json:"id,omitempty"`
 
@@ -1779,7 +1785,7 @@ type Revision struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Id") to
+	// ForceSendFields is a list of field names (e.g. "ExportLinks") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1787,10 +1793,10 @@ type Revision struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ExportLinks") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

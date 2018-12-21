@@ -2824,8 +2824,10 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// DiagnosticInfo: The free-form diagnostic info. For example, this
-	// field
-	// could contain webhook call latency.
+	// field could contain
+	// webhook call latency. The string keys of the Struct's fields map can
+	// change
+	// without notice.
 	DiagnosticInfo googleapi.RawMessage `json:"diagnosticInfo,omitempty"`
 
 	// FulfillmentMessages: The collection of rich messages to present to
@@ -3132,7 +3134,7 @@ type GoogleCloudDialogflowV2TextInput struct {
 
 	// Text: Required. The UTF-8 encoded natural language text to be
 	// processed.
-	// Text length must not exceed 256 bytes.
+	// Text length must not exceed 256 characters.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
@@ -3414,70 +3416,6 @@ func (s *GoogleCloudDialogflowV2beta1Context) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1ConversationEvent: Represents a
-// notification sent to Cloud Pub/Sub subscribers for
-// conversation
-// lifecycle events.
-type GoogleCloudDialogflowV2beta1ConversationEvent struct {
-	// Conversation: Required. The unique identifier of the conversation
-	// this notification
-	// refers to. Format: `projects/<Project ID>/conversations/<Conversation
-	// ID>`.
-	Conversation string `json:"conversation,omitempty"`
-
-	// ErrorStatus: Optional. More detailed information about an error. Only
-	// set for type
-	// UNRECOVERABLE_ERROR_IN_PHONE_CALL.
-	ErrorStatus *GoogleRpcStatus `json:"errorStatus,omitempty"`
-
-	// Type: Required. The type of the event that this notification refers
-	// to.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Type not set.
-	//   "CONVERSATION_STARTED" - A new conversation has been opened. This
-	// is fired when a telephone call
-	// is answered, or a conversation is created via the API.
-	//   "CONVERSATION_FINISHED" - An existing conversation has closed. This
-	// is fired when a telephone call
-	// is terminated, or a conversation is closed via the API.
-	//   "UNRECOVERABLE_ERROR" - Unrecoverable error during a telephone
-	// call.
-	//
-	// In general non-recoverable errors only occur if something
-	// was
-	// misconfigured in the ConversationProfile corresponding to the call.
-	// After
-	// a non-recoverable error, Dialogflow may stop responding.
-	//
-	// We don't fire this event:
-	// * in an API call because we can directly return the error, or,
-	// * when we can recover from an error.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Conversation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Conversation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1ConversationEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1ConversationEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2beta1EntityType: Represents an entity
 // type.
 // Entity types serve as a tool for extracting parameter values from
@@ -3685,47 +3623,6 @@ type GoogleCloudDialogflowV2beta1ExportAgentResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1ExportAgentResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ExportAgentResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent: Represents a
-// notification sent to Cloud Pub/Sub subscribers for
-// agent assistant events in a specific conversation.
-type GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent struct {
-	// Conversation: Required. The conversation this notification refers
-	// to.
-	// Format: `projects/<Project ID>/conversations/<Conversation ID>`.
-	Conversation string `json:"conversation,omitempty"`
-
-	// Type: Required. The type of the event that this notification refers
-	// to.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Type not set.
-	//   "NEW_SUGGESTION" - A new suggestion has been sent.
-	// This is fired when a suggestion comes from an agent assistant.
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Conversation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Conversation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1HumanAgentAssistantEvent
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5325,8 +5222,10 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	AllRequiredParamsPresent bool `json:"allRequiredParamsPresent,omitempty"`
 
 	// DiagnosticInfo: The free-form diagnostic info. For example, this
-	// field
-	// could contain webhook call latency.
+	// field could contain
+	// webhook call latency. The string keys of the Struct's fields map can
+	// change
+	// without notice.
 	DiagnosticInfo googleapi.RawMessage `json:"diagnosticInfo,omitempty"`
 
 	// FulfillmentMessages: The collection of rich messages to present to

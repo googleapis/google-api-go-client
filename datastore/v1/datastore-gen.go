@@ -948,7 +948,6 @@ func (s *GoogleDatastoreAdminV1ImportEntitiesRequest) MarshalJSON() ([]byte, err
 }
 
 // GoogleDatastoreAdminV1Index: A minimal index definition.
-// Next tag: 8
 type GoogleDatastoreAdminV1Index struct {
 	// Ancestor: The index's ancestor mode.  Must not be
 	// ANCESTOR_MODE_UNSPECIFIED.
@@ -1066,7 +1065,7 @@ func (s *GoogleDatastoreAdminV1IndexOperationMetadata) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleDatastoreAdminV1IndexedProperty: Next tag: 3
+// GoogleDatastoreAdminV1IndexedProperty: A property of an index.
 type GoogleDatastoreAdminV1IndexedProperty struct {
 	// Direction: The indexed property's direction.  Must not be
 	// DIRECTION_UNSPECIFIED.

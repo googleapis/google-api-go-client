@@ -1572,7 +1572,7 @@
       }
     }
   },
-  "revision": "20181120",
+  "revision": "20181218",
   "rootUrl": "https://appengine.googleapis.com/",
   "schemas": {
     "ApiConfigHandler": {
@@ -3550,6 +3550,10 @@
         },
         "runtimeChannel": {
           "description": "The channel of the runtime to use. Only available for some runtimes. Defaults to the default channel.",
+          "type": "string"
+        },
+        "runtimeMainExecutablePath": {
+          "description": "The path or name of the app's main executable.",
           "type": "string"
         },
         "servingStatus": {

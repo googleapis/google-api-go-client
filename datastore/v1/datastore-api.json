@@ -564,7 +564,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20181207",
   "rootUrl": "https://datastore.googleapis.com/",
   "schemas": {
     "AllocateIdsRequest": {
@@ -967,7 +967,7 @@
       "type": "object"
     },
     "GoogleDatastoreAdminV1Index": {
-      "description": "A minimal index definition.\nNext tag: 8",
+      "description": "A minimal index definition.",
       "id": "GoogleDatastoreAdminV1Index",
       "properties": {
         "ancestor": {
@@ -1044,7 +1044,7 @@
       "type": "object"
     },
     "GoogleDatastoreAdminV1IndexedProperty": {
-      "description": "Next tag: 3",
+      "description": "A property of an index.",
       "id": "GoogleDatastoreAdminV1IndexedProperty",
       "properties": {
         "direction": {

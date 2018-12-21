@@ -3532,6 +3532,10 @@ type Version struct {
 	// some runtimes. Defaults to the default channel.
 	RuntimeChannel string `json:"runtimeChannel,omitempty"`
 
+	// RuntimeMainExecutablePath: The path or name of the app's main
+	// executable.
+	RuntimeMainExecutablePath string `json:"runtimeMainExecutablePath,omitempty"`
+
 	// ServingStatus: Current serving status of this version. Only the
 	// versions with a SERVING status create instances and can be
 	// billed.SERVING_STATUS_UNSPECIFIED is an invalid value. Defaults to

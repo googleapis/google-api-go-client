@@ -1074,7 +1074,7 @@
       }
     }
   },
-  "revision": "20181213",
+  "revision": "20181203",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1267,7 +1267,7 @@
       "id": "ModifyAckDeadlineRequest",
       "properties": {
         "ackDeadlineSeconds": {
-          "description": "The new ack deadline with respect to the time this request was sent to\nthe Pub/Sub system. For example, if the value is 10, the new\nack deadline will expire 10 seconds after the `ModifyAckDeadline` call\nwas made. Specifying zero might immediately make the message available for\ndelivery to another subscriber client. This typically results in an\nincrease in the rate of message redeliveries (that is, duplicates).\nThe minimum deadline you can specify is 0 seconds.\nThe maximum deadline you can specify is 600 seconds (10 minutes).",
+          "description": "The new ack deadline with respect to the time this request was sent to\nthe Pub/Sub system. For example, if the value is 10, the new\nack deadline will expire 10 seconds after the `ModifyAckDeadline` call\nwas made. Specifying zero may immediately make the message available for\nanother pull request.\nThe minimum deadline you can specify is 0 seconds.\nThe maximum deadline you can specify is 600 seconds (10 minutes).",
           "format": "int32",
           "type": "integer"
         },

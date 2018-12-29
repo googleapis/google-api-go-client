@@ -3891,7 +3891,9 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Subnetwork: Represents a subnet that was created by a peered service.
+// Subnetwork: Represents a subnet that was created or discovered by a
+// private access
+// management service.
 type Subnetwork struct {
 	// IpCidrRange: Subnetwork CIDR range in `10.x.x.x/y` format.
 	IpCidrRange string `json:"ipCidrRange,omitempty"`
@@ -3906,6 +3908,11 @@ type Subnetwork struct {
 	// example:
 	// `projects/1234321/global/networks/host-network`
 	Network string `json:"network,omitempty"`
+
+	// OutsideAllocation: This is a discovered subnet that is not within the
+	// current consumer
+	// allocated ranges.
+	OutsideAllocation bool `json:"outsideAllocation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
 	// unconditionally include in API requests. By default, fields with
@@ -4435,7 +4442,7 @@ type ServicesAddSubnetworkCall struct {
 // ranges
 // to find a non-conflicting IP address range. The method will reuse a
 // subnet
-// if subsequent calls contain the same subnet name, region, prefix
+// if subsequent calls contain the same subnet name, region, and prefix
 // length.
 // This method will make producer's tenant project to be a shared VPC
 // service
@@ -4540,7 +4547,7 @@ func (c *ServicesAddSubnetworkCall) Do(opts ...googleapi.CallOption) (*Operation
 	}
 	return ret, nil
 	// {
-	//   "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
+	//   "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, and prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
 	//   "flatPath": "v1beta/services/{servicesId}/{servicesId1}/{servicesId2}:addSubnetwork",
 	//   "httpMethod": "POST",
 	//   "id": "servicenetworking.services.addSubnetwork",

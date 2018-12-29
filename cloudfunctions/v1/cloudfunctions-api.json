@@ -139,12 +139,12 @@
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Required. A filter for matching the requested operations.\u003cbr\u003e\u003cbr\u003e The supported formats of \u003cb\u003efilter\u003c/b\u003e are:\u003cbr\u003e To query for specific function: \u003ccode\u003eproject:*,location:*,function:*\u003c/code\u003e\u003cbr\u003e To query for all of the latest operations for a project: \u003ccode\u003eproject:*,latest:true\u003c/code\u003e",
+              "description": "The standard list filter.",
               "location": "query",
               "type": "string"
             },
             "name": {
-              "description": "Must not be set.",
+              "description": "The name of the operation's parent resource.",
               "location": "query",
               "type": "string"
             },
@@ -539,7 +539,7 @@
       }
     }
   },
-  "revision": "20181212",
+  "revision": "20181202",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {

@@ -2162,6 +2162,10 @@ type JobStatistics struct {
 	// time.
 	QuotaDeferments []string `json:"quotaDeferments,omitempty"`
 
+	// ReservationUsage: [Output-only] Job resource usage breakdown by
+	// reservation.
+	ReservationUsage []*JobStatisticsReservationUsage `json:"reservationUsage,omitempty"`
+
 	// StartTime: [Output-only] Start time of this job, in milliseconds
 	// since the epoch. This field will be present when the job transitions
 	// from the PENDING state to either RUNNING or DONE.
@@ -2170,6 +2174,9 @@ type JobStatistics struct {
 	// TotalBytesProcessed: [Output-only] [Deprecated] Use the bytes
 	// processed in the query statistics instead.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
+
+	// TotalSlotMs: [Output-only] Slot-milliseconds for the job.
+	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CompletionRatio") to
 	// unconditionally include in API requests. By default, fields with
@@ -2207,6 +2214,38 @@ func (s *JobStatistics) UnmarshalJSON(data []byte) error {
 	}
 	s.CompletionRatio = float64(s1.CompletionRatio)
 	return nil
+}
+
+type JobStatisticsReservationUsage struct {
+	// Name: [Output-only] Reservation name or "unreserved" for on-demand
+	// resources usage.
+	Name string `json:"name,omitempty"`
+
+	// SlotMs: [Output-only] Slot-milliseconds the job spent in the given
+	// reservation.
+	SlotMs int64 `json:"slotMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JobStatisticsReservationUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod JobStatisticsReservationUsage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type JobStatistics2 struct {
@@ -2272,7 +2311,7 @@ type JobStatistics2 struct {
 	// StatementType: The type of query statement, if valid. Possible values
 	// (new values might be added in the future): "SELECT": SELECT query.
 	// "INSERT": INSERT query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "MERGE": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... "DROP_VIEW": DROP VIEW
+	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "UPDATE": UPDATE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "DELETE": DELETE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "MERGE": MERGE query; see https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language. "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT. "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ... . "DROP_TABLE": DROP TABLE query. "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... . "DROP_VIEW": DROP VIEW query. "ALTER_TABLE": ALTER TABLE query. "ALTER_VIEW": ALTER VIEW
 	// query.
 	StatementType string `json:"statementType,omitempty"`
 

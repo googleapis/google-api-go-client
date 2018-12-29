@@ -1347,18 +1347,15 @@ func (r *OperationsService) List() *OperationsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required. A filter for
-// matching the requested operations.<br><br> The supported formats of
-// <b>filter</b> are:<br> To query for specific function:
-// <code>project:*,location:*,function:*</code><br> To query for all of
-// the latest operations for a project:
-// <code>project:*,latest:true</code>
+// Filter sets the optional parameter "filter": The standard list
+// filter.
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// Name sets the optional parameter "name": Must not be set.
+// Name sets the optional parameter "name": The name of the operation's
+// parent resource.
 func (c *OperationsListCall) Name(name string) *OperationsListCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -1480,12 +1477,12 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A filter for matching the requested operations.\u003cbr\u003e\u003cbr\u003e The supported formats of \u003cb\u003efilter\u003c/b\u003e are:\u003cbr\u003e To query for specific function: \u003ccode\u003eproject:*,location:*,function:*\u003c/code\u003e\u003cbr\u003e To query for all of the latest operations for a project: \u003ccode\u003eproject:*,latest:true\u003c/code\u003e",
+	//       "description": "The standard list filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Must not be set.",
+	//       "description": "The name of the operation's parent resource.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

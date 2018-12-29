@@ -140,7 +140,7 @@
     "services": {
       "methods": {
         "addSubnetwork": {
-          "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
+          "description": "For service producers, provisions a new subnet in a\npeered service's shared VPC network in the requested region and with the\nrequested size that's expressed as a CIDR range (number of leading bits of\nipV4 network mask). The method checks against the assigned allocated ranges\nto find a non-conflicting IP address range. The method will reuse a subnet\nif subsequent calls contain the same subnet name, region, and prefix length.\nThis method will make producer's tenant project to be a shared VPC service\nproject as needed.\nThe response from the `get` operation will be of type `Subnetwork` if the\noperation successfully completes.",
           "flatPath": "v1beta/services/{servicesId}/{servicesId1}/{servicesId2}:addSubnetwork",
           "httpMethod": "POST",
           "id": "servicenetworking.services.addSubnetwork",
@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20181217",
+  "revision": "20181220",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -1804,7 +1804,7 @@
       "type": "object"
     },
     "Subnetwork": {
-      "description": "Represents a subnet that was created by a peered service.",
+      "description": "Represents a subnet that was created or discovered by a private access\nmanagement service.",
       "id": "Subnetwork",
       "properties": {
         "ipCidrRange": {
@@ -1818,6 +1818,10 @@
         "network": {
           "description": "In the Shared VPC host project, the VPC network that's peered with the\nconsumer network. For example:\n`projects/1234321/global/networks/host-network`",
           "type": "string"
+        },
+        "outsideAllocation": {
+          "description": "This is a discovered subnet that is not within the current consumer\nallocated ranges.",
+          "type": "boolean"
         }
       },
       "type": "object"

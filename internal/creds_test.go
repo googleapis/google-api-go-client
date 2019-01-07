@@ -73,13 +73,6 @@ func TestTokenSource(t *testing.T) {
 	// TODO(jba): find a way to test the call to google.DefaultTokenSource.
 }
 
-const validRefeshTokenJSON = `{
-  "client_id": "764-aaaaa.apps.googleusercontent.com",
-  "client_secret": "d-988888888",
-  "refresh_token": "1/88888aaaaaaaaa",
-  "type": "authorized_user"
-}`
-
 const validServiceAccountJSON = `{
   "type": "service_account",
   "project_id": "dumba-504",

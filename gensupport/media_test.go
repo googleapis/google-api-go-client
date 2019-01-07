@@ -280,12 +280,10 @@ func TestUploadRequestGetBody(t *testing.T) {
 	}()
 
 	for _, test := range []struct {
-		desc            string
-		r               io.Reader
-		chunkSize       int
-		wantGetBody     bool
-		wantContentType string
-		wantUploadType  string
+		desc        string
+		r           io.Reader
+		chunkSize   int
+		wantGetBody bool
 	}{
 		{
 			desc:        "chunk size of zero: no getBody",

@@ -30,11 +30,12 @@ type DialSettings struct {
 	Endpoint        string
 	Scopes          []string
 	TokenSource     oauth2.TokenSource
-	Credentials     *google.DefaultCredentials
+	Credentials     *google.Credentials
 	CredentialsFile string // if set, Token Source is ignored.
 	CredentialsJSON []byte
 	UserAgent       string
 	APIKey          string
+	Audiences       []string
 	HTTPClient      *http.Client
 	GRPCDialOpts    []grpc.DialOption
 	GRPCConn        *grpc.ClientConn
@@ -65,6 +66,9 @@ func (ds *DialSettings) Validate() error {
 	}
 	if ds.TokenSource != nil {
 		nCreds++
+	}
+	if len(ds.Scopes) > 0 && len(ds.Audiences) > 0 {
+		return errors.New("WithScopes is incompatible with WithAudience")
 	}
 	// Accept only one form of credentials, except we allow TokenSource and CredentialsFile for backwards compatibility.
 	if nCreds > 1 && !(nCreds == 2 && ds.TokenSource != nil && ds.CredentialsFile != "") {

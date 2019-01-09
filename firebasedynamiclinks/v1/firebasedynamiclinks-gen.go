@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1000,6 +1000,11 @@ type GetIosReopenAttributionResponse struct {
 	// InvitationId: Optional invitation ID, for only invite typed requested
 	// FDL links.
 	InvitationId string `json:"invitationId,omitempty"`
+
+	// IosMinAppVersion: FDL input value of the "&imv=" parameter, minimum
+	// app version to be
+	// returned to Google Firebase SDK running on iOS-9.
+	IosMinAppVersion string `json:"iosMinAppVersion,omitempty"`
 
 	// ResolvedLink: The entire FDL, expanded from a short link. It is the
 	// same as the

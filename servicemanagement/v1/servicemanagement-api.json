@@ -876,7 +876,7 @@
       }
     }
   },
-  "revision": "20181210",
+  "revision": "20190102",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -2303,14 +2303,14 @@
       "id": "Monitoring",
       "properties": {
         "consumerDestinations": {
-          "description": "Monitoring configurations for sending metrics to the consumer project.\nThere can be multiple consumer destinations, each one must have a\ndifferent monitored resource type. A metric can be used in at most\none consumer destination.",
+          "description": "Monitoring configurations for sending metrics to the consumer project.\nThere can be multiple consumer destinations. A monitored resouce type may\nappear in multiple monitoring destinations if different aggregations are\nneeded for different sets of metrics associated with that monitored\nresource type. A monitored resource and metric pair may only be used once\nin the Monitoring configuration.",
           "items": {
             "$ref": "MonitoringDestination"
           },
           "type": "array"
         },
         "producerDestinations": {
-          "description": "Monitoring configurations for sending metrics to the producer project.\nThere can be multiple producer destinations, each one must have a\ndifferent monitored resource type. A metric can be used in at most\none producer destination.",
+          "description": "Monitoring configurations for sending metrics to the producer project.\nThere can be multiple producer destinations. A monitored resouce type may\nappear in multiple monitoring destinations if different aggregations are\nneeded for different sets of metrics associated with that monitored\nresource type. A monitored resource and metric pair may only be used once\nin the Monitoring configuration.",
           "items": {
             "$ref": "MonitoringDestination"
           },
@@ -2324,7 +2324,7 @@
       "id": "MonitoringDestination",
       "properties": {
         "metrics": {
-          "description": "Names of the metrics to report to this monitoring destination.\nEach name must be defined in Service.metrics section.",
+          "description": "Types of the metrics to report to this monitoring destination.\nEach type must be defined in Service.metrics section.",
           "items": {
             "type": "string"
           },
@@ -2715,7 +2715,7 @@
           "description": "Monitoring configuration."
         },
         "name": {
-          "description": "The DNS address at which this service is available,\ne.g. `calendar.googleapis.com`.",
+          "description": "The service name, which is a DNS-like logical identifier for the\nservice, such as `calendar.googleapis.com`. The service name\ntypically goes through DNS verification to make sure the owner\nof the service also owns the DNS name.",
           "type": "string"
         },
         "producerProjectId": {

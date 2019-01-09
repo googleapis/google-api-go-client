@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1792,8 +1792,12 @@ type GoogleApiService struct {
 	// Monitoring: Monitoring configuration.
 	Monitoring *Monitoring `json:"monitoring,omitempty"`
 
-	// Name: The DNS address at which this service is available,
-	// e.g. `calendar.googleapis.com`.
+	// Name: The service name, which is a DNS-like logical identifier for
+	// the
+	// service, such as `calendar.googleapis.com`. The service
+	// name
+	// typically goes through DNS verification to make sure the owner
+	// of the service also owns the DNS name.
 	Name string `json:"name,omitempty"`
 
 	// ProducerProjectId: The Google project that owns this service.

@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -190,9 +190,9 @@ func (s *AttributeValue) MarshalJSON() ([]byte, error) {
 type Attributes struct {
 	// AttributeMap: The set of attributes. Each attribute's key can be up
 	// to 128 bytes
-	// long. The value can be a string up to 256 bytes, an integer, or
-	// the
-	// Boolean values `true` and `false`. For example:
+	// long. The value can be a string up to 256 bytes, a signed 64-bit
+	// integer,
+	// or the Boolean values `true` and `false`. For example:
 	//
 	//     "/instance_id": "my-instance"
 	//     "/http/user_agent": ""

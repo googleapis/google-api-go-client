@@ -485,7 +485,7 @@
       }
     }
   },
-  "revision": "20181217",
+  "revision": "20190107",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -1949,7 +1949,7 @@
           "description": "Monitoring configuration."
         },
         "name": {
-          "description": "The DNS address at which this service is available,\ne.g. `calendar.googleapis.com`.",
+          "description": "The service name, which is a DNS-like logical identifier for the\nservice, such as `calendar.googleapis.com`. The service name\ntypically goes through DNS verification to make sure the owner\nof the service also owns the DNS name.",
           "type": "string"
         },
         "producerProjectId": {

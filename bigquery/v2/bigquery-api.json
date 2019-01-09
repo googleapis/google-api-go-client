@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/eFeCSA4VWy7K7nrpB2R4OL12KqY\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/JOw8AGQ14WBAuCZq4gmK7QO5KVM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20181216",
+  "revision": "20181230",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -1151,11 +1151,15 @@
           "items": {
             "properties": {
               "domain": {
-                "description": "[Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: \"example.com\".",
+                "description": "[Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: \"example.com\". Maps to IAM policy member \"domain:DOMAIN\".",
                 "type": "string"
               },
               "groupByEmail": {
-                "description": "[Pick one] An email address of a Google Group to grant access to.",
+                "description": "[Pick one] An email address of a Google Group to grant access to. Maps to IAM policy member \"group:GROUP\".",
+                "type": "string"
+              },
+              "iamMember": {
+                "description": "[Pick one] Some other type of member that appears in the IAM Policy but isn't a user, group, domain, or special group.",
                 "type": "string"
               },
               "role": {
@@ -1163,11 +1167,11 @@
                 "type": "string"
               },
               "specialGroup": {
-                "description": "[Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users.",
+                "description": "[Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. Maps to similarly-named IAM members.",
                 "type": "string"
               },
               "userByEmail": {
-                "description": "[Pick one] An email address of a user to grant access to. For example: fred@example.com.",
+                "description": "[Pick one] An email address of a user to grant access to. For example: fred@example.com. Maps to IAM policy member \"user:EMAIL\" or \"serviceAccount:EMAIL\".",
                 "type": "string"
               },
               "view": {
@@ -3320,8 +3324,6 @@
           "type": "string"
         },
         "requirePartitionFilter": {
-          "default": "false",
-          "description": "[Beta] [Optional] If set to true, queries over this table require a partition filter that can be used for partition elimination to be specified.",
           "type": "boolean"
         },
         "type": {

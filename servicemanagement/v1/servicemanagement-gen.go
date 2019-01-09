@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -3740,20 +3740,28 @@ func (s *MonitoredResourceDescriptor) MarshalJSON() ([]byte, error) {
 type Monitoring struct {
 	// ConsumerDestinations: Monitoring configurations for sending metrics
 	// to the consumer project.
-	// There can be multiple consumer destinations, each one must have
-	// a
-	// different monitored resource type. A metric can be used in at
-	// most
-	// one consumer destination.
+	// There can be multiple consumer destinations. A monitored resouce type
+	// may
+	// appear in multiple monitoring destinations if different aggregations
+	// are
+	// needed for different sets of metrics associated with that
+	// monitored
+	// resource type. A monitored resource and metric pair may only be used
+	// once
+	// in the Monitoring configuration.
 	ConsumerDestinations []*MonitoringDestination `json:"consumerDestinations,omitempty"`
 
 	// ProducerDestinations: Monitoring configurations for sending metrics
 	// to the producer project.
-	// There can be multiple producer destinations, each one must have
-	// a
-	// different monitored resource type. A metric can be used in at
-	// most
-	// one producer destination.
+	// There can be multiple producer destinations. A monitored resouce type
+	// may
+	// appear in multiple monitoring destinations if different aggregations
+	// are
+	// needed for different sets of metrics associated with that
+	// monitored
+	// resource type. A monitored resource and metric pair may only be used
+	// once
+	// in the Monitoring configuration.
 	ProducerDestinations []*MonitoringDestination `json:"producerDestinations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3785,9 +3793,9 @@ func (s *Monitoring) MarshalJSON() ([]byte, error) {
 // destination (the producer project
 // or the consumer project).
 type MonitoringDestination struct {
-	// Metrics: Names of the metrics to report to this monitoring
+	// Metrics: Types of the metrics to report to this monitoring
 	// destination.
-	// Each name must be defined in Service.metrics section.
+	// Each type must be defined in Service.metrics section.
 	Metrics []string `json:"metrics,omitempty"`
 
 	// MonitoredResource: The monitored resource type. The type must be
@@ -4646,8 +4654,12 @@ type Service struct {
 	// Monitoring: Monitoring configuration.
 	Monitoring *Monitoring `json:"monitoring,omitempty"`
 
-	// Name: The DNS address at which this service is available,
-	// e.g. `calendar.googleapis.com`.
+	// Name: The service name, which is a DNS-like logical identifier for
+	// the
+	// service, such as `calendar.googleapis.com`. The service
+	// name
+	// typically goes through DNS verification to make sure the owner
+	// of the service also owns the DNS name.
 	Name string `json:"name,omitempty"`
 
 	// ProducerProjectId: The Google project that owns this service.

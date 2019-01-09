@@ -244,7 +244,7 @@
       }
     }
   },
-  "revision": "20181218",
+  "revision": "20190107",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1001,10 +1001,10 @@
           "items": {
             "enum": [
               "REGION_UNSPECIFIED",
-              "US_CENTRAL1",
-              "US_WEST1",
-              "US_EAST1",
-              "US_EAST4"
+              "us-central1",
+              "us-west1",
+              "us-east1",
+              "us-east4"
             ],
             "type": "string"
           },

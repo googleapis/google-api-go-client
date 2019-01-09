@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -2546,6 +2546,10 @@ func (s *ResourceInfo) MarshalJSON() ([]byte, error) {
 type ResourceLocation struct {
 	// CurrentLocations: The locations of a resource after the execution of
 	// the operation.
+	// Requests to create or delete a location based resource must
+	// populate
+	// the 'current_locations' field and not the 'original_locations'
+	// field.
 	// For example:
 	//
 	//     "europe-west1-a"
@@ -2555,6 +2559,9 @@ type ResourceLocation struct {
 
 	// OriginalLocations: The locations of a resource prior to the execution
 	// of the operation.
+	// Requests that mutate the resource's location must populate both
+	// the
+	// 'original_locations' as well as the 'current_locations' fields.
 	// For example:
 	//
 	//     "europe-west1-a"

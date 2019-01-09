@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -8,7 +8,7 @@
 //
 // This package is DEPRECATED. Use package cloud.google.com/go/oslogin/apiv1 instead.
 //
-// See https://cloud.google.com/compute/docs/oslogin/rest/
+// See https://cloud.google.com/compute/docs/oslogin/
 //
 // Usage example:
 //

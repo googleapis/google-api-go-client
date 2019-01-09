@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -1719,6 +1719,10 @@ func (s *IosVersion) MarshalJSON() ([]byte, error) {
 // contains all
 // the binaries needed to run the tests.
 type IosXcTest struct {
+	// AppBundleId: Output only. The bundle id for the application under
+	// test.
+	AppBundleId string `json:"appBundleId,omitempty"`
+
 	// TestsZip: Required. The .zip containing the .xctestrun file and the
 	// contents of the
 	// DerivedData/Build/Products directory.
@@ -1742,7 +1746,7 @@ type IosXcTest struct {
 	// tests. Default is taken from the tests zip.
 	Xctestrun *FileReference `json:"xctestrun,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TestsZip") to
+	// ForceSendFields is a list of field names (e.g. "AppBundleId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1750,10 +1754,10 @@ type IosXcTest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TestsZip") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AppBundleId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2404,6 +2408,14 @@ type TestMatrix struct {
 
 	// EnvironmentMatrix: Required. How the host machine(s) are configured.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
+
+	// FlakyTestAttempts: The number of times a TestExecution should be
+	// re-attempted if one or more
+	// of its test cases fail for any reason.
+	// The maximum number of reruns allowed is 10.
+	//
+	// Default is 0, which implies no reruns.
+	FlakyTestAttempts int64 `json:"flakyTestAttempts,omitempty"`
 
 	// InvalidMatrixDetails: Output only. Describes why the matrix is
 	// considered invalid.

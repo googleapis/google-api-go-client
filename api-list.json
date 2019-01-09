@@ -1164,6 +1164,36 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "containeranalysis:v1alpha1",
+   "name": "containeranalysis",
+   "version": "v1alpha1",
+   "title": "Container Analysis API",
+   "description": "An implementation of the Grafeas API, which stores, and enables querying and retrieval of critical metadata about all of your software artifacts.",
+   "discoveryRestUrl": "https://containeranalysis.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/container-analysis/api/reference/rest/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "containeranalysis:v1beta1",
+   "name": "containeranalysis",
+   "version": "v1beta1",
+   "title": "Container Analysis API",
+   "description": "An implementation of the Grafeas API, which stores, and enables querying and retrieval of critical metadata about all of your software artifacts.",
+   "discoveryRestUrl": "https://containeranalysis.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/container-analysis/api/reference/rest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "content:v2",
    "name": "content",
    "version": "v2",
@@ -2078,6 +2108,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "libraryagent:v1",
+   "name": "libraryagent",
+   "version": "v1",
+   "title": "Library Agent API",
+   "description": "A simple Google Example Library API.",
+   "discoveryRestUrl": "https://libraryagent.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/docs/quota",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "licensing:v1",
    "name": "licensing",
    "version": "v1",
@@ -2245,7 +2290,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
+   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/",
    "preferred": false
   },
   {
@@ -2260,7 +2305,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
+   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/",
    "preferred": false
   },
   {
@@ -2275,7 +2320,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/rest/",
+   "documentationLink": "https://cloud.google.com/compute/docs/oslogin/",
    "preferred": true
   },
   {
@@ -2524,6 +2569,51 @@
    },
    "documentationLink": "https://cloud.google.com/memorystore/docs/redis/",
    "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "remotebuildexecution:v1alpha",
+   "name": "remotebuildexecution",
+   "version": "v1alpha",
+   "title": "Remote Build Execution API",
+   "description": "Supplies a Remote Execution API service for tools such as bazel.",
+   "discoveryRestUrl": "https://remotebuildexecution.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "remotebuildexecution:v1",
+   "name": "remotebuildexecution",
+   "version": "v1",
+   "title": "Remote Build Execution API",
+   "description": "Supplies a Remote Execution API service for tools such as bazel.",
+   "discoveryRestUrl": "https://remotebuildexecution.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "remotebuildexecution:v2",
+   "name": "remotebuildexecution",
+   "version": "v2",
+   "title": "Remote Build Execution API",
+   "description": "Supplies a Remote Execution API service for tools such as bazel.",
+   "discoveryRestUrl": "https://remotebuildexecution.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/remote-build-execution/docs/",
+   "preferred": true
   },
   {
    "kind": "discovery#directoryItem",

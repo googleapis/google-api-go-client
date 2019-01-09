@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -577,12 +577,16 @@ func (s *Dataset) MarshalJSON() ([]byte, error) {
 type DatasetAccess struct {
 	// Domain: [Pick one] A domain to grant access to. Any users signed in
 	// with the domain specified will be granted the specified access.
-	// Example: "example.com".
+	// Example: "example.com". Maps to IAM policy member "domain:DOMAIN".
 	Domain string `json:"domain,omitempty"`
 
 	// GroupByEmail: [Pick one] An email address of a Google Group to grant
-	// access to.
+	// access to. Maps to IAM policy member "group:GROUP".
 	GroupByEmail string `json:"groupByEmail,omitempty"`
+
+	// IamMember: [Pick one] Some other type of member that appears in the
+	// IAM Policy but isn't a user, group, domain, or special group.
+	IamMember string `json:"iamMember,omitempty"`
 
 	// Role: [Required] Describes the rights granted to the user specified
 	// by the other member of the access object. The following string values
@@ -593,11 +597,12 @@ type DatasetAccess struct {
 	// values include: projectOwners: Owners of the enclosing project.
 	// projectReaders: Readers of the enclosing project. projectWriters:
 	// Writers of the enclosing project. allAuthenticatedUsers: All
-	// authenticated BigQuery users.
+	// authenticated BigQuery users. Maps to similarly-named IAM members.
 	SpecialGroup string `json:"specialGroup,omitempty"`
 
 	// UserByEmail: [Pick one] An email address of a user to grant access
-	// to. For example: fred@example.com.
+	// to. For example: fred@example.com. Maps to IAM policy member
+	// "user:EMAIL" or "serviceAccount:EMAIL".
 	UserByEmail string `json:"userByEmail,omitempty"`
 
 	// View: [Pick one] A view from a different dataset to grant access to.
@@ -3853,9 +3858,6 @@ type TimePartitioning struct {
 	// REQUIRED.
 	Field string `json:"field,omitempty"`
 
-	// RequirePartitionFilter: [Beta] [Optional] If set to true, queries
-	// over this table require a partition filter that can be used for
-	// partition elimination to be specified.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
 	// Type: [Required] The only type supported is DAY, which will generate

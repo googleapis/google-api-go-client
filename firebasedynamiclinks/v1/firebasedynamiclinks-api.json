@@ -223,7 +223,7 @@
       }
     }
   },
-  "revision": "20181127",
+  "revision": "20190105",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -770,6 +770,10 @@
         },
         "invitationId": {
           "description": "Optional invitation ID, for only invite typed requested FDL links.",
+          "type": "string"
+        },
+        "iosMinAppVersion": {
+          "description": "FDL input value of the \"\u0026imv=\" parameter, minimum app version to be\nreturned to Google Firebase SDK running on iOS-9.",
           "type": "string"
         },
         "resolvedLink": {

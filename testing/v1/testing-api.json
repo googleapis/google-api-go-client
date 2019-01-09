@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20181211",
+  "revision": "20190107",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1173,6 +1173,10 @@
       "description": "A test of an iOS application that uses the XCTest framework.\nXcode supports the option to \"build for testing\", which generates an\n.xctestrun file that contains a test specification (arguments, test methods,\netc). This test type accepts a zip file containing the .xctestrun file and\nthe corresponding contents of the Build/Products directory that contains all\nthe binaries needed to run the tests.",
       "id": "IosXcTest",
       "properties": {
+        "appBundleId": {
+          "description": "Output only. The bundle id for the application under test.",
+          "type": "string"
+        },
         "testsZip": {
           "$ref": "FileReference",
           "description": "Required. The .zip containing the .xctestrun file and the contents of the\nDerivedData/Build/Products directory.\nThe .xctestrun file in this zip is ignored if the xctestrun field is\nspecified."
@@ -1518,6 +1522,11 @@
         "environmentMatrix": {
           "$ref": "EnvironmentMatrix",
           "description": "Required. How the host machine(s) are configured."
+        },
+        "flakyTestAttempts": {
+          "description": "The number of times a TestExecution should be re-attempted if one or more\nof its test cases fail for any reason.\nThe maximum number of reruns allowed is 10.\n\nDefault is 0, which implies no reruns.",
+          "format": "int32",
+          "type": "integer"
         },
         "invalidMatrixDetails": {
           "description": "Output only. Describes why the matrix is considered invalid.\nOnly useful for matrices in the INVALID state.",

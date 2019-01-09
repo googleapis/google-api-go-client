@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20181214",
+  "revision": "20181229",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -1499,14 +1499,14 @@
       "id": "ResourceLocation",
       "properties": {
         "currentLocations": {
-          "description": "The locations of a resource after the execution of the operation.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
+          "description": "The locations of a resource after the execution of the operation.\nRequests to create or delete a location based resource must populate\nthe 'current_locations' field and not the 'original_locations' field.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "originalLocations": {
-          "description": "The locations of a resource prior to the execution of the operation.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
+          "description": "The locations of a resource prior to the execution of the operation.\nRequests that mutate the resource's location must populate both the\n'original_locations' as well as the 'current_locations' fields.\nFor example:\n\n    \"europe-west1-a\"\n    \"us-east1\"\n    \"nam3\"",
           "items": {
             "type": "string"
           },

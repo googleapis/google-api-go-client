@@ -1,4 +1,4 @@
-// Copyright 2018 Google Inc. All rights reserved.
+// Copyright 2019 Google Inc. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -154,6 +154,7 @@ type AppEngineHttpTarget struct {
 	//   This header can be modified, but Cloud Scheduler will append
 	//   "AppEngine-Google; (+http://code.google.com/appengine)" to the
 	//   modified `User-Agent`.
+	// * `X-CloudScheduler`: This header will be set to true.
 	//
 	// If the job has an body, Cloud Scheduler sets the
 	// following headers:
@@ -172,17 +173,10 @@ type AppEngineHttpTarget struct {
 	// overridden:
 	//
 	// * `X-Google-*`: For Google internal use only.
-	// * `X-AppEngine-*`: For Google internal use only. See
-	//   [Reading request
-	// headers](https://cloud.google.com/appengine/docs/python/taskqueue/push
-	// /creating-handlers#reading_request_headers).
+	// * `X-AppEngine-*`: For Google internal use only.
 	//
 	// In addition, some App Engine headers, which contain
-	// job-specific information, are also be sent to the job handler;
-	// see
-	// [request
-	// headers](https://cloud.google.comappengine/docs/standard/python/config
-	// /cron#securing_urls_for_cron).
+	// job-specific information, are also be sent to the job handler.
 	Headers map[string]string `json:"headers,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. PATCH and OPTIONS

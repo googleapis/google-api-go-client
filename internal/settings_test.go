@@ -62,6 +62,8 @@ func TestSettingsValidate(t *testing.T) {
 		{HTTPClient: &http.Client{}, GRPCConn: &grpc.ClientConn{}},
 		{HTTPClient: &http.Client{}, GRPCDialOpts: []grpc.DialOption{grpc.WithInsecure()}},
 		{Audiences: []string{"foo"}, Scopes: []string{"foo"}},
+		{HTTPClient: &http.Client{}, QuotaProject: "foo"},
+		{HTTPClient: &http.Client{}, RequestReason: "foo"},
 	} {
 		err := ds.Validate()
 		if err == nil {

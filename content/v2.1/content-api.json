@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/KNVDmWVa-0q2EHowFmKdbt3xwM8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Gc5bHP9hFZTe1XxTe5wSUsRMYb8\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2970,7 +2970,7 @@
       }
     }
   },
-  "revision": "20181212",
+  "revision": "20190107",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3387,6 +3387,18 @@
         "emailAddress": {
           "description": "User's email address.",
           "type": "string"
+        },
+        "orderManager": {
+          "description": "Whether user is an order manager.",
+          "type": "boolean"
+        },
+        "paymentsAnalyst": {
+          "description": "Whether user can access payment statements.",
+          "type": "boolean"
+        },
+        "paymentsManager": {
+          "description": "Whether user can manage payment settings.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3814,11 +3826,11 @@
     "Amount": {
       "id": "Amount",
       "properties": {
-        "pretax": {
+        "priceAmount": {
           "$ref": "Price",
-          "description": "[required] Value before taxes."
+          "description": "[required] The pre-tax or post-tax price depending on the location of the order."
         },
-        "tax": {
+        "taxAmount": {
           "$ref": "Price",
           "description": "[required] Tax value."
         }
@@ -5236,6 +5248,10 @@
         "status": {
           "description": "The status of the order.",
           "type": "string"
+        },
+        "taxCollector": {
+          "description": "The party responsible for collecting and remitting taxes.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5852,7 +5868,7 @@
           "type": "string"
         },
         "productAmount": {
-          "$ref": "Amount",
+          "$ref": "ProductAmount",
           "description": "Total amount for the items."
         },
         "transactionDate": {
@@ -6641,7 +6657,7 @@
         },
         "priceAmount": {
           "$ref": "Price",
-          "description": "The amount to be refunded. This may be pre-tax or post-tax depending on the location of the order. If omitted, refundless return is assumed. Optional, but if filled then both priceAmount and taxAmount must be set."
+          "description": "The amount to be refunded. This may be pre-tax or post-tax depending on the location of the order. If omitted, refundless return is assumed."
         },
         "productId": {
           "description": "The ID of the product to return. This is the REST ID used in the products service. Either lineItemId or productId is required.",
@@ -6662,7 +6678,7 @@
         },
         "taxAmount": {
           "$ref": "Price",
-          "description": "The amount of tax to be refunded."
+          "description": "The amount of tax to be refunded. Optional, but if filled, then priceAmount must be set. Calculated automatically if not provided."
         }
       },
       "type": "object"
@@ -7946,6 +7962,24 @@
         "unitPricingMeasure": {
           "$ref": "ProductUnitPricingMeasure",
           "description": "The measure and dimension of an item."
+        }
+      },
+      "type": "object"
+    },
+    "ProductAmount": {
+      "id": "ProductAmount",
+      "properties": {
+        "priceAmount": {
+          "$ref": "Price",
+          "description": "The pre-tax or post-tax price depending on the location of the order."
+        },
+        "remittedTaxAmount": {
+          "$ref": "Price",
+          "description": "Remitted tax value."
+        },
+        "taxAmount": {
+          "$ref": "Price",
+          "description": "Tax value."
         }
       },
       "type": "object"

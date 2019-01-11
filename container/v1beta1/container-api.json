@@ -357,6 +357,31 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "getJwks": {
+                  "description": "GetJSONWebKeys gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
+                  "httpMethod": "GET",
+                  "id": "container.projects.locations.clusters.getJwks",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The cluster (project, location, cluster id) to get keys for. Specified in\nthe format 'projects/*/locations/*/clusters/*'.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+parent}/jwks",
+                  "response": {
+                    "$ref": "GetJSONWebKeysResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "list": {
                   "description": "Lists all clusters owned by a project in either the specified zone or all\nzones.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters",
@@ -1025,6 +1050,35 @@
                       },
                       "response": {
                         "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                },
+                "well-known": {
+                  "methods": {
+                    "getOpenid-configuration": {
+                      "description": "GetOpenIDConfig gets the OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.\nhttps://openid.net/specs/openid-connect-discovery-1_0.html\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
+                      "httpMethod": "GET",
+                      "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "The cluster (project, location, cluster id) to get the discovery document\nfor. Specified in the format 'projects/*/locations/*/clusters/*'.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+parent}/.well-known/openid-configuration",
+                      "response": {
+                        "$ref": "GetOpenIDConfigResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -2435,7 +2489,7 @@
       }
     }
   },
-  "revision": "20181113",
+  "revision": "20181211",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2625,6 +2679,10 @@
         "currentNodeVersion": {
           "description": "[Output only] Deprecated, use\n[NodePool.version](/kubernetes-engine/docs/reference/rest/v1beta1/projects.zones.clusters.nodePool)\ninstead. The current version of the node software components.\nIf they are currently at multiple versions because they're in the process\nof being upgraded, this reflects the minimum version of all nodes.",
           "type": "string"
+        },
+        "databaseEncryption": {
+          "$ref": "DatabaseEncryption",
+          "description": "Configuration of etcd encryption."
         },
         "defaultMaxPodsConstraint": {
           "$ref": "MaxPodsConstraint",
@@ -2997,10 +3055,99 @@
       },
       "type": "object"
     },
+    "DatabaseEncryption": {
+      "description": "Configuration of etcd encryption.",
+      "id": "DatabaseEncryption",
+      "properties": {
+        "keyName": {
+          "description": "Name of CloudKMS key to use for the encryption of secrets in etcd.\nEx. projects/my-project/locations/global/keyRings/my-ring/cryptoKeys/my-key",
+          "type": "string"
+        },
+        "state": {
+          "description": "Denotes the state of etcd encryption.",
+          "enum": [
+            "UNKNOWN",
+            "ENCRYPTED",
+            "DECRYPTED"
+          ],
+          "enumDescriptions": [
+            "Should never be set",
+            "Secrets in etcd are encrypted.",
+            "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to GCE level full disk encryption."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "GetJSONWebKeysResponse": {
+      "description": "GetJSONWebKeysResponse is a valid JSON Web Key Set as specififed in rfc 7517",
+      "id": "GetJSONWebKeysResponse",
+      "properties": {
+        "keys": {
+          "description": "The public component of the keys used by the cluster to sign token\nrequests.",
+          "items": {
+            "$ref": "Jwk"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GetOpenIDConfigResponse": {
+      "description": "GetOpenIDConfigResponse is an OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.",
+      "id": "GetOpenIDConfigResponse",
+      "properties": {
+        "claims_supported": {
+          "description": "NOLINT",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "grant_types": {
+          "description": "NOLINT",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "id_token_signing_alg_values_supported": {
+          "description": "NOLINT",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "issuer": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "jwks_uri": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "response_types_supported": {
+          "description": "NOLINT",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "subject_types_supported": {
+          "description": "NOLINT",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "HorizontalPodAutoscaling": {
@@ -3103,6 +3250,49 @@
         "disabled": {
           "description": "Whether Istio is enabled for this cluster.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "Jwk": {
+      "description": "Jwk is a JSON Web Key as specified in RFC 7517",
+      "id": "Jwk",
+      "properties": {
+        "alg": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "crv": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "e": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "kid": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "kty": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "n": {
+          "description": "Fields for RSA keys.\nNOLINT",
+          "type": "string"
+        },
+        "use": {
+          "description": "NOLINT",
+          "type": "string"
+        },
+        "x": {
+          "description": "Fields for ECDSA keys.\nNOLINT",
+          "type": "string"
+        },
+        "y": {
+          "description": "NOLINT",
+          "type": "string"
         }
       },
       "type": "object"

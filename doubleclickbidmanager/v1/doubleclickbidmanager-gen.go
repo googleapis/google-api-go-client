@@ -209,8 +209,8 @@ func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DownloadRequest: Request to fetch stored campaigns, insertion orders,
-// line items, TrueView ad groups and ads.
+// DownloadRequest: Request to fetch stored inventory sources,
+// campaigns, insertion orders, line items, TrueView ad groups and ads.
 type DownloadRequest struct {
 	// FileTypes: File types that will be returned.
 	//
@@ -220,12 +220,14 @@ type DownloadRequest struct {
 	// - "CAMPAIGN"
 	// - "INSERTION_ORDER"
 	// - "LINE_ITEM"
+	// - "INVENTORY_SOURCE"
 	//
 	// Possible values:
 	//   "AD"
 	//   "AD_GROUP"
 	//   "CAMPAIGN"
 	//   "INSERTION_ORDER"
+	//   "INVENTORY_SOURCE"
 	//   "LINE_ITEM"
 	FileTypes []string `json:"fileTypes,omitempty"`
 
@@ -239,7 +241,9 @@ type DownloadRequest struct {
 	//   "ADVERTISER_ID"
 	//   "CAMPAIGN_ID"
 	//   "INSERTION_ORDER_ID"
+	//   "INVENTORY_SOURCE_ID"
 	//   "LINE_ITEM_ID"
+	//   "PARTNER_ID"
 	FilterType string `json:"filterType,omitempty"`
 
 	// Version: SDF Version (column names, types, order) in which the
@@ -282,6 +286,8 @@ type DownloadResponse struct {
 
 	// InsertionOrders: Retrieved insertion orders in SDF format.
 	InsertionOrders string `json:"insertionOrders,omitempty"`
+
+	InventorySources string `json:"inventorySources,omitempty"`
 
 	// LineItems: Retrieved line items in SDF format.
 	LineItems string `json:"lineItems,omitempty"`
@@ -336,6 +342,7 @@ type FilterPair struct {
 	//   "FILTER_COMPANION_CREATIVE_ID"
 	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
 	//   "FILTER_CREATIVE_HEIGHT"
 	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_SIZE"
@@ -355,7 +362,10 @@ type FilterPair struct {
 	//   "FILTER_FLOODLIGHT_PIXEL_ID"
 	//   "FILTER_GENDER"
 	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
 	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_INVENTORY_RATE_TYPE"
 	//   "FILTER_INVENTORY_SOURCE"
 	//   "FILTER_INVENTORY_SOURCE_TYPE"
 	//   "FILTER_KEYWORD"
@@ -568,6 +578,7 @@ type Parameters struct {
 	//   "FILTER_COMPANION_CREATIVE_ID"
 	//   "FILTER_CONVERSION_DELAY"
 	//   "FILTER_COUNTRY"
+	//   "FILTER_CREATIVE_ATTRIBUTE"
 	//   "FILTER_CREATIVE_HEIGHT"
 	//   "FILTER_CREATIVE_ID"
 	//   "FILTER_CREATIVE_SIZE"
@@ -587,7 +598,10 @@ type Parameters struct {
 	//   "FILTER_FLOODLIGHT_PIXEL_ID"
 	//   "FILTER_GENDER"
 	//   "FILTER_INSERTION_ORDER"
+	//   "FILTER_INVENTORY_COMMITMENT_TYPE"
+	//   "FILTER_INVENTORY_DELIVERY_METHOD"
 	//   "FILTER_INVENTORY_FORMAT"
+	//   "FILTER_INVENTORY_RATE_TYPE"
 	//   "FILTER_INVENTORY_SOURCE"
 	//   "FILTER_INVENTORY_SOURCE_TYPE"
 	//   "FILTER_KEYWORD"

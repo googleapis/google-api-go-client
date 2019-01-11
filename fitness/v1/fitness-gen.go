@@ -683,6 +683,9 @@ type DataSource struct {
 	// into the platform.
 	Application *Application `json:"application,omitempty"`
 
+	// DataQualityStandard: DO NOT USE THIS FIELD. It is never populated in
+	// responses from the platform, and is ignored in queries.
+	//
 	// Possible values:
 	//   "dataQualityBloodGlucoseIso151972003"
 	//   "dataQualityBloodGlucoseIso151972013"

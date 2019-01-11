@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/hpAivS3Oe8CKVoCbwnyJCYDdS-0\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/mGcIZj-2gXhBfgt2l47QRlnnjV0\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -150,7 +150,7 @@
             "acceleratorType": {
               "description": "Name of the accelerator type to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -302,7 +302,7 @@
             "address": {
               "description": "Name of the address resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -348,7 +348,7 @@
             "address": {
               "description": "Name of the address resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -635,7 +635,7 @@
             "allocation": {
               "description": "Name of the allocation to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -681,7 +681,7 @@
             "allocation": {
               "description": "Name of the allocation to retrieve.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1005,7 +1005,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1051,7 +1051,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1190,7 +1190,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to patch.",
               "location": "query",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "type": "string"
             },
             "project": {
@@ -1282,7 +1282,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to update.",
               "location": "query",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "type": "string"
             },
             "project": {
@@ -1373,7 +1373,7 @@
             "backendBucket": {
               "description": "Name of the BackendBucket resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1455,7 +1455,7 @@
             "backendBucket": {
               "description": "Name of the BackendBucket resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1571,7 +1571,7 @@
             "backendBucket": {
               "description": "Name of the BackendBucket resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1612,7 +1612,7 @@
             "backendBucket": {
               "description": "Name of the BackendBucket resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1746,7 +1746,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1828,7 +1828,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -1862,7 +1862,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to which the queried instance belongs.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2098,7 +2098,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -2193,7 +2193,7 @@
             "diskType": {
               "description": "Name of the disk type to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3245,7 +3245,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3291,7 +3291,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3480,7 +3480,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource in which target is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3577,7 +3577,7 @@
             "address": {
               "description": "Name of the address resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3615,7 +3615,7 @@
             "address": {
               "description": "Name of the address resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3808,7 +3808,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3846,7 +3846,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -3998,7 +3998,7 @@
             "forwardingRule": {
               "description": "Name of the ForwardingRule resource in which target is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -6751,7 +6751,7 @@
     "instanceTemplates": {
       "methods": {
         "delete": {
-          "description": "Deletes the specified instance template. Deleting an instance template is permanent and cannot be undone. It's not possible to delete templates which are in use by an instance group.",
+          "description": "Deletes the specified instance template. Deleting an instance template is permanent and cannot be undone. It is not possible to delete templates that are already in use by a managed instance group.",
           "httpMethod": "DELETE",
           "id": "compute.instanceTemplates.delete",
           "parameterOrder": [
@@ -6890,7 +6890,7 @@
           ]
         },
         "list": {
-          "description": "Retrieves a list of instance templates that are contained within the specified project and zone.",
+          "description": "Retrieves a list of instance templates that are contained within the specified project.",
           "httpMethod": "GET",
           "id": "compute.instanceTemplates.list",
           "parameterOrder": [
@@ -9806,6 +9806,40 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "getIamPolicy": {
+          "description": "Gets the access control policy for a resource. May be empty if no such policy or resource exists.",
+          "httpMethod": "GET",
+          "id": "compute.licenses.getIamPolicy",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/licenses/{resource}/getIamPolicy",
+          "response": {
+            "$ref": "Policy"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
         "insert": {
           "description": "Create a License resource in the specified project.",
           "httpMethod": "POST",
@@ -11501,7 +11535,7 @@
           ],
           "parameters": {
             "nodeGroup": {
-              "description": "Name of the NodeGroup resource to delete.",
+              "description": "Name of the NodeGroup resource to update.",
               "location": "path",
               "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
               "required": true,
@@ -12571,7 +12605,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12617,7 +12651,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12756,7 +12790,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to patch.",
               "location": "query",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "type": "string"
             },
             "project": {
@@ -12848,7 +12882,7 @@
             "autoscaler": {
               "description": "Name of the autoscaler to update.",
               "location": "query",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "type": "string"
             },
             "project": {
@@ -12900,7 +12934,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12946,7 +12980,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12988,7 +13022,7 @@
             "backendService": {
               "description": "Name of the BackendService resource for which to get health.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13224,7 +13258,7 @@
             "backendService": {
               "description": "Name of the BackendService resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13326,7 +13360,7 @@
             "commitment": {
               "description": "Name of the commitment to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13470,7 +13504,7 @@
             "diskType": {
               "description": "Name of the disk type to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -21369,7 +21403,7 @@
       }
     }
   },
-  "revision": "20181130",
+  "revision": "20181217",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -21382,7 +21416,7 @@
           "type": "integer"
         },
         "acceleratorType": {
-          "description": "Full or partial URL of the accelerator type resource to attach to this instance. If you are creating an instance template, specify only the accelerator name.",
+          "description": "Full or partial URL of the accelerator type resource to attach to this instance. For example: projects/my-project/zones/us-central1-c/acceleratorTypes/nvidia-tesla-p100 If you are creating an instance template, specify only the accelerator name. See GPUs on Compute Engine for a full list of accelerator types.",
           "type": "string"
         }
       },
@@ -21906,9 +21940,11 @@
           "enum": [
             "DNS_RESOLVER",
             "GCE_ENDPOINT",
+            "NAT_AUTO",
             "VPC_PEERING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -22768,7 +22804,7 @@
           "type": "boolean"
         },
         "deviceName": {
-          "description": "Specifies a unique device name of your choice that is reflected into the /dev/disk/by-id/google-* tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance.\n\nIf not specified, the server chooses a default device name to apply to this disk, in the form persistent-disks-x, where x is a number assigned by Google Compute Engine. This field is only applicable for persistent disks.",
+          "description": "Specifies a unique device name of your choice that is reflected into the /dev/disk/by-id/google-* tree of a Linux operating system running within the instance. This name can be used to reference the device for mounting, resizing, and so on, from within the instance.\n\nIf not specified, the server chooses a default device name to apply to this disk, in the form persistent-disk-x, where x is a number assigned by Google Compute Engine. This field is only applicable for persistent disks.",
           "type": "string"
         },
         "diskEncryptionKey": {
@@ -23502,7 +23538,7 @@
       "id": "AutoscalingPolicyLoadBalancingUtilization",
       "properties": {
         "utilizationTarget": {
-          "description": "Fraction of backend capacity utilization (set in HTTP(s) load balancing configuration) that autoscaler should maintain. Must be a positive float value. If not defined, the default is 0.8.",
+          "description": "Fraction of backend capacity utilization (set in HTTP(S) load balancing configuration) that autoscaler should maintain. Must be a positive float value. If not defined, the default is 0.8.",
           "format": "double",
           "type": "number"
         }
@@ -25087,11 +25123,13 @@
           "description": "[Output Only] The status of disk creation.",
           "enum": [
             "CREATING",
+            "DELETING",
             "FAILED",
             "READY",
             "RESTORING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -28022,11 +28060,13 @@
         "status": {
           "description": "[Output Only] The status of the image. An image can be used to create other resources, such as instances, only after the image has been successfully created and the status is set to READY. Possible values are FAILED, PENDING, or READY.",
           "enum": [
+            "DELETING",
             "FAILED",
             "PENDING",
             "READY"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -30541,7 +30581,7 @@
           "type": "object"
         },
         "linkType": {
-          "description": "Type of link requested. This field indicates speed of each of the links in the bundle, not the entire bundle. Only 10G per link is allowed for a dedicated interconnect. Options: Ethernet_10G_LR",
+          "description": "Type of link requested. This field indicates speed of each of the links in the bundle, not the entire bundle.",
           "enum": [
             "LINK_TYPE_ETHERNET_10G_LR"
           ],
@@ -35867,6 +35907,10 @@
           ],
           "type": "string"
         },
+        "owner": {
+          "description": "[Output Only] Owning resource. This is the resource on which this quota is applied.",
+          "type": "string"
+        },
         "usage": {
           "description": "[Output Only] Current usage of this metric.",
           "format": "double",
@@ -37211,6 +37255,13 @@
           },
           "description": "Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.",
           "type": "object"
+        },
+        "storageLocations": {
+          "description": "GCS bucket storage location of the auto snapshot (regional or multi-regional).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -39096,7 +39147,7 @@
       "type": "object"
     },
     "ShieldedVmIdentityEntry": {
-      "description": "A Shielded VM Identity Entry.",
+      "description": "A Shielded Instance Identity Entry.",
       "id": "ShieldedVmIdentityEntry",
       "properties": {
         "ekCert": {

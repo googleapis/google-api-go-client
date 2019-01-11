@@ -170,7 +170,13 @@ type ResourceRecordSetsService struct {
 	s *Service
 }
 
-// Change: An atomic update to a collection of ResourceRecordSets.
+// Change: A Change represents a set of ResourceRecordSet additions and
+// deletions applied atomically to a ManagedZone. ResourceRecordSets
+// within a ManagedZone are modified by creating a new Change element in
+// the Changes collection. In turn the Changes collection also records
+// the past modifications to the ResourceRecordSets in a ManagedZone.
+// The current state of the ManagedZone is the sum effect of applying
+// all Change elements in the Changes collection in sequence.
 type Change struct {
 	// Additions: Which ResourceRecordSets to add?
 	Additions []*ResourceRecordSet `json:"additions,omitempty"`
@@ -194,7 +200,9 @@ type Change struct {
 	// (output only). This is in RFC3339 text format.
 	StartTime string `json:"startTime,omitempty"`
 
-	// Status: Status of the operation (output only).
+	// Status: Status of the operation (output only). A status of "done"
+	// means that the request to update the authoritative servers has been
+	// sent, but the servers might not be updated yet.
 	//
 	// Possible values:
 	//   "done"
@@ -428,11 +436,12 @@ type DnsKeySpec struct {
 	// KeyLength: Length of the keys in bits.
 	KeyLength int64 `json:"keyLength,omitempty"`
 
-	// KeyType: One of "KEY_SIGNING" or "ZONE_SIGNING". Keys of type
-	// KEY_SIGNING have the Secure Entry Point flag set and, when active,
-	// will be used to sign only resource record sets of type DNSKEY.
-	// Otherwise, the Secure Entry Point flag will be cleared and this key
-	// will be used to sign only resource record sets of other types.
+	// KeyType: Specifies whether this is a key signing key (KSK) or a zone
+	// signing key (ZSK). Key signing keys have the Secure Entry Point flag
+	// set and, when active, will only be used to sign resource record sets
+	// of type DNSKEY. Zone signing keys do not have the Secure Entry Point
+	// flag set and will be used to sign all other types of resource record
+	// sets.
 	//
 	// Possible values:
 	//   "keySigning"
@@ -568,12 +577,13 @@ type ManagedZone struct {
 	// servers; defined by the server (output only)
 	NameServers []string `json:"nameServers,omitempty"`
 
-	// PrivateVisibilityConfig: For privately visible zones, the set of GCP
-	// resources that the zone is visible from.
+	// PrivateVisibilityConfig: For privately visible zones, the set of
+	// Virtual Private Cloud resources that the zone is visible from.
 	PrivateVisibilityConfig *ManagedZonePrivateVisibilityConfig `json:"privateVisibilityConfig,omitempty"`
 
 	// Visibility: The zone's visibility: public zones are exposed to the
-	// Internet, while private zones are visible only to GCP resources.
+	// Internet, while private zones are visible only to Virtual Private
+	// Cloud resources.
 	//
 	// Possible values:
 	//   "private"
@@ -775,7 +785,7 @@ type ManagedZonePrivateVisibilityConfig struct {
 	// string "dns#managedZonePrivateVisibilityConfig".
 	Kind string `json:"kind,omitempty"`
 
-	// Networks: The list of GCE private network IDs that can see this zone.
+	// Networks: The list of VPC networks that can see this zone.
 	Networks []*ManagedZonePrivateVisibilityConfigNetwork `json:"networks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -806,8 +816,8 @@ type ManagedZonePrivateVisibilityConfigNetwork struct {
 	// string "dns#managedZonePrivateVisibilityConfigNetwork".
 	Kind string `json:"kind,omitempty"`
 
-	// NetworkUrl: The fully qualified URL of the GCE private network to
-	// bind to. This should be formatted like
+	// NetworkUrl: The fully qualified URL of the VPC network to bind to.
+	// This should be formatted like
 	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
 	NetworkUrl string `json:"networkUrl,omitempty"`
 
@@ -909,7 +919,9 @@ type Operation struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// Status: Status of the operation. Can be one of the following:
-	// "PENDING" or "DONE" (output only).
+	// "PENDING" or "DONE" (output only). A status of "DONE" means that the
+	// request to update the authoritative servers has been sent, but the
+	// servers might not be updated yet.
 	//
 	// Possible values:
 	//   "done"
@@ -1129,8 +1141,8 @@ func (s *PoliciesUpdateResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Policy: A policy is a collection of rules applied to one or more
-// networks that specify forwarding behavior for that network.
+// Policy: A policy is a collection of DNS rules applied to one or more
+// Virtual Private Cloud resources.
 type Policy struct {
 	// AlternativeNameServerConfig: Sets an alternative name server for the
 	// associated networks. When specified, all DNS queries are forwarded to
@@ -1263,8 +1275,8 @@ type PolicyNetwork struct {
 	// string "dns#policyNetwork".
 	Kind string `json:"kind,omitempty"`
 
-	// NetworkUrl: The fully qualified URL of the GCE private network to
-	// bind to. This should be formatted like
+	// NetworkUrl: The fully qualified URL of the VPC network to bind to.
+	// This should be formatted like
 	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
 	NetworkUrl string `json:"networkUrl,omitempty"`
 
@@ -1441,8 +1453,8 @@ type ResourceRecordSet struct {
 	// resolvers.
 	Ttl int64 `json:"ttl,omitempty"`
 
-	// Type: The identifier of a supported record type, for example, A,
-	// AAAA, MX, TXT, and so on.
+	// Type: The identifier of a supported record type. See the list of
+	// Supported DNS record types.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to

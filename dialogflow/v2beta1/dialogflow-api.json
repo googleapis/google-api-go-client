@@ -502,7 +502,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+                      "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                       "required": true,
@@ -1249,7 +1249,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+                      "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -2386,7 +2386,7 @@
       }
     }
   },
-  "revision": "20181215",
+  "revision": "20190107",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2483,7 +2483,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+          "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
           "type": "string"
         }
       },
@@ -2624,7 +2624,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "outputContexts": {
@@ -2659,7 +2659,7 @@
           "type": "string"
         },
         "trainingPhrases": {
-          "description": "Optional. The collection of examples/templates that the agent is\ntrained on.",
+          "description": "Optional. The collection of examples that the agent is\ntrained on.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2IntentTrainingPhrase"
           },
@@ -3134,7 +3134,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2IntentTrainingPhrase": {
-      "description": "Represents an example or template that the agent is trained on.",
+      "description": "Represents an example that the agent is trained on.",
       "id": "GoogleCloudDialogflowV2IntentTrainingPhrase",
       "properties": {
         "name": {
@@ -3149,7 +3149,7 @@
           "type": "array"
         },
         "timesAddedCount": {
-          "description": "Optional. Indicates how many times this example or template was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
+          "description": "Optional. Indicates how many times this example was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
           "format": "int32",
           "type": "integer"
         },
@@ -3163,7 +3163,7 @@
           "enumDescriptions": [
             "Not specified. This value should never be used.",
             "Examples do not contain @-prefixed entity type names, but example parts\ncan be annotated with entity types.",
-            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings."
+            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings.\nTemplate mode has been deprecated. Example mode is the only supported\nway to create new training phrases. If you have existing training\nphrases that you've created in template mode, those will continue to\nwork."
           ],
           "type": "string"
         }
@@ -3183,7 +3183,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example or template,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
           "type": "string"
         },
         "userDefined": {
@@ -3773,7 +3773,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+          "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
           "type": "string"
         }
       },
@@ -4016,7 +4016,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "outputContexts": {
@@ -4051,7 +4051,7 @@
           "type": "string"
         },
         "trainingPhrases": {
-          "description": "Optional. The collection of examples/templates that the agent is\ntrained on.",
+          "description": "Optional. The collection of examples that the agent is\ntrained on.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase"
           },
@@ -4591,7 +4591,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1IntentTrainingPhrase": {
-      "description": "Represents an example or template that the agent is trained on.",
+      "description": "Represents an example that the agent is trained on.",
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
       "properties": {
         "name": {
@@ -4606,7 +4606,7 @@
           "type": "array"
         },
         "timesAddedCount": {
-          "description": "Optional. Indicates how many times this example or template was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
+          "description": "Optional. Indicates how many times this example was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
           "format": "int32",
           "type": "integer"
         },
@@ -4620,7 +4620,7 @@
           "enumDescriptions": [
             "Not specified. This value should never be used.",
             "Examples do not contain @-prefixed entity type names, but example parts\ncan be annotated with entity types.",
-            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings."
+            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings.\nTemplate mode has been deprecated. Example mode is the only supported\nway to create new training phrases. If you have existing training\nphrases that you've created in template mode, those will continue to\nwork."
           ],
           "type": "string"
         }
@@ -4640,7 +4640,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example or template,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
           "type": "string"
         },
         "userDefined": {

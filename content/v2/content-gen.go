@@ -979,6 +979,15 @@ type AccountUser struct {
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
+	// OrderManager: Whether user is an order manager.
+	OrderManager bool `json:"orderManager,omitempty"`
+
+	// PaymentsAnalyst: Whether user can access payment statements.
+	PaymentsAnalyst bool `json:"paymentsAnalyst,omitempty"`
+
+	// PaymentsManager: Whether user can manage payment settings.
+	PaymentsManager bool `json:"paymentsManager,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Admin") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -4472,6 +4481,10 @@ type Order struct {
 	// Status: The status of the order.
 	Status string `json:"status,omitempty"`
 
+	// TaxCollector: The party responsible for collecting and remitting
+	// taxes.
+	TaxCollector string `json:"taxCollector,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -5311,6 +5324,10 @@ type OrderReportTransaction struct {
 
 	// ProductAmount: Total amount for the items.
 	ProductAmount *Amount `json:"productAmount,omitempty"`
+
+	// ProductAmountWithRemittedTax: Total amount with remitted tax for the
+	// items.
+	ProductAmountWithRemittedTax *ProductAmount `json:"productAmountWithRemittedTax,omitempty"`
 
 	// TransactionDate: The date of the transaction, in ISO 8601 format.
 	TransactionDate string `json:"transactionDate,omitempty"`
@@ -6188,8 +6205,9 @@ type OrdersCancelLineItemRequest struct {
 	// left on the order.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to cancellation amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to cancellation amount in
+	// amountPretax. Optional, but if filled, then amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
@@ -6687,8 +6705,9 @@ type OrdersCustomBatchRequestEntryCancelLineItem struct {
 	// left on the order.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to cancellation amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to cancellation amount in
+	// amountPretax. Optional, but if filled, then amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// LineItemId: The ID of the line item to cancel. Either lineItemId or
@@ -6814,11 +6833,12 @@ type OrdersCustomBatchRequestEntryRefund struct {
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: The amount that is refunded. Either amount or
-	// amountPretax and amountTax should be filled.
+	// amountPretax should be filled.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to refund amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to refund amount in
+	// amountPretax. Optional, but if filled, amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// Reason: The reason for the refund.
@@ -6934,12 +6954,12 @@ func (s *OrdersCustomBatchRequestEntryReturnLineItem) MarshalJSON() ([]byte, err
 
 type OrdersCustomBatchRequestEntryReturnRefundLineItem struct {
 	// AmountPretax: The amount that is refunded. If omitted, refundless
-	// return is assumed (same as calling returnLineItem method). Optional,
-	// but if filled then both amountPretax and amountTax must be set.
+	// return is assumed (same as calling returnLineItem method).
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to refund amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to refund amount in
+	// amountPretax. Optional, but if filled, then amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// LineItemId: The ID of the line item to return. Either lineItemId or
@@ -7465,11 +7485,12 @@ type OrdersRefundRequest struct {
 	Amount *Price `json:"amount,omitempty"`
 
 	// AmountPretax: The amount that is refunded. Either amount or
-	// amountPretax and amountTax should be filled.
+	// amountPretax should be filled.
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to refund amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to refund amount in
+	// amountPretax. Optional, but if filled, amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// OperationId: The ID of the operation. Unique across all operations
@@ -7705,12 +7726,12 @@ func (s *OrdersReturnLineItemResponse) MarshalJSON() ([]byte, error) {
 
 type OrdersReturnRefundLineItemRequest struct {
 	// AmountPretax: The amount that is refunded. If omitted, refundless
-	// return is assumed (same as calling returnLineItem method). Optional,
-	// but if filled then both amountPretax and amountTax must be set.
+	// return is assumed (same as calling returnLineItem method).
 	AmountPretax *Price `json:"amountPretax,omitempty"`
 
-	// AmountTax: Tax amount that correspond to refund amount in
-	// amountPretax.
+	// AmountTax: Tax amount that corresponds to refund amount in
+	// amountPretax. Optional, but if filled, then amountPretax must be set.
+	// Calculated automatically if not provided.
 	AmountTax *Price `json:"amountTax,omitempty"`
 
 	// LineItemId: The ID of the line item to return. Either lineItemId or
@@ -9254,6 +9275,40 @@ func (s *Product) UnmarshalJSON(data []byte) error {
 	}
 	s.DisplayAdsValue = float64(s1.DisplayAdsValue)
 	return nil
+}
+
+type ProductAmount struct {
+	// PriceAmount: The pre-tax or post-tax price depending on the location
+	// of the order.
+	PriceAmount *Price `json:"priceAmount,omitempty"`
+
+	// RemittedTaxAmount: Remitted tax value.
+	RemittedTaxAmount *Price `json:"remittedTaxAmount,omitempty"`
+
+	// TaxAmount: Tax value.
+	TaxAmount *Price `json:"taxAmount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PriceAmount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PriceAmount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductAmount) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductAmount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ProductAspect struct {

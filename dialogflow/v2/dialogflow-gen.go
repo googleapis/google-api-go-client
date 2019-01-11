@@ -852,11 +852,11 @@ type GoogleCloudDialogflowV2EntityType struct {
 	// types (with or without aliases).
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of the entity type. Format:
-	// `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+	// Name: The unique identifier of the entity type.
+	// Required for EntityTypes.UpdateEntityType
+	// and
+	// EntityTypes.BatchUpdateEntityTypes methods.
+	// Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1383,10 +1383,10 @@ type GoogleCloudDialogflowV2Intent struct {
 	// auto-markup in the UI is turned off.
 	MlDisabled bool `json:"mlDisabled,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of this intent.
+	// Name: The unique identifier of this intent.
+	// Required for Intents.UpdateIntent and
+	// Intents.BatchUpdateIntents
+	// methods.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	Name string `json:"name,omitempty"`
 
@@ -1439,8 +1439,8 @@ type GoogleCloudDialogflowV2Intent struct {
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
-	// TrainingPhrases: Optional. The collection of examples/templates that
-	// the agent is
+	// TrainingPhrases: Optional. The collection of examples that the agent
+	// is
 	// trained on.
 	TrainingPhrases []*GoogleCloudDialogflowV2IntentTrainingPhrase `json:"trainingPhrases,omitempty"`
 
@@ -2382,8 +2382,8 @@ func (s *GoogleCloudDialogflowV2IntentParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2IntentTrainingPhrase: Represents an example or
-// template that the agent is trained on.
+// GoogleCloudDialogflowV2IntentTrainingPhrase: Represents an example
+// that the agent is trained on.
 type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	// Name: Output only. The unique identifier of this training phrase.
 	Name string `json:"name,omitempty"`
@@ -2395,8 +2395,8 @@ type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	// only for the annotated parts of the training phrase.
 	Parts []*GoogleCloudDialogflowV2IntentTrainingPhrasePart `json:"parts,omitempty"`
 
-	// TimesAddedCount: Optional. Indicates how many times this example or
-	// template was added to
+	// TimesAddedCount: Optional. Indicates how many times this example was
+	// added to
 	// the intent. Each time a developer adds an existing sample by editing
 	// an
 	// intent or training, this counter is increased.
@@ -2413,6 +2413,13 @@ type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
 	// they can contain
 	// @-prefixed entity type names as substrings.
+	// Template mode has been deprecated. Example mode is the only
+	// supported
+	// way to create new training phrases. If you have existing
+	// training
+	// phrases that you've created in template mode, those will continue
+	// to
+	// work.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2453,7 +2460,7 @@ type GoogleCloudDialogflowV2IntentTrainingPhrasePart struct {
 	// examples.
 	EntityType string `json:"entityType,omitempty"`
 
-	// Text: Required. The text corresponding to the example or template,
+	// Text: Required. The text corresponding to the example,
 	// if there are no annotations. For
 	// annotated examples, it is the text for one of the example's parts.
 	Text string `json:"text,omitempty"`
@@ -3456,11 +3463,11 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 	// types (with or without aliases).
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of the entity type. Format:
-	// `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+	// Name: The unique identifier of the entity type.
+	// Required for EntityTypes.UpdateEntityType
+	// and
+	// EntityTypes.BatchUpdateEntityTypes methods.
+	// Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoExpansionMode")
@@ -3786,10 +3793,10 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	//   ml_enabled = true / ml_disabled = false.
 	MlEnabled bool `json:"mlEnabled,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of this intent.
+	// Name: The unique identifier of this intent.
+	// Required for Intents.UpdateIntent and
+	// Intents.BatchUpdateIntents
+	// methods.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	Name string `json:"name,omitempty"`
 
@@ -3842,8 +3849,8 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
-	// TrainingPhrases: Optional. The collection of examples/templates that
-	// the agent is
+	// TrainingPhrases: Optional. The collection of examples that the agent
+	// is
 	// trained on.
 	TrainingPhrases []*GoogleCloudDialogflowV2beta1IntentTrainingPhrase `json:"trainingPhrases,omitempty"`
 
@@ -4890,7 +4897,7 @@ func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrase: Represents an
-// example or template that the agent is trained on.
+// example that the agent is trained on.
 type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	// Name: Output only. The unique identifier of this training phrase.
 	Name string `json:"name,omitempty"`
@@ -4902,8 +4909,8 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	// only for the annotated parts of the training phrase.
 	Parts []*GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart `json:"parts,omitempty"`
 
-	// TimesAddedCount: Optional. Indicates how many times this example or
-	// template was added to
+	// TimesAddedCount: Optional. Indicates how many times this example was
+	// added to
 	// the intent. Each time a developer adds an existing sample by editing
 	// an
 	// intent or training, this counter is increased.
@@ -4920,6 +4927,13 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
 	// they can contain
 	// @-prefixed entity type names as substrings.
+	// Template mode has been deprecated. Example mode is the only
+	// supported
+	// way to create new training phrases. If you have existing
+	// training
+	// phrases that you've created in template mode, those will continue
+	// to
+	// work.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4960,7 +4974,7 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart struct {
 	// examples.
 	EntityType string `json:"entityType,omitempty"`
 
-	// Text: Required. The text corresponding to the example or template,
+	// Text: Required. The text corresponding to the example,
 	// if there are no annotations. For
 	// annotated examples, it is the text for one of the example's parts.
 	Text string `json:"text,omitempty"`
@@ -7884,7 +7898,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+	//       "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -8923,7 +8937,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or\nindirect followup intents, we also delete them.\n\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or\nindirect followup intents, we also delete them.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -9523,7 +9537,7 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,

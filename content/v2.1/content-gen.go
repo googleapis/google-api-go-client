@@ -860,6 +860,15 @@ type AccountUser struct {
 	// EmailAddress: User's email address.
 	EmailAddress string `json:"emailAddress,omitempty"`
 
+	// OrderManager: Whether user is an order manager.
+	OrderManager bool `json:"orderManager,omitempty"`
+
+	// PaymentsAnalyst: Whether user can access payment statements.
+	PaymentsAnalyst bool `json:"paymentsAnalyst,omitempty"`
+
+	// PaymentsManager: Whether user can manage payment settings.
+	PaymentsManager bool `json:"paymentsManager,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Admin") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1650,13 +1659,14 @@ func (s *AccounttaxListResponse) MarshalJSON() ([]byte, error) {
 }
 
 type Amount struct {
-	// Pretax: [required] Value before taxes.
-	Pretax *Price `json:"pretax,omitempty"`
+	// PriceAmount: [required] The pre-tax or post-tax price depending on
+	// the location of the order.
+	PriceAmount *Price `json:"priceAmount,omitempty"`
 
-	// Tax: [required] Tax value.
-	Tax *Price `json:"tax,omitempty"`
+	// TaxAmount: [required] Tax value.
+	TaxAmount *Price `json:"taxAmount,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Pretax") to
+	// ForceSendFields is a list of field names (e.g. "PriceAmount") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1664,10 +1674,10 @@ type Amount struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Pretax") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PriceAmount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3914,6 +3924,10 @@ type Order struct {
 	// Status: The status of the order.
 	Status string `json:"status,omitempty"`
 
+	// TaxCollector: The party responsible for collecting and remitting
+	// taxes.
+	TaxCollector string `json:"taxCollector,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -4687,7 +4701,7 @@ type OrderReportTransaction struct {
 	OrderId string `json:"orderId,omitempty"`
 
 	// ProductAmount: Total amount for the items.
-	ProductAmount *Amount `json:"productAmount,omitempty"`
+	ProductAmount *ProductAmount `json:"productAmount,omitempty"`
 
 	// TransactionDate: The date of the transaction, in ISO 8601 format.
 	TransactionDate string `json:"transactionDate,omitempty"`
@@ -6251,8 +6265,7 @@ type OrdersReturnRefundLineItemRequest struct {
 
 	// PriceAmount: The amount to be refunded. This may be pre-tax or
 	// post-tax depending on the location of the order. If omitted,
-	// refundless return is assumed. Optional, but if filled then both
-	// priceAmount and taxAmount must be set.
+	// refundless return is assumed.
 	PriceAmount *Price `json:"priceAmount,omitempty"`
 
 	// ProductId: The ID of the product to return. This is the REST ID used
@@ -6268,7 +6281,9 @@ type OrdersReturnRefundLineItemRequest struct {
 	// ReasonText: The explanation of the reason.
 	ReasonText string `json:"reasonText,omitempty"`
 
-	// TaxAmount: The amount of tax to be refunded.
+	// TaxAmount: The amount of tax to be refunded. Optional, but if filled,
+	// then priceAmount must be set. Calculated automatically if not
+	// provided.
 	TaxAmount *Price `json:"taxAmount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LineItemId") to
@@ -7763,6 +7778,40 @@ func (s *Product) UnmarshalJSON(data []byte) error {
 	}
 	s.DisplayAdsValue = float64(s1.DisplayAdsValue)
 	return nil
+}
+
+type ProductAmount struct {
+	// PriceAmount: The pre-tax or post-tax price depending on the location
+	// of the order.
+	PriceAmount *Price `json:"priceAmount,omitempty"`
+
+	// RemittedTaxAmount: Remitted tax value.
+	RemittedTaxAmount *Price `json:"remittedTaxAmount,omitempty"`
+
+	// TaxAmount: Tax value.
+	TaxAmount *Price `json:"taxAmount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PriceAmount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PriceAmount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductAmount) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductAmount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 type ProductShipping struct {

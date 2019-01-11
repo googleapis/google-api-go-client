@@ -1095,7 +1095,8 @@ type BasicChartSeries struct {
 	//   "COMBO" - A <a
 	// href="/chart/interactive/docs/gallery/combochart">combo chart</a>.
 	//   "STEPPED_AREA" - A <a
-	// href="/chart/interactive/docs/gallery/steppedareachart">stepped area
+	// href="/chart/interactive/docs/gallery/steppedareachart">stepped
+	// area
 	// chart</a>.
 	Type string `json:"type,omitempty"`
 
@@ -1147,7 +1148,8 @@ type BasicChartSpec struct {
 	//   "COMBO" - A <a
 	// href="/chart/interactive/docs/gallery/combochart">combo chart</a>.
 	//   "STEPPED_AREA" - A <a
-	// href="/chart/interactive/docs/gallery/steppedareachart">stepped area
+	// href="/chart/interactive/docs/gallery/steppedareachart">stepped
+	// area
 	// chart</a>.
 	ChartType string `json:"chartType,omitempty"`
 
@@ -2469,7 +2471,8 @@ func (s *BubbleChartSpec) UnmarshalJSON(data []byte) error {
 
 // CandlestickChartSpec: A <a
 // href="/chart/interactive/docs/gallery/candlestickchart">candlestick
-// chart</a>.
+// ch
+// art</a>.
 type CandlestickChartSpec struct {
 	// Data: The Candlestick chart data.
 	// Only one CandlestickData is supported.

@@ -14,11 +14,8 @@
 
 #!/bin/bash
 
-# Fail on any error
-set -eo
-
-# Display commands being run
-set -x
+# Fail on error, and display commands being run.
+set -ex
 
 # Only run the linter on go1.11, since it needs type aliases (and we only care about its output once).
 # TODO(deklerk) We should pass an environment variable from kokoro to decide this logic instead.
@@ -28,12 +25,17 @@ fi
 
 pwd
 
+# Fail if a dependency was added without the necessary go.mod/go.sum change
+# being part of the commit.
+GO111MODULE=on go mod tidy
+git diff go.mod | tee /dev/stderr | (! read)
+git diff go.sum | tee /dev/stderr | (! read)
+
 try3() { eval "$*" || eval "$*" || eval "$*"; }
 
 try3 go get -u \
   golang.org/x/lint/golint \
   golang.org/x/tools/cmd/goimports \
-  golang.org/x/lint/golint \
   honnef.co/go/tools/cmd/staticcheck
 
 # Look at all .go files (ignoring .pb.go files) and make sure they have a Copyright. Fail if any don't.

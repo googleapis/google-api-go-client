@@ -1642,6 +1642,52 @@ func (s *Field) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudServicenetworkingV1betaSubnetwork: Represents a subnet
+// that was created or discovered by a private access
+// management service.
+type GoogleCloudServicenetworkingV1betaSubnetwork struct {
+	// IpCidrRange: Subnetwork CIDR range in `10.x.x.x/y` format.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// Name: Subnetwork name.
+	// See https://cloud.google.com/compute/docs/vpc/
+	Name string `json:"name,omitempty"`
+
+	// Network: In the Shared VPC host project, the VPC network that's
+	// peered with the
+	// consumer network. For
+	// example:
+	// `projects/1234321/global/networks/host-network`
+	Network string `json:"network,omitempty"`
+
+	// OutsideAllocation: This is a discovered subnet that is not within the
+	// current consumer
+	// allocated ranges.
+	OutsideAllocation bool `json:"outsideAllocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudServicenetworkingV1betaSubnetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudServicenetworkingV1betaSubnetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Http: Defines the HTTP configuration for an API service. It contains
 // a list of
 // HttpRule, each specifying the mapping of an RPC method
@@ -3530,6 +3576,43 @@ type QuotaLimit struct {
 
 func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaLimit
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Range: Represents a found unused range.
+type Range struct {
+	// IpCidrRange: CIDR range in "10.x.x.x/y" format that is within
+	// the
+	// allocated ranges and currently unused.
+	IpCidrRange string `json:"ipCidrRange,omitempty"`
+
+	// Network: In the Shared VPC host project, the VPC network that's
+	// peered with the
+	// consumer network. For
+	// example:
+	// `projects/1234321/global/networks/host-network`
+	Network string `json:"network,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IpCidrRange") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Range) MarshalJSON() ([]byte, error) {
+	type NoMethod Range
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

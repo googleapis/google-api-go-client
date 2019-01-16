@@ -515,7 +515,7 @@ type Attempt struct {
 	// `dispatch_time` will be truncated to the nearest microsecond.
 	DispatchTime string `json:"dispatchTime,omitempty"`
 
-	// ResponseStatus: Output only. The response from the target for this
+	// ResponseStatus: Output only. The response from the worker for this
 	// attempt.
 	//
 	// If `response_time` is unset, then the task has not been attempted or
@@ -1109,9 +1109,9 @@ type PurgeQueueRequest struct {
 // limits,
 // retry options, queue types, and others.
 type Queue struct {
-	// AppEngineHttpQueue: App Engine HTTP queue.
-	//
-	// An App Engine queue is a queue that has an AppEngineHttpQueue type.
+	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only
+	// to
+	// AppEngine tasks in this queue.
 	AppEngineHttpQueue *AppEngineHttpQueue `json:"appEngineHttpQueue,omitempty"`
 
 	// Name: Caller-specified and required in CreateQueue,
@@ -1156,10 +1156,10 @@ type Queue struct {
 
 	// RateLimits: Rate limits for task dispatches.
 	//
-	// rate_limits and
-	// retry_config are related because they both
-	// control task attempts however they control how tasks are
-	// attempted in different ways:
+	// rate_limits and retry_config are
+	// related because they both control task attempts. However they control
+	// task
+	// attempts in different ways:
 	//
 	// * rate_limits controls the total rate of
 	//   dispatches from a queue (i.e. all traffic dispatched from the
@@ -1169,6 +1169,18 @@ type Queue struct {
 	//   particular a task after its first attempt fails. That is,
 	//   retry_config controls task retries (the
 	//   second attempt, third attempt, etc).
+	//
+	// The queue's actual dispatch rate is the result of:
+	//
+	// * Number of tasks in the queue
+	// * User-specified throttling: rate limits
+	//   retry configuration, and the
+	//   queue's state.
+	// * System throttling due to `429` (Too Many Requests) or `503`
+	// (Service
+	//   Unavailable) responses from the worker, high error rates, or to
+	// smooth
+	//   sudden large traffic spikes.
 	RateLimits *RateLimits `json:"rateLimits,omitempty"`
 
 	// RetryConfig: Settings that determine the retry behavior.
@@ -1219,10 +1231,11 @@ type Queue struct {
 	// [queue.yaml](https://cloud.google.com/appengine/docs/python/confi
 	// g/queueref)
 	// or
-	// [queue.xml](https://cloud.google.com/appengine/docs/standard/java/c
-	// onfig/queueref) is uploaded
-	// which does not contain the queue. You cannot directly disable a
-	// queue.
+	// [queue.xml](https://cloud.google.com/appengine/docs/sta
+	// ndard/java/config/queueref)
+	// is uploaded which does not contain the queue. You cannot directly
+	// disable
+	// a queue.
 	//
 	// When a queue is disabled, tasks can still be added to a queue
 	// but the tasks are not dispatched.
@@ -1757,11 +1770,8 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 
 // Task: A unit of scheduled work.
 type Task struct {
-	// AppEngineHttpRequest: App Engine HTTP request that is sent to the
-	// task's target. Can
-	// be set only if
-	// app_engine_http_queue is set
-	// on the queue.
+	// AppEngineHttpRequest: HTTP request that is sent to the App Engine app
+	// handler.
 	//
 	// An App Engine task is a task that has AppEngineHttpRequest set.
 	AppEngineHttpRequest *AppEngineHttpRequest `json:"appEngineHttpRequest,omitempty"`

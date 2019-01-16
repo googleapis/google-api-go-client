@@ -844,6 +844,7 @@ func (s *OutdatedLibrary) MarshalJSON() ([]byte, error) {
 
 // ScanConfig: A ScanConfig resource contains the configurations to
 // launch a scan.
+// next id: 12
 type ScanConfig struct {
 	// Authentication: The authentication configuration. If specified,
 	// service will use the
@@ -858,6 +859,9 @@ type ScanConfig struct {
 	// DisplayName: Required.
 	// The user provided display name of the ScanConfig.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// LatestRun: Latest ScanRun if available.
+	LatestRun *ScanRun `json:"latestRun,omitempty"`
 
 	// MaxQps: The maximum QPS during scanning. A valid value ranges from 5
 	// to 20

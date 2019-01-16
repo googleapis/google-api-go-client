@@ -720,7 +720,7 @@ func (s *ColorInfo) UnmarshalJSON(data []byte) error {
 type CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
 	// coordinates of the bounding
-	// box are in the original image's scale, as returned in `ImageParams`.
+	// box are in the original image's scale.
 	BoundingPoly *BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Confidence of this being a salient region.  Range [0, 1].
@@ -1057,7 +1057,7 @@ type FaceAnnotation struct {
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
 	// of the bounding box
-	// are in the original image's scale, as returned in `ImageParams`.
+	// are in the original image's scale.
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.
@@ -1675,7 +1675,7 @@ func (s *GoogleCloudVisionV1p1beta1ColorInfo) UnmarshalJSON(data []byte) error {
 type GoogleCloudVisionV1p1beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
 	// coordinates of the bounding
-	// box are in the original image's scale, as returned in `ImageParams`.
+	// box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Confidence of this being a salient region.  Range [0, 1].
@@ -1923,7 +1923,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
 	// of the bounding box
-	// are in the original image's scale, as returned in `ImageParams`.
+	// are in the original image's scale.
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.
@@ -4273,7 +4273,7 @@ func (s *GoogleCloudVisionV1p2beta1ColorInfo) UnmarshalJSON(data []byte) error {
 type GoogleCloudVisionV1p2beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
 	// coordinates of the bounding
-	// box are in the original image's scale, as returned in `ImageParams`.
+	// box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p2beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Confidence of this being a salient region.  Range [0, 1].
@@ -4560,7 +4560,7 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
 	// of the bounding box
-	// are in the original image's scale, as returned in `ImageParams`.
+	// are in the original image's scale.
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.
@@ -7145,7 +7145,7 @@ func (s *GoogleCloudVisionV1p3beta1ColorInfo) UnmarshalJSON(data []byte) error {
 type GoogleCloudVisionV1p3beta1CropHint struct {
 	// BoundingPoly: The bounding polygon for the crop region. The
 	// coordinates of the bounding
-	// box are in the original image's scale, as returned in `ImageParams`.
+	// box are in the original image's scale.
 	BoundingPoly *GoogleCloudVisionV1p3beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Confidence of this being a salient region.  Range [0, 1].
@@ -7393,7 +7393,7 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 
 	// BoundingPoly: The bounding polygon around the face. The coordinates
 	// of the bounding box
-	// are in the original image's scale, as returned in `ImageParams`.
+	// are in the original image's scale.
 	// The bounding box is computed to "frame" the face in accordance with
 	// human
 	// expectations. It is based on the landmarker results.

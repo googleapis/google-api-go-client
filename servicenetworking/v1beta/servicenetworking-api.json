@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20190109",
+  "revision": "20190114",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -1004,6 +1004,29 @@
       },
       "type": "object"
     },
+    "GoogleCloudServicenetworkingV1betaSubnetwork": {
+      "description": "Represents a subnet that was created or discovered by a private access\nmanagement service.",
+      "id": "GoogleCloudServicenetworkingV1betaSubnetwork",
+      "properties": {
+        "ipCidrRange": {
+          "description": "Subnetwork CIDR range in `10.x.x.x/y` format.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Subnetwork name.\nSee https://cloud.google.com/compute/docs/vpc/",
+          "type": "string"
+        },
+        "network": {
+          "description": "In the Shared VPC host project, the VPC network that's peered with the\nconsumer network. For example:\n`projects/1234321/global/networks/host-network`",
+          "type": "string"
+        },
+        "outsideAllocation": {
+          "description": "This is a discovered subnet that is not within the current consumer\nallocated ranges.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Http": {
       "description": "Defines the HTTP configuration for an API service. It contains a list of\nHttpRule, each specifying the mapping of an RPC method\nto one or more HTTP REST API methods.",
       "id": "Http",
@@ -1600,6 +1623,21 @@
           },
           "description": "Tiered limit values. You must specify this as a key:value pair, with an\ninteger value that is the maximum number of requests allowed for the\nspecified unit. Currently only STANDARD is supported.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Range": {
+      "description": "Represents a found unused range.",
+      "id": "Range",
+      "properties": {
+        "ipCidrRange": {
+          "description": "CIDR range in \"10.x.x.x/y\" format that is within the\nallocated ranges and currently unused.",
+          "type": "string"
+        },
+        "network": {
+          "description": "In the Shared VPC host project, the VPC network that's peered with the\nconsumer network. For example:\n`projects/1234321/global/networks/host-network`",
+          "type": "string"
         }
       },
       "type": "object"

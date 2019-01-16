@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20181206",
+  "revision": "20190108",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1650,7 +1650,6 @@
       "id": "DateValues",
       "properties": {
         "values": {
-          "description": "The maximum number of elements is 100.",
           "items": {
             "$ref": "Date"
           },
@@ -1726,7 +1725,6 @@
       "id": "DoubleValues",
       "properties": {
         "values": {
-          "description": "The maximum number of elements is 100.",
           "items": {
             "format": "double",
             "type": "number"
@@ -1921,7 +1919,7 @@
       "id": "EnumValues",
       "properties": {
         "values": {
-          "description": "The maximum allowable length for string values is 32 characters.\nThe maximum number of elements is 100.",
+          "description": "The maximum allowable length for string values is 32 characters.",
           "items": {
             "type": "string"
           },
@@ -2154,7 +2152,7 @@
       "id": "HtmlValues",
       "properties": {
         "values": {
-          "description": "The maximum allowable length for html values is 2048 characters.\nThe maximum number of string elements is 100.",
+          "description": "The maximum allowable length for html values is 2048 characters.",
           "items": {
             "type": "string"
           },
@@ -2254,7 +2252,6 @@
       "id": "IntegerValues",
       "properties": {
         "values": {
-          "description": "The maximum number of elements is 100.",
           "items": {
             "format": "int64",
             "type": "string"
@@ -2888,7 +2885,6 @@
       "id": "ObjectValues",
       "properties": {
         "values": {
-          "description": "The maximum number of elements is 100.",
           "items": {
             "$ref": "StructuredDataObject"
           },
@@ -4213,7 +4209,7 @@
       "id": "TextValues",
       "properties": {
         "values": {
-          "description": "The maximum allowable length for text values is 2048 characters.\nThe maximum number of string elements is 100.",
+          "description": "The maximum allowable length for text values is 2048 characters.",
           "items": {
             "type": "string"
           },
@@ -4257,7 +4253,6 @@
       "id": "TimestampValues",
       "properties": {
         "values": {
-          "description": "The maximum number of elements is 100.",
           "items": {
             "format": "google-datetime",
             "type": "string"

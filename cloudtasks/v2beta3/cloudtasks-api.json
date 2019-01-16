@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20181022",
+  "revision": "20190104",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpQueue": {
@@ -769,7 +769,7 @@
         },
         "responseStatus": {
           "$ref": "Status",
-          "description": "Output only. The response from the target for this attempt.\n\nIf `response_time` is unset, then the task has not been attempted or is\ncurrently running and the `response_status` field is meaningless."
+          "description": "Output only. The response from the worker for this attempt.\n\nIf `response_time` is unset, then the task has not been attempted or is\ncurrently running and the `response_status` field is meaningless."
         },
         "responseTime": {
           "description": "Output only. The time that this attempt response was received.\n\n`response_time` will be truncated to the nearest microsecond.",
@@ -996,7 +996,7 @@
       "properties": {
         "appEngineHttpQueue": {
           "$ref": "AppEngineHttpQueue",
-          "description": "App Engine HTTP queue.\n\nAn App Engine queue is a queue that has an AppEngineHttpQueue type."
+          "description": "AppEngineHttpQueue settings apply only to\nAppEngine tasks in this queue."
         },
         "name": {
           "description": "Caller-specified and required in CreateQueue,\nafter which it becomes output only.\n\nThe queue name.\n\nThe queue name must have the following format:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`\n\n* `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),\n   hyphens (-), colons (:), or periods (.).\n   For more information, see\n   [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)\n* `LOCATION_ID` is the canonical ID for the queue's location.\n   The list of available locations can be obtained by calling\n   ListLocations.\n   For more information, see https://cloud.google.com/about/locations/.\n* `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or\n  hyphens (-). The maximum length is 100 characters.",
@@ -1009,7 +1009,7 @@
         },
         "rateLimits": {
           "$ref": "RateLimits",
-          "description": "Rate limits for task dispatches.\n\nrate_limits and\nretry_config are related because they both\ncontrol task attempts however they control how tasks are\nattempted in different ways:\n\n* rate_limits controls the total rate of\n  dispatches from a queue (i.e. all traffic dispatched from the\n  queue, regardless of whether the dispatch is from a first\n  attempt or a retry).\n* retry_config controls what happens to\n  particular a task after its first attempt fails. That is,\n  retry_config controls task retries (the\n  second attempt, third attempt, etc)."
+          "description": "Rate limits for task dispatches.\n\nrate_limits and retry_config are\nrelated because they both control task attempts. However they control task\nattempts in different ways:\n\n* rate_limits controls the total rate of\n  dispatches from a queue (i.e. all traffic dispatched from the\n  queue, regardless of whether the dispatch is from a first\n  attempt or a retry).\n* retry_config controls what happens to\n  particular a task after its first attempt fails. That is,\n  retry_config controls task retries (the\n  second attempt, third attempt, etc).\n\nThe queue's actual dispatch rate is the result of:\n\n* Number of tasks in the queue\n* User-specified throttling: rate limits\n  retry configuration, and the\n  queue's state.\n* System throttling due to `429` (Too Many Requests) or `503` (Service\n  Unavailable) responses from the worker, high error rates, or to smooth\n  sudden large traffic spikes."
         },
         "retryConfig": {
           "$ref": "RetryConfig",
@@ -1027,7 +1027,7 @@
             "Unspecified state.",
             "The queue is running. Tasks can be dispatched.\n\nIf the queue was created using Cloud Tasks and the queue has\nhad no activity (method calls or task dispatches) for 30 days,\nthe queue may take a few minutes to re-activate. Some method\ncalls may return NOT_FOUND and\ntasks may not be dispatched for a few minutes until the queue\nhas been re-activated.",
             "Tasks are paused by the user. If the queue is paused then Cloud\nTasks will stop delivering tasks from it, but more tasks can\nstill be added to it by the user.",
-            "The queue is disabled.\n\nA queue becomes `DISABLED` when\n[queue.yaml](https://cloud.google.com/appengine/docs/python/config/queueref) or\n[queue.xml](https://cloud.google.com/appengine/docs/standard/java/config/queueref) is uploaded\nwhich does not contain the queue. You cannot directly disable a queue.\n\nWhen a queue is disabled, tasks can still be added to a queue\nbut the tasks are not dispatched.\n\nTo permanently delete this queue and all of its tasks, call\nDeleteQueue."
+            "The queue is disabled.\n\nA queue becomes `DISABLED` when\n[queue.yaml](https://cloud.google.com/appengine/docs/python/config/queueref)\nor\n[queue.xml](https://cloud.google.com/appengine/docs/standard/java/config/queueref)\nis uploaded which does not contain the queue. You cannot directly disable\na queue.\n\nWhen a queue is disabled, tasks can still be added to a queue\nbut the tasks are not dispatched.\n\nTo permanently delete this queue and all of its tasks, call\nDeleteQueue."
           ],
           "type": "string"
         }
@@ -1159,7 +1159,7 @@
       "properties": {
         "appEngineHttpRequest": {
           "$ref": "AppEngineHttpRequest",
-          "description": "App Engine HTTP request that is sent to the task's target. Can\nbe set only if\napp_engine_http_queue is set\non the queue.\n\nAn App Engine task is a task that has AppEngineHttpRequest set."
+          "description": "HTTP request that is sent to the App Engine app handler.\n\nAn App Engine task is a task that has AppEngineHttpRequest set."
         },
         "createTime": {
           "description": "Output only. The time that the task was created.\n\n`create_time` will be truncated to the nearest second.",

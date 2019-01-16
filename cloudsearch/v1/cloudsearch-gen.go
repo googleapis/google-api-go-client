@@ -838,7 +838,6 @@ func (s *DatePropertyOptions) MarshalJSON() ([]byte, error) {
 
 // DateValues: List of date values.
 type DateValues struct {
-	// Values: The maximum number of elements is 100.
 	Values []*Date `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -1038,7 +1037,6 @@ func (s *DoublePropertyOptions) MarshalJSON() ([]byte, error) {
 
 // DoubleValues: List of double values.
 type DoubleValues struct {
-	// Values: The maximum number of elements is 100.
 	Values []float64 `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -1444,7 +1442,6 @@ func (s *EnumValuePair) MarshalJSON() ([]byte, error) {
 type EnumValues struct {
 	// Values: The maximum allowable length for string values is 32
 	// characters.
-	// The maximum number of elements is 100.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -2004,7 +2001,6 @@ func (s *HtmlPropertyOptions) MarshalJSON() ([]byte, error) {
 type HtmlValues struct {
 	// Values: The maximum allowable length for html values is 2048
 	// characters.
-	// The maximum number of string elements is 100.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -2224,7 +2220,6 @@ func (s *IntegerPropertyOptions) MarshalJSON() ([]byte, error) {
 
 // IntegerValues: List of integer values.
 type IntegerValues struct {
-	// Values: The maximum number of elements is 100.
 	Values googleapi.Int64s `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -3392,7 +3387,6 @@ func (s *ObjectPropertyOptions) MarshalJSON() ([]byte, error) {
 
 // ObjectValues: List of object values.
 type ObjectValues struct {
-	// Values: The maximum number of elements is 100.
 	Values []*StructuredDataObject `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -5900,7 +5894,6 @@ func (s *TextPropertyOptions) MarshalJSON() ([]byte, error) {
 type TextValues struct {
 	// Values: The maximum allowable length for text values is 2048
 	// characters.
-	// The maximum number of string elements is 100.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to
@@ -6038,7 +6031,6 @@ func (s *TimestampPropertyOptions) MarshalJSON() ([]byte, error) {
 
 // TimestampValues: List of timestamp values.
 type TimestampValues struct {
-	// Values: The maximum number of elements is 100.
 	Values []string `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Values") to

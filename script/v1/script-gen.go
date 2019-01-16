@@ -474,7 +474,9 @@ type ExecutionRequest struct {
 
 	// Function: The name of the function to execute in the given script.
 	// The name does not
-	// include parentheses or parameters.
+	// include parentheses or parameters. It can reference a function in
+	// an
+	// included library such as `Library.libFunction1`.
 	Function string `json:"function,omitempty"`
 
 	// Parameters: The parameters to be passed to the function being

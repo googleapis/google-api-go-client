@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20181113",
+  "revision": "20190108",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2647,7 +2647,7 @@
           "enumDescriptions": [
             "Unspecified. Defaults to WHITELIST.",
             "Only apps that are in the policy are available and any app not in the policy will be automatically uninstalled from the device.",
-            "All apps are available and any app that should not be on the device should be explicitly markeds as 'BLOCKED' in the applications policy."
+            "All apps are available and any app that should not be on the device should be explicitly marked as 'BLOCKED' in the applications policy."
           ],
           "type": "string"
         },

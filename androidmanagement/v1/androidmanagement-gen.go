@@ -2493,7 +2493,7 @@ type Policy struct {
 	// any app not in the policy will be automatically uninstalled from the
 	// device.
 	//   "BLACKLIST" - All apps are available and any app that should not be
-	// on the device should be explicitly markeds as 'BLOCKED' in the
+	// on the device should be explicitly marked as 'BLOCKED' in the
 	// applications policy.
 	PlayStoreMode string `json:"playStoreMode,omitempty"`
 

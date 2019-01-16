@@ -821,7 +821,7 @@
       }
     }
   },
-  "revision": "20181202",
+  "revision": "20190114",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -980,7 +980,7 @@
           "type": "boolean"
         },
         "function": {
-          "description": "The name of the function to execute in the given script. The name does not\ninclude parentheses or parameters.",
+          "description": "The name of the function to execute in the given script. The name does not\ninclude parentheses or parameters. It can reference a function in an\nincluded library such as `Library.libFunction1`.",
           "type": "string"
         },
         "parameters": {

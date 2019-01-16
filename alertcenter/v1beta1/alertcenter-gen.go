@@ -1511,8 +1511,10 @@ func (c *AlertsListCall) CustomerId(customerId string) *AlertsListCall {
 // [Query
 // filters](/admin-sdk/alertcenter/guides/query-filters) and
 // [Supported
-// query filter
-// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).
+// query
+// filter
+// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.l
+// ist).
 func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1656,7 +1658,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
+	//       "description": "Optional. A query string for filtering alert results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter\nfields](/admin-sdk/alertcenter/reference/filter-fields#alerts.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2041,9 +2043,10 @@ func (c *AlertsFeedbackListCall) CustomerId(customerId string) *AlertsFeedbackLi
 // [Query
 // filters](/admin-sdk/alertcenter/guides/query-filters) and
 // [Supported
-// query filter
-// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback
-// .list).
+// query
+// filter
+// fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.f
+// eedback.list).
 func (c *AlertsFeedbackListCall) Filter(filter string) *AlertsFeedbackListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2167,7 +2170,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "Optional. A query string for filtering alert feedback results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter fields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
+	//       "description": "Optional. A query string for filtering alert feedback results.\nFor more details, see [Query\nfilters](/admin-sdk/alertcenter/guides/query-filters) and [Supported\nquery filter\nfields](/admin-sdk/alertcenter/reference/filter-fields#alerts.feedback.list).",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

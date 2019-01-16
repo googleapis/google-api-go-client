@@ -746,6 +746,21 @@ type CreateClusterMetadata struct {
 	// RequestTime: The time at which the original request was received.
 	RequestTime string `json:"requestTime,omitempty"`
 
+	// Tables: Keys: the full `name` of each table that existed in the
+	// instance when
+	// CreateCluster was first called,
+	// i.e.
+	// `projects/<project>/instances/<instance>/tables/<table>`. Any table
+	// added
+	// to the instance by a later API call will be created in the new
+	// cluster by
+	// that API call, not this one.
+	//
+	// Values: information on how much of a table's data has been copied to
+	// the
+	// newly-created cluster so far.
+	Tables map[string]TableProgress `json:"tables,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "FinishTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2113,6 +2128,56 @@ type Table struct {
 
 func (s *Table) MarshalJSON() ([]byte, error) {
 	type NoMethod Table
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableProgress: Progress info for copying a table's data to the new
+// cluster.
+type TableProgress struct {
+	// EstimatedCopiedBytes: Estimate of the number of bytes copied so far
+	// for this table.
+	// This will eventually reach 'estimated_size_bytes' unless the table
+	// copy
+	// is CANCELLED.
+	EstimatedCopiedBytes int64 `json:"estimatedCopiedBytes,omitempty,string"`
+
+	// EstimatedSizeBytes: Estimate of the size of the table to be copied.
+	EstimatedSizeBytes int64 `json:"estimatedSizeBytes,omitempty,string"`
+
+	// Possible values:
+	//   "STATE_UNSPECIFIED"
+	//   "PENDING" - The table has not yet begun copying to the new cluster.
+	//   "COPYING" - The table is actively being copied to the new cluster.
+	//   "COMPLETED" - The table has been fully copied to the new cluster.
+	//   "CANCELLED" - The table was deleted before it finished copying to
+	// the new cluster.
+	// Note that tables deleted after completion will stay marked
+	// as
+	// COMPLETED, not CANCELLED.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EstimatedCopiedBytes") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EstimatedCopiedBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableProgress) MarshalJSON() ([]byte, error) {
+	type NoMethod TableProgress
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

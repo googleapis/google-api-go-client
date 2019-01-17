@@ -283,31 +283,6 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
-                "getJwks": {
-                  "description": "GetJSONWebKeys gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
-                  "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
-                  "httpMethod": "GET",
-                  "id": "container.projects.locations.clusters.getJwks",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "The cluster (project, location, cluster id) to get keys for. Specified in\nthe format 'projects/*/locations/*/clusters/*'.",
-                      "location": "path",
-                      "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1/{+parent}/jwks",
-                  "response": {
-                    "$ref": "GetJSONWebKeysResponse"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                },
                 "list": {
                   "description": "Lists all clusters owned by a project in either the specified zone or all\nzones.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters",
@@ -976,35 +951,6 @@
                       },
                       "response": {
                         "$ref": "Operation"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  }
-                },
-                "well-known": {
-                  "methods": {
-                    "getOpenid-configuration": {
-                      "description": "GetOpenIDConfig gets the OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.\nhttps://openid.net/specs/openid-connect-discovery-1_0.html\nThis API is not yet intended for general use, and is not available for all\nclusters.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
-                      "httpMethod": "GET",
-                      "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "The cluster (project, location, cluster id) to get the discovery document\nfor. Specified in the format 'projects/*/locations/*/clusters/*'.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+parent}/.well-known/openid-configuration",
-                      "response": {
-                        "$ref": "GetOpenIDConfigResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -2415,7 +2361,7 @@
       }
     }
   },
-  "revision": "20181211",
+  "revision": "20181207",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2860,70 +2806,6 @@
       "properties": {},
       "type": "object"
     },
-    "GetJSONWebKeysResponse": {
-      "description": "GetJSONWebKeysResponse is a valid JSON Web Key Set as specififed in rfc 7517",
-      "id": "GetJSONWebKeysResponse",
-      "properties": {
-        "keys": {
-          "description": "The public component of the keys used by the cluster to sign token\nrequests.",
-          "items": {
-            "$ref": "Jwk"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GetOpenIDConfigResponse": {
-      "description": "GetOpenIDConfigResponse is an OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.",
-      "id": "GetOpenIDConfigResponse",
-      "properties": {
-        "claims_supported": {
-          "description": "NOLINT",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "grant_types": {
-          "description": "NOLINT",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "id_token_signing_alg_values_supported": {
-          "description": "NOLINT",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "issuer": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "jwks_uri": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "response_types_supported": {
-          "description": "NOLINT",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "subject_types_supported": {
-          "description": "NOLINT",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "HorizontalPodAutoscaling": {
       "description": "Configuration options for the horizontal pod autoscaling feature, which\nincreases or decreases the number of replica pods a replication controller\nhas based on the resource usage of the existing pods.",
       "id": "HorizontalPodAutoscaling",
@@ -2993,49 +2875,6 @@
         "useIpAliases": {
           "description": "Whether alias IPs will be used for pod IPs in the cluster.",
           "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "Jwk": {
-      "description": "Jwk is a JSON Web Key as specified in RFC 7517",
-      "id": "Jwk",
-      "properties": {
-        "alg": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "crv": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "e": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "kid": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "kty": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "n": {
-          "description": "Fields for RSA keys.\nNOLINT",
-          "type": "string"
-        },
-        "use": {
-          "description": "NOLINT",
-          "type": "string"
-        },
-        "x": {
-          "description": "Fields for ECDSA keys.\nNOLINT",
-          "type": "string"
-        },
-        "y": {
-          "description": "NOLINT",
-          "type": "string"
         }
       },
       "type": "object"

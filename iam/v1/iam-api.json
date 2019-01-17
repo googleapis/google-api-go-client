@@ -713,6 +713,34 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "patch": {
+              "description": "Patches a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` and `description`.\n\nOnly fields specified in the request are garaunteed to be returned in\nthe response. Other fields in the response may be empty.\n\nNote: The field mask is required.",
+              "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
+              "httpMethod": "PATCH",
+              "id": "iam.projects.serviceAccounts.patch",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.\n\nRequests using `-` as a wildcard for the `PROJECT_ID` will infer the\nproject from the `account` and the `ACCOUNT` value can be the `email`\naddress or the `unique_id` of the service account.\n\nIn responses the resource name will always be in the format\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}",
+              "request": {
+                "$ref": "PatchServiceAccountRequest"
+              },
+              "response": {
+                "$ref": "ServiceAccount"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "setIamPolicy": {
               "description": "Sets the IAM access control policy for a\nServiceAccount.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:setIamPolicy",
@@ -1081,7 +1109,7 @@
       }
     }
   },
-  "revision": "20181005",
+  "revision": "20190111",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1458,6 +1486,20 @@
         },
         "nextPageToken": {
           "description": "To retrieve the next page of results, set\nListServiceAccountsRequest.page_token\nto this value.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PatchServiceAccountRequest": {
+      "description": "The patch service account request.",
+      "id": "PatchServiceAccountRequest",
+      "properties": {
+        "serviceAccount": {
+          "$ref": "ServiceAccount"
+        },
+        "updateMask": {
+          "format": "google-fieldmask",
           "type": "string"
         }
       },

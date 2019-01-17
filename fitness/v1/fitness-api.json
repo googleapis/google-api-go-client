@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/4iC6UhHeBH4Kvfc2YWJ1Z3_e2eA\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/4Mc3ZMTkywIuovUzWRCiWwTqc-E\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -802,7 +802,7 @@
       }
     }
   },
-  "revision": "20190101",
+  "revision": "20190109",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {
@@ -913,7 +913,7 @@
           "type": "string"
         },
         "filteredDataQualityStandard": {
-          "description": "A list of acceptable data quality standards. Only data points which conform to at least one of the specified data quality standards will be returned. If the list is empty, all data points are returned.",
+          "description": "DO NOT POPULATE THIS FIELD. As data quality standards are deprecated, filling it in will result in no data sources being returned. It will be removed in a future version entirely.",
           "items": {
             "enum": [
               "dataQualityBloodGlucoseIso151972003",
@@ -1148,7 +1148,7 @@
           "description": "Information about an application which feeds sensor data into the platform."
         },
         "dataQualityStandard": {
-          "description": "DO NOT USE THIS FIELD. It is never populated in responses from the platform, and is ignored in queries.",
+          "description": "DO NOT POPULATE THIS FIELD. It is never populated in responses from the platform, and is ignored in queries. It will be removed in a future version entirely.",
           "items": {
             "enum": [
               "dataQualityBloodGlucoseIso151972003",
@@ -1333,7 +1333,7 @@
               "fitness.users.dataSources.datasets.patch"
             ]
           },
-          "description": "The largest end time of all data points in this possibly partial representation of the dataset. Time is in nanoseconds from epoch. This should also match the first part of the dataset identifier.",
+          "description": "The largest end time of all data points in this possibly partial representation of the dataset. Time is in nanoseconds from epoch. This should also match the second part of the dataset identifier.",
           "format": "int64",
           "type": "string"
         },

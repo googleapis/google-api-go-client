@@ -14,7 +14,7 @@
   "basePath": "",
   "baseUrl": "https://jobs.googleapis.com/",
   "batchPath": "batch",
-  "canonicalName": "Job Service",
+  "canonicalName": "Cloud Talent Solution",
   "description": "Cloud Talent Solution provides the capability to create, read, update, and delete job postings, as well as search jobs based on keywords and filters.\n",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/talent-solution/job-search/docs/",
@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20181126",
+  "revision": "20190110",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1196,7 +1196,7 @@
           "type": "boolean"
         },
         "longValue": {
-          "description": "Optional but at least one of string_values or long_value must\nbe specified.\n\nThis field is used to perform number range search.\n(`EQ`, `GT`, `GE`, `LE`, `LT`) over filterable `long_value`. For\n`long_value`, a value between Long.MIN and Long.MIN is allowed.",
+          "description": "Optional but at least one of string_values or long_value must\nbe specified.\n\nThis field is used to perform number range search.\n(`EQ`, `GT`, `GE`, `LE`, `LT`) over filterable `long_value`. For\n`long_value`, a value between Long.MIN and Long.MAX is allowed.",
           "format": "int64",
           "type": "string"
         },

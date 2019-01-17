@@ -1256,7 +1256,7 @@ type CustomAttribute struct {
 	// This field is used to perform number range search.
 	// (`EQ`, `GT`, `GE`, `LE`, `LT`) over filterable `long_value`.
 	// For
-	// `long_value`, a value between Long.MIN and Long.MIN is allowed.
+	// `long_value`, a value between Long.MIN and Long.MAX is allowed.
 	LongValue int64 `json:"longValue,omitempty,string"`
 
 	// StringValues: Optional but at least one of string_values or

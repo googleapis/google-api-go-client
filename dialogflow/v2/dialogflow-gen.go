@@ -852,11 +852,11 @@ type GoogleCloudDialogflowV2EntityType struct {
 	// types (with or without aliases).
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of the entity type. Format:
-	// `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+	// Name: The unique identifier of the entity type.
+	// Required for EntityTypes.UpdateEntityType
+	// and
+	// EntityTypes.BatchUpdateEntityTypes methods.
+	// Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1383,10 +1383,10 @@ type GoogleCloudDialogflowV2Intent struct {
 	// auto-markup in the UI is turned off.
 	MlDisabled bool `json:"mlDisabled,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of this intent.
+	// Name: The unique identifier of this intent.
+	// Required for Intents.UpdateIntent and
+	// Intents.BatchUpdateIntents
+	// methods.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	Name string `json:"name,omitempty"`
 
@@ -1439,8 +1439,8 @@ type GoogleCloudDialogflowV2Intent struct {
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
-	// TrainingPhrases: Optional. The collection of examples/templates that
-	// the agent is
+	// TrainingPhrases: Optional. The collection of examples that the agent
+	// is
 	// trained on.
 	TrainingPhrases []*GoogleCloudDialogflowV2IntentTrainingPhrase `json:"trainingPhrases,omitempty"`
 
@@ -2382,8 +2382,8 @@ func (s *GoogleCloudDialogflowV2IntentParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2IntentTrainingPhrase: Represents an example or
-// template that the agent is trained on.
+// GoogleCloudDialogflowV2IntentTrainingPhrase: Represents an example
+// that the agent is trained on.
 type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	// Name: Output only. The unique identifier of this training phrase.
 	Name string `json:"name,omitempty"`
@@ -2395,8 +2395,8 @@ type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	// only for the annotated parts of the training phrase.
 	Parts []*GoogleCloudDialogflowV2IntentTrainingPhrasePart `json:"parts,omitempty"`
 
-	// TimesAddedCount: Optional. Indicates how many times this example or
-	// template was added to
+	// TimesAddedCount: Optional. Indicates how many times this example was
+	// added to
 	// the intent. Each time a developer adds an existing sample by editing
 	// an
 	// intent or training, this counter is increased.
@@ -2413,6 +2413,13 @@ type GoogleCloudDialogflowV2IntentTrainingPhrase struct {
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
 	// they can contain
 	// @-prefixed entity type names as substrings.
+	// Template mode has been deprecated. Example mode is the only
+	// supported
+	// way to create new training phrases. If you have existing
+	// training
+	// phrases that you've created in template mode, those will continue
+	// to
+	// work.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -2453,7 +2460,7 @@ type GoogleCloudDialogflowV2IntentTrainingPhrasePart struct {
 	// examples.
 	EntityType string `json:"entityType,omitempty"`
 
-	// Text: Required. The text corresponding to the example or template,
+	// Text: Required. The text corresponding to the example,
 	// if there are no annotations. For
 	// annotated examples, it is the text for one of the example's parts.
 	Text string `json:"text,omitempty"`
@@ -2836,6 +2843,8 @@ type GoogleCloudDialogflowV2QueryResult struct {
 
 	// FulfillmentText: The text to be pronounced to the user or shown on
 	// the screen.
+	// Note: This is a legacy field, `fulfillment_messages` should be
+	// preferred.
 	FulfillmentText string `json:"fulfillmentText,omitempty"`
 
 	// Intent: The intent that matched the conversational query. Some,
@@ -3456,11 +3465,11 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 	// types (with or without aliases).
 	Kind string `json:"kind,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of the entity type. Format:
-	// `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
+	// Name: The unique identifier of the entity type.
+	// Required for EntityTypes.UpdateEntityType
+	// and
+	// EntityTypes.BatchUpdateEntityTypes methods.
+	// Format: `projects/<Project ID>/agent/entityTypes/<Entity Type ID>`.
 	Name string `json:"name,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoExpansionMode")
@@ -3786,10 +3795,10 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	//   ml_enabled = true / ml_disabled = false.
 	MlEnabled bool `json:"mlEnabled,omitempty"`
 
-	// Name: Required for all methods except `create` (`create` populates
-	// the name
-	// automatically.
-	// The unique identifier of this intent.
+	// Name: The unique identifier of this intent.
+	// Required for Intents.UpdateIntent and
+	// Intents.BatchUpdateIntents
+	// methods.
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	Name string `json:"name,omitempty"`
 
@@ -3842,8 +3851,8 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	// Format: `projects/<Project ID>/agent/intents/<Intent ID>`.
 	RootFollowupIntentName string `json:"rootFollowupIntentName,omitempty"`
 
-	// TrainingPhrases: Optional. The collection of examples/templates that
-	// the agent is
+	// TrainingPhrases: Optional. The collection of examples that the agent
+	// is
 	// trained on.
 	TrainingPhrases []*GoogleCloudDialogflowV2beta1IntentTrainingPhrase `json:"trainingPhrases,omitempty"`
 
@@ -4890,7 +4899,7 @@ func (s *GoogleCloudDialogflowV2beta1IntentParameter) MarshalJSON() ([]byte, err
 }
 
 // GoogleCloudDialogflowV2beta1IntentTrainingPhrase: Represents an
-// example or template that the agent is trained on.
+// example that the agent is trained on.
 type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	// Name: Output only. The unique identifier of this training phrase.
 	Name string `json:"name,omitempty"`
@@ -4902,8 +4911,8 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	// only for the annotated parts of the training phrase.
 	Parts []*GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart `json:"parts,omitempty"`
 
-	// TimesAddedCount: Optional. Indicates how many times this example or
-	// template was added to
+	// TimesAddedCount: Optional. Indicates how many times this example was
+	// added to
 	// the intent. Each time a developer adds an existing sample by editing
 	// an
 	// intent or training, this counter is increased.
@@ -4920,6 +4929,13 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrase struct {
 	//   "TEMPLATE" - Templates are not annotated with entity types, but
 	// they can contain
 	// @-prefixed entity type names as substrings.
+	// Template mode has been deprecated. Example mode is the only
+	// supported
+	// way to create new training phrases. If you have existing
+	// training
+	// phrases that you've created in template mode, those will continue
+	// to
+	// work.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -4960,7 +4976,7 @@ type GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart struct {
 	// examples.
 	EntityType string `json:"entityType,omitempty"`
 
-	// Text: Required. The text corresponding to the example or template,
+	// Text: Required. The text corresponding to the example,
 	// if there are no annotations. For
 	// annotated examples, it is the text for one of the example's parts.
 	Text string `json:"text,omitempty"`
@@ -5234,6 +5250,8 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 
 	// FulfillmentText: The text to be pronounced to the user or shown on
 	// the screen.
+	// Note: This is a legacy field, `fulfillment_messages` should be
+	// preferred.
 	FulfillmentText string `json:"fulfillmentText,omitempty"`
 
 	// Intent: The intent that matched the conversational query. Some,
@@ -6013,8 +6031,7 @@ type ProjectsAgentExportCall struct {
 
 // Export: Exports the specified agent to a ZIP file.
 //
-// Operation <response: ExportAgentResponse,
-//            metadata: google.protobuf.Struct>
+// Operation <response: ExportAgentResponse>
 func (r *ProjectsAgentService) Export(parent string, googleclouddialogflowv2exportagentrequest *GoogleCloudDialogflowV2ExportAgentRequest) *ProjectsAgentExportCall {
 	c := &ProjectsAgentExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6112,7 +6129,7 @@ func (c *ProjectsAgentExportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Exports the specified agent to a ZIP file.\n\nOperation \u003cresponse: ExportAgentResponse,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Exports the specified agent to a ZIP file.\n\nOperation \u003cresponse: ExportAgentResponse\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent:export",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.export",
@@ -6162,8 +6179,7 @@ type ProjectsAgentImportCall struct {
 // new
 // versions from ImportAgentRequest.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentService) Import(parent string, googleclouddialogflowv2importagentrequest *GoogleCloudDialogflowV2ImportAgentRequest) *ProjectsAgentImportCall {
 	c := &ProjectsAgentImportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6261,7 +6277,7 @@ func (c *ProjectsAgentImportCall) Do(opts ...googleapi.CallOption) (*GoogleLongr
 	}
 	return ret, nil
 	// {
-	//   "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent:import",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.import",
@@ -6309,8 +6325,7 @@ type ProjectsAgentRestoreCall struct {
 // and
 // entity types in the older version are deleted.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentService) Restore(parent string, googleclouddialogflowv2restoreagentrequest *GoogleCloudDialogflowV2RestoreAgentRequest) *ProjectsAgentRestoreCall {
 	c := &ProjectsAgentRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6408,7 +6423,7 @@ func (c *ProjectsAgentRestoreCall) Do(opts ...googleapi.CallOption) (*GoogleLong
 	}
 	return ret, nil
 	// {
-	//   "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent:restore",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.restore",
@@ -6656,8 +6671,7 @@ type ProjectsAgentTrainCall struct {
 
 // Train: Trains the specified agent.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentService) Train(parent string, googleclouddialogflowv2trainagentrequest *GoogleCloudDialogflowV2TrainAgentRequest) *ProjectsAgentTrainCall {
 	c := &ProjectsAgentTrainCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6755,7 +6769,7 @@ func (c *ProjectsAgentTrainCall) Do(opts ...googleapi.CallOption) (*GoogleLongru
 	}
 	return ret, nil
 	// {
-	//   "description": "Trains the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Trains the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent:train",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.train",
@@ -6799,8 +6813,7 @@ type ProjectsAgentEntityTypesBatchDeleteCall struct {
 
 // BatchDelete: Deletes entity types in the specified agent.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentEntityTypesService) BatchDelete(parent string, googleclouddialogflowv2batchdeleteentitytypesrequest *GoogleCloudDialogflowV2BatchDeleteEntityTypesRequest) *ProjectsAgentEntityTypesBatchDeleteCall {
 	c := &ProjectsAgentEntityTypesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6898,7 +6911,7 @@ func (c *ProjectsAgentEntityTypesBatchDeleteCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent/entityTypes:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.batchDelete",
@@ -6943,8 +6956,7 @@ type ProjectsAgentEntityTypesBatchUpdateCall struct {
 // BatchUpdate: Updates/Creates multiple entity types in the specified
 // agent.
 //
-// Operation <response: BatchUpdateEntityTypesResponse,
-//            metadata: google.protobuf.Struct>
+// Operation <response: BatchUpdateEntityTypesResponse>
 func (r *ProjectsAgentEntityTypesService) BatchUpdate(parent string, googleclouddialogflowv2batchupdateentitytypesrequest *GoogleCloudDialogflowV2BatchUpdateEntityTypesRequest) *ProjectsAgentEntityTypesBatchUpdateCall {
 	c := &ProjectsAgentEntityTypesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7042,7 +7054,7 @@ func (c *ProjectsAgentEntityTypesBatchUpdateCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent/entityTypes:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.batchUpdate",
@@ -7884,7 +7896,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+	//       "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
 	//       "required": true,
@@ -8069,8 +8081,7 @@ type ProjectsAgentEntityTypesEntitiesBatchDeleteCall struct {
 // BatchDelete: Deletes entities in the specified entity
 // type.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchDelete(parent string, googleclouddialogflowv2batchdeleteentitiesrequest *GoogleCloudDialogflowV2BatchDeleteEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchDeleteCall {
 	c := &ProjectsAgentEntityTypesEntitiesBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8168,7 +8179,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchDeleteCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Deletes entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.entities.batchDelete",
@@ -8216,8 +8227,7 @@ type ProjectsAgentEntityTypesEntitiesBatchUpdateCall struct {
 // explicitly
 // specified in the request.
 //
-// Operation <response: google.protobuf.Empty,
-//            metadata: google.protobuf.Struct>
+// Operation <response: google.protobuf.Empty>
 func (r *ProjectsAgentEntityTypesEntitiesService) BatchUpdate(parent string, googleclouddialogflowv2batchupdateentitiesrequest *GoogleCloudDialogflowV2BatchUpdateEntitiesRequest) *ProjectsAgentEntityTypesEntitiesBatchUpdateCall {
 	c := &ProjectsAgentEntityTypesEntitiesBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8315,7 +8325,7 @@ func (c *ProjectsAgentEntityTypesEntitiesBatchUpdateCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+	//   "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
 	//   "flatPath": "v2/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "dialogflow.projects.agent.entityTypes.entities.batchUpdate",
@@ -8923,7 +8933,7 @@ func (c *ProjectsAgentIntentsDeleteCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The name of the intent to delete. If this intent has direct or\nindirect followup intents, we also delete them.\n\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "Required. The name of the intent to delete. If this intent has direct or\nindirect followup intents, we also delete them.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,
@@ -9523,7 +9533,7 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+	//       "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
 	//       "required": true,

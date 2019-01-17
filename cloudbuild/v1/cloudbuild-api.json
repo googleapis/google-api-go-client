@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20181018",
+  "revision": "20190116",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1322,7 +1322,7 @@
           "additionalProperties": {
             "$ref": "FileHashes"
           },
-          "description": "Output only. Hash(es) of the build source, which can be used to verify that\nthe originalsource integrity was maintained in the build. Note that\n`FileHashes` willonly be populated if `BuildOptions` has requested a\n`SourceProvenanceHash`.\n\nThe keys to this map are file paths used as build source and the values\ncontain the hash values for those files.\n\nIf the build source came in a single package such as a gzipped tarfile\n(`.tar.gz`), the `FileHash` will be for the single path to that file.",
+          "description": "Output only. Hash(es) of the build source, which can be used to verify that\nthe original source integrity was maintained in the build. Note that\n`FileHashes` will only be populated if `BuildOptions` has requested a\n`SourceProvenanceHash`.\n\nThe keys to this map are file paths used as build source and the values\ncontain the hash values for those files.\n\nIf the build source came in a single package such as a gzipped tarfile\n(`.tar.gz`), the `FileHash` will be for the single path to that file.",
           "type": "object"
         },
         "resolvedRepoSource": {

@@ -1135,9 +1135,9 @@ func (s *Source) MarshalJSON() ([]byte, error) {
 type SourceProvenance struct {
 	// FileHashes: Output only. Hash(es) of the build source, which can be
 	// used to verify that
-	// the originalsource integrity was maintained in the build. Note
+	// the original source integrity was maintained in the build. Note
 	// that
-	// `FileHashes` willonly be populated if `BuildOptions` has requested
+	// `FileHashes` will only be populated if `BuildOptions` has requested
 	// a
 	// `SourceProvenanceHash`.
 	//

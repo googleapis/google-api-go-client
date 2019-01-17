@@ -329,10 +329,10 @@ type AggregateRequest struct {
 	// since epoch, inclusive.
 	EndTimeMillis int64 `json:"endTimeMillis,omitempty,string"`
 
-	// FilteredDataQualityStandard: A list of acceptable data quality
-	// standards. Only data points which conform to at least one of the
-	// specified data quality standards will be returned. If the list is
-	// empty, all data points are returned.
+	// FilteredDataQualityStandard: DO NOT POPULATE THIS FIELD. As data
+	// quality standards are deprecated, filling it in will result in no
+	// data sources being returned. It will be removed in a future version
+	// entirely.
 	//
 	// Possible values:
 	//   "dataQualityBloodGlucoseIso151972003"
@@ -683,8 +683,9 @@ type DataSource struct {
 	// into the platform.
 	Application *Application `json:"application,omitempty"`
 
-	// DataQualityStandard: DO NOT USE THIS FIELD. It is never populated in
-	// responses from the platform, and is ignored in queries.
+	// DataQualityStandard: DO NOT POPULATE THIS FIELD. It is never
+	// populated in responses from the platform, and is ignored in queries.
+	// It will be removed in a future version entirely.
 	//
 	// Possible values:
 	//   "dataQualityBloodGlucoseIso151972003"
@@ -885,7 +886,7 @@ type Dataset struct {
 
 	// MaxEndTimeNs: The largest end time of all data points in this
 	// possibly partial representation of the dataset. Time is in
-	// nanoseconds from epoch. This should also match the first part of the
+	// nanoseconds from epoch. This should also match the second part of the
 	// dataset identifier.
 	MaxEndTimeNs int64 `json:"maxEndTimeNs,omitempty,string"`
 

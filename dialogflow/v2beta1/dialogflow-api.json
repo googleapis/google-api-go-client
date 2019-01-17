@@ -140,7 +140,7 @@
         "agent": {
           "methods": {
             "export": {
-              "description": "Exports the specified agent to a ZIP file.\n\n\nOperation \u003cresponse: ExportAgentResponse,\n           metadata: google.protobuf.Struct\u003e",
+              "description": "Exports the specified agent to a ZIP file.\n\n\nOperation \u003cresponse: ExportAgentResponse\u003e",
               "flatPath": "v2beta1/projects/{projectsId}/agent:export",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.export",
@@ -169,7 +169,7 @@
               ]
             },
             "import": {
-              "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest.\n\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+              "description": "Imports the specified agent from a ZIP file.\n\nUploads new intents and entity types without deleting the existing ones.\nIntents and entity types with the same name are replaced with the new\nversions from ImportAgentRequest.\n\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
               "flatPath": "v2beta1/projects/{projectsId}/agent:import",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.import",
@@ -198,7 +198,7 @@
               ]
             },
             "restore": {
-              "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted.\n\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+              "description": "Restores the specified agent from a ZIP file.\n\nReplaces the current agent version with a new one. All the intents and\nentity types in the older version are deleted.\n\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
               "flatPath": "v2beta1/projects/{projectsId}/agent:restore",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.restore",
@@ -264,7 +264,7 @@
               ]
             },
             "train": {
-              "description": "Trains the specified agent.\n\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+              "description": "Trains the specified agent.\n\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
               "flatPath": "v2beta1/projects/{projectsId}/agent:train",
               "httpMethod": "POST",
               "id": "dialogflow.projects.agent.train",
@@ -297,7 +297,7 @@
             "entityTypes": {
               "methods": {
                 "batchDelete": {
-                  "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+                  "description": "Deletes entity types in the specified agent.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes:batchDelete",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.agent.entityTypes.batchDelete",
@@ -326,7 +326,7 @@
                   ]
                 },
                 "batchUpdate": {
-                  "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse,\n           metadata: google.protobuf.Struct\u003e",
+                  "description": "Updates/Creates multiple entity types in the specified agent.\n\nOperation \u003cresponse: BatchUpdateEntityTypesResponse\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes:batchUpdate",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.agent.entityTypes.batchUpdate",
@@ -502,7 +502,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+                      "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/entityTypes/[^/]+$",
                       "required": true,
@@ -561,7 +561,7 @@
                       ]
                     },
                     "batchDelete": {
-                      "description": "Deletes entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+                      "description": "Deletes entities in the specified entity type.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchDelete",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.entityTypes.entities.batchDelete",
@@ -590,7 +590,7 @@
                       ]
                     },
                     "batchUpdate": {
-                      "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: google.protobuf.Struct\u003e",
+                      "description": "Updates or creates multiple entities in the specified entity type. This\nmethod does not affect entities in the entity type that aren't explicitly\nspecified in the request.\n\nOperation \u003cresponse: google.protobuf.Empty\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/entityTypes/{entityTypesId}/entities:batchUpdate",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.entityTypes.entities.batchUpdate",
@@ -1249,7 +1249,7 @@
                       "type": "string"
                     },
                     "name": {
-                      "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+                      "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/agent/intents/[^/]+$",
                       "required": true,
@@ -2386,7 +2386,7 @@
       }
     }
   },
-  "revision": "20181215",
+  "revision": "20190115",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2483,7 +2483,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+          "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
           "type": "string"
         }
       },
@@ -2624,7 +2624,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "outputContexts": {
@@ -2659,7 +2659,7 @@
           "type": "string"
         },
         "trainingPhrases": {
-          "description": "Optional. The collection of examples/templates that the agent is\ntrained on.",
+          "description": "Optional. The collection of examples that the agent is\ntrained on.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2IntentTrainingPhrase"
           },
@@ -3134,7 +3134,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2IntentTrainingPhrase": {
-      "description": "Represents an example or template that the agent is trained on.",
+      "description": "Represents an example that the agent is trained on.",
       "id": "GoogleCloudDialogflowV2IntentTrainingPhrase",
       "properties": {
         "name": {
@@ -3149,7 +3149,7 @@
           "type": "array"
         },
         "timesAddedCount": {
-          "description": "Optional. Indicates how many times this example or template was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
+          "description": "Optional. Indicates how many times this example was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
           "format": "int32",
           "type": "integer"
         },
@@ -3163,7 +3163,7 @@
           "enumDescriptions": [
             "Not specified. This value should never be used.",
             "Examples do not contain @-prefixed entity type names, but example parts\ncan be annotated with entity types.",
-            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings."
+            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings.\nTemplate mode has been deprecated. Example mode is the only supported\nway to create new training phrases. If you have existing training\nphrases that you've created in template mode, those will continue to\nwork."
           ],
           "type": "string"
         }
@@ -3183,7 +3183,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example or template,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
           "type": "string"
         },
         "userDefined": {
@@ -3244,7 +3244,7 @@
           "type": "array"
         },
         "fulfillmentText": {
-          "description": "The text to be pronounced to the user or shown on the screen.",
+          "description": "The text to be pronounced to the user or shown on the screen.\nNote: This is a legacy field, `fulfillment_messages` should be preferred.",
           "type": "string"
         },
         "intent": {
@@ -3659,7 +3659,7 @@
           "type": "array"
         },
         "outputAudio": {
-          "description": "The audio data bytes encoded as specified in the request.",
+          "description": "The audio data bytes encoded as specified in the request.\nNote: The output audio is generated based on the values of default platform\ntext responses found in the `query_result.fulfillment_messages` field. If\nmultiple default text responses exist, they will be concatenated when\ngenerating audio. If no default platform text responses exist, the\ngenerated audio content will be empty.",
           "format": "byte",
           "type": "string"
         },
@@ -3773,7 +3773,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of the entity type. Format:\n`projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
+          "description": "The unique identifier of the entity type.\nRequired for EntityTypes.UpdateEntityType and\nEntityTypes.BatchUpdateEntityTypes methods.\nFormat: `projects/\u003cProject ID\u003e/agent/entityTypes/\u003cEntity Type ID\u003e`.",
           "type": "string"
         }
       },
@@ -4016,7 +4016,7 @@
           "type": "boolean"
         },
         "name": {
-          "description": "Required for all methods except `create` (`create` populates the name\nautomatically.\nThe unique identifier of this intent.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
+          "description": "The unique identifier of this intent.\nRequired for Intents.UpdateIntent and Intents.BatchUpdateIntents\nmethods.\nFormat: `projects/\u003cProject ID\u003e/agent/intents/\u003cIntent ID\u003e`.",
           "type": "string"
         },
         "outputContexts": {
@@ -4051,7 +4051,7 @@
           "type": "string"
         },
         "trainingPhrases": {
-          "description": "Optional. The collection of examples/templates that the agent is\ntrained on.",
+          "description": "Optional. The collection of examples that the agent is\ntrained on.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase"
           },
@@ -4591,7 +4591,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1IntentTrainingPhrase": {
-      "description": "Represents an example or template that the agent is trained on.",
+      "description": "Represents an example that the agent is trained on.",
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrase",
       "properties": {
         "name": {
@@ -4606,7 +4606,7 @@
           "type": "array"
         },
         "timesAddedCount": {
-          "description": "Optional. Indicates how many times this example or template was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
+          "description": "Optional. Indicates how many times this example was added to\nthe intent. Each time a developer adds an existing sample by editing an\nintent or training, this counter is increased.",
           "format": "int32",
           "type": "integer"
         },
@@ -4620,7 +4620,7 @@
           "enumDescriptions": [
             "Not specified. This value should never be used.",
             "Examples do not contain @-prefixed entity type names, but example parts\ncan be annotated with entity types.",
-            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings."
+            "Templates are not annotated with entity types, but they can contain\n@-prefixed entity type names as substrings.\nTemplate mode has been deprecated. Example mode is the only supported\nway to create new training phrases. If you have existing training\nphrases that you've created in template mode, those will continue to\nwork."
           ],
           "type": "string"
         }
@@ -4640,7 +4640,7 @@
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example or template,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
           "type": "string"
         },
         "userDefined": {
@@ -5004,7 +5004,7 @@
           "type": "array"
         },
         "fulfillmentText": {
-          "description": "The text to be pronounced to the user or shown on the screen.",
+          "description": "The text to be pronounced to the user or shown on the screen.\nNote: This is a legacy field, `fulfillment_messages` should be preferred.",
           "type": "string"
         },
         "intent": {

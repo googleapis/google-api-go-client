@@ -2905,11 +2905,28 @@ type GoogleCloudVideointelligenceV1p2beta1ObjectTrackingAnnotation struct {
 
 	// Frames: Information corresponding to all frames where this object
 	// track appears.
+	// Non-streaming batch mode: it may be one or multiple
+	// ObjectTrackingFrame
+	// messages in frames.
+	// Streaming mode: it can only be one ObjectTrackingFrame message in
+	// frames.
 	Frames []*GoogleCloudVideointelligenceV1p2beta1ObjectTrackingFrame `json:"frames,omitempty"`
 
-	// Segment: Each object track corresponds to one video segment where it
-	// appears.
+	// Segment: Non-streaming batch mode ONLY.
+	// Each object track corresponds to one video segment where it appears.
 	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
+
+	// TrackId: Streaming mode ONLY.
+	// In streaming mode, we do not know the end time of a tracked
+	// object
+	// before it is completed. Hence, there is no VideoSegment info
+	// returned.
+	// Instead, we provide a unique identifiable integer track_id so
+	// that
+	// the customers can correlate the results of the
+	// ongoing
+	// ObjectTrackAnnotation of the same track_id over time.
+	TrackId int64 `json:"trackId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Confidence") to
 	// unconditionally include in API requests. By default, fields with

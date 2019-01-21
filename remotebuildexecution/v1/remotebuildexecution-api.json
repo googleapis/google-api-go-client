@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20190103",
+  "revision": "20190116",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -438,21 +438,21 @@
           "type": "array"
         },
         "environmentVariables": {
-          "description": "The environment variables to set when running the program. The worker may\nprovide its own default environment variables; these defaults can be\noverridden using this field. Additional variables can also be specified.\n\nIn order to ensure that equivalent `Command`s always hash to the same\nvalue, the environment variables MUST be lexicographically sorted by name.\nSorting of strings is done by code point, equivalently, by the UTF-8 bytes.",
+          "description": "The environment variables to set when running the program. The worker may\nprovide its own default environment variables; these defaults can be\noverridden using this field. Additional variables can also be specified.\n\nIn order to ensure that equivalent\nCommands always hash to the same\nvalue, the environment variables MUST be lexicographically sorted by name.\nSorting of strings is done by code point, equivalently, by the UTF-8 bytes.",
           "items": {
             "$ref": "BuildBazelRemoteExecutionV2CommandEnvironmentVariable"
           },
           "type": "array"
         },
         "outputDirectories": {
-          "description": "A list of the output directories that the client expects to retrieve from\nthe action. Only the contents of the indicated directories (recursively\nincluding the contents of their subdirectories) will be\nreturned, as well as files listed in `output_files`. Other files that may\nbe created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path. The special value of empty string is allowed,\nalthough not recommended, and can be used to capture the entire working\ndirectory tree, including inputs.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output directory cannot be duplicated, be a parent of another output\ndirectory, be a parent of a listed output file, or have the same path as\nany of the listed output files.",
+          "description": "A list of the output directories that the client expects to retrieve from\nthe action. Only the listed directories will be returned (an entire\ndirectory structure will be returned as a\nTree message digest, see\nOutputDirectory), as\nwell as files listed in `output_files`. Other files or directories that\nmay be created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path. The special value of empty string is allowed,\nalthough not recommended, and can be used to capture the entire working\ndirectory tree, including inputs.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output directory cannot be duplicated or have the same path as any of\nthe listed output files.\n\nDirectories leading up to the output directories (but not the output\ndirectories themselves) are created by the worker prior to execution, even\nif they are not explicitly part of the input root.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "outputFiles": {
-          "description": "A list of the output files that the client expects to retrieve from the\naction. Only the listed files, as well as directories listed in\n`output_directories`, will be returned to the client as output.\nOther files that may be created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output file cannot be duplicated, be a parent of another output file, be\na child of a listed output directory, or have the same path as any of the\nlisted output directories.",
+          "description": "A list of the output files that the client expects to retrieve from the\naction. Only the listed files, as well as directories listed in\n`output_directories`, will be returned to the client as output.\nOther files or directories that may be created during command execution\nare discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output file cannot be duplicated, be a parent of another output file, or\nhave the same path as any of the listed output directories.\n\nDirectories leading up to the output files are created by the worker prior\nto execution, even if they are not explicitly part of the input root.",
           "items": {
             "type": "string"
           },
@@ -485,7 +485,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2Digest": {
-      "description": "A content digest. A digest for a given blob consists of the size of the blob\nand its hash. The hash algorithm to use is defined by the server, but servers\nSHOULD use SHA-256.\n\nThe size is considered to be an integral part of the digest and cannot be\nseparated. That is, even if the `hash` field is correctly specified but\n`size_bytes` is not, the server MUST reject the request.\n\nThe reason for including the size in the digest is as follows: in a great\nmany cases, the server needs to know the size of the blob it is about to work\nwith prior to starting an operation with it, such as flattening Merkle tree\nstructures or streaming it to a worker. Technically, the server could\nimplement a separate metadata store, but this results in a significantly more\ncomplicated implementation as opposed to having the client specify the size\nup-front (or storing the size along with the digest in every message where\ndigests are embedded). This does mean that the API leaks some implementation\ndetails of (what we consider to be) a reasonable server implementation, but\nwe consider this to be a worthwhile tradeoff.\n\nWhen a `Digest` is used to refer to a proto message, it always refers to the\nmessage in binary encoded form. To ensure consistent hashing, clients and\nservers MUST ensure that they serialize messages according to the following\nrules, even if there are alternate valid encodings for the same message.\n- Fields are serialized in tag order.\n- There are no unknown fields.\n- There are no duplicate fields.\n- Fields are serialized according to the default semantics for their type.\n\nMost protocol buffer implementations will always follow these rules when\nserializing, but care should be taken to avoid shortcuts. For instance,\nconcatenating two messages to merge them may produce duplicate fields.",
+      "description": "A content digest. A digest for a given blob consists of the size of the blob\nand its hash. The hash algorithm to use is defined by the server, but servers\nSHOULD use SHA-256.\n\nThe size is considered to be an integral part of the digest and cannot be\nseparated. That is, even if the `hash` field is correctly specified but\n`size_bytes` is not, the server MUST reject the request.\n\nThe reason for including the size in the digest is as follows: in a great\nmany cases, the server needs to know the size of the blob it is about to work\nwith prior to starting an operation with it, such as flattening Merkle tree\nstructures or streaming it to a worker. Technically, the server could\nimplement a separate metadata store, but this results in a significantly more\ncomplicated implementation as opposed to having the client specify the size\nup-front (or storing the size along with the digest in every message where\ndigests are embedded). This does mean that the API leaks some implementation\ndetails of (what we consider to be) a reasonable server implementation, but\nwe consider this to be a worthwhile tradeoff.\n\nWhen a `Digest` is used to refer to a proto message, it always refers to the\nmessage in binary encoded form. To ensure consistent hashing, clients and\nservers MUST ensure that they serialize messages according to the following\nrules, even if there are alternate valid encodings for the same message:\n\n* Fields are serialized in tag order.\n* There are no unknown fields.\n* There are no duplicate fields.\n* Fields are serialized according to the default semantics for their type.\n\nMost protocol buffer implementations will always follow these rules when\nserializing, but care should be taken to avoid shortcuts. For instance,\nconcatenating two messages to merge them may produce duplicate fields.",
       "id": "BuildBazelRemoteExecutionV2Digest",
       "properties": {
         "hash": {
@@ -501,7 +501,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2Directory": {
-      "description": "A `Directory` represents a directory node in a file tree, containing zero or\nmore children FileNodes,\nDirectoryNodes and\nSymlinkNodes.\nEach `Node` contains its name in the directory, either the digest of its\ncontent (either a file blob or a `Directory` proto) or a symlink target, as\nwell as possibly some metadata about the file or directory.\n\nIn order to ensure that two equivalent directory trees hash to the same\nvalue, the following restrictions MUST be obeyed when constructing a\na `Directory`:\n  - Every child in the directory must have a path of exactly one segment.\n    Multiple levels of directory hierarchy may not be collapsed.\n  - Each child in the directory must have a unique path segment (file name).\n  - The files, directories and symlinks in the directory must each be sorted\n    in lexicographical order by path. The path strings must be sorted by code\n    point, equivalently, by UTF-8 bytes.\n\nA `Directory` that obeys the restrictions is said to be in canonical form.\n\nAs an example, the following could be used for a file named `bar` and a\ndirectory named `foo` with an executable file named `baz` (hashes shortened\nfor readability):\n\n```json\n// (Directory proto)\n{\n  files: [\n    {\n      name: \"bar\",\n      digest: {\n        hash: \"4a73bc9d03...\",\n        size: 65534\n      }\n    }\n  ],\n  directories: [\n    {\n      name: \"foo\",\n      digest: {\n        hash: \"4cf2eda940...\",\n        size: 43\n      }\n    }\n  ]\n}\n\n// (Directory proto with hash \"4cf2eda940...\" and size 43)\n{\n  files: [\n    {\n      name: \"baz\",\n      digest: {\n        hash: \"b2c941073e...\",\n        size: 1294,\n      },\n      is_executable: true\n    }\n  ]\n}\n```",
+      "description": "A `Directory` represents a directory node in a file tree, containing zero or\nmore children FileNodes,\nDirectoryNodes and\nSymlinkNodes.\nEach `Node` contains its name in the directory, either the digest of its\ncontent (either a file blob or a `Directory` proto) or a symlink target, as\nwell as possibly some metadata about the file or directory.\n\nIn order to ensure that two equivalent directory trees hash to the same\nvalue, the following restrictions MUST be obeyed when constructing a\na `Directory`:\n\n* Every child in the directory must have a path of exactly one segment.\n  Multiple levels of directory hierarchy may not be collapsed.\n* Each child in the directory must have a unique path segment (file name).\n* The files, directories and symlinks in the directory must each be sorted\n  in lexicographical order by path. The path strings must be sorted by code\n  point, equivalently, by UTF-8 bytes.\n\nA `Directory` that obeys the restrictions is said to be in canonical form.\n\nAs an example, the following could be used for a file named `bar` and a\ndirectory named `foo` with an executable file named `baz` (hashes shortened\nfor readability):\n\n```json\n// (Directory proto)\n{\n  files: [\n    {\n      name: \"bar\",\n      digest: {\n        hash: \"4a73bc9d03...\",\n        size: 65534\n      }\n    }\n  ],\n  directories: [\n    {\n      name: \"foo\",\n      digest: {\n        hash: \"4cf2eda940...\",\n        size: 43\n      }\n    }\n  ]\n}\n\n// (Directory proto with hash \"4cf2eda940...\" and size 43)\n{\n  files: [\n    {\n      name: \"baz\",\n      digest: {\n        hash: \"b2c941073e...\",\n        size: 1294,\n      },\n      is_executable: true\n    }\n  ]\n}\n```",
       "id": "BuildBazelRemoteExecutionV2Directory",
       "properties": {
         "directories": {
@@ -586,6 +586,10 @@
         "cachedResult": {
           "description": "True if the result was served from cache, false if it was executed.",
           "type": "boolean"
+        },
+        "message": {
+          "description": "Freeform informational message with details on the execution of the action\nthat may be displayed to the user upon failure or when requested explicitly.",
+          "type": "string"
         },
         "result": {
           "$ref": "BuildBazelRemoteExecutionV2ActionResult",
@@ -774,7 +778,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2RequestMetadata": {
-      "description": "An optional Metadata to attach to any RPC request to tell the server about an\nexternal context of the request. The server may use this for logging or other\npurposes. To use it, the client attaches the header to the call using the\ncanonical proto serialization:\nname: build.bazel.remote.execution.v2.requestmetadata-bin\ncontents: the base64 encoded binary RequestMetadata message.",
+      "description": "An optional Metadata to attach to any RPC request to tell the server about an\nexternal context of the request. The server may use this for logging or other\npurposes. To use it, the client attaches the header to the call using the\ncanonical proto serialization:\n\n* name: `build.bazel.remote.execution.v2.requestmetadata-bin`\n* contents: the base64 encoded binary `RequestMetadata` message.",
       "id": "BuildBazelRemoteExecutionV2RequestMetadata",
       "properties": {
         "actionId": {
@@ -1008,6 +1012,10 @@
           "description": "The location is a GCP region. Currently only `us-central1` is supported.",
           "type": "string"
         },
+        "loggingEnabled": {
+          "description": "Output only. Whether stack driver logging is enabled for the instance.",
+          "type": "boolean"
+        },
         "name": {
           "description": "Output only. Instance resource name formatted as:\n`projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.\nName should not be populated when creating an instance since it is provided\nin the `instance_id` field.",
           "type": "string"
@@ -1115,7 +1123,7 @@
           "type": "string"
         },
         "reserved": {
-          "description": "Output only. `reserved=true` means the worker is reserved and won't be\npreempted.",
+          "description": "Determines whether the worker is reserved (and therefore won't be\npreempted).\nSee [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more\ndetails.",
           "type": "boolean"
         }
       },
@@ -1580,17 +1588,8 @@
           "format": "int32",
           "type": "integer"
         },
-        "outputs": {
-          "$ref": "GoogleDevtoolsRemoteworkersV1test2Digest",
-          "description": "The output files. The blob referenced by the digest should contain\none of the following (implementation-dependent):\n   * A marshalled DirectoryMetadata of the returned filesystem\n   * A LUCI-style .isolated file"
-        },
-        "overhead": {
-          "description": "The amount of time *not* spent executing the command (ie\nuploading/downloading files).",
-          "format": "google-duration",
-          "type": "string"
-        },
-        "statistics": {
-          "description": "Implementation-dependent statistics about the task. Both servers and bots\nmay define messages which can be encoded here; bots are free to provide\nstatistics in multiple formats, and servers are free to choose one or more\nof the values to process and ignore others. In particular, it is *not*\nconsidered an error for the bot to provide the server with a field that it\ndoesn't know about.",
+        "metadata": {
+          "description": "Implementation-dependent metadata about the task. Both servers and bots\nmay define messages which can be encoded here; bots are free to provide\nmetadata in multiple formats, and servers are free to choose one or more\nof the values to process and ignore others. In particular, it is *not*\nconsidered an error for the bot to provide the server with a field that it\ndoesn't know about.",
           "items": {
             "additionalProperties": {
               "description": "Properties of the object. Contains field @type with type URL.",
@@ -1599,6 +1598,15 @@
             "type": "object"
           },
           "type": "array"
+        },
+        "outputs": {
+          "$ref": "GoogleDevtoolsRemoteworkersV1test2Digest",
+          "description": "The output files. The blob referenced by the digest should contain\none of the following (implementation-dependent):\n   * A marshalled DirectoryMetadata of the returned filesystem\n   * A LUCI-style .isolated file"
+        },
+        "overhead": {
+          "description": "The amount of time *not* spent executing the command (ie\nuploading/downloading files).",
+          "format": "google-duration",
+          "type": "string"
         },
         "status": {
           "$ref": "GoogleRpcStatus",

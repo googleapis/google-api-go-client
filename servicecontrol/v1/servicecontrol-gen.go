@@ -734,7 +734,9 @@ type CheckRequest struct {
 
 	// SkipActivationCheck: Indicates if service activation check should be
 	// skipped for this request.
-	// Default behavior is to perform the check and apply relevant quota.
+	// Default behavior is to perform the check and apply relevant
+	// quota.
+	// WARNING: Setting this flag to "true" will disable quota enforcement.
 	SkipActivationCheck bool `json:"skipActivationCheck,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Operation") to

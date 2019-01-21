@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20181229",
+  "revision": "20190114",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -564,7 +564,7 @@
           "type": "string"
         },
         "skipActivationCheck": {
-          "description": "Indicates if service activation check should be skipped for this request.\nDefault behavior is to perform the check and apply relevant quota.",
+          "description": "Indicates if service activation check should be skipped for this request.\nDefault behavior is to perform the check and apply relevant quota.\nWARNING: Setting this flag to \"true\" will disable quota enforcement.",
           "type": "boolean"
         }
       },

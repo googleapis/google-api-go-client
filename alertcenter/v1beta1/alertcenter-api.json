@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190110",
+  "revision": "20190116",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -370,7 +370,7 @@
         },
         "loginDetails": {
           "$ref": "LoginDetails",
-          "description": "Optional. Details of the login action associated with the warning event.\nThis is only available for:\n\n* Suspicious login\n* Suspicious login (less secure app)\n* User suspended (suspicious activity)"
+          "description": "Optional. Details of the login action associated with the warning event.\nThis is only available for:\n\n* Suspicious login\n* Suspicious login (less secure app)\n* Suspicious programmatic login\n* User suspended (suspicious activity)"
         }
       },
       "type": "object"

@@ -196,11 +196,11 @@ type ProjectsOperationsService struct {
 // are
 // handled, all other features will continue to work unchanged.
 type GoogleApi__HttpBody struct {
-	// ContentType: The HTTP Content-Type string representing the content
-	// type of the body.
+	// ContentType: The HTTP Content-Type header value specifying the
+	// content type of the body.
 	ContentType string `json:"contentType,omitempty"`
 
-	// Data: HTTP body binary data.
+	// Data: The HTTP request/response body as raw binary.
 	Data string `json:"data,omitempty"`
 
 	// Extensions: Application specific response metadata. Must be set in
@@ -575,8 +575,9 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// algorithm if unspecified.
 	//
 	// Possible values:
-	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by
-	// hyperparameter tuning service.
+	//   "ALGORITHM_UNSPECIFIED" - The default algorithm used by the
+	// hyperparameter tuning service. This is
+	// a Bayesian optimization algorithm.
 	//   "GRID_SEARCH" - Simple grid search within the feasible space. To
 	// use grid search,
 	// all parameters must be `INTEGER`, `CATEGORICAL`, or `DISCRETE`.
@@ -1300,7 +1301,7 @@ func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudMlV1__PredictionInput: Represents input parameters for a
-// prediction job. Next field: 20
+// prediction job.
 type GoogleCloudMlV1__PredictionInput struct {
 	// Accelerator: Optional. The type and number of accelerators to be
 	// attached to each
@@ -1595,30 +1596,22 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   <dt>standard_v100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>standard</i> that
-	//   also includes a single NVIDIA Tesla V100 GPU. The availability of
-	// these
-	//   GPUs is in the <i>Beta</i> launch stage.
+	//   also includes a single NVIDIA Tesla V100 GPU.
 	//   </dd>
 	//   <dt>large_model_v100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>large_model</i> that
-	//   also includes a single NVIDIA Tesla V100 GPU. The availability of
-	// these
-	//   GPUs is in the <i>Beta</i> launch stage.
+	//   also includes a single NVIDIA Tesla V100 GPU.
 	//   </dd>
 	//   <dt>complex_model_m_v100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>complex_model_m</i> that
-	//   also includes four NVIDIA Tesla V100 GPUs. The availability of
-	// these
-	//   GPUs is in the <i>Beta</i> launch stage.
+	//   also includes four NVIDIA Tesla V100 GPUs.
 	//   </dd>
 	//   <dt>complex_model_l_v100</dt>
 	//   <dd>
 	//   A machine equivalent to <i>complex_model_l</i> that
-	//   also includes eight NVIDIA Tesla V100 GPUs. The availability of
-	// these
-	//   GPUs is in the <i>Beta</i> launch stage.
+	//   also includes eight NVIDIA Tesla V100 GPUs.
 	//   </dd>
 	//   <dt>cloud_tpu</dt>
 	//   <dd>
@@ -1647,6 +1640,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// This value can only be used when `scale_tier` is set to `CUSTOM`.If
 	// you
 	// set this value, you must also set `parameter_server_type`.
+	//
+	// The default value is zero.
 	ParameterServerCount int64 `json:"parameterServerCount,omitempty,string"`
 
 	// ParameterServerType: Optional. Specifies the type of virtual machine
@@ -1753,6 +1748,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// This value can only be used when `scale_tier` is set to `CUSTOM`. If
 	// you
 	// set this value, you must also set `worker_type`.
+	//
+	// The default value is zero.
 	WorkerCount int64 `json:"workerCount,omitempty,string"`
 
 	// WorkerType: Optional. Specifies the type of virtual machine to use
@@ -1925,8 +1922,8 @@ type GoogleCloudMlV1__Version struct {
 	// of the model to 1.4 or greater.
 	//
 	// Possible values:
-	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Defaults to
-	// TensorFlow.
+	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Assigns a value
+	// based on the file suffix.
 	//   "TENSORFLOW" - Tensorflow framework.
 	//   "SCIKIT_LEARN" - Scikit-learn framework.
 	//   "XGBOOST" - XGBoost framework.

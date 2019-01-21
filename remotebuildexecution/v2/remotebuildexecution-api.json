@@ -107,7 +107,7 @@
     "actionResults": {
       "methods": {
         "get": {
-          "description": "Retrieve a cached execution result.\n\nErrors:\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
+          "description": "Retrieve a cached execution result.\n\nErrors:\n\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
           "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
           "httpMethod": "GET",
           "id": "remotebuildexecution.actionResults.get",
@@ -147,7 +147,7 @@
           ]
         },
         "update": {
-          "description": "Upload a new execution result.\n\nThis method is intended for servers which implement the distributed cache\nindependently of the\nExecution API. As a\nresult, it is OPTIONAL for servers to implement.\n\nIn order to allow the server to perform access control based on the type of\naction, and to assist with client debugging, the client MUST first upload\nthe Action that produced the\nresult, along with its\nCommand, into the\n`ContentAddressableStorage`.\n\nErrors:\n* `UNIMPLEMENTED`: This method is not supported by the server.\n* `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the\n  entry to the cache.",
+          "description": "Upload a new execution result.\n\nIn order to allow the server to perform access control based on the type of\naction, and to assist with client debugging, the client MUST first upload\nthe Action that produced the\nresult, along with its\nCommand, into the\n`ContentAddressableStorage`.\n\nErrors:\n\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in updating the\n  action result, such as a missing command or action.\n* `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the\n  entry to the cache.",
           "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
           "httpMethod": "PUT",
           "id": "remotebuildexecution.actionResults.update",
@@ -200,7 +200,7 @@
     "actions": {
       "methods": {
         "execute": {
-          "description": "Execute an action remotely.\n\nIn order to execute an action, the client must first upload all of the\ninputs, the\nCommand to run, and the\nAction into the\nContentAddressableStorage.\nIt then calls `Execute` with an `action_digest` referring to them. The\nserver will run the action and eventually return the result.\n\nThe input `Action`'s fields MUST meet the various canonicalization\nrequirements specified in the documentation for their types so that it has\nthe same digest as other logically equivalent `Action`s. The server MAY\nenforce the requirements and return errors if a non-canonical input is\nreceived. It MAY also proceed without verifying some or all of the\nrequirements, such as for performance reasons. If the server does not\nverify the requirement, then it will treat the `Action` as distinct from\nanother logically equivalent action if they hash differently.\n\nReturns a stream of\ngoogle.longrunning.Operation messages\ndescribing the resulting execution, with eventual `response`\nExecuteResponse. The\n`metadata` on the operation is of type\nExecuteOperationMetadata.\n\nIf the client remains connected after the first response is returned after\nthe server, then updates are streamed as if the client had called\nWaitExecution\nuntil the execution completes or the request reaches an error. The\noperation can also be queried using Operations\nAPI.\n\nThe server NEED NOT implement other methods or functionality of the\nOperations API.\n\nErrors discovered during creation of the `Operation` will be reported\nas gRPC Status errors, while errors that occurred while running the\naction will be reported in the `status` field of the `ExecuteResponse`. The\nserver MUST NOT set the `error` field of the `Operation` proto.\nThe possible errors include:\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in setting up the\n  action requested, such as a missing input or command or no worker being\n  available. The client may be able to fix the errors and retry.\n* `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run\n  the action.\n* `UNAVAILABLE`: Due to a transient condition, such as all workers being\n  occupied (and the server does not support a queue), the action could not\n  be started. The client should retry.\n* `INTERNAL`: An internal error occurred in the execution engine or the\n  worker.\n* `DEADLINE_EXCEEDED`: The execution timed out.\n\nIn the case of a missing input or command, the server SHOULD additionally\nsend a PreconditionFailure error detail\nwhere, for each requested blob not present in the CAS, there is a\n`Violation` with a `type` of `MISSING` and a `subject` of\n`\"blobs/{hash}/{size}\"` indicating the digest of the missing blob.",
+          "description": "Execute an action remotely.\n\nIn order to execute an action, the client must first upload all of the\ninputs, the\nCommand to run, and the\nAction into the\nContentAddressableStorage.\nIt then calls `Execute` with an `action_digest` referring to them. The\nserver will run the action and eventually return the result.\n\nThe input `Action`'s fields MUST meet the various canonicalization\nrequirements specified in the documentation for their types so that it has\nthe same digest as other logically equivalent `Action`s. The server MAY\nenforce the requirements and return errors if a non-canonical input is\nreceived. It MAY also proceed without verifying some or all of the\nrequirements, such as for performance reasons. If the server does not\nverify the requirement, then it will treat the `Action` as distinct from\nanother logically equivalent action if they hash differently.\n\nReturns a stream of\ngoogle.longrunning.Operation messages\ndescribing the resulting execution, with eventual `response`\nExecuteResponse. The\n`metadata` on the operation is of type\nExecuteOperationMetadata.\n\nIf the client remains connected after the first response is returned after\nthe server, then updates are streamed as if the client had called\nWaitExecution\nuntil the execution completes or the request reaches an error. The\noperation can also be queried using Operations\nAPI.\n\nThe server NEED NOT implement other methods or functionality of the\nOperations API.\n\nErrors discovered during creation of the `Operation` will be reported\nas gRPC Status errors, while errors that occurred while running the\naction will be reported in the `status` field of the `ExecuteResponse`. The\nserver MUST NOT set the `error` field of the `Operation` proto.\nThe possible errors include:\n\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in setting up the\n  action requested, such as a missing input or command or no worker being\n  available. The client may be able to fix the errors and retry.\n* `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run\n  the action.\n* `UNAVAILABLE`: Due to a transient condition, such as all workers being\n  occupied (and the server does not support a queue), the action could not\n  be started. The client should retry.\n* `INTERNAL`: An internal error occurred in the execution engine or the\n  worker.\n* `DEADLINE_EXCEEDED`: The execution timed out.\n* `CANCELLED`: The operation was cancelled by the client. This status is\n  only possible if the server implements the Operations API CancelOperation\n  method, and it was called for the current execution.\n\nIn the case of a missing input or command, the server SHOULD additionally\nsend a PreconditionFailure error detail\nwhere, for each requested blob not present in the CAS, there is a\n`Violation` with a `type` of `MISSING` and a `subject` of\n`\"blobs/{hash}/{size}\"` indicating the digest of the missing blob.",
           "flatPath": "v2/{v2Id}/actions:execute",
           "httpMethod": "POST",
           "id": "remotebuildexecution.actions.execute",
@@ -232,7 +232,7 @@
     "blobs": {
       "methods": {
         "batchRead": {
-          "description": "Download many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be downloaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or downloaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Read` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n* `INVALID_ARGUMENT`: The client attempted to read more than the\n  server supported limit.\n\nEvery error on individual read will be returned in the corresponding digest\nstatus.",
+          "description": "Download many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be downloaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or downloaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Read` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n\n* `INVALID_ARGUMENT`: The client attempted to read more than the\n  server supported limit.\n\nEvery error on individual read will be returned in the corresponding digest\nstatus.",
           "flatPath": "v2/{v2Id}/blobs:batchRead",
           "httpMethod": "POST",
           "id": "remotebuildexecution.blobs.batchRead",
@@ -260,7 +260,7 @@
           ]
         },
         "batchUpdate": {
-          "description": "Upload many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be uploaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or uploaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Write` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n* `INVALID_ARGUMENT`: The client attempted to upload more than the\n  server supported limit.\n\nIndividual requests may return the following errors, additionally:\n* `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob.\n* `INVALID_ARGUMENT`: The\nDigest does not match the\nprovided data.",
+          "description": "Upload many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be uploaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or uploaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Write` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n\n* `INVALID_ARGUMENT`: The client attempted to upload more than the\n  server supported limit.\n\nIndividual requests may return the following errors, additionally:\n\n* `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob.\n* `INVALID_ARGUMENT`: The\nDigest does not match the\nprovided data.",
           "flatPath": "v2/{v2Id}/blobs:batchUpdate",
           "httpMethod": "POST",
           "id": "remotebuildexecution.blobs.batchUpdate",
@@ -430,7 +430,7 @@
       }
     }
   },
-  "revision": "20190103",
+  "revision": "20190116",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -651,10 +651,10 @@
         "digestFunction": {
           "description": "All the digest functions supported by the remote cache.\nRemote cache may support multiple digest functions simultaneously.",
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
+            "It is an error for the server to return this value.",
+            "The Sha-256 digest function.",
+            "The Sha-1 digest function.",
+            "The MD5 digest function."
           ],
           "items": {
             "enum": [
@@ -681,7 +681,7 @@
           ],
           "enumDescriptions": [
             "",
-            "Server will return an INVALID_ARGUMENT on input symlinks with absolute targets.\nIf an action tries to create an output symlink with an absolute target, a\nFAILED_PRECONDITION will be returned.",
+            "Server will return an `INVALID_ARGUMENT` on input symlinks with absolute\ntargets.\nIf an action tries to create an output symlink with an absolute target, a\n`FAILED_PRECONDITION` will be returned.",
             "Server will allow symlink targets to escape the input root tree, possibly\nresulting in non-hermetic builds."
           ],
           "type": "string"
@@ -701,21 +701,21 @@
           "type": "array"
         },
         "environmentVariables": {
-          "description": "The environment variables to set when running the program. The worker may\nprovide its own default environment variables; these defaults can be\noverridden using this field. Additional variables can also be specified.\n\nIn order to ensure that equivalent `Command`s always hash to the same\nvalue, the environment variables MUST be lexicographically sorted by name.\nSorting of strings is done by code point, equivalently, by the UTF-8 bytes.",
+          "description": "The environment variables to set when running the program. The worker may\nprovide its own default environment variables; these defaults can be\noverridden using this field. Additional variables can also be specified.\n\nIn order to ensure that equivalent\nCommands always hash to the same\nvalue, the environment variables MUST be lexicographically sorted by name.\nSorting of strings is done by code point, equivalently, by the UTF-8 bytes.",
           "items": {
             "$ref": "BuildBazelRemoteExecutionV2CommandEnvironmentVariable"
           },
           "type": "array"
         },
         "outputDirectories": {
-          "description": "A list of the output directories that the client expects to retrieve from\nthe action. Only the contents of the indicated directories (recursively\nincluding the contents of their subdirectories) will be\nreturned, as well as files listed in `output_files`. Other files that may\nbe created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path. The special value of empty string is allowed,\nalthough not recommended, and can be used to capture the entire working\ndirectory tree, including inputs.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output directory cannot be duplicated, be a parent of another output\ndirectory, be a parent of a listed output file, or have the same path as\nany of the listed output files.",
+          "description": "A list of the output directories that the client expects to retrieve from\nthe action. Only the listed directories will be returned (an entire\ndirectory structure will be returned as a\nTree message digest, see\nOutputDirectory), as\nwell as files listed in `output_files`. Other files or directories that\nmay be created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path. The special value of empty string is allowed,\nalthough not recommended, and can be used to capture the entire working\ndirectory tree, including inputs.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output directory cannot be duplicated or have the same path as any of\nthe listed output files.\n\nDirectories leading up to the output directories (but not the output\ndirectories themselves) are created by the worker prior to execution, even\nif they are not explicitly part of the input root.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "outputFiles": {
-          "description": "A list of the output files that the client expects to retrieve from the\naction. Only the listed files, as well as directories listed in\n`output_directories`, will be returned to the client as output.\nOther files that may be created during command execution are discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output file cannot be duplicated, be a parent of another output file, be\na child of a listed output directory, or have the same path as any of the\nlisted output directories.",
+          "description": "A list of the output files that the client expects to retrieve from the\naction. Only the listed files, as well as directories listed in\n`output_directories`, will be returned to the client as output.\nOther files or directories that may be created during command execution\nare discarded.\n\nThe paths are relative to the working directory of the action execution.\nThe paths are specified using a single forward slash (`/`) as a path\nseparator, even if the execution platform natively uses a different\nseparator. The path MUST NOT include a trailing slash, nor a leading slash,\nbeing a relative path.\n\nIn order to ensure consistent hashing of the same Action, the output paths\nMUST be sorted lexicographically by code point (or, equivalently, by UTF-8\nbytes).\n\nAn output file cannot be duplicated, be a parent of another output file, or\nhave the same path as any of the listed output directories.\n\nDirectories leading up to the output files are created by the worker prior\nto execution, even if they are not explicitly part of the input root.",
           "items": {
             "type": "string"
           },
@@ -748,7 +748,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2Digest": {
-      "description": "A content digest. A digest for a given blob consists of the size of the blob\nand its hash. The hash algorithm to use is defined by the server, but servers\nSHOULD use SHA-256.\n\nThe size is considered to be an integral part of the digest and cannot be\nseparated. That is, even if the `hash` field is correctly specified but\n`size_bytes` is not, the server MUST reject the request.\n\nThe reason for including the size in the digest is as follows: in a great\nmany cases, the server needs to know the size of the blob it is about to work\nwith prior to starting an operation with it, such as flattening Merkle tree\nstructures or streaming it to a worker. Technically, the server could\nimplement a separate metadata store, but this results in a significantly more\ncomplicated implementation as opposed to having the client specify the size\nup-front (or storing the size along with the digest in every message where\ndigests are embedded). This does mean that the API leaks some implementation\ndetails of (what we consider to be) a reasonable server implementation, but\nwe consider this to be a worthwhile tradeoff.\n\nWhen a `Digest` is used to refer to a proto message, it always refers to the\nmessage in binary encoded form. To ensure consistent hashing, clients and\nservers MUST ensure that they serialize messages according to the following\nrules, even if there are alternate valid encodings for the same message.\n- Fields are serialized in tag order.\n- There are no unknown fields.\n- There are no duplicate fields.\n- Fields are serialized according to the default semantics for their type.\n\nMost protocol buffer implementations will always follow these rules when\nserializing, but care should be taken to avoid shortcuts. For instance,\nconcatenating two messages to merge them may produce duplicate fields.",
+      "description": "A content digest. A digest for a given blob consists of the size of the blob\nand its hash. The hash algorithm to use is defined by the server, but servers\nSHOULD use SHA-256.\n\nThe size is considered to be an integral part of the digest and cannot be\nseparated. That is, even if the `hash` field is correctly specified but\n`size_bytes` is not, the server MUST reject the request.\n\nThe reason for including the size in the digest is as follows: in a great\nmany cases, the server needs to know the size of the blob it is about to work\nwith prior to starting an operation with it, such as flattening Merkle tree\nstructures or streaming it to a worker. Technically, the server could\nimplement a separate metadata store, but this results in a significantly more\ncomplicated implementation as opposed to having the client specify the size\nup-front (or storing the size along with the digest in every message where\ndigests are embedded). This does mean that the API leaks some implementation\ndetails of (what we consider to be) a reasonable server implementation, but\nwe consider this to be a worthwhile tradeoff.\n\nWhen a `Digest` is used to refer to a proto message, it always refers to the\nmessage in binary encoded form. To ensure consistent hashing, clients and\nservers MUST ensure that they serialize messages according to the following\nrules, even if there are alternate valid encodings for the same message:\n\n* Fields are serialized in tag order.\n* There are no unknown fields.\n* There are no duplicate fields.\n* Fields are serialized according to the default semantics for their type.\n\nMost protocol buffer implementations will always follow these rules when\nserializing, but care should be taken to avoid shortcuts. For instance,\nconcatenating two messages to merge them may produce duplicate fields.",
       "id": "BuildBazelRemoteExecutionV2Digest",
       "properties": {
         "hash": {
@@ -764,7 +764,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2Directory": {
-      "description": "A `Directory` represents a directory node in a file tree, containing zero or\nmore children FileNodes,\nDirectoryNodes and\nSymlinkNodes.\nEach `Node` contains its name in the directory, either the digest of its\ncontent (either a file blob or a `Directory` proto) or a symlink target, as\nwell as possibly some metadata about the file or directory.\n\nIn order to ensure that two equivalent directory trees hash to the same\nvalue, the following restrictions MUST be obeyed when constructing a\na `Directory`:\n  - Every child in the directory must have a path of exactly one segment.\n    Multiple levels of directory hierarchy may not be collapsed.\n  - Each child in the directory must have a unique path segment (file name).\n  - The files, directories and symlinks in the directory must each be sorted\n    in lexicographical order by path. The path strings must be sorted by code\n    point, equivalently, by UTF-8 bytes.\n\nA `Directory` that obeys the restrictions is said to be in canonical form.\n\nAs an example, the following could be used for a file named `bar` and a\ndirectory named `foo` with an executable file named `baz` (hashes shortened\nfor readability):\n\n```json\n// (Directory proto)\n{\n  files: [\n    {\n      name: \"bar\",\n      digest: {\n        hash: \"4a73bc9d03...\",\n        size: 65534\n      }\n    }\n  ],\n  directories: [\n    {\n      name: \"foo\",\n      digest: {\n        hash: \"4cf2eda940...\",\n        size: 43\n      }\n    }\n  ]\n}\n\n// (Directory proto with hash \"4cf2eda940...\" and size 43)\n{\n  files: [\n    {\n      name: \"baz\",\n      digest: {\n        hash: \"b2c941073e...\",\n        size: 1294,\n      },\n      is_executable: true\n    }\n  ]\n}\n```",
+      "description": "A `Directory` represents a directory node in a file tree, containing zero or\nmore children FileNodes,\nDirectoryNodes and\nSymlinkNodes.\nEach `Node` contains its name in the directory, either the digest of its\ncontent (either a file blob or a `Directory` proto) or a symlink target, as\nwell as possibly some metadata about the file or directory.\n\nIn order to ensure that two equivalent directory trees hash to the same\nvalue, the following restrictions MUST be obeyed when constructing a\na `Directory`:\n\n* Every child in the directory must have a path of exactly one segment.\n  Multiple levels of directory hierarchy may not be collapsed.\n* Each child in the directory must have a unique path segment (file name).\n* The files, directories and symlinks in the directory must each be sorted\n  in lexicographical order by path. The path strings must be sorted by code\n  point, equivalently, by UTF-8 bytes.\n\nA `Directory` that obeys the restrictions is said to be in canonical form.\n\nAs an example, the following could be used for a file named `bar` and a\ndirectory named `foo` with an executable file named `baz` (hashes shortened\nfor readability):\n\n```json\n// (Directory proto)\n{\n  files: [\n    {\n      name: \"bar\",\n      digest: {\n        hash: \"4a73bc9d03...\",\n        size: 65534\n      }\n    }\n  ],\n  directories: [\n    {\n      name: \"foo\",\n      digest: {\n        hash: \"4cf2eda940...\",\n        size: 43\n      }\n    }\n  ]\n}\n\n// (Directory proto with hash \"4cf2eda940...\" and size 43)\n{\n  files: [\n    {\n      name: \"baz\",\n      digest: {\n        hash: \"b2c941073e...\",\n        size: 1294,\n      },\n      is_executable: true\n    }\n  ]\n}\n```",
       "id": "BuildBazelRemoteExecutionV2Directory",
       "properties": {
         "directories": {
@@ -873,6 +873,10 @@
           "description": "True if the result was served from cache, false if it was executed.",
           "type": "boolean"
         },
+        "message": {
+          "description": "Freeform informational message with details on the execution of the action\nthat may be displayed to the user upon failure or when requested explicitly.",
+          "type": "string"
+        },
         "result": {
           "$ref": "BuildBazelRemoteExecutionV2ActionResult",
           "description": "The result of the action."
@@ -960,10 +964,10 @@
             "MD5"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
+            "It is an error for the server to return this value.",
+            "The Sha-256 digest function.",
+            "The Sha-1 digest function.",
+            "The MD5 digest function."
           ],
           "type": "string"
         },
@@ -1177,7 +1181,7 @@
       "type": "object"
     },
     "BuildBazelRemoteExecutionV2RequestMetadata": {
-      "description": "An optional Metadata to attach to any RPC request to tell the server about an\nexternal context of the request. The server may use this for logging or other\npurposes. To use it, the client attaches the header to the call using the\ncanonical proto serialization:\nname: build.bazel.remote.execution.v2.requestmetadata-bin\ncontents: the base64 encoded binary RequestMetadata message.",
+      "description": "An optional Metadata to attach to any RPC request to tell the server about an\nexternal context of the request. The server may use this for logging or other\npurposes. To use it, the client attaches the header to the call using the\ncanonical proto serialization:\n\n* name: `build.bazel.remote.execution.v2.requestmetadata-bin`\n* contents: the base64 encoded binary `RequestMetadata` message.",
       "id": "BuildBazelRemoteExecutionV2RequestMetadata",
       "properties": {
         "actionId": {
@@ -1293,21 +1297,26 @@
       "type": "object"
     },
     "BuildBazelSemverSemVer": {
+      "description": "The full version of a given tool.",
       "id": "BuildBazelSemverSemVer",
       "properties": {
         "major": {
+          "description": "The major version, e.g 10 for 10.2.3.",
           "format": "int32",
           "type": "integer"
         },
         "minor": {
+          "description": "The minor version, e.g. 2 for 10.2.3.",
           "format": "int32",
           "type": "integer"
         },
         "patch": {
+          "description": "The patch version, e.g 3 for 10.2.3.",
           "format": "int32",
           "type": "integer"
         },
         "prerelease": {
+          "description": "The pre-release version. Either this field or major/minor/patch fields\nmust be filled. They are mutually exclusive. Pre-release versions are\nassumed to be earlier than any released versions.",
           "type": "string"
         }
       },
@@ -1466,6 +1475,10 @@
           "description": "The location is a GCP region. Currently only `us-central1` is supported.",
           "type": "string"
         },
+        "loggingEnabled": {
+          "description": "Output only. Whether stack driver logging is enabled for the instance.",
+          "type": "boolean"
+        },
         "name": {
           "description": "Output only. Instance resource name formatted as:\n`projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.\nName should not be populated when creating an instance since it is provided\nin the `instance_id` field.",
           "type": "string"
@@ -1573,7 +1586,7 @@
           "type": "string"
         },
         "reserved": {
-          "description": "Output only. `reserved=true` means the worker is reserved and won't be\npreempted.",
+          "description": "Determines whether the worker is reserved (and therefore won't be\npreempted).\nSee [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more\ndetails.",
           "type": "boolean"
         }
       },
@@ -2038,17 +2051,8 @@
           "format": "int32",
           "type": "integer"
         },
-        "outputs": {
-          "$ref": "GoogleDevtoolsRemoteworkersV1test2Digest",
-          "description": "The output files. The blob referenced by the digest should contain\none of the following (implementation-dependent):\n   * A marshalled DirectoryMetadata of the returned filesystem\n   * A LUCI-style .isolated file"
-        },
-        "overhead": {
-          "description": "The amount of time *not* spent executing the command (ie\nuploading/downloading files).",
-          "format": "google-duration",
-          "type": "string"
-        },
-        "statistics": {
-          "description": "Implementation-dependent statistics about the task. Both servers and bots\nmay define messages which can be encoded here; bots are free to provide\nstatistics in multiple formats, and servers are free to choose one or more\nof the values to process and ignore others. In particular, it is *not*\nconsidered an error for the bot to provide the server with a field that it\ndoesn't know about.",
+        "metadata": {
+          "description": "Implementation-dependent metadata about the task. Both servers and bots\nmay define messages which can be encoded here; bots are free to provide\nmetadata in multiple formats, and servers are free to choose one or more\nof the values to process and ignore others. In particular, it is *not*\nconsidered an error for the bot to provide the server with a field that it\ndoesn't know about.",
           "items": {
             "additionalProperties": {
               "description": "Properties of the object. Contains field @type with type URL.",
@@ -2057,6 +2061,15 @@
             "type": "object"
           },
           "type": "array"
+        },
+        "outputs": {
+          "$ref": "GoogleDevtoolsRemoteworkersV1test2Digest",
+          "description": "The output files. The blob referenced by the digest should contain\none of the following (implementation-dependent):\n   * A marshalled DirectoryMetadata of the returned filesystem\n   * A LUCI-style .isolated file"
+        },
+        "overhead": {
+          "description": "The amount of time *not* spent executing the command (ie\nuploading/downloading files).",
+          "format": "google-duration",
+          "type": "string"
         },
         "status": {
           "$ref": "GoogleRpcStatus",

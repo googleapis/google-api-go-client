@@ -1070,6 +1070,14 @@ type ExternalDataConfiguration struct {
 	// set to GOOGLE_SHEETS.
 	GoogleSheetsOptions *GoogleSheetsOptions `json:"googleSheetsOptions,omitempty"`
 
+	// HivePartitioningMode: [Optional, Experimental] If hive partitioning
+	// is enabled, which mode to use. Two modes are supported: - AUTO:
+	// automatically infer partition key name(s) and type(s). - STRINGS:
+	// automatic infer partition key name(s). All types are strings. Not all
+	// storage formats support hive partitioning -- requesting hive
+	// partitioning on an unsupported format will lead to an error.
+	HivePartitioningMode string `json:"hivePartitioningMode,omitempty"`
+
 	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,
 	// the extra values are ignored. If false, records with extra columns
@@ -1634,6 +1642,14 @@ type JobConfigurationLoad struct {
 	// raw, binary state. BigQuery also supports the escape sequence "\t" to
 	// specify a tab separator. The default value is a comma (',').
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
+
+	// HivePartitioningMode: [Optional, Experimental] If hive partitioning
+	// is enabled, which mode to use. Two modes are supported: - AUTO:
+	// automatically infer partition key name(s) and type(s). - STRINGS:
+	// automatic infer partition key name(s). All types are strings. Not all
+	// storage formats support hive partitioning -- requesting hive
+	// partitioning on an unsupported format will lead to an error.
+	HivePartitioningMode string `json:"hivePartitioningMode,omitempty"`
 
 	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,

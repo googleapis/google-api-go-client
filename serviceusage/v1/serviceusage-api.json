@@ -236,7 +236,7 @@
     "services": {
       "methods": {
         "batchEnable": {
-          "description": "Enable multiple services on a project. The operation is atomic: if enabling\nany service fails, then the entire batch fails, and no state changes occur.",
+          "description": "Enable multiple services on a project. The operation is atomic: if enabling\nany service fails, then the entire batch fails, and no state changes occur.\n\nOperation\u003cresponse: BatchEnableServicesResponse\u003e",
           "flatPath": "v1/{v1Id}/{v1Id1}/services:batchEnable",
           "httpMethod": "POST",
           "id": "serviceusage.services.batchEnable",
@@ -265,7 +265,7 @@
           ]
         },
         "disable": {
-          "description": "Disable a service so that it can no longer be used with a project.\nThis prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nIt is not valid to call the disable method on a service that is not\ncurrently enabled. Callers will receive a `FAILED_PRECONDITION` status if\nthe target service is not currently enabled.",
+          "description": "Disable a service so that it can no longer be used with a project.\nThis prevents unintended usage that may cause unexpected billing\ncharges or security leaks.\n\nIt is not valid to call the disable method on a service that is not\ncurrently enabled. Callers will receive a `FAILED_PRECONDITION` status if\nthe target service is not currently enabled.\n\nOperation\u003cresponse: DisableServiceResponse\u003e",
           "flatPath": "v1/{v1Id}/{v1Id1}/services/{servicesId}:disable",
           "httpMethod": "POST",
           "id": "serviceusage.services.disable",
@@ -294,7 +294,7 @@
           ]
         },
         "enable": {
-          "description": "Enable a service so that it can be used with a project.",
+          "description": "Enable a service so that it can be used with a project.\n\nOperation\u003cresponse: EnableServiceResponse\u003e",
           "flatPath": "v1/{v1Id}/{v1Id1}/services/{servicesId}:enable",
           "httpMethod": "POST",
           "id": "serviceusage.services.enable",
@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20190115",
+  "revision": "20190114",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {

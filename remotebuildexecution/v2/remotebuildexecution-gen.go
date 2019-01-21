@@ -732,10 +732,10 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	// Remote cache may support multiple digest functions simultaneously.
 	//
 	// Possible values:
-	//   "UNKNOWN"
-	//   "SHA256"
-	//   "SHA1"
-	//   "MD5"
+	//   "UNKNOWN" - It is an error for the server to return this value.
+	//   "SHA256" - The Sha-256 digest function.
+	//   "SHA1" - The Sha-1 digest function.
+	//   "MD5" - The MD5 digest function.
 	DigestFunction []string `json:"digestFunction,omitempty"`
 
 	// MaxBatchTotalSizeBytes: Maximum total size of blobs to be
@@ -750,11 +750,12 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	//
 	// Possible values:
 	//   "UNKNOWN"
-	//   "DISALLOWED" - Server will return an INVALID_ARGUMENT on input
-	// symlinks with absolute targets.
+	//   "DISALLOWED" - Server will return an `INVALID_ARGUMENT` on input
+	// symlinks with absolute
+	// targets.
 	// If an action tries to create an output symlink with an absolute
 	// target, a
-	// FAILED_PRECONDITION will be returned.
+	// `FAILED_PRECONDITION` will be returned.
 	//   "ALLOWED" - Server will allow symlink targets to escape the input
 	// root tree, possibly
 	// resulting in non-hermetic builds.
@@ -811,8 +812,8 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// overridden using this field. Additional variables can also be
 	// specified.
 	//
-	// In order to ensure that equivalent `Command`s always hash to the
-	// same
+	// In order to ensure that equivalent
+	// Commands always hash to the same
 	// value, the environment variables MUST be lexicographically sorted by
 	// name.
 	// Sorting of strings is done by code point, equivalently, by the UTF-8
@@ -821,12 +822,14 @@ type BuildBazelRemoteExecutionV2Command struct {
 
 	// OutputDirectories: A list of the output directories that the client
 	// expects to retrieve from
-	// the action. Only the contents of the indicated directories
-	// (recursively
-	// including the contents of their subdirectories) will be
-	// returned, as well as files listed in `output_files`. Other files that
-	// may
-	// be created during command execution are discarded.
+	// the action. Only the listed directories will be returned (an
+	// entire
+	// directory structure will be returned as a
+	// Tree message digest, see
+	// OutputDirectory), as
+	// well as files listed in `output_files`. Other files or directories
+	// that
+	// may be created during command execution are discarded.
 	//
 	// The paths are relative to the working directory of the action
 	// execution.
@@ -848,11 +851,15 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// UTF-8
 	// bytes).
 	//
-	// An output directory cannot be duplicated, be a parent of another
+	// An output directory cannot be duplicated or have the same path as any
+	// of
+	// the listed output files.
+	//
+	// Directories leading up to the output directories (but not the
 	// output
-	// directory, be a parent of a listed output file, or have the same path
-	// as
-	// any of the listed output files.
+	// directories themselves) are created by the worker prior to execution,
+	// even
+	// if they are not explicitly part of the input root.
 	OutputDirectories []string `json:"outputDirectories,omitempty"`
 
 	// OutputFiles: A list of the output files that the client expects to
@@ -860,8 +867,9 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// action. Only the listed files, as well as directories listed
 	// in
 	// `output_directories`, will be returned to the client as output.
-	// Other files that may be created during command execution are
-	// discarded.
+	// Other files or directories that may be created during command
+	// execution
+	// are discarded.
 	//
 	// The paths are relative to the working directory of the action
 	// execution.
@@ -880,10 +888,13 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// bytes).
 	//
 	// An output file cannot be duplicated, be a parent of another output
-	// file, be
-	// a child of a listed output directory, or have the same path as any of
-	// the
-	// listed output directories.
+	// file, or
+	// have the same path as any of the listed output
+	// directories.
+	//
+	// Directories leading up to the output files are created by the worker
+	// prior
+	// to execution, even if they are not explicitly part of the input root.
 	OutputFiles []string `json:"outputFiles,omitempty"`
 
 	// Platform: The platform requirements for the execution environment.
@@ -998,11 +1009,12 @@ func (s *BuildBazelRemoteExecutionV2CommandEnvironmentVariable) MarshalJSON() ([
 // servers MUST ensure that they serialize messages according to the
 // following
 // rules, even if there are alternate valid encodings for the same
-// message.
-// - Fields are serialized in tag order.
-// - There are no unknown fields.
-// - There are no duplicate fields.
-// - Fields are serialized according to the default semantics for their
+// message:
+//
+// * Fields are serialized in tag order.
+// * There are no unknown fields.
+// * There are no duplicate fields.
+// * Fields are serialized according to the default semantics for their
 // type.
 //
 // Most protocol buffer implementations will always follow these rules
@@ -1059,16 +1071,17 @@ func (s *BuildBazelRemoteExecutionV2Digest) MarshalJSON() ([]byte, error) {
 // value, the following restrictions MUST be obeyed when constructing
 // a
 // a `Directory`:
-//   - Every child in the directory must have a path of exactly one
+//
+// * Every child in the directory must have a path of exactly one
 // segment.
-//     Multiple levels of directory hierarchy may not be collapsed.
-//   - Each child in the directory must have a unique path segment (file
+//   Multiple levels of directory hierarchy may not be collapsed.
+// * Each child in the directory must have a unique path segment (file
 // name).
-//   - The files, directories and symlinks in the directory must each be
+// * The files, directories and symlinks in the directory must each be
 // sorted
-//     in lexicographical order by path. The path strings must be sorted
+//   in lexicographical order by path. The path strings must be sorted
 // by code
-//     point, equivalently, by UTF-8 bytes.
+//   point, equivalently, by UTF-8 bytes.
 //
 // A `Directory` that obeys the restrictions is said to be in canonical
 // form.
@@ -1300,6 +1313,12 @@ type BuildBazelRemoteExecutionV2ExecuteResponse struct {
 	// was executed.
 	CachedResult bool `json:"cachedResult,omitempty"`
 
+	// Message: Freeform informational message with details on the execution
+	// of the action
+	// that may be displayed to the user upon failure or when requested
+	// explicitly.
+	Message string `json:"message,omitempty"`
+
 	// Result: The result of the action.
 	Result *BuildBazelRemoteExecutionV2ActionResult `json:"result,omitempty"`
 
@@ -1433,10 +1452,10 @@ type BuildBazelRemoteExecutionV2ExecutionCapabilities struct {
 	// function.
 	//
 	// Possible values:
-	//   "UNKNOWN"
-	//   "SHA256"
-	//   "SHA1"
-	//   "MD5"
+	//   "UNKNOWN" - It is an error for the server to return this value.
+	//   "SHA256" - The Sha-256 digest function.
+	//   "SHA1" - The Sha-1 digest function.
+	//   "MD5" - The MD5 digest function.
 	DigestFunction string `json:"digestFunction,omitempty"`
 
 	// ExecEnabled: Whether remote execution is enabled for the particular
@@ -1997,8 +2016,9 @@ func (s *BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange) MarshalJS
 // purposes. To use it, the client attaches the header to the call using
 // the
 // canonical proto serialization:
-// name: build.bazel.remote.execution.v2.requestmetadata-bin
-// contents: the base64 encoded binary RequestMetadata message.
+//
+// * name: `build.bazel.remote.execution.v2.requestmetadata-bin`
+// * contents: the base64 encoded binary `RequestMetadata` message.
 type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// ActionId: An identifier that ties multiple requests to the same
 	// action.
@@ -2252,13 +2272,22 @@ func (s *BuildBazelRemoteExecutionV2Tree) MarshalJSON() ([]byte, error) {
 type BuildBazelRemoteExecutionV2WaitExecutionRequest struct {
 }
 
+// BuildBazelSemverSemVer: The full version of a given tool.
 type BuildBazelSemverSemVer struct {
+	// Major: The major version, e.g 10 for 10.2.3.
 	Major int64 `json:"major,omitempty"`
 
+	// Minor: The minor version, e.g. 2 for 10.2.3.
 	Minor int64 `json:"minor,omitempty"`
 
+	// Patch: The patch version, e.g 3 for 10.2.3.
 	Patch int64 `json:"patch,omitempty"`
 
+	// Prerelease: The pre-release version. Either this field or
+	// major/minor/patch fields
+	// must be filled. They are mutually exclusive. Pre-release versions
+	// are
+	// assumed to be earlier than any released versions.
 	Prerelease string `json:"prerelease,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Major") to
@@ -2604,6 +2633,10 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance struct {
 	// is supported.
 	Location string `json:"location,omitempty"`
 
+	// LoggingEnabled: Output only. Whether stack driver logging is enabled
+	// for the instance.
+	LoggingEnabled bool `json:"loggingEnabled,omitempty"`
+
 	// Name: Output only. Instance resource name formatted
 	// as:
 	// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
@@ -2835,9 +2868,12 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// Platforms](https://cloud.google.com/compute/docs/cpu-platforms).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
-	// Reserved: Output only. `reserved=true` means the worker is reserved
-	// and won't be
-	// preempted.
+	// Reserved: Determines whether the worker is reserved (and therefore
+	// won't be
+	// preempted).
+	// See [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for
+	// more
+	// details.
 	Reserved bool `json:"reserved,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -4038,6 +4074,19 @@ type GoogleDevtoolsRemoteworkersV1test2CommandResult struct {
 	// `status` has a code of OK (otherwise it may simply be unset).
 	ExitCode int64 `json:"exitCode,omitempty"`
 
+	// Metadata: Implementation-dependent metadata about the task. Both
+	// servers and bots
+	// may define messages which can be encoded here; bots are free to
+	// provide
+	// metadata in multiple formats, and servers are free to choose one or
+	// more
+	// of the values to process and ignore others. In particular, it is
+	// *not*
+	// considered an error for the bot to provide the server with a field
+	// that it
+	// doesn't know about.
+	Metadata []googleapi.RawMessage `json:"metadata,omitempty"`
+
 	// Outputs: The output files. The blob referenced by the digest should
 	// contain
 	// one of the following (implementation-dependent):
@@ -4049,19 +4098,6 @@ type GoogleDevtoolsRemoteworkersV1test2CommandResult struct {
 	// (ie
 	// uploading/downloading files).
 	Overhead string `json:"overhead,omitempty"`
-
-	// Statistics: Implementation-dependent statistics about the task. Both
-	// servers and bots
-	// may define messages which can be encoded here; bots are free to
-	// provide
-	// statistics in multiple formats, and servers are free to choose one or
-	// more
-	// of the values to process and ignore others. In particular, it is
-	// *not*
-	// considered an error for the bot to provide the server with a field
-	// that it
-	// doesn't know about.
-	Statistics []googleapi.RawMessage `json:"statistics,omitempty"`
 
 	// Status: An overall status for the command. For example, if the
 	// command timed out,
@@ -4737,6 +4773,7 @@ type ActionResultsGetCall struct {
 // Get: Retrieve a cached execution result.
 //
 // Errors:
+//
 // * `NOT_FOUND`: The requested `ActionResult` is not in the cache.
 func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes int64) *ActionResultsGetCall {
 	c := &ActionResultsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4847,7 +4884,7 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a cached execution result.\n\nErrors:\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
+	//   "description": "Retrieve a cached execution result.\n\nErrors:\n\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
 	//   "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
 	//   "httpMethod": "GET",
 	//   "id": "remotebuildexecution.actionResults.get",
@@ -4904,12 +4941,6 @@ type ActionResultsUpdateCall struct {
 
 // Update: Upload a new execution result.
 //
-// This method is intended for servers which implement the distributed
-// cache
-// independently of the
-// Execution API. As a
-// result, it is OPTIONAL for servers to implement.
-//
 // In order to allow the server to perform access control based on the
 // type of
 // action, and to assist with client debugging, the client MUST first
@@ -4920,7 +4951,10 @@ type ActionResultsUpdateCall struct {
 // `ContentAddressableStorage`.
 //
 // Errors:
-// * `UNIMPLEMENTED`: This method is not supported by the server.
+//
+// * `INVALID_ARGUMENT`: One or more arguments are invalid.
+// * `FAILED_PRECONDITION`: One or more errors occurred in updating the
+//   action result, such as a missing command or action.
 // * `RESOURCE_EXHAUSTED`: There is insufficient storage space to add
 // the
 //   entry to the cache.
@@ -5045,7 +5079,7 @@ func (c *ActionResultsUpdateCall) Do(opts ...googleapi.CallOption) (*BuildBazelR
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload a new execution result.\n\nThis method is intended for servers which implement the distributed cache\nindependently of the\nExecution API. As a\nresult, it is OPTIONAL for servers to implement.\n\nIn order to allow the server to perform access control based on the type of\naction, and to assist with client debugging, the client MUST first upload\nthe Action that produced the\nresult, along with its\nCommand, into the\n`ContentAddressableStorage`.\n\nErrors:\n* `UNIMPLEMENTED`: This method is not supported by the server.\n* `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the\n  entry to the cache.",
+	//   "description": "Upload a new execution result.\n\nIn order to allow the server to perform access control based on the type of\naction, and to assist with client debugging, the client MUST first upload\nthe Action that produced the\nresult, along with its\nCommand, into the\n`ContentAddressableStorage`.\n\nErrors:\n\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in updating the\n  action result, such as a missing command or action.\n* `RESOURCE_EXHAUSTED`: There is insufficient storage space to add the\n  entry to the cache.",
 	//   "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
 	//   "httpMethod": "PUT",
 	//   "id": "remotebuildexecution.actionResults.update",
@@ -5166,6 +5200,7 @@ type ActionsExecuteCall struct {
 // `ExecuteResponse`. The
 // server MUST NOT set the `error` field of the `Operation` proto.
 // The possible errors include:
+//
 // * `INVALID_ARGUMENT`: One or more arguments are invalid.
 // * `FAILED_PRECONDITION`: One or more errors occurred in setting up
 // the
@@ -5184,6 +5219,11 @@ type ActionsExecuteCall struct {
 // the
 //   worker.
 // * `DEADLINE_EXCEEDED`: The execution timed out.
+// * `CANCELLED`: The operation was cancelled by the client. This status
+// is
+//   only possible if the server implements the Operations API
+// CancelOperation
+//   method, and it was called for the current execution.
 //
 // In the case of a missing input or command, the server SHOULD
 // additionally
@@ -5290,7 +5330,7 @@ func (c *ActionsExecuteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	}
 	return ret, nil
 	// {
-	//   "description": "Execute an action remotely.\n\nIn order to execute an action, the client must first upload all of the\ninputs, the\nCommand to run, and the\nAction into the\nContentAddressableStorage.\nIt then calls `Execute` with an `action_digest` referring to them. The\nserver will run the action and eventually return the result.\n\nThe input `Action`'s fields MUST meet the various canonicalization\nrequirements specified in the documentation for their types so that it has\nthe same digest as other logically equivalent `Action`s. The server MAY\nenforce the requirements and return errors if a non-canonical input is\nreceived. It MAY also proceed without verifying some or all of the\nrequirements, such as for performance reasons. If the server does not\nverify the requirement, then it will treat the `Action` as distinct from\nanother logically equivalent action if they hash differently.\n\nReturns a stream of\ngoogle.longrunning.Operation messages\ndescribing the resulting execution, with eventual `response`\nExecuteResponse. The\n`metadata` on the operation is of type\nExecuteOperationMetadata.\n\nIf the client remains connected after the first response is returned after\nthe server, then updates are streamed as if the client had called\nWaitExecution\nuntil the execution completes or the request reaches an error. The\noperation can also be queried using Operations\nAPI.\n\nThe server NEED NOT implement other methods or functionality of the\nOperations API.\n\nErrors discovered during creation of the `Operation` will be reported\nas gRPC Status errors, while errors that occurred while running the\naction will be reported in the `status` field of the `ExecuteResponse`. The\nserver MUST NOT set the `error` field of the `Operation` proto.\nThe possible errors include:\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in setting up the\n  action requested, such as a missing input or command or no worker being\n  available. The client may be able to fix the errors and retry.\n* `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run\n  the action.\n* `UNAVAILABLE`: Due to a transient condition, such as all workers being\n  occupied (and the server does not support a queue), the action could not\n  be started. The client should retry.\n* `INTERNAL`: An internal error occurred in the execution engine or the\n  worker.\n* `DEADLINE_EXCEEDED`: The execution timed out.\n\nIn the case of a missing input or command, the server SHOULD additionally\nsend a PreconditionFailure error detail\nwhere, for each requested blob not present in the CAS, there is a\n`Violation` with a `type` of `MISSING` and a `subject` of\n`\"blobs/{hash}/{size}\"` indicating the digest of the missing blob.",
+	//   "description": "Execute an action remotely.\n\nIn order to execute an action, the client must first upload all of the\ninputs, the\nCommand to run, and the\nAction into the\nContentAddressableStorage.\nIt then calls `Execute` with an `action_digest` referring to them. The\nserver will run the action and eventually return the result.\n\nThe input `Action`'s fields MUST meet the various canonicalization\nrequirements specified in the documentation for their types so that it has\nthe same digest as other logically equivalent `Action`s. The server MAY\nenforce the requirements and return errors if a non-canonical input is\nreceived. It MAY also proceed without verifying some or all of the\nrequirements, such as for performance reasons. If the server does not\nverify the requirement, then it will treat the `Action` as distinct from\nanother logically equivalent action if they hash differently.\n\nReturns a stream of\ngoogle.longrunning.Operation messages\ndescribing the resulting execution, with eventual `response`\nExecuteResponse. The\n`metadata` on the operation is of type\nExecuteOperationMetadata.\n\nIf the client remains connected after the first response is returned after\nthe server, then updates are streamed as if the client had called\nWaitExecution\nuntil the execution completes or the request reaches an error. The\noperation can also be queried using Operations\nAPI.\n\nThe server NEED NOT implement other methods or functionality of the\nOperations API.\n\nErrors discovered during creation of the `Operation` will be reported\nas gRPC Status errors, while errors that occurred while running the\naction will be reported in the `status` field of the `ExecuteResponse`. The\nserver MUST NOT set the `error` field of the `Operation` proto.\nThe possible errors include:\n\n* `INVALID_ARGUMENT`: One or more arguments are invalid.\n* `FAILED_PRECONDITION`: One or more errors occurred in setting up the\n  action requested, such as a missing input or command or no worker being\n  available. The client may be able to fix the errors and retry.\n* `RESOURCE_EXHAUSTED`: There is insufficient quota of some resource to run\n  the action.\n* `UNAVAILABLE`: Due to a transient condition, such as all workers being\n  occupied (and the server does not support a queue), the action could not\n  be started. The client should retry.\n* `INTERNAL`: An internal error occurred in the execution engine or the\n  worker.\n* `DEADLINE_EXCEEDED`: The execution timed out.\n* `CANCELLED`: The operation was cancelled by the client. This status is\n  only possible if the server implements the Operations API CancelOperation\n  method, and it was called for the current execution.\n\nIn the case of a missing input or command, the server SHOULD additionally\nsend a PreconditionFailure error detail\nwhere, for each requested blob not present in the CAS, there is a\n`Violation` with a `type` of `MISSING` and a `subject` of\n`\"blobs/{hash}/{size}\"` indicating the digest of the missing blob.",
 	//   "flatPath": "v2/{v2Id}/actions:execute",
 	//   "httpMethod": "POST",
 	//   "id": "remotebuildexecution.actions.execute",
@@ -5348,6 +5388,7 @@ type BlobsBatchReadCall struct {
 // independently.
 //
 // Errors:
+//
 // * `INVALID_ARGUMENT`: The client attempted to read more than the
 //   server supported limit.
 //
@@ -5453,7 +5494,7 @@ func (c *BlobsBatchReadCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemote
 	}
 	return ret, nil
 	// {
-	//   "description": "Download many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be downloaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or downloaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Read` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n* `INVALID_ARGUMENT`: The client attempted to read more than the\n  server supported limit.\n\nEvery error on individual read will be returned in the corresponding digest\nstatus.",
+	//   "description": "Download many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be downloaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or downloaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Read` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n\n* `INVALID_ARGUMENT`: The client attempted to read more than the\n  server supported limit.\n\nEvery error on individual read will be returned in the corresponding digest\nstatus.",
 	//   "flatPath": "v2/{v2Id}/blobs:batchRead",
 	//   "httpMethod": "POST",
 	//   "id": "remotebuildexecution.blobs.batchRead",
@@ -5511,10 +5552,12 @@ type BlobsBatchUpdateCall struct {
 // independently.
 //
 // Errors:
+//
 // * `INVALID_ARGUMENT`: The client attempted to upload more than the
 //   server supported limit.
 //
 // Individual requests may return the following errors, additionally:
+//
 // * `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the
 // blob.
 // * `INVALID_ARGUMENT`: The
@@ -5619,7 +5662,7 @@ func (c *BlobsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	}
 	return ret, nil
 	// {
-	//   "description": "Upload many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be uploaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or uploaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Write` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n* `INVALID_ARGUMENT`: The client attempted to upload more than the\n  server supported limit.\n\nIndividual requests may return the following errors, additionally:\n* `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob.\n* `INVALID_ARGUMENT`: The\nDigest does not match the\nprovided data.",
+	//   "description": "Upload many blobs at once.\n\nThe server may enforce a limit of the combined total size of blobs\nto be uploaded using this API. This limit may be obtained using the\nCapabilities API.\nRequests exceeding the limit should either be split into smaller\nchunks or uploaded using the\nByteStream API, as appropriate.\n\nThis request is equivalent to calling a Bytestream `Write` request\non each individual blob, in parallel. The requests may succeed or fail\nindependently.\n\nErrors:\n\n* `INVALID_ARGUMENT`: The client attempted to upload more than the\n  server supported limit.\n\nIndividual requests may return the following errors, additionally:\n\n* `RESOURCE_EXHAUSTED`: There is insufficient disk quota to store the blob.\n* `INVALID_ARGUMENT`: The\nDigest does not match the\nprovided data.",
 	//   "flatPath": "v2/{v2Id}/blobs:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "remotebuildexecution.blobs.batchUpdate",

@@ -470,8 +470,8 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// overridden using this field. Additional variables can also be
 	// specified.
 	//
-	// In order to ensure that equivalent `Command`s always hash to the
-	// same
+	// In order to ensure that equivalent
+	// Commands always hash to the same
 	// value, the environment variables MUST be lexicographically sorted by
 	// name.
 	// Sorting of strings is done by code point, equivalently, by the UTF-8
@@ -480,12 +480,14 @@ type BuildBazelRemoteExecutionV2Command struct {
 
 	// OutputDirectories: A list of the output directories that the client
 	// expects to retrieve from
-	// the action. Only the contents of the indicated directories
-	// (recursively
-	// including the contents of their subdirectories) will be
-	// returned, as well as files listed in `output_files`. Other files that
-	// may
-	// be created during command execution are discarded.
+	// the action. Only the listed directories will be returned (an
+	// entire
+	// directory structure will be returned as a
+	// Tree message digest, see
+	// OutputDirectory), as
+	// well as files listed in `output_files`. Other files or directories
+	// that
+	// may be created during command execution are discarded.
 	//
 	// The paths are relative to the working directory of the action
 	// execution.
@@ -507,11 +509,15 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// UTF-8
 	// bytes).
 	//
-	// An output directory cannot be duplicated, be a parent of another
+	// An output directory cannot be duplicated or have the same path as any
+	// of
+	// the listed output files.
+	//
+	// Directories leading up to the output directories (but not the
 	// output
-	// directory, be a parent of a listed output file, or have the same path
-	// as
-	// any of the listed output files.
+	// directories themselves) are created by the worker prior to execution,
+	// even
+	// if they are not explicitly part of the input root.
 	OutputDirectories []string `json:"outputDirectories,omitempty"`
 
 	// OutputFiles: A list of the output files that the client expects to
@@ -519,8 +525,9 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// action. Only the listed files, as well as directories listed
 	// in
 	// `output_directories`, will be returned to the client as output.
-	// Other files that may be created during command execution are
-	// discarded.
+	// Other files or directories that may be created during command
+	// execution
+	// are discarded.
 	//
 	// The paths are relative to the working directory of the action
 	// execution.
@@ -539,10 +546,13 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// bytes).
 	//
 	// An output file cannot be duplicated, be a parent of another output
-	// file, be
-	// a child of a listed output directory, or have the same path as any of
-	// the
-	// listed output directories.
+	// file, or
+	// have the same path as any of the listed output
+	// directories.
+	//
+	// Directories leading up to the output files are created by the worker
+	// prior
+	// to execution, even if they are not explicitly part of the input root.
 	OutputFiles []string `json:"outputFiles,omitempty"`
 
 	// Platform: The platform requirements for the execution environment.
@@ -657,11 +667,12 @@ func (s *BuildBazelRemoteExecutionV2CommandEnvironmentVariable) MarshalJSON() ([
 // servers MUST ensure that they serialize messages according to the
 // following
 // rules, even if there are alternate valid encodings for the same
-// message.
-// - Fields are serialized in tag order.
-// - There are no unknown fields.
-// - There are no duplicate fields.
-// - Fields are serialized according to the default semantics for their
+// message:
+//
+// * Fields are serialized in tag order.
+// * There are no unknown fields.
+// * There are no duplicate fields.
+// * Fields are serialized according to the default semantics for their
 // type.
 //
 // Most protocol buffer implementations will always follow these rules
@@ -718,16 +729,17 @@ func (s *BuildBazelRemoteExecutionV2Digest) MarshalJSON() ([]byte, error) {
 // value, the following restrictions MUST be obeyed when constructing
 // a
 // a `Directory`:
-//   - Every child in the directory must have a path of exactly one
+//
+// * Every child in the directory must have a path of exactly one
 // segment.
-//     Multiple levels of directory hierarchy may not be collapsed.
-//   - Each child in the directory must have a unique path segment (file
+//   Multiple levels of directory hierarchy may not be collapsed.
+// * Each child in the directory must have a unique path segment (file
 // name).
-//   - The files, directories and symlinks in the directory must each be
+// * The files, directories and symlinks in the directory must each be
 // sorted
-//     in lexicographical order by path. The path strings must be sorted
+//   in lexicographical order by path. The path strings must be sorted
 // by code
-//     point, equivalently, by UTF-8 bytes.
+//   point, equivalently, by UTF-8 bytes.
 //
 // A `Directory` that obeys the restrictions is said to be in canonical
 // form.
@@ -909,6 +921,12 @@ type BuildBazelRemoteExecutionV2ExecuteResponse struct {
 	// CachedResult: True if the result was served from cache, false if it
 	// was executed.
 	CachedResult bool `json:"cachedResult,omitempty"`
+
+	// Message: Freeform informational message with details on the execution
+	// of the action
+	// that may be displayed to the user upon failure or when requested
+	// explicitly.
+	Message string `json:"message,omitempty"`
 
 	// Result: The result of the action.
 	Result *BuildBazelRemoteExecutionV2ActionResult `json:"result,omitempty"`
@@ -1350,8 +1368,9 @@ func (s *BuildBazelRemoteExecutionV2PlatformProperty) MarshalJSON() ([]byte, err
 // purposes. To use it, the client attaches the header to the call using
 // the
 // canonical proto serialization:
-// name: build.bazel.remote.execution.v2.requestmetadata-bin
-// contents: the base64 encoded binary RequestMetadata message.
+//
+// * name: `build.bazel.remote.execution.v2.requestmetadata-bin`
+// * contents: the base64 encoded binary `RequestMetadata` message.
 type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// ActionId: An identifier that ties multiple requests to the same
 	// action.
@@ -1829,6 +1848,10 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaInstance struct {
 	// is supported.
 	Location string `json:"location,omitempty"`
 
+	// LoggingEnabled: Output only. Whether stack driver logging is enabled
+	// for the instance.
+	LoggingEnabled bool `json:"loggingEnabled,omitempty"`
+
 	// Name: Output only. Instance resource name formatted
 	// as:
 	// `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
@@ -2072,9 +2095,12 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// Platforms](https://cloud.google.com/compute/docs/cpu-platforms).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
-	// Reserved: Output only. `reserved=true` means the worker is reserved
-	// and won't be
-	// preempted.
+	// Reserved: Determines whether the worker is reserved (and therefore
+	// won't be
+	// preempted).
+	// See [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for
+	// more
+	// details.
 	Reserved bool `json:"reserved,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
@@ -3279,6 +3305,19 @@ type GoogleDevtoolsRemoteworkersV1test2CommandResult struct {
 	// `status` has a code of OK (otherwise it may simply be unset).
 	ExitCode int64 `json:"exitCode,omitempty"`
 
+	// Metadata: Implementation-dependent metadata about the task. Both
+	// servers and bots
+	// may define messages which can be encoded here; bots are free to
+	// provide
+	// metadata in multiple formats, and servers are free to choose one or
+	// more
+	// of the values to process and ignore others. In particular, it is
+	// *not*
+	// considered an error for the bot to provide the server with a field
+	// that it
+	// doesn't know about.
+	Metadata []googleapi.RawMessage `json:"metadata,omitempty"`
+
 	// Outputs: The output files. The blob referenced by the digest should
 	// contain
 	// one of the following (implementation-dependent):
@@ -3290,19 +3329,6 @@ type GoogleDevtoolsRemoteworkersV1test2CommandResult struct {
 	// (ie
 	// uploading/downloading files).
 	Overhead string `json:"overhead,omitempty"`
-
-	// Statistics: Implementation-dependent statistics about the task. Both
-	// servers and bots
-	// may define messages which can be encoded here; bots are free to
-	// provide
-	// statistics in multiple formats, and servers are free to choose one or
-	// more
-	// of the values to process and ignore others. In particular, it is
-	// *not*
-	// considered an error for the bot to provide the server with a field
-	// that it
-	// doesn't know about.
-	Statistics []googleapi.RawMessage `json:"statistics,omitempty"`
 
 	// Status: An overall status for the command. For example, if the
 	// command timed out,

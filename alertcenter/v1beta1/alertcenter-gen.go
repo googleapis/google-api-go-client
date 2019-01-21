@@ -124,6 +124,7 @@ type AccountWarning struct {
 	//
 	// * Suspicious login
 	// * Suspicious login (less secure app)
+	// * Suspicious programmatic login
 	// * User suspended (suspicious activity)
 	LoginDetails *LoginDetails `json:"loginDetails,omitempty"`
 

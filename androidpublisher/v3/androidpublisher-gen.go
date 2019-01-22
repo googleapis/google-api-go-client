@@ -1464,6 +1464,7 @@ type ProductPurchase struct {
 	// billing flow. Possible values are:
 	// - Test (i.e. purchased from a license testing account)
 	// - Promo (i.e. purchased using a promo code)
+	// - Rewarded (i.e. from watching a video ad instead of paying)
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

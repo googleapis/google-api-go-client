@@ -355,6 +355,7 @@ type Block struct {
 	//   "PICTURE" - Image block.
 	//   "RULER" - Horizontal/vertical line box.
 	//   "BARCODE" - Barcode block.
+	//   "KEY_VALUE_PAIR" - A key-value pair block.
 	BlockType string `json:"blockType,omitempty"`
 
 	// BoundingBox: The bounding box for the block.
@@ -1678,6 +1679,7 @@ type GoogleCloudVisionV1p1beta1Block struct {
 	//   "PICTURE" - Image block.
 	//   "RULER" - Horizontal/vertical line box.
 	//   "BARCODE" - Barcode block.
+	//   "KEY_VALUE_PAIR" - A key-value pair block.
 	BlockType string `json:"blockType,omitempty"`
 
 	// BoundingBox: The bounding box for the block.
@@ -4494,6 +4496,7 @@ type GoogleCloudVisionV1p2beta1Block struct {
 	//   "PICTURE" - Image block.
 	//   "RULER" - Horizontal/vertical line box.
 	//   "BARCODE" - Barcode block.
+	//   "KEY_VALUE_PAIR" - A key-value pair block.
 	BlockType string `json:"blockType,omitempty"`
 
 	// BoundingBox: The bounding box for the block.
@@ -6978,6 +6981,7 @@ type GoogleCloudVisionV1p3beta1Block struct {
 	//   "PICTURE" - Image block.
 	//   "RULER" - Horizontal/vertical line box.
 	//   "BARCODE" - Barcode block.
+	//   "KEY_VALUE_PAIR" - A key-value pair block.
 	BlockType string `json:"blockType,omitempty"`
 
 	// BoundingBox: The bounding box for the block.

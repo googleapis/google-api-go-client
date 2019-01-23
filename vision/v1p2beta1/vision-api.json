@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20190111",
+  "revision": "20190119",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -328,7 +328,8 @@
             "TABLE",
             "PICTURE",
             "RULER",
-            "BARCODE"
+            "BARCODE",
+            "KEY_VALUE_PAIR"
           ],
           "enumDescriptions": [
             "Unknown block type.",
@@ -336,7 +337,8 @@
             "Table block.",
             "Image block.",
             "Horizontal/vertical line box.",
-            "Barcode block."
+            "Barcode block.",
+            "A key-value pair block."
           ],
           "type": "string"
         },
@@ -925,7 +927,8 @@
             "TABLE",
             "PICTURE",
             "RULER",
-            "BARCODE"
+            "BARCODE",
+            "KEY_VALUE_PAIR"
           ],
           "enumDescriptions": [
             "Unknown block type.",
@@ -933,7 +936,8 @@
             "Table block.",
             "Image block.",
             "Horizontal/vertical line box.",
-            "Barcode block."
+            "Barcode block.",
+            "A key-value pair block."
           ],
           "type": "string"
         },
@@ -2379,7 +2383,8 @@
             "TABLE",
             "PICTURE",
             "RULER",
-            "BARCODE"
+            "BARCODE",
+            "KEY_VALUE_PAIR"
           ],
           "enumDescriptions": [
             "Unknown block type.",
@@ -2387,7 +2392,8 @@
             "Table block.",
             "Image block.",
             "Horizontal/vertical line box.",
-            "Barcode block."
+            "Barcode block.",
+            "A key-value pair block."
           ],
           "type": "string"
         },
@@ -3956,7 +3962,8 @@
             "TABLE",
             "PICTURE",
             "RULER",
-            "BARCODE"
+            "BARCODE",
+            "KEY_VALUE_PAIR"
           ],
           "enumDescriptions": [
             "Unknown block type.",
@@ -3964,7 +3971,8 @@
             "Table block.",
             "Image block.",
             "Horizontal/vertical line box.",
-            "Barcode block."
+            "Barcode block.",
+            "A key-value pair block."
           ],
           "type": "string"
         },

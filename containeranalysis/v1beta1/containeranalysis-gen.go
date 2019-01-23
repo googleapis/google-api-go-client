@@ -2020,6 +2020,38 @@ func (s *Installation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type KnowledgeBase struct {
+	// Name: The KB name (generally of the form KB[0-9]+ i.e. KB123456).
+	Name string `json:"name,omitempty"`
+
+	// Url: A link to the KB in the Windows update catalog
+	// -
+	// https://www.catalog.update.microsoft.com/
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KnowledgeBase) MarshalJSON() ([]byte, error) {
+	type NoMethod KnowledgeBase
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Layer: Layer holds metadata specific to a layer of a Docker image.
 type Layer struct {
 	// Arguments: The recovered arguments to the Dockerfile directive.
@@ -3338,6 +3370,15 @@ type Vulnerability struct {
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
 
+	// WindowsDetails: Windows details get their own format because the
+	// information format and
+	// model don't match a normal detail. Specifically Windows updates are
+	// done as
+	// patches, thus Windows vulnerabilities really are a missing package,
+	// rather
+	// than a package being at an incorrect version.
+	WindowsDetails []*WindowsDetail `json:"windowsDetails,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CvssScore") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3443,6 +3484,53 @@ type VulnerabilityOccurrencesSummary struct {
 
 func (s *VulnerabilityOccurrencesSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod VulnerabilityOccurrencesSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type WindowsDetail struct {
+	// CpeUri: Required. The CPE URI in
+	// [cpe format](https://cpe.mitre.org/specification/) in which
+	// the
+	// vulnerability manifests. Examples include distro or storage location
+	// for
+	// vulnerable jar.
+	CpeUri string `json:"cpeUri,omitempty"`
+
+	// Description: The description of the vulnerability.
+	Description string `json:"description,omitempty"`
+
+	// FixingKbs: Required. The names of the KBs which have hotfixes to
+	// mitigate this
+	// vulnerability. Note that there may be multiple hotfixes (and
+	// thus
+	// multiple KBs) that mitigate a given vulnerability. Currently any
+	// listed
+	// kb's presence is considered a fix.
+	FixingKbs []*KnowledgeBase `json:"fixingKbs,omitempty"`
+
+	// Name: Required. The name of the vulnerability.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CpeUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpeUri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WindowsDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod WindowsDetail
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

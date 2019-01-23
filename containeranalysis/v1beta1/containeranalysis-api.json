@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20190122",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -1852,6 +1852,20 @@
       },
       "type": "object"
     },
+    "KnowledgeBase": {
+      "id": "KnowledgeBase",
+      "properties": {
+        "name": {
+          "description": "The KB name (generally of the form KB[0-9]+ i.e. KB123456).",
+          "type": "string"
+        },
+        "url": {
+          "description": "A link to the KB in the Windows update catalog -\nhttps://www.catalog.update.microsoft.com/",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Layer": {
       "description": "Layer holds metadata specific to a layer of a Docker image.",
       "id": "Layer",
@@ -2568,6 +2582,13 @@
             "Critical severity."
           ],
           "type": "string"
+        },
+        "windowsDetails": {
+          "description": "Windows details get their own format because the information format and\nmodel don't match a normal detail. Specifically Windows updates are done as\npatches, thus Windows vulnerabilities really are a missing package, rather\nthan a package being at an incorrect version.",
+          "items": {
+            "$ref": "WindowsDetail"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2601,6 +2622,31 @@
             "$ref": "FixableTotalByDigest"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "WindowsDetail": {
+      "id": "WindowsDetail",
+      "properties": {
+        "cpeUri": {
+          "description": "Required. The CPE URI in\n[cpe format](https://cpe.mitre.org/specification/) in which the\nvulnerability manifests. Examples include distro or storage location for\nvulnerable jar.",
+          "type": "string"
+        },
+        "description": {
+          "description": "The description of the vulnerability.",
+          "type": "string"
+        },
+        "fixingKbs": {
+          "description": "Required. The names of the KBs which have hotfixes to mitigate this\nvulnerability. Note that there may be multiple hotfixes (and thus\nmultiple KBs) that mitigate a given vulnerability. Currently any listed\nkb's presence is considered a fix.",
+          "items": {
+            "$ref": "KnowledgeBase"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Required. The name of the vulnerability.",
+          "type": "string"
         }
       },
       "type": "object"

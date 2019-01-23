@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ZT96Bm2RJj8H_3UsGNmErvb_EFw\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/k5woGc08Fl3gBUjWiEfIGefs87A\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -3060,6 +3060,237 @@
         }
       }
     },
+    "externalVpnGateways": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the specified externalVpnGateway.",
+          "httpMethod": "DELETE",
+          "id": "compute.externalVpnGateways.delete",
+          "parameterOrder": [
+            "project",
+            "externalVpnGateway"
+          ],
+          "parameters": {
+            "externalVpnGateway": {
+              "description": "Name of the externalVpnGateways to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways/{externalVpnGateway}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified externalVpnGateway. Get a list of available externalVpnGateways by making a list() request.",
+          "httpMethod": "GET",
+          "id": "compute.externalVpnGateways.get",
+          "parameterOrder": [
+            "project",
+            "externalVpnGateway"
+          ],
+          "parameters": {
+            "externalVpnGateway": {
+              "description": "Name of the externalVpnGateway to return.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways/{externalVpnGateway}",
+          "response": {
+            "$ref": "ExternalVpnGateway"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a ExternalVpnGateway in the specified project using the data included in the request.",
+          "httpMethod": "POST",
+          "id": "compute.externalVpnGateways.insert",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways",
+          "request": {
+            "$ref": "ExternalVpnGateway"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Retrieves the list of ExternalVpnGateway available to the specified project.",
+          "httpMethod": "GET",
+          "id": "compute.externalVpnGateways.list",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways",
+          "response": {
+            "$ref": "ExternalVpnGatewayList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "setLabels": {
+          "description": "Sets the labels on an ExternalVpnGateway. To learn more about labels, read the Labeling Resources documentation.",
+          "httpMethod": "POST",
+          "id": "compute.externalVpnGateways.setLabels",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways/{resource}/setLabels",
+          "request": {
+            "$ref": "GlobalSetLabelsRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.externalVpnGateways.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9_]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/externalVpnGateways/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
     "firewalls": {
       "methods": {
         "delete": {
@@ -4375,7 +4606,7 @@
             "operation": {
               "description": "Name of the Operations resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4405,7 +4636,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4488,7 +4719,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4525,7 +4756,7 @@
             "operation": {
               "description": "Name of the Operations resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4552,7 +4783,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4627,7 +4858,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4712,7 +4943,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4750,7 +4981,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4866,7 +5097,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4944,7 +5175,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -4989,7 +5220,7 @@
             "httpHealthCheck": {
               "description": "Name of the HttpHealthCheck resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5027,7 +5258,7 @@
             "httpHealthCheck": {
               "description": "Name of the HttpHealthCheck resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5143,7 +5374,7 @@
             "httpHealthCheck": {
               "description": "Name of the HttpHealthCheck resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5221,7 +5452,7 @@
             "httpHealthCheck": {
               "description": "Name of the HttpHealthCheck resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5266,7 +5497,7 @@
             "httpsHealthCheck": {
               "description": "Name of the HttpsHealthCheck resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5304,7 +5535,7 @@
             "httpsHealthCheck": {
               "description": "Name of the HttpsHealthCheck resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5420,7 +5651,7 @@
             "httpsHealthCheck": {
               "description": "Name of the HttpsHealthCheck resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -5498,7 +5729,7 @@
             "httpsHealthCheck": {
               "description": "Name of the HttpsHealthCheck resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -7469,7 +7700,7 @@
             "instanceTemplate": {
               "description": "The name of the instance template to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -7507,7 +7738,7 @@
             "instanceTemplate": {
               "description": "The name of the instance template.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -8547,7 +8778,7 @@
           ]
         },
         "reset": {
-          "description": "Performs a reset on the instance. For more information, see Resetting an instance.",
+          "description": "Performs a reset on the instance. This is a hard reset; the VM does not do a graceful shutdown. For more information, see Resetting an instance.",
           "httpMethod": "POST",
           "id": "compute.instances.reset",
           "parameterOrder": [
@@ -9798,7 +10029,7 @@
             "interconnectAttachment": {
               "description": "Name of the interconnect attachment to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -9844,7 +10075,7 @@
             "interconnectAttachment": {
               "description": "Name of the interconnect attachment to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10026,7 +10257,7 @@
             "interconnectAttachment": {
               "description": "Name of the interconnect attachment to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10216,7 +10447,7 @@
             "interconnectLocation": {
               "description": "Name of the interconnect location to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10340,7 +10571,7 @@
             "interconnect": {
               "description": "Name of the interconnect to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10378,7 +10609,7 @@
             "interconnect": {
               "description": "Name of the interconnect to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10412,7 +10643,7 @@
             "interconnect": {
               "description": "Name of the interconnect resource to query.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10562,7 +10793,7 @@
             "interconnect": {
               "description": "Name of the interconnect to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10861,7 +11092,7 @@
             "license": {
               "description": "Name of the license resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -10899,7 +11130,7 @@
             "license": {
               "description": "Name of the License resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -11129,7 +11360,7 @@
             "machineImage": {
               "description": "The name of the machine image to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -11167,7 +11398,7 @@
             "machineImage": {
               "description": "The name of the machine image.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -11449,7 +11680,7 @@
             "machineType": {
               "description": "Name of the machine type to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12356,7 +12587,7 @@
             "network": {
               "description": "Name of the network for this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
               "required": true,
               "type": "string"
             },
@@ -12613,7 +12844,7 @@
             "nodeGroup": {
               "description": "Name of the NodeGroup resource.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12711,7 +12942,7 @@
             "nodeGroup": {
               "description": "Name of the NodeGroup resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12757,7 +12988,7 @@
             "nodeGroup": {
               "description": "Name of the NodeGroup resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -12806,7 +13037,7 @@
             "nodeGroup": {
               "description": "Name of the node group to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13009,7 +13240,7 @@
             "nodeGroup": {
               "description": "Name of the NodeGroup resource whose nodes you want to list.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13154,7 +13385,7 @@
             "nodeGroup": {
               "description": "Name of the NodeGroup resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13301,7 +13532,7 @@
             "nodeTemplate": {
               "description": "Name of the NodeTemplate resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13347,7 +13578,7 @@
             "nodeTemplate": {
               "description": "Name of the node template to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -13671,7 +13902,7 @@
             "nodeType": {
               "description": "Name of the node type to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -16247,7 +16478,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -16293,7 +16524,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -16433,7 +16664,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -16527,7 +16758,7 @@
             "healthCheck": {
               "description": "Name of the HealthCheck resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -17800,7 +18031,7 @@
             "operation": {
               "description": "Name of the Operations resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -17838,7 +18069,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -17937,7 +18168,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -18002,7 +18233,7 @@
             "sslCertificate": {
               "description": "Name of the SslCertificate resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18043,7 +18274,7 @@
             "sslCertificate": {
               "description": "Name of the SslCertificate resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18237,7 +18468,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18278,7 +18509,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18423,7 +18654,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy to set a URL map for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18521,7 +18752,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18562,7 +18793,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18707,7 +18938,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to set an SslCertificates resource for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18756,7 +18987,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy to set a URL map for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18854,7 +19085,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18895,7 +19126,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -18983,7 +19214,7 @@
             "urlMap": {
               "description": "Name of the UrlMap scoping this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19089,7 +19320,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19183,7 +19414,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19227,7 +19458,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to be validated as.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19267,7 +19498,7 @@
             "region": {
               "description": "Name of the region resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19416,7 +19647,7 @@
             "resourcePolicy": {
               "description": "Name of the resource policy to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19457,7 +19688,7 @@
             "resourcePolicy": {
               "description": "Name of the resource policy to retrieve.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19786,7 +20017,7 @@
             "router": {
               "description": "Name of the Router resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19827,7 +20058,7 @@
             "router": {
               "description": "Name of the Router resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19892,7 +20123,7 @@
             "router": {
               "description": "Name of the Router resource to query for Nat Mapping information of VM endpoints.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -19934,7 +20165,7 @@
             "router": {
               "description": "Name of the Router resource to query.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20079,7 +20310,7 @@
             "router": {
               "description": "Name of the Router resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20123,7 +20354,7 @@
             "router": {
               "description": "Name of the Router resource to query.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20218,7 +20449,7 @@
             "router": {
               "description": "Name of the Router resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20453,7 +20684,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -20499,7 +20730,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20532,7 +20763,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to get.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20572,7 +20803,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to which the queried rule belongs.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20746,7 +20977,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -20788,7 +21019,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -20835,7 +21066,7 @@
             "securityPolicy": {
               "description": "Name of the security policy to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -21267,7 +21498,7 @@
             "sslCertificate": {
               "description": "Name of the SslCertificate resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -21300,7 +21531,7 @@
             "sslCertificate": {
               "description": "Name of the SslCertificate resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -21801,7 +22032,7 @@
             "subnetwork": {
               "description": "Name of the Subnetwork resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -21847,7 +22078,7 @@
             "subnetwork": {
               "description": "Name of the Subnetwork resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -21891,7 +22122,7 @@
             "subnetwork": {
               "description": "Name of the Subnetwork resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22133,7 +22364,7 @@
             "subnetwork": {
               "description": "Name of the Subnetwork resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22226,7 +22457,7 @@
             "subnetwork": {
               "description": "Name of the Subnetwork resource.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22365,7 +22596,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22398,7 +22629,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22519,7 +22750,7 @@
             "targetHttpProxy": {
               "description": "Name of the TargetHttpProxy to set a URL map for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22650,7 +22881,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22683,7 +22914,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22844,7 +23075,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource to set an SslCertificates resource for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -22925,7 +23156,7 @@
             "targetHttpsProxy": {
               "description": "Name of the TargetHttpsProxy resource whose URL map is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23057,7 +23288,7 @@
             "targetInstance": {
               "description": "Name of the TargetInstance resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -23098,7 +23329,7 @@
             "targetInstance": {
               "description": "Name of the TargetInstance resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -23299,7 +23530,7 @@
             "targetPool": {
               "description": "Name of the target pool to add a health check to.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23348,7 +23579,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to add instances to.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23446,7 +23677,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23487,7 +23718,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23529,7 +23760,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to which the queried instance belongs.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23677,7 +23908,7 @@
             "targetPool": {
               "description": "Name of the target pool to remove health checks from.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23726,7 +23957,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to remove instances from.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23781,7 +24012,7 @@
             "targetPool": {
               "description": "Name of the TargetPool resource to set a backup pool for.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23871,7 +24102,7 @@
             "targetSslProxy": {
               "description": "Name of the TargetSslProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -23904,7 +24135,7 @@
             "targetSslProxy": {
               "description": "Name of the TargetSslProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24025,7 +24256,7 @@
             "targetSslProxy": {
               "description": "Name of the TargetSslProxy resource whose BackendService resource is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24066,7 +24297,7 @@
             "targetSslProxy": {
               "description": "Name of the TargetSslProxy resource whose ProxyHeader is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24107,7 +24338,7 @@
             "targetSslProxy": {
               "description": "Name of the TargetSslProxy resource whose SslCertificate resource is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24229,7 +24460,7 @@
             "targetTcpProxy": {
               "description": "Name of the TargetTcpProxy resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24262,7 +24493,7 @@
             "targetTcpProxy": {
               "description": "Name of the TargetTcpProxy resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24383,7 +24614,7 @@
             "targetTcpProxy": {
               "description": "Name of the TargetTcpProxy resource whose BackendService resource is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24424,7 +24655,7 @@
             "targetTcpProxy": {
               "description": "Name of the TargetTcpProxy resource whose ProxyHeader is to be set.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24563,7 +24794,7 @@
             "targetVpnGateway": {
               "description": "Name of the target VPN gateway to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24604,7 +24835,7 @@
             "targetVpnGateway": {
               "description": "Name of the target VPN gateway to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24888,7 +25119,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24921,7 +25152,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -24993,7 +25224,7 @@
             "urlMap": {
               "description": "Name of the UrlMap scoping this request.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25083,7 +25314,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to patch.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25161,7 +25392,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to update.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25197,7 +25428,7 @@
             "urlMap": {
               "description": "Name of the UrlMap resource to be validated as.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25299,7 +25530,7 @@
             "vpnGateway": {
               "description": "Name of the VPN gateway to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25340,7 +25571,7 @@
             "vpnGateway": {
               "description": "Name of the VPN gateway to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25632,7 +25863,7 @@
             "vpnTunnel": {
               "description": "Name of the VpnTunnel resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25673,7 +25904,7 @@
             "vpnTunnel": {
               "description": "Name of the VpnTunnel resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -25897,7 +26128,7 @@
             "operation": {
               "description": "Name of the Operations resource to delete.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -25935,7 +26166,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -26034,7 +26265,7 @@
             "operation": {
               "description": "Name of the Operations resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             },
@@ -26086,7 +26317,7 @@
             "zone": {
               "description": "Name of the zone resource to return.",
               "location": "path",
-              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
               "required": true,
               "type": "string"
             }
@@ -26153,7 +26384,7 @@
       }
     }
   },
-  "revision": "20181217",
+  "revision": "20190107",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -31279,6 +31510,209 @@
       },
       "type": "object"
     },
+    "ExternalVpnGateway": {
+      "description": "External VPN gateway is the on-premises VPN gateway(s) or another cloud provider?s VPN gateway that connects to your Google Cloud VPN gateway. To create a highly available VPN from Google Cloud to your on-premises side or another Cloud provider's VPN gateway, you must create a external VPN gateway resource in GCP, which provides the information to GCP about your external VPN gateway.",
+      "id": "ExternalVpnGateway",
+      "properties": {
+        "creationTimestamp": {
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "interfaces": {
+          "description": "List of interfaces for this external VPN gateway.",
+          "items": {
+            "$ref": "ExternalVpnGatewayInterface"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#externalVpnGateway",
+          "description": "[Output Only] Type of the resource. Always compute#externalVpnGateway for externalVpnGateways.",
+          "type": "string"
+        },
+        "labelFingerprint": {
+          "description": "A fingerprint for the labels being applied to this ExternalVpnGateway, which is essentially a hash of the labels set used for optimistic locking. The fingerprint is initially generated by Compute Engine and changes after every request to modify or update labels. You must always provide an up-to-date fingerprint hash in order to update or change labels, otherwise the request will fail with error 412 conditionNotMet.\n\nTo see the latest fingerprint, make a get() request to retrieve an ExternalVpnGateway.",
+          "format": "byte",
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels to apply to this ExternalVpnGateway resource. These can be later modified by the setLabels method. Each label key/value must comply with RFC1035. Label values may be empty.",
+          "type": "object"
+        },
+        "name": {
+          "annotations": {
+            "required": [
+              "compute.externalVpnGateways.insert"
+            ]
+          },
+          "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "redundancyType": {
+          "description": "Indicates the user-supplied redundancy type of this external VPN gateway.",
+          "enum": [
+            "FOUR_IPS_REDUNDANCY",
+            "SINGLE_IP_INTERNALLY_REDUNDANT",
+            "TWO_IPS_REDUNDANCY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExternalVpnGatewayInterface": {
+      "description": "The interface for the external VPN gateway.",
+      "id": "ExternalVpnGatewayInterface",
+      "properties": {
+        "id": {
+          "description": "The numeric ID of this interface. The allowed input values for this id for different redundancy types of external VPN gateway: SINGLE_IP_INTERNALLY_REDUNDANT - 0 TWO_IPS_REDUNDANCY - 0, 1 FOUR_IPS_REDUNDANCY - 0, 1, 2, 3",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "ipAddress": {
+          "description": "IP address of the interface in the external VPN gateway. Only IPv4 is supported. This IP address can be either from your on-premise gateway or another Cloud provider?s VPN gateway, it cannot be an IP address from Google Compute Engine.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExternalVpnGatewayList": {
+      "description": "Response to the list request, and contains a list of externalVpnGateways.",
+      "id": "ExternalVpnGatewayList",
+      "properties": {
+        "etag": {
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of ExternalVpnGateway resources.",
+          "items": {
+            "$ref": "ExternalVpnGateway"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#externalVpnGatewayList",
+          "description": "[Output Only] Type of resource. Always compute#externalVpnGatewayList  for lists of externalVpnGateways.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "Firewall": {
       "description": "Represents a Firewall resource.",
       "id": "Firewall",
@@ -32429,6 +32863,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "sslHealthCheck": {
           "$ref": "SSLHealthCheck"
         },
@@ -33090,6 +33528,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "timeoutSec": {
           "description": "How long (in seconds) to wait before claiming failure. The default value is 5 seconds. It is invalid for timeoutSec to have greater value than checkIntervalSec.",
           "format": "int32",
@@ -33359,11 +33801,11 @@
         },
         "routeAction": {
           "$ref": "HttpRouteAction",
-          "description": "In response to a matching matchRule, the load balancer routes the request to the backend service specified by this  routeAction.\nOnly one of routeAction or urlRedirect must be set."
+          "description": "In response to a matching matchRule, the load balancer performs advanced routing actions like URL rewrites, header transformations, etc. prior to forwarding the request to the selected backend. If  routeAction specifies any  weightedBackendServices, service must not be set. Conversely if service is set, routeAction cannot contain any  weightedBackendServices.\nOnly one of routeAction or urlRedirect must be set."
         },
         "urlRedirect": {
           "$ref": "HttpRedirectAction",
-          "description": "In response to a route rule match, the load balancer redirects the request to a URL specified by the following HttpRedirectAction.\nOnly one of urlRedirect or routeAction must be set."
+          "description": "When this rule is matched, the request is redirected to a URL specified by urlRedirect.\nIf urlRedirect is specified, service or routeAction must not be set."
         }
       },
       "type": "object"
@@ -33464,6 +33906,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "timeoutSec": {
@@ -34051,6 +34497,10 @@
         "sourceMachineImage": {
           "description": "Source machine image",
           "type": "string"
+        },
+        "sourceMachineImageEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Source GMI encryption key when creating an instance from GMI."
         },
         "startRestricted": {
           "description": "[Output Only] Whether a VM has been restricted for start because Compute Engine has detected suspicious activity.",
@@ -36010,6 +36460,10 @@
           },
           "type": "array"
         },
+        "displayDevice": {
+          "$ref": "DisplayDevice",
+          "description": "Display Device properties to enable support for remote display products like: Teradici, VNC and TeamViewer"
+        },
         "guestAccelerators": {
           "description": "A list of guest accelerator cards' type and count to use for instances created from the instance template.",
           "items": {
@@ -36118,6 +36572,10 @@
         },
         "selfLink": {
           "description": "[Output Only] The URL for this instance template. The server defines this URL.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "sourceInstance": {
@@ -36610,9 +37068,11 @@
         "linkType": {
           "description": "Type of link requested. This field indicates speed of each of the links in the bundle, not the entire bundle.",
           "enum": [
+            "LINK_TYPE_ETHERNET_100G_LR",
             "LINK_TYPE_ETHERNET_10G_LR"
           ],
           "enumDescriptions": [
+            "",
             ""
           ],
           "type": "string"
@@ -36663,6 +37123,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "state": {
@@ -36827,6 +37291,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "state": {
@@ -37564,6 +38032,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "status": {
           "description": "[Output Only] The status of this InterconnectLocation. If the status is AVAILABLE, new Interconnects may be provisioned in this InterconnectLocation. Otherwise, no new Interconnects may be provisioned.",
           "enum": [
@@ -38145,6 +38617,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "transferable": {
           "description": "If false, licenses will not be copied from the source resource when creating an image from a disk, disk from snapshot, or snapshot from disk.",
           "type": "boolean"
@@ -38455,6 +38931,10 @@
           "description": "[Output Only] The resource type, which is always compute#machineImage for machine image.",
           "type": "string"
         },
+        "machineImageEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "Encryption key to protect the machine image."
+        },
         "name": {
           "annotations": {
             "required": [
@@ -38467,6 +38947,10 @@
         },
         "selfLink": {
           "description": "[Output Only] The URL for this machine image. The server defines this URL.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "sourceInstance": {
@@ -38677,6 +39161,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "zone": {
@@ -39566,6 +40054,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "size": {
           "description": "[Output only] Number of network endpoints in the network endpoint group.",
           "format": "int32",
@@ -40421,6 +40913,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "size": {
           "description": "[Output Only] The total number of nodes in the node group.",
           "format": "int32",
@@ -41024,6 +41520,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "serverBinding": {
           "$ref": "ServerBinding",
           "description": "Binding properties for the physical server."
@@ -41436,6 +41936,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "zone": {
@@ -41852,6 +42356,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "startTime": {
@@ -42304,15 +42812,15 @@
       "properties": {
         "defaultRouteAction": {
           "$ref": "HttpRouteAction",
-          "description": "The default HttpRouteAction to follow if none of the pathRules or routeRules defined by this pathMatcher are matched. Use defaultRouteAction instead of defaultService when more advanced default routing actions like traffic splitting and URL rewrites are desired.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect must be set."
+          "description": "defaultRouteAction takes effect when none of the  pathRules or routeRules match. The load balancer performs advanced routing actions like URL rewrites, header transformations, etc. prior to forwarding the request to the selected backend. If defaultRouteAction specifies any weightedBackendServices, defaultService must not be set. Conversely if defaultService is set, defaultRouteAction cannot contain any  weightedBackendServices.\nOnly one of defaultRouteAction or defaultUrlRedirect must be set."
         },
         "defaultService": {
-          "description": "The full or partial URL to the BackendService resource. This will be used if none of the pathRules or routeRules defined by this PathMatcher are matched. For example, the following are all valid URLs to a BackendService resource:  \n- https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService \n- compute/v1/projects/project/global/backendServices/backendService \n- global/backendServices/backendService  \nUse defaultService instead of defaultRouteAction when simple routing to a backend service is desired and other advanced capabilities like traffic splitting and URL rewrites are not required.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect must be set.\nAuthorization requires one or more of the following Google IAM permissions on the specified resource default_service:  \n- compute.backendBuckets.use \n- compute.backendServices.use",
+          "description": "The full or partial URL to the BackendService resource. This will be used if none of the pathRules or routeRules defined by this PathMatcher are matched. For example, the following are all valid URLs to a BackendService resource:  \n- https://www.googleapis.com/compute/v1/projects/project/global/backendServices/backendService \n- compute/v1/projects/project/global/backendServices/backendService \n- global/backendServices/backendService  If defaultRouteAction is additionally specified, advanced routing actions like URL Rewrites, etc. take effect prior to sending the request to the backend. However, if defaultService is specified, defaultRouteAction cannot contain any weightedBackendServices. Conversely, if defaultRouteAction specifies any weightedBackendServices, defaultService must not be specified.\nOnly one of defaultService, defaultUrlRedirect  or defaultRouteAction.weightedBackendService must be set.\nAuthorization requires one or more of the following Google IAM permissions on the specified resource default_service:  \n- compute.backendBuckets.use \n- compute.backendServices.use",
           "type": "string"
         },
         "defaultUrlRedirect": {
           "$ref": "HttpRedirectAction",
-          "description": "The request is redirected by default to a URL specified by defaultUrlRedirect when none of the specified pathRules or routeRules match.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect must be set."
+          "description": "When when none of the specified pathRules or routeRules match, the request is redirected to a URL specified by defaultUrlRedirect.\nIf defaultUrlRedirect is specified, defaultService or defaultRouteAction must not be set."
         },
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",
@@ -42356,15 +42864,15 @@
         },
         "routeAction": {
           "$ref": "HttpRouteAction",
-          "description": "The HttpRouteAction to follow if this rule is matched. Use routeAction instead of service when more advanced default routing actions like traffic splitting and Url rewrites are desired.\nOnly one of service, routeAction or urlRedirect should must be set."
+          "description": "In response to a matching path, the load balancer performs advanced routing actions like URL rewrites, header transformations, etc. prior to forwarding the request to the selected backend. If routeAction specifies any  weightedBackendServices, service must not be set. Conversely if service is set, routeAction cannot contain any  weightedBackendServices.\nOnly one of routeAction or urlRedirect must be set."
         },
         "service": {
-          "description": "The URL of the backend service resource if this rule is matched.\nUse service instead of routeAction when simple routing to a backend service is desired and other advanced capabilities like traffic splitting and rewrites are not required.\nOnly one of service, routeAction or urlRedirect should must be set.",
+          "description": "The full or partial URL of the backend service resource to which traffic is directed if this rule is matched. If routeAction is additionally specified, advanced routing actions like URL Rewrites, etc. take effect prior to sending the request to the backend. However, if service is specified, routeAction cannot contain any weightedBackendService s. Conversely, if routeAction specifies any  weightedBackendServices, service must not be specified.\nOnly one of urlRedirect, service or routeAction.weightedBackendService must be set.",
           "type": "string"
         },
         "urlRedirect": {
           "$ref": "HttpRedirectAction",
-          "description": "The request is redirected to a URL specified by urlRedirect if this rule is matched.\nOnly one of service, routeAction or urlRedirect should must be set."
+          "description": "When a path pattern is matched, the request is redirected to a URL specified by urlRedirect.\nIf urlRedirect is specified, service or routeAction must not be set."
         }
       },
       "type": "object"
@@ -42684,6 +43192,7 @@
         "metric": {
           "description": "[Output Only] Name of the quota metric.",
           "enum": [
+            "ALIASES_PER_NETWORK_GLOBAL",
             "AMD_S9300_GPUS",
             "AUTOSCALERS",
             "BACKEND_BUCKETS",
@@ -42699,6 +43208,7 @@
             "HEALTH_CHECKS",
             "IMAGES",
             "INSTANCES",
+            "INSTANCES_PER_NETWORK_GLOBAL",
             "INSTANCE_GROUPS",
             "INSTANCE_GROUP_MANAGERS",
             "INSTANCE_TEMPLATES",
@@ -42706,9 +43216,14 @@
             "INTERCONNECT_ATTACHMENTS_PER_REGION",
             "INTERCONNECT_ATTACHMENTS_TOTAL_MBPS",
             "INTERNAL_ADDRESSES",
+            "INTERNAL_FORWARDING_RULES_PER_NETWORK",
+            "INTERNAL_FORWARDING_RULES_WITH_GLOBAL_ACCESS_PER_NETWORK",
+            "INTERNAL_FORWARDING_RULES_WITH_TARGET_INSTANCE_PER_NETWORK",
+            "INTERNAL_TARGET_INSTANCE_WITH_GLOBAL_ACCESS_PER_NETWORK",
             "IN_USE_ADDRESSES",
             "IN_USE_BACKUP_SCHEDULES",
             "IN_USE_MAINTENANCE_WINDOWS",
+            "IN_USE_SNAPSHOT_SCHEDULES",
             "LOCAL_SSD_TOTAL_GB",
             "MACHINE_IMAGES",
             "NETWORKS",
@@ -42753,9 +43268,18 @@
             "TARGET_VPN_GATEWAYS",
             "URL_MAPS",
             "VPN_GATEWAYS",
-            "VPN_TUNNELS"
+            "VPN_TUNNELS",
+            "XPN_SERVICE_PROJECTS"
           ],
           "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
             "",
             "",
             "",
@@ -42904,6 +43428,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "status": {
@@ -44180,10 +44708,6 @@
     "ResourcePolicy": {
       "id": "ResourcePolicy",
       "properties": {
-        "backupSchedulePolicy": {
-          "$ref": "ResourcePolicyBackupSchedulePolicy",
-          "description": "Resource policy for persistent disks for creating snapshots."
-        },
         "creationTimestamp": {
           "description": "[Output Only] Creation timestamp in RFC3339 text format.",
           "type": "string"
@@ -44217,6 +44741,14 @@
         "selfLink": {
           "description": "[Output Only] Server-defined fully-qualified URL for this resource.",
           "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
+        "snapshotSchedulePolicy": {
+          "$ref": "ResourcePolicySnapshotSchedulePolicy",
+          "description": "Resource policy for persistent disks for creating snapshots."
         },
         "vmMaintenancePolicy": {
           "$ref": "ResourcePolicyVmMaintenancePolicy",
@@ -44337,106 +44869,6 @@
             }
           },
           "type": "object"
-        }
-      },
-      "type": "object"
-    },
-    "ResourcePolicyBackupSchedulePolicy": {
-      "description": "A backup schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.",
-      "id": "ResourcePolicyBackupSchedulePolicy",
-      "properties": {
-        "retentionPolicy": {
-          "$ref": "ResourcePolicyBackupSchedulePolicyRetentionPolicy",
-          "description": "Retention policy applied to snapshots created by this resource policy."
-        },
-        "schedule": {
-          "$ref": "ResourcePolicyBackupSchedulePolicySchedule",
-          "description": "A Vm Maintenance Policy specifies what kind of infrastructure maintenance we are allowed to perform on this VM and when. Schedule that is applied to disks covered by this policy."
-        },
-        "snapshotProperties": {
-          "$ref": "ResourcePolicyBackupSchedulePolicySnapshotProperties",
-          "description": "Properties with which snapshots are created such as labels, encryption keys."
-        }
-      },
-      "type": "object"
-    },
-    "ResourcePolicyBackupSchedulePolicyRetentionPolicy": {
-      "description": "Policy for retention of scheduled snapshots.",
-      "id": "ResourcePolicyBackupSchedulePolicyRetentionPolicy",
-      "properties": {
-        "maxRetentionDays": {
-          "description": "Maximum age of the snapshot that is allowed to be kept.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "onPolicySwitch": {
-          "description": "Specifies the behavior to apply to existing, scheduled snapshots snapshots if the policy is changed.",
-          "enum": [
-            "DO_NOT_RETROACTIVELY_APPLY",
-            "RETROACTIVELY_APPLY",
-            "UNSPECIFIED_ON_POLICY_SWITCH"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        },
-        "onSourceDiskDelete": {
-          "description": "Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.",
-          "enum": [
-            "APPLY_RETENTION_POLICY",
-            "KEEP_AUTO_SNAPSHOTS",
-            "UNSPECIFIED_ON_SOURCE_DISK_DELETE"
-          ],
-          "enumDescriptions": [
-            "",
-            "",
-            ""
-          ],
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ResourcePolicyBackupSchedulePolicySchedule": {
-      "description": "A schedule for disks where the schedueled operations are performed.",
-      "id": "ResourcePolicyBackupSchedulePolicySchedule",
-      "properties": {
-        "dailySchedule": {
-          "$ref": "ResourcePolicyDailyCycle"
-        },
-        "hourlySchedule": {
-          "$ref": "ResourcePolicyHourlyCycle"
-        },
-        "weeklySchedule": {
-          "$ref": "ResourcePolicyWeeklyCycle"
-        }
-      },
-      "type": "object"
-    },
-    "ResourcePolicyBackupSchedulePolicySnapshotProperties": {
-      "description": "Specified snapshot properties for scheduled snapshots created by this policy.",
-      "id": "ResourcePolicyBackupSchedulePolicySnapshotProperties",
-      "properties": {
-        "guestFlush": {
-          "description": "Indication to perform a ?guest aware? snapshot.",
-          "type": "boolean"
-        },
-        "labels": {
-          "additionalProperties": {
-            "type": "string"
-          },
-          "description": "Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.",
-          "type": "object"
-        },
-        "storageLocations": {
-          "description": "GCS bucket storage location of the auto snapshot (regional or multi-regional).",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -44591,6 +45023,106 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ResourcePolicySnapshotSchedulePolicy": {
+      "description": "A snapshot schedule policy specifies when and how frequently snapshots are to be created for the target disk. Also specifies how many and how long these scheduled snapshots should be retained.",
+      "id": "ResourcePolicySnapshotSchedulePolicy",
+      "properties": {
+        "retentionPolicy": {
+          "$ref": "ResourcePolicySnapshotSchedulePolicyRetentionPolicy",
+          "description": "Retention policy applied to snapshots created by this resource policy."
+        },
+        "schedule": {
+          "$ref": "ResourcePolicySnapshotSchedulePolicySchedule",
+          "description": "A Vm Maintenance Policy specifies what kind of infrastructure maintenance we are allowed to perform on this VM and when. Schedule that is applied to disks covered by this policy."
+        },
+        "snapshotProperties": {
+          "$ref": "ResourcePolicySnapshotSchedulePolicySnapshotProperties",
+          "description": "Properties with which snapshots are created such as labels, encryption keys."
+        }
+      },
+      "type": "object"
+    },
+    "ResourcePolicySnapshotSchedulePolicyRetentionPolicy": {
+      "description": "Policy for retention of scheduled snapshots.",
+      "id": "ResourcePolicySnapshotSchedulePolicyRetentionPolicy",
+      "properties": {
+        "maxRetentionDays": {
+          "description": "Maximum age of the snapshot that is allowed to be kept.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "onPolicySwitch": {
+          "description": "Specifies the behavior to apply to existing, scheduled snapshots snapshots if the policy is changed.",
+          "enum": [
+            "DO_NOT_RETROACTIVELY_APPLY",
+            "RETROACTIVELY_APPLY",
+            "UNSPECIFIED_ON_POLICY_SWITCH"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "onSourceDiskDelete": {
+          "description": "Specifies the behavior to apply to scheduled snapshots when the source disk is deleted.",
+          "enum": [
+            "APPLY_RETENTION_POLICY",
+            "KEEP_AUTO_SNAPSHOTS",
+            "UNSPECIFIED_ON_SOURCE_DISK_DELETE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourcePolicySnapshotSchedulePolicySchedule": {
+      "description": "A schedule for disks where the schedueled operations are performed.",
+      "id": "ResourcePolicySnapshotSchedulePolicySchedule",
+      "properties": {
+        "dailySchedule": {
+          "$ref": "ResourcePolicyDailyCycle"
+        },
+        "hourlySchedule": {
+          "$ref": "ResourcePolicyHourlyCycle"
+        },
+        "weeklySchedule": {
+          "$ref": "ResourcePolicyWeeklyCycle"
+        }
+      },
+      "type": "object"
+    },
+    "ResourcePolicySnapshotSchedulePolicySnapshotProperties": {
+      "description": "Specified snapshot properties for scheduled snapshots created by this policy.",
+      "id": "ResourcePolicySnapshotSchedulePolicySnapshotProperties",
+      "properties": {
+        "guestFlush": {
+          "description": "Indication to perform a ?guest aware? snapshot.",
+          "type": "boolean"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Labels to apply to scheduled snapshots. These can be later modified by the setLabels method. Label values may be empty.",
+          "type": "object"
+        },
+        "storageLocations": {
+          "description": "GCS bucket storage location of the auto snapshot (regional or multi-regional).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -45046,6 +45578,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         }
       },
@@ -45539,17 +46075,23 @@
       "description": "Configuration of logging on a NAT.",
       "id": "RouterNatLogConfig",
       "properties": {
-        "enabled": {
+        "enable": {
           "description": "Indicates whether or not to export logs. This is false by default.",
+          "type": "boolean"
+        },
+        "enabled": {
+          "description": "Indicates whether or not to export logs. This is false by default. [Deprecated] Use 'enable' instead.",
           "type": "boolean"
         },
         "filter": {
           "description": "Specifies the desired filtering of logs on this NAT. If unspecified, logs are exported for all connections handled by this NAT.",
           "enum": [
+            "ALL",
             "ERRORS_ONLY",
             "TRANSLATIONS_ONLY"
           ],
           "enumDescriptions": [
+            "",
             "",
             ""
           ],
@@ -46240,6 +46782,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "type": {
@@ -47057,6 +47603,10 @@
           "description": "[Output only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "selfManaged": {
           "$ref": "SslCertificateSelfManagedSslCertificate",
           "description": "Configuration and status of a self-managed SSL certificate."
@@ -47680,6 +48230,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "warnings": {
           "description": "[Output Only] If potential misconfigurations are detected for this SSL policy, this field will be populated with warning messages.",
           "items": {
@@ -47886,7 +48440,7 @@
           "type": "boolean"
         },
         "enablePrivateV6Access": {
-          "description": "Whether the VMs in this subnet can directly access Google services via internal IPv6 addresses. This field can be both set at resource creation time and updated using patch.",
+          "description": "Deprecated in favor of enable in PrivateIpv6GoogleAccess. Whether the VMs in this subnet can directly access Google services via internal IPv6 addresses. This field can be both set at resource creation time and updated using patch.",
           "type": "boolean"
         },
         "fingerprint": {
@@ -47950,6 +48504,20 @@
           "description": "Whether the VMs in this subnet can access Google services without assigned external IP addresses. This field can be both set at resource creation time and updated using setPrivateIpGoogleAccess.",
           "type": "boolean"
         },
+        "privateIpv6GoogleAccess": {
+          "description": "The private IPv6 google access type for the VMs in this subnet. This is an expanded field of enablePrivateV6Access. If both fields are set, privateIpv6GoogleAccess will take priority.\n\nThis field can be both set at resource creation time and updated using patch.",
+          "enum": [
+            "DISABLE_GOOGLE_ACCESS",
+            "ENABLE_BIDIRECTIONAL_ACCESS_TO_GOOGLE",
+            "ENABLE_OUTBOUND_VM_ACCESS_TO_GOOGLE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "purpose": {
           "description": "The purpose of the resource. This field can be either PRIVATE_RFC_1918 or INTERNAL_HTTPS_LOAD_BALANCER. A subnetwork with purpose set to INTERNAL_HTTPS_LOAD_BALANCER is a user-created subnetwork that is reserved for Internal HTTP(S) Load Balancing. If unspecified, the purpose defaults to PRIVATE_RFC_1918.",
           "enum": [
@@ -47989,6 +48557,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "state": {
@@ -48603,6 +49175,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "urlMap": {
           "description": "URL to the UrlMap resource that defines the mapping from URL to the BackendService.",
           "type": "string"
@@ -49010,6 +49586,10 @@
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
         },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
+          "type": "string"
+        },
         "sslCertificates": {
           "description": "URLs to SslCertificate resources that are used to authenticate connections between users and the load balancer. At least one SSL certificate must be specified. Currently, you may specify up to 15 SSL certificates.",
           "items": {
@@ -49295,6 +49875,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "zone": {
@@ -49678,6 +50262,10 @@
         },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
         "sessionAffinity": {
@@ -50990,15 +51578,15 @@
         },
         "defaultRouteAction": {
           "$ref": "HttpRouteAction",
-          "description": "The default HttpRouteAction to follow if none of the hostRules match. Use defaultRouteAction instead of defaultService when more advanced default routing actions like traffic splitting and Url rewrites are desired.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect should must be set."
+          "description": "defaultRouteAction takes effect when none of the  hostRules match. The load balancer performs advanced routing actions like URL rewrites, header transformations, etc. prior to forwarding the request to the selected backend. If defaultRouteAction specifies any weightedBackendServices, defaultService must not be set. Conversely if defaultService is set, defaultRouteAction cannot contain any  weightedBackendServices.\nOnly one of defaultRouteAction or defaultUrlRedirect must be set."
         },
         "defaultService": {
-          "description": "The URL of the backendService resource if none of the hostRules match.\nUse defaultService instead of defaultRouteAction when simple routing to a backendService is desired and other advanced capabilities like traffic splitting and rewrites are not required.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect should must be set.",
+          "description": "The full or partial URL of the defaultService resource to which traffic is directed if none of the hostRules match. If defaultRouteAction is additionally specified, advanced routing actions like URL Rewrites, etc. take effect prior to sending the request to the backend. However, if defaultService is specified, defaultRouteAction cannot contain any weightedBackendServices. Conversely, if routeAction specifies any weightedBackendServices, service must not be specified.\nOnly one of defaultService, defaultUrlRedirect  or defaultRouteAction.weightedBackendService must be set.",
           "type": "string"
         },
         "defaultUrlRedirect": {
           "$ref": "HttpRedirectAction",
-          "description": "The request is redirected to a default URL specified by defaultUrlRedirect if none of the HostRules match.\nOnly one of defaultService, defaultRouteAction or defaultUrlRedirect should must be set."
+          "description": "When none of the specified hostRules match, the request is redirected to a URL specified by defaultUrlRedirect.\nIf defaultUrlRedirect is specified, defaultService or defaultRouteAction must not be set."
         },
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",

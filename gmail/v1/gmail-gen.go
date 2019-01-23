@@ -1198,7 +1198,9 @@ func (s *ListLabelsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type ListMessagesResponse struct {
-	// Messages: List of messages.
+	// Messages: List of messages. Note that each message resource contains
+	// only an id and a threadId. Additional message details can be fetched
+	// using the messages.get method.
 	Messages []*Message `json:"messages,omitempty"`
 
 	// NextPageToken: Token to retrieve the next page of results in the
@@ -1306,7 +1308,9 @@ type ListThreadsResponse struct {
 	// ResultSizeEstimate: Estimated total number of results.
 	ResultSizeEstimate int64 `json:"resultSizeEstimate,omitempty"`
 
-	// Threads: List of threads.
+	// Threads: List of threads. Note that each thread resource does not
+	// contain a list of messages. The list of messages for a given thread
+	// can be fetched using the threads.get method.
 	Threads []*Thread `json:"threads,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

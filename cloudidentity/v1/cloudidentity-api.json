@@ -164,7 +164,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Maximum number of Groups to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+              "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -257,7 +257,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "Maximum number of Groups to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+              "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -371,7 +371,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "Maximum number of Memberships to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+                  "description": "Maximum number of Memberships to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC| 200     | 1000\nFULL | 50      | 500",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -441,7 +441,7 @@
       }
     }
   },
-  "revision": "20181218",
+  "revision": "20190122",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {

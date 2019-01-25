@@ -93,7 +93,7 @@
   "description": "Manages enterprise resources such as users and groups, administrative notifications, security features, and more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/admin-sdk/directory/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/3gWnYLZX6BDruNsFQ2Dxff52vJg\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/P-4B11WcMvVB7cxHhUyxObdpF6w\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3969,7 +3969,7 @@
       }
     }
   },
-  "revision": "20180917",
+  "revision": "20190118",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -6260,6 +6260,14 @@
           "description": "username of User",
           "type": "string"
         },
+        "recoveryEmail": {
+          "description": "Recovery email of the user.",
+          "type": "string"
+        },
+        "recoveryPhone": {
+          "description": "Recovery phone of the user.",
+          "type": "string"
+        },
         "relations": {
           "type": "any"
         },
@@ -6710,8 +6718,7 @@
       "id": "UserPosixAccount",
       "properties": {
         "accountId": {
-          "description": "A POSIX account field identifier. (Read-only)",
-          "readOnly": true,
+          "description": "A POSIX account field identifier.",
           "type": "string"
         },
         "gecos": {

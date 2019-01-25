@@ -15,7 +15,7 @@
   "description": "API for viewing and managing your reports in DoubleClick Bid Manager.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/bid-manager/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/C4pFSZQGsGqgsPnMpCOWYwz21Fc\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/lPeOK93Z0eJies1sxdn4f7TLHKM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -257,7 +257,7 @@
       }
     }
   },
-  "revision": "20190103",
+  "revision": "20190114",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "DownloadLineItemsRequest": {
@@ -457,10 +457,7 @@
             "FILTER_FLOODLIGHT_PIXEL_ID",
             "FILTER_GENDER",
             "FILTER_INSERTION_ORDER",
-            "FILTER_INVENTORY_COMMITMENT_TYPE",
-            "FILTER_INVENTORY_DELIVERY_METHOD",
             "FILTER_INVENTORY_FORMAT",
-            "FILTER_INVENTORY_RATE_TYPE",
             "FILTER_INVENTORY_SOURCE",
             "FILTER_INVENTORY_SOURCE_TYPE",
             "FILTER_KEYWORD",
@@ -549,9 +546,6 @@
             "FILTER_ZIP_CODE"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
             "",
             "",
             "",
@@ -778,10 +772,7 @@
               "FILTER_FLOODLIGHT_PIXEL_ID",
               "FILTER_GENDER",
               "FILTER_INSERTION_ORDER",
-              "FILTER_INVENTORY_COMMITMENT_TYPE",
-              "FILTER_INVENTORY_DELIVERY_METHOD",
               "FILTER_INVENTORY_FORMAT",
-              "FILTER_INVENTORY_RATE_TYPE",
               "FILTER_INVENTORY_SOURCE",
               "FILTER_INVENTORY_SOURCE_TYPE",
               "FILTER_KEYWORD",
@@ -870,9 +861,6 @@
               "FILTER_ZIP_CODE"
             ],
             "enumDescriptions": [
-              "",
-              "",
-              "",
               "",
               "",
               "",

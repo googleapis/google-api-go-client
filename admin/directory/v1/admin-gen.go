@@ -3521,6 +3521,12 @@ type User struct {
 	// PrimaryEmail: username of User
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
 
+	// RecoveryEmail: Recovery email of the user.
+	RecoveryEmail string `json:"recoveryEmail,omitempty"`
+
+	// RecoveryPhone: Recovery phone of the user.
+	RecoveryPhone string `json:"recoveryPhone,omitempty"`
+
 	Relations interface{} `json:"relations,omitempty"`
 
 	SshPublicKeys interface{} `json:"sshPublicKeys,omitempty"`
@@ -4188,7 +4194,7 @@ func (s *UserPhoto) MarshalJSON() ([]byte, error) {
 // UserPosixAccount: JSON template for a POSIX account entry.
 // Description of the field family: go/fbs-posix.
 type UserPosixAccount struct {
-	// AccountId: A POSIX account field identifier. (Read-only)
+	// AccountId: A POSIX account field identifier.
 	AccountId string `json:"accountId,omitempty"`
 
 	// Gecos: The GECOS (user information) for this account.

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Gc5bHP9hFZTe1XxTe5wSUsRMYb8\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/QAmYRc3uCTT7WgsWEIdZyJ_RGQY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -342,6 +342,7 @@
     "accountstatuses": {
       "methods": {
         "custombatch": {
+          "description": "Retrieves multiple Merchant Center account statuses in a single request.",
           "httpMethod": "POST",
           "id": "content.accountstatuses.custombatch",
           "path": "accountstatuses/batch",
@@ -1278,146 +1279,6 @@
           },
           "response": {
             "$ref": "OrderinvoicesCreateRefundInvoiceResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        }
-      }
-    },
-    "orderpayments": {
-      "methods": {
-        "notifyauthapproved": {
-          "description": "Notify about successfully authorizing user's payment method for a given amount.",
-          "httpMethod": "POST",
-          "id": "content.orderpayments.notifyauthapproved",
-          "parameterOrder": [
-            "merchantId",
-            "orderId"
-          ],
-          "parameters": {
-            "merchantId": {
-              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "orderId": {
-              "description": "The ID of the order for for which payment authorization is happening.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/orderpayments/{orderId}/notifyAuthApproved",
-          "request": {
-            "$ref": "OrderpaymentsNotifyAuthApprovedRequest"
-          },
-          "response": {
-            "$ref": "OrderpaymentsNotifyAuthApprovedResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "notifyauthdeclined": {
-          "description": "Notify about failure to authorize user's payment method.",
-          "httpMethod": "POST",
-          "id": "content.orderpayments.notifyauthdeclined",
-          "parameterOrder": [
-            "merchantId",
-            "orderId"
-          ],
-          "parameters": {
-            "merchantId": {
-              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "orderId": {
-              "description": "The ID of the order for which payment authorization was declined.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/orderpayments/{orderId}/notifyAuthDeclined",
-          "request": {
-            "$ref": "OrderpaymentsNotifyAuthDeclinedRequest"
-          },
-          "response": {
-            "$ref": "OrderpaymentsNotifyAuthDeclinedResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "notifycharge": {
-          "description": "Notify about charge on user's selected payments method.",
-          "httpMethod": "POST",
-          "id": "content.orderpayments.notifycharge",
-          "parameterOrder": [
-            "merchantId",
-            "orderId"
-          ],
-          "parameters": {
-            "merchantId": {
-              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "orderId": {
-              "description": "The ID of the order for which charge is happening.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/orderpayments/{orderId}/notifyCharge",
-          "request": {
-            "$ref": "OrderpaymentsNotifyChargeRequest"
-          },
-          "response": {
-            "$ref": "OrderpaymentsNotifyChargeResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/content"
-          ]
-        },
-        "notifyrefund": {
-          "description": "Notify about refund on user's selected payments method.",
-          "httpMethod": "POST",
-          "id": "content.orderpayments.notifyrefund",
-          "parameterOrder": [
-            "merchantId",
-            "orderId"
-          ],
-          "parameters": {
-            "merchantId": {
-              "description": "The ID of the account that manages the order. This cannot be a multi-client account.",
-              "format": "uint64",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            },
-            "orderId": {
-              "description": "The ID of the order for which charge is happening.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "{merchantId}/orderpayments/{orderId}/notifyRefund",
-          "request": {
-            "$ref": "OrderpaymentsNotifyRefundRequest"
-          },
-          "response": {
-            "$ref": "OrderpaymentsNotifyRefundResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/content"
@@ -2970,7 +2831,7 @@
       }
     }
   },
-  "revision": "20190107",
+  "revision": "20190122",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5717,9 +5578,9 @@
           "description": "This field is used to identify promotions within merchants' own systems.",
           "type": "string"
         },
-        "pretaxValue": {
+        "priceValue": {
           "$ref": "Price",
-          "description": "Estimated discount applied to pre-tax amount."
+          "description": "Estimated discount applied to price. Amount is pre-tax or post-tax depending on location of order."
         },
         "shortTitle": {
           "description": "A short title of the promotion to be shown on the checkout page.",
@@ -6072,122 +5933,6 @@
         },
         "reason": {
           "description": "[required] Reason for the return.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyAuthApprovedRequest": {
-      "id": "OrderpaymentsNotifyAuthApprovedRequest",
-      "properties": {
-        "authAmountPretax": {
-          "$ref": "Price"
-        },
-        "authAmountTax": {
-          "$ref": "Price"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyAuthApprovedResponse": {
-      "id": "OrderpaymentsNotifyAuthApprovedResponse",
-      "properties": {
-        "executionStatus": {
-          "description": "The status of the execution.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "content#orderpaymentsNotifyAuthApprovedResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderpaymentsNotifyAuthApprovedResponse\".",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyAuthDeclinedRequest": {
-      "id": "OrderpaymentsNotifyAuthDeclinedRequest",
-      "properties": {
-        "declineReason": {
-          "description": "Reason why payment authorization was declined.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyAuthDeclinedResponse": {
-      "id": "OrderpaymentsNotifyAuthDeclinedResponse",
-      "properties": {
-        "executionStatus": {
-          "description": "The status of the execution.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "content#orderpaymentsNotifyAuthDeclinedResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderpaymentsNotifyAuthDeclinedResponse\".",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyChargeRequest": {
-      "id": "OrderpaymentsNotifyChargeRequest",
-      "properties": {
-        "chargeState": {
-          "description": "Whether charge was successful.",
-          "type": "string"
-        },
-        "invoiceIds": {
-          "description": "Invoice IDs from the orderinvoices service that correspond to the charge.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyChargeResponse": {
-      "id": "OrderpaymentsNotifyChargeResponse",
-      "properties": {
-        "executionStatus": {
-          "description": "The status of the execution.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "content#orderpaymentsNotifyChargeResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderpaymentsNotifyChargeResponse\".",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyRefundRequest": {
-      "id": "OrderpaymentsNotifyRefundRequest",
-      "properties": {
-        "invoiceIds": {
-          "description": "Invoice IDs from the orderinvoices service that correspond to the refund.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "refundState": {
-          "description": "Whether refund was successful.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "OrderpaymentsNotifyRefundResponse": {
-      "id": "OrderpaymentsNotifyRefundResponse",
-      "properties": {
-        "executionStatus": {
-          "description": "The status of the execution.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "content#orderpaymentsNotifyRefundResponse",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"content#orderpaymentsNotifyRefundResponse\".",
           "type": "string"
         }
       },
@@ -8977,15 +8722,6 @@
             ]
           },
           "description": "Details of the requested shipping for the line item."
-        },
-        "unitTax": {
-          "$ref": "Price",
-          "annotations": {
-            "required": [
-              "content.orders.createtestorder"
-            ]
-          },
-          "description": "Unit tax for the line item."
         }
       },
       "type": "object"
@@ -9066,7 +8802,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The price for the product."
+          "description": "The price for the product. Tax is automatically calculated for MFL orders. For non-MFL orders, tax settings from Merchant Center are applied."
         },
         "targetCountry": {
           "annotations": {
@@ -9113,9 +8849,9 @@
           },
           "type": "array"
         },
-        "unitPricePretax": {
+        "unitPrice": {
           "$ref": "Price",
-          "description": "[required] Price of the unit, before applying taxes."
+          "description": "[required] Pre-tax or post-tax price of the unit depending on the locality of the order."
         },
         "unitPriceTaxes": {
           "description": "Tax amounts to apply to the unit price.",

@@ -104,6 +104,35 @@
   },
   "protocol": "rest",
   "resources": {
+    "operations": {
+      "methods": {
+        "delete": {
+          "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+          "flatPath": "v1/operations/{operationsId}",
+          "httpMethod": "DELETE",
+          "id": "ml.operations.delete",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "The name of the operation resource to be deleted.",
+              "location": "path",
+              "pattern": "^operations/.+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+name}",
+          "response": {
+            "$ref": "GoogleProtobuf__Empty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
+    },
     "projects": {
       "methods": {
         "getConfig": {
@@ -919,31 +948,6 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
-            "delete": {
-              "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
-              "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
-              "httpMethod": "DELETE",
-              "id": "ml.projects.operations.delete",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "The name of the operation resource to be deleted.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/operations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1/{+name}",
-              "response": {
-                "$ref": "GoogleProtobuf__Empty"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
             "get": {
               "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
               "flatPath": "v1/projects/{projectsId}/operations/{operationsId}",
@@ -1015,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190115",
+  "revision": "20190123",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1078,16 +1082,14 @@
             "NVIDIA_TESLA_K80",
             "NVIDIA_TESLA_P100",
             "NVIDIA_TESLA_V100",
-            "NVIDIA_TESLA_P4",
-            "NVIDIA_TESLA_T4"
+            "TPU_V2"
           ],
           "enumDescriptions": [
             "Unspecified accelerator type. Default to no GPU.",
             "Nvidia Tesla K80 GPU.",
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
-            "Nvidia Tesla P4 GPU.",
-            "Nvidia Tesla T4 GPU."
+            "TPU V2"
           ],
           "type": "string"
         }
@@ -1122,8 +1124,7 @@
             "Nvidia Tesla K80 GPU.",
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
-            "Nvidia Tesla P4 GPU.",
-            "Nvidia Tesla T4 GPU."
+            "TPU V2"
           ],
           "items": {
             "enum": [
@@ -1131,8 +1132,7 @@
               "NVIDIA_TESLA_K80",
               "NVIDIA_TESLA_P100",
               "NVIDIA_TESLA_V100",
-              "NVIDIA_TESLA_P4",
-              "NVIDIA_TESLA_T4"
+              "TPU_V2"
             ],
             "type": "string"
           },

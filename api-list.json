@@ -1618,6 +1618,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "file:v1",
+   "name": "file",
+   "version": "v1",
+   "title": "Cloud Filestore API",
+   "description": "The Cloud Filestore API is used for creating and managing cloud file servers.",
+   "discoveryRestUrl": "https://file.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/filestore/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "file:v1beta1",
    "name": "file",
    "version": "v1beta1",
@@ -1629,7 +1644,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/filestore/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",

@@ -3752,7 +3752,7 @@ type UptimeCheckConfig struct {
 	// Period: How often, in seconds, the uptime check is performed.
 	// Currently, the only supported values are 60s (1 minute), 300s (5
 	// minutes), 600s (10 minutes), and 900s (15 minutes). Optional,
-	// defaults to 300s.
+	// defaults to 60s.
 	Period string `json:"period,omitempty"`
 
 	// ResourceGroup: The group resource associated with the configuration.

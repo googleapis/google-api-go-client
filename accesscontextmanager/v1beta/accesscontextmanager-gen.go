@@ -793,8 +793,8 @@ type ServicePerimeterConfig struct {
 	// nonexistent `AccessLevel` is a syntax error. If no `AccessLevel`
 	// names are
 	// listed, resources within the perimeter can only be accessed via GCP
-	// calls with
-	// request origins within the perimeter.
+	// calls
+	// with request origins within the perimeter.
 	// Example:
 	// "accessPolicies/MY_POLICY/accessLevels/MY_LEVEL".
 	// For Service Perimeter Bridge, must be empty.
@@ -837,8 +837,8 @@ type ServicePerimeterConfig struct {
 	// `logging.googleapis.com` is unrestricted, users can access logs
 	// inside the
 	// perimeter as if the perimeter doesn't exist, and it also means VMs
-	// inside the perimeter
-	// can access logs outside the perimeter.
+	// inside
+	// the perimeter can access logs outside the perimeter.
 	//
 	// The wildcard means that unless explicitly specified
 	// by

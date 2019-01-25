@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190115",
+  "revision": "20190122",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1626,7 +1626,7 @@
           "type": "string"
         },
         "entities": {
-          "description": "Optional. The collection of entities associated with the entity type.",
+          "description": "Optional. The collection of entity entries associated with the entity type.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2EntityTypeEntity"
           },
@@ -1668,25 +1668,25 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2EntityTypeEntity": {
-      "description": "Optional. Represents an entity.",
+      "description": "An **entity entry** for an associated entity type.",
       "id": "GoogleCloudDialogflowV2EntityTypeEntity",
       "properties": {
         "synonyms": {
-          "description": "Required. A collection of synonyms. For `KIND_LIST` entity types this\nmust contain exactly one synonym equal to `value`.",
+          "description": "Required. A collection of value synonyms. For example, if the entity type\nis *vegetable*, and `value` is *scallions*, a synonym could be *green\nonions*.\n\nFor `KIND_LIST` entity types:\n\n*   This collection must contain exactly one synonym equal to `value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "value": {
-          "description": "Required.\nFor `KIND_MAP` entity types:\n  A canonical name to be used in place of synonyms.\nFor `KIND_LIST` entity types:\n  A string that can contain references to other entity types (with or\n  without aliases).",
+          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A canonical value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudDialogflowV2EventInput": {
-      "description": "Events allow for matching intents by event name instead of the natural\nlanguage input. For instance, input `\u003cevent: { name: “welcome_event”,\nparameters: { name: “Sam” } }\u003e` can trigger a personalized welcome response.\nThe parameter `name` may be used by the agent in the response:\n`“Hello #welcome_event.name! What can I do for you today?”`.",
+      "description": "Events allow for matching intents by event name instead of the natural\nlanguage input. For instance, input `\u003cevent: { name: \"welcome_event\",\nparameters: { name: \"Sam\" } }\u003e` can trigger a personalized welcome response.\nThe parameter `name` may be used by the agent in the response:\n`\"Hello #welcome_event.name! What can I do for you today?\"`.",
       "id": "GoogleCloudDialogflowV2EventInput",
       "properties": {
         "languageCode": {
@@ -2921,7 +2921,7 @@
           "type": "string"
         },
         "entities": {
-          "description": "Optional. The collection of entities associated with the entity type.",
+          "description": "Optional. The collection of entity entries associated with the entity type.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1EntityTypeEntity"
           },
@@ -2949,25 +2949,25 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1EntityTypeEntity": {
-      "description": "Optional. Represents an entity.",
+      "description": "An **entity entry** for an associated entity type.",
       "id": "GoogleCloudDialogflowV2beta1EntityTypeEntity",
       "properties": {
         "synonyms": {
-          "description": "Required. A collection of synonyms. For `KIND_LIST` entity types this\nmust contain exactly one synonym equal to `value`.",
+          "description": "Required. A collection of value synonyms. For example, if the entity type\nis *vegetable*, and `value` is *scallions*, a synonym could be *green\nonions*.\n\nFor `KIND_LIST` entity types:\n\n*   This collection must contain exactly one synonym equal to `value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "value": {
-          "description": "Required.\nFor `KIND_MAP` entity types:\n  A canonical name to be used in place of synonyms.\nFor `KIND_LIST` entity types:\n  A string that can contain references to other entity types (with or\n  without aliases).",
+          "description": "Required. The primary value associated with this entity entry.\nFor example, if the entity type is *vegetable*, the value could be\n*scallions*.\n\nFor `KIND_MAP` entity types:\n\n*   A canonical value to be used in place of synonyms.\n\nFor `KIND_LIST` entity types:\n\n*   A string that can contain references to other entity types (with or\n    without aliases).",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1EventInput": {
-      "description": "Events allow for matching intents by event name instead of the natural\nlanguage input. For instance, input `\u003cevent: { name: “welcome_event”,\nparameters: { name: “Sam” } }\u003e` can trigger a personalized welcome response.\nThe parameter `name` may be used by the agent in the response:\n`“Hello #welcome_event.name! What can I do for you today?”`.",
+      "description": "Events allow for matching intents by event name instead of the natural\nlanguage input. For instance, input `\u003cevent: { name: \"welcome_event\",\nparameters: { name: \"Sam\" } }\u003e` can trigger a personalized welcome response.\nThe parameter `name` may be used by the agent in the response:\n`\"Hello #welcome_event.name! What can I do for you today?\"`.",
       "id": "GoogleCloudDialogflowV2beta1EventInput",
       "properties": {
         "languageCode": {

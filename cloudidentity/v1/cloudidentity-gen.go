@@ -1091,12 +1091,12 @@ func (r *GroupsService) List() *GroupsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// Groups to return.
+// groups to return.
 //
-// View | Default | Maximum
-// -----|---------|--------
-// BASIC | 200 | 1000
-// FULL | 50 | 500
+// View  | Default | Maximum
+// ----- | ------- | -------
+// BASIC | 200     | 1000
+// FULL  | 50      | 500
 func (c *GroupsListCall) PageSize(pageSize int64) *GroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1231,7 +1231,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Groups to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+	//       "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1615,12 +1615,12 @@ func (r *GroupsService) Search() *GroupsSearchCall {
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// Groups to return.
+// groups to return.
 //
-// View | Default | Maximum
-// -----|---------|--------
-// BASIC | 200 | 1000
-// FULL | 50 | 500
+// View  | Default | Maximum
+// ----- | ------- | -------
+// BASIC | 200     | 1000
+// FULL  | 50      | 500
 func (c *GroupsSearchCall) PageSize(pageSize int64) *GroupsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1759,7 +1759,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Groups to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+	//       "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2239,8 +2239,8 @@ func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCal
 //
 // View | Default | Maximum
 // -----|---------|--------
-// BASIC | 200 | 1000
-// FULL | 50 | 500
+// BASIC| 200     | 1000
+// FULL | 50      | 500
 func (c *GroupsMembershipsListCall) PageSize(pageSize int64) *GroupsMembershipsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2372,7 +2372,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Memberships to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC | 200 | 1000\nFULL | 50 | 500",
+	//       "description": "Maximum number of Memberships to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC| 200     | 1000\nFULL | 50      | 500",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

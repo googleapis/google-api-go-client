@@ -4458,9 +4458,9 @@ type Order struct {
 	// PlacedDate: The date when the order was placed, in ISO 8601 format.
 	PlacedDate string `json:"placedDate,omitempty"`
 
-	// Promotions: Deprecated. The details of the merchant provided
-	// promotions applied to the order. More details about the program are
-	// here.
+	// Promotions: Deprecated. Ignored if provided for createTestOrder. The
+	// details of the merchant provided promotions applied to the order.
+	// More details about the program are here.
 	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
 	// Refunds: Refunds for the order.
@@ -5716,8 +5716,12 @@ func (s *OrderinvoicesCustomBatchRequestEntryCreateRefundInvoiceReturnOption) Ma
 }
 
 type OrderpaymentsNotifyAuthApprovedRequest struct {
+	// AuthAmountPretax: Authorized amount for pre-tax charge on user's
+	// credit card.
 	AuthAmountPretax *Price `json:"authAmountPretax,omitempty"`
 
+	// AuthAmountTax: Authorized amount for tax charge on user's credit
+	// card.
 	AuthAmountTax *Price `json:"authAmountTax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AuthAmountPretax") to
@@ -11045,7 +11049,9 @@ type TestOrderLineItem struct {
 	// ShippingDetails: Details of the requested shipping for the line item.
 	ShippingDetails *OrderLineItemShippingDetails `json:"shippingDetails,omitempty"`
 
-	// UnitTax: Unit tax for the line item.
+	// UnitTax: Deprecated. Ignored if provided. Tax is automatically
+	// calculated for MFL orders. For non-MFL orders, tax settings from
+	// Merchant Center are applied.
 	UnitTax *Price `json:"unitTax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Product") to
@@ -11100,7 +11106,9 @@ type TestOrderLineItemProduct struct {
 	// OfferId: An identifier of the item.
 	OfferId string `json:"offerId,omitempty"`
 
-	// Price: The price for the product.
+	// Price: The price for the product. Tax is automatically calculated for
+	// MFL orders. For non-MFL orders, tax settings from Merchant Center are
+	// applied.
 	Price *Price `json:"price,omitempty"`
 
 	// TargetCountry: The CLDR territory code of the target country of the
@@ -12891,7 +12899,8 @@ type AccountstatusesCustombatchCall struct {
 	header_                           http.Header
 }
 
-// Custombatch:
+// Custombatch: Retrieves multiple Merchant Center account statuses in a
+// single request.
 func (r *AccountstatusesService) Custombatch(accountstatusescustombatchrequest *AccountstatusesCustomBatchRequest) *AccountstatusesCustombatchCall {
 	c := &AccountstatusesCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountstatusescustombatchrequest = accountstatusescustombatchrequest
@@ -12986,6 +12995,7 @@ func (c *AccountstatusesCustombatchCall) Do(opts ...googleapi.CallOption) (*Acco
 	}
 	return ret, nil
 	// {
+	//   "description": "Retrieves multiple Merchant Center account statuses in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.accountstatuses.custombatch",
 	//   "path": "accountstatuses/batch",

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/0TCLgXZWRV_u3CJuMzbjjgElfPQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/aoLJVRoELXoGluLLA5j3eAQmbRA\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -404,6 +404,7 @@
     "accountstatuses": {
       "methods": {
         "custombatch": {
+          "description": "Retrieves multiple Merchant Center account statuses in a single request.",
           "httpMethod": "POST",
           "id": "content.accountstatuses.custombatch",
           "path": "accountstatuses/batch",
@@ -3481,7 +3482,7 @@
       }
     }
   },
-  "revision": "20190107",
+  "revision": "20190122",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6100,7 +6101,7 @@
           "type": "string"
         },
         "promotions": {
-          "description": "Deprecated. The details of the merchant provided promotions applied to the order. More details about the program are here.",
+          "description": "Deprecated. Ignored if provided for createTestOrder. The details of the merchant provided promotions applied to the order. More details about the program are here.",
           "items": {
             "$ref": "OrderLegacyPromotion"
           },
@@ -6974,10 +6975,12 @@
       "id": "OrderpaymentsNotifyAuthApprovedRequest",
       "properties": {
         "authAmountPretax": {
-          "$ref": "Price"
+          "$ref": "Price",
+          "description": "Authorized amount for pre-tax charge on user's credit card."
         },
         "authAmountTax": {
-          "$ref": "Price"
+          "$ref": "Price",
+          "description": "Authorized amount for tax charge on user's credit card."
         }
       },
       "type": "object"
@@ -10560,12 +10563,7 @@
         },
         "unitTax": {
           "$ref": "Price",
-          "annotations": {
-            "required": [
-              "content.orders.createtestorder"
-            ]
-          },
-          "description": "Unit tax for the line item."
+          "description": "Deprecated. Ignored if provided. Tax is automatically calculated for MFL orders. For non-MFL orders, tax settings from Merchant Center are applied."
         }
       },
       "type": "object"
@@ -10646,7 +10644,7 @@
               "content.orders.createtestorder"
             ]
           },
-          "description": "The price for the product."
+          "description": "The price for the product. Tax is automatically calculated for MFL orders. For non-MFL orders, tax settings from Merchant Center are applied."
         },
         "targetCountry": {
           "annotations": {

@@ -772,6 +772,62 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScheduleOptions: Options customizing the data transfer schedule.
+type ScheduleOptions struct {
+	// DisableAutoScheduling: If true, automatic scheduling of data transfer
+	// runs for this configuration
+	// will be disabled. The runs can be started on ad-hoc basis
+	// using
+	// StartManualTransferRuns API. When automatic scheduling is disabled,
+	// the
+	// TransferConfig.schedule field will be ignored.
+	DisableAutoScheduling bool `json:"disableAutoScheduling,omitempty"`
+
+	// EndTime: Defines time to stop scheduling transfer runs. A transfer
+	// run cannot be
+	// scheduled at or after the end time. The end time can be changed at
+	// any
+	// moment. The time when a data transfer can be trigerred manually is
+	// not
+	// limited by this option.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Specifies time to start scheduling transfer runs. The
+	// first run will be
+	// scheduled at or after the start time according to a recurrence
+	// pattern
+	// defined in the schedule string. The start time can be changed at
+	// any
+	// moment. The time when a data transfer can be trigerred manually is
+	// not
+	// limited by this option.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DisableAutoScheduling") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisableAutoScheduling") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduleOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduleOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ScheduleTransferRunsRequest: A request to schedule transfer runs for
 // a time range.
 type ScheduleTransferRunsRequest struct {
@@ -1039,6 +1095,9 @@ type TransferConfig struct {
 	// ng-jobs-with-cron-yaml#the_schedule_format
 	// NOTE: the granularity should be at least 8 hours, or less frequent.
 	Schedule string `json:"schedule,omitempty"`
+
+	// ScheduleOptions: Options customizing the data transfer schedule.
+	ScheduleOptions *ScheduleOptions `json:"scheduleOptions,omitempty"`
 
 	// State: Output only. State of the most recently updated transfer run.
 	//

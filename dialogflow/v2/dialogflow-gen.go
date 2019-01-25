@@ -833,8 +833,8 @@ type GoogleCloudDialogflowV2EntityType struct {
 	// DisplayName: Required. The name of the entity type.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Entities: Optional. The collection of entities associated with the
-	// entity type.
+	// Entities: Optional. The collection of entity entries associated with
+	// the entity type.
 	Entities []*GoogleCloudDialogflowV2EntityTypeEntity `json:"entities,omitempty"`
 
 	// Kind: Required. Indicates the kind of entity type.
@@ -916,21 +916,36 @@ func (s *GoogleCloudDialogflowV2EntityTypeBatch) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2EntityTypeEntity: Optional. Represents an
-// entity.
+// GoogleCloudDialogflowV2EntityTypeEntity: An **entity entry** for an
+// associated entity type.
 type GoogleCloudDialogflowV2EntityTypeEntity struct {
-	// Synonyms: Required. A collection of synonyms. For `KIND_LIST` entity
-	// types this
-	// must contain exactly one synonym equal to `value`.
+	// Synonyms: Required. A collection of value synonyms. For example, if
+	// the entity type
+	// is *vegetable*, and `value` is *scallions*, a synonym could be
+	// *green
+	// onions*.
+	//
+	// For `KIND_LIST` entity types:
+	//
+	// *   This collection must contain exactly one synonym equal to
+	// `value`.
 	Synonyms []string `json:"synonyms,omitempty"`
 
-	// Value: Required.
+	// Value: Required. The primary value associated with this entity
+	// entry.
+	// For example, if the entity type is *vegetable*, the value could
+	// be
+	// *scallions*.
+	//
 	// For `KIND_MAP` entity types:
-	//   A canonical name to be used in place of synonyms.
+	//
+	// *   A canonical value to be used in place of synonyms.
+	//
 	// For `KIND_LIST` entity types:
-	//   A string that can contain references to other entity types (with
+	//
+	// *   A string that can contain references to other entity types (with
 	// or
-	//   without aliases).
+	//     without aliases).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Synonyms") to
@@ -959,12 +974,12 @@ func (s *GoogleCloudDialogflowV2EntityTypeEntity) MarshalJSON() ([]byte, error) 
 // GoogleCloudDialogflowV2EventInput: Events allow for matching intents
 // by event name instead of the natural
 // language input. For instance, input `<event: { name:
-// “welcome_event”,
-// parameters: { name: “Sam” } }>` can trigger a personalized
-// welcome response.
+// "welcome_event",
+// parameters: { name: "Sam" } }>` can trigger a personalized welcome
+// response.
 // The parameter `name` may be used by the agent in the
 // response:
-// `“Hello #welcome_event.name! What can I do for you today?”`.
+// "Hello #welcome_event.name! What can I do for you today?".
 type GoogleCloudDialogflowV2EventInput struct {
 	// LanguageCode: Required. The language of this query. See
 	// [Language
@@ -3446,8 +3461,8 @@ type GoogleCloudDialogflowV2beta1EntityType struct {
 	// DisplayName: Required. The name of the entity type.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Entities: Optional. The collection of entities associated with the
-	// entity type.
+	// Entities: Optional. The collection of entity entries associated with
+	// the entity type.
 	Entities []*GoogleCloudDialogflowV2beta1EntityTypeEntity `json:"entities,omitempty"`
 
 	// Kind: Required. Indicates the kind of entity type.
@@ -3496,21 +3511,36 @@ func (s *GoogleCloudDialogflowV2beta1EntityType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1EntityTypeEntity: Optional. Represents an
-// entity.
+// GoogleCloudDialogflowV2beta1EntityTypeEntity: An **entity entry** for
+// an associated entity type.
 type GoogleCloudDialogflowV2beta1EntityTypeEntity struct {
-	// Synonyms: Required. A collection of synonyms. For `KIND_LIST` entity
-	// types this
-	// must contain exactly one synonym equal to `value`.
+	// Synonyms: Required. A collection of value synonyms. For example, if
+	// the entity type
+	// is *vegetable*, and `value` is *scallions*, a synonym could be
+	// *green
+	// onions*.
+	//
+	// For `KIND_LIST` entity types:
+	//
+	// *   This collection must contain exactly one synonym equal to
+	// `value`.
 	Synonyms []string `json:"synonyms,omitempty"`
 
-	// Value: Required.
+	// Value: Required. The primary value associated with this entity
+	// entry.
+	// For example, if the entity type is *vegetable*, the value could
+	// be
+	// *scallions*.
+	//
 	// For `KIND_MAP` entity types:
-	//   A canonical name to be used in place of synonyms.
+	//
+	// *   A canonical value to be used in place of synonyms.
+	//
 	// For `KIND_LIST` entity types:
-	//   A string that can contain references to other entity types (with
+	//
+	// *   A string that can contain references to other entity types (with
 	// or
-	//   without aliases).
+	//     without aliases).
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Synonyms") to
@@ -3539,12 +3569,12 @@ func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, er
 // GoogleCloudDialogflowV2beta1EventInput: Events allow for matching
 // intents by event name instead of the natural
 // language input. For instance, input `<event: { name:
-// “welcome_event”,
-// parameters: { name: “Sam” } }>` can trigger a personalized
-// welcome response.
+// "welcome_event",
+// parameters: { name: "Sam" } }>` can trigger a personalized welcome
+// response.
 // The parameter `name` may be used by the agent in the
 // response:
-// `“Hello #welcome_event.name! What can I do for you today?”`.
+// "Hello #welcome_event.name! What can I do for you today?".
 type GoogleCloudDialogflowV2beta1EventInput struct {
 	// LanguageCode: Required. The language of this query. See
 	// [Language

@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/y92ZBD_TKKKguL_TSM7yuUk3ht0\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/3PU0tfPO0Ff5odyEdFP_aystsQs\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1161,7 +1161,7 @@
       }
     }
   },
-  "revision": "20181128",
+  "revision": "20190128",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1812,12 +1812,14 @@
           "description": "The simplest way to interpret a result.\n\nRequired",
           "enum": [
             "failure",
+            "flaky",
             "inconclusive",
             "skipped",
             "success",
             "unset"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

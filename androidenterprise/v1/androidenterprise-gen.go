@@ -867,14 +867,13 @@ func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
 // restrictions for installation. At least one of the fields must be
 // set.
 type AutoInstallConstraint struct {
-	// ChargingStateConstraint: Charging state to constrain on.
+	// ChargingStateConstraint: Charging state constraint.
 	ChargingStateConstraint string `json:"chargingStateConstraint,omitempty"`
 
-	// DeviceIdleStateConstraint: The idle state of the device to constrain
-	// on.
+	// DeviceIdleStateConstraint: Device idle state constraint.
 	DeviceIdleStateConstraint string `json:"deviceIdleStateConstraint,omitempty"`
 
-	// NetworkTypeConstraint: Network type to constrain on.
+	// NetworkTypeConstraint: Network type constraint.
 	NetworkTypeConstraint string `json:"networkTypeConstraint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -903,20 +902,20 @@ func (s *AutoInstallConstraint) MarshalJSON() ([]byte, error) {
 }
 
 type AutoInstallPolicy struct {
-	// AutoInstallConstraint: The constraints for the install. Currently
-	// there can be at most one constraint.
+	// AutoInstallConstraint: Constraints for auto-installing the app. You
+	// can specify a maximum of one constraint.
 	AutoInstallConstraint []*AutoInstallConstraint `json:"autoInstallConstraint,omitempty"`
 
-	// AutoInstallMode: The auto install mode. If unset defaults to
+	// AutoInstallMode: The auto-install mode. If unset defaults to
 	// "doNotAutoInstall".
 	AutoInstallMode string `json:"autoInstallMode,omitempty"`
 
 	// AutoInstallPriority: The priority of the install, as an unsigned
-	// integer. Lower number means higher priority.
+	// integer. A lower number means higher priority.
 	AutoInstallPriority int64 `json:"autoInstallPriority,omitempty"`
 
 	// MinimumVersionCode: The minimum version of the app. If a lower
-	// version of the app is installed then the app will be auto-updated
+	// version of the app is installed, then the app will be auto-updated
 	// according to the auto-install constraints, instead of waiting for the
 	// regular auto-update.
 	MinimumVersionCode int64 `json:"minimumVersionCode,omitempty"`
@@ -11538,7 +11537,7 @@ func (c *ProductsListCall) Query(query string) *ProductsListCall {
 }
 
 // Token sets the optional parameter "token": A pagination token is
-// contained in a request''s response when there are more products. The
+// contained in a request's response when there are more products. The
 // token can be used in a subsequent request to obtain more products,
 // and so forth. This parameter cannot be used in the initial request.
 func (c *ProductsListCall) Token(token string) *ProductsListCall {
@@ -11679,7 +11678,7 @@ func (c *ProductsListCall) Do(opts ...googleapi.CallOption) (*ProductsListRespon
 	//       "type": "string"
 	//     },
 	//     "token": {
-	//       "description": "A pagination token is contained in a request''s response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
+	//       "description": "A pagination token is contained in a request's response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

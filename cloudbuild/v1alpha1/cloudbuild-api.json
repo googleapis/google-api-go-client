@@ -244,7 +244,7 @@
       }
     }
   },
-  "revision": "20190116",
+  "revision": "20190127",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -752,7 +752,7 @@
       "id": "Network",
       "properties": {
         "network": {
-          "description": "Network on which the workers are created.\n“default” network is used if empty.",
+          "description": "Network on which the workers are created.\n\"default\" network is used if empty.",
           "type": "string"
         },
         "projectId": {
@@ -760,7 +760,7 @@
           "type": "string"
         },
         "subnetwork": {
-          "description": "Subnetwork on which the workers are created.\n“default” subnetwork is used if empty.",
+          "description": "Subnetwork on which the workers are created.\n\"default\" subnetwork is used if empty.",
           "type": "string"
         }
       },
@@ -990,7 +990,7 @@
           "type": "string"
         },
         "regions": {
-          "description": "List of regions to create the `WorkerPool`. Regions can’t be empty.\nIf Cloud Build adds a new GCP region in the future, the existing\n`WorkerPool` will not be enabled in the new region automatically;\nyou must add the new region to the `regions` field to enable the\n`WorkerPool` in that region.",
+          "description": "List of regions to create the `WorkerPool`. Regions can't be empty.\nIf Cloud Build adds a new GCP region in the future, the existing\n`WorkerPool` will not be enabled in the new region automatically;\nyou must add the new region to the `regions` field to enable the\n`WorkerPool` in that region.",
           "enumDescriptions": [
             "no region",
             "us-central1 region",

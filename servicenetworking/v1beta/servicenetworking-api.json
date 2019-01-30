@@ -168,11 +168,40 @@
             "https://www.googleapis.com/auth/service.management"
           ]
         },
-        "patch": {
+        "searchRange": {
+          "description": "Service producers can use this method to find a currently unused range\nwithin consumer allocated ranges.   This returned range is not reserved,\nand not guaranteed to remain unused.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation).\nOperation\u003cresponse: Range\u003e",
+          "flatPath": "v1beta/services/{servicesId}:searchRange",
+          "httpMethod": "POST",
+          "id": "servicenetworking.services.searchRange",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. This is in a form services/{service}.\n{service} the name of the private access management service, for example\n'service-peering.example.com'.",
+              "location": "path",
+              "pattern": "^services/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1beta/{+parent}:searchRange",
+          "request": {
+            "$ref": "SearchRangeRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/service.management"
+          ]
+        },
+        "updateConnections": {
           "description": "Updates the allocated ranges that are assigned to a connection.\nThe response from the `get` operation will be of type `Connection` if the\noperation successfully completes.",
-          "flatPath": "v1beta/services/{servicesId}",
+          "flatPath": "v1beta/services/{servicesId}/connections",
           "httpMethod": "PATCH",
-          "id": "servicenetworking.services.patch",
+          "id": "servicenetworking.services.updateConnections",
           "parameterOrder": [
             "name"
           ],
@@ -196,38 +225,9 @@
               "type": "string"
             }
           },
-          "path": "v1beta/{+name}",
+          "path": "v1beta/{+name}/connections",
           "request": {
             "$ref": "Connection"
-          },
-          "response": {
-            "$ref": "Operation"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/service.management"
-          ]
-        },
-        "searchRange": {
-          "description": "Service producers can use this method to find a currently unused range\nwithin consumer allocated ranges.   This returned range is not reserved,\nand not guaranteed to remain unused.\nIt will validate previously provided allocated ranges, find\nnon-conflicting sub-range of requested size (expressed in\nnumber of leading bits of ipv4 network mask, as in CIDR range\nnotation).\nOperation\u003cresponse: Range\u003e",
-          "flatPath": "v1beta/services/{servicesId}:searchRange",
-          "httpMethod": "POST",
-          "id": "servicenetworking.services.searchRange",
-          "parameterOrder": [
-            "parent"
-          ],
-          "parameters": {
-            "parent": {
-              "description": "Required. This is in a form services/{service}.\n{service} the name of the private access management service, for example\n'service-peering.example.com'.",
-              "location": "path",
-              "pattern": "^services/[^/]+$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1beta/{+parent}:searchRange",
-          "request": {
-            "$ref": "SearchRangeRequest"
           },
           "response": {
             "$ref": "Operation"
@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20190114",
+  "revision": "20190128",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {

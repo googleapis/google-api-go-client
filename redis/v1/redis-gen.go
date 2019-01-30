@@ -358,8 +358,6 @@ type Instance struct {
 	// progress.
 	//   "DELETING" - Redis instance is being deleted.
 	//   "REPAIRING" - Redis instance is being repaired and may be unusable.
-	// Details can be
-	// found in the `status_message` field.
 	//   "MAINTENANCE" - Maintenance is being performed on this Redis
 	// instance.
 	State string `json:"state,omitempty"`

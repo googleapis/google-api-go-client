@@ -309,6 +309,7 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_K80" - Nvidia Tesla K80 GPU.
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
+	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	//   "TPU_V2" - TPU V2
 	Type string `json:"type,omitempty"`
 
@@ -424,6 +425,7 @@ type GoogleCloudMlV1__Capability struct {
 	//   "NVIDIA_TESLA_K80" - Nvidia Tesla K80 GPU.
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
+	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
 	//   "TPU_V2" - TPU V2
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
@@ -1504,6 +1506,39 @@ func (s *GoogleCloudMlV1__PredictionOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudMlV1__ReplicaConfig: Represents the configration for a
+// replica in a cluster.
+type GoogleCloudMlV1__ReplicaConfig struct {
+	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
+
+	// ImageUri: The docker image to run on worker.
+	// This image must be in Google Container Registry.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcceleratorConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__ReplicaConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__ReplicaConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__SetDefaultVersionRequest: Request message for the
 // SetDefaultVersion request.
 type GoogleCloudMlV1__SetDefaultVersionRequest struct {
@@ -1534,6 +1569,13 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// specifying
 	// this field is that Cloud ML validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
+
+	// MasterConfig: Optional. The configuration for master.
+	//
+	// Only one of `masterConfig.imageUri` and `runtimeVersion` should
+	// be
+	// set.
+	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
 	// for your training
@@ -1640,6 +1682,13 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// the training program and any additional dependencies.
 	// The maximum number of package URIs is 100.
 	PackageUris []string `json:"packageUris,omitempty"`
+
+	// ParameterServerConfig: Optional. The config of parameter servers.
+	//
+	// If `parameterServerConfig.imageUri` has not been set, the value
+	// of
+	// `masterConfig.imageUri` will be used.
+	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
 	// replicas to use for the training
@@ -1749,6 +1798,13 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// be
 	// different from your worker type and master type.
 	ScaleTier string `json:"scaleTier,omitempty"`
+
+	// WorkerConfig: Optional. The configrations for workers.
+	//
+	// If `workerConfig.imageUri` has not been set, the value
+	// of
+	// `masterConfig.imageUri` will be used.
+	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
 	// training job. Each

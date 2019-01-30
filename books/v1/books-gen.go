@@ -2433,6 +2433,8 @@ type Notification struct {
 
 	TargetUrl string `json:"targetUrl,omitempty"`
 
+	TimeToExpireMs int64 `json:"timeToExpireMs,omitempty,string"`
+
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -905,7 +905,7 @@ func (s *ListWorkerPoolsResponse) MarshalJSON() ([]byte, error) {
 // Network: Network describes the GCP network used to create workers in.
 type Network struct {
 	// Network: Network on which the workers are created.
-	// “default” network is used if empty.
+	// "default" network is used if empty.
 	Network string `json:"network,omitempty"`
 
 	// ProjectId: Project id containing the defined network and subnetwork.
@@ -919,9 +919,8 @@ type Network struct {
 	// with no VPC, this will be the same as project_id.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// Subnetwork: Subnetwork on which the workers are
-	// created.
-	// “default” subnetwork is used if empty.
+	// Subnetwork: Subnetwork on which the workers are created.
+	// "default" subnetwork is used if empty.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -1403,8 +1402,8 @@ type WorkerPool struct {
 	// `WorkerPool` is created.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// Regions: List of regions to create the `WorkerPool`. Regions can’t
-	// be empty.
+	// Regions: List of regions to create the `WorkerPool`. Regions can't be
+	// empty.
 	// If Cloud Build adds a new GCP region in the future, the
 	// existing
 	// `WorkerPool` will not be enabled in the new region automatically;

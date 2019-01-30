@@ -382,7 +382,7 @@
       }
     }
   },
-  "revision": "20190116",
+  "revision": "20190122",
   "rootUrl": "https://admin-remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1149,7 +1149,7 @@
           "type": "string"
         },
         "machineType": {
-          "description": "Required. Machine type of the worker, such as n1-standard-2.\nSee https://cloud.google.com/compute/docs/machine-types for a list of\nsupported machine types.",
+          "description": "Required. Machine type of the worker, such as `n1-standard-2`.\nSee https://cloud.google.com/compute/docs/machine-types for a list of\nsupported machine types. Note that `f1-micro` and `g1-small` are not yet\nsupported.",
           "type": "string"
         },
         "minCpuPlatform": {

@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/62CTAjcZgObMIh6Lb59rsOBAAME\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/c9p6mtC7ozG3ElgN5bnD6rjWj10\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -1858,7 +1858,7 @@
               "type": "string"
             },
             "token": {
-              "description": "A pagination token is contained in a request''s response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
+              "description": "A pagination token is contained in a request's response when there are more products. The token can be used in a subsequent request to obtain more products, and so forth. This parameter cannot be used in the initial request.",
               "location": "query",
               "type": "string"
             }
@@ -2911,7 +2911,7 @@
       }
     }
   },
-  "revision": "20190117",
+  "revision": "20190123",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3228,15 +3228,15 @@
       "id": "AutoInstallConstraint",
       "properties": {
         "chargingStateConstraint": {
-          "description": "Charging state to constrain on.",
+          "description": "Charging state constraint.",
           "type": "string"
         },
         "deviceIdleStateConstraint": {
-          "description": "The idle state of the device to constrain on.",
+          "description": "Device idle state constraint.",
           "type": "string"
         },
         "networkTypeConstraint": {
-          "description": "Network type to constrain on.",
+          "description": "Network type constraint.",
           "type": "string"
         }
       },
@@ -3246,23 +3246,23 @@
       "id": "AutoInstallPolicy",
       "properties": {
         "autoInstallConstraint": {
-          "description": "The constraints for the install. Currently there can be at most one constraint.",
+          "description": "Constraints for auto-installing the app. You can specify a maximum of one constraint.",
           "items": {
             "$ref": "AutoInstallConstraint"
           },
           "type": "array"
         },
         "autoInstallMode": {
-          "description": "The auto install mode. If unset defaults to \"doNotAutoInstall\".",
+          "description": "The auto-install mode. If unset defaults to \"doNotAutoInstall\".",
           "type": "string"
         },
         "autoInstallPriority": {
-          "description": "The priority of the install, as an unsigned integer. Lower number means higher priority.",
+          "description": "The priority of the install, as an unsigned integer. A lower number means higher priority.",
           "format": "int32",
           "type": "integer"
         },
         "minimumVersionCode": {
-          "description": "The minimum version of the app. If a lower version of the app is installed then the app will be auto-updated according to the auto-install constraints, instead of waiting for the regular auto-update.",
+          "description": "The minimum version of the app. If a lower version of the app is installed, then the app will be auto-updated according to the auto-install constraints, instead of waiting for the regular auto-update.",
           "format": "int32",
           "type": "integer"
         }

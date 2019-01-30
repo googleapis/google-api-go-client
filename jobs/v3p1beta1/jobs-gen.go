@@ -444,7 +444,7 @@ type CommuteFilter struct {
 	//
 	// The departure time used to calculate traffic impact, represented
 	// as
-	// .google.type.TimeOfDay in local time zone.
+	// google.type.TimeOfDay in local time zone.
 	//
 	// Currently traffic model is restricted to hour level resolution.
 	DepartureTime *TimeOfDay `json:"departureTime,omitempty"`
@@ -2493,11 +2493,10 @@ type Job struct {
 	// which
 	// the job is available. If this field is set, a
 	// LocationFilter in a search query within the job region
-	// finds this job posting if an exact location match is not
-	// specified.
-	// If this field is set to PostingRegion.NATION_WIDE
+	// finds this job posting if an exact location match isn't specified.
+	// If this field is set to PostingRegion.NATION
 	// or
-	// [PostingRegion.ADMINISTRATIVE_AREA], setting job addresses
+	// PostingRegion.ADMINISTRATIVE_AREA, setting job Job.addresses
 	// to the same location level as this field is strongly recommended.
 	//
 	// Possible values:

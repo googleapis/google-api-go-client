@@ -1526,6 +1526,7 @@ type Outcome struct {
 	//
 	// Possible values:
 	//   "failure"
+	//   "flaky"
 	//   "inconclusive"
 	//   "skipped"
 	//   "success"

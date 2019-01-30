@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190107",
+  "revision": "20190129",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1537,6 +1537,7 @@
             "MALFORMED_TEST_APK",
             "NO_MANIFEST",
             "NO_PACKAGE_NAME",
+            "INVALID_PACKAGE_NAME",
             "TEST_SAME_AS_APP",
             "NO_INSTRUMENTATION",
             "NO_SIGNATURE",
@@ -1569,6 +1570,7 @@
             "The input test APK could not be parsed.",
             "The AndroidManifest.xml could not be found.",
             "The APK manifest does not declare a package name.",
+            "The APK application ID (aka package name) is invalid.\nSee also\nhttps://developer.android.com/studio/build/application-id",
             "The test package and app package are the same.",
             "The test apk does not declare an instrumentation.",
             "The input app apk does not have a signature.",

@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190123",
+  "revision": "20190126",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1082,6 +1082,7 @@
             "NVIDIA_TESLA_K80",
             "NVIDIA_TESLA_P100",
             "NVIDIA_TESLA_V100",
+            "NVIDIA_TESLA_P4",
             "TPU_V2"
           ],
           "enumDescriptions": [
@@ -1089,6 +1090,7 @@
             "Nvidia Tesla K80 GPU.",
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
+            "Nvidia Tesla P4 GPU.",
             "TPU V2"
           ],
           "type": "string"
@@ -1124,6 +1126,7 @@
             "Nvidia Tesla K80 GPU.",
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
+            "Nvidia Tesla P4 GPU.",
             "TPU V2"
           ],
           "items": {
@@ -1132,6 +1135,7 @@
               "NVIDIA_TESLA_K80",
               "NVIDIA_TESLA_P100",
               "NVIDIA_TESLA_V100",
+              "NVIDIA_TESLA_P4",
               "TPU_V2"
             ],
             "type": "string"
@@ -1776,6 +1780,20 @@
       },
       "type": "object"
     },
+    "GoogleCloudMlV1__ReplicaConfig": {
+      "description": "Represents the configration for a replica in a cluster.",
+      "id": "GoogleCloudMlV1__ReplicaConfig",
+      "properties": {
+        "acceleratorConfig": {
+          "$ref": "GoogleCloudMlV1__AcceleratorConfig"
+        },
+        "imageUri": {
+          "description": "The docker image to run on worker.\nThis image must be in Google Container Registry.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudMlV1__SetDefaultVersionRequest": {
       "description": "Request message for the SetDefaultVersion request.",
       "id": "GoogleCloudMlV1__SetDefaultVersionRequest",
@@ -1801,6 +1819,10 @@
           "description": "Optional. A Google Cloud Storage path in which to store training outputs\nand other data needed for training. This path is passed to your TensorFlow\nprogram as the '--job-dir' command-line argument. The benefit of specifying\nthis field is that Cloud ML validates the path for use in training.",
           "type": "string"
         },
+        "masterConfig": {
+          "$ref": "GoogleCloudMlV1__ReplicaConfig",
+          "description": "Optional. The configuration for master.\n\nOnly one of `masterConfig.imageUri` and `runtimeVersion` should be\nset."
+        },
         "masterType": {
           "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker.\n\nThe following types are supported:\n\n\u003cdl\u003e\n  \u003cdt\u003estandard\u003c/dt\u003e\n  \u003cdd\u003e\n  A basic machine configuration suitable for training simple models with\n  small to moderate datasets.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with a lot of memory, specially suited for parameter servers\n  when your model is large (having many hidden layers or layers with very\n  large numbers of nodes).\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_s\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine suitable for the master and workers of the cluster when your\n  model requires more computation than the standard machine can handle\n  satisfactorily.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_s\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_m\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla K80 GPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-gpus\"\u003eusing GPUs to\n  train your model\u003c/a\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that also includes\n  eight NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla P100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla P100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003elarge_model\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that\n  also includes four NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that\n  also includes eight NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecloud_tpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A TPU VM including one Cloud TPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-tpus\"\u003eusing TPUs to train\n  your model\u003c/a\u003e.\n  \u003c/dd\u003e\n\u003c/dl\u003e\n\nYou must set this value when `scaleTier` is set to `CUSTOM`.",
           "type": "string"
@@ -1811,6 +1833,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "parameterServerConfig": {
+          "$ref": "GoogleCloudMlV1__ReplicaConfig",
+          "description": "Optional. The config of parameter servers.\n\nIf `parameterServerConfig.imageUri` has not been set, the value of\n`masterConfig.imageUri` will be used."
         },
         "parameterServerCount": {
           "description": "Optional. The number of parameter server replicas to use for the training\njob. Each replica in the cluster will be of the type specified in\n`parameter_server_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`.If you\nset this value, you must also set `parameter_server_type`.\n\nThe default value is zero.",
@@ -1856,6 +1882,10 @@
             "The CUSTOM tier is not a set tier, but rather enables you to use your\nown cluster specification. When you use this tier, set values to\nconfigure your processing cluster according to these guidelines:\n\n*   You _must_ set `TrainingInput.masterType` to specify the type\n    of machine to use for your master node. This is the only required\n    setting.\n\n*   You _may_ set `TrainingInput.workerCount` to specify the number of\n    workers to use. If you specify one or more workers, you _must_ also\n    set `TrainingInput.workerType` to specify the type of machine to use\n    for your worker nodes.\n\n*   You _may_ set `TrainingInput.parameterServerCount` to specify the\n    number of parameter servers to use. If you specify one or more\n    parameter servers, you _must_ also set\n    `TrainingInput.parameterServerType` to specify the type of machine to\n    use for your parameter servers.\n\nNote that all of your workers must use the same machine type, which can\nbe different from your parameter server type and master type. Your\nparameter servers must likewise use the same machine type, which can be\ndifferent from your worker type and master type."
           ],
           "type": "string"
+        },
+        "workerConfig": {
+          "$ref": "GoogleCloudMlV1__ReplicaConfig",
+          "description": "Optional. The configrations for workers.\n\nIf `workerConfig.imageUri` has not been set, the value of\n`masterConfig.imageUri` will be used."
         },
         "workerCount": {
           "description": "Optional. The number of worker replicas to use for the training job. Each\nreplica in the cluster will be of the type specified in `worker_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `worker_type`.\n\nThe default value is zero.",

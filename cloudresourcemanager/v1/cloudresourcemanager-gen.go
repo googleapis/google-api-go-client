@@ -4390,7 +4390,7 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the Organization to fetch, e.g. \"organizations/1234\".",
+	//       "description": "The resource name of the Organization to fetch. This is the organization's\nrelative path in the API, formatted as \"organizations/[organizationId]\".\nFor example, \"organizations/1234\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,

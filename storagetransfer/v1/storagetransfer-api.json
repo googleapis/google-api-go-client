@@ -419,7 +419,7 @@
       }
     }
   },
-  "revision": "20180919",
+  "revision": "20190128",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -550,7 +550,7 @@
           "type": "string"
         },
         "errorLogEntries": {
-          "description": "Error samples.",
+          "description": "Error samples.\n\nNo more than 100 error log entries may be recorded for a given\nerror code for a single task.",
           "items": {
             "$ref": "ErrorLogEntry"
           },

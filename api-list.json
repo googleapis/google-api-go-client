@@ -3319,6 +3319,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "videointelligence:v1p2beta1",
+   "name": "videointelligence",
+   "version": "v1p2beta1",
+   "title": "Cloud Video Intelligence API",
+   "description": "Detects objects, explicit content, and scene changes in videos. It also specifies the region for annotation and transcribes speech to text.",
+   "discoveryRestUrl": "https://videointelligence.googleapis.com/$discovery/rest?version=v1p2beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/video-intelligence/docs/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "videointelligence:v1",
    "name": "videointelligence",
    "version": "v1",

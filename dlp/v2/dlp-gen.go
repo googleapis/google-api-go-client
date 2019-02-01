@@ -239,6 +239,11 @@ type ProjectsStoredInfoTypesService struct {
 // job.
 // See https://cloud.google.com/dlp/docs/concepts-actions to learn more.
 type GooglePrivacyDlpV2Action struct {
+	// JobNotificationEmails: Enable email notification to project owners
+	// and editors on job‘s
+	// completion/failure.
+	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
+
 	// PubSub: Publish a notification to a pubsub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
 
@@ -249,20 +254,22 @@ type GooglePrivacyDlpV2Action struct {
 	// SaveFindings: Save resulting findings in a provided location.
 	SaveFindings *GooglePrivacyDlpV2SaveFindings `json:"saveFindings,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PubSub") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "JobNotificationEmails") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PubSub") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "JobNotificationEmails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4028,6 +4035,12 @@ func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2JobNotificationEmails: Enable email notification to
+// project owners and editors on jobs's
+// completion/failure.
+type GooglePrivacyDlpV2JobNotificationEmails struct {
+}
+
 // GooglePrivacyDlpV2JobTrigger: Contains a configuration to make dlp
 // api calls on a repeating basis.
 // See https://cloud.google.com/dlp/docs/concepts-job-triggers to learn
@@ -5970,6 +5983,12 @@ func (s *GooglePrivacyDlpV2RedactImageResponse) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2Regex: Message defining a custom regular
 // expression.
 type GooglePrivacyDlpV2Regex struct {
+	// GroupIndexes: The index of the submatch to extract as findings. When
+	// not
+	// specified, the entire match is returned. No more than 3 may be
+	// included.
+	GroupIndexes []int64 `json:"groupIndexes,omitempty"`
+
 	// Pattern: Pattern defining the regular expression. Its
 	// syntax
 	// (https://github.com/google/re2/wiki/Syntax) can be found under
@@ -5977,7 +5996,7 @@ type GooglePrivacyDlpV2Regex struct {
 	// google/re2 repository on GitHub.
 	Pattern string `json:"pattern,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Pattern") to
+	// ForceSendFields is a list of field names (e.g. "GroupIndexes") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5985,10 +6004,10 @@ type GooglePrivacyDlpV2Regex struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Pattern") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "GroupIndexes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -13616,6 +13635,40 @@ func (r *ProjectsJobTriggersService) List(parent string) *ProjectsJobTriggersLis
 	return c
 }
 
+// Filter sets the optional parameter "filter": Allows
+// filtering.
+//
+// Supported syntax:
+//
+// * Filter expressions are made up of one or more restrictions.
+// * Restrictions can be combined by `AND` or `OR` logical operators.
+// A
+// sequence of restrictions implicitly uses `AND`.
+// * A restriction has the form of `<field> <operator> <value>`.
+// * Supported fields/values for inspect jobs:
+//     - `status` - HEALTHY|PAUSED|CANCELLED
+//     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
+//     - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by
+//     quotation marks. Nanoseconds are ignored.
+//     - 'error_count' - Number of errors that have occurred while
+// running.
+// * The operator must be `=` or `!=` for status and
+// inspected_storage.
+//
+// Examples:
+//
+// * inspected_storage = cloud_storage AND status = HEALTHY
+// * inspected_storage = cloud_storage OR inspected_storage = bigquery
+// * inspected_storage = cloud_storage AND (state = PAUSED OR state =
+// HEALTHY)
+// * last_run_time > \"2017-12-12T00:00:00+00:00\"
+//
+// The length of this field should be no more than 500 characters.
+func (c *ProjectsJobTriggersListCall) Filter(filter string) *ProjectsJobTriggersListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // OrderBy sets the optional parameter "orderBy": Optional comma
 // separated list of triggeredJob fields to order by,
 // followed by `asc` or `desc` postfix. This list is
@@ -13631,6 +13684,7 @@ func (r *ProjectsJobTriggersService) List(parent string) *ProjectsJobTriggersLis
 // - `create_time`: corresponds to time the JobTrigger was created.
 // - `update_time`: corresponds to time the JobTrigger was last
 // updated.
+// - `last_run_time`: corresponds to the last time the JobTrigger ran.
 // - `name`: corresponds to JobTrigger's name.
 // - `display_name`: corresponds to JobTrigger's display name.
 // - `status`: corresponds to JobTrigger's status.
@@ -13763,8 +13817,13 @@ func (c *ProjectsJobTriggersListCall) Do(opts ...googleapi.CallOption) (*GoogleP
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `status` - HEALTHY|PAUSED|CANCELLED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - 'last_run_time` - RFC 3339 formatted timestamp, surrounded by\n    quotation marks. Nanoseconds are ignored.\n    - 'error_count' - Number of errors that have occurred while running.\n* The operator must be `=` or `!=` for status and inspected_storage.\n\nExamples:\n\n* inspected_storage = cloud_storage AND status = HEALTHY\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = PAUSED OR state = HEALTHY)\n* last_run_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "orderBy": {
-	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
+	//       "description": "Optional comma separated list of triggeredJob fields to order by,\nfollowed by `asc` or `desc` postfix. This list is case-insensitive,\ndefault sorting order is ascending, redundant space characters are\ninsignificant.\n\nExample: `name asc,update_time, create_time desc`\n\nSupported fields are:\n\n- `create_time`: corresponds to time the JobTrigger was created.\n- `update_time`: corresponds to time the JobTrigger was last updated.\n- `last_run_time`: corresponds to the last time the JobTrigger ran.\n- `name`: corresponds to JobTrigger's name.\n- `display_name`: corresponds to JobTrigger's display name.\n- `status`: corresponds to JobTrigger's status.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

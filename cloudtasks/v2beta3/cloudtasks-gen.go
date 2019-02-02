@@ -354,6 +354,8 @@ type AppEngineHttpRequest struct {
 	//   "HEAD" - HTTP HEAD
 	//   "PUT" - HTTP PUT
 	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
 	// RelativeUri: The relative URI.
@@ -1109,9 +1111,8 @@ type PurgeQueueRequest struct {
 // limits,
 // retry options, queue types, and others.
 type Queue struct {
-	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only
-	// to
-	// AppEngine tasks in this queue.
+	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only to
+	// App Engine tasks in this queue.
 	AppEngineHttpQueue *AppEngineHttpQueue `json:"appEngineHttpQueue,omitempty"`
 
 	// Name: Caller-specified and required in CreateQueue,
@@ -1788,6 +1789,54 @@ type Task struct {
 	// haven't
 	// received a response.
 	DispatchCount int64 `json:"dispatchCount,omitempty"`
+
+	// DispatchDeadline: The deadline for requests sent to the worker. If
+	// the worker does not
+	// respond by this deadline then the request is cancelled and the
+	// attempt
+	// is marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will retry
+	// the
+	// task according to the RetryConfig.
+	//
+	// Note that when the request is cancelled, Cloud Tasks will stop
+	// listing for
+	// the response, but whether the worker stops processing depends on
+	// the
+	// worker. For example, if the worker is stuck, it may not react to
+	// cancelled
+	// requests.
+	//
+	// The default and maximum values depend on the type of request:
+	//
+	//
+	// * For App Engine tasks, 0 indicates that the
+	//   request has the default deadline. The default deadline depends on
+	// the
+	//   [scaling
+	// type](https://cloud.google.com/appengine/docs/standard/go/how-instance
+	// s-are-managed#instance_scaling)
+	//   of the service: 10 minutes for standard apps with automatic
+	// scaling, 24
+	//   hours for standard apps with manual and basic scaling, and 60
+	// minutes for
+	//   flex apps. If the request deadline is set, it must be in the
+	// interval [15
+	//   seconds, 24 hours 15 seconds]. Regardless of the task's
+	//   `dispatch_deadline`, the app handler will not run for longer than
+	// than
+	//   the service's timeout. We recommend setting the `dispatch_deadline`
+	// to
+	//   at most a few seconds more than the app handler's timeout. For
+	// more
+	//   information see
+	//
+	// [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-hand
+	// lers#timeouts).
+	//
+	// `dispatch_deadline` will be truncated to the nearest millisecond.
+	// The
+	// deadline is an approximate deadline.
+	DispatchDeadline string `json:"dispatchDeadline,omitempty"`
 
 	// FirstAttempt: Output only. The status of the task's first
 	// attempt.

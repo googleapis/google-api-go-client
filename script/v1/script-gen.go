@@ -490,10 +490,11 @@ type ExecutionRequest struct {
 	// `string`, `number`, `array`, `object`, or `boolean`. Optional.
 	Parameters []interface{} `json:"parameters,omitempty"`
 
-	// SessionState: For Android add-ons only. An ID that represents the
-	// user's current session
-	// in the Android app for Google Docs or Sheets, included as extra data
-	// in
+	// SessionState: <b>Deprecated</b>. For use with Android add-ons only.
+	// An ID that represents
+	// the user's current session in the Android app for Google Docs or
+	// Sheets,
+	// included as extra data in
 	// the
 	// [Intent](https://developer.android.com/guide/components/intents-fi
 	// lters.html)

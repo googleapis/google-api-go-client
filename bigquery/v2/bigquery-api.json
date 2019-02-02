@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/Sc1cBz8bm3nVS0YgBFltaKSnt9g\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/R-oIGXZXmcc1qto8wFr473V-oY4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20190108",
+  "revision": "20190124",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -3145,6 +3145,19 @@
     "TableFieldSchema": {
       "id": "TableFieldSchema",
       "properties": {
+        "categories": {
+          "description": "[Optional] The categories attached to this field, used for field-level access control.",
+          "properties": {
+            "names": {
+              "description": "A list of category resource names. For example, \"projects/1/taxonomies/2/categories/3\". At most 5 categories are allowed.",
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            }
+          },
+          "type": "object"
+        },
         "description": {
           "description": "[Optional] The field description. The maximum length is 1,024 characters.",
           "type": "string"

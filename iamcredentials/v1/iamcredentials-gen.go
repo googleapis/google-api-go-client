@@ -330,6 +330,7 @@ type GenerateIdentityBindingAccessTokenRequest struct {
 	//   "iat": 1517963104,
 	//   "exp": 1517966704,
 	//   "aud":
+	//
 	// "https://iamcredentials.googleapis.com/google.iam.credentials.v1.Cloud
 	// Gaia",
 	//   "sub": "113475438248934895348",

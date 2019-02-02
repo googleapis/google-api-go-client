@@ -58,6 +58,9 @@ const (
 	// Share your Google+ profile information and view and manage your game
 	// activity
 	GamesScope = "https://www.googleapis.com/auth/games"
+
+	// Know who you are on Google
+	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 )
 
 func New(client *http.Client) (*Service, error) {
@@ -5195,7 +5198,8 @@ func (c *AchievementDefinitionsListCall) Do(opts ...googleapi.CallOption) (*Achi
 	//     "$ref": "AchievementDefinitionsListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -5369,7 +5373,8 @@ func (c *AchievementsIncrementCall) Do(opts ...googleapi.CallOption) (*Achieveme
 	//     "$ref": "AchievementIncrementResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -5583,7 +5588,8 @@ func (c *AchievementsListCall) Do(opts ...googleapi.CallOption) (*PlayerAchievem
 	//     "$ref": "PlayerAchievementListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -5732,7 +5738,8 @@ func (c *AchievementsRevealCall) Do(opts ...googleapi.CallOption) (*AchievementR
 	//     "$ref": "AchievementRevealResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -5873,7 +5880,8 @@ func (c *AchievementsSetStepsAtLeastCall) Do(opts ...googleapi.CallOption) (*Ach
 	//     "$ref": "AchievementSetStepsAtLeastResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6013,7 +6021,8 @@ func (c *AchievementsUnlockCall) Do(opts ...googleapi.CallOption) (*AchievementU
 	//     "$ref": "AchievementUnlockResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6150,7 +6159,8 @@ func (c *AchievementsUpdateMultipleCall) Do(opts ...googleapi.CallOption) (*Achi
 	//     "$ref": "AchievementUpdateMultipleResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6334,7 +6344,8 @@ func (c *ApplicationsGetCall) Do(opts ...googleapi.CallOption) (*Application, er
 	//     "$ref": "Application"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6432,7 +6443,8 @@ func (c *ApplicationsPlayedCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "applications/played",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6575,7 +6587,8 @@ func (c *ApplicationsVerifyCall) Do(opts ...googleapi.CallOption) (*ApplicationV
 	//     "$ref": "ApplicationVerifyResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6744,7 +6757,8 @@ func (c *EventsListByPlayerCall) Do(opts ...googleapi.CallOption) (*PlayerEventL
 	//     "$ref": "PlayerEventListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -6934,7 +6948,8 @@ func (c *EventsListDefinitionsCall) Do(opts ...googleapi.CallOption) (*EventDefi
 	//     "$ref": "EventDefinitionListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7091,7 +7106,8 @@ func (c *EventsRecordCall) Do(opts ...googleapi.CallOption) (*EventUpdateRespons
 	//     "$ref": "EventUpdateResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7244,7 +7260,8 @@ func (c *LeaderboardsGetCall) Do(opts ...googleapi.CallOption) (*Leaderboard, er
 	//     "$ref": "Leaderboard"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7412,7 +7429,8 @@ func (c *LeaderboardsListCall) Do(opts ...googleapi.CallOption) (*LeaderboardLis
 	//     "$ref": "LeaderboardListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7559,7 +7577,8 @@ func (c *MetagameGetMetagameConfigCall) Do(opts ...googleapi.CallOption) (*Metag
 	//     "$ref": "MetagameConfig"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7758,7 +7777,8 @@ func (c *MetagameListCategoriesByPlayerCall) Do(opts ...googleapi.CallOption) (*
 	//     "$ref": "CategoryListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -7933,7 +7953,8 @@ func (c *PlayersGetCall) Do(opts ...googleapi.CallOption) (*Player, error) {
 	//     "$ref": "Player"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8128,7 +8149,8 @@ func (c *PlayersListCall) Do(opts ...googleapi.CallOption) (*PlayerListResponse,
 	//     "$ref": "PlayerListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8243,7 +8265,8 @@ func (c *PushtokensRemoveCall) Do(opts ...googleapi.CallOption) error {
 	//     "$ref": "PushTokenId"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8336,7 +8359,8 @@ func (c *PushtokensUpdateCall) Do(opts ...googleapi.CallOption) error {
 	//     "$ref": "PushToken"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8456,7 +8480,8 @@ func (c *QuestMilestonesClaimCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "quests/{questId}/milestones/{milestoneId}/claim",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8596,7 +8621,8 @@ func (c *QuestsAcceptCall) Do(opts ...googleapi.CallOption) (*Quest, error) {
 	//     "$ref": "Quest"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8780,7 +8806,8 @@ func (c *QuestsListCall) Do(opts ...googleapi.CallOption) (*QuestListResponse, e
 	//     "$ref": "QuestListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -8938,7 +8965,8 @@ func (c *RevisionsCheckCall) Do(opts ...googleapi.CallOption) (*RevisionCheckRes
 	//     "$ref": "RevisionCheckResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9074,7 +9102,8 @@ func (c *RoomsCreateCall) Do(opts ...googleapi.CallOption) (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9214,7 +9243,8 @@ func (c *RoomsDeclineCall) Do(opts ...googleapi.CallOption) (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9314,7 +9344,8 @@ func (c *RoomsDismissCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "rooms/{roomId}/dismiss",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9467,7 +9498,8 @@ func (c *RoomsGetCall) Do(opts ...googleapi.CallOption) (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9617,7 +9649,8 @@ func (c *RoomsJoinCall) Do(opts ...googleapi.CallOption) (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9767,7 +9800,8 @@ func (c *RoomsLeaveCall) Do(opts ...googleapi.CallOption) (*Room, error) {
 	//     "$ref": "Room"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -9935,7 +9969,8 @@ func (c *RoomsListCall) Do(opts ...googleapi.CallOption) (*RoomList, error) {
 	//     "$ref": "RoomList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -10107,7 +10142,8 @@ func (c *RoomsReportStatusCall) Do(opts ...googleapi.CallOption) (*RoomStatus, e
 	//     "$ref": "RoomStatus"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -10356,7 +10392,8 @@ func (c *ScoresGetCall) Do(opts ...googleapi.CallOption) (*PlayerLeaderboardScor
 	//     "$ref": "PlayerLeaderboardScoreListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -10597,7 +10634,8 @@ func (c *ScoresListCall) Do(opts ...googleapi.CallOption) (*LeaderboardScores, e
 	//     "$ref": "LeaderboardScores"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -10868,7 +10906,8 @@ func (c *ScoresListWindowCall) Do(opts ...googleapi.CallOption) (*LeaderboardSco
 	//     "$ref": "LeaderboardScores"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11052,7 +11091,8 @@ func (c *ScoresSubmitCall) Do(opts ...googleapi.CallOption) (*PlayerScoreRespons
 	//     "$ref": "PlayerScoreResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11187,7 +11227,8 @@ func (c *ScoresSubmitMultipleCall) Do(opts ...googleapi.CallOption) (*PlayerScor
 	//     "$ref": "PlayerScoreListResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11341,7 +11382,8 @@ func (c *SnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive.appdata",
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11525,7 +11567,8 @@ func (c *SnapshotsListCall) Do(opts ...googleapi.CallOption) (*SnapshotListRespo
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/drive.appdata",
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11645,7 +11688,8 @@ func (c *TurnBasedMatchesCancelCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "turnbasedmatches/{matchId}/cancel",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11780,7 +11824,8 @@ func (c *TurnBasedMatchesCreateCall) Do(opts ...googleapi.CallOption) (*TurnBase
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -11919,7 +11964,8 @@ func (c *TurnBasedMatchesDeclineCall) Do(opts ...googleapi.CallOption) (*TurnBas
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12020,7 +12066,8 @@ func (c *TurnBasedMatchesDismissCall) Do(opts ...googleapi.CallOption) error {
 	//   },
 	//   "path": "turnbasedmatches/{matchId}/dismiss",
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12171,7 +12218,8 @@ func (c *TurnBasedMatchesFinishCall) Do(opts ...googleapi.CallOption) (*TurnBase
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12336,7 +12384,8 @@ func (c *TurnBasedMatchesGetCall) Do(opts ...googleapi.CallOption) (*TurnBasedMa
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12475,7 +12524,8 @@ func (c *TurnBasedMatchesJoinCall) Do(opts ...googleapi.CallOption) (*TurnBasedM
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12615,7 +12665,8 @@ func (c *TurnBasedMatchesLeaveCall) Do(opts ...googleapi.CallOption) (*TurnBased
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12779,7 +12830,8 @@ func (c *TurnBasedMatchesLeaveTurnCall) Do(opts ...googleapi.CallOption) (*TurnB
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -12980,7 +13032,8 @@ func (c *TurnBasedMatchesListCall) Do(opts ...googleapi.CallOption) (*TurnBasedM
 	//     "$ref": "TurnBasedMatchList"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -13158,7 +13211,8 @@ func (c *TurnBasedMatchesRematchCall) Do(opts ...googleapi.CallOption) (*TurnBas
 	//     "$ref": "TurnBasedMatchRematch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -13362,7 +13416,8 @@ func (c *TurnBasedMatchesSyncCall) Do(opts ...googleapi.CallOption) (*TurnBasedM
 	//     "$ref": "TurnBasedMatchSync"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 
@@ -13532,7 +13587,8 @@ func (c *TurnBasedMatchesTakeTurnCall) Do(opts ...googleapi.CallOption) (*TurnBa
 	//     "$ref": "TurnBasedMatch"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/games"
+	//     "https://www.googleapis.com/auth/games",
+	//     "https://www.googleapis.com/auth/plus.me"
 	//   ]
 	// }
 

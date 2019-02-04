@@ -44,6 +44,23 @@ var pageTemplate = template.Must(template.New("").Parse(`
 {{end}}
 `))
 
+func Example() {
+	it := Primes(19)
+
+	for {
+		item, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%d ", item)
+	}
+	// Output:
+	// 2 3 5 7 11 13 17 19
+}
+
 // This example demonstrates how to use Pager to support
 // pagination on a web site.
 func Example_webHandler(w http.ResponseWriter, r *http.Request) {
@@ -120,11 +137,11 @@ func Example_serverPages() {
 	var items []int
 	for {
 		item, err := it.Next()
-		if err != nil && err != iterator.Done {
-			log.Fatal(err)
-		}
 		if err == iterator.Done {
 			break
+		}
+		if err != nil {
+			log.Fatal(err)
 		}
 		items = append(items, item)
 		if it.PageInfo().Remaining() == 0 {

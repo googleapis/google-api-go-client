@@ -63,7 +63,11 @@ func Example() {
 
 // This example demonstrates how to use Pager to support
 // pagination on a web site.
-func Example_webHandler(w http.ResponseWriter, r *http.Request) {
+func Example_webHandler() {
+	// Assuming some response writer and request per https://golang.org/pkg/net/http/#Handler.
+	var w http.ResponseWriter
+	var r *http.Request
+
 	const pageSize = 25
 	it := client.Items(ctx)
 	var items []int
@@ -79,6 +83,8 @@ func Example_webHandler(w http.ResponseWriter, r *http.Request) {
 		pageToken,
 	}
 	var buf bytes.Buffer
+	// pageTemplate is a global html/template.Template that is only parsed once, rather than for
+	// every invocation.
 	if err := pageTemplate.Execute(&buf, data); err != nil {
 		http.Error(w, fmt.Sprintf("executing page template: %v", err), http.StatusInternalServerError)
 	}

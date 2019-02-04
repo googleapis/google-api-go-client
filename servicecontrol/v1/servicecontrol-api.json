@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190114",
+  "revision": "20190128",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -521,6 +521,10 @@
         "detail": {
           "description": "Free-form text providing details on the error cause of the error.",
           "type": "string"
+        },
+        "status": {
+          "$ref": "Status",
+          "description": "Contains public information about the check error. If available,\n`status.code` will be non zero and client can propagate it out as public\nerror."
         },
         "subject": {
           "description": "Subject to whom this error applies. See the specific code enum for more\ndetails on this field. For example:\n    - “project:\u003cproject-id or project-number\u003e”\n    - “folder:\u003cfolder-id\u003e”\n    - “organization:\u003corganization-id\u003e”",

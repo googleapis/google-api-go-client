@@ -649,6 +649,13 @@ type CheckError struct {
 	// error.
 	Detail string `json:"detail,omitempty"`
 
+	// Status: Contains public information about the check error. If
+	// available,
+	// `status.code` will be non zero and client can propagate it out as
+	// public
+	// error.
+	Status *Status `json:"status,omitempty"`
+
 	// Subject: Subject to whom this error applies. See the specific code
 	// enum for more
 	// details on this field. For example:

@@ -3097,10 +3097,6 @@ type LeaseWorkItemRequest struct {
 	// RequestedLeaseDuration: The initial lease period.
 	RequestedLeaseDuration string `json:"requestedLeaseDuration,omitempty"`
 
-	// UnifiedWorkerRequest: Untranslated bag-of-bytes WorkRequest from
-	// UnifiedWorker.
-	UnifiedWorkerRequest googleapi.RawMessage `json:"unifiedWorkerRequest,omitempty"`
-
 	// WorkItemTypes: Filter for WorkItem type.
 	WorkItemTypes []string `json:"workItemTypes,omitempty"`
 
@@ -3140,10 +3136,6 @@ func (s *LeaseWorkItemRequest) MarshalJSON() ([]byte, error) {
 
 // LeaseWorkItemResponse: Response to a request to lease WorkItems.
 type LeaseWorkItemResponse struct {
-	// UnifiedWorkerResponse: Untranslated bag-of-bytes WorkResponse for
-	// UnifiedWorker.
-	UnifiedWorkerResponse googleapi.RawMessage `json:"unifiedWorkerResponse,omitempty"`
-
 	// WorkItems: A list of the leased WorkItems.
 	WorkItems []*WorkItem `json:"workItems,omitempty"`
 
@@ -3151,22 +3143,20 @@ type LeaseWorkItemResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "UnifiedWorkerResponse") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "WorkItems") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UnifiedWorkerResponse") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "WorkItems") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4094,10 +4084,6 @@ type ReportWorkItemStatusRequest struct {
 	// Location: The location which contains the WorkItem's job.
 	Location string `json:"location,omitempty"`
 
-	// UnifiedWorkerRequest: Untranslated bag-of-bytes
-	// WorkProgressUpdateRequest from UnifiedWorker.
-	UnifiedWorkerRequest googleapi.RawMessage `json:"unifiedWorkerRequest,omitempty"`
-
 	// WorkItemStatuses: The order is unimportant, except that the order of
 	// the
 	// WorkItemServiceState messages in the
@@ -4140,10 +4126,6 @@ func (s *ReportWorkItemStatusRequest) MarshalJSON() ([]byte, error) {
 // ReportWorkItemStatusResponse: Response from a request to report the
 // status of WorkItems.
 type ReportWorkItemStatusResponse struct {
-	// UnifiedWorkerResponse: Untranslated bag-of-bytes
-	// WorkProgressUpdateResponse for UnifiedWorker.
-	UnifiedWorkerResponse googleapi.RawMessage `json:"unifiedWorkerResponse,omitempty"`
-
 	// WorkItemServiceStates: A set of messages indicating the service-side
 	// state for each
 	// WorkItem whose status was reported, in the same order as
@@ -4158,7 +4140,7 @@ type ReportWorkItemStatusResponse struct {
 	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "UnifiedWorkerResponse") to unconditionally include in API requests.
+	// "WorkItemServiceStates") to unconditionally include in API requests.
 	// By default, fields with empty values are omitted from API requests.
 	// However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -4166,7 +4148,7 @@ type ReportWorkItemStatusResponse struct {
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UnifiedWorkerResponse") to
+	// NullFields is a list of field names (e.g. "WorkItemServiceStates") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -5680,11 +5662,6 @@ type StreamingComputationConfig struct {
 
 	// SystemName: System defined name for this computation.
 	SystemName string `json:"systemName,omitempty"`
-
-	// TransformUserNameToStateFamily: Map from user name of stateful
-	// transforms in this stage to their state
-	// family.
-	TransformUserNameToStateFamily map[string]string `json:"transformUserNameToStateFamily,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ComputationId") to
 	// unconditionally include in API requests. By default, fields with

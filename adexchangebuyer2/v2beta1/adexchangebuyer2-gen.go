@@ -4550,7 +4550,7 @@ type PauseProposalRequest struct {
 	// Reason: The reason why the proposal is being paused.
 	// This human readable message will be displayed in the seller's
 	// UI.
-	// (Max length: 100 unicode code units.)
+	// (Max length: 1000 unicode code units.)
 	Reason string `json:"reason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reason") to

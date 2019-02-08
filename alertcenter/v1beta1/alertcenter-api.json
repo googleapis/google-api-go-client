@@ -136,7 +136,7 @@
           ]
         },
         "get": {
-          "description": "Gets the specified alert.",
+          "description": "Gets the specified alert. Attempting to get a nonexistent alert returns\n`NOT_FOUND` error.",
           "flatPath": "v1beta1/alerts/{alertId}",
           "httpMethod": "GET",
           "id": "alertcenter.alerts.get",
@@ -145,7 +145,7 @@
           ],
           "parameters": {
             "alertId": {
-              "description": "Required. The identifier of the alert to retrieve.\nReturns a NOT_FOUND error if no such alert.",
+              "description": "Required. The identifier of the alert to retrieve.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -238,7 +238,7 @@
         "feedback": {
           "methods": {
             "create": {
-              "description": "Creates new feedback for an alert.",
+              "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error.",
               "flatPath": "v1beta1/alerts/{alertId}/feedback",
               "httpMethod": "POST",
               "id": "alertcenter.alerts.feedback.create",
@@ -247,7 +247,7 @@
               ],
               "parameters": {
                 "alertId": {
-                  "description": "Required. The identifier of the alert this feedback belongs to.\nReturns a `NOT_FOUND` error if no such alert.",
+                  "description": "Required. The identifier of the alert this feedback belongs to.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -270,7 +270,7 @@
               ]
             },
             "list": {
-              "description": "Lists all the feedback for an alert.",
+              "description": "Lists all the feedback for an alert. Attempting to list feedbacks for\na non-existent alert returns `NOT_FOUND` error.",
               "flatPath": "v1beta1/alerts/{alertId}/feedback",
               "httpMethod": "GET",
               "id": "alertcenter.alerts.feedback.list",
@@ -279,7 +279,7 @@
               ],
               "parameters": {
                 "alertId": {
-                  "description": "Required. The alert identifier.\nThe \"-\" wildcard could be used to represent all alerts.\nIf alert does not exist returns a `NOT_FOUND` error.",
+                  "description": "Required. The alert identifier.\nThe \"-\" wildcard could be used to represent all alerts.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -331,7 +331,7 @@
           ]
         },
         "updateSettings": {
-          "description": "Update the customer-level settings.",
+          "description": "Updates the customer-level settings.",
           "flatPath": "v1beta1/settings",
           "httpMethod": "PATCH",
           "id": "alertcenter.updateSettings",
@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190116",
+  "revision": "20190204",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -376,7 +376,7 @@
       "type": "object"
     },
     "Alert": {
-      "description": "An alert affecting a customer.\nAll fields are read-only once created.",
+      "description": "An alert affecting a customer.",
       "id": "Alert",
       "properties": {
         "alertId": {
@@ -414,7 +414,7 @@
           "type": "string"
         },
         "source": {
-          "description": "Required. A unique identifier for the system that reported the alert.\n\nSupported sources are any of the following:\n\n* Google Operations\n* Mobile device management\n* Gmail phishing\n* Domain wide takeout\n* Government attack warning\n* Google identity",
+          "description": "Required. A unique identifier for the system that reported the alert.\nThis is output only after alert is created.\n\nSupported sources are any of the following:\n\n* Google Operations\n* Mobile device management\n* Gmail phishing\n* Domain wide takeout\n* Government attack warning\n* Google identity",
           "type": "string"
         },
         "startTime": {
@@ -423,7 +423,7 @@
           "type": "string"
         },
         "type": {
-          "description": "Required. The type of the alert.\nFor a list of available alert types see\n[G Suite Alert types](/admin-sdk/alertcenter/reference/alert-types).",
+          "description": "Required. The type of the alert.\nThis is output only after alert is created.\nFor a list of available alert types see\n[G Suite Alert types](/admin-sdk/alertcenter/reference/alert-types).",
           "type": "string"
         }
       },
@@ -469,6 +469,20 @@
             "The alert report is very useful."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AppMakerSqlSetupNotification": {
+      "description": "Alerts from App Maker to notify admins to set up default SQL instance.",
+      "id": "AppMakerSqlSetupNotification",
+      "properties": {
+        "requestInfo": {
+          "description": "List of applications with requests for default SQL set up.",
+          "items": {
+            "$ref": "RequestInfo"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -840,6 +854,29 @@
             "$ref": "GmailMessageInfo"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "RequestInfo": {
+      "description": "Requests for one application that needs default SQL setup.",
+      "id": "RequestInfo",
+      "properties": {
+        "appDeveloperEmail": {
+          "description": "List of app developers who triggered notifications for above\napplication.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "appName": {
+          "description": "Required. The application that requires the SQL setup.",
+          "type": "string"
+        },
+        "numberOfRequests": {
+          "description": "Required. Number of requests sent for this application to set up default\nSQL instance.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"

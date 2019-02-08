@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190108",
+  "revision": "20190205",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1551,7 +1551,7 @@
           "type": "array"
         },
         "shortName": {
-          "description": "A short name or alias for the source.  This value will be used to match the\n'source' operator. For example, if the short name is *\u0026lt;value\u0026gt;* then\nqueries like *source:\u0026lt;value\u0026gt;* will only return results for this\nsource. The value must be unique across all data sources. The value must\nonly contain alphanumeric characters (a-zA-Z0-9). The value cannot start\nwith 'google' and cannot be one of the following: mail, gmail, docs, drive,\ngroups, sites, calendar, hangouts, gplus, keep.\nIts maximum length is 32 characters.",
+          "description": "A short name or alias for the source.  This value will be used to match the\n'source' operator. For example, if the short name is *\u0026lt;value\u0026gt;* then\nqueries like *source:\u0026lt;value\u0026gt;* will only return results for this\nsource. The value must be unique across all data sources. The value must\nonly contain alphanumeric characters (a-zA-Z0-9). The value cannot start\nwith 'google' and cannot be one of the following: mail, gmail, docs, drive,\ngroups, sites, calendar, hangouts, gplus, keep, people, teams.\nIts maximum length is 32 characters.",
           "type": "string"
         }
       },

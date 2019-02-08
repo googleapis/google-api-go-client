@@ -4242,12 +4242,12 @@ type CreativeAsset struct {
 	// all REDIRECT and TRACKING_TEXT.
 	AssetIdentifier *CreativeAssetId `json:"assetIdentifier,omitempty"`
 
-	// AudioBitRate: Audio stream bit rate in kbps.This is a read-only
+	// AudioBitRate: Audio stream bit rate in kbps. This is a read-only
 	// field. Applicable to the following creative types: INSTREAM_AUDIO,
 	// INSTREAM_VIDEO and all VPAID.
 	AudioBitRate int64 `json:"audioBitRate,omitempty"`
 
-	// AudioSampleRate: Audio sample bit rate in hertz.This is a read-only
+	// AudioSampleRate: Audio sample bit rate in hertz. This is a read-only
 	// field. Applicable to the following creative types: INSTREAM_AUDIO,
 	// INSTREAM_VIDEO and all VPAID.
 	AudioSampleRate int64 `json:"audioSampleRate,omitempty"`
@@ -4411,9 +4411,9 @@ type CreativeAsset struct {
 	// asset type is not HTML_IMAGE.
 	FlashVersion int64 `json:"flashVersion,omitempty"`
 
-	// FrameRate: Video frame rate for video asset in frames per second.This
-	// is a read-only field. Applicable to the following creative types:
-	// INSTREAM_VIDEO and all VPAID.
+	// FrameRate: Video frame rate for video asset in frames per second.
+	// This is a read-only field. Applicable to the following creative
+	// types: INSTREAM_VIDEO and all VPAID.
 	FrameRate float64 `json:"frameRate,omitempty"`
 
 	// HideFlashObjects: Whether to hide Flash objects flag for an asset.

@@ -766,7 +766,7 @@
       }
     }
   },
-  "revision": "20190108",
+  "revision": "20190205",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -938,14 +938,16 @@
             "PREINSTALLED",
             "FORCE_INSTALLED",
             "BLOCKED",
-            "AVAILABLE"
+            "AVAILABLE",
+            "REQUIRED_FOR_SETUP"
           ],
           "enumDescriptions": [
             "Unspecified. Defaults to AVAILABLE.",
             "The app is automatically installed and can be removed by the user.",
             "The app is automatically installed and can't be removed by the user.",
             "The app is blocked and can't be installed. If the app was installed under a previous policy, it will be uninstalled.",
-            "The app is available to install."
+            "The app is available to install.",
+            "The app is automatically installed and can't be removed by the user and will prevent setup from completion until installation is complete."
           ],
           "type": "string"
         },
@@ -1769,6 +1771,17 @@
             "type": "number"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LaunchAppAction": {
+      "description": "An action to launch an app.",
+      "id": "LaunchAppAction",
+      "properties": {
+        "packageName": {
+          "description": "Package name of app to be launched",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2679,6 +2692,13 @@
           "description": "Whether changing the wallpaper is disabled.",
           "type": "boolean"
         },
+        "setupActions": {
+          "description": "Actions to take during the setup process.",
+          "items": {
+            "$ref": "SetupAction"
+          },
+          "type": "array"
+        },
         "shareLocationDisabled": {
           "description": "Whether location sharing is disabled.",
           "type": "boolean"
@@ -2760,7 +2780,7 @@
           "type": "boolean"
         },
         "wifiConfigsLockdownEnabled": {
-          "description": "Whether Wi-Fi networks defined in Open Network Configuration are locked so they can't be edited by the user.",
+          "description": "DEPRECATED - Use wifi_config_disabled.",
           "type": "boolean"
         }
       },
@@ -2830,6 +2850,25 @@
           "description": "The port of the direct proxy.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "SetupAction": {
+      "description": "An action executed during setup.",
+      "id": "SetupAction",
+      "properties": {
+        "description": {
+          "$ref": "UserFacingMessage",
+          "description": "Description of this action."
+        },
+        "launchApp": {
+          "$ref": "LaunchAppAction",
+          "description": "An action to launch an app."
+        },
+        "title": {
+          "$ref": "UserFacingMessage",
+          "description": "Title of this action."
         }
       },
       "type": "object"

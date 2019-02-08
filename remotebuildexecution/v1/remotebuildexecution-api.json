@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20190122",
+  "revision": "20190205",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -931,7 +931,7 @@
           "description": "Specifies the instance to create.\nThe name in the instance, if specified in the instance, is ignored."
         },
         "instanceId": {
-          "description": "ID of the created instance.\nA valid `instance_id` must:\nbe 6-50 characters long,\ncontains only lowercase letters, digits, hyphens and underscores,\nstart with a lowercase letter, and\nend with a lowercase letter or a digit.",
+          "description": "ID of the created instance.\nA valid `instance_id` must:\nbe 6-50 characters long,\ncontain only lowercase letters, digits, hyphens and underscores,\nstart with a lowercase letter, and\nend with a lowercase letter or a digit.",
           "type": "string"
         },
         "parent": {

@@ -3426,6 +3426,11 @@ func (s *GooglePrivacyDlpV2InfoType) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2InfoTypeDescription: InfoType description.
 type GooglePrivacyDlpV2InfoTypeDescription struct {
+	// Description: Description of the infotype. Translated when language is
+	// provided in the
+	// request.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Human readable form of the infoType name.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -3440,7 +3445,7 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	//   "RISK_ANALYSIS" - Supported by the risk analysis operations.
 	SupportedBy []string `json:"supportedBy,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3448,7 +3453,7 @@ type GooglePrivacyDlpV2InfoTypeDescription struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// NullFields is a list of field names (e.g. "Description") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as

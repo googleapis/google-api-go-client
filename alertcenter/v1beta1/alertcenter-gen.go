@@ -152,7 +152,6 @@ func (s *AccountWarning) MarshalJSON() ([]byte, error) {
 }
 
 // Alert: An alert affecting a customer.
-// All fields are read-only once created.
 type Alert struct {
 	// AlertId: Output only. The unique identifier for the alert.
 	AlertId string `json:"alertId,omitempty"`
@@ -186,6 +185,7 @@ type Alert struct {
 
 	// Source: Required. A unique identifier for the system that reported
 	// the alert.
+	// This is output only after alert is created.
 	//
 	// Supported sources are any of the following:
 	//
@@ -203,6 +203,7 @@ type Alert struct {
 	StartTime string `json:"startTime,omitempty"`
 
 	// Type: Required. The type of the alert.
+	// This is output only after alert is created.
 	// For a list of available alert types see
 	// [G Suite Alert types](/admin-sdk/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
@@ -285,6 +286,36 @@ type AlertFeedback struct {
 
 func (s *AlertFeedback) MarshalJSON() ([]byte, error) {
 	type NoMethod AlertFeedback
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppMakerSqlSetupNotification: Alerts from App Maker to notify admins
+// to set up default SQL instance.
+type AppMakerSqlSetupNotification struct {
+	// RequestInfo: List of applications with requests for default SQL set
+	// up.
+	RequestInfo []*RequestInfo `json:"requestInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RequestInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RequestInfo") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppMakerSqlSetupNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod AppMakerSqlSetupNotification
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -998,6 +1029,46 @@ func (s *PhishingSpike) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RequestInfo: Requests for one application that needs default SQL
+// setup.
+type RequestInfo struct {
+	// AppDeveloperEmail: List of app developers who triggered notifications
+	// for above
+	// application.
+	AppDeveloperEmail []string `json:"appDeveloperEmail,omitempty"`
+
+	// AppName: Required. The application that requires the SQL setup.
+	AppName string `json:"appName,omitempty"`
+
+	// NumberOfRequests: Required. Number of requests sent for this
+	// application to set up default
+	// SQL instance.
+	NumberOfRequests int64 `json:"numberOfRequests,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AppDeveloperEmail")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppDeveloperEmail") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RequestInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Customer-level settings.
 type Settings struct {
 	// Notifications: The list of notifications.
@@ -1336,7 +1407,9 @@ type AlertsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the specified alert.
+// Get: Gets the specified alert. Attempting to get a nonexistent alert
+// returns
+// `NOT_FOUND` error.
 func (r *AlertsService) Get(alertId string) *AlertsGetCall {
 	c := &AlertsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -1450,7 +1523,7 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the specified alert.",
+	//   "description": "Gets the specified alert. Attempting to get a nonexistent alert returns\n`NOT_FOUND` error.",
 	//   "flatPath": "v1beta1/alerts/{alertId}",
 	//   "httpMethod": "GET",
 	//   "id": "alertcenter.alerts.get",
@@ -1459,7 +1532,7 @@ func (c *AlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The identifier of the alert to retrieve.\nReturns a NOT_FOUND error if no such alert.",
+	//       "description": "Required. The identifier of the alert to retrieve.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1870,7 +1943,9 @@ type AlertsFeedbackCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Creates new feedback for an alert.
+// Create: Creates new feedback for an alert. Attempting to create a
+// feedback for
+// a non-existent alert returns `NOT_FOUND` error.
 func (r *AlertsFeedbackService) Create(alertId string, alertfeedback *AlertFeedback) *AlertsFeedbackCreateCall {
 	c := &AlertsFeedbackCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -1977,7 +2052,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates new feedback for an alert.",
+	//   "description": "Creates new feedback for an alert. Attempting to create a feedback for\na non-existent alert returns `NOT_FOUND` error.",
 	//   "flatPath": "v1beta1/alerts/{alertId}/feedback",
 	//   "httpMethod": "POST",
 	//   "id": "alertcenter.alerts.feedback.create",
@@ -1986,7 +2061,7 @@ func (c *AlertsFeedbackCreateCall) Do(opts ...googleapi.CallOption) (*AlertFeedb
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The identifier of the alert this feedback belongs to.\nReturns a `NOT_FOUND` error if no such alert.",
+	//       "description": "Required. The identifier of the alert this feedback belongs to.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2022,7 +2097,9 @@ type AlertsFeedbackListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all the feedback for an alert.
+// List: Lists all the feedback for an alert. Attempting to list
+// feedbacks for
+// a non-existent alert returns `NOT_FOUND` error.
 func (r *AlertsFeedbackService) List(alertId string) *AlertsFeedbackListCall {
 	c := &AlertsFeedbackListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.alertId = alertId
@@ -2151,7 +2228,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all the feedback for an alert.",
+	//   "description": "Lists all the feedback for an alert. Attempting to list feedbacks for\na non-existent alert returns `NOT_FOUND` error.",
 	//   "flatPath": "v1beta1/alerts/{alertId}/feedback",
 	//   "httpMethod": "GET",
 	//   "id": "alertcenter.alerts.feedback.list",
@@ -2160,7 +2237,7 @@ func (c *AlertsFeedbackListCall) Do(opts ...googleapi.CallOption) (*ListAlertFee
 	//   ],
 	//   "parameters": {
 	//     "alertId": {
-	//       "description": "Required. The alert identifier.\nThe \"-\" wildcard could be used to represent all alerts.\nIf alert does not exist returns a `NOT_FOUND` error.",
+	//       "description": "Required. The alert identifier.\nThe \"-\" wildcard could be used to represent all alerts.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -2340,7 +2417,7 @@ type V1beta1UpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Update the customer-level settings.
+// UpdateSettings: Updates the customer-level settings.
 func (r *V1beta1Service) UpdateSettings(settings *Settings) *V1beta1UpdateSettingsCall {
 	c := &V1beta1UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.settings = settings
@@ -2443,7 +2520,7 @@ func (c *V1beta1UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Update the customer-level settings.",
+	//   "description": "Updates the customer-level settings.",
 	//   "flatPath": "v1beta1/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "alertcenter.updateSettings",

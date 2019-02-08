@@ -2149,6 +2149,9 @@ type RoboStartingIntent struct {
 
 	StartActivity *StartActivityIntent `json:"startActivity,omitempty"`
 
+	// Timeout: Timeout in seconds for each intent.
+	Timeout string `json:"timeout,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "LauncherActivity") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

@@ -3780,7 +3780,7 @@ func (s *GoogleCloudVisionV1p2beta1AnnotateFileResponse) MarshalJSON() ([]byte, 
 
 // GoogleCloudVisionV1p2beta1AnnotateImageRequest: Request for
 // performing Google Cloud Vision API tasks over a user-provided
-// image, with user-requested features.
+// image, with user-requested features, and with context information.
 type GoogleCloudVisionV1p2beta1AnnotateImageRequest struct {
 	// Features: Requested features.
 	Features []*GoogleCloudVisionV1p2beta1Feature `json:"features,omitempty"`

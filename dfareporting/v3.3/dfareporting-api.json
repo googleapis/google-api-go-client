@@ -20,7 +20,7 @@
   "description": "Manages your DoubleClick Campaign Manager ad campaigns and reports.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/doubleclick-advertisers/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/4qSVLqzayCpgVGY54eYy_0Lz8TQ\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/HfgI2-QxJJ0kpvSvsSfA1DROEv8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/doubleclick-16.gif",
     "x32": "https://www.google.com/images/icons/product/doubleclick-32.gif"
@@ -9397,7 +9397,7 @@
       }
     }
   },
-  "revision": "20190124",
+  "revision": "20190206",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -11934,12 +11934,12 @@
           "description": "Identifier of this asset. This is the same identifier returned during creative asset insert operation. This is a required field. Applicable to all but the following creative types: all REDIRECT and TRACKING_TEXT."
         },
         "audioBitRate": {
-          "description": "Audio stream bit rate in kbps.This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
+          "description": "Audio stream bit rate in kbps. This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "format": "int32",
           "type": "integer"
         },
         "audioSampleRate": {
-          "description": "Audio sample bit rate in hertz.This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
+          "description": "Audio sample bit rate in hertz. This is a read-only field. Applicable to the following creative types: INSTREAM_AUDIO, INSTREAM_VIDEO and all VPAID.",
           "format": "int32",
           "type": "integer"
         },
@@ -12190,7 +12190,7 @@
           "type": "integer"
         },
         "frameRate": {
-          "description": "Video frame rate for video asset in frames per second.This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
+          "description": "Video frame rate for video asset in frames per second. This is a read-only field. Applicable to the following creative types: INSTREAM_VIDEO and all VPAID.",
           "format": "float",
           "type": "number"
         },

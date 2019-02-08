@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/c9p6mtC7ozG3ElgN5bnD6rjWj10\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/psKDiISfxUEa5MGtkMDFTk4XUmg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2911,7 +2911,7 @@
       }
     }
   },
-  "revision": "20190123",
+  "revision": "20190130",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -2950,6 +2950,10 @@
           "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#administratorWebTokenSpec\".",
           "type": "string"
         },
+        "managedConfigurations": {
+          "$ref": "AdministratorWebTokenSpecManagedConfigurations",
+          "description": "Options for displaying the Managed Configuration page."
+        },
         "parent": {
           "description": "The URI of the parent frame hosting the iframe. To prevent XSS, the iframe may not be hosted at other URIs. This URI must be https.",
           "type": "string"
@@ -2976,6 +2980,16 @@
         "webApps": {
           "$ref": "AdministratorWebTokenSpecWebApps",
           "description": "Options for displaying the Web Apps page."
+        }
+      },
+      "type": "object"
+    },
+    "AdministratorWebTokenSpecManagedConfigurations": {
+      "id": "AdministratorWebTokenSpecManagedConfigurations",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Managed Configuration page is displayed. Default is true.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3224,7 +3238,7 @@
       "type": "object"
     },
     "AutoInstallConstraint": {
-      "description": "The Auto install constraint. Defines a set of restrictions for installation. At least one of the fields must be set.",
+      "description": "The auto-install constraint. Defines a set of restrictions for installation. At least one of the fields must be set.",
       "id": "AutoInstallConstraint",
       "properties": {
         "chargingStateConstraint": {
@@ -3246,7 +3260,7 @@
       "id": "AutoInstallPolicy",
       "properties": {
         "autoInstallConstraint": {
-          "description": "Constraints for auto-installing the app. You can specify a maximum of one constraint.",
+          "description": "The constraints for auto-installing the app. You can specify a maximum of one constraint.",
           "items": {
             "$ref": "AutoInstallConstraint"
           },
@@ -4206,7 +4220,7 @@
       "properties": {
         "autoInstallPolicy": {
           "$ref": "AutoInstallPolicy",
-          "description": "The auto install policy for the product."
+          "description": "The auto-install policy for the product."
         },
         "productId": {
           "description": "The ID of the product. For example, \"app:com.google.android.gm\".",

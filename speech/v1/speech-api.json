@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20190114",
+  "revision": "20190201",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -503,7 +503,7 @@
           "type": "boolean"
         },
         "sampleRateHertz": {
-          "description": "Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).\nThis field is optional for `FLAC` and `WAV` audio files and required\nfor all other audio formats. For details, see AudioEncoding.",
+          "description": "Sample rate in Hertz of the audio data sent in all\n`RecognitionAudio` messages. Valid values are: 8000-48000.\n16000 is optimal. For best results, set the sampling rate of the audio\nsource to 16000 Hz. If that's not possible, use the native sample rate of\nthe audio source (instead of re-sampling).\nThis field is optional for `FLAC`,  `WAV`. and 'MP3' audio files, and is\nrequired for all other audio formats. For details, see AudioEncoding.",
           "format": "int32",
           "type": "integer"
         },
@@ -656,7 +656,7 @@
     }
   },
   "servicePath": "",
-  "title": "Cloud Speech API",
+  "title": "Cloud Speech-to-Text API",
   "version": "v1",
   "version_module": true
 }

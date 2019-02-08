@@ -598,7 +598,7 @@
       }
     }
   },
-  "revision": "20190121",
+  "revision": "20190206",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -705,7 +705,7 @@
           "type": "array"
         },
         "members": {
-          "description": "The signed-in user originating the request must be a part of one of the\nprovided members.\nSyntax:\n`user:{emailid}`\n`group:{emailid}`\n`serviceAccount:{emailid}`\nIf not specified, a request may come from any user (logged in/not logged\nin, not present in any groups, etc.).",
+          "description": "The request must be made by one of the provided user or service\naccounts. Groups are not supported.\nSyntax:\n`user:{emailid}`\n`serviceAccount:{emailid}`\nIf not specified, a request may come from any user.",
           "items": {
             "type": "string"
           },

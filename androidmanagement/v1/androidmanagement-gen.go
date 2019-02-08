@@ -409,6 +409,9 @@ type ApplicationPolicy struct {
 	//   "BLOCKED" - The app is blocked and can't be installed. If the app
 	// was installed under a previous policy, it will be uninstalled.
 	//   "AVAILABLE" - The app is available to install.
+	//   "REQUIRED_FOR_SETUP" - The app is automatically installed and can't
+	// be removed by the user and will prevent setup from completion until
+	// installation is complete.
 	InstallType string `json:"installType,omitempty"`
 
 	// LockTaskAllowed: Whether the app is allowed to lock itself in
@@ -1386,6 +1389,34 @@ type HardwareStatus struct {
 
 func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LaunchAppAction: An action to launch an app.
+type LaunchAppAction struct {
+	// PackageName: Package name of app to be launched
+	PackageName string `json:"packageName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PackageName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LaunchAppAction) MarshalJSON() ([]byte, error) {
+	type NoMethod LaunchAppAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2527,6 +2558,9 @@ type Policy struct {
 	// SetWallpaperDisabled: Whether changing the wallpaper is disabled.
 	SetWallpaperDisabled bool `json:"setWallpaperDisabled,omitempty"`
 
+	// SetupActions: Actions to take during the setup process.
+	SetupActions []*SetupAction `json:"setupActions,omitempty"`
+
 	// ShareLocationDisabled: Whether location sharing is disabled.
 	ShareLocationDisabled bool `json:"shareLocationDisabled,omitempty"`
 
@@ -2598,8 +2632,7 @@ type Policy struct {
 	// disabled.
 	WifiConfigDisabled bool `json:"wifiConfigDisabled,omitempty"`
 
-	// WifiConfigsLockdownEnabled: Whether Wi-Fi networks defined in Open
-	// Network Configuration are locked so they can't be edited by the user.
+	// WifiConfigsLockdownEnabled: DEPRECATED - Use wifi_config_disabled.
 	WifiConfigsLockdownEnabled bool `json:"wifiConfigsLockdownEnabled,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2727,6 +2760,40 @@ type ProxyInfo struct {
 
 func (s *ProxyInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProxyInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SetupAction: An action executed during setup.
+type SetupAction struct {
+	// Description: Description of this action.
+	Description *UserFacingMessage `json:"description,omitempty"`
+
+	// LaunchApp: An action to launch an app.
+	LaunchApp *LaunchAppAction `json:"launchApp,omitempty"`
+
+	// Title: Title of this action.
+	Title *UserFacingMessage `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SetupAction) MarshalJSON() ([]byte, error) {
+	type NoMethod SetupAction
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

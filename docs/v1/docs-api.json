@@ -24,7 +24,7 @@
   "baseUrl": "https://docs.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Docs",
-  "description": "An API for creating and editing Google Docs documents.",
+  "description": "Reads and writes Google Docs documents.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/docs/",
   "fullyEncodeReservedExpansion": true,
@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190125",
+  "revision": "20190129",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -325,7 +325,7 @@
       "id": "Body",
       "properties": {
         "content": {
-          "description": "The contents of the body.\n\nThe indices for the body's content begin at zero.",
+          "description": "The contents of the body.\n\nThe indexes for the body's content begin at zero.",
           "items": {
             "$ref": "StructuralElement"
           },
@@ -1108,7 +1108,7 @@
       "id": "Footer",
       "properties": {
         "content": {
-          "description": "The contents of the footer.\n\nThe indices for a footer's content begin at zero.",
+          "description": "The contents of the footer.\n\nThe indexes for a footer's content begin at zero.",
           "items": {
             "$ref": "StructuralElement"
           },
@@ -1126,7 +1126,7 @@
       "id": "Footnote",
       "properties": {
         "content": {
-          "description": "The contents of the footnote.\n\nThe indices for a footnote's content begin at zero.",
+          "description": "The contents of the footnote.\n\nThe indexes for a footnote's content begin at zero.",
           "items": {
             "$ref": "StructuralElement"
           },
@@ -1184,7 +1184,7 @@
       "id": "Header",
       "properties": {
         "content": {
-          "description": "The contents of the header.\n\nThe indices for a header's content begin at zero.",
+          "description": "The contents of the header.\n\nThe indexes for a header's content begin at zero.",
           "items": {
             "$ref": "StructuralElement"
           },
@@ -1588,7 +1588,7 @@
       "type": "object"
     },
     "NamedRange": {
-      "description": "A collection of Ranges with the same named range\nID.\n\nNamed ranges allow developers to associate parts of a document with an\narbitrary user-defined label so their contents can be programmatically read\nor edited at a later time. A document may contain multiple named ranges with\nthe same name, but every named range has a unique ID.\n\nA named range is created with a single Range,\nand content inserted inside a named range generally expands that range.\nHowever, certain document changes can cause the range to be split into\nmultiple ranges.",
+      "description": "A collection of Ranges with the same named range\nID.\n\nNamed ranges allow developers to associate parts of a document with an\narbitrary user-defined label so their contents can be programmatically read\nor edited at a later time. A document can contain multiple named ranges with\nthe same name, but every named range has a unique ID.\n\nA named range is created with a single Range,\nand content inserted inside a named range generally expands that range.\nHowever, certain document changes can cause the range to be split into\nmultiple ranges.",
       "id": "NamedRange",
       "properties": {
         "name": {
@@ -1788,8 +1788,8 @@
             "A number where single digit numbers are prefixed with a zero, like `01`,\n`02`, or `03`. Numbers with more than one digit are not prefixed with a\nzero.",
             "An uppercase letter, like `A`, `B`, or `C`.",
             "A lowercase letter, like `a`, `b`, or `c`.",
-            "An uppercase roman numeral, like `I`, `II`, or `III`.",
-            "A lowercase roman numeral, like `i`, `ii`, or `iii`."
+            "An uppercase Roman numeral, like `I`, `II`, or `III`.",
+            "A lowercase Roman numeral, like `i`, `ii`, or `iii`."
           ],
           "type": "string"
         },
@@ -2007,7 +2007,7 @@
           "description": "A column break paragraph element."
         },
         "endIndex": {
-          "description": "The zero-base end index of this paragraph element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-base end index of this paragraph element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
@@ -2032,7 +2032,7 @@
           "description": "A page break paragraph element."
         },
         "startIndex": {
-          "description": "The zero-based start index of this paragraph element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based start index of this paragraph element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
@@ -2726,7 +2726,7 @@
       "id": "StructuralElement",
       "properties": {
         "endIndex": {
-          "description": "The zero-based end index of this structural element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based end index of this structural element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
@@ -2739,7 +2739,7 @@
           "description": "A section break type of structural element."
         },
         "startIndex": {
-          "description": "The zero-based start index of this structural element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based start index of this structural element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
@@ -3000,12 +3000,12 @@
           "type": "array"
         },
         "endIndex": {
-          "description": "The zero-based end index of this cell, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based end index of this cell, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
         "startIndex": {
-          "description": "The zero-based start index of this cell, in Unicode code units of the\nUTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based start index of this cell, in Unicode code units of the\nUTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
@@ -3273,12 +3273,12 @@
       "id": "TableRow",
       "properties": {
         "endIndex": {
-          "description": "The zero-based end index of this row, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based end index of this row, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },
         "startIndex": {
-          "description": "The zero-based start index of this row, in Unicode code units of the UTF-16\nencoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indices. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indices.",
+          "description": "The zero-based start index of this row, in Unicode code units of the UTF-16\nencoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
           "format": "int32",
           "type": "integer"
         },

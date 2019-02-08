@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20190119",
+  "revision": "20190204",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -2176,7 +2176,7 @@
       "type": "object"
     },
     "GoogleCloudVisionV1p2beta1AnnotateImageRequest": {
-      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features.",
+      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features, and with context information.",
       "id": "GoogleCloudVisionV1p2beta1AnnotateImageRequest",
       "properties": {
         "features": {

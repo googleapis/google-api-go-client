@@ -5025,6 +5025,15 @@ func (r *ProjectsGroupsService) Delete(name string) *ProjectsGroupsDeleteCall {
 	return c
 }
 
+// Recursive sets the optional parameter "recursive": If this field is
+// true, then the request means to delete a group with all its
+// descendants. Otherwise, the request means to delete a group only when
+// it has no descendants. The default value is false.
+func (c *ProjectsGroupsDeleteCall) Recursive(recursive bool) *ProjectsGroupsDeleteCall {
+	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5124,6 +5133,11 @@ func (c *ProjectsGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, err
 	//       "pattern": "^projects/[^/]+/groups/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "recursive": {
+	//       "description": "If this field is true, then the request means to delete a group with all its descendants. Otherwise, the request means to delete a group only when it has no descendants. The default value is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     }
 	//   },
 	//   "path": "v3/{+name}",

@@ -2357,7 +2357,8 @@ type Network struct {
 	// default.
 	Name string `json:"name,omitempty"`
 
-	// SessionAffinity: Enable session affinity.
+	// SessionAffinity: Enable session affinity. Only applicable in the App
+	// Engine flexible environment.
 	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 
 	// SubnetworkName: Google Cloud Platform sub-network where the virtual

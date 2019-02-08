@@ -713,34 +713,6 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
-            "patch": {
-              "description": "Patches a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` and `description`.\n\nOnly fields specified in the request are garaunteed to be returned in\nthe response. Other fields in the response may be empty.\n\nNote: The field mask is required.",
-              "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
-              "httpMethod": "PATCH",
-              "id": "iam.projects.serviceAccounts.patch",
-              "parameterOrder": [
-                "name"
-              ],
-              "parameters": {
-                "name": {
-                  "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.\n\nRequests using `-` as a wildcard for the `PROJECT_ID` will infer the\nproject from the `account` and the `ACCOUNT` value can be the `email`\naddress or the `unique_id` of the service account.\n\nIn responses the resource name will always be in the format\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.",
-                  "location": "path",
-                  "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1/{+name}",
-              "request": {
-                "$ref": "PatchServiceAccountRequest"
-              },
-              "response": {
-                "$ref": "ServiceAccount"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            },
             "setIamPolicy": {
               "description": "Sets the IAM access control policy for a\nServiceAccount.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:setIamPolicy",
@@ -770,7 +742,7 @@
               ]
             },
             "signBlob": {
-              "description": "Signs a blob using a service account's system-managed private key.",
+              "description": "**Note**: This method is in the process of being deprecated. Call the\n[`signBlob()`](/iam/credentials/reference/rest/v1/projects.serviceAccounts/signBlob)\nmethod of the Cloud IAM Service Account Credentials API instead.\n\nSigns a blob using a service account's system-managed private key.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:signBlob",
               "httpMethod": "POST",
               "id": "iam.projects.serviceAccounts.signBlob",
@@ -798,7 +770,7 @@
               ]
             },
             "signJwt": {
-              "description": "Signs a JWT using a service account's system-managed private key.\n\nIf no expiry time (`exp`) is provided in the `SignJwtRequest`, IAM sets an\nan expiry time of one hour by default. If you request an expiry time of\nmore than one hour, the request will fail.",
+              "description": "**Note**: This method is in the process of being deprecated. Call the\n[`signJwt()`](/iam/credentials/reference/rest/v1/projects.serviceAccounts/signJwt)\nmethod of the Cloud IAM Service Account Credentials API instead.\n\nSigns a JWT using a service account's system-managed private key.\n\nIf no expiry time (`exp`) is provided in the `SignJwtRequest`, IAM sets an\nan expiry time of one hour by default. If you request an expiry time of\nmore than one hour, the request will fail.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:signJwt",
               "httpMethod": "POST",
               "id": "iam.projects.serviceAccounts.signJwt",
@@ -1109,7 +1081,7 @@
       }
     }
   },
-  "revision": "20190111",
+  "revision": "20190201",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1486,20 +1458,6 @@
         },
         "nextPageToken": {
           "description": "To retrieve the next page of results, set\nListServiceAccountsRequest.page_token\nto this value.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "PatchServiceAccountRequest": {
-      "description": "The patch service account request.",
-      "id": "PatchServiceAccountRequest",
-      "properties": {
-        "serviceAccount": {
-          "$ref": "ServiceAccount"
-        },
-        "updateMask": {
-          "format": "google-fieldmask",
           "type": "string"
         }
       },

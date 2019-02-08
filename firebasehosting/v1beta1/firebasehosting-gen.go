@@ -251,6 +251,47 @@ func (s *CertHttpChallenge) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloudRunRewrite: A configured rewrite that will direct any requests
+// to a Cloud Run service. If
+// the Cloud Run service does not exist when setting or updating your
+// Firebase
+// Hosting configuration then the request will fail. Any errors from the
+// Cloud
+// Run service (including when the service has been deleted) will be
+// passed back
+// down to the end user.
+type CloudRunRewrite struct {
+	// Region: Optional. The region where the Cloud Run service is hosted.
+	// Defaults to
+	// `us-central1` if not supplied.
+	Region string `json:"region,omitempty"`
+
+	// ServiceId: Required. User supplied ID of the Cloud Run service.
+	ServiceId string `json:"serviceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Region") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Region") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudRunRewrite) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRunRewrite
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Domain: The intended behavior and status information of a domain.
 type Domain struct {
 	// DomainName: Required. The domain name of the association.
@@ -840,6 +881,9 @@ type Rewrite struct {
 	// Path: The URL path to rewrite the request to.
 	Path string `json:"path,omitempty"`
 
+	// Run: The request will be forwarded to Cloud Run.
+	Run *CloudRunRewrite `json:"run,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "DynamicLinks") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1065,9 +1109,10 @@ type Version struct {
 	//   "ABANDONED" - The version was not updated to `FINALIZED` within
 	// 12&nbsp;hours and was
 	// automatically deleted.
-	//   "EXPIRED" - The version has fallen out of the site-configured
-	// retention window and its
-	// associated files in GCS have been/been scheduled for deletion.
+	//   "EXPIRED" - The version is outside the site-configured limit for
+	// the number of
+	// retained versions, so the version's content is scheduled for
+	// deletion.
 	Status string `json:"status,omitempty"`
 
 	// VersionBytes: Output only. The total stored bytesize of the

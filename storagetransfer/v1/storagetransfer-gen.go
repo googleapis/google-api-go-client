@@ -114,9 +114,10 @@ type TransferOperationsService struct {
 }
 
 // AwsAccessKey: AWS access key (see
-// [AWS Security
-// Credentials](http://docs.aws.amazon.com/general/latest/gr/aws-security
-// -credentials.html)).
+// [AWS
+// Security
+// Credentials](http://docs.aws.amazon.com/general/latest/gr/aws
+// -security-credentials.html)).
 type AwsAccessKey struct {
 	// AccessKeyId: AWS access key ID.
 	// Required.
@@ -163,9 +164,10 @@ type AwsS3Data struct {
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
 	// BucketName: S3 Bucket name (see
-	// [Creating a
-	// bucket](http://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-g
-	// et-location-example.html)).
+	// [Creating
+	// a
+	// bucket](http://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket
+	// -get-location-example.html)).
 	// Required.
 	BucketName string `json:"bucketName,omitempty"`
 
@@ -744,11 +746,12 @@ type ObjectConditions struct {
 	// satisfy the object
 	// conditions must have names that start with one of the
 	// `includePrefixes`
-	// and that do not start with any of the `excludePrefixes`. If
-	// `includePrefixes`
-	// is not specified, all objects except those that have names starting
-	// with
-	// one of the `excludePrefixes` must satisfy the object
+	// and that do not start with any of the `excludePrefixes`.
+	// If
+	// `includePrefixes` is not specified, all objects except those that
+	// have
+	// names starting with one of the `excludePrefixes` must satisfy the
+	// object
 	// conditions.
 	//
 	// Requirements:
@@ -1256,8 +1259,8 @@ type TransferJob struct {
 	// error.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The ID of the Google Cloud Platform Console project that
-	// owns the job.
+	// ProjectId: The ID of the Google Cloud Platform Project that owns the
+	// job.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// Schedule: Schedule specification.
@@ -1332,8 +1335,8 @@ type TransferOperation struct {
 	// Name: A globally unique ID assigned by the system.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The ID of the Google Cloud Platform Console project that
-	// owns the operation.
+	// ProjectId: The ID of the Google Cloud Platform Project that owns the
+	// operation.
 	// Required.
 	ProjectId string `json:"projectId,omitempty"`
 

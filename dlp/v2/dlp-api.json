@@ -1491,7 +1491,7 @@
       }
     }
   },
-  "revision": "20190129",
+  "revision": "20190205",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3027,6 +3027,10 @@
       "description": "InfoType description.",
       "id": "GooglePrivacyDlpV2InfoTypeDescription",
       "properties": {
+        "description": {
+          "description": "Description of the infotype. Translated when language is provided in the\nrequest.",
+          "type": "string"
+        },
         "displayName": {
           "description": "Human readable form of the infoType name.",
           "type": "string"

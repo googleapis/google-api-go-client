@@ -369,6 +369,11 @@
                   "pattern": "^projects/[^/]+/groups/[^/]+$",
                   "required": true,
                   "type": "string"
+                },
+                "recursive": {
+                  "description": "If this field is true, then the request means to delete a group with all its descendants. Otherwise, the request means to delete a group only when it has no descendants. The default value is false.",
+                  "location": "query",
+                  "type": "boolean"
                 }
               },
               "path": "v3/{+name}",
@@ -1452,7 +1457,7 @@
       }
     }
   },
-  "revision": "20190122",
+  "revision": "20190204",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {

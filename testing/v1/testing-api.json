@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190129",
+  "revision": "20190207",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -1374,6 +1374,11 @@
         },
         "startActivity": {
           "$ref": "StartActivityIntent"
+        },
+        "timeout": {
+          "description": "Timeout in seconds for each intent.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"

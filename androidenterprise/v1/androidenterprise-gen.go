@@ -344,6 +344,10 @@ type AdministratorWebTokenSpec struct {
 	// string "androidenterprise#administratorWebTokenSpec".
 	Kind string `json:"kind,omitempty"`
 
+	// ManagedConfigurations: Options for displaying the Managed
+	// Configuration page.
+	ManagedConfigurations *AdministratorWebTokenSpecManagedConfigurations `json:"managedConfigurations,omitempty"`
+
 	// Parent: The URI of the parent frame hosting the iframe. To prevent
 	// XSS, the iframe may not be hosted at other URIs. This URI must be
 	// https.
@@ -383,6 +387,34 @@ type AdministratorWebTokenSpec struct {
 
 func (s *AdministratorWebTokenSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod AdministratorWebTokenSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type AdministratorWebTokenSpecManagedConfigurations struct {
+	// Enabled: Whether the Managed Configuration page is displayed. Default
+	// is true.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdministratorWebTokenSpecManagedConfigurations) MarshalJSON() ([]byte, error) {
+	type NoMethod AdministratorWebTokenSpecManagedConfigurations
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -863,7 +895,7 @@ func (s *AuthenticationToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AutoInstallConstraint: The Auto install constraint. Defines a set of
+// AutoInstallConstraint: The auto-install constraint. Defines a set of
 // restrictions for installation. At least one of the fields must be
 // set.
 type AutoInstallConstraint struct {
@@ -902,8 +934,8 @@ func (s *AutoInstallConstraint) MarshalJSON() ([]byte, error) {
 }
 
 type AutoInstallPolicy struct {
-	// AutoInstallConstraint: Constraints for auto-installing the app. You
-	// can specify a maximum of one constraint.
+	// AutoInstallConstraint: The constraints for auto-installing the app.
+	// You can specify a maximum of one constraint.
 	AutoInstallConstraint []*AutoInstallConstraint `json:"autoInstallConstraint,omitempty"`
 
 	// AutoInstallMode: The auto-install mode. If unset defaults to
@@ -2683,7 +2715,7 @@ func (s *ProductPermissions) MarshalJSON() ([]byte, error) {
 
 // ProductPolicy: The policy for a product.
 type ProductPolicy struct {
-	// AutoInstallPolicy: The auto install policy for the product.
+	// AutoInstallPolicy: The auto-install policy for the product.
 	AutoInstallPolicy *AutoInstallPolicy `json:"autoInstallPolicy,omitempty"`
 
 	// ProductId: The ID of the product. For example,

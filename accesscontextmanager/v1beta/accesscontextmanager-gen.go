@@ -318,18 +318,14 @@ type Condition struct {
 	// addresses are allowed.
 	IpSubnetworks []string `json:"ipSubnetworks,omitempty"`
 
-	// Members: The signed-in user originating the request must be a part of
-	// one of the
-	// provided
-	// members.
+	// Members: The request must be made by one of the provided user or
+	// service
+	// accounts. Groups are not
+	// supported.
 	// Syntax:
 	// `user:{emailid}`
-	// `group:{emailid}`
-	// `serviceAccount:{e
-	// mailid}`
-	// If not specified, a request may come from any user (logged in/not
-	// logged
-	// in, not present in any groups, etc.).
+	// `serviceAccount:{emailid}`
+	// If not specified, a request may come from any user.
 	Members []string `json:"members,omitempty"`
 
 	// Negate: Whether to negate the Condition. If true, the Condition

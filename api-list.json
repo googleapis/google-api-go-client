@@ -1491,7 +1491,7 @@
    "id": "discovery:v1",
    "name": "discovery",
    "version": "v1",
-   "title": "APIs Discovery Service",
+   "title": "API Discovery Service",
    "description": "Provides information about other Google APIs, such as what APIs are available, the resource, and method details for each API.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/discovery/v1/rest",
    "discoveryLink": "./apis/discovery/v1/rest",
@@ -1969,6 +1969,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/google-apps/groups-settings/get_started",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "healthcare:v1alpha",
+   "name": "healthcare",
+   "version": "v1alpha",
+   "title": "Cloud Healthcare API",
+   "description": "",
+   "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/healthcare",
    "preferred": true
   },
   {
@@ -2990,7 +3005,7 @@
    "id": "speech:v1p1beta1",
    "name": "speech",
    "version": "v1p1beta1",
-   "title": "Cloud Speech API",
+   "title": "Cloud Speech-to-Text API",
    "description": "Converts audio to text by applying powerful neural network models.",
    "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1p1beta1",
    "icons": {
@@ -3005,7 +3020,7 @@
    "id": "speech:v1",
    "name": "speech",
    "version": "v1",
-   "title": "Cloud Speech API",
+   "title": "Cloud Speech-to-Text API",
    "description": "Converts audio to text by applying powerful neural network models.",
    "discoveryRestUrl": "https://speech.googleapis.com/$discovery/rest?version=v1",
    "icons": {

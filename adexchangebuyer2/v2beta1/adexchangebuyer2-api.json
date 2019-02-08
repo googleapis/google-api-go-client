@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20190128",
+  "revision": "20190206",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -5056,7 +5056,7 @@
       "id": "PauseProposalRequest",
       "properties": {
         "reason": {
-          "description": "The reason why the proposal is being paused.\nThis human readable message will be displayed in the seller's UI.\n(Max length: 100 unicode code units.)",
+          "description": "The reason why the proposal is being paused.\nThis human readable message will be displayed in the seller's UI.\n(Max length: 1000 unicode code units.)",
           "type": "string"
         }
       },

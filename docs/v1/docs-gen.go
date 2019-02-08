@@ -305,7 +305,7 @@ func (s *BatchUpdateDocumentResponse) MarshalJSON() ([]byte, error) {
 type Body struct {
 	// Content: The contents of the body.
 	//
-	// The indices for the body's content begin at zero.
+	// The indexes for the body's content begin at zero.
 	Content []*StructuralElement `json:"content,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -1724,7 +1724,7 @@ func (s *Equation) MarshalJSON() ([]byte, error) {
 type Footer struct {
 	// Content: The contents of the footer.
 	//
-	// The indices for a footer's content begin at zero.
+	// The indexes for a footer's content begin at zero.
 	Content []*StructuralElement `json:"content,omitempty"`
 
 	// FooterId: The ID of the footer.
@@ -1757,7 +1757,7 @@ func (s *Footer) MarshalJSON() ([]byte, error) {
 type Footnote struct {
 	// Content: The contents of the footnote.
 	//
-	// The indices for a footnote's content begin at zero.
+	// The indexes for a footnote's content begin at zero.
 	Content []*StructuralElement `json:"content,omitempty"`
 
 	// FootnoteId: The ID of the footnote.
@@ -1845,7 +1845,7 @@ func (s *FootnoteReference) MarshalJSON() ([]byte, error) {
 type Header struct {
 	// Content: The contents of the header.
 	//
-	// The indices for a header's content begin at zero.
+	// The indexes for a header's content begin at zero.
 	Content []*StructuralElement `json:"content,omitempty"`
 
 	// HeaderId: The ID of the header.
@@ -2758,7 +2758,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // an
 // arbitrary user-defined label so their contents can be
 // programmatically read
-// or edited at a later time. A document may contain multiple named
+// or edited at a later time. A document can contain multiple named
 // ranges with
 // the same name, but every named range has a unique ID.
 //
@@ -3128,9 +3128,9 @@ type NestingLevel struct {
 	// zero.
 	//   "UPPER_ALPHA" - An uppercase letter, like `A`, `B`, or `C`.
 	//   "ALPHA" - A lowercase letter, like `a`, `b`, or `c`.
-	//   "UPPER_ROMAN" - An uppercase roman numeral, like `I`, `II`, or
+	//   "UPPER_ROMAN" - An uppercase Roman numeral, like `I`, `II`, or
 	// `III`.
-	//   "ROMAN" - A lowercase roman numeral, like `i`, `ii`, or `iii`.
+	//   "ROMAN" - A lowercase Roman numeral, like `i`, `ii`, or `iii`.
 	GlyphType string `json:"glyphType,omitempty"`
 
 	// IndentFirstLine: The amount of indentation for the first line of
@@ -3488,9 +3488,9 @@ type ParagraphElement struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	EndIndex int64 `json:"endIndex,omitempty"`
 
 	// Equation: An equation paragraph element.
@@ -3514,9 +3514,9 @@ type ParagraphElement struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// TextRun: A text run paragraph element.
@@ -4746,9 +4746,9 @@ type StructuralElement struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	EndIndex int64 `json:"endIndex,omitempty"`
 
 	// Paragraph: A paragraph type of structural element.
@@ -4763,9 +4763,9 @@ type StructuralElement struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// Table: A table type of structural element.
@@ -5319,9 +5319,9 @@ type TableCell struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	EndIndex int64 `json:"endIndex,omitempty"`
 
 	// StartIndex: The zero-based start index of this cell, in Unicode code
@@ -5330,9 +5330,9 @@ type TableCell struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// SuggestedDeletionIds: The suggested deletion IDs. If empty, then
@@ -5717,9 +5717,9 @@ type TableRow struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	EndIndex int64 `json:"endIndex,omitempty"`
 
 	// StartIndex: The zero-based start index of this row, in Unicode code
@@ -5728,9 +5728,9 @@ type TableRow struct {
 	//
 	// Unicode code units of the UTF-16 encoding means that surrogate
 	// pairs
-	// consume two indices. For example, the "GRINNING FACE" emoji would
+	// consume two indexes. For example, the "GRINNING FACE" emoji would
 	// be
-	// represented as "\uD83D\uDE00" and would consume two indices.
+	// represented as "\uD83D\uDE00" and would consume two indexes.
 	StartIndex int64 `json:"startIndex,omitempty"`
 
 	// SuggestedDeletionIds: The suggested deletion IDs. If empty, then

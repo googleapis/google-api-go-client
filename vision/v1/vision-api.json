@@ -906,7 +906,7 @@
       }
     }
   },
-  "revision": "20190119",
+  "revision": "20190204",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {
@@ -939,7 +939,7 @@
       "type": "object"
     },
     "AnnotateImageRequest": {
-      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features.",
+      "description": "Request for performing Google Cloud Vision API tasks over a user-provided\nimage, with user-requested features, and with context information.",
       "id": "AnnotateImageRequest",
       "properties": {
         "features": {

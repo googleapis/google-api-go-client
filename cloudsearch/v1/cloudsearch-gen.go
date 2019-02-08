@@ -579,7 +579,7 @@ type DataSource struct {
 	// start
 	// with 'google' and cannot be one of the following: mail, gmail, docs,
 	// drive,
-	// groups, sites, calendar, hangouts, gplus, keep.
+	// groups, sites, calendar, hangouts, gplus, keep, people, teams.
 	// Its maximum length is 32 characters.
 	ShortName string `json:"shortName,omitempty"`
 

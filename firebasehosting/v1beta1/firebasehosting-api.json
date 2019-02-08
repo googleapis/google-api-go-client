@@ -604,7 +604,7 @@
       }
     }
   },
-  "revision": "20190114",
+  "revision": "20190205",
   "rootUrl": "https://firebasehosting.googleapis.com/",
   "schemas": {
     "ActingUser": {
@@ -647,6 +647,21 @@
         },
         "token": {
           "description": "The token to serve at the specified URL path to satisfy the certificate\nchallenge.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudRunRewrite": {
+      "description": "A configured rewrite that will direct any requests to a Cloud Run service. If\nthe Cloud Run service does not exist when setting or updating your Firebase\nHosting configuration then the request will fail. Any errors from the Cloud\nRun service (including when the service has been deleted) will be passed back\ndown to the end user.",
+      "id": "CloudRunRewrite",
+      "properties": {
+        "region": {
+          "description": "Optional. The region where the Cloud Run service is hosted.  Defaults to\n`us-central1` if not supplied.",
+          "type": "string"
+        },
+        "serviceId": {
+          "description": "Required. User supplied ID of the Cloud Run service.",
           "type": "string"
         }
       },
@@ -992,6 +1007,10 @@
         "path": {
           "description": "The URL path to rewrite the request to.",
           "type": "string"
+        },
+        "run": {
+          "$ref": "CloudRunRewrite",
+          "description": "The request will be forwarded to Cloud Run."
         }
       },
       "type": "object"
@@ -1133,7 +1152,7 @@
             "All content has been added to the version, and the version can no longer be\nchanged.",
             "The version has been deleted.",
             "The version was not updated to `FINALIZED` within 12\u0026nbsp;hours and was\nautomatically deleted.",
-            "The version has fallen out of the site-configured retention window and its\nassociated files in GCS have been/been scheduled for deletion."
+            "The version is outside the site-configured limit for the number of\nretained versions, so the version's content is scheduled for deletion."
           ],
           "type": "string"
         },

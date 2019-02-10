@@ -1184,6 +1184,44 @@ func (s *InconclusiveDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IndividualOutcome: Step Id and outcome of each individual step that
+// was run as a group with other steps with the same configuration.
+type IndividualOutcome struct {
+	// Possible values:
+	//   "failure"
+	//   "flaky"
+	//   "inconclusive"
+	//   "skipped"
+	//   "success"
+	//   "unset"
+	OutcomeSummary string `json:"outcomeSummary,omitempty"`
+
+	StepId string `json:"stepId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OutcomeSummary") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OutcomeSummary") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndividualOutcome) MarshalJSON() ([]byte, error) {
+	type NoMethod IndividualOutcome
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListExecutionsResponse struct {
 	// Executions: Executions.
 	//
@@ -1484,6 +1522,45 @@ func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MultiStep: Details when multiple steps are run with the same
+// configuration as a group.
+type MultiStep struct {
+	// MultistepNumber: Unique int given to each step. Ranges from
+	// 0(inclusive) to total number of steps(exclusive). The primary step is
+	// 0.
+	MultistepNumber int64 `json:"multistepNumber,omitempty"`
+
+	// PrimaryStep: Present if it is a primary (original) step.
+	PrimaryStep *PrimaryStep `json:"primaryStep,omitempty"`
+
+	// PrimaryStepId: Step Id of the primary (original) step, which might be
+	// this step.
+	PrimaryStepId string `json:"primaryStepId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MultistepNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MultistepNumber") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MultiStep) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Outcome: Interprets a result so that humans and machines can act on
 // it.
 type Outcome struct {
@@ -1742,6 +1819,48 @@ type PerfSampleSeries struct {
 
 func (s *PerfSampleSeries) MarshalJSON() ([]byte, error) {
 	type NoMethod PerfSampleSeries
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrimaryStep: Stores rollup test status of multiple steps that were
+// run as a group and outcome of each individual step.
+type PrimaryStep struct {
+	// IndividualOutcome: Step Id and outcome of each individual step.
+	IndividualOutcome []*IndividualOutcome `json:"individualOutcome,omitempty"`
+
+	// RollUp: Rollup test status of multiple steps that were run with the
+	// same configuration as a group.
+	//
+	// Possible values:
+	//   "failure"
+	//   "flaky"
+	//   "inconclusive"
+	//   "skipped"
+	//   "success"
+	//   "unset"
+	RollUp string `json:"rollUp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndividualOutcome")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndividualOutcome") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrimaryStep) MarshalJSON() ([]byte, error) {
+	type NoMethod PrimaryStep
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2209,6 +2328,16 @@ type Step struct {
 	// request: optional; any new key/value pair will be added to the map,
 	// and any new value for an existing key will update that key's value
 	Labels []*StepLabelsEntry `json:"labels,omitempty"`
+
+	// MultiStep: Details when multiple steps are run with the same
+	// configuration as a group. These details can be used identify which
+	// group this step is part of. It also identifies the groups 'primary
+	// step' which indexes all the group members.
+	//
+	// - In response: present if previously set. - In create request:
+	// optional, set iff this step was performed more than once. - In update
+	// request: optional
+	MultiStep *MultiStep `json:"multiStep,omitempty"`
 
 	// Name: A short human-readable name to display in the UI. Maximum of
 	// 100 characters. For example: Clean build

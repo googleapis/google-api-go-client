@@ -1561,10 +1561,10 @@ type Operation struct {
 	// consumer, but not for service-initiated operations that are
 	// not related to a specific consumer.
 	//
-	// This can be in one of the following formats:
-	//   project:<project_id>,
-	//   project_number:<project_number>,
-	//   api_key:<api_key>.
+	// - This can be in one of the following formats:
+	//     - project:PROJECT_ID,
+	//     - project`_`number:PROJECT_NUMBER,
+	//     - api`_`key:API_KEY.
 	ConsumerId string `json:"consumerId,omitempty"`
 
 	// EndTime: End time of the operation.

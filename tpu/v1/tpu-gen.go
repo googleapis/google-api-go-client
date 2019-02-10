@@ -510,8 +510,12 @@ type Node struct {
 	//   "HEALTH_UNSPECIFIED" - Health status is unknown: not initialized or
 	// failed to retrieve.
 	//   "HEALTHY" - The resource is healthy.
-	//   "UNHEALTHY" - The resource is unhealthy.
+	//   "DEPRECATED_UNHEALTHY" - The resource is unhealthy.
 	//   "TIMEOUT" - The resource is unresponsive.
+	//   "UNHEALTHY_TENSORFLOW" - The in-guest ML stack is unhealthy.
+	//   "UNHEALTHY_MAINTENANCE" - The node is under maintenance/priority
+	// boost caused rescheduling and
+	// will resume running once rescheduled.
 	Health string `json:"health,omitempty"`
 
 	// HealthDescription: Output only.

@@ -658,7 +658,7 @@
       }
     }
   },
-  "revision": "20181010",
+  "revision": "20190205",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
@@ -855,14 +855,18 @@
           "enum": [
             "HEALTH_UNSPECIFIED",
             "HEALTHY",
-            "UNHEALTHY",
-            "TIMEOUT"
+            "DEPRECATED_UNHEALTHY",
+            "TIMEOUT",
+            "UNHEALTHY_TENSORFLOW",
+            "UNHEALTHY_MAINTENANCE"
           ],
           "enumDescriptions": [
             "Health status is unknown: not initialized or failed to retrieve.",
             "The resource is healthy.",
             "The resource is unhealthy.",
-            "The resource is unresponsive."
+            "The resource is unresponsive.",
+            "The in-guest ML stack is unhealthy.",
+            "The node is under maintenance/priority boost caused rescheduling and\nwill resume running once rescheduled."
           ],
           "type": "string"
         },

@@ -187,6 +187,45 @@ func (s *AndroidInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AppPreview: Customizable parameters on the app preview page.
+// The text fields no longer need translation.
+type AppPreview struct {
+	// OpenButtonText: Text that appears on the button to open up the app.
+	// Optional
+	// Defaults to "Open"
+	OpenButtonText string `json:"openButtonText,omitempty"`
+
+	// SavePositionText: Text that asks if user wants to save place in app.
+	// Optional.
+	// Defaults to "Save my place in the app. A link will be copied to
+	// continue
+	// to this page"
+	SavePositionText string `json:"savePositionText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OpenButtonText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OpenButtonText") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppPreview) MarshalJSON() ([]byte, error) {
+	type NoMethod AppPreview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateManagedShortLinkRequest: Request to create a managed Short
 // Dynamic Link.
 type CreateManagedShortLinkRequest struct {
@@ -535,6 +574,9 @@ type DynamicLinkInfo struct {
 	// [documentation](https://firebase.google.com/docs/dynamic-links/cre
 	// ate-manually).
 	AndroidInfo *AndroidInfo `json:"androidInfo,omitempty"`
+
+	// AppPreview: Optional customizable parameters on the app preview page
+	AppPreview *AppPreview `json:"appPreview,omitempty"`
 
 	// DesktopInfo: Desktop related information. See desktop related
 	// parameters in

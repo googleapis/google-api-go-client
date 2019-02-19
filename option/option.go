@@ -16,11 +16,17 @@
 package option
 
 import (
+	"context"
+	"fmt"
+	"log"
 	"net/http"
+	"time"
 
 	"golang.org/x/oauth2"
+	iamcredentials "google.golang.org/api/iamcredentials/v1"
 	"google.golang.org/api/internal"
 	"google.golang.org/grpc"
+)
 )
 
 // A ClientOption is an option for a Google API client.
@@ -38,6 +44,56 @@ type withTokenSource struct{ ts oauth2.TokenSource }
 
 func (w withTokenSource) Apply(o *internal.DialSettings) {
 	o.TokenSource = w.ts
+}
+
+func WithImpersonatedTokenSource(s *ImpersonatedTokenSourceConfig) ClientOption {
+	if s.RootTokenSource == nil {
+		log.Fatalf("google.golang.org/api/option: rootSource cannot be nil")
+	}
+	if s.Lifetime > (3600 * time.Second) {
+		log.Fatalf("google.golang.org/api/option: lifetime must be less than or equal to 3600 seconds")
+	}
+	return s
+}
+
+type ImpersonatedTokenSourceConfig struct {
+	RootTokenSource oauth2.TokenSource
+	TargetPrincipal string
+	Lifetime        time.Duration
+	Delegates       []string
+	TargetScopes    []string
+}
+
+func (w ImpersonatedTokenSourceConfig) Apply(o *internal.DialSettings) {
+
+	client := oauth2.NewClient(context.TODO(), w.RootTokenSource)
+	service, err := iamcredentials.New(client)
+	if err != nil {
+		log.Printf("google.golang.org/api/option: Error creating IAMCredentials: %v", err)
+		return
+	}
+	name := fmt.Sprintf("projects/-/serviceAccounts/%s", w.TargetPrincipal)
+	tokenRequest := &iamcredentials.GenerateAccessTokenRequest{
+		Lifetime:  fmt.Sprintf("%ds", int(w.Lifetime.Seconds())),
+		Delegates: w.Delegates,
+		Scope:     w.TargetScopes,
+	}
+	at, err := service.Projects.ServiceAccounts.GenerateAccessToken(name, tokenRequest).Do()
+	if err != nil {
+		log.Printf("google.golang.org/api/option: Error calling iamcredentials.GenerateAccessToken: %v", err)
+		return
+	}
+
+	expireAt, err := time.Parse(time.RFC3339, at.ExpireTime)
+	if err != nil {
+		log.Printf("google.golang.org/api/option: Error parsing ExpireTime from iamcredentials: %v", err)
+		return
+	}
+
+	o.TokenSource = oauth2.StaticTokenSource(&oauth2.Token{
+		AccessToken: at.AccessToken,
+		Expiry:      expireAt,
+	})
 }
 
 type withCredFile string

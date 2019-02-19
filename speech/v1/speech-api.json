@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20190201",
+  "revision": "20190215",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -449,6 +449,11 @@
       "description": "Provides information to the recognizer that specifies how to process the\nrequest.",
       "id": "RecognitionConfig",
       "properties": {
+        "audioChannelCount": {
+          "description": "*Optional* The number of channels in the input audio data.\nONLY set this for MULTI-CHANNEL recognition.\nValid values for LINEAR16 and FLAC are `1`-`8`.\nValid values for OGG_OPUS are '1'-'254'.\nValid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only `1`.\nIf `0` or omitted, defaults to one channel (mono).\nNote: We only recognize the first channel by default.\nTo perform independent recognition on each channel set\n`enable_separate_recognition_per_channel` to 'true'.",
+          "format": "int32",
+          "type": "integer"
+        },
         "enableAutomaticPunctuation": {
           "description": "*Optional* If 'true', adds punctuation to recognition result hypotheses.\nThis feature is only available in select languages. Setting this for\nrequests in other languages has no effect at all.\nThe default 'false' value does not add punctuation to result hypotheses.\nNote: This is currently offered as an experimental service, complimentary\nto all users. In the future this may be exclusively available as a\npremium feature.",
           "type": "boolean"
@@ -494,6 +499,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "metadata": {
+          "$ref": "RecognitionMetadata",
+          "description": "*Optional* Metadata regarding this request."
+        },
         "model": {
           "description": "*Optional* Which model to select for the given request. Select the model\nbest suited to your domain to get best results. If a model is not\nexplicitly specified, then we auto-select a model based on the parameters\nin the RecognitionConfig.\n\u003ctable\u003e\n  \u003ctr\u003e\n    \u003ctd\u003e\u003cb\u003eModel\u003c/b\u003e\u003c/td\u003e\n    \u003ctd\u003e\u003cb\u003eDescription\u003c/b\u003e\u003c/td\u003e\n  \u003c/tr\u003e\n  \u003ctr\u003e\n    \u003ctd\u003e\u003ccode\u003ecommand_and_search\u003c/code\u003e\u003c/td\u003e\n    \u003ctd\u003eBest for short queries such as voice commands or voice search.\u003c/td\u003e\n  \u003c/tr\u003e\n  \u003ctr\u003e\n    \u003ctd\u003e\u003ccode\u003ephone_call\u003c/code\u003e\u003c/td\u003e\n    \u003ctd\u003eBest for audio that originated from a phone call (typically\n    recorded at an 8khz sampling rate).\u003c/td\u003e\n  \u003c/tr\u003e\n  \u003ctr\u003e\n    \u003ctd\u003e\u003ccode\u003evideo\u003c/code\u003e\u003c/td\u003e\n    \u003ctd\u003eBest for audio that originated from from video or includes multiple\n        speakers. Ideally the audio is recorded at a 16khz or greater\n        sampling rate. This is a premium model that costs more than the\n        standard rate.\u003c/td\u003e\n  \u003c/tr\u003e\n  \u003ctr\u003e\n    \u003ctd\u003e\u003ccode\u003edefault\u003c/code\u003e\u003c/td\u003e\n    \u003ctd\u003eBest for audio that is not one of the specific audio models.\n        For example, long-form audio. Ideally the audio is high-fidelity,\n        recorded at a 16khz or greater sampling rate.\u003c/td\u003e\n  \u003c/tr\u003e\n\u003c/table\u003e",
           "type": "string"
@@ -517,6 +526,113 @@
         "useEnhanced": {
           "description": "*Optional* Set to true to use an enhanced model for speech recognition.\nIf `use_enhanced` is set to true and the `model` field is not set, then\nan appropriate enhanced model is chosen if:\n1. project is eligible for requesting enhanced models\n2. an enhanced model exists for the audio\n\nIf `use_enhanced` is true and an enhanced version of the specified model\ndoes not exist, then the speech is recognized using the standard version\nof the specified model.\n\nEnhanced speech models require that you opt-in to data logging using\ninstructions in the\n[documentation](/speech-to-text/docs/enable-data-logging). If you set\n`use_enhanced` to true and you have not enabled audio logging, then you\nwill receive an error.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "RecognitionMetadata": {
+      "description": "Description of audio data to be recognized.",
+      "id": "RecognitionMetadata",
+      "properties": {
+        "audioTopic": {
+          "description": "Description of the content. Eg. \"Recordings of federal supreme court\nhearings from 2012\".",
+          "type": "string"
+        },
+        "industryNaicsCodeOfAudio": {
+          "description": "The industry vertical to which this speech recognition request most\nclosely applies. This is most indicative of the topics contained\nin the audio.  Use the 6-digit NAICS code to identify the industry\nvertical - see https://www.naics.com/search/.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "interactionType": {
+          "description": "The use case most closely describing the audio content to be recognized.",
+          "enum": [
+            "INTERACTION_TYPE_UNSPECIFIED",
+            "DISCUSSION",
+            "PRESENTATION",
+            "PHONE_CALL",
+            "VOICEMAIL",
+            "PROFESSIONALLY_PRODUCED",
+            "VOICE_SEARCH",
+            "VOICE_COMMAND",
+            "DICTATION"
+          ],
+          "enumDescriptions": [
+            "Use case is either unknown or is something other than one of the other\nvalues below.",
+            "Multiple people in a conversation or discussion. For example in a\nmeeting with two or more people actively participating. Typically\nall the primary people speaking would be in the same room (if not,\nsee PHONE_CALL)",
+            "One or more persons lecturing or presenting to others, mostly\nuninterrupted.",
+            "A phone-call or video-conference in which two or more people, who are\nnot in the same room, are actively participating.",
+            "A recorded message intended for another person to listen to.",
+            "Professionally produced audio (eg. TV Show, Podcast).",
+            "Transcribe spoken questions and queries into text.",
+            "Transcribe voice commands, such as for controlling a device.",
+            "Transcribe speech to text to create a written document, such as a\ntext-message, email or report."
+          ],
+          "type": "string"
+        },
+        "microphoneDistance": {
+          "description": "The audio type that most closely describes the audio being recognized.",
+          "enum": [
+            "MICROPHONE_DISTANCE_UNSPECIFIED",
+            "NEARFIELD",
+            "MIDFIELD",
+            "FARFIELD"
+          ],
+          "enumDescriptions": [
+            "Audio type is not known.",
+            "The audio was captured from a closely placed microphone. Eg. phone,\ndictaphone, or handheld microphone. Generally if there speaker is within\n1 meter of the microphone.",
+            "The speaker if within 3 meters of the microphone.",
+            "The speaker is more than 3 meters away from the microphone."
+          ],
+          "type": "string"
+        },
+        "obfuscatedId": {
+          "description": "Obfuscated (privacy-protected) ID of the user, to identify number of\nunique users using the service.",
+          "format": "int64",
+          "type": "string"
+        },
+        "originalMediaType": {
+          "description": "The original media the speech was recorded on.",
+          "enum": [
+            "ORIGINAL_MEDIA_TYPE_UNSPECIFIED",
+            "AUDIO",
+            "VIDEO"
+          ],
+          "enumDescriptions": [
+            "Unknown original media type.",
+            "The speech data is an audio recording.",
+            "The speech data originally recorded on a video."
+          ],
+          "type": "string"
+        },
+        "originalMimeType": {
+          "description": "Mime type of the original audio file.  For example `audio/m4a`,\n`audio/x-alaw-basic`, `audio/mp3`, `audio/3gpp`.\nA list of possible audio mime types is maintained at\nhttp://www.iana.org/assignments/media-types/media-types.xhtml#audio",
+          "type": "string"
+        },
+        "recordingDeviceName": {
+          "description": "The device used to make the recording.  Examples 'Nexus 5X' or\n'Polycom SoundStation IP 6000' or 'POTS' or 'VoIP' or\n'Cardioid Microphone'.",
+          "type": "string"
+        },
+        "recordingDeviceType": {
+          "description": "The type of device the speech was recorded with.",
+          "enum": [
+            "RECORDING_DEVICE_TYPE_UNSPECIFIED",
+            "SMARTPHONE",
+            "PC",
+            "PHONE_LINE",
+            "VEHICLE",
+            "OTHER_OUTDOOR_DEVICE",
+            "OTHER_INDOOR_DEVICE"
+          ],
+          "enumDescriptions": [
+            "The recording device is unknown.",
+            "Speech was recorded on a smartphone.",
+            "Speech was recorded using a personal computer or tablet.",
+            "Speech was recorded over a phone line.",
+            "Speech was recorded in a vehicle.",
+            "Speech was recorded outdoors.",
+            "Speech was recorded indoors."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

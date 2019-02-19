@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/R-oIGXZXmcc1qto8wFr473V-oY4\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ZYECgHEp_WVh6UNpKvl2Vf2w5rw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -998,7 +998,7 @@
       }
     }
   },
-  "revision": "20190124",
+  "revision": "20190208",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -1336,6 +1336,13 @@
         "friendlyName": {
           "description": "[Optional] The friendly name for the destination table. This will only be used if the destination table is newly created. If the table already exists and a value different than the current friendly name is provided, the job will fail.",
           "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "[Optional] The labels associated with this table. You can use these to organize and group your tables. This will only be used if the destination table is newly created. If the table already exists and labels are different than the current labels are provided, the job will fail.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -2465,6 +2472,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "inputBytes": {
+          "description": "[Output-only] Number of user bytes extracted into the result. This is the byte count as computed by BigQuery for billing purposes.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"

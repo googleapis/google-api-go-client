@@ -2584,8 +2584,7 @@ func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If unspecified, defaults to
-// 256. The maximum value is 2048.
+// of results to return. The maximum value is 256.
 func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2717,7 +2716,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If unspecified, defaults to\n256. The maximum value is 2048.",
+	//       "description": "The maximum number of results to return. The maximum value is 256.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

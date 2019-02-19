@@ -74,6 +74,7 @@ func New(client *http.Client) (*APIService, error) {
 	s.Pos = NewPosService(s)
 	s.Products = NewProductsService(s)
 	s.Productstatuses = NewProductstatusesService(s)
+	s.Regionalinventory = NewRegionalinventoryService(s)
 	s.Shippingsettings = NewShippingsettingsService(s)
 	return s, nil
 }
@@ -108,6 +109,8 @@ type APIService struct {
 	Products *ProductsService
 
 	Productstatuses *ProductstatusesService
+
+	Regionalinventory *RegionalinventoryService
 
 	Shippingsettings *ShippingsettingsService
 }
@@ -233,6 +236,15 @@ func NewProductstatusesService(s *APIService) *ProductstatusesService {
 }
 
 type ProductstatusesService struct {
+	s *APIService
+}
+
+func NewRegionalinventoryService(s *APIService) *RegionalinventoryService {
+	rs := &RegionalinventoryService{s: s}
+	return rs
+}
+
+type RegionalinventoryService struct {
 	s *APIService
 }
 
@@ -2612,7 +2624,7 @@ type DeliveryTime struct {
 
 	// MaxTransitTimeInDays: Maximum number of business days that is spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
-	// Must be greater than or equal to minTransitTimeInDays. Required.
+	// Must be greater than or equal to minTransitTimeInDays.
 	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
 
 	// MinHandlingTimeInDays: Minimum number of business days spent before
@@ -2622,8 +2634,15 @@ type DeliveryTime struct {
 
 	// MinTransitTimeInDays: Minimum number of business days that is spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
-	// Required.
+	// Either {min,max}transitTimeInDays or transitTimeTable must be set,
+	// but not both.
 	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
+
+	// TransitTimeTable: Transit time table, number of business days spent
+	// in transit based on row and column dimensions. Either
+	// {min,max}transitTimeInDays or transitTimeTable can be set, but not
+	// both.
+	TransitTimeTable *TransitTable `json:"transitTimeTable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CutoffTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2785,7 +2804,7 @@ func (s *GmbAccountsGmbAccount) MarshalJSON() ([]byte, error) {
 
 // Headers: A non-empty list of row or column headers for a table.
 // Exactly one of prices, weights, numItems, postalCodeGroupNames, or
-// locations must be set.
+// location must be set.
 type Headers struct {
 	// Locations: A list of location ID sets. Must be non-empty. Can only be
 	// set if all other fields are not set.
@@ -2977,33 +2996,8 @@ type InvoiceSummary struct {
 	// additional charges.
 	AdditionalChargeSummaries []*InvoiceSummaryAdditionalChargeSummary `json:"additionalChargeSummaries,omitempty"`
 
-	// CustomerBalance: [required] Customer balance on this invoice. A
-	// negative amount means the customer is paying, a positive one means
-	// the customer is receiving money. Note: the sum of merchant_balance,
-	// customer_balance and google_balance must always be zero.
-	//
-	// Furthermore the absolute value of this amount is expected to be equal
-	// to the sum of product amount and additional charges, minus
-	// promotions.
-	CustomerBalance *Amount `json:"customerBalance,omitempty"`
-
-	// GoogleBalance: [required] Google balance on this invoice. A negative
-	// amount means Google is paying, a positive one means Google is
-	// receiving money. Note: the sum of merchant_balance, customer_balance
-	// and google_balance must always be zero.
-	GoogleBalance *Amount `json:"googleBalance,omitempty"`
-
-	// MerchantBalance: [required] Merchant balance on this invoice. A
-	// negative amount means the merchant is paying, a positive one means
-	// the merchant is receiving money. Note: the sum of merchant_balance,
-	// customer_balance and google_balance must always be zero.
-	MerchantBalance *Amount `json:"merchantBalance,omitempty"`
-
 	// ProductTotal: [required] Total price for the product.
 	ProductTotal *Amount `json:"productTotal,omitempty"`
-
-	// PromotionSummaries: Summary for each promotion.
-	PromotionSummaries []*Promotion `json:"promotionSummaries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AdditionalChargeSummaries") to unconditionally include in API
@@ -3880,10 +3874,15 @@ type Order struct {
 	// MerchantOrderId: Merchant-provided id of the order.
 	MerchantOrderId string `json:"merchantOrderId,omitempty"`
 
-	// NetAmount: The net amount for the order. For example, if an order was
-	// originally for a grand total of $100 and a refund was issued for $20,
-	// the net amount will be $80.
-	NetAmount *Price `json:"netAmount,omitempty"`
+	// NetPriceAmount: The net amount for the order (price part). For
+	// example, if an order was originally for $100 and a refund was issued
+	// for $20, the net amount will be $80.
+	NetPriceAmount *Price `json:"netPriceAmount,omitempty"`
+
+	// NetTaxAmount: The net amount for the order (tax part). Note that in
+	// certain cases due to taxable base adjustment netTaxAmount might not
+	// match to a sum of tax field across all lineItems and refunds.
+	NetTaxAmount *Price `json:"netTaxAmount,omitempty"`
 
 	// PaymentStatus: The status of the payment.
 	PaymentStatus string `json:"paymentStatus,omitempty"`
@@ -8323,39 +8322,6 @@ func (s *ProductstatusesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type Promotion struct {
-	// PromotionAmount: [required] Amount of the promotion. The values here
-	// are the promotion applied to the unit price pretax and to the total
-	// of the tax amounts.
-	PromotionAmount *Amount `json:"promotionAmount,omitempty"`
-
-	// PromotionId: [required] ID of the promotion.
-	PromotionId string `json:"promotionId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "PromotionAmount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PromotionAmount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Promotion) MarshalJSON() ([]byte, error) {
-	type NoMethod Promotion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 type RateGroup struct {
 	// ApplicableShippingLabels: A list of shipping labels defining the
 	// products to which this rate group applies to. This is a disjunction:
@@ -8436,14 +8402,220 @@ func (s *RefundReason) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RegionalInventory: Regional inventory resource. contains the regional
+// name and all attributes which are overridden for the specified
+// region.
+type RegionalInventory struct {
+	// Availability: The availability of the product.
+	Availability string `json:"availability,omitempty"`
+
+	// CustomAttributes: A list of custom (merchant-provided) attributes. It
+	// can also be used for submitting any attribute of the feed
+	// specification in its generic form.
+	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#regionalInventory".
+	Kind string `json:"kind,omitempty"`
+
+	// Price: The price of the product.
+	Price *Price `json:"price,omitempty"`
+
+	// RegionId: The id (name) of the region.
+	RegionId string `json:"regionId,omitempty"`
+
+	// SalePrice: The sale price of the product. Mandatory if
+	// sale_price_effective_date is defined.
+	SalePrice *Price `json:"salePrice,omitempty"`
+
+	// SalePriceEffectiveDate: A date range represented by a pair of ISO
+	// 8601 dates separated by a space, comma, or slash. Both dates might be
+	// specified as 'null' if undecided.
+	SalePriceEffectiveDate string `json:"salePriceEffectiveDate,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Availability") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Availability") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalInventory) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalInventory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RegionalinventoryCustomBatchRequest struct {
+	// Entries: The request entries to be processed in the batch.
+	Entries []*RegionalinventoryCustomBatchRequestEntry `json:"entries,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalinventoryCustomBatchRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalinventoryCustomBatchRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RegionalinventoryCustomBatchRequestEntry: A batch entry encoding a
+// single non-batch regional inventory request.
+type RegionalinventoryCustomBatchRequestEntry struct {
+	// BatchId: An entry ID, unique within the batch request.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// MerchantId: The ID of the managing account.
+	MerchantId uint64 `json:"merchantId,omitempty,string"`
+
+	Method string `json:"method,omitempty"`
+
+	// ProductId: The ID of the product for which to update price and
+	// availability.
+	ProductId string `json:"productId,omitempty"`
+
+	// RegionalInventory: Price and availability of the product.
+	RegionalInventory *RegionalInventory `json:"regionalInventory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalinventoryCustomBatchRequestEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalinventoryCustomBatchRequestEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type RegionalinventoryCustomBatchResponse struct {
+	// Entries: The result of the execution of the batch requests.
+	Entries []*RegionalinventoryCustomBatchResponseEntry `json:"entries,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#regionalinventoryCustomBatchResponse".
+	Kind string `json:"kind,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Entries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalinventoryCustomBatchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalinventoryCustomBatchResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RegionalinventoryCustomBatchResponseEntry: A batch entry encoding a
+// single non-batch regional inventory response.
+type RegionalinventoryCustomBatchResponseEntry struct {
+	// BatchId: The ID of the request entry this entry responds to.
+	BatchId int64 `json:"batchId,omitempty"`
+
+	// Errors: A list of errors defined if and only if the request failed.
+	Errors *Errors `json:"errors,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "content#regionalinventoryCustomBatchResponseEntry".
+	Kind string `json:"kind,omitempty"`
+
+	// RegionalInventory: Price and availability of the product.
+	RegionalInventory *RegionalInventory `json:"regionalInventory,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BatchId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BatchId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RegionalinventoryCustomBatchResponseEntry) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionalinventoryCustomBatchResponseEntry
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ReturnShipment struct {
 	CreationDate string `json:"creationDate,omitempty"`
+
+	DeliveryDate string `json:"deliveryDate,omitempty"`
 
 	ReturnMethodType string `json:"returnMethodType,omitempty"`
 
 	ShipmentId string `json:"shipmentId,omitempty"`
 
 	ShipmentTrackingInfos []*ShipmentTrackingInfo `json:"shipmentTrackingInfos,omitempty"`
+
+	ShippingDate string `json:"shippingDate,omitempty"`
+
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreationDate") to
 	// unconditionally include in API requests. By default, fields with
@@ -9020,11 +9192,11 @@ type TestOrder struct {
 	// Promotions: Promotions associated with the order.
 	Promotions []*OrderPromotion `json:"promotions,omitempty"`
 
-	// ShippingCost: The total cost of shipping for all items.
+	// ShippingCost: The price of shipping for all items. Shipping tax is
+	// automatically calculated for MFL orders. For non-MFL orders, tax
+	// settings from Merchant Center are applied. Note that shipping is not
+	// taxed in certain states.
 	ShippingCost *Price `json:"shippingCost,omitempty"`
-
-	// ShippingCostTax: The tax for the total shipping cost.
-	ShippingCostTax *Price `json:"shippingCostTax,omitempty"`
 
 	// ShippingOption: The requested shipping option.
 	ShippingOption string `json:"shippingOption,omitempty"`
@@ -9223,13 +9395,109 @@ func (s *TestOrderLineItemProduct) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type TransitTable struct {
+	// PostalCodeGroupNames: A list of postal group names. The last value
+	// can be "all other locations". Example: ["zone 1", "zone 2", "all
+	// other locations"]. The referred postal code groups must match the
+	// delivery country of the service.
+	PostalCodeGroupNames []string `json:"postalCodeGroupNames,omitempty"`
+
+	Rows []*TransitTableTransitTimeRow `json:"rows,omitempty"`
+
+	// TransitTimeLabels: A list of transit time labels. The last value can
+	// be "all other labels". Example: ["food", "electronics", "all other
+	// labels"].
+	TransitTimeLabels []string `json:"transitTimeLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PostalCodeGroupNames") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostalCodeGroupNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTable) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TransitTableTransitTimeRow struct {
+	Values []*TransitTableTransitTimeRowTransitTimeValue `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTableTransitTimeRow) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTableTransitTimeRow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TransitTableTransitTimeRowTransitTimeValue struct {
+	// MaxTransitTimeInDays: Must be greater than or equal to
+	// minTransitTimeInDays.
+	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
+
+	// MinTransitTimeInDays: Transit time range (min-max) in business days.
+	// 0 means same day delivery, 1 means next day delivery.
+	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxTransitTimeInDays") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxTransitTimeInDays") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTableTransitTimeRowTransitTimeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTableTransitTimeRowTransitTimeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type UnitInvoice struct {
 	// AdditionalCharges: Additional charges for a unit, e.g. shipping
 	// costs.
 	AdditionalCharges []*UnitInvoiceAdditionalCharge `json:"additionalCharges,omitempty"`
-
-	// Promotions: Promotions applied to a unit.
-	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// UnitPrice: [required] Pre-tax or post-tax price of the unit depending
 	// on the locality of the order.
@@ -9265,10 +9533,6 @@ func (s *UnitInvoice) MarshalJSON() ([]byte, error) {
 type UnitInvoiceAdditionalCharge struct {
 	// AdditionalChargeAmount: [required] Amount of the additional charge.
 	AdditionalChargeAmount *Amount `json:"additionalChargeAmount,omitempty"`
-
-	// AdditionalChargePromotions: Promotions applied to the additional
-	// charge.
-	AdditionalChargePromotions []*Promotion `json:"additionalChargePromotions,omitempty"`
 
 	// Type: [required] Type of the additional charge.
 	Type string `json:"type,omitempty"`
@@ -21222,6 +21486,279 @@ func (c *ProductstatusesListCall) Pages(ctx context.Context, f func(*Productstat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "content.regionalinventory.custombatch":
+
+type RegionalinventoryCustombatchCall struct {
+	s                                   *APIService
+	regionalinventorycustombatchrequest *RegionalinventoryCustomBatchRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Custombatch: Updates regional inventory for multiple products or
+// regions in a single request.
+func (r *RegionalinventoryService) Custombatch(regionalinventorycustombatchrequest *RegionalinventoryCustomBatchRequest) *RegionalinventoryCustombatchCall {
+	c := &RegionalinventoryCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.regionalinventorycustombatchrequest = regionalinventorycustombatchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionalinventoryCustombatchCall) Fields(s ...googleapi.Field) *RegionalinventoryCustombatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionalinventoryCustombatchCall) Context(ctx context.Context) *RegionalinventoryCustombatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionalinventoryCustombatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionalinventoryCustombatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionalinventorycustombatchrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "regionalinventory/batch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.regionalinventory.custombatch" call.
+// Exactly one of *RegionalinventoryCustomBatchResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RegionalinventoryCustomBatchResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *RegionalinventoryCustombatchCall) Do(opts ...googleapi.CallOption) (*RegionalinventoryCustomBatchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RegionalinventoryCustomBatchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates regional inventory for multiple products or regions in a single request.",
+	//   "httpMethod": "POST",
+	//   "id": "content.regionalinventory.custombatch",
+	//   "path": "regionalinventory/batch",
+	//   "request": {
+	//     "$ref": "RegionalinventoryCustomBatchRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RegionalinventoryCustomBatchResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.regionalinventory.insert":
+
+type RegionalinventoryInsertCall struct {
+	s                 *APIService
+	merchantId        uint64
+	productId         string
+	regionalinventory *RegionalInventory
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Insert: Update the regional inventory of a product in your Merchant
+// Center account. If a regional inventory with the same region ID
+// already exists, this method updates that entry.
+func (r *RegionalinventoryService) Insert(merchantId uint64, productId string, regionalinventory *RegionalInventory) *RegionalinventoryInsertCall {
+	c := &RegionalinventoryInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.productId = productId
+	c.regionalinventory = regionalinventory
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RegionalinventoryInsertCall) Fields(s ...googleapi.Field) *RegionalinventoryInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RegionalinventoryInsertCall) Context(ctx context.Context) *RegionalinventoryInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RegionalinventoryInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RegionalinventoryInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.regionalinventory)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/products/{productId}/regionalinventory")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatUint(c.merchantId, 10),
+		"productId":  c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.regionalinventory.insert" call.
+// Exactly one of *RegionalInventory or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RegionalInventory.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *RegionalinventoryInsertCall) Do(opts ...googleapi.CallOption) (*RegionalInventory, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RegionalInventory{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update the regional inventory of a product in your Merchant Center account. If a regional inventory with the same region ID already exists, this method updates that entry.",
+	//   "httpMethod": "POST",
+	//   "id": "content.regionalinventory.insert",
+	//   "parameterOrder": [
+	//     "merchantId",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "merchantId": {
+	//       "description": "The ID of the account that contains the product. This account cannot be a multi-client account.",
+	//       "format": "uint64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "The REST id of the product for which to update the regional inventory.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/products/{productId}/regionalinventory",
+	//   "request": {
+	//     "$ref": "RegionalInventory"
+	//   },
+	//   "response": {
+	//     "$ref": "RegionalInventory"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
 }
 
 // method id "content.shippingsettings.custombatch":

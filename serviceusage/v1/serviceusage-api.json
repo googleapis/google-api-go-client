@@ -393,7 +393,7 @@
       }
     }
   },
-  "revision": "20190122",
+  "revision": "20190215",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -1364,7 +1364,7 @@
       "id": "Http",
       "properties": {
         "fullyDecodeReservedExpansion": {
-          "description": "When set to true, URL path parmeters will be fully URI-decoded except in\ncases of single segment matches in reserved expansion, where \"%2F\" will be\nleft encoded.\n\nThe default behavior is to not decode RFC 6570 reserved characters in multi\nsegment matches.",
+          "description": "When set to true, URL path parameters will be fully URI-decoded except in\ncases of single segment matches in reserved expansion, where \"%2F\" will be\nleft encoded.\n\nThe default behavior is to not decode RFC 6570 reserved characters in multi\nsegment matches.",
           "type": "boolean"
         },
         "rules": {

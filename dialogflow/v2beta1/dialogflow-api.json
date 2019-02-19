@@ -2386,7 +2386,7 @@
       }
     }
   },
-  "revision": "20190122",
+  "revision": "20190215",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2422,7 +2422,7 @@
       "id": "GoogleCloudDialogflowV2Context",
       "properties": {
         "lifespanCount": {
-          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 20 minutes even if there\nare no matching queries.",
+          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 20 minutes if there\nare no matching queries.",
           "format": "int32",
           "type": "integer"
         },
@@ -3604,7 +3604,7 @@
       "id": "GoogleCloudDialogflowV2beta1Context",
       "properties": {
         "lifespanCount": {
-          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 10 minutes even if there\nare no matching queries.",
+          "description": "Optional. The number of conversational query requests after which the\ncontext expires. If set to `0` (the default) the context expires\nimmediately. Contexts expire automatically after 20 minutes if there\nare no matching queries.",
           "format": "int32",
           "type": "integer"
         },

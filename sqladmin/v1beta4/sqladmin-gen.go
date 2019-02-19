@@ -934,8 +934,6 @@ func (s *DemoteMasterMySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 // ExportContext: Database instance export context.
 type ExportContext struct {
 	// CsvExportOptions: Options for exporting data as CSV.
-	// Exporting in CSV format using the Cloud SQL Admin API is not
-	// supported for PostgreSQL instances.
 	CsvExportOptions *ExportContextCsvExportOptions `json:"csvExportOptions,omitempty"`
 
 	// Databases: Databases to be exported.
@@ -944,15 +942,14 @@ type ExportContext struct {
 	// fileType is CSV, you can specify one database, either by using this
 	// property or by using the csvExportOptions.selectQuery property, which
 	// takes precedence over this property.
-	// PostgreSQL instances: If fileType is SQL, you must specify one
-	// database to be exported. A fileType of CSV is not supported for
-	// PostgreSQL instances.
+	// PostgreSQL instances: Specify exactly one database to be exported. If
+	// fileType is CSV, this database must match the database used in the
+	// csvExportOptions.selectQuery property.
 	Databases []string `json:"databases,omitempty"`
 
 	// FileType: The file type for the specified uri.
 	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
-	// CSV is not supported for PostgreSQL instances.
 	FileType string `json:"fileType,omitempty"`
 
 	// Kind: This is always sql#exportContext.
@@ -992,10 +989,7 @@ func (s *ExportContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ExportContextCsvExportOptions: Options for exporting data as
-// CSV.
-// Exporting in CSV format using the Cloud SQL Admin API is not
-// supported for PostgreSQL instances.
+// ExportContextCsvExportOptions: Options for exporting data as CSV.
 type ExportContextCsvExportOptions struct {
 	// SelectQuery: The select query used to extract the data.
 	SelectQuery string `json:"selectQuery,omitempty"`
@@ -1138,6 +1132,9 @@ type Flag struct {
 	// Second Generation instances.
 	AppliesTo []string `json:"appliesTo,omitempty"`
 
+	// InBeta: True if the flag is only released in Beta.
+	InBeta bool `json:"inBeta,omitempty"`
+
 	// Kind: This is always sql#flag.
 	Kind string `json:"kind,omitempty"`
 
@@ -1222,8 +1219,6 @@ func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
 // ImportContext: Database instance import context.
 type ImportContext struct {
 	// CsvImportOptions: Options for importing data as CSV.
-	// Importing CSV data using the Cloud SQL Admin API is not supported for
-	// PostgreSQL instances.
 	CsvImportOptions *ImportContextCsvImportOptions `json:"csvImportOptions,omitempty"`
 
 	// Database: The target database for the import. If fileType is SQL,
@@ -1235,12 +1230,10 @@ type ImportContext struct {
 	// FileType: The file type for the specified uri.
 	// SQL: The file contains SQL statements.
 	// CSV: The file contains CSV data.
-	// Importing CSV data using the Cloud SQL Admin API is not supported for
-	// PostgreSQL instances.
 	FileType string `json:"fileType,omitempty"`
 
-	// ImportUser: The PostgreSQL user for this import operation. Defaults
-	// to cloudsqlsuperuser. PostgreSQL instances only.
+	// ImportUser: The PostgreSQL user for this import operation. PostgreSQL
+	// instances only.
 	ImportUser string `json:"importUser,omitempty"`
 
 	// Kind: This is always sql#importContext.
@@ -1276,10 +1269,7 @@ func (s *ImportContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportContextCsvImportOptions: Options for importing data as
-// CSV.
-// Importing CSV data using the Cloud SQL Admin API is not supported for
-// PostgreSQL instances.
+// ImportContextCsvImportOptions: Options for importing data as CSV.
 type ImportContextCsvImportOptions struct {
 	// Columns: The columns to which CSV data is imported. If not specified,
 	// all columns of the database table are loaded with CSV data.

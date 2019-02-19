@@ -2671,6 +2671,22 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) AuthorizationCode(authoriza
 	return c
 }
 
+// VersionInfo sets the optional parameter "versionInfo": Optional
+// version info. If users want to find a very recent access token,
+// that is, immediately after approving access, users have to set
+// the
+// version_info claim in the token request. To obtain the version_info,
+// users
+// must use the “none+gsession” response type. which be return
+// a
+// version_info back in the authorization response which be be put in a
+// JWT
+// claim in the token request.
+func (c *ProjectsLocationsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsCreateCall {
+	c.urlParams_.Set("versionInfo", versionInfo)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2779,6 +2795,11 @@ func (c *ProjectsLocationsTransferConfigsCreateCall) Do(opts ...googleapi.CallOp
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionInfo": {
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -3339,6 +3360,22 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) UpdateMask(updateMask string
 	return c
 }
 
+// VersionInfo sets the optional parameter "versionInfo": Optional
+// version info. If users want to find a very recent access token,
+// that is, immediately after approving access, users have to set
+// the
+// version_info claim in the token request. To obtain the version_info,
+// users
+// must use the “none+gsession” response type. which be return
+// a
+// version_info back in the authorization response which be be put in a
+// JWT
+// claim in the token request.
+func (c *ProjectsLocationsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsLocationsTransferConfigsPatchCall {
+	c.urlParams_.Set("versionInfo", versionInfo)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3452,6 +3489,11 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//     "updateMask": {
 	//       "description": "Required list of fields to be updated in this request.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "versionInfo": {
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -4405,6 +4447,22 @@ func (c *ProjectsTransferConfigsCreateCall) AuthorizationCode(authorizationCode 
 	return c
 }
 
+// VersionInfo sets the optional parameter "versionInfo": Optional
+// version info. If users want to find a very recent access token,
+// that is, immediately after approving access, users have to set
+// the
+// version_info claim in the token request. To obtain the version_info,
+// users
+// must use the “none+gsession” response type. which be return
+// a
+// version_info back in the authorization response which be be put in a
+// JWT
+// claim in the token request.
+func (c *ProjectsTransferConfigsCreateCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsCreateCall {
+	c.urlParams_.Set("versionInfo", versionInfo)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4513,6 +4571,11 @@ func (c *ProjectsTransferConfigsCreateCall) Do(opts ...googleapi.CallOption) (*T
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionInfo": {
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -5073,6 +5136,22 @@ func (c *ProjectsTransferConfigsPatchCall) UpdateMask(updateMask string) *Projec
 	return c
 }
 
+// VersionInfo sets the optional parameter "versionInfo": Optional
+// version info. If users want to find a very recent access token,
+// that is, immediately after approving access, users have to set
+// the
+// version_info claim in the token request. To obtain the version_info,
+// users
+// must use the “none+gsession” response type. which be return
+// a
+// version_info back in the authorization response which be be put in a
+// JWT
+// claim in the token request.
+func (c *ProjectsTransferConfigsPatchCall) VersionInfo(versionInfo string) *ProjectsTransferConfigsPatchCall {
+	c.urlParams_.Set("versionInfo", versionInfo)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5186,6 +5265,11 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//     "updateMask": {
 	//       "description": "Required list of fields to be updated in this request.",
 	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "versionInfo": {
+	//       "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

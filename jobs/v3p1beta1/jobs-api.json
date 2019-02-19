@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190130",
+  "revision": "20190212",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -782,12 +782,18 @@
           "enum": [
             "COMMUTE_METHOD_UNSPECIFIED",
             "DRIVING",
-            "TRANSIT"
+            "TRANSIT",
+            "WALKING",
+            "CYCLING",
+            "TRANSIT_ACCESSIBLE"
           ],
           "enumDescriptions": [
             "Commute method is not specified.",
             "Commute time is calculated based on driving time.",
-            "Commute time is calculated based on public transit including bus, metro,\nsubway, etc."
+            "Commute time is calculated based on public transit including bus, metro,\nsubway, etc.",
+            "Commute time is calculated based on walking time.",
+            "Commute time is calculated based on biking time.",
+            "Commute time is calculated based on public transit that is wheelchair\naccessible."
           ],
           "type": "string"
         },

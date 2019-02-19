@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20190125",
+  "revision": "20190211",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpQueue": {
@@ -1171,7 +1171,7 @@
           "type": "string"
         },
         "dispatchCount": {
-          "description": "Output only. The number of attempts dispatched.\n\nThis count includes tasks which have been dispatched but haven't\nreceived a response.",
+          "description": "Output only. The number of attempts dispatched.\n\nThis count includes attempts which have been dispatched but haven't\nreceived a response.",
           "format": "int32",
           "type": "integer"
         },

@@ -673,7 +673,7 @@ type GoogleCloudDialogflowV2Context struct {
 	// after which the
 	// context expires. If set to `0` (the default) the context
 	// expires
-	// immediately. Contexts expire automatically after 20 minutes even if
+	// immediately. Contexts expire automatically after 20 minutes if
 	// there
 	// are no matching queries.
 	LifespanCount int64 `json:"lifespanCount,omitempty"`
@@ -3387,7 +3387,7 @@ type GoogleCloudDialogflowV2beta1Context struct {
 	// after which the
 	// context expires. If set to `0` (the default) the context
 	// expires
-	// immediately. Contexts expire automatically after 10 minutes even if
+	// immediately. Contexts expire automatically after 20 minutes if
 	// there
 	// are no matching queries.
 	LifespanCount int64 `json:"lifespanCount,omitempty"`

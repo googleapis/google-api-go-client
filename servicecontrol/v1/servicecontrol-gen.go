@@ -1564,6 +1564,9 @@ type Operation struct {
 	// - This can be in one of the following formats:
 	//     - project:PROJECT_ID,
 	//     - project`_`number:PROJECT_NUMBER,
+	//     - projects/RPOJECT_ID or PROJECT_NUMBER,
+	//     - folders/FOLDER_NUMBER,
+	//     - organizations/ORGANIZATION_NUMBER,
 	//     - api`_`key:API_KEY.
 	ConsumerId string `json:"consumerId,omitempty"`
 
@@ -1996,6 +1999,13 @@ type QuotaOperation struct {
 	// higher than the available quota, request does not fail but all
 	// available
 	// quota will be allocated.
+	// For rate quota, BEST_EFFORT will continue to deduct from other
+	// groups
+	// even if one does not have enough quota. For allocation, it will find
+	// the
+	// minimum available amount across all groups and deduct that amount
+	// from
+	// all the affected groups.
 	//   "CHECK_ONLY" - For AllocateQuota request, only checks if there is
 	// enough quota
 	// available and does not change the available quota. No lock is placed

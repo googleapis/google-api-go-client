@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/k5woGc08Fl3gBUjWiEfIGefs87A\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/5bNm1r7buxeHuENnfSndCatyqIE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -848,6 +848,55 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "resize": {
+          "description": "Resizes the allocation (applicable to standalone allocations only)",
+          "httpMethod": "POST",
+          "id": "compute.allocations.resize",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "allocation"
+          ],
+          "parameters": {
+            "allocation": {
+              "description": "Name of the allocation to update.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "Name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/allocations/{allocation}/resize",
+          "request": {
+            "$ref": "AllocationsResizeRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
           ]
         },
         "setIamPolicy": {
@@ -7153,7 +7202,7 @@
           ]
         },
         "updatePerInstanceConfigs": {
-          "description": "Insert or patch (for the ones that already exist) per-instance configs for the managed instance group. perInstanceConfig.instance serves as a key used to distinguish whether to perform insert or patch.",
+          "description": "Insert or update (for the ones that already exist) per-instance configs for the managed instance group. perInstanceConfig.instance serves as a key used to distinguish whether to perform insert or patch.",
           "httpMethod": "POST",
           "id": "compute.instanceGroupManagers.updatePerInstanceConfigs",
           "parameterOrder": [
@@ -8118,7 +8167,7 @@
           ],
           "parameters": {
             "forceAttach": {
-              "description": "Whether to force attach the disk even if it's currently attached to another instance. This is only available for regional disks.",
+              "description": "Whether to force attach the disk even if it's currently attached to another instance.",
               "location": "query",
               "type": "boolean"
             },
@@ -8506,6 +8555,48 @@
           "path": "{project}/zones/{zone}/instances/{instance}/serialPort",
           "response": {
             "$ref": "SerialPortOutput"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getShieldedInstanceIdentity": {
+          "description": "Returns the Shielded Instance Identity of an instance",
+          "httpMethod": "GET",
+          "id": "compute.instances.getShieldedInstanceIdentity",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name or id of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/getShieldedInstanceIdentity",
+          "response": {
+            "$ref": "ShieldedInstanceIdentity"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -9372,6 +9463,55 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
+        "setShieldedInstanceIntegrityPolicy": {
+          "description": "Sets the Shielded Instance integrity policy for an instance. You can only use this method on a running instance. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
+          "httpMethod": "PATCH",
+          "id": "compute.instances.setShieldedInstanceIntegrityPolicy",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name or id of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/setShieldedInstanceIntegrityPolicy",
+          "request": {
+            "$ref": "ShieldedInstanceIntegrityPolicy"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "setShieldedVmIntegrityPolicy": {
           "description": "Sets the Shielded VM integrity policy for a VM instance. You can only use this method on a running VM instance. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
           "httpMethod": "PATCH",
@@ -9905,6 +10045,55 @@
           "path": "{project}/zones/{zone}/instances/{instance}/updateNetworkInterface",
           "request": {
             "$ref": "NetworkInterface"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "updateShieldedInstanceConfig": {
+          "description": "Updates the Shielded Instance config for an instance. You can only use this method on a stopped instance. This method supports PATCH semantics and uses the JSON merge patch format and processing rules.",
+          "httpMethod": "PATCH",
+          "id": "compute.instances.updateShieldedInstanceConfig",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name or id of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/updateShieldedInstanceConfig",
+          "request": {
+            "$ref": "ShieldedInstanceConfig"
           },
           "response": {
             "$ref": "Operation"
@@ -14058,6 +14247,33 @@
             "https://www.googleapis.com/auth/compute"
           ]
         },
+        "copyRules": {
+          "description": "Copies rules to the specified security policy.",
+          "httpMethod": "POST",
+          "id": "compute.organizationSecurityPolicies.copyRules",
+          "parameterOrder": [
+            "securityPolicy"
+          ],
+          "parameters": {
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "securityPolicy": {
+              "description": "Name of the security policy to update.",
+              "location": "path",
+              "pattern": "[0-9]{0,20}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "locations/global/securityPolicies/{securityPolicy}/copyRules",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "delete": {
           "description": "Deletes the specified policy.",
           "httpMethod": "DELETE",
@@ -14247,6 +14463,33 @@
             "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "move": {
+          "description": "Moves the specified security policy.",
+          "httpMethod": "POST",
+          "id": "compute.organizationSecurityPolicies.move",
+          "parameterOrder": [
+            "securityPolicy"
+          ],
+          "parameters": {
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "securityPolicy": {
+              "description": "Name of the security policy to update.",
+              "location": "path",
+              "pattern": "[0-9]{0,20}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "locations/global/securityPolicies/{securityPolicy}/move",
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
           ]
         },
         "patchRule": {
@@ -15783,6 +16026,55 @@
             "https://www.googleapis.com/auth/compute",
             "https://www.googleapis.com/auth/compute.readonly"
           ]
+        },
+        "updateAllocations": {
+          "description": "Update the shape of allocations for GPUS/Local SSDs of allocations within the commitments.",
+          "httpMethod": "POST",
+          "id": "compute.regionCommitments.updateAllocations",
+          "parameterOrder": [
+            "project",
+            "region",
+            "commitment"
+          ],
+          "parameters": {
+            "commitment": {
+              "description": "Name of the commitment of which the allocation's capacities are being updated.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/commitments/{commitment}/updateAllocations",
+          "request": {
+            "$ref": "RegionCommitmentsUpdateAllocationsRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
         }
       }
     },
@@ -16449,6 +16741,239 @@
             }
           },
           "path": "{project}/regions/{region}/disks/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
+    "regionHealthCheckServices": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the specified regional HealthCheckService.",
+          "httpMethod": "DELETE",
+          "id": "compute.regionHealthCheckServices.delete",
+          "parameterOrder": [
+            "project",
+            "region",
+            "healthCheckService"
+          ],
+          "parameters": {
+            "healthCheckService": {
+              "description": "Name of the HealthCheckService to delete. The name must be 1-63 characters long, and comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/healthCheckServices/{healthCheckService}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified regional HealthCheckService resource.",
+          "httpMethod": "GET",
+          "id": "compute.regionHealthCheckServices.get",
+          "parameterOrder": [
+            "project",
+            "region",
+            "healthCheckService"
+          ],
+          "parameters": {
+            "healthCheckService": {
+              "description": "Name of the HealthCheckService to update. The name must be 1-63 characters long, and comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/healthCheckServices/{healthCheckService}",
+          "response": {
+            "$ref": "HealthCheckService"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a regional HealthCheckService resource in the specified project and region using the data included in the request.",
+          "httpMethod": "POST",
+          "id": "compute.regionHealthCheckServices.insert",
+          "parameterOrder": [
+            "project",
+            "region"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/healthCheckServices",
+          "request": {
+            "$ref": "HealthCheckService"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Lists all the HealthCheckService resources that have been configured for the specified project in the given region.",
+          "httpMethod": "GET",
+          "id": "compute.regionHealthCheckServices.list",
+          "parameterOrder": [
+            "project",
+            "region"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/healthCheckServices",
+          "response": {
+            "$ref": "HealthCheckServicesList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionHealthCheckServices.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/healthCheckServices/{resource}/testIamPermissions",
           "request": {
             "$ref": "TestPermissionsRequest"
           },
@@ -17710,7 +18235,7 @@
           ]
         },
         "updatePerInstanceConfigs": {
-          "description": "Insert or patch (for the ones that already exist) per-instance configs for the managed instance group. perInstanceConfig.instance serves as a key used to distinguish whether to perform insert or patch.",
+          "description": "Insert or update (for the ones that already exist) per-instance configs for the managed instance group. perInstanceConfig.instance serves as a key used to distinguish whether to perform insert or patch.",
           "httpMethod": "POST",
           "id": "compute.regionInstanceGroupManagers.updatePerInstanceConfigs",
           "parameterOrder": [
@@ -18002,6 +18527,241 @@
             }
           },
           "path": "{project}/regions/{region}/instanceGroups/{resource}/testIamPermissions",
+          "request": {
+            "$ref": "TestPermissionsRequest"
+          },
+          "response": {
+            "$ref": "TestPermissionsResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
+    "regionNotificationEndpoints": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the specified NotificationEndpoint in the given region",
+          "httpMethod": "DELETE",
+          "id": "compute.regionNotificationEndpoints.delete",
+          "parameterOrder": [
+            "project",
+            "region",
+            "notificationEndpoint"
+          ],
+          "parameters": {
+            "notificationEndpoint": {
+              "description": "Name of the NotificationEndpoint resource to delete.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/notificationEndpoints/{notificationEndpoint}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified NotificationEndpoint resource in the given region.",
+          "httpMethod": "GET",
+          "id": "compute.regionNotificationEndpoints.get",
+          "parameterOrder": [
+            "project",
+            "region",
+            "notificationEndpoint"
+          ],
+          "parameters": {
+            "notificationEndpoint": {
+              "description": "Name of the NotificationEndpoint resource to return.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/notificationEndpoints/{notificationEndpoint}",
+          "response": {
+            "$ref": "NotificationEndpoint"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Create a NotificationEndpoint in the specified project in the given region using the parameters that are included in the request.",
+          "httpMethod": "POST",
+          "id": "compute.regionNotificationEndpoints.insert",
+          "parameterOrder": [
+            "project",
+            "region"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/notificationEndpoints",
+          "request": {
+            "$ref": "NotificationEndpoint"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Lists the NotificationEndpoints for a project in the given region.",
+          "httpMethod": "GET",
+          "id": "compute.regionNotificationEndpoints.list",
+          "parameterOrder": [
+            "project",
+            "region"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "Name of the region scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/notificationEndpoints",
+          "response": {
+            "$ref": "NotificationEndpointList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "testIamPermissions": {
+          "description": "Returns permissions that a caller has on the specified resource.",
+          "httpMethod": "POST",
+          "id": "compute.regionNotificationEndpoints.testIamPermissions",
+          "parameterOrder": [
+            "project",
+            "region",
+            "resource"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "region": {
+              "description": "The name of the region for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "resource": {
+              "description": "Name or id of the resource for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/regions/{region}/notificationEndpoints/{resource}/testIamPermissions",
           "request": {
             "$ref": "TestPermissionsRequest"
           },
@@ -26384,7 +27144,7 @@
       }
     }
   },
-  "revision": "20190107",
+  "revision": "20190201",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -27336,6 +28096,7 @@
           "type": "string"
         },
         "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
         },
         "id": {
@@ -27367,13 +28128,15 @@
           "type": "string"
         },
         "specificAllocation": {
-          "$ref": "AllocationSpecificSKUAllocation"
+          "$ref": "AllocationSpecificSKUAllocation",
+          "description": "Allocation for instances with specific machine shapes."
         },
         "specificAllocationRequired": {
           "description": "Indicates whether the allocation can be consumed by VMs with \"any allocation\" defined. If the field is set, then only VMs that target the allocation by name using --allocation-affinity can consume this allocation.",
           "type": "boolean"
         },
         "zone": {
+          "description": "Zone in which the allocation resides, must be provided if allocation is created with commitment creation.",
           "type": "string"
         }
       },
@@ -27651,7 +28414,8 @@
           "type": "string"
         },
         "instanceProperties": {
-          "$ref": "AllocationSpecificSKUAllocationAllocatedInstanceProperties"
+          "$ref": "AllocationSpecificSKUAllocationAllocatedInstanceProperties",
+          "description": "The instance properties for this specific sku allocation."
         }
       },
       "type": "object"
@@ -27705,6 +28469,17 @@
             "",
             ""
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AllocationsResizeRequest": {
+      "id": "AllocationsResizeRequest",
+      "properties": {
+        "specificSkuCount": {
+          "description": "Number of allocated resources can be resized with minimum = 1 and maximum = 1000.",
+          "format": "int64",
           "type": "string"
         }
       },
@@ -27953,6 +28728,13 @@
           "description": "Specifies the disk type to use to create the instance. If not specified, the default is pd-standard, specified using the full URL. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/pd-standard\n\n\nOther values include pd-ssd and local-ssd. If you define this field, you can provide either the full or partial URL. For example, the following are valid values:  \n- https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType \n- projects/project/zones/zone/diskTypes/diskType \n- zones/zone/diskTypes/diskType  Note that for InstanceTemplate, this is the name of the disk type, not URL.",
           "type": "string"
         },
+        "guestOsFeatures": {
+          "description": "A list of features to enable on the guest operating system. Applicable only for bootable images. Read  Enabling guest operating system features to see a list of available options.\n\nGuest OS features are applied by merging initializeParams.guestOsFeatures and disks.guestOsFeatures",
+          "items": {
+            "$ref": "GuestOsFeature"
+          },
+          "type": "array"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -28030,6 +28812,59 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AuthenticationPolicy": {
+      "description": "The authentication settings for the backend service.",
+      "id": "AuthenticationPolicy",
+      "properties": {
+        "origins": {
+          "description": "List of authentication methods that can be used for origin authentication. Similar to peers, these will be evaluated in order; the first valid one will be used to set origin identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if origin authentication is not required.",
+          "items": {
+            "$ref": "OriginAuthenticationMethod"
+          },
+          "type": "array"
+        },
+        "peers": {
+          "description": "List of authentication methods that can be used for peer authentication. They will be evaluated in order; the first valid one will be used to set peer identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if peer authentication is not required.",
+          "items": {
+            "$ref": "PeerAuthenticationMethod"
+          },
+          "type": "array"
+        },
+        "principalBinding": {
+          "description": "Define whether peer or origin identity should be used for principal. Default value is USE_PEER. If peer (or origin) identity is not available, either because peer/origin authentication is not defined, or failed, principal will be left unset. In other words, binding rule does not affect the decision to accept or reject request. This field can be set to one of the following: USE_PEER: Principal will be set to the identity from peer authentication. USE_ORIGIN: Principal will be set to the identity from origin authentication.",
+          "enum": [
+            "INVALID",
+            "USE_ORIGIN",
+            "USE_PEER"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "serverTlsContext": {
+          "$ref": "TlsContext",
+          "description": "Configures the mechanism to obtain server-side security certificates and identity information."
+        }
+      },
+      "type": "object"
+    },
+    "AuthorizationConfig": {
+      "description": "Authorization configuration provides service-level and method-level access control for a service.",
+      "id": "AuthorizationConfig",
+      "properties": {
+        "policies": {
+          "description": "List of RbacPolicies.",
+          "items": {
+            "$ref": "RbacPolicy"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -28946,12 +29781,20 @@
           "$ref": "BackendServiceCdnPolicy",
           "description": "Cloud CDN configuration for this BackendService."
         },
+        "circuitBreakers": {
+          "$ref": "CircuitBreakers",
+          "description": "Settings controlling the volume of connections to a backend service.\n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
+        },
         "cloudFunctionBackend": {
           "$ref": "BackendServiceCloudFunctionBackend",
           "description": "Directs request to a cloud function. appEngineBackend and backends[] must be empty if this is set."
         },
         "connectionDraining": {
           "$ref": "ConnectionDraining"
+        },
+        "consistentHash": {
+          "$ref": "ConsistentHashLoadBalancerSettings",
+          "description": "Consistent Hash-based load balancing can be used to provide soft session affinity based on HTTP headers, cookies or other properties. This load balancing policy is applicable only for HTTP connections. The affinity to a particular destination host will be lost when one or more hosts are added/removed from the destination service. This field specifies parameters that control consistent hashing. This field is only applicable when localityLbPolicy is set to MAGLEV or RING_HASH.\n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
         },
         "creationTimestamp": {
           "description": "[Output Only] Creation timestamp in RFC3339 text format.",
@@ -29018,6 +29861,28 @@
           ],
           "type": "string"
         },
+        "localityLbPolicy": {
+          "description": "The load balancing algorithm used within the scope of the locality. The possible values are:  \n- ROUND_ROBIN: This is a simple policy in which each healthy backend is selected in round robin order. This is the default. \n- LEAST_REQUEST: An O(1) algorithm which selects two random healthy hosts and picks the host which has fewer active requests. \n- RING_HASH: The ring/modulo hash load balancer implements consistent hashing to backends. The algorithm has the property that the addition/removal of a host from a set of N hosts only affects 1/N of the requests. \n- RANDOM: The load balancer selects a random healthy host. \n- ORIGINAL_DESTINATION: Backend host is selected based on the client connection metadata, i.e., connections are opened to the same address as the destination address of the incoming connection before the connection was redirected to the load balancer. \n- MAGLEV: used as a drop in replacement for the ring hash load balancer. Maglev is not as stable as ring hash but has faster table lookup build times and host selection times. For more information about Maglev, refer to https://ai.google/research/pubs/pub44824 \n\nThis field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED.",
+          "enum": [
+            "INVALID_LB_POLICY",
+            "LEAST_REQUEST",
+            "MAGLEV",
+            "ORINGINAL_DESTINATION",
+            "RANDOM",
+            "RING_HASH",
+            "ROUND_ROBIN"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "logConfig": {
           "$ref": "BackendServiceLogConfig",
           "description": "This field denotes the logging options for the load balancer traffic served by this backend service. If logging is enabled, logs will be exported to Stackdriver."
@@ -29026,6 +29891,10 @@
           "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
+        },
+        "outlierDetection": {
+          "$ref": "OutlierDetection",
+          "description": "Settings controlling eviction of unhealthy hosts from the load balancing pool. This field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
         },
         "port": {
           "description": "Deprecated in favor of portName. The TCP port to connect on the backend. The default value is 80.\n\nThis cannot be used for internal load balancing.",
@@ -29064,6 +29933,10 @@
           "description": "[Output Only] The resource URL for the security policy associated with this backend service.",
           "type": "string"
         },
+        "securitySettings": {
+          "$ref": "SecuritySettings",
+          "description": "This field specifies the security policy that applies to this backend service. This field is applicable to either:  \n- A regional backend service with the service_protocol set to HTTP, HTTPS, or HTTP2, and load_balancing_scheme set to INTERNAL_MANAGED. \n- A global backend service with the load_balancing_scheme set to INTERNAL_SELF_MANAGED."
+        },
         "selfLink": {
           "description": "[Output Only] Server-defined URL for the resource.",
           "type": "string"
@@ -29079,9 +29952,13 @@
             "CLIENT_IP_PORT_PROTO",
             "CLIENT_IP_PROTO",
             "GENERATED_COOKIE",
+            "HEADER_FIELD",
+            "HTTP_COOKIE",
             "NONE"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -29653,6 +30530,142 @@
       },
       "type": "object"
     },
+    "CallCredentials": {
+      "description": "gRPC call credentials to access the SDS server.",
+      "id": "CallCredentials",
+      "properties": {
+        "accessToken": {
+          "description": "The access token that is used as call credential for the SDS server. This field is used only if callCredentialType is ACCESS_TOKEN.",
+          "type": "string"
+        },
+        "callCredentialType": {
+          "description": "The type of call credentials to use for GRPC requests to the SDS server. This field can be set to one of the following: ACCESS_TOKEN: An access token is used as call credentials for the SDS server. GCE_VM: The local GCE VM service account credentials are used to access the SDS server. JWT_SERVICE_TOKEN: The user provisioned service account credentials are used to access the SDS server. FROM_PLUGIN: Custom authenticator credentials are used to access the SDS server.",
+          "enum": [
+            "ACCESS_TOKEN",
+            "FROM_PLUGIN",
+            "GCE_VM",
+            "INVALID",
+            "JWT_SERVICE_ACCOUNT"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "fromPlugin": {
+          "$ref": "MetadataCredentialsFromPlugin",
+          "description": "Custom authenticator credentials."
+        },
+        "jwtServiceAccount": {
+          "$ref": "ServiceAccountJwtAccessCredentials",
+          "description": "This service account credentials are used as call credentials for the SDS server. This field is used only if callCredentialType is JWT_SERVICE_ACCOUNT."
+        }
+      },
+      "type": "object"
+    },
+    "ChannelCredentials": {
+      "description": "gRPC channel credentials to access the SDS server.",
+      "id": "ChannelCredentials",
+      "properties": {
+        "certificates": {
+          "$ref": "TlsCertificatePaths",
+          "description": "The call credentials to access the SDS server."
+        },
+        "channelCredentialType": {
+          "description": "The channel credentials to access the SDS server. This field can be set to one of the following: CERTIFICATES: Use TLS certificates to access the SDS server. GCE_VM: Use local GCE VM credentials to access the SDS server.",
+          "enum": [
+            "CERTIFICATES",
+            "GCE_VM",
+            "INVALID"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CircuitBreakers": {
+      "description": "Settings controlling the volume of connections to a backend service.",
+      "id": "CircuitBreakers",
+      "properties": {
+        "connectTimeout": {
+          "$ref": "Duration",
+          "description": "The timeout for new network connections to hosts."
+        },
+        "maxConnections": {
+          "description": "The maximum number of connections to the backend cluster. If not specified, the default is 1024.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxPendingRequests": {
+          "description": "The maximum number of pending requests allowed to the backend cluster. If not specified, the default is 1024.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxRequests": {
+          "description": "The maximum number of parallel requests that allowed to the backend cluster. If not specified, the default is 1024.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxRequestsPerConnection": {
+          "description": "Maximum requests for a single backend connection. This parameter is respected by both the HTTP/1.1 and HTTP/2 implementations. If not specified, there is no limit. Setting this parameter to 1 will effectively disable keep alive.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "maxRetries": {
+          "description": "The maximum number of parallel retries allowed to the backend cluster. If not specified, the default is 3.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ClientTlsSettings": {
+      "description": "The client side authentication settings for connection originating from the backend service.",
+      "id": "ClientTlsSettings",
+      "properties": {
+        "clientTlsContext": {
+          "$ref": "TlsContext",
+          "description": "Configures the mechanism to obtain client-side security certificates and identity information. This field is only applicable when mode is set to MUTUAL."
+        },
+        "mode": {
+          "description": "Indicates whether connections to this port should be secured using TLS. The value of this field determines how TLS is enforced. This can be set to one of the following values: DISABLE: Do not setup a TLS connection to the backends. SIMPLE: Originate a TLS connection to the backends. MUTUAL: Secure connections to the backends using mutual TLS by presenting client certificates for authentication.",
+          "enum": [
+            "DISABLE",
+            "INVALID",
+            "MUTUAL",
+            "SIMPLE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "sni": {
+          "description": "SNI string to present to the server during TLS handshake. This field is applicable only when mode is SIMPLE or MUTUAL.",
+          "type": "string"
+        },
+        "subjectAltNames": {
+          "description": "A list of alternate names to verify the subject identity in the certificate.If specified, the proxy will verify that the server certificate's subject alt name matches one of the specified values. This field is applicable only when mode is SIMPLE or MUTUAL.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Commitment": {
       "description": "Represents a Commitment resource. Creating a Commitment resource means that you are purchasing a committed use contract with an explicit start and end time. You can create commitments based on vCPUs and memory usage and receive discounted rates. For full details, read Signing Up for Committed Use Discounts.\n\nCommitted use discounts are subject to Google Cloud Platform's Service Specific Terms. By purchasing a committed use discount, you agree to these terms. Committed use discounts will not renew, so you must purchase a new commitment to continue receiving discounts. (== resource_for beta.commitments ==) (== resource_for v1.commitments ==)",
       "id": "Commitment",
@@ -30151,12 +31164,8 @@
           ],
           "type": "string"
         },
-        "value": {
-          "description": "DEPRECATED. Use 'values' instead.",
-          "type": "string"
-        },
         "values": {
-          "description": "The objects of the condition. This is mutually exclusive with 'value'.",
+          "description": "The objects of the condition.",
           "items": {
             "type": "string"
           },
@@ -30173,6 +31182,45 @@
           "description": "Time for which instance will be drained (not accept new connections, but still work to finish started).",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ConsistentHashLoadBalancerSettings": {
+      "description": "This message defines settings for a consistent hash style load balancer.",
+      "id": "ConsistentHashLoadBalancerSettings",
+      "properties": {
+        "httpCookie": {
+          "$ref": "ConsistentHashLoadBalancerSettingsHttpCookie",
+          "description": "Hash is based on HTTP Cookie. This field describes a HTTP cookie that will be used as the hash key for the consistent hash load balancer. If the cookie is not present, it will be generated. This field is applicable if the sessionAffinity is set to HTTP_COOKIE."
+        },
+        "httpHeaderName": {
+          "description": "The hash based on the value of the specified header field. This field is applicable if the sessionAffinity is set to HEADER_FIELD.",
+          "type": "string"
+        },
+        "minimumRingSize": {
+          "description": "The minimum number of virtual nodes to use for the hash ring. Defaults to 1024. Larger ring sizes result in more granular load distributions. If the number of hosts in the load balancing pool is larger than the ring size, each host will be assigned a single virtual node.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConsistentHashLoadBalancerSettingsHttpCookie": {
+      "description": "The information about the HTTP Cookie on which the hash function is based for load balancing policies that use a consistent hash.",
+      "id": "ConsistentHashLoadBalancerSettingsHttpCookie",
+      "properties": {
+        "name": {
+          "description": "Name of the cookie.",
+          "type": "string"
+        },
+        "path": {
+          "description": "Path to set for the cookie.",
+          "type": "string"
+        },
+        "ttl": {
+          "$ref": "Duration",
+          "description": "Lifetime of the cookie."
         }
       },
       "type": "object"
@@ -30376,6 +31424,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "multiWriter": {
+          "description": "Indicates whether or not the disk can be read/write attached to more than one instance.",
+          "type": "boolean"
         },
         "name": {
           "annotations": {
@@ -31991,6 +33043,18 @@
         "enable": {
           "description": "This field denotes whether to enable logging for a particular firewall rule.",
           "type": "boolean"
+        },
+        "metadata": {
+          "description": "This field can only be specified for a particular firewall rule if logging is enabled for that rule. This field denotes whether to include or exclude metadata for firewall logs.",
+          "enum": [
+            "EXCLUDE_ALL_METADATA",
+            "INCLUDE_ALL_METADATA"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -32184,7 +33248,7 @@
           "type": "string"
         },
         "target": {
-          "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object. For INTERNAL_SELF_MANAGED\" load balancing, only HTTP and HTTPS targets are valid.",
+          "description": "The URL of the target resource to receive the matched traffic. For regional forwarding rules, this target must live in the same region as the forwarding rule. For global forwarding rules, this target must be a global load balancing resource. The forwarded traffic must be of a type appropriate to the target object. For INTERNAL_SELF_MANAGED load balancing, only HTTP and HTTPS targets are valid.",
           "type": "string"
         }
       },
@@ -32553,6 +33617,25 @@
         "policy": {
           "$ref": "Policy",
           "description": "REQUIRED: The complete policy to be applied to the 'resource'. The size of the policy is limited to a few 10s of KB. An empty policy is in general a valid policy but certain services (like Projects) might reject them."
+        }
+      },
+      "type": "object"
+    },
+    "GrpcServiceConfig": {
+      "description": "gRPC config to access the SDS server.",
+      "id": "GrpcServiceConfig",
+      "properties": {
+        "callCredentials": {
+          "$ref": "CallCredentials",
+          "description": "The call credentials to access the SDS server."
+        },
+        "channelCredentials": {
+          "$ref": "ChannelCredentials",
+          "description": "The channel credentials to access the SDS server."
+        },
+        "targetUri": {
+          "description": "The target URI of the SDS server.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -33029,6 +34112,192 @@
       "properties": {
         "healthCheck": {
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "HealthCheckService": {
+      "description": "A HealthCheckService defines a set of backends on which to perform periodic health checks and an endpoint to which to send notification of changes in the health status of the backends.",
+      "id": "HealthCheckService",
+      "properties": {
+        "creationTimestamp": {
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "healthChecks": {
+          "description": "List of URLs to the HealthCheck resources. Must have at least one HealthCheck, and not more than 10. HealthCheck resources must have portSpecification=USE_SERVING_PORT. For regional HealthCheckService, the HealthCheck must be regional and in the same region. For global HealthCheckService, HealthCheck must be global. Mix of regional and global HealthChecks is not supported. Multiple regional HealthChecks must belong to the same region. Regional HealthChecks\u003c/code? must belong to the same region as zones of NEGs.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "healthStatusAggregationStrategy": {
+          "description": "Policy for how the results from multiple health checks for the same endpoint are aggregated.  \n- NO_AGGREGATION. An EndpointHealth message is returned for each backend in the health check service. \n- AND. If any backend's health check reports UNHEALTHY, then UNHEALTHY is the HealthState of the entire health check service. If all backend's are healthy, the HealthState of the health check service is HEALTHY. .",
+          "enum": [
+            "AND",
+            "NO_AGGREGATION"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "id": {
+          "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#healthCheckService",
+          "description": "[Output only] Type of the resource. Always compute#healthCheckServicefor health check services.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the resource. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "networkEndpointGroups": {
+          "description": "List of URLs to the NetworkEndpointGroup resources. Must not have more than 100. For regional HealthCheckService, NEGs must be in zones in the region of the HealthCheckService.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notificationEndpoints": {
+          "description": "List of URLs to the NotificationEndpoint resources. Must not have more than 10. A list of endpoints for receiving notifications of change in health status. For regional HealthCheckService, NotificationEndpoint must be regional and in the same region. For global HealthCheckService, NotificationEndpoint must be global.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "region": {
+          "description": "[Output Only] URL of the region where the health check service resides. This field is not applicable to global health check services. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        },
+        "selfLinkWithId": {
+          "description": "[Output Only] Server-defined URL with id for the resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "HealthCheckServicesList": {
+      "id": "HealthCheckServicesList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of HealthCheckService resources.",
+          "items": {
+            "$ref": "HealthCheckService"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#healthCheckServicesList",
+          "description": "[Output Only] Type of the resource. Always compute#healthCheckServicesList for lists of HealthCheckServices.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
         }
       },
       "type": "object"
@@ -33776,7 +35045,7 @@
           "description": "The spec to modify the URL of the request, prior to forwarding the request to the matched service"
         },
         "weightedBackendServices": {
-          "description": "A list of weighted backend services to send traffic to when a route match occurs. The weights determine the percentage of traffic that flows to their corresponding backend service. The weights must add up to 100. If all traffic needs to go to a single backend service, there must be one weightedBackendService with weight set to 100.\nOnce a backendService is identified and before forwarding the request to the backend service, advanced routing actions like Url rewrites and header transformations are applied depending on additional settings specified in this HttpRouteAction.",
+          "description": "A list of weighted backend services to send traffic to when a route match occurs. The weights determine the fraction of traffic that flows to their corresponding backend service. If all traffic needs to go to a single backend service, there must be one  weightedBackendService with weight set to a non 0 number.\nOnce a backendService is identified and before forwarding the request to the backend service, advanced routing actions like Url rewrites and header transformations are applied depending on additional settings specified in this HttpRouteAction.",
           "items": {
             "$ref": "WeightedBackendService"
           },
@@ -34487,6 +35756,12 @@
             "$ref": "ServiceAccount"
           },
           "type": "array"
+        },
+        "shieldedInstanceConfig": {
+          "$ref": "ShieldedInstanceConfig"
+        },
+        "shieldedInstanceIntegrityPolicy": {
+          "$ref": "ShieldedInstanceIntegrityPolicy"
         },
         "shieldedVmConfig": {
           "$ref": "ShieldedVmConfig"
@@ -35589,6 +36864,22 @@
             ""
           ],
           "type": "string"
+        },
+        "mostDisruptiveAllowedAction": {
+          "description": "The most disruptive action that allowed to be performed on the instances. By default REPLACE.",
+          "enum": [
+            "NONE",
+            "REFRESH",
+            "REPLACE",
+            "RESTART"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -36512,6 +37803,9 @@
             "$ref": "ServiceAccount"
           },
           "type": "array"
+        },
+        "shieldedInstanceConfig": {
+          "$ref": "ShieldedInstanceConfig"
         },
         "shieldedVmConfig": {
           "$ref": "ShieldedVmConfig",
@@ -37777,6 +39071,7 @@
       "id": "InterconnectDiagnosticsLinkOpticalPower",
       "properties": {
         "state": {
+          "description": "The status of the current value when compared to the warning and alarm levels for the receiving or transmitting transceiver. Possible states include:  \n- OK: The value has not crossed a warning threshold. \n- LOW_WARNING: The value has crossed below the low warning threshold. \n- HIGH_WARNING: The value has crossed above the high warning threshold. \n- LOW_ALARM: The value has crossed below the low alarm threshold. \n- HIGH_ALARM: The value has crossed above the high alarm threshold.",
           "enum": [
             "HIGH_ALARM",
             "HIGH_WARNING",
@@ -37794,7 +39089,7 @@
           "type": "string"
         },
         "value": {
-          "description": "Value of the current optical power, read in dBm. Take a known good optical value, give it a 10% margin and trigger warnings relative to that value. In general, a -7dBm warning and a -11dBm alarm are good optical value estimates for most links.",
+          "description": "Value of the current receiving or transmitting optical power, read in dBm. Take a known good optical value, give it a 10% margin and trigger warnings relative to that value. In general, a -7dBm warning and a -11dBm alarm are good optical value estimates for most links.",
           "format": "float",
           "type": "number"
         }
@@ -37823,10 +39118,12 @@
           "$ref": "InterconnectDiagnosticsLinkLACPStatus"
         },
         "receivingOpticalPower": {
-          "$ref": "InterconnectDiagnosticsLinkOpticalPower"
+          "$ref": "InterconnectDiagnosticsLinkOpticalPower",
+          "description": "An InterconnectDiagnostics.LinkOpticalPower object, describing the current value and status of the received light level."
         },
         "transmittingOpticalPower": {
-          "$ref": "InterconnectDiagnosticsLinkOpticalPower"
+          "$ref": "InterconnectDiagnosticsLinkOpticalPower",
+          "description": "An InterconnectDiagnostics.LinkOpticalPower object, describing the current value and status of the transmitted light level."
         }
       },
       "type": "object"
@@ -38565,6 +39862,57 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Jwt": {
+      "description": "JWT configuration for origin authentication.",
+      "id": "Jwt",
+      "properties": {
+        "audiences": {
+          "description": "A JWT containing any of these audiences will be accepted. The service name will be accepted if audiences is empty. Examples: bookstore_android.apps.googleusercontent.com, bookstore_web.apps.googleusercontent.com",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "issuer": {
+          "description": "Identifies the issuer that issued the JWT, which is usually a URL or an email address. Examples: https://securetoken.google.com, 1234567-compute@developer.gserviceaccount.com",
+          "type": "string"
+        },
+        "jwksPublicKeys": {
+          "description": "The provider?s public key set to validate the signature of the JWT.",
+          "type": "string"
+        },
+        "jwtHeaders": {
+          "description": "jwt_headers and jwt_params define where to extract the JWT from an HTTP request. If no explicit location is specified, the following default locations are tried in order:\n\n1. The Authorization header using the Bearer schema. See `here `_. Example:\n\nAuthorization: Bearer .\n\n2. `access_token` query parameter. See `this `_\n\nMultiple JWTs can be verified for a request. Each JWT has to be extracted from the locations its issuer specified or from the default locations.\n\nThis field is set if JWT is sent in a request header. This field specifies the header name. For example, if `header=x-goog-iap-jwt-assertion`, the header format will be x-goog-iap-jwt-assertion: .",
+          "items": {
+            "$ref": "JwtHeader"
+          },
+          "type": "array"
+        },
+        "jwtParams": {
+          "description": "This field is set if JWT is sent in a query parameter. This field specifies the query parameter name. For example, if jwt_params[0] is jwt_token, the JWT format in the query parameter is /path?jwt_token=.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "JwtHeader": {
+      "description": "This message specifies a header location to extract JWT token.",
+      "id": "JwtHeader",
+      "properties": {
+        "name": {
+          "description": "The HTTP header name.",
+          "type": "string"
+        },
+        "valuePrefix": {
+          "description": "The value prefix. The value format is \"value_prefix\" For example, for \"Authorization: Bearer \", value_prefix=\"Bearer \" with a space at the end.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -39809,6 +41157,21 @@
       },
       "type": "object"
     },
+    "MetadataCredentialsFromPlugin": {
+      "description": "Custom authenticator credentials.",
+      "id": "MetadataCredentialsFromPlugin",
+      "properties": {
+        "name": {
+          "description": "Plugin name.",
+          "type": "string"
+        },
+        "structConfig": {
+          "description": "A text proto that conforms to a Struct type definition interpreted by the plugin.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MetadataFilter": {
       "description": "Opaque filter criteria used by loadbalancers to restrict routing configuration to a limited set of loadbalancing proxies. Proxies and sidecars involved in loadbalancing would typically present metadata to the loadbalancers which need to match criteria specified here. If a match takes place, the relevant routing configuration is made available to those proxies.\nFor each metadataFilter in this list, if its filterMatchCriteria is set to MATCH_ANY, at least one of the filterLabels must match the corresponding label provided in the metadata. If its filterMatchCriteria is set to MATCH_ALL, then all of its filterLabels must match with corresponding labels in the provided metadata.\nAn example for using metadataFilters would be: if loadbalancing involves  Envoys, they will only receive routing configuration when values in metadataFilters match values supplied in \u003ca href=\"https://www.envoyproxy.io/docs/envoy/latest/api-v2/api/v2/core/base.proto#envoy-api-msg-core-node\" Node metadata of their XDS requests to loadbalancers.",
       "id": "MetadataFilter",
@@ -39852,6 +41215,27 @@
       },
       "type": "object"
     },
+    "MutualTls": {
+      "description": "Configuration for the mutual Tls mode for peer authentication.",
+      "id": "MutualTls",
+      "properties": {
+        "mode": {
+          "description": "Specifies if the server TLS is configured to be strict or permissive. This field can be set to one of the following: STRICT: Client certificate must be presented, connection is in TLS. PERMISSIVE: Client certificate can be omitted, connection can be either plaintext or TLS.",
+          "enum": [
+            "INVALID",
+            "PERMISSIVE",
+            "STRICT"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "NamedPort": {
       "description": "The named port. For example: .",
       "id": "NamedPort",
@@ -39873,7 +41257,7 @@
       "id": "Network",
       "properties": {
         "IPv4Range": {
-          "description": "The range of internal addresses that are legal on this network. This range is a CIDR specification, for example: 192.168.0.0/16. Provided by the client when the network is created.",
+          "description": "Deprecated in favor of subnet mode networks. The range of internal addresses that are legal on this network. This range is a CIDR specification, for example: 192.168.0.0/16. Provided by the client when the network is created.",
           "pattern": "[0-9]{1,3}(?:\\.[0-9]{1,3}){3}/[0-9]{1,2}",
           "type": "string"
         },
@@ -40761,7 +42145,7 @@
           "type": "boolean"
         },
         "autoCreateRoutes": {
-          "description": "Indicates whether full mesh connectivity is created and managed automatically. When it is set to true, Google Compute Engine will automatically create and manage the routes between two networks when the state is ACTIVE. Otherwise, user needs to create routes manually to route packets to peer network.",
+          "description": "This field will be deprecated soon. Prefer using exchange_subnet_routes instead. Indicates whether full mesh connectivity is created and managed automatically. When it is set to true, Google Compute Engine will automatically create and manage the routes between two networks when the state is ACTIVE. Otherwise, user needs to create routes manually to route packets to peer network.",
           "type": "boolean"
         },
         "exchangeSubnetRoutes": {
@@ -40826,7 +42210,7 @@
       "id": "NetworksAddPeeringRequest",
       "properties": {
         "autoCreateRoutes": {
-          "description": "Whether Google Compute Engine manages the routes automatically.",
+          "description": "This field will be deprecated soon. Prefer using exchange_subnet_routes in network_peering instead. Whether Google Compute Engine manages the routes automatically.",
           "type": "boolean"
         },
         "exportCustomRoutes": {
@@ -42267,6 +43651,179 @@
       },
       "type": "object"
     },
+    "NotificationEndpoint": {
+      "description": "A notification endpoint resource defines an endpoint to receive notifications when there are status changes detected by the associated health check service.",
+      "id": "NotificationEndpoint",
+      "properties": {
+        "creationTimestamp": {
+          "description": "[Output Only] Creation timestamp in RFC3339 text format.",
+          "type": "string"
+        },
+        "description": {
+          "description": "An optional description of this resource. Provide this property when you create the resource.",
+          "type": "string"
+        },
+        "grpcSettings": {
+          "$ref": "NotificationEndpointGrpcSettings",
+          "description": "Settings of the gRPC notification endpoint including the endpoint URL and the retry duration."
+        },
+        "id": {
+          "description": "[Output Only] A unique identifier for this resource type. The server generates this identifier.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "kind": {
+          "default": "compute#notificationEndpoint",
+          "description": "[Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
+          "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+          "type": "string"
+        },
+        "region": {
+          "description": "[Output Only] URL of the region where the notification endpoint resides. This field applies only to the regional resource. You must specify this field as part of the HTTP request URL. It is not settable as a field in the request body.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for the resource.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NotificationEndpointGrpcSettings": {
+      "description": "Represents a gRPC setting that describes one gRPC notification endpoint and the retry duration attempting to send notification to this endpoint.",
+      "id": "NotificationEndpointGrpcSettings",
+      "properties": {
+        "endpoint": {
+          "description": "Endpoint to which gRPC notifications are sent. This must be a valid gRPCLB DNS name.",
+          "type": "string"
+        },
+        "payloadName": {
+          "description": "Optional. If specified, this field is used to populate the ?name? field in gRPC requests.",
+          "type": "string"
+        },
+        "retryDurationSec": {
+          "description": "How much time (in seconds) is spent attempting notification retries until a successful response is received. Default is 30s. Limit is 20m (1200s). Must be a positive number.",
+          "format": "uint32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "NotificationEndpointList": {
+      "id": "NotificationEndpointList",
+      "properties": {
+        "id": {
+          "description": "[Output Only] Unique identifier for the resource; defined by the server.",
+          "type": "string"
+        },
+        "items": {
+          "description": "A list of NotificationEndpoint resources.",
+          "items": {
+            "$ref": "NotificationEndpoint"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "default": "compute#notificationEndpointList",
+          "description": "[Output Only] Type of the resource. Always compute#notificationEndpoint for notification endpoints.",
+          "type": "string"
+        },
+        "nextPageToken": {
+          "description": "[Output Only] This token allows you to get the next page of results for list requests. If the number of results is larger than maxResults, use the nextPageToken as a value for the query parameter pageToken in the next list request. Subsequent list requests will have their own nextPageToken to continue paging through the results.",
+          "type": "string"
+        },
+        "selfLink": {
+          "description": "[Output Only] Server-defined URL for this resource.",
+          "type": "string"
+        },
+        "warning": {
+          "description": "[Output Only] Informational warning message.",
+          "properties": {
+            "code": {
+              "description": "[Output Only] A warning code, if applicable. For example, Compute Engine returns NO_RESULTS_ON_PAGE if there are no results in the response.",
+              "enum": [
+                "CLEANUP_FAILED",
+                "DEPRECATED_RESOURCE_USED",
+                "DEPRECATED_TYPE_USED",
+                "DISK_SIZE_LARGER_THAN_IMAGE_SIZE",
+                "EXPERIMENTAL_TYPE_USED",
+                "EXTERNAL_API_WARNING",
+                "FIELD_VALUE_OVERRIDEN",
+                "INJECTED_KERNELS_DEPRECATED",
+                "MISSING_TYPE_DEPENDENCY",
+                "NEXT_HOP_ADDRESS_NOT_ASSIGNED",
+                "NEXT_HOP_CANNOT_IP_FORWARD",
+                "NEXT_HOP_INSTANCE_NOT_FOUND",
+                "NEXT_HOP_INSTANCE_NOT_ON_NETWORK",
+                "NEXT_HOP_NOT_RUNNING",
+                "NOT_CRITICAL_ERROR",
+                "NO_RESULTS_ON_PAGE",
+                "REQUIRED_TOS_AGREEMENT",
+                "RESOURCE_IN_USE_BY_OTHER_RESOURCE_WARNING",
+                "RESOURCE_NOT_DELETED",
+                "SCHEMA_VALIDATION_IGNORED",
+                "SINGLE_INSTANCE_PROPERTY_TEMPLATE",
+                "UNDECLARED_PROPERTIES",
+                "UNREACHABLE"
+              ],
+              "enumDescriptions": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+              ],
+              "type": "string"
+            },
+            "data": {
+              "description": "[Output Only] Metadata about this warning in key: value format. For example:\n\"data\": [ { \"key\": \"scope\", \"value\": \"zones/us-east1-d\" }",
+              "items": {
+                "properties": {
+                  "key": {
+                    "description": "[Output Only] A key that provides more detail on the warning being returned. For example, for warnings where there are no results in a list request for a particular zone, this key might be scope and the key value might be the zone name. Other examples might be a key indicating a deprecated resource and a suggested replacement, or a warning about invalid network settings (for example, if an instance attempts to perform IP forwarding but is not enabled for IP forwarding).",
+                    "type": "string"
+                  },
+                  "value": {
+                    "description": "[Output Only] A warning data value corresponding to the key.",
+                    "type": "string"
+                  }
+                },
+                "type": "object"
+              },
+              "type": "array"
+            },
+            "message": {
+              "description": "[Output Only] A human-readable description of the warning code.",
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "Operation": {
       "description": "An Operation resource, used to manage asynchronous API requests. (== resource_for v1.globalOperations ==) (== resource_for beta.globalOperations ==) (== resource_for v1.regionOperations ==) (== resource_for beta.regionOperations ==) (== resource_for v1.zoneOperations ==) (== resource_for beta.zoneOperations ==)",
       "id": "Operation",
@@ -42806,6 +44363,76 @@
       },
       "type": "object"
     },
+    "OriginAuthenticationMethod": {
+      "description": "Configuration for the origin authentication method.",
+      "id": "OriginAuthenticationMethod",
+      "properties": {
+        "jwt": {
+          "$ref": "Jwt"
+        }
+      },
+      "type": "object"
+    },
+    "OutlierDetection": {
+      "description": "Settings controlling eviction of unhealthy hosts from the load balancing pool.",
+      "id": "OutlierDetection",
+      "properties": {
+        "baseEjectionTime": {
+          "$ref": "Duration",
+          "description": "The base time that a host is ejected for. The real time is equal to the base time multiplied by the number of times the host has been ejected. Defaults to 30000ms or 30s."
+        },
+        "consecutiveErrors": {
+          "description": "Number of errors before a host is ejected from the connection pool. When the backend host is accessed over HTTP, a 5xx return code qualifies as an error. Defaults to 5.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "consecutiveGatewayFailure": {
+          "description": "The number of consecutive gateway failures (502, 503, 504 status or connection errors that are mapped to one of those status codes) before a consecutive gateway failure ejection occurs. Defaults to 5.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "enforcingConsecutiveErrors": {
+          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive 5xx. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 100.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "enforcingConsecutiveGatewayFailure": {
+          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through consecutive gateway failures. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 0.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "enforcingSuccessRate": {
+          "description": "The percentage chance that a host will be actually ejected when an outlier status is detected through success rate statistics. This setting can be used to disable ejection or to ramp it up slowly. Defaults to 100.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "interval": {
+          "$ref": "Duration",
+          "description": "Time interval between ejection sweep analysis. This can result in both new ejections as well as hosts being returned to service. Defaults to 10 seconds."
+        },
+        "maxEjectionPercent": {
+          "description": "Maximum percentage of hosts in the load balancing pool for the backend service that can be ejected. Defaults to 10%.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "successRateMinimumHosts": {
+          "description": "The number of hosts in a cluster that must have enough request volume to detect success rate outliers. If the number of hosts is less than this setting, outlier detection via success rate statistics is not performed for any host in the cluster. Defaults to 5.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "successRateRequestVolume": {
+          "description": "The minimum number of total requests that must be collected in one interval (as defined by the interval duration above) to include this host in success rate based outlier detection. If the volume is lower than this setting, outlier detection via success rate statistics is not performed for that host. Defaults to 100.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "successRateStdevFactor": {
+          "description": "This factor is used to determine the ejection threshold for success rate outlier ejection. The ejection threshold is the difference between the mean success rate, and the product of this factor and the standard deviation of the mean success rate: mean - (stdev * success_rate_stdev_factor). This factor is divided by a thousand to get a double. That is, if the desired factor is 1.9, the runtime value should be 1900. Defaults to 1900.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "PathMatcher": {
       "description": "A matcher for the path portion of the URL. The BackendService from the longest-matched rule will serve the URL. If no rule was matched, the default service will be used.",
       "id": "PathMatcher",
@@ -42877,6 +44504,17 @@
       },
       "type": "object"
     },
+    "PeerAuthenticationMethod": {
+      "description": "Configuration for the peer authentication method.",
+      "id": "PeerAuthenticationMethod",
+      "properties": {
+        "mtls": {
+          "$ref": "MutualTls",
+          "description": "Set if mTLS is used for peer authentication."
+        }
+      },
+      "type": "object"
+    },
     "PerInstanceConfig": {
       "id": "PerInstanceConfig",
       "properties": {
@@ -42899,6 +44537,94 @@
         "preservedState": {
           "$ref": "PreservedState",
           "description": "Intended preserved state for the given instance. Does not contain state generated based on Stateful Policy."
+        }
+      },
+      "type": "object"
+    },
+    "Permission": {
+      "description": "All fields defined in a permission are ANDed.",
+      "id": "Permission",
+      "properties": {
+        "constraints": {
+          "description": "Extra custom constraints. The constraints are ANDed together.",
+          "items": {
+            "$ref": "PermissionConstraint"
+          },
+          "type": "array"
+        },
+        "hosts": {
+          "description": "Used in Ingress or Egress Gateway cases to specify hosts that the policy applies to. Exact match, prefix match, and suffix match are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "methods": {
+          "description": "HTTP method.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notHosts": {
+          "description": "Negate of hosts. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notMethods": {
+          "description": "Negate of methods. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notPaths": {
+          "description": "Negate of paths. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notPorts": {
+          "description": "Negate of ports. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "paths": {
+          "description": "HTTP request paths or gRPC methods. Exact match, prefix match, and suffix match are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ports": {
+          "description": "Port names or numbers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "PermissionConstraint": {
+      "description": "Custom constraint that specifies a key and a list of allowed values for Istio attributes.",
+      "id": "PermissionConstraint",
+      "properties": {
+        "key": {
+          "description": "Key of the constraint.",
+          "type": "string"
+        },
+        "values": {
+          "description": "A list of allowed values.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -43009,6 +44735,80 @@
         "source": {
           "description": "The URL of the disk resource that is stateful and should be attached to the VM instance.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Principal": {
+      "description": "All fields defined in a principal are ANDed.",
+      "id": "Principal",
+      "properties": {
+        "condition": {
+          "description": "An expression to specify custom condition.",
+          "type": "string"
+        },
+        "groups": {
+          "description": "The groups the principal belongs to. Exact match, prefix match, and suffix match are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "ips": {
+          "description": "IPv4 or IPv6 address or range (In CIDR format)",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "namespaces": {
+          "description": "The namespaces. Exact match, prefix match, and suffix match are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notGroups": {
+          "description": "Negate of groups. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notIps": {
+          "description": "Negate of IPs. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notNamespaces": {
+          "description": "Negate of namespaces. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "notUsers": {
+          "description": "Negate of users. Specifies exclusions.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "properties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "A map of Istio attribute to expected values. Exact match, prefix match, and suffix match are supported for values. For example, `request.headers[version]: ?v1?`. The properties are ANDed together.",
+          "type": "object"
+        },
+        "users": {
+          "description": "The user names/IDs or service accounts. Exact match, prefix match, and suffix match are supported.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -43365,6 +45165,30 @@
       },
       "type": "object"
     },
+    "RbacPolicy": {
+      "id": "RbacPolicy",
+      "properties": {
+        "name": {
+          "description": "Name of the RbacPolicy.",
+          "type": "string"
+        },
+        "permissions": {
+          "description": "The list of permissions.",
+          "items": {
+            "$ref": "Permission"
+          },
+          "type": "array"
+        },
+        "principals": {
+          "description": "The list of principals.",
+          "items": {
+            "$ref": "Principal"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Reference": {
       "description": "Represents a reference to a resource.",
       "id": "Reference",
@@ -43564,6 +45388,19 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "RegionCommitmentsUpdateAllocationsRequest": {
+      "id": "RegionCommitmentsUpdateAllocationsRequest",
+      "properties": {
+        "allocations": {
+          "description": "List of allocations for the capacity move of VMs with accelerators and local ssds.",
+          "items": {
+            "$ref": "Allocation"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -44017,6 +45854,22 @@
         },
         "minimalAction": {
           "description": "The minimal action that should be perfomed on the instances. By default NONE.",
+          "enum": [
+            "NONE",
+            "REFRESH",
+            "REPLACE",
+            "RESTART"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "mostDisruptiveAllowedAction": {
+          "description": "The most disruptive action that allowed to be performed on the instances. By default REPLACE.",
           "enum": [
             "NONE",
             "REFRESH",
@@ -45758,6 +47611,11 @@
           "description": "Local BGP Autonomous System Number (ASN). Must be an RFC6996 private ASN, either 16-bit or 32-bit. The value will be fixed for this router resource. All VPN tunnels that link to this router will have the same local ASN.",
           "format": "uint32",
           "type": "integer"
+        },
+        "keepaliveInterval": {
+          "description": "The interval in seconds between BGP keepalive messages that are sent to the peer. Hold time is three times the interval at which keepalive messages are sent, and the hold time is the maximum number of seconds allowed to elapse between successive keepalive messages that BGP receives from a peer. BGP will use the smaller of either the local hold time value or the peer?s hold time value as the hold time for the BGP connection between the two peers. If set, this value must be between 1 and 120. The default is 20.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -45806,6 +47664,22 @@
           "format": "uint32",
           "type": "integer"
         },
+        "bfd": {
+          "$ref": "RouterBgpPeerBfd",
+          "description": "BFD configuration for the BGP peering."
+        },
+        "enable": {
+          "description": "The status of the BGP peer connection. If set to FALSE, any active session with the peer is terminated and all associated routing information is removed. If set to TRUE, the peer connection can be established with routing information. The default is TRUE.",
+          "enum": [
+            "FALSE",
+            "TRUE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "interfaceName": {
           "description": "Name of the interface the BGP peer is associated with.",
           "type": "string"
@@ -45839,6 +47713,58 @@
         "peerIpAddress": {
           "description": "IP address of the BGP interface outside Google cloud. Only IPv4 is supported.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RouterBgpPeerBfd": {
+      "id": "RouterBgpPeerBfd",
+      "properties": {
+        "minReceiveInterval": {
+          "description": "The minimum interval, in milliseconds, between BFD packets received from the peer router. The actual value is negotiated between the two routers and is equal to the greater of this value and the transmit interval of the other router. If BFD echo mode is enabled on this router and the peer router, this value is used to negotiate the interval between BFD echo packets transmitted by the peer router. Otherwise, it will be used to determine the interval between BFD control packets. If set, this value must be between 33 and 30000. The default is 300.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "minTransmitInterval": {
+          "description": "The minimum interval, in milliseconds, between BFD packets transmitted to the peer router. The actual value is negotiated between the two routers and is equal to the greater of this value and the corresponding receive interval of the other router. If BFD echo mode is enabled on this router and the peer router, this value is used to negotiate the interval between BFD echo packets transmitted by this router. Otherwise, it will be used to determine the interval between BFD control packets. If set, this value must be between 33 and 30000. The default is 300.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "mode": {
+          "description": "The BFD session initiation mode for this BGP peer. If set to ACTIVE, the Cloud Router will initiate the BFD session for this BGP peer. If set to PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP peer. The default is PASSIVE.",
+          "enum": [
+            "ACTIVE",
+            "DISABLED",
+            "PASSIVE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "multiplier": {
+          "description": "The number of consecutive BFD packets that must be missed before BFD declares that a peer is unavailable. If set, the value must be a value between 2 and 16. The default is 3.",
+          "format": "uint32",
+          "type": "integer"
+        },
+        "packetMode": {
+          "description": "The BFD packet mode for this BGP peer. If set to CONTROL_AND_ECHO, BFD echo mode is enabled for this BGP peer. In this mode, if the peer router also has BFD echo mode enabled, BFD echo packets will be sent to the other router. If the peer router does not have BFD echo mode enabled, only control packets will be sent. If set to CONTROL_ONLY, BFD echo mode is disabled for this BGP peer. If this router and the peer router have a multihop connection, this should be set to CONTROL_ONLY as BFD echo mode is only supported on singlehop connections. The default is CONTROL_AND_ECHO.",
+          "enum": [
+            "CONTROL_AND_ECHO",
+            "CONTROL_ONLY"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "slowTimerInterval": {
+          "description": "The minimum interval, in milliseconds, between BFD control packets transmitted to and received from the peer router when BFD echo mode is enabled on both routers. The actual transmit and receive intervals are negotiated between the two routers and are equal to the greater of this value and the corresponding interval on the other router. If set, this value must be between 1000 and 30000. The default is 5000.",
+          "format": "uint32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -46704,6 +48630,17 @@
       },
       "type": "object"
     },
+    "SdsConfig": {
+      "description": "The configuration to access the SDS server.",
+      "id": "SdsConfig",
+      "properties": {
+        "grpcServiceConfig": {
+          "$ref": "GrpcServiceConfig",
+          "description": "The configuration to access the SDS server over GRPC."
+        }
+      },
+      "type": "object"
+    },
     "SecurityPoliciesListPreconfiguredExpressionSetsResponse": {
       "id": "SecurityPoliciesListPreconfiguredExpressionSetsResponse",
       "properties": {
@@ -47060,6 +48997,29 @@
       },
       "type": "object"
     },
+    "SecuritySettings": {
+      "description": "The authentication and authorization settings for a BackendService.",
+      "id": "SecuritySettings",
+      "properties": {
+        "authenticationPolicy": {
+          "$ref": "AuthenticationPolicy",
+          "description": "Authentication policy defines what authentication methods can be accepted on backends, and if authenticated, which method/certificate will set the request principal."
+        },
+        "authorizationConfig": {
+          "$ref": "AuthorizationConfig",
+          "description": "Authorization config defines the Role Based Access Control (RBAC) config."
+        },
+        "clientTlsSettings": {
+          "$ref": "ClientTlsSettings",
+          "description": "TLS Settings for the backend service."
+        },
+        "serverSettingsSelector": {
+          "$ref": "ServerSecuritySettingsSelector",
+          "description": "The listener config of the XDS client is generated if the selector matches the client."
+        }
+      },
+      "type": "object"
+    },
     "SerialPortOutput": {
       "description": "An instance's serial console output.",
       "id": "SerialPortOutput",
@@ -47109,6 +49069,57 @@
       },
       "type": "object"
     },
+    "ServerSecuritySettingsSelector": {
+      "description": "A selector associated with the SecuritySettings. If the labels and port in this selector match the Envoy's label and port, the server side authentication and authorization settings are applied to the Envoy.",
+      "id": "ServerSecuritySettingsSelector",
+      "properties": {
+        "labelMatches": {
+          "description": "The labels associated with the XDS client.",
+          "items": {
+            "$ref": "MetadataFilterLabelMatch"
+          },
+          "type": "array"
+        },
+        "port": {
+          "description": "The listener port of the XDS client.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ServerTlsSettings": {
+      "description": "The TLS settings for the server.",
+      "id": "ServerTlsSettings",
+      "properties": {
+        "proxyTlsContext": {
+          "$ref": "TlsContext",
+          "description": "Configures the mechanism to obtain security certificates and identity information."
+        },
+        "subjectAltNames": {
+          "description": "A list of alternate names to verify the subject identity in the certificate presented by the client.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "tlsMode": {
+          "description": "Indicates whether connections should be secured using TLS. The value of this field determines how TLS is enforced. This field can be set to one of the following:  \n- SIMPLE Secure connections with standard TLS semantics.  \n- MUTUAL Secure connections to the backends using mutual TLS by presenting client certificates for authentication.",
+          "enum": [
+            "INVALID",
+            "MUTUAL",
+            "SIMPLE"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ServiceAccount": {
       "description": "A service account.",
       "id": "ServiceAccount",
@@ -47123,6 +49134,87 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceAccountJwtAccessCredentials": {
+      "description": "JWT credentials for a service account.",
+      "id": "ServiceAccountJwtAccessCredentials",
+      "properties": {
+        "jsonKey": {
+          "description": "Service account key.",
+          "type": "string"
+        },
+        "tokenLifetimeSeconds": {
+          "description": "The token lifetime seconds.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedInstanceConfig": {
+      "description": "A set of Shielded Instance options.",
+      "id": "ShieldedInstanceConfig",
+      "properties": {
+        "enableIntegrityMonitoring": {
+          "description": "Defines whether the instance has integrity monitoring enabled.",
+          "type": "boolean"
+        },
+        "enableSecureBoot": {
+          "description": "Defines whether the instance has Secure Boot enabled.",
+          "type": "boolean"
+        },
+        "enableVtpm": {
+          "description": "Defines whether the instance has the vTPM enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedInstanceIdentity": {
+      "description": "A shielded Instance identity entry.",
+      "id": "ShieldedInstanceIdentity",
+      "properties": {
+        "encryptionKey": {
+          "$ref": "ShieldedInstanceIdentityEntry",
+          "description": "An Endorsement Key (EK) issued to the Shielded Instance's vTPM."
+        },
+        "kind": {
+          "default": "compute#shieldedInstanceIdentity",
+          "description": "[Output Only] Type of the resource. Always compute#shieldedInstanceIdentity for shielded Instance identity entry.",
+          "type": "string"
+        },
+        "signingKey": {
+          "$ref": "ShieldedInstanceIdentityEntry",
+          "description": "An Attestation Key (AK) issued to the Shielded Instance's vTPM."
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedInstanceIdentityEntry": {
+      "description": "A Shielded Instance Identity Entry.",
+      "id": "ShieldedInstanceIdentityEntry",
+      "properties": {
+        "ekCert": {
+          "description": "A PEM-encoded X.509 certificate. This field can be empty.",
+          "type": "string"
+        },
+        "ekPub": {
+          "description": "A PEM-encoded public key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ShieldedInstanceIntegrityPolicy": {
+      "description": "The policy describes the baseline against which Instance boot integrity is measured.",
+      "id": "ShieldedInstanceIntegrityPolicy",
+      "properties": {
+        "updateAutoLearnPolicy": {
+          "description": "Updates the integrity policy baseline using the measurements from the VM instance's most recent boot.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -48234,6 +50326,10 @@
           "description": "[Output Only] Server-defined URL for this resource with the resource id.",
           "type": "string"
         },
+        "tlsSettings": {
+          "$ref": "ServerTlsSettings",
+          "description": "Security settings for the proxy. This field is only applicable to a global backend service with the loadBalancingScheme set to INTERNAL_SELF_MANAGED."
+        },
         "warnings": {
           "description": "[Output Only] If potential misconfigurations are detected for this SSL policy, this field will be populated with warning messages.",
           "items": {
@@ -49167,6 +51263,10 @@
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
+        "proxyBind": {
+          "description": "This field only applies when the loadBalancingScheme is INTERNAL_SELF_MANAGED. When set to true the Envoy binds on the IP address specified by the forwarding rule. Default is false.",
+          "type": "boolean"
+        },
         "region": {
           "description": "[Output Only] URL of the region where the regional Target HTTP Proxy resides. This field is not applicable to global Target HTTP Proxies.",
           "type": "string"
@@ -49563,6 +51663,10 @@
           "description": "Name of the resource. Provided by the client when the resource is created. The name must be 1-63 characters long, and comply with RFC1035. Specifically, the name must be 1-63 characters long and match the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the first character must be a lowercase letter, and all following characters must be a dash, lowercase letter, or digit, except the last character, which cannot be a dash.",
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
+        },
+        "proxyBind": {
+          "description": "This field only applies when the loadBalancingScheme is INTERNAL_SELF_MANAGED. When set to true the Envoy binds on the IP address specified by the forwarding rule. Default is false.",
+          "type": "boolean"
         },
         "quicOverride": {
           "description": "Specifies the QUIC override policy for this TargetHttpsProxy resource. This determines whether the load balancer will attempt to negotiate QUIC with clients or not. Can specify one of NONE, ENABLE, or DISABLE. Specify ENABLE to always enable QUIC, Enables QUIC when set to ENABLE, and disables QUIC when set to DISABLE. If NONE is specified, uses the QUIC policy with no user overrides, which is equivalent to DISABLE. Not specifying this field is equivalent to specifying NONE.",
@@ -50275,9 +52379,13 @@
             "CLIENT_IP_PORT_PROTO",
             "CLIENT_IP_PROTO",
             "GENERATED_COOKIE",
+            "HEADER_FIELD",
+            "HTTP_COOKIE",
             "NONE"
           ],
           "enumDescriptions": [
+            "",
+            "",
             "",
             "",
             "",
@@ -51541,6 +53649,94 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "TlsCertificateContext": {
+      "description": "Defines the mechanism to obtain the client or server certificate.",
+      "id": "TlsCertificateContext",
+      "properties": {
+        "certificatePaths": {
+          "$ref": "TlsCertificatePaths",
+          "description": "Specifies the certificate and private key paths. This field is applicable only if tlsCertificateSource is set to USE_PATH."
+        },
+        "certificateSource": {
+          "description": "Defines how TLS certificates are obtained.",
+          "enum": [
+            "INVALID",
+            "USE_PATH",
+            "USE_SDS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "sdsConfig": {
+          "$ref": "SdsConfig",
+          "description": "Specifies the config to retrieve certificates through SDS. This field is applicable only if tlsCertificateSource is set to USE_SDS."
+        }
+      },
+      "type": "object"
+    },
+    "TlsCertificatePaths": {
+      "description": "The paths to the mounted TLS Certificates and private key.",
+      "id": "TlsCertificatePaths",
+      "properties": {
+        "certificatePath": {
+          "description": "The path to the file holding the client or server TLS certificate to use.",
+          "type": "string"
+        },
+        "privateKeyPath": {
+          "description": "The path to the file holding the client or server private key.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TlsContext": {
+      "description": "The TLS settings for the client or server.",
+      "id": "TlsContext",
+      "properties": {
+        "certificateContext": {
+          "$ref": "TlsCertificateContext",
+          "description": "Defines the mechanism to obtain the client or server certificate."
+        },
+        "validationContext": {
+          "$ref": "TlsValidationContext",
+          "description": "Defines the mechanism to obtain the Certificate Authority certificate to validate the client/server certificate. If omitted, the proxy will not validate the server or client certificate."
+        }
+      },
+      "type": "object"
+    },
+    "TlsValidationContext": {
+      "description": "Defines the mechanism to obtain the Certificate Authority certificate to validate the client/server certificate.",
+      "id": "TlsValidationContext",
+      "properties": {
+        "certificatePath": {
+          "description": "The path to the file holding the CA certificate to validate the client or server certificate.",
+          "type": "string"
+        },
+        "sdsConfig": {
+          "$ref": "SdsConfig",
+          "description": "Specifies the config to retrieve certificates through SDS. This field is applicable only if tlsCertificateSource is set to USE_SDS."
+        },
+        "validationSource": {
+          "description": "Defines how TLS certificates are obtained.",
+          "enum": [
+            "INVALID",
+            "USE_PATH",
+            "USE_SDS"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -52856,6 +55052,19 @@
           "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
           "type": "string"
         },
+        "peerExternalGateway": {
+          "description": "URL of the peer side external VPN gateway to which this VPN tunnel is connected. Provided by the client when the VPN tunnel is created. This field is exclusive with the field peerGcpGateway.",
+          "type": "string"
+        },
+        "peerExternalGatewayInterface": {
+          "description": "The interface ID of the external VPN gateway to which this VPN tunnel is connected. Provided by the client when the VPN tunnel is created.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "peerGcpGateway": {
+          "description": "URL of the peer side HA GCP VPN gateway to which this VPN tunnel is connected. Provided by the client when the VPN tunnel is created. This field can be used when creating highly available VPN from VPC network to VPC network, the field is exclusive with the field peerExternalGateway. If provided, the VPN tunnel will automatically use the same vpnGatewayInterface ID in the peer GCP VPN gateway.",
+          "type": "string"
+        },
         "peerIp": {
           "description": "IP address of the peer VPN gateway. Only IPv4 is supported.",
           "type": "string"
@@ -53300,7 +55509,7 @@
           "description": "Specifies changes to request and response headers that need to take effect for the selected backendService.\nheaderAction specified here take effect before headerAction in the enclosing HttpRouteRule, PathMatcher and UrlMap."
         },
         "weight": {
-          "description": "Specifies the fraction of traffic sent to backendService. The sum of all weights specified in weightedBackendServices within HttpRouteAction must equal 100.\nThe selection of a backend service is determined only for new traffic. Once a user's request has been directed to a backendService, subsequent requests will be sent to the same backendService as determined by the BackendService's session affinity policy.",
+          "description": "Specifies the fraction of traffic sent to backendService, computed as weight / (sum of all weightedBackendService weights in routeAction) .\nThe selection of a backend service is determined only for new traffic. Once a user's request has been directed to a backendService, subsequent requests will be sent to the same backendService as determined by the BackendService's session affinity policy.\nThe value must be between 0 and 1000",
           "format": "uint32",
           "type": "integer"
         }

@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190204",
+  "revision": "20190213",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -469,20 +469,6 @@
             "The alert report is very useful."
           ],
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AppMakerSqlSetupNotification": {
-      "description": "Alerts from App Maker to notify admins to set up default SQL instance.",
-      "id": "AppMakerSqlSetupNotification",
-      "properties": {
-        "requestInfo": {
-          "description": "List of applications with requests for default SQL set up.",
-          "items": {
-            "$ref": "RequestInfo"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -854,29 +840,6 @@
             "$ref": "GmailMessageInfo"
           },
           "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "RequestInfo": {
-      "description": "Requests for one application that needs default SQL setup.",
-      "id": "RequestInfo",
-      "properties": {
-        "appDeveloperEmail": {
-          "description": "List of app developers who triggered notifications for above\napplication.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        },
-        "appName": {
-          "description": "Required. The application that requires the SQL setup.",
-          "type": "string"
-        },
-        "numberOfRequests": {
-          "description": "Required. Number of requests sent for this application to set up default\nSQL instance.",
-          "format": "int64",
-          "type": "string"
         }
       },
       "type": "object"

@@ -279,6 +279,11 @@ func (s *GooglePrivacyDlpV2Action) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2ActivateJobTriggerRequest: Request message for
+// ActivateJobTrigger.
+type GooglePrivacyDlpV2ActivateJobTriggerRequest struct {
+}
+
 // GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails: Result of a risk
 // analysis operation request.
 type GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails struct {
@@ -1010,6 +1015,9 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	//   rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs,
 	// wml,
 	//   xml, xsl, xsd, yml, yaml.
+	//   "IMAGE" - Included file extensions:
+	//   bmp, gif, jpg, jpeg, jpe, png.
+	// bytes_limit_per_file has no effect on image files.
 	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// FilesLimitPercent: Limits the number of files to scan to this
@@ -13193,6 +13201,147 @@ func (c *ProjectsInspectTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2InspectTemplate"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.jobTriggers.activate":
+
+type ProjectsJobTriggersActivateCall struct {
+	s                                           *Service
+	name                                        string
+	googleprivacydlpv2activatejobtriggerrequest *GooglePrivacyDlpV2ActivateJobTriggerRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Activate: Activate a job trigger. Causes the immediate execute of a
+// trigger
+// instead of waiting on the trigger event to occur.
+func (r *ProjectsJobTriggersService) Activate(name string, googleprivacydlpv2activatejobtriggerrequest *GooglePrivacyDlpV2ActivateJobTriggerRequest) *ProjectsJobTriggersActivateCall {
+	c := &ProjectsJobTriggersActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2activatejobtriggerrequest = googleprivacydlpv2activatejobtriggerrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsJobTriggersActivateCall) Fields(s ...googleapi.Field) *ProjectsJobTriggersActivateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsJobTriggersActivateCall) Context(ctx context.Context) *ProjectsJobTriggersActivateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsJobTriggersActivateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsJobTriggersActivateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2activatejobtriggerrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:activate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.jobTriggers.activate" call.
+// Exactly one of *GooglePrivacyDlpV2DlpJob or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePrivacyDlpV2DlpJob.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsJobTriggersActivateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2DlpJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GooglePrivacyDlpV2DlpJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Activate a job trigger. Causes the immediate execute of a trigger\ninstead of waiting on the trigger event to occur.",
+	//   "flatPath": "v2/projects/{projectsId}/jobTriggers/{jobTriggersId}:activate",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.jobTriggers.activate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the trigger to activate, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/jobTriggers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:activate",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2ActivateJobTriggerRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2DlpJob"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

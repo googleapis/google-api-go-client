@@ -2314,7 +2314,7 @@ type GetIamPolicyRequest struct {
 // HttpRule, each specifying the mapping of an RPC method
 // to one or more HTTP REST API methods.
 type Http struct {
-	// FullyDecodeReservedExpansion: When set to true, URL path parmeters
+	// FullyDecodeReservedExpansion: When set to true, URL path parameters
 	// will be fully URI-decoded except in
 	// cases of single segment matches in reserved expansion, where "%2F"
 	// will be
@@ -7202,8 +7202,9 @@ func (c *ServicesListCall) ConsumerId(consumerId string) *ServicesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested size of
-// the next page of data.
+// PageSize sets the optional parameter "pageSize": The max number of
+// items to include in the response list. Page size is 50
+// if not specified. Maximum value is 100.
 func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7331,7 +7332,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Requested size of the next page of data.",
+	//       "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8161,7 +8162,8 @@ func (r *ServicesConfigsService) List(serviceName string) *ServicesConfigsListCa
 }
 
 // PageSize sets the optional parameter "pageSize": The max number of
-// items to include in the response list.
+// items to include in the response list. Page size is 50
+// if not specified. Maximum value is 100.
 func (c *ServicesConfigsListCall) PageSize(pageSize int64) *ServicesConfigsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8281,7 +8283,7 @@ func (c *ServicesConfigsListCall) Do(opts ...googleapi.CallOption) (*ListService
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The max number of items to include in the response list.",
+	//       "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -9280,7 +9282,8 @@ func (c *ServicesRolloutsListCall) Filter(filter string) *ServicesRolloutsListCa
 }
 
 // PageSize sets the optional parameter "pageSize": The max number of
-// items to include in the response list.
+// items to include in the response list. Page size is 50
+// if not specified. Maximum value is 100.
 func (c *ServicesRolloutsListCall) PageSize(pageSize int64) *ServicesRolloutsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9405,7 +9408,7 @@ func (c *ServicesRolloutsListCall) Do(opts ...googleapi.CallOption) (*ListServic
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The max number of items to include in the response list.",
+	//       "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

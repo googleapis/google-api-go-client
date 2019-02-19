@@ -964,7 +964,7 @@
         "datasources": {
           "methods": {
             "create": {
-              "description": "Creates data source.",
+              "description": "Creates a datasource.",
               "flatPath": "v1/settings/datasources",
               "httpMethod": "POST",
               "id": "cloudsearch.settings.datasources.create",
@@ -984,7 +984,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes a data source.",
+              "description": "Deletes a datasource.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "DELETE",
               "id": "cloudsearch.settings.datasources.delete",
@@ -998,7 +998,7 @@
                   "type": "boolean"
                 },
                 "name": {
-                  "description": "Name of the data source.\nFormat: datasources/{source_id}.",
+                  "description": "Name of the datasource.\nFormat: datasources/{source_id}.",
                   "location": "path",
                   "pattern": "^datasources/[^/]+$",
                   "required": true,
@@ -1016,7 +1016,7 @@
               ]
             },
             "get": {
-              "description": "Gets a data source.",
+              "description": "Gets a datasource.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.datasources.get",
@@ -1030,7 +1030,7 @@
                   "type": "boolean"
                 },
                 "name": {
-                  "description": "Name of the data source resource.\nFormat: datasources/{source_id}.",
+                  "description": "Name of the datasource resource.\nFormat: datasources/{source_id}.",
                   "location": "path",
                   "pattern": "^datasources/[^/]+$",
                   "required": true,
@@ -1048,7 +1048,7 @@
               ]
             },
             "list": {
-              "description": "Lists data sources.",
+              "description": "Lists datasources.",
               "flatPath": "v1/settings/datasources",
               "httpMethod": "GET",
               "id": "cloudsearch.settings.datasources.list",
@@ -1060,7 +1060,7 @@
                   "type": "boolean"
                 },
                 "pageSize": {
-                  "description": "Maximum number of data sources to fetch in a request.\nThe max value is 100.\n\u003cbr /\u003eThe default value is 10",
+                  "description": "Maximum number of datasources to fetch in a request.\nThe max value is 100.\n\u003cbr /\u003eThe default value is 10",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -1082,7 +1082,7 @@
               ]
             },
             "update": {
-              "description": "Updates a data source.",
+              "description": "Updates a datasource.",
               "flatPath": "v1/settings/datasources/{datasourcesId}",
               "httpMethod": "PUT",
               "id": "cloudsearch.settings.datasources.update",
@@ -1091,7 +1091,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the data source resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a data source.",
+                  "description": "Name of the datasource resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a datasource.",
                   "location": "path",
                   "pattern": "^datasources/[^/]+$",
                   "required": true,
@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190205",
+  "revision": "20190212",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1510,11 +1510,11 @@
       "type": "object"
     },
     "DataSource": {
-      "description": "Data source is a logical namespace for items to be indexed.\nAll items must belong to a data source.  This is the prerequisite before\nitems can be indexed into Cloud Search.",
+      "description": "Datasource is a logical namespace for items to be indexed.\nAll items must belong to a datasource.  This is the prerequisite before\nitems can be indexed into Cloud Search.",
       "id": "DataSource",
       "properties": {
         "disableModifications": {
-          "description": "If true, Indexing API rejects any modification calls to this data source\nsuch as create, update, and delete.\nDisabling this does not imply halting process of previously\naccepted data.",
+          "description": "If true, Indexing API rejects any modification calls to this datasource\nsuch as create, update, and delete.\nDisabling this does not imply halting process of previously\naccepted data.",
           "type": "boolean"
         },
         "disableServing": {
@@ -1522,7 +1522,7 @@
           "type": "boolean"
         },
         "displayName": {
-          "description": "Required. Display name of the data source\nThe maximum length is 300 characters.",
+          "description": "Required. Display name of the datasource\nThe maximum length is 300 characters.",
           "type": "string"
         },
         "indexingServiceAccounts": {
@@ -1533,14 +1533,14 @@
           "type": "array"
         },
         "itemsVisibility": {
-          "description": "This restricts visibility to items at a data source level to the\ndisjunction of users/groups mentioned with the field. Note that, this\ndoes not ensure access to a specific item, as users need to have ACL\npermissions on the contained items. This ensures a high level access\non the entire data source, and that the individual items are not shared\noutside this visibility.",
+          "description": "This field restricts visibility to items at the datasource level. Items\nwithin the datasource are restricted to the union of users and groups\nincluded in this field. Note that, this does not ensure access to a\nspecific item, as users need to have ACL permissions on the contained\nitems. This ensures a high level access on the entire datasource, and\nthat the individual items are not shared outside this visibility.",
           "items": {
             "$ref": "GSuitePrincipal"
           },
           "type": "array"
         },
         "name": {
-          "description": "Name of the data source resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a data source.",
+          "description": "Name of the datasource resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a datasource.",
           "type": "string"
         },
         "operationIds": {
@@ -1551,7 +1551,7 @@
           "type": "array"
         },
         "shortName": {
-          "description": "A short name or alias for the source.  This value will be used to match the\n'source' operator. For example, if the short name is *\u0026lt;value\u0026gt;* then\nqueries like *source:\u0026lt;value\u0026gt;* will only return results for this\nsource. The value must be unique across all data sources. The value must\nonly contain alphanumeric characters (a-zA-Z0-9). The value cannot start\nwith 'google' and cannot be one of the following: mail, gmail, docs, drive,\ngroups, sites, calendar, hangouts, gplus, keep, people, teams.\nIts maximum length is 32 characters.",
+          "description": "A short name or alias for the source.  This value will be used to match the\n'source' operator. For example, if the short name is *\u0026lt;value\u0026gt;* then\nqueries like *source:\u0026lt;value\u0026gt;* will only return results for this\nsource. The value must be unique across all datasources. The value must\nonly contain alphanumeric characters (a-zA-Z0-9). The value cannot start\nwith 'google' and cannot be one of the following: mail, gmail, docs, drive,\ngroups, sites, calendar, hangouts, gplus, keep, people, teams.\nIts maximum length is 32 characters.",
           "type": "string"
         }
       },
@@ -2066,12 +2066,12 @@
       "id": "FreshnessOptions",
       "properties": {
         "freshnessDuration": {
-          "description": "The duration (in seconds) after which an object should be considered\nstale.",
+          "description": "The duration after which an object should be considered\nstale. The default value is 180 days (in seconds).",
           "format": "google-duration",
           "type": "string"
         },
         "freshnessProperty": {
-          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nproperty definitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.",
+          "description": "This property indicates the freshness level of the object in the index.\nIf set, this property must be a top-level property within the\nproperty definitions\nand it must be a\ntimestamp type\nor\ndate type.\nOtherwise, the Indexing API uses\nupdateTime\nas the freshness indicator.\nThe maximum length is 256 characters.\n\nWhen a property is used to calculate fresheness, the value defaults\nto 2 years from the current time.",
           "type": "string"
         }
       },
@@ -2117,6 +2117,158 @@
             "$ref": "DataSourceIndexStats"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GmailActionRestrict": {
+      "description": "Gmail Action restricts (i.e. read/replied/snoozed).",
+      "id": "GmailActionRestrict",
+      "properties": {
+        "type": {
+          "enum": [
+            "UNSPECIFIED",
+            "UNREAD",
+            "READ",
+            "REPLIED_TO",
+            "MUTED"
+          ],
+          "enumDescriptions": [
+            "",
+            "is:unread",
+            "is:read",
+            "label:^io_re",
+            "label:mute"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GmailAttachmentRestrict": {
+      "description": "Gmail Attachment restricts (i.e. has:attachment, has:drive, filename:pdf).",
+      "id": "GmailAttachmentRestrict",
+      "properties": {
+        "type": {
+          "enum": [
+            "UNSPECIFIED",
+            "HAS_ATTACHMENT",
+            "HAS_PHOTO",
+            "HAS_DRIVE",
+            "HAS_DOCUMENT",
+            "HAS_SPREADSHEET",
+            "HAS_PRESENTATION",
+            "HAS_YOUTUBE",
+            "HAS_PDF"
+          ],
+          "enumDescriptions": [
+            "",
+            "has:attachment",
+            "has photos (changes to filename:(jpg OR jpeg OR png)  when typed)",
+            "has:drive",
+            "has:document",
+            "has:spreadsheet",
+            "has:presentation",
+            "has:youtube",
+            "filename:pdf"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GmailFolderRestrict": {
+      "description": "Gmail Folder restricts (i.e. in Drafts/Sent/Chats/User Generated Labels).",
+      "id": "GmailFolderRestrict",
+      "properties": {
+        "type": {
+          "enum": [
+            "UNSPECIFIED",
+            "IN_SENT",
+            "IN_DRAFT",
+            "CHATS",
+            "IN_TRASH",
+            "USER_GENERATED_LABEL"
+          ],
+          "enumDescriptions": [
+            "",
+            "in:sent",
+            "in:draft",
+            "label:chats",
+            "in:trash",
+            "label:\u003cuser generated\u003e"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GmailIntelligentRestrict": {
+      "description": "Gmail Intelligent restricts (i.e. smartlabels, important).",
+      "id": "GmailIntelligentRestrict",
+      "properties": {
+        "type": {
+          "enum": [
+            "UNSPECIFIED",
+            "SOCIAL",
+            "UPDATES",
+            "FORUMS",
+            "PROMOTIONS",
+            "IMPORTANT",
+            "FLIGHT_RESERVATION",
+            "LODGING_RESERVATION",
+            "CAR_RESERVATION",
+            "BUS_RESERVATION"
+          ],
+          "enumDescriptions": [
+            "",
+            "category:social",
+            "category:updates",
+            "category:forums",
+            "category:promotions",
+            "is:important",
+            "label:^cob_sm_flightreservation",
+            "label:^cob_sm_lodgingreservation",
+            "label:^cob_sm_rentalcarreservation",
+            "label:^cob_sm_busreservation"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GmailTimeRestrict": {
+      "description": "Gmail Time restricts (i.e. received today, this week).",
+      "id": "GmailTimeRestrict",
+      "properties": {
+        "type": {
+          "enum": [
+            "UNSPECIFIED",
+            "FROM_THIS_WEEK",
+            "OLDER_THAN_ONE_YEAR",
+            "FROM_TODAY",
+            "FROM_YESTERDAY",
+            "FROM_THIS_MONTH",
+            "FROM_CERTAIN_MONTH",
+            "OLDER_THAN_TODAY",
+            "OLDER_THAN_YESTERDAY",
+            "OLDER_THAN_A_WEEK",
+            "OLDER_THAN_A_MONTH"
+          ],
+          "enumDescriptions": [
+            "",
+            "newer_than:7d",
+            "older_than:1y",
+            "newer_than:1d",
+            "newer_than:2d older_than:1d",
+            "newer_than:30d",
+            "This will read as something like \"From November\" and will have operator\nbefore:X after:Y",
+            "older_than:1d",
+            "older_than:2d",
+            "older_than:7d",
+            "older_than:30d"
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -2741,7 +2893,7 @@
           "description": "The named source for the result, such as Gmail."
         },
         "updateTime": {
-          "description": "The last modified date for the object in the search result.",
+          "description": "The last modified date for the object in the search result. If not\nset in the item, the value returned here is empty. When\n`updateTime` is used for calculating freshness and is not set, this\nvalue defaults to 2 years from the current time.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -3476,20 +3628,38 @@
       "type": "object"
     },
     "RestrictItem": {
-      "description": "Information relevant only to a restrict entry.\nNextId: 7",
+      "description": "Information relevant only to a restrict entry.\nNextId: 12",
       "id": "RestrictItem",
       "properties": {
         "driveFollowUpRestrict": {
-          "$ref": "DriveFollowUpRestrict"
+          "$ref": "DriveFollowUpRestrict",
+          "description": "LINT.ThenChange(//depot/google3/java/com/google/apps/search/quality/itemsuggest/utils/SubtypeRerankingUtils.java)"
         },
         "driveLocationRestrict": {
           "$ref": "DriveLocationRestrict"
         },
         "driveMimeTypeRestrict": {
-          "$ref": "DriveMimeTypeRestrict"
+          "$ref": "DriveMimeTypeRestrict",
+          "description": "LINT.IfChange\nDrive Types."
         },
         "driveTimeSpanRestrict": {
           "$ref": "DriveTimeSpanRestrict"
+        },
+        "gmailActionRestrict": {
+          "$ref": "GmailActionRestrict"
+        },
+        "gmailAttachmentRestrict": {
+          "$ref": "GmailAttachmentRestrict"
+        },
+        "gmailFolderRestrict": {
+          "$ref": "GmailFolderRestrict",
+          "description": "Gmail Types."
+        },
+        "gmailIntelligentRestrict": {
+          "$ref": "GmailIntelligentRestrict"
+        },
+        "gmailTimeRestrict": {
+          "$ref": "GmailTimeRestrict"
         },
         "searchOperator": {
           "description": "The search restrict (e.g. \"after:2017-09-11 before:2017-09-12\").",
@@ -3722,7 +3892,7 @@
       "id": "SearchQualityMetadata",
       "properties": {
         "quality": {
-          "description": "An indication of the quality of the item, used to influence search quality.\nValue should be between 0.0 (lowest quality) and 1.0 (highest quality).",
+          "description": "An indication of the quality of the item, used to influence search quality.\nValue should be between 0.0 (lowest quality) and 1.0 (highest quality). The\ndefault value is 0.0.",
           "format": "double",
           "type": "number"
         }

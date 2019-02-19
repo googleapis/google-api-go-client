@@ -617,6 +617,10 @@ type DataPoint struct {
 	// OriginDataSourceId: If the data point is contained in a dataset for a
 	// derived data source, this field will be populated with the data
 	// source stream ID that created the data point originally.
+	//
+	// WARNING: do not rely on this field for anything other than debugging.
+	// The value of this field, if it is set at all, is an implementation
+	// detail and is not guaranteed to remain consistent.
 	OriginDataSourceId string `json:"originDataSourceId,omitempty"`
 
 	// RawTimestampNanos: The raw timestamp from the original SensorEvent.

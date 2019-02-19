@@ -406,6 +406,11 @@
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
                       "type": "string"
+                    },
+                    "versionInfo": {
+                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                      "location": "query",
+                      "type": "string"
                     }
                   },
                   "path": "v1/{+parent}/transferConfigs",
@@ -540,6 +545,11 @@
                     "updateMask": {
                       "description": "Required list of fields to be updated in this request.",
                       "format": "google-fieldmask",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "versionInfo": {
+                      "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                       "location": "query",
                       "type": "string"
                     }
@@ -786,6 +796,11 @@
                   "pattern": "^projects/[^/]+$",
                   "required": true,
                   "type": "string"
+                },
+                "versionInfo": {
+                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
+                  "location": "query",
+                  "type": "string"
                 }
               },
               "path": "v1/{+parent}/transferConfigs",
@@ -920,6 +935,11 @@
                 "updateMask": {
                   "description": "Required list of fields to be updated in this request.",
                   "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                },
+                "versionInfo": {
+                  "description": "Optional version info. If users want to find a very recent access token,\nthat is, immediately after approving access, users have to set the\nversion_info claim in the token request. To obtain the version_info, users\nmust use the “none+gsession” response type. which be return a\nversion_info back in the authorization response which be be put in a JWT\nclaim in the token request.",
                   "location": "query",
                   "type": "string"
                 }
@@ -1145,7 +1165,7 @@
       }
     }
   },
-  "revision": "20190119",
+  "revision": "20190212",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {

@@ -786,7 +786,7 @@
       }
     }
   },
-  "revision": "20181022",
+  "revision": "20190211",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AcknowledgeTaskRequest": {
@@ -1465,7 +1465,7 @@
       "id": "TaskStatus",
       "properties": {
         "attemptDispatchCount": {
-          "description": "Output only. The number of attempts dispatched.\n\nThis count includes tasks which have been dispatched but haven't\nreceived a response.",
+          "description": "Output only. The number of attempts dispatched.\n\nThis count includes attempts which have been dispatched but haven't\nreceived a response.",
           "format": "int32",
           "type": "integer"
         },

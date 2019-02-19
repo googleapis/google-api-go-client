@@ -438,6 +438,11 @@ type CommuteFilter struct {
 	//   "TRANSIT" - Commute time is calculated based on public transit
 	// including bus, metro,
 	// subway, etc.
+	//   "WALKING" - Commute time is calculated based on walking time.
+	//   "CYCLING" - Commute time is calculated based on biking time.
+	//   "TRANSIT_ACCESSIBLE" - Commute time is calculated based on public
+	// transit that is wheelchair
+	// accessible.
 	CommuteMethod string `json:"commuteMethod,omitempty"`
 
 	// DepartureTime: Optional.

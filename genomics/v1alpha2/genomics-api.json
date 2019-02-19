@@ -188,7 +188,7 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "The maximum number of results to return. If unspecified, defaults to\n256. The maximum value is 2048.",
+              "description": "The maximum number of results to return. The maximum value is 256.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20181017",
+  "revision": "20190216",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {

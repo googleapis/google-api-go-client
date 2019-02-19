@@ -1183,6 +1183,34 @@
         },
         "jobTriggers": {
           "methods": {
+            "activate": {
+              "description": "Activate a job trigger. Causes the immediate execute of a trigger\ninstead of waiting on the trigger event to occur.",
+              "flatPath": "v2/projects/{projectsId}/jobTriggers/{jobTriggersId}:activate",
+              "httpMethod": "POST",
+              "id": "dlp.projects.jobTriggers.activate",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "Resource name of the trigger to activate, for example\n`projects/dlp-test-project/jobTriggers/53234423`.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/jobTriggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v2/{+name}:activate",
+              "request": {
+                "$ref": "GooglePrivacyDlpV2ActivateJobTriggerRequest"
+              },
+              "response": {
+                "$ref": "GooglePrivacyDlpV2DlpJob"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "create": {
               "description": "Creates a job trigger to run DLP actions such as scanning storage for\nsensitive information on a set schedule.\nSee https://cloud.google.com/dlp/docs/creating-job-triggers to learn more.",
               "flatPath": "v2/projects/{projectsId}/jobTriggers",
@@ -1491,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190205",
+  "revision": "20190212",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1515,6 +1543,12 @@
           "description": "Save resulting findings in a provided location."
         }
       },
+      "type": "object"
+    },
+    "GooglePrivacyDlpV2ActivateJobTriggerRequest": {
+      "description": "Request message for ActivateJobTrigger.",
+      "id": "GooglePrivacyDlpV2ActivateJobTriggerRequest",
+      "properties": {},
       "type": "object"
     },
     "GooglePrivacyDlpV2AnalyzeDataSourceRiskDetails": {
@@ -1918,13 +1952,15 @@
           "enumDescriptions": [
             "Includes all files.",
             "Includes all file extensions not covered by text file types.",
-            "Included file extensions:\n  asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh, hpp,\n  hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json,\n  ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw,\n  rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs, wml,\n  xml, xsl, xsd, yml, yaml."
+            "Included file extensions:\n  asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh, hpp,\n  hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json,\n  ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw,\n  rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs, wml,\n  xml, xsl, xsd, yml, yaml.",
+            "Included file extensions:\n  bmp, gif, jpg, jpeg, jpe, png.\nbytes_limit_per_file has no effect on image files."
           ],
           "items": {
             "enum": [
               "FILE_TYPE_UNSPECIFIED",
               "BINARY_FILE",
-              "TEXT_FILE"
+              "TEXT_FILE",
+              "IMAGE"
             ],
             "type": "string"
           },

@@ -2794,7 +2794,7 @@ type DeliveryTime struct {
 
 	// MaxTransitTimeInDays: Maximum number of business days that is spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
-	// Must be greater than or equal to minTransitTimeInDays. Required.
+	// Must be greater than or equal to minTransitTimeInDays.
 	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
 
 	// MinHandlingTimeInDays: Minimum number of business days spent before
@@ -2804,8 +2804,15 @@ type DeliveryTime struct {
 
 	// MinTransitTimeInDays: Minimum number of business days that is spent
 	// in transit. 0 means same day delivery, 1 means next day delivery.
-	// Required.
+	// Either {min,max}transitTimeInDays or transitTimeTable must be set,
+	// but not both.
 	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
+
+	// TransitTimeTable: Transit time table, number of business days spent
+	// in transit based on row and column dimensions. Either
+	// {min,max}transitTimeInDays or transitTimeTable can be set, but not
+	// both.
+	TransitTimeTable *TransitTable `json:"transitTimeTable,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CutoffTime") to
 	// unconditionally include in API requests. By default, fields with
@@ -2967,7 +2974,7 @@ func (s *GmbAccountsGmbAccount) MarshalJSON() ([]byte, error) {
 
 // Headers: A non-empty list of row or column headers for a table.
 // Exactly one of prices, weights, numItems, postalCodeGroupNames, or
-// locations must be set.
+// location must be set.
 type Headers struct {
 	// Locations: A list of location ID sets. Must be non-empty. Can only be
 	// set if all other fields are not set.
@@ -3544,32 +3551,19 @@ type InvoiceSummary struct {
 	// additional charges.
 	AdditionalChargeSummaries []*InvoiceSummaryAdditionalChargeSummary `json:"additionalChargeSummaries,omitempty"`
 
-	// CustomerBalance: [required] Customer balance on this invoice. A
-	// negative amount means the customer is paying, a positive one means
-	// the customer is receiving money. Note: the sum of merchant_balance,
-	// customer_balance and google_balance must always be zero.
-	//
-	// Furthermore the absolute value of this amount is expected to be equal
-	// to the sum of product amount and additional charges, minus
-	// promotions.
+	// CustomerBalance: Deprecated.
 	CustomerBalance *Amount `json:"customerBalance,omitempty"`
 
-	// GoogleBalance: [required] Google balance on this invoice. A negative
-	// amount means Google is paying, a positive one means Google is
-	// receiving money. Note: the sum of merchant_balance, customer_balance
-	// and google_balance must always be zero.
+	// GoogleBalance: Deprecated.
 	GoogleBalance *Amount `json:"googleBalance,omitempty"`
 
-	// MerchantBalance: [required] Merchant balance on this invoice. A
-	// negative amount means the merchant is paying, a positive one means
-	// the merchant is receiving money. Note: the sum of merchant_balance,
-	// customer_balance and google_balance must always be zero.
+	// MerchantBalance: Deprecated.
 	MerchantBalance *Amount `json:"merchantBalance,omitempty"`
 
 	// ProductTotal: [required] Total price for the product.
 	ProductTotal *Amount `json:"productTotal,omitempty"`
 
-	// PromotionSummaries: Summary for each promotion.
+	// PromotionSummaries: Deprecated.
 	PromotionSummaries []*Promotion `json:"promotionSummaries,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -10349,11 +10343,17 @@ func (s *RefundReason) MarshalJSON() ([]byte, error) {
 type ReturnShipment struct {
 	CreationDate string `json:"creationDate,omitempty"`
 
+	DeliveryDate string `json:"deliveryDate,omitempty"`
+
 	ReturnMethodType string `json:"returnMethodType,omitempty"`
 
 	ShipmentId string `json:"shipmentId,omitempty"`
 
 	ShipmentTrackingInfos []*ShipmentTrackingInfo `json:"shipmentTrackingInfos,omitempty"`
+
+	ShippingDate string `json:"shippingDate,omitempty"`
+
+	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreationDate") to
 	// unconditionally include in API requests. By default, fields with
@@ -10932,10 +10932,13 @@ type TestOrder struct {
 	// here.
 	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
-	// ShippingCost: The total cost of shipping for all items.
+	// ShippingCost: The price of shipping for all items. Shipping tax is
+	// automatically calculated for MFL orders. For non-MFL orders, tax
+	// settings from Merchant Center are applied. Note that shipping is not
+	// taxed in certain states.
 	ShippingCost *Price `json:"shippingCost,omitempty"`
 
-	// ShippingCostTax: The tax for the total shipping cost.
+	// ShippingCostTax: Deprecated. Ignored if provided.
 	ShippingCostTax *Price `json:"shippingCostTax,omitempty"`
 
 	// ShippingOption: The requested shipping option.
@@ -11049,9 +11052,7 @@ type TestOrderLineItem struct {
 	// ShippingDetails: Details of the requested shipping for the line item.
 	ShippingDetails *OrderLineItemShippingDetails `json:"shippingDetails,omitempty"`
 
-	// UnitTax: Deprecated. Ignored if provided. Tax is automatically
-	// calculated for MFL orders. For non-MFL orders, tax settings from
-	// Merchant Center are applied.
+	// UnitTax: Deprecated. Ignored if provided.
 	UnitTax *Price `json:"unitTax,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Product") to
@@ -11186,12 +11187,111 @@ func (s *TestOrderPaymentMethod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type TransitTable struct {
+	// PostalCodeGroupNames: A list of postal group names. The last value
+	// can be "all other locations". Example: ["zone 1", "zone 2", "all
+	// other locations"]. The referred postal code groups must match the
+	// delivery country of the service.
+	PostalCodeGroupNames []string `json:"postalCodeGroupNames,omitempty"`
+
+	Rows []*TransitTableTransitTimeRow `json:"rows,omitempty"`
+
+	// TransitTimeLabels: A list of transit time labels. The last value can
+	// be "all other labels". Example: ["food", "electronics", "all other
+	// labels"].
+	TransitTimeLabels []string `json:"transitTimeLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PostalCodeGroupNames") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PostalCodeGroupNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTable) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TransitTableTransitTimeRow struct {
+	Values []*TransitTableTransitTimeRowTransitTimeValue `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTableTransitTimeRow) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTableTransitTimeRow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TransitTableTransitTimeRowTransitTimeValue struct {
+	// MaxTransitTimeInDays: Must be greater than or equal to
+	// minTransitTimeInDays.
+	MaxTransitTimeInDays int64 `json:"maxTransitTimeInDays,omitempty"`
+
+	// MinTransitTimeInDays: Transit time range (min-max) in business days.
+	// 0 means same day delivery, 1 means next day delivery.
+	MinTransitTimeInDays int64 `json:"minTransitTimeInDays,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MaxTransitTimeInDays") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxTransitTimeInDays") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TransitTableTransitTimeRowTransitTimeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitTableTransitTimeRowTransitTimeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type UnitInvoice struct {
 	// AdditionalCharges: Additional charges for a unit, e.g. shipping
 	// costs.
 	AdditionalCharges []*UnitInvoiceAdditionalCharge `json:"additionalCharges,omitempty"`
 
-	// Promotions: Promotions applied to a unit.
+	// Promotions: Deprecated.
 	Promotions []*Promotion `json:"promotions,omitempty"`
 
 	// UnitPricePretax: [required] Price of the unit, before applying taxes.
@@ -11228,8 +11328,7 @@ type UnitInvoiceAdditionalCharge struct {
 	// AdditionalChargeAmount: [required] Amount of the additional charge.
 	AdditionalChargeAmount *Amount `json:"additionalChargeAmount,omitempty"`
 
-	// AdditionalChargePromotions: Promotions applied to the additional
-	// charge.
+	// AdditionalChargePromotions: Deprecated.
 	AdditionalChargePromotions []*Promotion `json:"additionalChargePromotions,omitempty"`
 
 	// Type: [required] Type of the additional charge.

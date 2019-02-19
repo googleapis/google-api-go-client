@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190207",
+  "revision": "20190219",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -291,19 +291,19 @@
       "id": "AndroidDevice",
       "properties": {
         "androidModelId": {
-          "description": "Required. The id of the Android device to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The id of the Android device to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "androidVersionId": {
-          "description": "Required. The id of the Android OS version to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The id of the Android OS version to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "locale": {
-          "description": "Required. The locale the test device used for testing.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The locale the test device used for testing.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "orientation": {
-          "description": "Required. How the device is oriented during the test.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. How the device is oriented during the test.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         }
       },
@@ -405,28 +405,28 @@
       "id": "AndroidMatrix",
       "properties": {
         "androidModelIds": {
-          "description": "Required. The ids of the set of Android device to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The ids of the set of Android device to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "androidVersionIds": {
-          "description": "Required. The ids of the set of Android OS version to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The ids of the set of Android OS version to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "locales": {
-          "description": "Required. The set of locales the test device will enable for testing.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The set of locales the test device will enable for testing.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "orientations": {
-          "description": "Required. The set of orientations to test with.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The set of orientations to test with.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "items": {
             "type": "string"
           },
@@ -986,19 +986,19 @@
       "id": "IosDevice",
       "properties": {
         "iosModelId": {
-          "description": "Required. The id of the iOS device to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The id of the iOS device to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "iosVersionId": {
-          "description": "Required. The id of the iOS major software version to be used.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The id of the iOS major software version to be used.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "locale": {
-          "description": "Required. The locale the test device used for testing.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. The locale the test device used for testing.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         },
         "orientation": {
-          "description": "Required. How the device is oriented during the test.\nUse the EnvironmentDiscoveryService to get supported options.",
+          "description": "Required. How the device is oriented during the test.\nUse the TestEnvironmentDiscoveryService to get supported options.",
           "type": "string"
         }
       },
@@ -1182,7 +1182,7 @@
           "description": "Required. The .zip containing the .xctestrun file and the contents of the\nDerivedData/Build/Products directory.\nThe .xctestrun file in this zip is ignored if the xctestrun field is\nspecified."
         },
         "xcodeVersion": {
-          "description": "The Xcode version that should be used for the test.\nUse the EnvironmentDiscoveryService to get supported options.\nDefaults to the latest Xcode version Firebase Test Lab supports.",
+          "description": "The Xcode version that should be used for the test.\nUse the TestEnvironmentDiscoveryService to get supported options.\nDefaults to the latest Xcode version Firebase Test Lab supports.",
           "type": "string"
         },
         "xctestrun": {
@@ -1345,12 +1345,14 @@
           "enum": [
             "ACTION_TYPE_UNSPECIFIED",
             "SINGLE_CLICK",
-            "ENTER_TEXT"
+            "ENTER_TEXT",
+            "IGNORE"
           ],
           "enumDescriptions": [
             "DO NOT USE. For proto versioning only.",
             "Direct Robo to click on the specified element. No-op if specified element\nis not clickable.",
-            "Direct Robo to enter text on the specified element. No-op if specified\nelement is not enabled or does not allow text entry."
+            "Direct Robo to enter text on the specified element. No-op if specified\nelement is not enabled or does not allow text entry.",
+            "Direct Robo to ignore interactions with a specific element."
           ],
           "type": "string"
         },

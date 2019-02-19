@@ -223,7 +223,7 @@
       }
     }
   },
-  "revision": "20190206",
+  "revision": "20190217",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -259,21 +259,6 @@
         },
         "androidPackageName": {
           "description": "Android package name of the app.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AppPreview": {
-      "description": "Customizable parameters on the app preview page.\nThe text fields no longer need translation.",
-      "id": "AppPreview",
-      "properties": {
-        "openButtonText": {
-          "description": "Text that appears on the button to open up the app. Optional\nDefaults to \"Open\"",
-          "type": "string"
-        },
-        "savePositionText": {
-          "description": "Text that asks if user wants to save place in app. Optional.\nDefaults to \"Save my place in the app. A link will be copied to continue\nto this page\"",
           "type": "string"
         }
       },
@@ -482,10 +467,6 @@
         "androidInfo": {
           "$ref": "AndroidInfo",
           "description": "Android related information. See Android related parameters in the\n[documentation](https://firebase.google.com/docs/dynamic-links/create-manually)."
-        },
-        "appPreview": {
-          "$ref": "AppPreview",
-          "description": "Optional customizable parameters on the app preview page"
         },
         "desktopInfo": {
           "$ref": "DesktopInfo",

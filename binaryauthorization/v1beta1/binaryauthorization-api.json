@@ -481,7 +481,7 @@
       }
     }
   },
-  "revision": "20180813",
+  "revision": "20190215",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
@@ -492,11 +492,13 @@
           "description": "Required. The action when a pod creation is denied by the admission rule.",
           "enum": [
             "ENFORCEMENT_MODE_UNSPECIFIED",
-            "ENFORCED_BLOCK_AND_AUDIT_LOG"
+            "ENFORCED_BLOCK_AND_AUDIT_LOG",
+            "DRYRUN_AUDIT_LOG_ONLY"
           ],
           "enumDescriptions": [
-            "Mandatory.",
-            "Enforce the admission rule by blocking the pod creation."
+            "Do not use.",
+            "Enforce the admission rule by blocking the pod creation.",
+            "Dryrun mode: Audit logging only.  This will allow the pod creation as if\nthe admission request had specified break-glass."
           ],
           "type": "string"
         },
@@ -509,7 +511,7 @@
             "ALWAYS_DENY"
           ],
           "enumDescriptions": [
-            "Mandatory.",
+            "Do not use.",
             "This rule allows all all pod creations.",
             "This rule allows a pod creation if all the attestors listed in\n'require_attestations_by' have valid attestations for all of the\nimages in the pod spec.",
             "This rule denies all pod creations."

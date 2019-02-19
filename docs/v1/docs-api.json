@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190129",
+  "revision": "20190212",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -558,7 +558,7 @@
       "properties": {
         "range": {
           "$ref": "Range",
-          "description": "The range of content to delete.\n\nDeleting text that crosses a paragraph boundary may result in changes\nto paragraph styles, lists, positioned objects and bookmarks as the two\nparagraphs are merged.\n\nAttempting to delete certain ranges can result in an invalid document\nstructure in which case a 400 bad request error is returned.\n\nSome examples of invalid delete requests include:\n\n* Deleting one code unit of a surrogate pair.\n* Deleting the last newline character of a Body, Header,\n  Footer, Footnote, TableCell or TableOfContents.\n* Deleting the start or end of a Table,\n  TableOfContents or Equation without deleting the entire element.\n* Deleting the newline character before a\n  Table,\n  TableOfContents or\n  SectionBreak without deleting the\n  the element.\n* Deleting individual rows or cells of a table. Deleting the content within\n  a table cell is allowed."
+          "description": "The range of content to delete.\n\nDeleting text that crosses a paragraph boundary may result in changes\nto paragraph styles, lists, positioned objects and bookmarks as the two\nparagraphs are merged.\n\nAttempting to delete certain ranges can result in an invalid document\nstructure in which case a 400 bad request error is returned.\n\nSome examples of invalid delete requests include:\n\n* Deleting one code unit of a surrogate pair.\n* Deleting the last newline character of a Body, Header,\n  Footer, Footnote, TableCell or TableOfContents.\n* Deleting the start or end of a Table,\n  TableOfContents or Equation without deleting the entire element.\n* Deleting the newline character before a\n  Table,\n  TableOfContents or\n  SectionBreak without deleting the\n  element.\n* Deleting individual rows or cells of a table. Deleting the content within\n  a table cell is allowed."
         }
       },
       "type": "object"
@@ -1588,7 +1588,7 @@
       "type": "object"
     },
     "NamedRange": {
-      "description": "A collection of Ranges with the same named range\nID.\n\nNamed ranges allow developers to associate parts of a document with an\narbitrary user-defined label so their contents can be programmatically read\nor edited at a later time. A document can contain multiple named ranges with\nthe same name, but every named range has a unique ID.\n\nA named range is created with a single Range,\nand content inserted inside a named range generally expands that range.\nHowever, certain document changes can cause the range to be split into\nmultiple ranges.",
+      "description": "A collection of Ranges with the same named range\nID.\n\nNamed ranges allow developers to associate parts of a document with an\narbitrary user-defined label so their contents can be programmatically read\nor edited at a later time. A document can contain multiple named ranges with\nthe same name, but every named range has a unique ID.\n\nA named range is created with a single Range,\nand content inserted inside a named range generally expands that range.\nHowever, certain document changes can cause the range to be split into\nmultiple ranges.\n\nNamed ranges are not private. All applications and collaborators that have\naccess to the document can see its named ranges.",
       "id": "NamedRange",
       "properties": {
         "name": {
@@ -2007,7 +2007,7 @@
           "description": "A column break paragraph element."
         },
         "endIndex": {
-          "description": "The zero-base end index of this paragraph element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-base end index of this paragraph element, exclusive, in UTF-16\ncode units.",
           "format": "int32",
           "type": "integer"
         },
@@ -2032,7 +2032,7 @@
           "description": "A page break paragraph element."
         },
         "startIndex": {
-          "description": "The zero-based start index of this paragraph element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based start index of this paragraph element, in UTF-16 code units.",
           "format": "int32",
           "type": "integer"
         },
@@ -2405,7 +2405,7 @@
       "id": "Range",
       "properties": {
         "endIndex": {
-          "description": "The zero-based end index of this range, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nIn all current uses, an end index must be provided. This field is an\nInt32Value in order to accommodate future use cases with open-ended ranges.",
+          "description": "The zero-based end index of this range, exclusive, in UTF-16 code units.\n\nIn all current uses, an end index must be provided. This field is an\nInt32Value in order to accommodate future use cases with open-ended ranges.",
           "format": "int32",
           "type": "integer"
         },
@@ -2414,7 +2414,7 @@
           "type": "string"
         },
         "startIndex": {
-          "description": "The zero-based start index of this range, in Unicode code units of the\nUTF-16 encoding.\n\nIn all current uses, a start index must be provided. This field is an\nInt32Value in order to accommodate future use cases with open-ended ranges.",
+          "description": "The zero-based start index of this range, in UTF-16 code units.\n\nIn all current uses, a start index must be provided. This field is an\nInt32Value in order to accommodate future use cases with open-ended ranges.",
           "format": "int32",
           "type": "integer"
         }
@@ -2726,7 +2726,7 @@
       "id": "StructuralElement",
       "properties": {
         "endIndex": {
-          "description": "The zero-based end index of this structural element, exclusive, in Unicode\ncode units of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based end index of this structural element, exclusive, in UTF-16\ncode units.",
           "format": "int32",
           "type": "integer"
         },
@@ -2739,7 +2739,7 @@
           "description": "A section break type of structural element."
         },
         "startIndex": {
-          "description": "The zero-based start index of this structural element, in Unicode code\nunits of the UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based start index of this structural element, in UTF-16 code\nunits.",
           "format": "int32",
           "type": "integer"
         },
@@ -3000,12 +3000,12 @@
           "type": "array"
         },
         "endIndex": {
-          "description": "The zero-based end index of this cell, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based end index of this cell, exclusive, in UTF-16 code units.",
           "format": "int32",
           "type": "integer"
         },
         "startIndex": {
-          "description": "The zero-based start index of this cell, in Unicode code units of the\nUTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based start index of this cell, in UTF-16 code units.",
           "format": "int32",
           "type": "integer"
         },
@@ -3273,12 +3273,12 @@
       "id": "TableRow",
       "properties": {
         "endIndex": {
-          "description": "The zero-based end index of this row, exclusive, in Unicode code units of\nthe UTF-16 encoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based end index of this row, exclusive, in UTF-16 code units.",
           "format": "int32",
           "type": "integer"
         },
         "startIndex": {
-          "description": "The zero-based start index of this row, in Unicode code units of the UTF-16\nencoding.\n\nUnicode code units of the UTF-16 encoding means that surrogate pairs\nconsume two indexes. For example, the \"GRINNING FACE\" emoji would be\nrepresented as \"\\uD83D\\uDE00\" and would consume two indexes.",
+          "description": "The zero-based start index of this row, in UTF-16 code units.",
           "format": "int32",
           "type": "integer"
         },

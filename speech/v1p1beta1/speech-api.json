@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20190201",
+  "revision": "20190215",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -672,6 +672,10 @@
         "config": {
           "$ref": "RecognitionConfig",
           "description": "*Required* Provides information to the recognizer that specifies how to\nprocess the request."
+        },
+        "name": {
+          "description": "*Optional* The name of the model to use for recognition.",
+          "type": "string"
         }
       },
       "type": "object"

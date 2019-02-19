@@ -772,6 +772,13 @@ type DestinationTableProperties struct {
 	// friendly name is provided, the job will fail.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
+	// Labels: [Optional] The labels associated with this table. You can use
+	// these to organize and group your tables. This will only be used if
+	// the destination table is newly created. If the table already exists
+	// and labels are different than the current labels are provided, the
+	// job will fail.
+	Labels map[string]string `json:"labels,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -2472,6 +2479,11 @@ type JobStatistics4 struct {
 	// configuration. These values will be in the same order as the URIs
 	// specified in the 'destinationUris' field.
 	DestinationUriFileCounts googleapi.Int64s `json:"destinationUriFileCounts,omitempty"`
+
+	// InputBytes: [Output-only] Number of user bytes extracted into the
+	// result. This is the byte count as computed by BigQuery for billing
+	// purposes.
+	InputBytes int64 `json:"inputBytes,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DestinationUriFileCounts") to unconditionally include in API

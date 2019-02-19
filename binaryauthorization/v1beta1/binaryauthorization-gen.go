@@ -128,15 +128,18 @@ type AdmissionRule struct {
 	// by the admission rule.
 	//
 	// Possible values:
-	//   "ENFORCEMENT_MODE_UNSPECIFIED" - Mandatory.
+	//   "ENFORCEMENT_MODE_UNSPECIFIED" - Do not use.
 	//   "ENFORCED_BLOCK_AND_AUDIT_LOG" - Enforce the admission rule by
 	// blocking the pod creation.
+	//   "DRYRUN_AUDIT_LOG_ONLY" - Dryrun mode: Audit logging only.  This
+	// will allow the pod creation as if
+	// the admission request had specified break-glass.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 
 	// EvaluationMode: Required. How this admission rule will be evaluated.
 	//
 	// Possible values:
-	//   "EVALUATION_MODE_UNSPECIFIED" - Mandatory.
+	//   "EVALUATION_MODE_UNSPECIFIED" - Do not use.
 	//   "ALWAYS_ALLOW" - This rule allows all all pod creations.
 	//   "REQUIRE_ATTESTATION" - This rule allows a pod creation if all the
 	// attestors listed in

@@ -521,14 +521,14 @@ func (s *CustomerIndexStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Data source is a logical namespace for items to be
+// DataSource: Datasource is a logical namespace for items to be
 // indexed.
-// All items must belong to a data source.  This is the prerequisite
+// All items must belong to a datasource.  This is the prerequisite
 // before
 // items can be indexed into Cloud Search.
 type DataSource struct {
 	// DisableModifications: If true, Indexing API rejects any modification
-	// calls to this data source
+	// calls to this datasource
 	// such as create, update, and delete.
 	// Disabling this does not imply halting process of previously
 	// accepted data.
@@ -537,7 +537,7 @@ type DataSource struct {
 	// DisableServing: Disable serving any search or assist results.
 	DisableServing bool `json:"disableServing,omitempty"`
 
-	// DisplayName: Required. Display name of the data source
+	// DisplayName: Required. Display name of the datasource
 	// The maximum length is 300 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
@@ -545,22 +545,22 @@ type DataSource struct {
 	// access.
 	IndexingServiceAccounts []string `json:"indexingServiceAccounts,omitempty"`
 
-	// ItemsVisibility: This restricts visibility to items at a data source
-	// level to the
-	// disjunction of users/groups mentioned with the field. Note that,
-	// this
-	// does not ensure access to a specific item, as users need to have
-	// ACL
-	// permissions on the contained items. This ensures a high level
-	// access
-	// on the entire data source, and that the individual items are not
-	// shared
-	// outside this visibility.
+	// ItemsVisibility: This field restricts visibility to items at the
+	// datasource level. Items
+	// within the datasource are restricted to the union of users and
+	// groups
+	// included in this field. Note that, this does not ensure access to
+	// a
+	// specific item, as users need to have ACL permissions on the
+	// contained
+	// items. This ensures a high level access on the entire datasource,
+	// and
+	// that the individual items are not shared outside this visibility.
 	ItemsVisibility []*GSuitePrincipal `json:"itemsVisibility,omitempty"`
 
-	// Name: Name of the data source resource.
+	// Name: Name of the datasource resource.
 	// Format: datasources/{source_id}.
-	// <br />The name is ignored when creating a data source.
+	// <br />The name is ignored when creating a datasource.
 	Name string `json:"name,omitempty"`
 
 	// OperationIds: IDs of the Long Running Operations (LROs) currently
@@ -573,7 +573,7 @@ type DataSource struct {
 	// then
 	// queries like *source:&lt;value&gt;* will only return results for
 	// this
-	// source. The value must be unique across all data sources. The value
+	// source. The value must be unique across all datasources. The value
 	// must
 	// only contain alphanumeric characters (a-zA-Z0-9). The value cannot
 	// start
@@ -1772,9 +1772,9 @@ func (s *FilterOptions) MarshalJSON() ([]byte, error) {
 // query
 // are considered higher quality and ranked accordingly.
 type FreshnessOptions struct {
-	// FreshnessDuration: The duration (in seconds) after which an object
-	// should be considered
-	// stale.
+	// FreshnessDuration: The duration after which an object should be
+	// considered
+	// stale. The default value is 180 days (in seconds).
 	FreshnessDuration string `json:"freshnessDuration,omitempty"`
 
 	// FreshnessProperty: This property indicates the freshness level of the
@@ -1790,6 +1790,10 @@ type FreshnessOptions struct {
 	// updateTime
 	// as the freshness indicator.
 	// The maximum length is 256 characters.
+	//
+	// When a property is used to calculate fresheness, the value
+	// defaults
+	// to 2 years from the current time.
 	FreshnessProperty string `json:"freshnessProperty,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FreshnessDuration")
@@ -1911,6 +1915,195 @@ type GetDataSourceIndexStatsResponse struct {
 
 func (s *GetDataSourceIndexStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetDataSourceIndexStatsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GmailActionRestrict: Gmail Action restricts (i.e.
+// read/replied/snoozed).
+type GmailActionRestrict struct {
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "UNREAD" - is:unread
+	//   "READ" - is:read
+	//   "REPLIED_TO" - label:^io_re
+	//   "MUTED" - label:mute
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailActionRestrict) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailActionRestrict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GmailAttachmentRestrict: Gmail Attachment restricts (i.e.
+// has:attachment, has:drive, filename:pdf).
+type GmailAttachmentRestrict struct {
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "HAS_ATTACHMENT" - has:attachment
+	//   "HAS_PHOTO" - has photos (changes to filename:(jpg OR jpeg OR png)
+	// when typed)
+	//   "HAS_DRIVE" - has:drive
+	//   "HAS_DOCUMENT" - has:document
+	//   "HAS_SPREADSHEET" - has:spreadsheet
+	//   "HAS_PRESENTATION" - has:presentation
+	//   "HAS_YOUTUBE" - has:youtube
+	//   "HAS_PDF" - filename:pdf
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailAttachmentRestrict) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailAttachmentRestrict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GmailFolderRestrict: Gmail Folder restricts (i.e. in
+// Drafts/Sent/Chats/User Generated Labels).
+type GmailFolderRestrict struct {
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "IN_SENT" - in:sent
+	//   "IN_DRAFT" - in:draft
+	//   "CHATS" - label:chats
+	//   "IN_TRASH" - in:trash
+	//   "USER_GENERATED_LABEL" - label:<user generated>
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailFolderRestrict) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailFolderRestrict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GmailIntelligentRestrict: Gmail Intelligent restricts (i.e.
+// smartlabels, important).
+type GmailIntelligentRestrict struct {
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "SOCIAL" - category:social
+	//   "UPDATES" - category:updates
+	//   "FORUMS" - category:forums
+	//   "PROMOTIONS" - category:promotions
+	//   "IMPORTANT" - is:important
+	//   "FLIGHT_RESERVATION" - label:^cob_sm_flightreservation
+	//   "LODGING_RESERVATION" - label:^cob_sm_lodgingreservation
+	//   "CAR_RESERVATION" - label:^cob_sm_rentalcarreservation
+	//   "BUS_RESERVATION" - label:^cob_sm_busreservation
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailIntelligentRestrict) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailIntelligentRestrict
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GmailTimeRestrict: Gmail Time restricts (i.e. received today, this
+// week).
+type GmailTimeRestrict struct {
+	// Possible values:
+	//   "UNSPECIFIED"
+	//   "FROM_THIS_WEEK" - newer_than:7d
+	//   "OLDER_THAN_ONE_YEAR" - older_than:1y
+	//   "FROM_TODAY" - newer_than:1d
+	//   "FROM_YESTERDAY" - newer_than:2d older_than:1d
+	//   "FROM_THIS_MONTH" - newer_than:30d
+	//   "FROM_CERTAIN_MONTH" - This will read as something like "From
+	// November" and will have operator
+	// before:X after:Y
+	//   "OLDER_THAN_TODAY" - older_than:1d
+	//   "OLDER_THAN_YESTERDAY" - older_than:2d
+	//   "OLDER_THAN_A_WEEK" - older_than:7d
+	//   "OLDER_THAN_A_MONTH" - older_than:30d
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GmailTimeRestrict) MarshalJSON() ([]byte, error) {
+	type NoMethod GmailTimeRestrict
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3081,7 +3274,11 @@ type Metadata struct {
 	Source *Source `json:"source,omitempty"`
 
 	// UpdateTime: The last modified date for the object in the search
-	// result.
+	// result. If not
+	// set in the item, the value returned here is empty. When
+	// `updateTime` is used for calculating freshness and is not set,
+	// this
+	// value defaults to 2 years from the current time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -4476,15 +4673,31 @@ func (s *ResponseDebugInfo) MarshalJSON() ([]byte, error) {
 }
 
 // RestrictItem: Information relevant only to a restrict entry.
-// NextId: 7
+// NextId: 12
 type RestrictItem struct {
+	// DriveFollowUpRestrict:
+	// LINT.ThenChange(//depot/google3/java/com/google/apps/search/quality/it
+	// emsuggest/utils/SubtypeRerankingUtils.java)
 	DriveFollowUpRestrict *DriveFollowUpRestrict `json:"driveFollowUpRestrict,omitempty"`
 
 	DriveLocationRestrict *DriveLocationRestrict `json:"driveLocationRestrict,omitempty"`
 
+	// DriveMimeTypeRestrict: LINT.IfChange
+	// Drive Types.
 	DriveMimeTypeRestrict *DriveMimeTypeRestrict `json:"driveMimeTypeRestrict,omitempty"`
 
 	DriveTimeSpanRestrict *DriveTimeSpanRestrict `json:"driveTimeSpanRestrict,omitempty"`
+
+	GmailActionRestrict *GmailActionRestrict `json:"gmailActionRestrict,omitempty"`
+
+	GmailAttachmentRestrict *GmailAttachmentRestrict `json:"gmailAttachmentRestrict,omitempty"`
+
+	// GmailFolderRestrict: Gmail Types.
+	GmailFolderRestrict *GmailFolderRestrict `json:"gmailFolderRestrict,omitempty"`
+
+	GmailIntelligentRestrict *GmailIntelligentRestrict `json:"gmailIntelligentRestrict,omitempty"`
+
+	GmailTimeRestrict *GmailTimeRestrict `json:"gmailTimeRestrict,omitempty"`
 
 	// SearchOperator: The search restrict (e.g. "after:2017-09-11
 	// before:2017-09-12").
@@ -4933,7 +5146,8 @@ type SearchQualityMetadata struct {
 	// Quality: An indication of the quality of the item, used to influence
 	// search quality.
 	// Value should be between 0.0 (lowest quality) and 1.0 (highest
-	// quality).
+	// quality). The
+	// default value is 0.0.
 	Quality float64 `json:"quality,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Quality") to
@@ -10143,7 +10357,7 @@ type SettingsDatasourcesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates data source.
+// Create: Creates a datasource.
 func (r *SettingsDatasourcesService) Create(datasource *DataSource) *SettingsDatasourcesCreateCall {
 	c := &SettingsDatasourcesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datasource = datasource
@@ -10237,7 +10451,7 @@ func (c *SettingsDatasourcesCreateCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates data source.",
+	//   "description": "Creates a datasource.",
 	//   "flatPath": "v1/settings/datasources",
 	//   "httpMethod": "POST",
 	//   "id": "cloudsearch.settings.datasources.create",
@@ -10269,7 +10483,7 @@ type SettingsDatasourcesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a data source.
+// Delete: Deletes a datasource.
 func (r *SettingsDatasourcesService) Delete(name string) *SettingsDatasourcesDeleteCall {
 	c := &SettingsDatasourcesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10370,7 +10584,7 @@ func (c *SettingsDatasourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a data source.",
+	//   "description": "Deletes a datasource.",
 	//   "flatPath": "v1/settings/datasources/{datasourcesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudsearch.settings.datasources.delete",
@@ -10384,7 +10598,7 @@ func (c *SettingsDatasourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Opera
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the data source.\nFormat: datasources/{source_id}.",
+	//       "description": "Name of the datasource.\nFormat: datasources/{source_id}.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -10415,7 +10629,7 @@ type SettingsDatasourcesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a data source.
+// Get: Gets a datasource.
 func (r *SettingsDatasourcesService) Get(name string) *SettingsDatasourcesGetCall {
 	c := &SettingsDatasourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10529,7 +10743,7 @@ func (c *SettingsDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a data source.",
+	//   "description": "Gets a datasource.",
 	//   "flatPath": "v1/settings/datasources/{datasourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.settings.datasources.get",
@@ -10543,7 +10757,7 @@ func (c *SettingsDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Name of the data source resource.\nFormat: datasources/{source_id}.",
+	//       "description": "Name of the datasource resource.\nFormat: datasources/{source_id}.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,
@@ -10573,7 +10787,7 @@ type SettingsDatasourcesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists data sources.
+// List: Lists datasources.
 func (r *SettingsDatasourcesService) List() *SettingsDatasourcesListCall {
 	c := &SettingsDatasourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -10589,7 +10803,7 @@ func (c *SettingsDatasourcesListCall) DebugOptionsEnableDebugging(debugOptionsEn
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// data sources to fetch in a request.
+// datasources to fetch in a request.
 // The max value is 100.
 // <br />The default value is 10
 func (c *SettingsDatasourcesListCall) PageSize(pageSize int64) *SettingsDatasourcesListCall {
@@ -10699,7 +10913,7 @@ func (c *SettingsDatasourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists data sources.",
+	//   "description": "Lists datasources.",
 	//   "flatPath": "v1/settings/datasources",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.settings.datasources.list",
@@ -10711,7 +10925,7 @@ func (c *SettingsDatasourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//       "type": "boolean"
 	//     },
 	//     "pageSize": {
-	//       "description": "Maximum number of data sources to fetch in a request.\nThe max value is 100.\n\u003cbr /\u003eThe default value is 10",
+	//       "description": "Maximum number of datasources to fetch in a request.\nThe max value is 100.\n\u003cbr /\u003eThe default value is 10",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -10767,7 +10981,7 @@ type SettingsDatasourcesUpdateCall struct {
 	header_                 http.Header
 }
 
-// Update: Updates a data source.
+// Update: Updates a datasource.
 func (r *SettingsDatasourcesService) Update(name string, updatedatasourcerequest *UpdateDataSourceRequest) *SettingsDatasourcesUpdateCall {
 	c := &SettingsDatasourcesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10865,7 +11079,7 @@ func (c *SettingsDatasourcesUpdateCall) Do(opts ...googleapi.CallOption) (*Opera
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a data source.",
+	//   "description": "Updates a datasource.",
 	//   "flatPath": "v1/settings/datasources/{datasourcesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "cloudsearch.settings.datasources.update",
@@ -10874,7 +11088,7 @@ func (c *SettingsDatasourcesUpdateCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the data source resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a data source.",
+	//       "description": "Name of the datasource resource.\nFormat: datasources/{source_id}.\n\u003cbr /\u003eThe name is ignored when creating a datasource.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+$",
 	//       "required": true,

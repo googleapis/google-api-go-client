@@ -1571,7 +1571,7 @@
    "name": "docs",
    "version": "v1",
    "title": "Google Docs API",
-   "description": "An API for creating and editing Google Docs documents.",
+   "description": "Reads and writes Google Docs documents.",
    "discoveryRestUrl": "https://docs.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -1979,6 +1979,21 @@
    "title": "Cloud Healthcare API",
    "description": "",
    "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/healthcare",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "healthcare:v1alpha2",
+   "name": "healthcare",
+   "version": "v1alpha2",
+   "title": "Cloud Healthcare API",
+   "description": "",
+   "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

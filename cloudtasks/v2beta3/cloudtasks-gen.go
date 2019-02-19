@@ -1785,7 +1785,7 @@ type Task struct {
 
 	// DispatchCount: Output only. The number of attempts dispatched.
 	//
-	// This count includes tasks which have been dispatched but
+	// This count includes attempts which have been dispatched but
 	// haven't
 	// received a response.
 	DispatchCount int64 `json:"dispatchCount,omitempty"`

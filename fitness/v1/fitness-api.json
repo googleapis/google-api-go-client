@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/4Mc3ZMTkywIuovUzWRCiWwTqc-E\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/g9puVF3XrAXG-em5ovotDUu2Cuo\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -802,7 +802,7 @@
       }
     }
   },
-  "revision": "20190109",
+  "revision": "20190218",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {
@@ -1100,7 +1100,7 @@
           "type": "string"
         },
         "originDataSourceId": {
-          "description": "If the data point is contained in a dataset for a derived data source, this field will be populated with the data source stream ID that created the data point originally.",
+          "description": "If the data point is contained in a dataset for a derived data source, this field will be populated with the data source stream ID that created the data point originally.\n\nWARNING: do not rely on this field for anything other than debugging. The value of this field, if it is set at all, is an implementation detail and is not guaranteed to remain consistent.",
           "type": "string"
         },
         "rawTimestampNanos": {

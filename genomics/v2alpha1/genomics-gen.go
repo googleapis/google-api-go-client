@@ -333,9 +333,11 @@ type Action struct {
 	// and cannot start with a hypen.
 	Name string `json:"name,omitempty"`
 
-	// PidNamespace: The PID namespace to run the action inside. If
-	// unspecified, a separate
-	// isolated namespace is used.
+	// PidNamespace: An optional identifier for a PID namespace to run the
+	// action inside.
+	// Multiple actions should use the same string to share a namespace.
+	// If
+	// unspecified, a separate isolated namespace is used.
 	PidNamespace string `json:"pidNamespace,omitempty"`
 
 	// PortMappings: A map of containers to host port mappings for this
@@ -2619,8 +2621,7 @@ func (c *ProjectsOperationsListCall) Filter(filter string) *ProjectsOperationsLi
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If unspecified, defaults to
-// 256. The maximum value is 2048.
+// of results to return. The maximum value is 256.
 func (c *ProjectsOperationsListCall) PageSize(pageSize int64) *ProjectsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2752,7 +2753,7 @@ func (c *ProjectsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If unspecified, defaults to\n256. The maximum value is 2048.",
+	//       "description": "The maximum number of results to return. The maximum value is 256.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

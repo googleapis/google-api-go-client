@@ -414,7 +414,7 @@
               "type": "string"
             },
             "pageSize": {
-              "description": "Requested size of the next page of data.",
+              "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -611,7 +611,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The max number of items to include in the response list.",
+                  "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -843,7 +843,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The max number of items to include in the response list.",
+                  "description": "The max number of items to include in the response list. Page size is 50\nif not specified. Maximum value is 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -876,7 +876,7 @@
       }
     }
   },
-  "revision": "20190112",
+  "revision": "20190208",
   "rootUrl": "https://servicemanagement.googleapis.com/",
   "schemas": {
     "Advice": {
@@ -1848,7 +1848,7 @@
       "id": "Http",
       "properties": {
         "fullyDecodeReservedExpansion": {
-          "description": "When set to true, URL path parmeters will be fully URI-decoded except in\ncases of single segment matches in reserved expansion, where \"%2F\" will be\nleft encoded.\n\nThe default behavior is to not decode RFC 6570 reserved characters in multi\nsegment matches.",
+          "description": "When set to true, URL path parameters will be fully URI-decoded except in\ncases of single segment matches in reserved expansion, where \"%2F\" will be\nleft encoded.\n\nThe default behavior is to not decode RFC 6570 reserved characters in multi\nsegment matches.",
           "type": "boolean"
         },
         "rules": {

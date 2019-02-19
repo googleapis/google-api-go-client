@@ -1693,7 +1693,7 @@ func (s *GoogleCloudServicenetworkingV1betaSubnetwork) MarshalJSON() ([]byte, er
 // HttpRule, each specifying the mapping of an RPC method
 // to one or more HTTP REST API methods.
 type Http struct {
-	// FullyDecodeReservedExpansion: When set to true, URL path parmeters
+	// FullyDecodeReservedExpansion: When set to true, URL path parameters
 	// will be fully URI-decoded except in
 	// cases of single segment matches in reserved expansion, where "%2F"
 	// will be

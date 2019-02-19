@@ -210,7 +210,7 @@
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "The maximum number of results to return. If unspecified, defaults to\n256. The maximum value is 2048.",
+                  "description": "The maximum number of results to return. The maximum value is 256.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -267,7 +267,7 @@
       }
     }
   },
-  "revision": "20181127",
+  "revision": "20190216",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "Accelerator": {
@@ -362,7 +362,7 @@
           "type": "string"
         },
         "pidNamespace": {
-          "description": "The PID namespace to run the action inside. If unspecified, a separate\nisolated namespace is used.",
+          "description": "An optional identifier for a PID namespace to run the action inside.\nMultiple actions should use the same string to share a namespace.  If\nunspecified, a separate isolated namespace is used.",
           "type": "string"
         },
         "portMappings": {

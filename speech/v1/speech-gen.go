@@ -443,6 +443,20 @@ func (s *RecognitionAudio) MarshalJSON() ([]byte, error) {
 // specifies how to process the
 // request.
 type RecognitionConfig struct {
+	// AudioChannelCount: *Optional* The number of channels in the input
+	// audio data.
+	// ONLY set this for MULTI-CHANNEL recognition.
+	// Valid values for LINEAR16 and FLAC are `1`-`8`.
+	// Valid values for OGG_OPUS are '1'-'254'.
+	// Valid value for MULAW, AMR, AMR_WB and SPEEX_WITH_HEADER_BYTE is only
+	// `1`.
+	// If `0` or omitted, defaults to one channel (mono).
+	// Note: We only recognize the first channel by default.
+	// To perform independent recognition on each channel
+	// set
+	// `enable_separate_recognition_per_channel` to 'true'.
+	AudioChannelCount int64 `json:"audioChannelCount,omitempty"`
+
 	// EnableAutomaticPunctuation: *Optional* If 'true', adds punctuation to
 	// recognition result hypotheses.
 	// This feature is only available in select languages. Setting this
@@ -552,6 +566,9 @@ type RecognitionConfig struct {
 	// one. If omitted, will return a maximum of one.
 	MaxAlternatives int64 `json:"maxAlternatives,omitempty"`
 
+	// Metadata: *Optional* Metadata regarding this request.
+	Metadata *RecognitionMetadata `json:"metadata,omitempty"`
+
 	// Model: *Optional* Which model to select for the given request. Select
 	// the model
 	// best suited to your domain to get best results. If a model is
@@ -648,27 +665,150 @@ type RecognitionConfig struct {
 	// will receive an error.
 	UseEnhanced bool `json:"useEnhanced,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "EnableAutomaticPunctuation") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AudioChannelCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "EnableAutomaticPunctuation") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AudioChannelCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *RecognitionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RecognitionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecognitionMetadata: Description of audio data to be recognized.
+type RecognitionMetadata struct {
+	// AudioTopic: Description of the content. Eg. "Recordings of federal
+	// supreme court
+	// hearings from 2012".
+	AudioTopic string `json:"audioTopic,omitempty"`
+
+	// IndustryNaicsCodeOfAudio: The industry vertical to which this speech
+	// recognition request most
+	// closely applies. This is most indicative of the topics contained
+	// in the audio.  Use the 6-digit NAICS code to identify the
+	// industry
+	// vertical - see https://www.naics.com/search/.
+	IndustryNaicsCodeOfAudio int64 `json:"industryNaicsCodeOfAudio,omitempty"`
+
+	// InteractionType: The use case most closely describing the audio
+	// content to be recognized.
+	//
+	// Possible values:
+	//   "INTERACTION_TYPE_UNSPECIFIED" - Use case is either unknown or is
+	// something other than one of the other
+	// values below.
+	//   "DISCUSSION" - Multiple people in a conversation or discussion. For
+	// example in a
+	// meeting with two or more people actively participating. Typically
+	// all the primary people speaking would be in the same room (if
+	// not,
+	// see PHONE_CALL)
+	//   "PRESENTATION" - One or more persons lecturing or presenting to
+	// others, mostly
+	// uninterrupted.
+	//   "PHONE_CALL" - A phone-call or video-conference in which two or
+	// more people, who are
+	// not in the same room, are actively participating.
+	//   "VOICEMAIL" - A recorded message intended for another person to
+	// listen to.
+	//   "PROFESSIONALLY_PRODUCED" - Professionally produced audio (eg. TV
+	// Show, Podcast).
+	//   "VOICE_SEARCH" - Transcribe spoken questions and queries into text.
+	//   "VOICE_COMMAND" - Transcribe voice commands, such as for
+	// controlling a device.
+	//   "DICTATION" - Transcribe speech to text to create a written
+	// document, such as a
+	// text-message, email or report.
+	InteractionType string `json:"interactionType,omitempty"`
+
+	// MicrophoneDistance: The audio type that most closely describes the
+	// audio being recognized.
+	//
+	// Possible values:
+	//   "MICROPHONE_DISTANCE_UNSPECIFIED" - Audio type is not known.
+	//   "NEARFIELD" - The audio was captured from a closely placed
+	// microphone. Eg. phone,
+	// dictaphone, or handheld microphone. Generally if there speaker is
+	// within
+	// 1 meter of the microphone.
+	//   "MIDFIELD" - The speaker if within 3 meters of the microphone.
+	//   "FARFIELD" - The speaker is more than 3 meters away from the
+	// microphone.
+	MicrophoneDistance string `json:"microphoneDistance,omitempty"`
+
+	// ObfuscatedId: Obfuscated (privacy-protected) ID of the user, to
+	// identify number of
+	// unique users using the service.
+	ObfuscatedId int64 `json:"obfuscatedId,omitempty,string"`
+
+	// OriginalMediaType: The original media the speech was recorded on.
+	//
+	// Possible values:
+	//   "ORIGINAL_MEDIA_TYPE_UNSPECIFIED" - Unknown original media type.
+	//   "AUDIO" - The speech data is an audio recording.
+	//   "VIDEO" - The speech data originally recorded on a video.
+	OriginalMediaType string `json:"originalMediaType,omitempty"`
+
+	// OriginalMimeType: Mime type of the original audio file.  For example
+	// `audio/m4a`,
+	// `audio/x-alaw-basic`, `audio/mp3`, `audio/3gpp`.
+	// A list of possible audio mime types is maintained
+	// at
+	// http://www.iana.org/assignments/media-types/media-types.xhtml#audio
+	OriginalMimeType string `json:"originalMimeType,omitempty"`
+
+	// RecordingDeviceName: The device used to make the recording.  Examples
+	// 'Nexus 5X' or
+	// 'Polycom SoundStation IP 6000' or 'POTS' or 'VoIP' or
+	// 'Cardioid Microphone'.
+	RecordingDeviceName string `json:"recordingDeviceName,omitempty"`
+
+	// RecordingDeviceType: The type of device the speech was recorded with.
+	//
+	// Possible values:
+	//   "RECORDING_DEVICE_TYPE_UNSPECIFIED" - The recording device is
+	// unknown.
+	//   "SMARTPHONE" - Speech was recorded on a smartphone.
+	//   "PC" - Speech was recorded using a personal computer or tablet.
+	//   "PHONE_LINE" - Speech was recorded over a phone line.
+	//   "VEHICLE" - Speech was recorded in a vehicle.
+	//   "OTHER_OUTDOOR_DEVICE" - Speech was recorded outdoors.
+	//   "OTHER_INDOOR_DEVICE" - Speech was recorded indoors.
+	RecordingDeviceType string `json:"recordingDeviceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioTopic") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioTopic") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecognitionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RecognitionMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

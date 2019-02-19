@@ -1894,7 +1894,7 @@ func (meth *Method) generateCode() {
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
 	if meth.supportsMediaUpload() {
-		pn("gensupport.SetGetBody(req, getBody)")
+		pn("req.GetBody = getBody")
 	}
 
 	// Replace param values after NewRequest to avoid reencoding them.

@@ -251,7 +251,7 @@ func (c *AccountsCustomAppsCreateCall) doRequest(alt string) (*http.Response, er
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	googleapi.Expand(req.URL, map[string]string{
 		"account": strconv.FormatInt(c.account, 10),
 	})

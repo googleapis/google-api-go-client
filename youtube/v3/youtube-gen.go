@@ -10692,7 +10692,7 @@ func (c *CaptionsInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11168,7 +11168,7 @@ func (c *CaptionsUpdateCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -11447,7 +11447,7 @@ func (c *ChannelBannersInsertCall) doRequest(alt string) (*http.Response, error)
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -21581,7 +21581,7 @@ func (c *ThumbnailsSetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -22499,7 +22499,7 @@ func (c *VideosInsertCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
@@ -23541,7 +23541,7 @@ func (c *WatermarksSetCall) doRequest(alt string) (*http.Response, error) {
 		return nil, err
 	}
 	req.Header = reqHeaders
-	gensupport.SetGetBody(req, getBody)
+	req.GetBody = getBody
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 

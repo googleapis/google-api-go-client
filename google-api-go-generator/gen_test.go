@@ -17,10 +17,12 @@ package main
 import (
 	"bytes"
 	"flag"
+	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 )
 
 var updateGolden = flag.Bool("update_golden", false, "If true, causes TestAPIs to update golden files")
@@ -73,6 +75,7 @@ func TestAPIs(t *testing.T) {
 			t.Error(err)
 			continue
 		}
+		want = bytes.Replace(want, []byte("Copyright YEAR"), []byte(fmt.Sprintf("Copyright %d", time.Now().Year())), -1)
 		if !bytes.Equal(want, clean) {
 			tf, _ := ioutil.TempFile("", "api-"+name+"-got-json.")
 			tf.Write(clean)

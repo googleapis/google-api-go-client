@@ -1249,7 +1249,7 @@
       }
     }
   },
-  "revision": "20190106",
+  "revision": "20190207",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "AppProfile": {
@@ -1428,7 +1428,7 @@
       "id": "ClusterState",
       "properties": {
         "replicationState": {
-          "description": "(`OutputOnly`)\nThe state of replication for the table in this cluster.",
+          "description": "Output only.\nThe state of replication for the table in this cluster.",
           "enum": [
             "STATE_NOT_KNOWN",
             "INITIALIZING",
@@ -2046,7 +2046,7 @@
           "additionalProperties": {
             "$ref": "ClusterState"
           },
-          "description": "(`OutputOnly`)\nMap from cluster ID to per-cluster table state.\nIf it could not be determined whether or not the table has data in a\nparticular cluster (for example, if its zone is unavailable), then\nthere will be an entry for the cluster with UNKNOWN `replication_status`.\nViews: `REPLICATION_VIEW`, `FULL`",
+          "description": "Output only.\nMap from cluster ID to per-cluster table state.\nIf it could not be determined whether or not the table has data in a\nparticular cluster (for example, if its zone is unavailable), then\nthere will be an entry for the cluster with UNKNOWN `replication_status`.\nViews: `REPLICATION_VIEW`, `FULL`",
           "type": "object"
         },
         "columnFamilies": {
@@ -2057,7 +2057,7 @@
           "type": "object"
         },
         "granularity": {
-          "description": "(`CreationOnly`)\nThe granularity (i.e. `MILLIS`) at which timestamps are stored in\nthis table. Timestamps not matching the granularity will be rejected.\nIf unspecified at creation time, the value will be set to `MILLIS`.\nViews: `SCHEMA_VIEW`, `FULL`",
+          "description": "(`CreationOnly`)\nThe granularity (i.e. `MILLIS`) at which timestamps are stored in\nthis table. Timestamps not matching the granularity will be rejected.\nIf unspecified at creation time, the value will be set to `MILLIS`.\nViews: `SCHEMA_VIEW`, `FULL`.",
           "enum": [
             "TIMESTAMP_GRANULARITY_UNSPECIFIED",
             "MILLIS"
@@ -2069,7 +2069,7 @@
           "type": "string"
         },
         "name": {
-          "description": "(`OutputOnly`)\nThe unique name of the table. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/_a-zA-Z0-9*`.\nViews: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`",
+          "description": "Output only.\nThe unique name of the table. Values are of the form\n`projects/\u003cproject\u003e/instances/\u003cinstance\u003e/tables/_a-zA-Z0-9*`.\nViews: `NAME_ONLY`, `SCHEMA_VIEW`, `REPLICATION_VIEW`, `FULL`",
           "type": "string"
         }
       },

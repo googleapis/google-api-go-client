@@ -13,7 +13,8 @@
   "batchPath": "batch",
   "description": "Transfers data from external data sources to a Google Cloud Storage bucket or between Google Cloud Storage buckets.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/storage/transfer",
+  "documentationLink": "https://cloud.google.com/storage-transfer/docs",
+  "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
     "x32": "http://www.google.com/images/icons/product/search-32.gif"
@@ -419,7 +420,7 @@
       }
     }
   },
-  "revision": "20190204",
+  "revision": "20190219",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {

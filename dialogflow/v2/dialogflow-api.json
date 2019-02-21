@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190215",
+  "revision": "20190219",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1315,7 +1315,7 @@
           "type": "string"
         },
         "classificationThreshold": {
-          "description": "Optional. To filter out false positive results and still get variety in\nmatched natural language inputs for your agent, you can tune the machine\nlearning classification threshold. If the returned score value is less than\nthe threshold value, then a fallback intent is be triggered or, if there\nare no fallback intents defined, no intent will be triggered. The score\nvalues range from 0.0 (completely uncertain) to 1.0 (completely certain).\nIf set to 0.0, the default of 0.3 is used.",
+          "description": "Optional. To filter out false positive results and still get variety in\nmatched natural language inputs for your agent, you can tune the machine\nlearning classification threshold. If the returned score value is less than\nthe threshold value, then a fallback intent will be triggered or, if there\nare no fallback intents defined, no intent will be triggered. The score\nvalues range from 0.0 (completely uncertain) to 1.0 (completely certain).\nIf set to 0.0, the default of 0.3 is used.",
           "format": "float",
           "type": "number"
         },
@@ -2408,7 +2408,7 @@
           "type": "string"
         },
         "parts": {
-          "description": "Required. The collection of training phrase parts (can be annotated).\nFields: `entity_type`, `alias` and `user_defined` should be populated\nonly for the annotated parts of the training phrase.",
+          "description": "Required. The ordered list of training phrase parts.\nThe parts are concatenated in order to form the training phrase.\n\nNote: The API does not automatically annotate training phrases like the\nDialogflow Console does.\n\nNote: Do not forget to include whitespace at part boundaries,\nso the training phrase is well formatted when the parts are concatenated.\n\nIf the training phrase does not need to be annotated with parameters,\nyou just need a single part with only the Part.text field set.\n\nIf you want to annotate the training phrase, you must create multiple\nparts, where the fields of each part are populated in one of two ways:\n\n-   `Part.text` is set to a part of the phrase that has no parameters.\n-   `Part.text` is set to a part of the phrase that you want to annotate,\n    and the `entity_type`, `alias`, and `user_defined` fields are all\n    set.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2IntentTrainingPhrasePart"
           },
@@ -2441,19 +2441,19 @@
       "id": "GoogleCloudDialogflowV2IntentTrainingPhrasePart",
       "properties": {
         "alias": {
-          "description": "Optional. The parameter name for the value extracted from the\nannotated part of the example.",
+          "description": "Optional. The parameter name for the value extracted from the\nannotated part of the example.\nThis field is required for annotated parts of the training phrase.",
           "type": "string"
         },
         "entityType": {
-          "description": "Optional. The entity type name prefixed with `@`. This field is\nrequired for the annotated part of the text and applies only to\nexamples.",
+          "description": "Optional. The entity type name prefixed with `@`.\nThis field is required for annotated parts of the training phrase.",
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text for this part.",
           "type": "string"
         },
         "userDefined": {
-          "description": "Optional. Indicates whether the text was manually annotated by the\ndeveloper.",
+          "description": "Optional. Indicates whether the text was manually annotated.\nThis field is set to true when the Dialogflow Console is used to\nmanually annotate the part. When creating an annotated part with the\nAPI, you must set this to true.",
           "type": "boolean"
         }
       },
@@ -3662,7 +3662,7 @@
           "type": "string"
         },
         "parts": {
-          "description": "Required. The collection of training phrase parts (can be annotated).\nFields: `entity_type`, `alias` and `user_defined` should be populated\nonly for the annotated parts of the training phrase.",
+          "description": "Required. The ordered list of training phrase parts.\nThe parts are concatenated in order to form the training phrase.\n\nNote: The API does not automatically annotate training phrases like the\nDialogflow Console does.\n\nNote: Do not forget to include whitespace at part boundaries,\nso the training phrase is well formatted when the parts are concatenated.\n\nIf the training phrase does not need to be annotated with parameters,\nyou just need a single part with only the Part.text field set.\n\nIf you want to annotate the training phrase, you must create multiple\nparts, where the fields of each part are populated in one of two ways:\n\n-   `Part.text` is set to a part of the phrase that has no parameters.\n-   `Part.text` is set to a part of the phrase that you want to annotate,\n    and the `entity_type`, `alias`, and `user_defined` fields are all\n    set.",
           "items": {
             "$ref": "GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart"
           },
@@ -3695,19 +3695,19 @@
       "id": "GoogleCloudDialogflowV2beta1IntentTrainingPhrasePart",
       "properties": {
         "alias": {
-          "description": "Optional. The parameter name for the value extracted from the\nannotated part of the example.",
+          "description": "Optional. The parameter name for the value extracted from the\nannotated part of the example.\nThis field is required for annotated parts of the training phrase.",
           "type": "string"
         },
         "entityType": {
-          "description": "Optional. The entity type name prefixed with `@`. This field is\nrequired for the annotated part of the text and applies only to\nexamples.",
+          "description": "Optional. The entity type name prefixed with `@`.\nThis field is required for annotated parts of the training phrase.",
           "type": "string"
         },
         "text": {
-          "description": "Required. The text corresponding to the example,\nif there are no annotations. For\nannotated examples, it is the text for one of the example's parts.",
+          "description": "Required. The text for this part.",
           "type": "string"
         },
         "userDefined": {
-          "description": "Optional. Indicates whether the text was manually annotated by the\ndeveloper.",
+          "description": "Optional. Indicates whether the text was manually annotated.\nThis field is set to true when the Dialogflow Console is used to\nmanually annotate the part. When creating an annotated part with the\nAPI, you must set this to true.",
           "type": "boolean"
         }
       },

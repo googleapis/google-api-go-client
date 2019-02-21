@@ -825,6 +825,34 @@
                 "https://www.googleapis.com/auth/cloud-platform"
               ]
             },
+            "undelete": {
+              "description": "Restores a deleted ServiceAccount.",
+              "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:undelete",
+              "httpMethod": "POST",
+              "id": "iam.projects.serviceAccounts.undelete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_UNIQUE_ID}'.\nUsing `-` as a wildcard for the `PROJECT_ID` will infer the project from\nthe account.",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:undelete",
+              "request": {
+                "$ref": "UndeleteServiceAccountRequest"
+              },
+              "response": {
+                "$ref": "UndeleteServiceAccountResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
             "update": {
               "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
               "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
@@ -1081,7 +1109,7 @@
       }
     }
   },
-  "revision": "20190201",
+  "revision": "20190215",
   "rootUrl": "https://iam.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -1269,7 +1297,7 @@
         },
         "serviceAccount": {
           "$ref": "ServiceAccount",
-          "description": "The ServiceAccount resource to create.\nCurrently, only the following values are user assignable:\n`display_name` ."
+          "description": "The ServiceAccount resource to\ncreate. Currently, only the following values are user assignable:\n`display_name` ."
         }
       },
       "type": "object"
@@ -1736,6 +1764,10 @@
       "description": "A service account in the Identity and Access Management API.\n\nTo create a service account, specify the `project_id` and the `account_id`\nfor the account.  The `account_id` is unique within the project, and is used\nto generate the service account email address and a stable\n`unique_id`.\n\nIf the account already exists, the account's resource name is returned\nin the format of projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}. The caller\ncan use the name in other methods to access the account.\n\nAll other methods can identify the service account using the format\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}`.\nUsing `-` as a wildcard for the `PROJECT_ID` will infer the project from\nthe account. The `ACCOUNT` value can be the `email` address or the\n`unique_id` of the service account.",
       "id": "ServiceAccount",
       "properties": {
+        "disabled": {
+          "description": "@OutputOnly A bool indicate if the service account is disabled.",
+          "type": "boolean"
+        },
         "displayName": {
           "description": "Optional. A user-specified name for the service account.\nMust be less than or equal to 100 UTF-8 bytes.",
           "type": "string"
@@ -1933,6 +1965,22 @@
           "description": "Used to perform a consistent read-modify-write.",
           "format": "byte",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UndeleteServiceAccountRequest": {
+      "description": "The service account undelete request.",
+      "id": "UndeleteServiceAccountRequest",
+      "properties": {},
+      "type": "object"
+    },
+    "UndeleteServiceAccountResponse": {
+      "id": "UndeleteServiceAccountResponse",
+      "properties": {
+        "restoredAccount": {
+          "$ref": "ServiceAccount",
+          "description": "Metadata for the restored service account."
         }
       },
       "type": "object"

@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190212",
+  "revision": "20190221",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -2313,6 +2313,16 @@
       },
       "type": "object"
     },
+    "IndexItemOptions": {
+      "id": "IndexItemOptions",
+      "properties": {
+        "allowUnknownGsuitePrincipals": {
+          "description": "Specifies if the index request should allow gsuite principals that do not\nexist or are deleted in the index request.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "IndexItemRequest": {
       "id": "IndexItemRequest",
       "properties": {
@@ -2323,6 +2333,9 @@
         "debugOptions": {
           "$ref": "DebugOptions",
           "description": "Common debug options."
+        },
+        "indexItemOptions": {
+          "$ref": "IndexItemOptions"
         },
         "item": {
           "$ref": "Item",
@@ -3284,7 +3297,7 @@
           "type": "boolean"
         },
         "isReturnable": {
-          "description": "Indicates that the property identifies data that should be returned in search\nresults via the Query API. If set to *true*, indicates that Query API\nusers can use matching property fields in results. However, storing fields\nrequires more space allocation and uses more bandwidth for search queries,\nwhich impacts performance over large datasets. Set to *true* here only if\nthe field is needed for search results. Cannot be true for properties\nwhose type is an object.",
+          "description": "Indicates that the property identifies data that should be returned in\nsearch results via the Query API. If set to *true*, indicates that Query\nAPI users can use matching property fields in results. However, storing\nfields requires more space allocation and uses more bandwidth for search\nqueries, which impacts performance over large datasets. Set to *true* here\nonly if the field is needed for search results. Cannot be true for\nproperties whose type is an object.",
           "type": "boolean"
         },
         "isSortable": {
@@ -3833,7 +3846,7 @@
           "type": "string"
         },
         "operationIds": {
-          "description": "IDs of the Long Running Operations (LROs) currently running for this schema.\nOutput only field.",
+          "description": "IDs of the Long Running Operations (LROs) currently running for this\nschema. Output only field.",
           "items": {
             "type": "string"
           },
@@ -4282,7 +4295,8 @@
       "id": "StructuredResult",
       "properties": {
         "person": {
-          "$ref": "Person"
+          "$ref": "Person",
+          "description": "Representation of a person"
         }
       },
       "type": "object"

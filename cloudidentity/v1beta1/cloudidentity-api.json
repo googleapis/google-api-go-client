@@ -218,7 +218,7 @@
           "parameterOrder": [],
           "parameters": {
             "pageSize": {
-              "description": "The max number of groups to return.\nGroupView | Default | Maximum\n--------- | ------- | -------\nBASIC     | 200     | 1000\nFULL      | 50      | 500",
+              "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -331,7 +331,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "Maximum number of Memberships to return.\n\nMembershipView | Default | Maximum\n-------------- | ------- | -------\nBASIC          | 200     | 1000\nFULL           | 50      | 500",
+                  "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20181217",
+  "revision": "20190219",
   "rootUrl": "https://cloudidentity.googleapis.com/",
   "schemas": {
     "EntityKey": {

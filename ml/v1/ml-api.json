@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190126",
+  "revision": "20190216",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1076,7 +1076,7 @@
           "type": "string"
         },
         "type": {
-          "description": "The available types of accelerators.",
+          "description": "The type of accelerator to use.",
           "enum": [
             "ACCELERATOR_TYPE_UNSPECIFIED",
             "NVIDIA_TESLA_K80",
@@ -1091,7 +1091,7 @@
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
-            "TPU V2"
+            "TPU v2."
           ],
           "type": "string"
         }
@@ -1103,7 +1103,7 @@
       "id": "GoogleCloudMlV1__AutoScaling",
       "properties": {
         "minNodes": {
-          "description": "Optional. The minimum number of nodes to allocate for this model. These\nnodes are always up, starting from the time the model is deployed.\nTherefore, the cost of operating this model will be at least\n`rate` * `min_nodes` * number of hours since last billing cycle,\nwhere `rate` is the cost per node-hour as documented in the\n[pricing guide](/ml-engine/docs/pricing),\neven if no predictions are performed. There is additional cost for each\nprediction performed.\n\nUnlike manual scaling, if the load gets too heavy for the nodes\nthat are up, the service will automatically add nodes to handle the\nincreased load as well as scale back as traffic drops, always maintaining\nat least `min_nodes`. You will be charged for the time in which additional\nnodes are used.\n\nIf not specified, `min_nodes` defaults to 0, in which case, when traffic\nto a model stops (and after a cool-down period), nodes will be shut down\nand no charges will be incurred until traffic to the model resumes.\n\nYou can set `min_nodes` when creating the model version, and you can also\nupdate `min_nodes` for an existing version:\n\u003cpre\u003e\nupdate_body.json:\n{\n  'autoScaling': {\n    'minNodes': 5\n  }\n}\n\u003c/pre\u003e\nHTTP request:\n\u003cpre\u003e\nPATCH https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d @./update_body.json\n\u003c/pre\u003e",
+          "description": "Optional. The minimum number of nodes to allocate for this model. These\nnodes are always up, starting from the time the model is deployed.\nTherefore, the cost of operating this model will be at least\n`rate` * `min_nodes` * number of hours since last billing cycle,\nwhere `rate` is the cost per node-hour as documented in the\n[pricing guide](/ml-engine/docs/pricing),\neven if no predictions are performed. There is additional cost for each\nprediction performed.\n\nUnlike manual scaling, if the load gets too heavy for the nodes\nthat are up, the service will automatically add nodes to handle the\nincreased load as well as scale back as traffic drops, always maintaining\nat least `min_nodes`. You will be charged for the time in which additional\nnodes are used.\n\nIf not specified, `min_nodes` defaults to 0, in which case, when traffic\nto a model stops (and after a cool-down period), nodes will be shut down\nand no charges will be incurred until traffic to the model resumes.\n\nYou can set `min_nodes` when creating the model version, and you can also\nupdate `min_nodes` for an existing version:\n\u003cpre\u003e\nupdate_body.json:\n{\n  'autoScaling': {\n    'minNodes': 5\n  }\n}\n\u003c/pre\u003e\nHTTP request:\n\u003cpre\u003e\nPATCH\nhttps://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes\n-d @./update_body.json\n\u003c/pre\u003e",
           "format": "int32",
           "type": "integer"
         }
@@ -1127,7 +1127,7 @@
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
-            "TPU V2"
+            "TPU v2."
           ],
           "items": {
             "enum": [
@@ -1781,14 +1781,15 @@
       "type": "object"
     },
     "GoogleCloudMlV1__ReplicaConfig": {
-      "description": "Represents the configration for a replica in a cluster.",
+      "description": "Represents the configuration for a replica in a cluster.",
       "id": "GoogleCloudMlV1__ReplicaConfig",
       "properties": {
         "acceleratorConfig": {
-          "$ref": "GoogleCloudMlV1__AcceleratorConfig"
+          "$ref": "GoogleCloudMlV1__AcceleratorConfig",
+          "description": "Represents the type and number of accelerators used by the replica.\n[Learn about restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)"
         },
         "imageUri": {
-          "description": "The docker image to run on worker.\nThis image must be in Google Container Registry.",
+          "description": "The Docker image to run on the replica. This image must be in Container\nRegistry. Learn more about [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers).",
           "type": "string"
         }
       },
@@ -1821,10 +1822,10 @@
         },
         "masterConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for master.\n\nOnly one of `masterConfig.imageUri` and `runtimeVersion` should be\nset."
+          "description": "Optional. The configuration for your master worker.\n\nYou should only set `masterConfig.acceleratorConfig` if `masterType` is set\nto a Compute Engine machine type. Learn about [restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `masterConfig.imageUri` only if you build a custom image. Only one of\n`masterConfig.imageUri` and `runtimeVersion` should be set. Learn more about\n[configuring custom containers](/ml-engine/docs/distributed-training-containers)."
         },
         "masterType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker.\n\nThe following types are supported:\n\n\u003cdl\u003e\n  \u003cdt\u003estandard\u003c/dt\u003e\n  \u003cdd\u003e\n  A basic machine configuration suitable for training simple models with\n  small to moderate datasets.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with a lot of memory, specially suited for parameter servers\n  when your model is large (having many hidden layers or layers with very\n  large numbers of nodes).\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_s\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine suitable for the master and workers of the cluster when your\n  model requires more computation than the standard machine can handle\n  satisfactorily.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_s\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_m\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla K80 GPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-gpus\"\u003eusing GPUs to\n  train your model\u003c/a\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that also includes\n  eight NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla P100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla P100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003elarge_model\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that\n  also includes four NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that\n  also includes eight NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecloud_tpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A TPU VM including one Cloud TPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-tpus\"\u003eusing TPUs to train\n  your model\u003c/a\u003e.\n  \u003c/dd\u003e\n\u003c/dl\u003e\n\nYou must set this value when `scaleTier` is set to `CUSTOM`.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's master worker.\n\nThe following types are supported:\n\n\u003cdl\u003e\n  \u003cdt\u003estandard\u003c/dt\u003e\n  \u003cdd\u003e\n  A basic machine configuration suitable for training simple models with\n  small to moderate datasets.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with a lot of memory, specially suited for parameter servers\n  when your model is large (having many hidden layers or layers with very\n  large numbers of nodes).\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_s\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine suitable for the master and workers of the cluster when your\n  model requires more computation than the standard machine can handle\n  satisfactorily.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_s\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine with roughly twice the number of cores and roughly double the\n  memory of \u003ci\u003ecomplex_model_m\u003c/i\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla K80 GPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-gpus\"\u003eusing GPUs to\n  train your model\u003c/a\u003e.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_gpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that also includes\n  eight NVIDIA Tesla K80 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla P100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_p100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that also includes\n  four NVIDIA Tesla P100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003estandard_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003estandard\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003elarge_model_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003elarge_model\u003c/i\u003e that\n  also includes a single NVIDIA Tesla V100 GPU.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_m_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_m\u003c/i\u003e that\n  also includes four NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecomplex_model_l_v100\u003c/dt\u003e\n  \u003cdd\u003e\n  A machine equivalent to \u003ci\u003ecomplex_model_l\u003c/i\u003e that\n  also includes eight NVIDIA Tesla V100 GPUs.\n  \u003c/dd\u003e\n  \u003cdt\u003ecloud_tpu\u003c/dt\u003e\n  \u003cdd\u003e\n  A TPU VM including one Cloud TPU. See more about\n  \u003ca href=\"/ml-engine/docs/tensorflow/using-tpus\"\u003eusing TPUs to train\n  your model\u003c/a\u003e.\n  \u003c/dd\u003e\n\u003c/dl\u003e\n\nYou may also use certain Compute Engine machine types directly in this\nfield. The following types are supported:\n\n- `n1-standard-4`\n- `n1-standard-8`\n- `n1-standard-16`\n- `n1-standard-32`\n- `n1-standard-64`\n- `n1-standard-96`\n- `n1-highmem-2`\n- `n1-highmem-4`\n- `n1-highmem-8`\n- `n1-highmem-16`\n- `n1-highmem-32`\n- `n1-highmem-64`\n- `n1-highmem-96`\n- `n1-highcpu-16`\n- `n1-highcpu-32`\n- `n1-highcpu-64`\n- `n1-highcpu-96`\n\nSee more about [using Compute Engine machine\ntypes](/ml-engine/docs/tensorflow/machine-types#compute-engine-machine-types).\n\nYou must set this value when `scaleTier` is set to `CUSTOM`.",
           "type": "string"
         },
         "packageUris": {
@@ -1836,7 +1837,7 @@
         },
         "parameterServerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The config of parameter servers.\n\nIf `parameterServerConfig.imageUri` has not been set, the value of\n`masterConfig.imageUri` will be used."
+          "description": "Optional. The configuration for parameter servers.\n\nYou should only set `parameterServerConfig.acceleratorConfig` if\n`parameterServerConfigType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `parameterServerConfig.imageUri` only if you build a custom image for\nyour parameter server. If `parameterServerConfig.imageUri` has not been\nset, Cloud ML Engine uses the value of `masterConfig.imageUri`.\nLearn more about [configuring custom containers](/ml-engine/docs/distributed-training-containers)."
         },
         "parameterServerCount": {
           "description": "Optional. The number of parameter server replicas to use for the training\njob. Each replica in the cluster will be of the type specified in\n`parameter_server_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`.If you\nset this value, you must also set `parameter_server_type`.\n\nThe default value is zero.",
@@ -1844,7 +1845,7 @@
           "type": "string"
         },
         "parameterServerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be Cloud ML Engine machine\ntypes or both must be Compute Engine machine types.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
           "type": "string"
         },
         "pythonModule": {
@@ -1885,7 +1886,7 @@
         },
         "workerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configrations for workers.\n\nIf `workerConfig.imageUri` has not been set, the value of\n`masterConfig.imageUri` will be used."
+          "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, Cloud ML Engine uses\nthe value of `masterConfig.imageUri`. Learn more about\n[configuring custom containers](/ml-engine/docs/distributed-training-containers)."
         },
         "workerCount": {
           "description": "Optional. The number of worker replicas to use for the training job. Each\nreplica in the cluster will be of the type specified in `worker_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `worker_type`.\n\nThe default value is zero.",
@@ -1893,7 +1894,7 @@
           "type": "string"
         },
         "workerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`workerCount` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be Cloud ML Engine machine\ntypes or both must be Compute Engine machine types.\n\nIf you use `cloud_tpu` for this value, see special instructions for\n[configuring a custom TPU\nmachine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_machine).\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`workerCount` is greater than zero.",
           "type": "string"
         }
       },
@@ -1928,7 +1929,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__Version": {
-      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).",
+      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).\nNext ID: 29",
       "id": "GoogleCloudMlV1__Version",
       "properties": {
         "autoScaling": {
@@ -1990,7 +1991,7 @@
           "type": "string"
         },
         "machineType": {
-          "description": "Optional. The type of machine on which to serve the model. Currently only\napplies to online prediction service.\nThe following are currently supported and will be deprecated in\nBeta release.\n  mls1-highmem-1    1 core    2 Gb RAM\n  mls1-highcpu-4    4 core    2 Gb RAM\nThe following are available in Beta:\n  mls1-c1-m2        1 core    2 Gb RAM   Default\n  mls1-c4-m2        4 core    2 Gb RAM",
+          "description": "Optional. The type of machine on which to serve the model. Currently only\napplies to online prediction service.\n\u003cdl\u003e\n  \u003cdt\u003emls1-c1-m2\u003c/dt\u003e\n  \u003cdd\u003e\n  The \u003cb\u003edefault\u003c/b\u003e machine type, with 1 core and 2 GB RAM. The deprecated\n  name for this machine type is \"mls1-highmem-1\".\n  \u003c/dd\u003e\n  \u003cdt\u003emls1-c4-m2\u003c/dt\u003e\n  \u003cdd\u003e\n  In \u003cb\u003eBeta\u003c/b\u003e. This machine type has 4 cores and 2 GB RAM. The\n  deprecated name for this machine type is \"mls1-highcpu-4\".\n  \u003c/dd\u003e\n\u003c/dl\u003e",
           "type": "string"
         },
         "manualScaling": {

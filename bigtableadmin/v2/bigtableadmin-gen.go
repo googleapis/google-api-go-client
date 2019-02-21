@@ -648,7 +648,7 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 
 // ClusterState: The state of a table's data in a particular cluster.
 type ClusterState struct {
-	// ReplicationState: (`OutputOnly`)
+	// ReplicationState: Output only.
 	// The state of replication for the table in this cluster.
 	//
 	// Possible values:
@@ -2064,7 +2064,7 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // timestamp.
 // Each table is served using the resources of its parent cluster.
 type Table struct {
-	// ClusterStates: (`OutputOnly`)
+	// ClusterStates: Output only.
 	// Map from cluster ID to per-cluster table state.
 	// If it could not be determined whether or not the table has data in
 	// a
@@ -2088,7 +2088,7 @@ type Table struct {
 	// rejected.
 	// If unspecified at creation time, the value will be set to
 	// `MILLIS`.
-	// Views: `SCHEMA_VIEW`, `FULL`
+	// Views: `SCHEMA_VIEW`, `FULL`.
 	//
 	// Possible values:
 	//   "TIMESTAMP_GRANULARITY_UNSPECIFIED" - The user did not specify a
@@ -2097,7 +2097,7 @@ type Table struct {
 	//   "MILLIS" - The table keeps data versioned at a granularity of 1ms.
 	Granularity string `json:"granularity,omitempty"`
 
-	// Name: (`OutputOnly`)
+	// Name: Output only.
 	// The unique name of the table. Values are of the
 	// form
 	// `projects/<project>/instances/<instance>/tables/_a-zA-Z0-9*`.

@@ -6,7 +6,7 @@
 
 // Package storagetransfer provides access to the Storage Transfer API.
 //
-// See https://cloud.google.com/storage/transfer
+// See https://cloud.google.com/storage-transfer/docs
 //
 // Usage example:
 //

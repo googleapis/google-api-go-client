@@ -1118,8 +1118,8 @@ type ExportResourcesRequest struct {
 	// collaboration with the FHIR community to refine the
 	// [desired SQL projection of
 	// FHIR
-	// resources](https://github.com/rbrush/sql-on-fhir/blob/master/sql-
-	// on-fhir.md).
+	// resources](https://github.com/FHIR/sql-on-fhir/blob/master/sql-on
+	// -fhir.md)
 	BigqueryDestinationLocation *BigQueryLocation `json:"bigqueryDestinationLocation,omitempty"`
 
 	// GcsDestinationLocation: The Cloud Storage destination
@@ -15313,6 +15313,24 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 // - Label(x), a string value of the label with key x as set using the
 // labels
 //   map in Message, e.g. 'Label("priority") = "high"'
+// Negation on the patient ID function and the label function are
+// not
+// supported, e.g. invalid queries: 'NOT PatientId("123456",
+// "MRN")',
+// 'NOT HasLabel("tag1")', 'NOT Label("tag2") = "val2"'.
+// Conjunction of multiple patient ID functions is not supported, e.g.
+// an
+// invalid query: 'PatientId("123456", "MRN") AND PatientId("456789",
+// "MRN")'.
+// Conjunction of multiple label functions is also not supported, e.g.
+// an
+// invalid query: 'HasLabel("tag1") AND Label("tag2") =
+// "val2"'.
+// Conjunction of one patient ID function, one label function and other
+// fields
+// is supported, e.g. a valid query:
+// 'PatientId("123456", "MRN") AND HasLabel("tag1") AND message_type =
+// "ADT"'.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Filter(filter string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15453,7 +15471,7 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nFields/functions available for filtering are:\n- message_type, from the MSH-9 segment, e.g. 'NOT message_type = \"ADT\"'\n- send_date or sendDate, the YYYY-MM-DD date the message was sent in the\n  dataset's time_zone, from the MSH-7 segment; e.g.\n  'send_date \u003c \"2017-01-02\"'\n- send_time, the timestamp of when the message was sent, using the RFC3339\n  time format for comparisons, from the MSH-7 segment; e.g. 'send_time \u003c\n  \"2017-01-02T00:00:00-05:00\"'\n- send_facility, the hospital/trust that the message came from, from the\n  MSH-4 segment, e.g. 'send_facility = \"RAL\"'\n- HL7RegExp(expr), which does regular expression matching of expr against\n  the HL7 message payload using re2 (http://code.google.com/p/re2/)\n  syntax; e.g. 'HL7RegExp(\"^.*\\|.*\\|CERNER\")'\n- PatientId(value, type), which matches if the message lists a patient\n  having an ID of the given value and type in the PID-2, PID-3, or PID-4\n  segments; e.g. 'PatientId(\"123456\", \"MRN\")'\n- HasLabel(x), a boolean returning true if the message has a label with\n  key x (having any value) set using the labels map in Message; e.g.\n  'HasLabel(\"priority\")'\n- Label(x), a string value of the label with key x as set using the labels\n  map in Message, e.g. 'Label(\"priority\") = \"high\"'",
+	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nFields/functions available for filtering are:\n- message_type, from the MSH-9 segment, e.g. 'NOT message_type = \"ADT\"'\n- send_date or sendDate, the YYYY-MM-DD date the message was sent in the\n  dataset's time_zone, from the MSH-7 segment; e.g.\n  'send_date \u003c \"2017-01-02\"'\n- send_time, the timestamp of when the message was sent, using the RFC3339\n  time format for comparisons, from the MSH-7 segment; e.g. 'send_time \u003c\n  \"2017-01-02T00:00:00-05:00\"'\n- send_facility, the hospital/trust that the message came from, from the\n  MSH-4 segment, e.g. 'send_facility = \"RAL\"'\n- HL7RegExp(expr), which does regular expression matching of expr against\n  the HL7 message payload using re2 (http://code.google.com/p/re2/)\n  syntax; e.g. 'HL7RegExp(\"^.*\\|.*\\|CERNER\")'\n- PatientId(value, type), which matches if the message lists a patient\n  having an ID of the given value and type in the PID-2, PID-3, or PID-4\n  segments; e.g. 'PatientId(\"123456\", \"MRN\")'\n- HasLabel(x), a boolean returning true if the message has a label with\n  key x (having any value) set using the labels map in Message; e.g.\n  'HasLabel(\"priority\")'\n- Label(x), a string value of the label with key x as set using the labels\n  map in Message, e.g. 'Label(\"priority\") = \"high\"'\nNegation on the patient ID function and the label function are not\nsupported, e.g. invalid queries: 'NOT PatientId(\"123456\", \"MRN\")',\n'NOT HasLabel(\"tag1\")', 'NOT Label(\"tag2\") = \"val2\"'.\nConjunction of multiple patient ID functions is not supported, e.g. an\ninvalid query: 'PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")'.\nConjunction of multiple label functions is also not supported, e.g. an\ninvalid query: 'HasLabel(\"tag1\") AND Label(\"tag2\") = \"val2\"'.\nConjunction of one patient ID function, one label function and other fields\nis supported, e.g. a valid query:\n'PatientId(\"123456\", \"MRN\") AND HasLabel(\"tag1\") AND message_type = \"ADT\"'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -620,8 +620,8 @@ type CreateServiceAccountRequest struct {
 	// `[a-z]([-a-z0-9]*[a-z0-9])` to comply with RFC1035.
 	AccountId string `json:"accountId,omitempty"`
 
-	// ServiceAccount: The ServiceAccount resource to create.
-	// Currently, only the following values are user
+	// ServiceAccount: The ServiceAccount resource to
+	// create. Currently, only the following values are user
 	// assignable:
 	// `display_name` .
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
@@ -1627,6 +1627,10 @@ func (s *Role) MarshalJSON() ([]byte, error) {
 // the
 // `unique_id` of the service account.
 type ServiceAccount struct {
+	// Disabled: @OutputOnly A bool indicate if the service account is
+	// disabled.
+	Disabled bool `json:"disabled,omitempty"`
+
 	// DisplayName: Optional. A user-specified name for the service
 	// account.
 	// Must be less than or equal to 100 UTF-8 bytes.
@@ -1674,7 +1678,7 @@ type ServiceAccount struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1682,10 +1686,10 @@ type ServiceAccount struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Disabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2071,6 +2075,42 @@ type UndeleteRoleRequest struct {
 
 func (s *UndeleteRoleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteRoleRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteServiceAccountRequest: The service account undelete request.
+type UndeleteServiceAccountRequest struct {
+}
+
+type UndeleteServiceAccountResponse struct {
+	// RestoredAccount: Metadata for the restored service account.
+	RestoredAccount *ServiceAccount `json:"restoredAccount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "RestoredAccount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RestoredAccount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteServiceAccountResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteServiceAccountResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5709,6 +5749,145 @@ func (c *ProjectsServiceAccountsTestIamPermissionsCall) Do(opts ...googleapi.Cal
 	//   },
 	//   "response": {
 	//     "$ref": "TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "iam.projects.serviceAccounts.undelete":
+
+type ProjectsServiceAccountsUndeleteCall struct {
+	s                             *Service
+	name                          string
+	undeleteserviceaccountrequest *UndeleteServiceAccountRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Undelete: Restores a deleted ServiceAccount.
+func (r *ProjectsServiceAccountsService) Undelete(name string, undeleteserviceaccountrequest *UndeleteServiceAccountRequest) *ProjectsServiceAccountsUndeleteCall {
+	c := &ProjectsServiceAccountsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeleteserviceaccountrequest = undeleteserviceaccountrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsServiceAccountsUndeleteCall) Fields(s ...googleapi.Field) *ProjectsServiceAccountsUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsServiceAccountsUndeleteCall) Context(ctx context.Context) *ProjectsServiceAccountsUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsServiceAccountsUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServiceAccountsUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeleteserviceaccountrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iam.projects.serviceAccounts.undelete" call.
+// Exactly one of *UndeleteServiceAccountResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *UndeleteServiceAccountResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsServiceAccountsUndeleteCall) Do(opts ...googleapi.CallOption) (*UndeleteServiceAccountResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &UndeleteServiceAccountResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Restores a deleted ServiceAccount.",
+	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "iam.projects.serviceAccounts.undelete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The resource name of the service account in the following format:\n`projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT_UNIQUE_ID}'.\nUsing `-` as a wildcard for the `PROJECT_ID` will infer the project from\nthe account.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteServiceAccountRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "UndeleteServiceAccountResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

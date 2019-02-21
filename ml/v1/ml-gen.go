@@ -301,7 +301,7 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	// the job.
 	Count int64 `json:"count,omitempty,string"`
 
-	// Type: The available types of accelerators.
+	// Type: The type of accelerator to use.
 	//
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Unspecified accelerator type.
@@ -310,7 +310,7 @@ type GoogleCloudMlV1__AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
-	//   "TPU_V2" - TPU V2
+	//   "TPU_V2" - TPU v2.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Count") to
@@ -380,11 +380,13 @@ type GoogleCloudMlV1__AutoScaling struct {
 	//   }
 	// }
 	// </pre>
-	// HTTP request:
+	// HTTP
+	// request:
 	// <pre>
 	// PATCH
-	// https://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes -d
-	// @./update_body.json
+	// https://ml.googleapis.com/v1/{name=projects/*/mod
+	// els/*/versions/*}?update_mask=autoScaling.minNodes
+	// -d @./update_body.json
 	// </pre>
 	MinNodes int64 `json:"minNodes,omitempty"`
 
@@ -426,7 +428,7 @@ type GoogleCloudMlV1__Capability struct {
 	//   "NVIDIA_TESLA_P100" - Nvidia Tesla P100 GPU.
 	//   "NVIDIA_TESLA_V100" - Nvidia Tesla V100 GPU.
 	//   "NVIDIA_TESLA_P4" - Nvidia Tesla P4 GPU.
-	//   "TPU_V2" - TPU V2
+	//   "TPU_V2" - TPU v2.
 	AvailableAccelerators []string `json:"availableAccelerators,omitempty"`
 
 	// Possible values:
@@ -1506,13 +1508,22 @@ func (s *GoogleCloudMlV1__PredictionOutput) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GoogleCloudMlV1__ReplicaConfig: Represents the configration for a
+// GoogleCloudMlV1__ReplicaConfig: Represents the configuration for a
 // replica in a cluster.
 type GoogleCloudMlV1__ReplicaConfig struct {
+	// AcceleratorConfig: Represents the type and number of accelerators
+	// used by the replica.
+	// [Learn about restrictions on accelerator configurations
+	// for
+	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// chine-types-with-gpu)
 	AcceleratorConfig *GoogleCloudMlV1__AcceleratorConfig `json:"acceleratorConfig,omitempty"`
 
-	// ImageUri: The docker image to run on worker.
-	// This image must be in Google Container Registry.
+	// ImageUri: The Docker image to run on the replica. This image must be
+	// in Container
+	// Registry. Learn more about [configuring
+	// custom
+	// containers](/ml-engine/docs/distributed-training-containers).
 	ImageUri string `json:"imageUri,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AcceleratorConfig")
@@ -1570,11 +1581,24 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// this field is that Cloud ML validates the path for use in training.
 	JobDir string `json:"jobDir,omitempty"`
 
-	// MasterConfig: Optional. The configuration for master.
+	// MasterConfig: Optional. The configuration for your master
+	// worker.
 	//
-	// Only one of `masterConfig.imageUri` and `runtimeVersion` should
-	// be
-	// set.
+	// You should only set `masterConfig.acceleratorConfig` if `masterType`
+	// is set
+	// to a Compute Engine machine type. Learn about [restrictions on
+	// accelerator
+	// configurations
+	// for
+	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// chine-types-with-gpu)
+	//
+	// Set `masterConfig.imageUri` only if you build a custom image. Only
+	// one of
+	// `masterConfig.imageUri` and `runtimeVersion` should be set. Learn
+	// more about
+	// [configuring custom
+	// containers](/ml-engine/docs/distributed-training-containers).
 	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
 	// MasterType: Optional. Specifies the type of virtual machine to use
@@ -1674,6 +1698,33 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//   </dd>
 	// </dl>
 	//
+	// You may also use certain Compute Engine machine types directly in
+	// this
+	// field. The following types are supported:
+	//
+	// - `n1-standard-4`
+	// - `n1-standard-8`
+	// - `n1-standard-16`
+	// - `n1-standard-32`
+	// - `n1-standard-64`
+	// - `n1-standard-96`
+	// - `n1-highmem-2`
+	// - `n1-highmem-4`
+	// - `n1-highmem-8`
+	// - `n1-highmem-16`
+	// - `n1-highmem-32`
+	// - `n1-highmem-64`
+	// - `n1-highmem-96`
+	// - `n1-highcpu-16`
+	// - `n1-highcpu-32`
+	// - `n1-highcpu-64`
+	// - `n1-highcpu-96`
+	//
+	// See more about [using Compute Engine
+	// machine
+	// types](/ml-engine/docs/tensorflow/machine-types#compute-engine
+	// -machine-types).
+	//
 	// You must set this value when `scaleTier` is set to `CUSTOM`.
 	MasterType string `json:"masterType,omitempty"`
 
@@ -1683,11 +1734,25 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// The maximum number of package URIs is 100.
 	PackageUris []string `json:"packageUris,omitempty"`
 
-	// ParameterServerConfig: Optional. The config of parameter servers.
+	// ParameterServerConfig: Optional. The configuration for parameter
+	// servers.
 	//
-	// If `parameterServerConfig.imageUri` has not been set, the value
-	// of
-	// `masterConfig.imageUri` will be used.
+	// You should only set `parameterServerConfig.acceleratorConfig`
+	// if
+	// `parameterServerConfigType` is set to a Compute Engine machine type.
+	// [Learn
+	// about restrictions on accelerator configurations
+	// for
+	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// chine-types-with-gpu)
+	//
+	// Set `parameterServerConfig.imageUri` only if you build a custom image
+	// for
+	// your parameter server. If `parameterServerConfig.imageUri` has not
+	// been
+	// set, Cloud ML Engine uses the value of `masterConfig.imageUri`.
+	// Learn more about [configuring custom
+	// containers](/ml-engine/docs/distributed-training-containers).
 	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
 	// ParameterServerCount: Optional. The number of parameter server
@@ -1710,6 +1775,12 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// The supported values are the same as those described in the entry
 	// for
 	// `master_type`.
+	//
+	// This value must be consistent with the category of machine type
+	// that
+	// `masterType` uses. In other words, both must be Cloud ML Engine
+	// machine
+	// types or both must be Compute Engine machine types.
 	//
 	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
@@ -1799,11 +1870,24 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// different from your worker type and master type.
 	ScaleTier string `json:"scaleTier,omitempty"`
 
-	// WorkerConfig: Optional. The configrations for workers.
+	// WorkerConfig: Optional. The configuration for workers.
 	//
-	// If `workerConfig.imageUri` has not been set, the value
-	// of
-	// `masterConfig.imageUri` will be used.
+	// You should only set `workerConfig.acceleratorConfig` if `workerType`
+	// is set
+	// to a Compute Engine machine type. [Learn about restrictions on
+	// accelerator
+	// configurations
+	// for
+	// training.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-ma
+	// chine-types-with-gpu)
+	//
+	// Set `workerConfig.imageUri` only if you build a custom image for
+	// your
+	// worker. If `workerConfig.imageUri` has not been set, Cloud ML Engine
+	// uses
+	// the value of `masterConfig.imageUri`. Learn more about
+	// [configuring custom
+	// containers](/ml-engine/docs/distributed-training-containers).
 	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
 	// WorkerCount: Optional. The number of worker replicas to use for the
@@ -1825,6 +1909,19 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// The supported values are the same as those described in the entry
 	// for
 	// `masterType`.
+	//
+	// This value must be consistent with the category of machine type
+	// that
+	// `masterType` uses. In other words, both must be Cloud ML Engine
+	// machine
+	// types or both must be Compute Engine machine types.
+	//
+	// If you use `cloud_tpu` for this value, see special instructions
+	// for
+	// [configuring a custom
+	// TPU
+	// machine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custo
+	// m_tpu_machine).
 	//
 	// This value must be present when `scaleTier` is set to `CUSTOM`
 	// and
@@ -1921,6 +2018,7 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
+// Next ID: 29
 type GoogleCloudMlV1__Version struct {
 	// AutoScaling: Automatically scale the number of nodes used to serve
 	// the model in
@@ -2022,13 +2120,19 @@ type GoogleCloudMlV1__Version struct {
 	// MachineType: Optional. The type of machine on which to serve the
 	// model. Currently only
 	// applies to online prediction service.
-	// The following are currently supported and will be deprecated in
-	// Beta release.
-	//   mls1-highmem-1    1 core    2 Gb RAM
-	//   mls1-highcpu-4    4 core    2 Gb RAM
-	// The following are available in Beta:
-	//   mls1-c1-m2        1 core    2 Gb RAM   Default
-	//   mls1-c4-m2        4 core    2 Gb RAM
+	// <dl>
+	//   <dt>mls1-c1-m2</dt>
+	//   <dd>
+	//   The <b>default</b> machine type, with 1 core and 2 GB RAM. The
+	// deprecated
+	//   name for this machine type is "mls1-highmem-1".
+	//   </dd>
+	//   <dt>mls1-c4-m2</dt>
+	//   <dd>
+	//   In <b>Beta</b>. This machine type has 4 cores and 2 GB RAM. The
+	//   deprecated name for this machine type is "mls1-highcpu-4".
+	//   </dd>
+	// </dl>
 	MachineType string `json:"machineType,omitempty"`
 
 	// ManualScaling: Manually select the number of nodes to use for serving

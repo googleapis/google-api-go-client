@@ -240,7 +240,7 @@ type ProjectsStoredInfoTypesService struct {
 // See https://cloud.google.com/dlp/docs/concepts-actions to learn more.
 type GooglePrivacyDlpV2Action struct {
 	// JobNotificationEmails: Enable email notification to project owners
-	// and editors on job‘s
+	// and editors on job's
 	// completion/failure.
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 
@@ -1251,7 +1251,9 @@ func (s *GooglePrivacyDlpV2Color) UnmarshalJSON(data []byte) error {
 // GooglePrivacyDlpV2Condition: The field type of `value` and `field` do
 // not need to match to be
 // considered equal, but not all comparisons are possible.
-//
+// EQUAL_TO and NOT_EQUAL_TO attempt to compare even with incompatible
+// types,
+// but all other comparisons are invalid with incompatible types.
 // A `value` of type:
 //
 // - `string` can be compared against all other types
@@ -1282,8 +1284,9 @@ type GooglePrivacyDlpV2Condition struct {
 	//
 	// Possible values:
 	//   "RELATIONAL_OPERATOR_UNSPECIFIED"
-	//   "EQUAL_TO" - Equal.
-	//   "NOT_EQUAL_TO" - Not equal to.
+	//   "EQUAL_TO" - Equal. Attempts to match even with incompatible types.
+	//   "NOT_EQUAL_TO" - Not equal to. Attempts to match even with
+	// incompatible types.
 	//   "GREATER_THAN" - Greater than.
 	//   "LESS_THAN" - Less than.
 	//   "GREATER_THAN_OR_EQUALS" - Greater than or equals.
@@ -3147,14 +3150,14 @@ type GooglePrivacyDlpV2FindingLimits struct {
 	// MaxFindingsPerItem: Max number of findings that will be returned for
 	// each item scanned.
 	// When set within `InspectDataSourceRequest`,
-	// the maximum returned is 1000 regardless if this is set higher.
+	// the maximum returned is 2000 regardless if this is set higher.
 	// When set within `InspectContentRequest`, this field is ignored.
 	MaxFindingsPerItem int64 `json:"maxFindingsPerItem,omitempty"`
 
 	// MaxFindingsPerRequest: Max number of findings that will be returned
 	// per request/job.
 	// When set within `InspectContentRequest`, the maximum returned is
-	// 1000
+	// 2000
 	// regardless if this is set higher.
 	MaxFindingsPerRequest int64 `json:"maxFindingsPerRequest,omitempty"`
 

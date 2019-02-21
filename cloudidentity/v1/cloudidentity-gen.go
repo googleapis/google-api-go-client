@@ -1090,13 +1090,9 @@ func (r *GroupsService) List() *GroupsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// groups to return.
-//
-// View  | Default | Maximum
-// ----- | ------- | -------
-// BASIC | 200     | 1000
-// FULL  | 50      | 500
+// PageSize sets the optional parameter "pageSize": The default page
+// size is 200 (max 1000) for the BASIC view, and 50
+// (max 500) for the FULL view.
 func (c *GroupsListCall) PageSize(pageSize int64) *GroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1231,7 +1227,7 @@ func (c *GroupsListCall) Do(opts ...googleapi.CallOption) (*ListGroupsResponse, 
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -1614,13 +1610,9 @@ func (r *GroupsService) Search() *GroupsSearchCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// groups to return.
-//
-// View  | Default | Maximum
-// ----- | ------- | -------
-// BASIC | 200     | 1000
-// FULL  | 50      | 500
+// PageSize sets the optional parameter "pageSize": The default page
+// size is 200 (max 1000) for the BASIC view, and 50
+// (max 500) for the FULL view.
 func (c *GroupsSearchCall) PageSize(pageSize int64) *GroupsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1759,7 +1751,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of groups to return.\n\nView  | Default | Maximum\n----- | ------- | -------\nBASIC | 200     | 1000\nFULL  | 50      | 500",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -2234,13 +2226,9 @@ func (r *GroupsMembershipsService) List(parent string) *GroupsMembershipsListCal
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// Memberships to return.
-//
-// View | Default | Maximum
-// -----|---------|--------
-// BASIC| 200     | 1000
-// FULL | 50      | 500
+// PageSize sets the optional parameter "pageSize": The default page
+// size is 200 (max 1000) for the BASIC view, and 50
+// (max 500) for the FULL view.
 func (c *GroupsMembershipsListCall) PageSize(pageSize int64) *GroupsMembershipsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2372,7 +2360,7 @@ func (c *GroupsMembershipsListCall) Do(opts ...googleapi.CallOption) (*ListMembe
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of Memberships to return.\n\nView | Default | Maximum\n-----|---------|--------\nBASIC| 200     | 1000\nFULL | 50      | 500",
+	//       "description": "The default page size is 200 (max 1000) for the BASIC view, and 50\n(max 500) for the FULL view.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

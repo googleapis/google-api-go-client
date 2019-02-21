@@ -167,10 +167,10 @@ func NewAccountsContainersWorkspacesService(s *Service) *AccountsContainersWorks
 	rs := &AccountsContainersWorkspacesService{s: s}
 	rs.BuiltInVariables = NewAccountsContainersWorkspacesBuiltInVariablesService(s)
 	rs.Folders = NewAccountsContainersWorkspacesFoldersService(s)
-	rs.Proposal = NewAccountsContainersWorkspacesProposalService(s)
 	rs.Tags = NewAccountsContainersWorkspacesTagsService(s)
 	rs.Triggers = NewAccountsContainersWorkspacesTriggersService(s)
 	rs.Variables = NewAccountsContainersWorkspacesVariablesService(s)
+	rs.Zones = NewAccountsContainersWorkspacesZonesService(s)
 	return rs
 }
 
@@ -181,13 +181,13 @@ type AccountsContainersWorkspacesService struct {
 
 	Folders *AccountsContainersWorkspacesFoldersService
 
-	Proposal *AccountsContainersWorkspacesProposalService
-
 	Tags *AccountsContainersWorkspacesTagsService
 
 	Triggers *AccountsContainersWorkspacesTriggersService
 
 	Variables *AccountsContainersWorkspacesVariablesService
+
+	Zones *AccountsContainersWorkspacesZonesService
 }
 
 func NewAccountsContainersWorkspacesBuiltInVariablesService(s *Service) *AccountsContainersWorkspacesBuiltInVariablesService {
@@ -205,15 +205,6 @@ func NewAccountsContainersWorkspacesFoldersService(s *Service) *AccountsContaine
 }
 
 type AccountsContainersWorkspacesFoldersService struct {
-	s *Service
-}
-
-func NewAccountsContainersWorkspacesProposalService(s *Service) *AccountsContainersWorkspacesProposalService {
-	rs := &AccountsContainersWorkspacesProposalService{s: s}
-	return rs
-}
-
-type AccountsContainersWorkspacesProposalService struct {
 	s *Service
 }
 
@@ -241,6 +232,15 @@ func NewAccountsContainersWorkspacesVariablesService(s *Service) *AccountsContai
 }
 
 type AccountsContainersWorkspacesVariablesService struct {
+	s *Service
+}
+
+func NewAccountsContainersWorkspacesZonesService(s *Service) *AccountsContainersWorkspacesZonesService {
+	rs := &AccountsContainersWorkspacesZonesService{s: s}
+	return rs
+}
+
+type AccountsContainersWorkspacesZonesService struct {
 	s *Service
 }
 
@@ -681,6 +681,10 @@ type ContainerVersion struct {
 	// GTM Container Version.
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
 
+	// CustomTemplate: The custom templates in the container that this
+	// version was taken from.
+	CustomTemplate []*CustomTemplate `json:"customTemplate,omitempty"`
+
 	// Deleted: A value of true indicates this container version has been
 	// deleted.
 	Deleted bool `json:"deleted,omitempty"`
@@ -766,6 +770,10 @@ type ContainerVersionHeader struct {
 
 	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
+
+	// NumCustomTemplates: Number of custom templates in the container
+	// version.
+	NumCustomTemplates string `json:"numCustomTemplates,omitempty"`
 
 	// NumMacros: Number of macros in the container version.
 	NumMacros string `json:"numMacros,omitempty"`
@@ -923,17 +931,40 @@ func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateWorkspaceProposalRequest: Creates a workspace proposal to start
-// a review of a workspace.
-type CreateWorkspaceProposalRequest struct {
-	// InitialComment: If present, an initial comment to associate with the
-	// workspace proposal.
-	InitialComment *WorkspaceProposalHistoryComment `json:"initialComment,omitempty"`
+// CustomTemplate: Represents a Google Tag Manager Custom Template's
+// contents.
+type CustomTemplate struct {
+	// AccountId: GTM Account ID.
+	AccountId string `json:"accountId,omitempty"`
 
-	// Reviewers: List of users to review the workspace proposal.
-	Reviewers []*WorkspaceProposalUser `json:"reviewers,omitempty"`
+	// ContainerId: GTM Container ID.
+	ContainerId string `json:"containerId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InitialComment") to
+	// Fingerprint: The fingerprint of the GTM Custom Template as computed
+	// at storage time. This value is recomputed whenever the template is
+	// modified.
+	Fingerprint string `json:"fingerprint,omitempty"`
+
+	// Name: Custom Template display name.
+	Name string `json:"name,omitempty"`
+
+	// Path: GTM Custom Template's API relative path.
+	Path string `json:"path,omitempty"`
+
+	// TagManagerUrl: Auto generated link to the tag manager UI
+	TagManagerUrl string `json:"tagManagerUrl,omitempty"`
+
+	// TemplateData: The custom template in text format.
+	TemplateData string `json:"templateData,omitempty"`
+
+	// TemplateId: The Custom Template ID uniquely identifies the GTM custom
+	// template.
+	TemplateId string `json:"templateId,omitempty"`
+
+	// WorkspaceId: GTM Workspace ID.
+	WorkspaceId string `json:"workspaceId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -941,18 +972,17 @@ type CreateWorkspaceProposalRequest struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InitialComment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *CreateWorkspaceProposalRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod CreateWorkspaceProposalRequest
+func (s *CustomTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTemplate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1632,6 +1662,41 @@ func (s *ListWorkspacesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListZonesResponse struct {
+	// NextPageToken: Continuation token for fetching the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Zone: All GTM Zones of a GTM Container.
+	Zone []*Zone `json:"zone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListZonesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListZonesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MergeConflict: Represents a merge conflict.
 type MergeConflict struct {
 	// EntityInBaseVersion: The base version entity (since the latest sync
@@ -1978,6 +2043,40 @@ func (s *RevertVariableResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RevertZoneResponse: The result of reverting a zone in a workspace.
+type RevertZoneResponse struct {
+	// Zone: Zone as it appears in the latest container version since the
+	// last workspace synchronization operation. If no zone is present, that
+	// means the zone was deleted in the latest container version.
+	Zone *Zone `json:"zone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Zone") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Zone") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevertZoneResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RevertZoneResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SetupTag: Represents a reference to atag that fires before another
 // tag in order to set up dependencies.
 type SetupTag struct {
@@ -2240,17 +2339,20 @@ func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 }
 
 // Timestamp: A Timestamp represents a point in time independent of any
-// time zone or calendar, represented as seconds and fractions of
-// seconds at nanosecond resolution in UTC Epoch time. It is encoded
-// using the Proleptic Gregorian Calendar which extends the Gregorian
-// calendar backwards to year one. It is encoded assuming all minutes
-// are 60 seconds long, i.e. leap seconds are "smeared" so that no leap
-// second table is needed for interpretation. Range is from
-// 0001-01-01T00:00:00Z to 9999-12-31T23:59:59.999999999Z. By
-// restricting to that range, we ensure that we can convert to and from
-// RFC 3339 date strings. See
-// [https://www.ietf.org/rfc/rfc3339.txt](https://www.ietf.org/rfc/rfc333
-// 9.txt).
+// time zone or local calendar, encoded as a count of seconds and
+// fractions of seconds at nanosecond resolution. The count is relative
+// to an epoch at UTC midnight on January 1, 1970, in the proleptic
+// Gregorian calendar which extends the Gregorian calendar backwards to
+// year one.
+//
+// All minutes are 60 seconds long. Leap seconds are "smeared" so that
+// no leap second table is needed for interpretation, using a [24-hour
+// linear smear](https://developers.google.com/time/smear).
+//
+// The range is from 0001-01-01T00:00:00Z to
+// 9999-12-31T23:59:59.999999999Z. By restricting to that range, we
+// ensure that we can convert to and from [RFC
+// 3339](https://www.ietf.org/rfc/rfc3339.txt) date strings.
 //
 // # Examples
 //
@@ -2302,8 +2404,10 @@ func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 // {day}, {hour}, {min}, and {sec} are zero-padded to two digits each.
 // The fractional seconds, which can go up to 9 digits (i.e. up to 1
 // nanosecond resolution), are optional. The "Z" suffix indicates the
-// timezone ("UTC"); the timezone is required, though only UTC (as
-// indicated by "Z") is presently supported.
+// timezone ("UTC"); the timezone is required. A proto3 JSON serializer
+// should always use UTC (as indicated by "Z") when printing the
+// Timestamp type and a proto3 JSON parser should be able to accept both
+// UTC and other timezones (as indicated by an offset).
 //
 // For example, "2017-01-15T01:30:15.01Z" encodes 15.01 seconds past
 // 01:30 UTC on January 15, 2017.
@@ -2311,13 +2415,13 @@ func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 // In JavaScript, one can convert a Date object to this format using the
 // standard
 // [toISOString()](https://developer.mozilla.org/en-US/docs/Web/JavaScrip
-// t/Reference/Global_Objects/Date/toISOString] method. In Python, a
+// t/Reference/Global_Objects/Date/toISOString) method. In Python, a
 // standard `datetime.datetime` object can be converted to this format
 // using
 // [`strftime`](https://docs.python.org/2/library/time.html#time.strftime
 // ) with the time format spec '%Y-%m-%dT%H:%M:%S.%fZ'. Likewise, in
 // Java, one can use the Joda Time's [`ISODateTimeFormat.dateTime()`](
-// http://joda-time.sourceforge.net/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime()) to obtain a formatter capable of generating timestamps in this
+// http://www.joda.org/joda-time/apidocs/org/joda/time/format/ISODateTimeFormat.html#dateTime%2D%2D ) to obtain a formatter capable of generating timestamps in this
 // format.
 type Timestamp struct {
 	// Nanos: Non-negative fractions of a second at nanosecond resolution.
@@ -2547,55 +2651,6 @@ func (s *Trigger) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpdateWorkspaceProposalRequest: Updates a workspace proposal with
-// patch-like semantics.
-type UpdateWorkspaceProposalRequest struct {
-	// Fingerprint: When provided, this fingerprint must match the
-	// fingerprint of the proposal in storage.
-	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// NewComment: If present, a new comment is added to the workspace
-	// proposal history.
-	NewComment *WorkspaceProposalHistoryComment `json:"newComment,omitempty"`
-
-	// Reviewers: If present, the list of reviewers of the workspace
-	// proposal is updated.
-	Reviewers []*WorkspaceProposalUser `json:"reviewers,omitempty"`
-
-	// Status: If present, the status of the workspace proposal is updated.
-	//
-	// Possible values:
-	//   "approved"
-	//   "cancelled"
-	//   "completed"
-	//   "requested"
-	//   "reviewed"
-	//   "statusUnspecified"
-	Status string `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Fingerprint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Fingerprint") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UpdateWorkspaceProposalRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UpdateWorkspaceProposalRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // UserPermission: Represents a user's permissions to an account and its
 // container.
 type UserPermission struct {
@@ -2666,6 +2721,9 @@ type Variable struct {
 	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
 
+	// FormatValue: Option to convert a variable value to other value.
+	FormatValue *VariableFormatValue `json:"formatValue,omitempty"`
+
 	// Name: Variable display name.
 	Name string `json:"name,omitempty"`
 
@@ -2728,6 +2786,54 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type VariableFormatValue struct {
+	// CaseConversionType: The option to convert a string-type variable
+	// value to either lowercase or uppercase.
+	//
+	// Possible values:
+	//   "lowercase"
+	//   "none"
+	//   "uppercase"
+	CaseConversionType string `json:"caseConversionType,omitempty"`
+
+	// ConvertFalseToValue: The value to convert if a variable value is
+	// false.
+	ConvertFalseToValue *Parameter `json:"convertFalseToValue,omitempty"`
+
+	// ConvertNullToValue: The value to convert if a variable value is null.
+	ConvertNullToValue *Parameter `json:"convertNullToValue,omitempty"`
+
+	// ConvertTrueToValue: The value to convert if a variable value is true.
+	ConvertTrueToValue *Parameter `json:"convertTrueToValue,omitempty"`
+
+	// ConvertUndefinedToValue: The value to convert if a variable value is
+	// undefined.
+	ConvertUndefinedToValue *Parameter `json:"convertUndefinedToValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CaseConversionType")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CaseConversionType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VariableFormatValue) MarshalJSON() ([]byte, error) {
+	type NoMethod VariableFormatValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Workspace: Represents a Google Tag Manager Container Workspace.
 type Workspace struct {
 	// AccountId: GTM Account ID.
@@ -2783,229 +2889,6 @@ func (s *Workspace) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// WorkspaceProposal: A workspace proposal represents an ongoing review
-// of workspace changes in an effort to gain approval for container
-// version creation.
-type WorkspaceProposal struct {
-	// Authors: List of authors for the workspace proposal.
-	Authors []*WorkspaceProposalUser `json:"authors,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM workspace proposal as
-	// computed at storage time. This value is recomputed whenever the
-	// proposal is modified.
-	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// History: Records the history of comments and status changes.
-	History []*WorkspaceProposalHistory `json:"history,omitempty"`
-
-	// Path: GTM workspace proposal's relative path.
-	Path string `json:"path,omitempty"`
-
-	// Reviewers: Lists of reviewers for the workspace proposal.
-	Reviewers []*WorkspaceProposalUser `json:"reviewers,omitempty"`
-
-	// Status: The status of the workspace proposal as it goes through
-	// review.
-	//
-	// Possible values:
-	//   "approved"
-	//   "cancelled"
-	//   "completed"
-	//   "requested"
-	//   "reviewed"
-	//   "statusUnspecified"
-	Status string `json:"status,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Authors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Authors") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WorkspaceProposal) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkspaceProposal
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WorkspaceProposalHistory: A history event that represents a comment
-// or status change in the proposal.
-type WorkspaceProposalHistory struct {
-	// Comment: A user or reviewer comment.
-	Comment *WorkspaceProposalHistoryComment `json:"comment,omitempty"`
-
-	// CreatedBy: The party responsible for the change in history.
-	CreatedBy *WorkspaceProposalUser `json:"createdBy,omitempty"`
-
-	// CreatedTimestamp: When this history event was added to the workspace
-	// proposal.
-	CreatedTimestamp *Timestamp `json:"createdTimestamp,omitempty"`
-
-	// StatusChange: A change in the proposal's status.
-	StatusChange *WorkspaceProposalHistoryStatusChange `json:"statusChange,omitempty"`
-
-	// Type: The history type distinguishing between comments and status
-	// changes.
-	//
-	// Possible values:
-	//   "comment"
-	//   "statusChange"
-	//   "unspecified"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Comment") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Comment") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WorkspaceProposalHistory) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkspaceProposalHistory
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WorkspaceProposalHistoryComment: A comment from the reviewer or
-// author.
-type WorkspaceProposalHistoryComment struct {
-	// Content: The contents of the reviewer or author comment.
-	Content string `json:"content,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WorkspaceProposalHistoryComment) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkspaceProposalHistoryComment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WorkspaceProposalHistoryStatusChange: A change in the proposal's
-// status.
-type WorkspaceProposalHistoryStatusChange struct {
-	// NewStatus: The new proposal status after that status change.
-	//
-	// Possible values:
-	//   "approved"
-	//   "cancelled"
-	//   "completed"
-	//   "requested"
-	//   "reviewed"
-	//   "statusUnspecified"
-	NewStatus string `json:"newStatus,omitempty"`
-
-	// OldStatus: The old proposal status before the status change.
-	//
-	// Possible values:
-	//   "approved"
-	//   "cancelled"
-	//   "completed"
-	//   "requested"
-	//   "reviewed"
-	//   "statusUnspecified"
-	OldStatus string `json:"oldStatus,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NewStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NewStatus") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WorkspaceProposalHistoryStatusChange) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkspaceProposalHistoryStatusChange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// WorkspaceProposalUser: Represents an external user or internal Google
-// Tag Manager system.
-type WorkspaceProposalUser struct {
-	// GaiaId: Gaia id associated with a user, absent for the Google Tag
-	// Manager system.
-	GaiaId int64 `json:"gaiaId,omitempty,string"`
-
-	// Type: User type distinguishes between a user and the Google Tag
-	// Manager system.
-	//
-	// Possible values:
-	//   "gaiaId"
-	//   "system"
-	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "GaiaId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GaiaId") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *WorkspaceProposalUser) MarshalJSON() ([]byte, error) {
-	type NoMethod WorkspaceProposalUser
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Zone: Represents a Google Tag Manager Zone's contents.
 type Zone struct {
 	// AccountId: GTM Account ID.
@@ -3044,6 +2927,10 @@ type Zone struct {
 
 	// ZoneId: The Zone ID uniquely identifies the GTM Zone.
 	ZoneId string `json:"zoneId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
@@ -4873,157 +4760,6 @@ func (c *AccountsContainersEnvironmentsListCall) Pages(ctx context.Context, f fu
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "tagmanager.accounts.containers.environments.patch":
-
-type AccountsContainersEnvironmentsPatchCall struct {
-	s           *Service
-	path        string
-	environment *Environment
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Patch: Updates a GTM Environment. This method supports patch
-// semantics.
-func (r *AccountsContainersEnvironmentsService) Patch(path string, environment *Environment) *AccountsContainersEnvironmentsPatchCall {
-	c := &AccountsContainersEnvironmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.path = path
-	c.environment = environment
-	return c
-}
-
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the environment in
-// storage.
-func (c *AccountsContainersEnvironmentsPatchCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsPatchCall {
-	c.urlParams_.Set("fingerprint", fingerprint)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsContainersEnvironmentsPatchCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsContainersEnvironmentsPatchCall) Context(ctx context.Context) *AccountsContainersEnvironmentsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsContainersEnvironmentsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsContainersEnvironmentsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"path": c.path,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "tagmanager.accounts.containers.environments.patch" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *AccountsContainersEnvironmentsPatchCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Environment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a GTM Environment. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "tagmanager.accounts.containers.environments.patch",
-	//   "parameterOrder": [
-	//     "path"
-	//   ],
-	//   "parameters": {
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "path": {
-	//       "description": "GTM Environment's API relative path. Example: accounts/{account_id}/containers/{container_id}/environments/{environment_id}",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{+path}",
-	//   "request": {
-	//     "$ref": "Environment"
-	//   },
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
 
 // method id "tagmanager.accounts.containers.environments.reauthorize":
@@ -7103,144 +6839,6 @@ func (c *AccountsContainersWorkspacesGetCall) Do(opts ...googleapi.CallOption) (
 
 }
 
-// method id "tagmanager.accounts.containers.workspaces.getProposal":
-
-type AccountsContainersWorkspacesGetProposalCall struct {
-	s            *Service
-	path         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// GetProposal: Gets a GTM Workspace Proposal.
-func (r *AccountsContainersWorkspacesService) GetProposal(path string) *AccountsContainersWorkspacesGetProposalCall {
-	c := &AccountsContainersWorkspacesGetProposalCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.path = path
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsContainersWorkspacesGetProposalCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesGetProposalCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *AccountsContainersWorkspacesGetProposalCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesGetProposalCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsContainersWorkspacesGetProposalCall) Context(ctx context.Context) *AccountsContainersWorkspacesGetProposalCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsContainersWorkspacesGetProposalCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsContainersWorkspacesGetProposalCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"path": c.path,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "tagmanager.accounts.containers.workspaces.getProposal" call.
-// Exactly one of *WorkspaceProposal or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *WorkspaceProposal.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountsContainersWorkspacesGetProposalCall) Do(opts ...googleapi.CallOption) (*WorkspaceProposal, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &WorkspaceProposal{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Gets a GTM Workspace Proposal.",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.workspaces.getProposal",
-	//   "parameterOrder": [
-	//     "path"
-	//   ],
-	//   "parameters": {
-	//     "path": {
-	//       "description": "GTM workspace proposal's relative path: Example: accounts/{aid}/containers/{cid}/workspace/{wid}/workspace_proposal",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{+path}",
-	//   "response": {
-	//     "$ref": "WorkspaceProposal"
-	//   }
-	// }
-
-}
-
 // method id "tagmanager.accounts.containers.workspaces.getStatus":
 
 type AccountsContainersWorkspacesGetStatusCall struct {
@@ -8084,140 +7682,6 @@ func (c *AccountsContainersWorkspacesUpdateCall) Do(opts ...googleapi.CallOption
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
 	//   ]
-	// }
-
-}
-
-// method id "tagmanager.accounts.containers.workspaces.updateProposal":
-
-type AccountsContainersWorkspacesUpdateProposalCall struct {
-	s                              *Service
-	path                           string
-	updateworkspaceproposalrequest *UpdateWorkspaceProposalRequest
-	urlParams_                     gensupport.URLParams
-	ctx_                           context.Context
-	header_                        http.Header
-}
-
-// UpdateProposal: Updates a GTM Workspace Proposal.
-func (r *AccountsContainersWorkspacesService) UpdateProposal(path string, updateworkspaceproposalrequest *UpdateWorkspaceProposalRequest) *AccountsContainersWorkspacesUpdateProposalCall {
-	c := &AccountsContainersWorkspacesUpdateProposalCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.path = path
-	c.updateworkspaceproposalrequest = updateworkspaceproposalrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsContainersWorkspacesUpdateProposalCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesUpdateProposalCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsContainersWorkspacesUpdateProposalCall) Context(ctx context.Context) *AccountsContainersWorkspacesUpdateProposalCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsContainersWorkspacesUpdateProposalCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsContainersWorkspacesUpdateProposalCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateworkspaceproposalrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PUT", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"path": c.path,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "tagmanager.accounts.containers.workspaces.updateProposal" call.
-// Exactly one of *WorkspaceProposal or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *WorkspaceProposal.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountsContainersWorkspacesUpdateProposalCall) Do(opts ...googleapi.CallOption) (*WorkspaceProposal, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &WorkspaceProposal{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Updates a GTM Workspace Proposal.",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.workspaces.updateProposal",
-	//   "parameterOrder": [
-	//     "path"
-	//   ],
-	//   "parameters": {
-	//     "path": {
-	//       "description": "GTM workspace proposal's relative path: Example: accounts/{aid}/containers/{cid}/workspace/{wid}/workspace_proposal",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{+path}",
-	//   "request": {
-	//     "$ref": "UpdateWorkspaceProposalRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "WorkspaceProposal"
-	//   }
 	// }
 
 }
@@ -10885,236 +10349,6 @@ func (c *AccountsContainersWorkspacesFoldersUpdateCall) Do(opts ...googleapi.Cal
 
 }
 
-// method id "tagmanager.accounts.containers.workspaces.proposal.create":
-
-type AccountsContainersWorkspacesProposalCreateCall struct {
-	s                              *Service
-	parent                         string
-	createworkspaceproposalrequest *CreateWorkspaceProposalRequest
-	urlParams_                     gensupport.URLParams
-	ctx_                           context.Context
-	header_                        http.Header
-}
-
-// Create: Creates a GTM Workspace Proposal.
-func (r *AccountsContainersWorkspacesProposalService) Create(parent string, createworkspaceproposalrequest *CreateWorkspaceProposalRequest) *AccountsContainersWorkspacesProposalCreateCall {
-	c := &AccountsContainersWorkspacesProposalCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.createworkspaceproposalrequest = createworkspaceproposalrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsContainersWorkspacesProposalCreateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesProposalCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsContainersWorkspacesProposalCreateCall) Context(ctx context.Context) *AccountsContainersWorkspacesProposalCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsContainersWorkspacesProposalCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsContainersWorkspacesProposalCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createworkspaceproposalrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+parent}/proposal")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "tagmanager.accounts.containers.workspaces.proposal.create" call.
-// Exactly one of *WorkspaceProposal or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *WorkspaceProposal.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *AccountsContainersWorkspacesProposalCreateCall) Do(opts ...googleapi.CallOption) (*WorkspaceProposal, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &WorkspaceProposal{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Creates a GTM Workspace Proposal.",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.workspaces.proposal.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "GTM Workspace's API relative path. Example: accounts/{aid}/containers/{cid}/workspace/{wid}",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{+parent}/proposal",
-	//   "request": {
-	//     "$ref": "CreateWorkspaceProposalRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "WorkspaceProposal"
-	//   }
-	// }
-
-}
-
-// method id "tagmanager.accounts.containers.workspaces.proposal.delete":
-
-type AccountsContainersWorkspacesProposalDeleteCall struct {
-	s          *Service
-	path       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a GTM Workspace Proposal.
-func (r *AccountsContainersWorkspacesProposalService) Delete(path string) *AccountsContainersWorkspacesProposalDeleteCall {
-	c := &AccountsContainersWorkspacesProposalDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.path = path
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *AccountsContainersWorkspacesProposalDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesProposalDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *AccountsContainersWorkspacesProposalDeleteCall) Context(ctx context.Context) *AccountsContainersWorkspacesProposalDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *AccountsContainersWorkspacesProposalDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *AccountsContainersWorkspacesProposalDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"path": c.path,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "tagmanager.accounts.containers.workspaces.proposal.delete" call.
-func (c *AccountsContainersWorkspacesProposalDeleteCall) Do(opts ...googleapi.CallOption) error {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if err != nil {
-		return err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return err
-	}
-	return nil
-	// {
-	//   "description": "Deletes a GTM Workspace Proposal.",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.workspaces.proposal.delete",
-	//   "parameterOrder": [
-	//     "path"
-	//   ],
-	//   "parameters": {
-	//     "path": {
-	//       "description": "GTM workspace proposal's relative path: Example: accounts/{aid}/containers/{cid}/workspace/{wid}/workspace_proposal",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "{+path}"
-	// }
-
-}
-
 // method id "tagmanager.accounts.containers.workspaces.tags.create":
 
 type AccountsContainersWorkspacesTagsCreateCall struct {
@@ -13634,6 +12868,847 @@ func (c *AccountsContainersWorkspacesVariablesUpdateCall) Do(opts ...googleapi.C
 	//   },
 	//   "response": {
 	//     "$ref": "Variable"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.create":
+
+type AccountsContainersWorkspacesZonesCreateCall struct {
+	s          *Service
+	parent     string
+	zone       *Zone
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a GTM Zone.
+func (r *AccountsContainersWorkspacesZonesService) Create(parent string, zone *Zone) *AccountsContainersWorkspacesZonesCreateCall {
+	c := &AccountsContainersWorkspacesZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.zone = zone
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesCreateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesCreateCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zone)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+parent}/zones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.create" call.
+// Exactly one of *Zone or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Zone.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsContainersWorkspacesZonesCreateCall) Do(opts ...googleapi.CallOption) (*Zone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Zone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a GTM Zone.",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+parent}/zones",
+	//   "request": {
+	//     "$ref": "Zone"
+	//   },
+	//   "response": {
+	//     "$ref": "Zone"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.delete":
+
+type AccountsContainersWorkspacesZonesDeleteCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a GTM Zone.
+func (r *AccountsContainersWorkspacesZonesService) Delete(path string) *AccountsContainersWorkspacesZonesDeleteCall {
+	c := &AccountsContainersWorkspacesZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesDeleteCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.delete" call.
+func (c *AccountsContainersWorkspacesZonesDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return err
+	}
+	return nil
+	// {
+	//   "description": "Deletes a GTM Zone.",
+	//   "httpMethod": "DELETE",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.delete",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Zone's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/zones/{zone_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+path}",
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.get":
+
+type AccountsContainersWorkspacesZonesGetCall struct {
+	s            *Service
+	path         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a GTM Zone.
+func (r *AccountsContainersWorkspacesZonesService) Get(path string) *AccountsContainersWorkspacesZonesGetCall {
+	c := &AccountsContainersWorkspacesZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesGetCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesZonesGetCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesZonesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesGetCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.get" call.
+// Exactly one of *Zone or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Zone.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsContainersWorkspacesZonesGetCall) Do(opts ...googleapi.CallOption) (*Zone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Zone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a GTM Zone.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.get",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "path": {
+	//       "description": "GTM Zone's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/zones/{zone_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+path}",
+	//   "response": {
+	//     "$ref": "Zone"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.list":
+
+type AccountsContainersWorkspacesZonesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all GTM Zones of a GTM container workspace.
+func (r *AccountsContainersWorkspacesZonesService) List(parent string) *AccountsContainersWorkspacesZonesListCall {
+	c := &AccountsContainersWorkspacesZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Continuation token
+// for fetching the next page of results.
+func (c *AccountsContainersWorkspacesZonesListCall) PageToken(pageToken string) *AccountsContainersWorkspacesZonesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesListCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsContainersWorkspacesZonesListCall) IfNoneMatch(entityTag string) *AccountsContainersWorkspacesZonesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesListCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+parent}/zones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.list" call.
+// Exactly one of *ListZonesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListZonesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesZonesListCall) Do(opts ...googleapi.CallOption) (*ListZonesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListZonesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all GTM Zones of a GTM container workspace.",
+	//   "httpMethod": "GET",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageToken": {
+	//       "description": "Continuation token for fetching the next page of results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "GTM Workspace's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+parent}/zones",
+	//   "response": {
+	//     "$ref": "ListZonesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
+	//     "https://www.googleapis.com/auth/tagmanager.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsContainersWorkspacesZonesListCall) Pages(ctx context.Context, f func(*ListZonesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.revert":
+
+type AccountsContainersWorkspacesZonesRevertCall struct {
+	s          *Service
+	path       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Revert: Reverts changes to a GTM Zone in a GTM Workspace.
+func (r *AccountsContainersWorkspacesZonesService) Revert(path string) *AccountsContainersWorkspacesZonesRevertCall {
+	c := &AccountsContainersWorkspacesZonesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the zone in storage.
+func (c *AccountsContainersWorkspacesZonesRevertCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesZonesRevertCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesRevertCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesRevertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesRevertCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesRevertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesRevertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesRevertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}:revert")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.revert" call.
+// Exactly one of *RevertZoneResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *RevertZoneResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsContainersWorkspacesZonesRevertCall) Do(opts ...googleapi.CallOption) (*RevertZoneResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &RevertZoneResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reverts changes to a GTM Zone in a GTM Workspace.",
+	//   "httpMethod": "POST",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.revert",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the zone in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Zone's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/zones/{zone_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+path}:revert",
+	//   "response": {
+	//     "$ref": "RevertZoneResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
+	//   ]
+	// }
+
+}
+
+// method id "tagmanager.accounts.containers.workspaces.zones.update":
+
+type AccountsContainersWorkspacesZonesUpdateCall struct {
+	s          *Service
+	path       string
+	zone       *Zone
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Update: Updates a GTM Zone.
+func (r *AccountsContainersWorkspacesZonesService) Update(path string, zone *Zone) *AccountsContainersWorkspacesZonesUpdateCall {
+	c := &AccountsContainersWorkspacesZonesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.path = path
+	c.zone = zone
+	return c
+}
+
+// Fingerprint sets the optional parameter "fingerprint": When provided,
+// this fingerprint must match the fingerprint of the zone in storage.
+func (c *AccountsContainersWorkspacesZonesUpdateCall) Fingerprint(fingerprint string) *AccountsContainersWorkspacesZonesUpdateCall {
+	c.urlParams_.Set("fingerprint", fingerprint)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsContainersWorkspacesZonesUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersWorkspacesZonesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsContainersWorkspacesZonesUpdateCall) Context(ctx context.Context) *AccountsContainersWorkspacesZonesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsContainersWorkspacesZonesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsContainersWorkspacesZonesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.zone)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+path}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"path": c.path,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "tagmanager.accounts.containers.workspaces.zones.update" call.
+// Exactly one of *Zone or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Zone.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AccountsContainersWorkspacesZonesUpdateCall) Do(opts ...googleapi.CallOption) (*Zone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Zone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a GTM Zone.",
+	//   "httpMethod": "PUT",
+	//   "id": "tagmanager.accounts.containers.workspaces.zones.update",
+	//   "parameterOrder": [
+	//     "path"
+	//   ],
+	//   "parameters": {
+	//     "fingerprint": {
+	//       "description": "When provided, this fingerprint must match the fingerprint of the zone in storage.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "path": {
+	//       "description": "GTM Zone's API relative path. Example: accounts/{account_id}/containers/{container_id}/workspaces/{workspace_id}/zones/{zone_id}",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+path}",
+	//   "request": {
+	//     "$ref": "Zone"
+	//   },
+	//   "response": {
+	//     "$ref": "Zone"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"

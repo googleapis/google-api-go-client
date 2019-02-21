@@ -2219,6 +2219,37 @@ func (s *HtmlValues) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type IndexItemOptions struct {
+	// AllowUnknownGsuitePrincipals: Specifies if the index request should
+	// allow gsuite principals that do not
+	// exist or are deleted in the index request.
+	AllowUnknownGsuitePrincipals bool `json:"allowUnknownGsuitePrincipals,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowUnknownGsuitePrincipals") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AllowUnknownGsuitePrincipals") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IndexItemOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod IndexItemOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type IndexItemRequest struct {
 	// ConnectorName: Name of connector making this call.
 	// <br />Format: datasources/{source_id}/connectors/{ID}
@@ -2226,6 +2257,8 @@ type IndexItemRequest struct {
 
 	// DebugOptions: Common debug options.
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
+
+	IndexItemOptions *IndexItemOptions `json:"indexItemOptions,omitempty"`
 
 	// Item: Name of the item.
 	// Format:
@@ -4025,18 +4058,18 @@ type PropertyDefinition struct {
 	IsRepeatable bool `json:"isRepeatable,omitempty"`
 
 	// IsReturnable: Indicates that the property identifies data that should
-	// be returned in search
-	// results via the Query API. If set to *true*, indicates that Query
-	// API
-	// users can use matching property fields in results. However, storing
-	// fields
-	// requires more space allocation and uses more bandwidth for search
-	// queries,
-	// which impacts performance over large datasets. Set to *true* here
-	// only if
-	// the field is needed for search results. Cannot be true for
-	// properties
-	// whose type is an object.
+	// be returned in
+	// search results via the Query API. If set to *true*, indicates that
+	// Query
+	// API users can use matching property fields in results. However,
+	// storing
+	// fields requires more space allocation and uses more bandwidth for
+	// search
+	// queries, which impacts performance over large datasets. Set to *true*
+	// here
+	// only if the field is needed for search results. Cannot be true
+	// for
+	// properties whose type is an object.
 	IsReturnable bool `json:"isReturnable,omitempty"`
 
 	// IsSortable: Indicates that the property can be used for sorting.
@@ -5029,8 +5062,8 @@ type SearchApplication struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationIds: IDs of the Long Running Operations (LROs) currently
-	// running for this schema.
-	// Output only field.
+	// running for this
+	// schema. Output only field.
 	OperationIds []string `json:"operationIds,omitempty"`
 
 	// ScoringConfig: Configuration for ranking results.
@@ -5868,6 +5901,7 @@ func (s *StructuredDataObject) MarshalJSON() ([]byte, error) {
 // StructuredResult: Structured results that are returned as part of
 // search request.
 type StructuredResult struct {
+	// Person: Representation of a person
 	Person *Person `json:"person,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Person") to

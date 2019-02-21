@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190212",
+  "revision": "20190219",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1528,7 +1528,7 @@
       "properties": {
         "jobNotificationEmails": {
           "$ref": "GooglePrivacyDlpV2JobNotificationEmails",
-          "description": "Enable email notification to project owners and editors on job‘s\ncompletion/failure."
+          "description": "Enable email notification to project owners and editors on job's\ncompletion/failure."
         },
         "pubSub": {
           "$ref": "GooglePrivacyDlpV2PublishToPubSub",
@@ -2046,7 +2046,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Condition": {
-      "description": "The field type of `value` and `field` do not need to match to be\nconsidered equal, but not all comparisons are possible.\n\nA `value` of type:\n\n- `string` can be compared against all other types\n- `boolean` can only be compared against other booleans\n- `integer` can be compared against doubles or a string if the string value\ncan be parsed as an integer.\n- `double` can be compared against integers or a string if the string can\nbe parsed as a double.\n- `Timestamp` can be compared against strings in RFC 3339 date string\nformat.\n- `TimeOfDay` can be compared against timestamps and strings in the format\nof 'HH:mm:ss'.\n\nIf we fail to compare do to type mismatch, a warning will be given and\nthe condition will evaluate to false.",
+      "description": "The field type of `value` and `field` do not need to match to be\nconsidered equal, but not all comparisons are possible.\nEQUAL_TO and NOT_EQUAL_TO attempt to compare even with incompatible types,\nbut all other comparisons are invalid with incompatible types.\nA `value` of type:\n\n- `string` can be compared against all other types\n- `boolean` can only be compared against other booleans\n- `integer` can be compared against doubles or a string if the string value\ncan be parsed as an integer.\n- `double` can be compared against integers or a string if the string can\nbe parsed as a double.\n- `Timestamp` can be compared against strings in RFC 3339 date string\nformat.\n- `TimeOfDay` can be compared against timestamps and strings in the format\nof 'HH:mm:ss'.\n\nIf we fail to compare do to type mismatch, a warning will be given and\nthe condition will evaluate to false.",
       "id": "GooglePrivacyDlpV2Condition",
       "properties": {
         "field": {
@@ -2067,8 +2067,8 @@
           ],
           "enumDescriptions": [
             "",
-            "Equal.",
-            "Not equal to.",
+            "Equal. Attempts to match even with incompatible types.",
+            "Not equal to. Attempts to match even with incompatible types.",
             "Greater than.",
             "Less than.",
             "Greater than or equals.",
@@ -2964,12 +2964,12 @@
           "type": "array"
         },
         "maxFindingsPerItem": {
-          "description": "Max number of findings that will be returned for each item scanned.\nWhen set within `InspectDataSourceRequest`,\nthe maximum returned is 1000 regardless if this is set higher.\nWhen set within `InspectContentRequest`, this field is ignored.",
+          "description": "Max number of findings that will be returned for each item scanned.\nWhen set within `InspectDataSourceRequest`,\nthe maximum returned is 2000 regardless if this is set higher.\nWhen set within `InspectContentRequest`, this field is ignored.",
           "format": "int32",
           "type": "integer"
         },
         "maxFindingsPerRequest": {
-          "description": "Max number of findings that will be returned per request/job.\nWhen set within `InspectContentRequest`, the maximum returned is 1000\nregardless if this is set higher.",
+          "description": "Max number of findings that will be returned per request/job.\nWhen set within `InspectContentRequest`, the maximum returned is 2000\nregardless if this is set higher.",
           "format": "int32",
           "type": "integer"
         }

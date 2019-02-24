@@ -565,7 +565,7 @@
       }
     }
   },
-  "revision": "20190128",
+  "revision": "20190220",
   "rootUrl": "https://cloudresourcemanager.googleapis.com/",
   "schemas": {
     "Ancestor": {
@@ -925,7 +925,7 @@
           "type": "string"
         },
         "name": {
-          "description": "The user-assigned display name of the Project.\nIt must be 4 to 30 characters.\nAllowed characters are: lowercase and uppercase letters, numbers,\nhyphen, single-quote, double-quote, space, and exclamation point.\n\nExample: \u003ccode\u003eMy Project\u003c/code\u003e\nRead-write.",
+          "description": "The optional user-assigned display name of the Project.\nWhen present it must be between 4 to 30 characters.\nAllowed characters are: lowercase and uppercase letters, numbers,\nhyphen, single-quote, double-quote, space, and exclamation point.\n\nExample: \u003ccode\u003eMy Project\u003c/code\u003e\nRead-write.",
           "type": "string"
         },
         "parent": {

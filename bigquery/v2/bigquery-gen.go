@@ -2183,6 +2183,13 @@ type JobStatistics struct {
 	// Load: [Output-only] Statistics for a load job.
 	Load *JobStatistics3 `json:"load,omitempty"`
 
+	// NumChildJobs: [Output-only] Number of child jobs executed.
+	NumChildJobs int64 `json:"numChildJobs,omitempty,string"`
+
+	// ParentJobId: [Output-only] If this is a child job, the id of the
+	// parent.
+	ParentJobId string `json:"parentJobId,omitempty"`
+
 	// Query: [Output-only] Statistics for a query job.
 	Query *JobStatistics2 `json:"query,omitempty"`
 
@@ -5922,6 +5929,14 @@ func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	return c
 }
 
+// ParentJobId sets the optional parameter "parentJobId": If set,
+// retrieves only jobs whose parent is this job. Otherwise, retrieves
+// only jobs which have no parent.
+func (c *JobsListCall) ParentJobId(parentJobId string) *JobsListCall {
+	c.urlParams_.Set("parentJobId", parentJobId)
+	return c
+}
+
 // Projection sets the optional parameter "projection": Restrict
 // information returned to a set of selected fields
 //
@@ -6075,6 +6090,11 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 	//     },
 	//     "pageToken": {
 	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parentJobId": {
+	//       "description": "If set, retrieves only jobs whose parent is this job. Otherwise, retrieves only jobs which have no parent.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

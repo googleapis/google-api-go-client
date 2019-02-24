@@ -8000,7 +8000,10 @@ type ProjectsInstancesDatabasesSessionsDeleteCall struct {
 }
 
 // Delete: Ends a session, releasing server resources associated with
-// it.
+// it. This will
+// asynchronously trigger cancellation of any operations that are
+// running with
+// this session.
 func (r *ProjectsInstancesDatabasesSessionsService) Delete(name string) *ProjectsInstancesDatabasesSessionsDeleteCall {
 	c := &ProjectsInstancesDatabasesSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8092,7 +8095,7 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Ends a session, releasing server resources associated with it.",
+	//   "description": "Ends a session, releasing server resources associated with it. This will\nasynchronously trigger cancellation of any operations that are running with\nthis session.",
 	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "spanner.projects.instances.databases.sessions.delete",

@@ -226,6 +226,7 @@ func (s *AllocateQuotaResponse) MarshalJSON() ([]byte, error) {
 // operations.
 //
 //
+//
 type AuditLog struct {
 	// AuthenticationInfo: Authentication information.
 	AuthenticationInfo *AuthenticationInfo `json:"authenticationInfo,omitempty"`
@@ -463,6 +464,17 @@ type AuthenticationInfo struct {
 	// fail
 	// with a "permission denied" error.
 	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ServiceAccountDelegationInfo: Identity delegation history of an
+	// authenticated service account that makes
+	// the request. It contains information on the real authorities that try
+	// to
+	// access GCP resources by delegating on a service account. When
+	// multiple
+	// authorities present, they are guaranteed to be sorted based on the
+	// original
+	// ordering of the identity delegation events.
+	ServiceAccountDelegationInfo []*ServiceAccountDelegationInfo `json:"serviceAccountDelegationInfo,omitempty"`
 
 	// ServiceAccountKeyName: The name of the service account key used to
 	// create or exchange
@@ -1083,6 +1095,41 @@ func (s *ExponentialBuckets) UnmarshalJSON(data []byte) error {
 	s.GrowthFactor = float64(s1.GrowthFactor)
 	s.Scale = float64(s1.Scale)
 	return nil
+}
+
+// FirstPartyPrincipal: First party identity principal.
+type FirstPartyPrincipal struct {
+	// PrincipalEmail: The email address of a Google account.
+	// .
+	PrincipalEmail string `json:"principalEmail,omitempty"`
+
+	// ServiceMetadata: Metadata about the service that uses the service
+	// account.
+	// .
+	ServiceMetadata googleapi.RawMessage `json:"serviceMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrincipalEmail") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrincipalEmail") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FirstPartyPrincipal) MarshalJSON() ([]byte, error) {
+	type NoMethod FirstPartyPrincipal
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // HttpRequest: A common proto for logging HTTP requests. Only contains
@@ -2612,6 +2659,40 @@ func (s *ResourceLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceAccountDelegationInfo: Identity delegation history of an
+// authenticated service account.
+type ServiceAccountDelegationInfo struct {
+	// FirstPartyPrincipal: First party (Google) identity as the real
+	// authority.
+	FirstPartyPrincipal *FirstPartyPrincipal `json:"firstPartyPrincipal,omitempty"`
+
+	// ThirdPartyPrincipal: Third party identity as the real authority.
+	ThirdPartyPrincipal *ThirdPartyPrincipal `json:"thirdPartyPrincipal,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FirstPartyPrincipal")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FirstPartyPrincipal") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceAccountDelegationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAccountDelegationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different
 // programming environments, including REST APIs and RPC APIs. It is
@@ -2727,6 +2808,35 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThirdPartyPrincipal: Third party identity principal.
+type ThirdPartyPrincipal struct {
+	// ThirdPartyClaims: Metadata about third party identity.
+	ThirdPartyClaims googleapi.RawMessage `json:"thirdPartyClaims,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ThirdPartyClaims") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ThirdPartyClaims") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThirdPartyPrincipal) MarshalJSON() ([]byte, error) {
+	type NoMethod ThirdPartyPrincipal
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

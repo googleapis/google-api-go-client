@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ZYECgHEp_WVh6UNpKvl2Vf2w5rw\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/vevhQEzVDceq4B-ApaLKUhTa9zg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -513,6 +513,11 @@
             },
             "pageToken": {
               "description": "Page token, returned by a previous call, to request the next page of results",
+              "location": "query",
+              "type": "string"
+            },
+            "parentJobId": {
+              "description": "If set, retrieves only jobs whose parent is this job. Otherwise, retrieves only jobs which have no parent.",
               "location": "query",
               "type": "string"
             },
@@ -998,7 +1003,7 @@
       }
     }
   },
-  "revision": "20190208",
+  "revision": "20190215",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -2258,6 +2263,15 @@
         "load": {
           "$ref": "JobStatistics3",
           "description": "[Output-only] Statistics for a load job."
+        },
+        "numChildJobs": {
+          "description": "[Output-only] Number of child jobs executed.",
+          "format": "int64",
+          "type": "string"
+        },
+        "parentJobId": {
+          "description": "[Output-only] If this is a child job, the id of the parent.",
+          "type": "string"
         },
         "query": {
           "$ref": "JobStatistics2",

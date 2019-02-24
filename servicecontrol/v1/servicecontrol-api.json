@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190211",
+  "revision": "20190217",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -261,7 +261,7 @@
       "type": "object"
     },
     "AuditLog": {
-      "description": "Common audit log format for Google Cloud Platform API operations.\n\n",
+      "description": "Common audit log format for Google Cloud Platform API operations.\n\n\n",
       "id": "AuditLog",
       "properties": {
         "authenticationInfo": {
@@ -395,6 +395,13 @@
         "principalEmail": {
           "description": "The email address of the authenticated user (or service account on behalf\nof third party principal) making the request. For privacy reasons, the\nprincipal email address is redacted for all read-only operations that fail\nwith a \"permission denied\" error.",
           "type": "string"
+        },
+        "serviceAccountDelegationInfo": {
+          "description": "Identity delegation history of an authenticated service account that makes\nthe request. It contains information on the real authorities that try to\naccess GCP resources by delegating on a service account. When multiple\nauthorities present, they are guaranteed to be sorted based on the original\nordering of the identity delegation events.",
+          "items": {
+            "$ref": "ServiceAccountDelegationInfo"
+          },
+          "type": "array"
         },
         "serviceAccountKeyName": {
           "description": "The name of the service account key used to create or exchange\ncredentials for authenticating the service account making the request.\nThis is a scheme-less URI full resource name. For example:\n\n\"//iam.googleapis.com/projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}/keys/{key}\"",
@@ -721,6 +728,25 @@
           "description": "The i'th exponential bucket covers the interval\n  [scale * growth_factor^(i-1), scale * growth_factor^i)\nwhere i ranges from 1 to num_finite_buckets inclusive.\nMust be \u003e 0.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "FirstPartyPrincipal": {
+      "description": "First party identity principal.",
+      "id": "FirstPartyPrincipal",
+      "properties": {
+        "principalEmail": {
+          "description": "The email address of a Google account.\n.",
+          "type": "string"
+        },
+        "serviceMetadata": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Metadata about the service that uses the service account.\n.",
+          "type": "object"
         }
       },
       "type": "object"
@@ -1519,6 +1545,21 @@
       },
       "type": "object"
     },
+    "ServiceAccountDelegationInfo": {
+      "description": "Identity delegation history of an authenticated service account.",
+      "id": "ServiceAccountDelegationInfo",
+      "properties": {
+        "firstPartyPrincipal": {
+          "$ref": "FirstPartyPrincipal",
+          "description": "First party (Google) identity as the real authority."
+        },
+        "thirdPartyPrincipal": {
+          "$ref": "ThirdPartyPrincipal",
+          "description": "Third party identity as the real authority."
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
@@ -1542,6 +1583,21 @@
         "message": {
           "description": "A developer-facing error message, which should be in English. Any\nuser-facing error message should be localized and sent in the\ngoogle.rpc.Status.details field, or localized by the client.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ThirdPartyPrincipal": {
+      "description": "Third party identity principal.",
+      "id": "ThirdPartyPrincipal",
+      "properties": {
+        "thirdPartyClaims": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Metadata about third party identity.",
+          "type": "object"
         }
       },
       "type": "object"

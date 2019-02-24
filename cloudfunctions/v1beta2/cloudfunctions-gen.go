@@ -285,7 +285,9 @@ type CloudFunction struct {
 	// Node.js 6.
 	Runtime string `json:"runtime,omitempty"`
 
-	// ServiceAccount: Output only. The service account of the function.
+	// ServiceAccount: The email of the function's service account. If
+	// empty, defaults to
+	// {project_id}@appspot.gserviceaccount.com.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SourceArchiveUrl: The Google Cloud Storage URL, starting with gs://,
@@ -2329,12 +2331,23 @@ type ProjectsLocationsFunctionsGenerateUploadUrlCall struct {
 //
 // * Source file type should be a zip file.
 // * Source file size should not exceed 100MB limit.
+// * No credentials should be attached - the signed URLs provide access
+// to the
+//   target bucket using internal service identity; if credentials were
+//   attached, the identity from the credentials would be used, but
+// that
+//   identity does not have permissions to upload files to the
+// URL.
 //
 // When making a HTTP PUT request, these two headers need to be
 // specified:
 //
 // * `content-type: application/zip`
 // * `x-goog-content-length-range: 0,104857600`
+//
+// And this header SHOULD NOT be specified:
+//
+// * `Authorization: Bearer YOUR_TOKEN`
 func (r *ProjectsLocationsFunctionsService) GenerateUploadUrl(parent string, generateuploadurlrequest *GenerateUploadUrlRequest) *ProjectsLocationsFunctionsGenerateUploadUrlCall {
 	c := &ProjectsLocationsFunctionsGenerateUploadUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2432,7 +2445,7 @@ func (c *ProjectsLocationsFunctionsGenerateUploadUrlCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a signed URL for uploading a function source code.\nFor more information about the signed URL usage see:\nhttps://cloud.google.com/storage/docs/access-control/signed-urls\nOnce the function source code upload is complete, the used signed\nURL should be provided in CreateFunction or UpdateFunction request\nas a reference to the function source code.\n\nWhen uploading source code to the generated signed URL, please follow\nthese restrictions:\n\n* Source file type should be a zip file.\n* Source file size should not exceed 100MB limit.\n\nWhen making a HTTP PUT request, these two headers need to be specified:\n\n* `content-type: application/zip`\n* `x-goog-content-length-range: 0,104857600`",
+	//   "description": "Returns a signed URL for uploading a function source code.\nFor more information about the signed URL usage see:\nhttps://cloud.google.com/storage/docs/access-control/signed-urls\nOnce the function source code upload is complete, the used signed\nURL should be provided in CreateFunction or UpdateFunction request\nas a reference to the function source code.\n\nWhen uploading source code to the generated signed URL, please follow\nthese restrictions:\n\n* Source file type should be a zip file.\n* Source file size should not exceed 100MB limit.\n* No credentials should be attached - the signed URLs provide access to the\n  target bucket using internal service identity; if credentials were\n  attached, the identity from the credentials would be used, but that\n  identity does not have permissions to upload files to the URL.\n\nWhen making a HTTP PUT request, these two headers need to be specified:\n\n* `content-type: application/zip`\n* `x-goog-content-length-range: 0,104857600`\n\nAnd this header SHOULD NOT be specified:\n\n* `Authorization: Bearer YOUR_TOKEN`",
 	//   "flatPath": "v1beta2/projects/{projectsId}/locations/{locationsId}/functions:generateUploadUrl",
 	//   "httpMethod": "POST",
 	//   "id": "cloudfunctions.projects.locations.functions.generateUploadUrl",

@@ -1907,8 +1907,8 @@ type Project struct {
 	// not returned by the API.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The user-assigned display name of the Project.
-	// It must be 4 to 30 characters.
+	// Name: The optional user-assigned display name of the Project.
+	// When present it must be between 4 to 30 characters.
 	// Allowed characters are: lowercase and uppercase letters,
 	// numbers,
 	// hyphen, single-quote, double-quote, space, and exclamation

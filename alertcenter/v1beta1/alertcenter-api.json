@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190213",
+  "revision": "20190221",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -405,7 +405,7 @@
           "type": "boolean"
         },
         "endTime": {
-          "description": "Optional. The time the event that caused this alert ceased being active.\nIf provided, the end time must not be earlier than the start time.\nIf not provided, the end time defaults to the start time.",
+          "description": "Optional. The time the event that caused this alert ceased being active.\nIf provided, the end time must not be earlier than the start time.\nIf not provided, it indicates an ongoing alert.",
           "format": "google-datetime",
           "type": "string"
         },

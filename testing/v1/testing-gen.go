@@ -160,21 +160,21 @@ func (s *Account) MarshalJSON() ([]byte, error) {
 type AndroidDevice struct {
 	// AndroidModelId: Required. The id of the Android device to be
 	// used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidModelId string `json:"androidModelId,omitempty"`
 
 	// AndroidVersionId: Required. The id of the Android OS version to be
 	// used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidVersionId string `json:"androidVersionId,omitempty"`
 
 	// Locale: Required. The locale the test device used for testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Locale string `json:"locale,omitempty"`
 
 	// Orientation: Required. How the device is oriented during the
 	// test.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Orientation string `json:"orientation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelId") to
@@ -383,21 +383,21 @@ func (s *AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
 type AndroidMatrix struct {
 	// AndroidModelIds: Required. The ids of the set of Android device to be
 	// used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidModelIds []string `json:"androidModelIds,omitempty"`
 
 	// AndroidVersionIds: Required. The ids of the set of Android OS version
 	// to be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	AndroidVersionIds []string `json:"androidVersionIds,omitempty"`
 
 	// Locales: Required. The set of locales the test device will enable for
 	// testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Locales []string `json:"locales,omitempty"`
 
 	// Orientations: Required. The set of orientations to test with.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Orientations []string `json:"orientations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AndroidModelIds") to
@@ -1425,21 +1425,21 @@ func (s *IntentFilter) MarshalJSON() ([]byte, error) {
 // IosDevice: A single iOS device.
 type IosDevice struct {
 	// IosModelId: Required. The id of the iOS device to be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	IosModelId string `json:"iosModelId,omitempty"`
 
 	// IosVersionId: Required. The id of the iOS major software version to
 	// be used.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	IosVersionId string `json:"iosVersionId,omitempty"`
 
 	// Locale: Required. The locale the test device used for testing.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Locale string `json:"locale,omitempty"`
 
 	// Orientation: Required. How the device is oriented during the
 	// test.
-	// Use the TestEnvironmentDiscoveryService to get supported options.
+	// Use the EnvironmentDiscoveryService to get supported options.
 	Orientation string `json:"orientation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IosModelId") to
@@ -1732,7 +1732,7 @@ type IosXcTest struct {
 	TestsZip *FileReference `json:"testsZip,omitempty"`
 
 	// XcodeVersion: The Xcode version that should be used for the test.
-	// Use the TestEnvironmentDiscoveryService to get supported
+	// Use the EnvironmentDiscoveryService to get supported
 	// options.
 	// Defaults to the latest Xcode version Firebase Test Lab supports.
 	XcodeVersion string `json:"xcodeVersion,omitempty"`

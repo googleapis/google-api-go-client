@@ -1042,6 +1042,9 @@ type ClusterUpdate struct {
 	// DesiredClusterAutoscaling: Cluster-level autoscaling configuration.
 	DesiredClusterAutoscaling *ClusterAutoscaling `json:"desiredClusterAutoscaling,omitempty"`
 
+	// DesiredDatabaseEncryption: Configuration of etcd encryption.
+	DesiredDatabaseEncryption *DatabaseEncryption `json:"desiredDatabaseEncryption,omitempty"`
+
 	// DesiredImageType: The desired image type for the node pool.
 	// NOTE: Set the "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
@@ -2607,6 +2610,7 @@ type NodeConfig struct {
 	//  "cluster-name"
 	//  "cluster-uid"
 	//  "configure-sh"
+	//  "containerd-configure-sh"
 	//  "enable-oslogin"
 	//  "gci-ensure-gke-docker"
 	//  "gci-update-strategy"
@@ -4942,7 +4946,7 @@ func (c *ProjectsLocationsGetServerConfigCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project and location) of the server config to get\nSpecified in the format 'projects/*/locations/*'.",
+	//       "description": "The name (project and location) of the server config to get,\nspecified in the format 'projects/*/locations/*'.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -9867,8 +9871,8 @@ func (r *ProjectsZonesService) GetServerconfig(projectId string, zone string) *P
 }
 
 // Name sets the optional parameter "name": The name (project and
-// location) of the server config to get
-// Specified in the format 'projects/*/locations/*'.
+// location) of the server config to get,
+// specified in the format 'projects/*/locations/*'.
 func (c *ProjectsZonesGetServerconfigCall) Name(name string) *ProjectsZonesGetServerconfigCall {
 	c.urlParams_.Set("name", name)
 	return c
@@ -9983,7 +9987,7 @@ func (c *ProjectsZonesGetServerconfigCall) Do(opts ...googleapi.CallOption) (*Se
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name (project and location) of the server config to get\nSpecified in the format 'projects/*/locations/*'.",
+	//       "description": "The name (project and location) of the server config to get,\nspecified in the format 'projects/*/locations/*'.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

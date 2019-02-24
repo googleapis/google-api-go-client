@@ -174,7 +174,7 @@ type Alert struct {
 	// EndTime: Optional. The time the event that caused this alert ceased
 	// being active.
 	// If provided, the end time must not be earlier than the start time.
-	// If not provided, the end time defaults to the start time.
+	// If not provided, it indicates an ongoing alert.
 	EndTime string `json:"endTime,omitempty"`
 
 	// SecurityInvestigationToolLink: Output only. An optional

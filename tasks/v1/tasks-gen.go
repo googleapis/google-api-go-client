@@ -735,7 +735,8 @@ func (r *TasklistsService) List() *TasklistsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is 100.
+// of task lists returned on one page.  The default is 20 (max allowed:
+// 100).
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -848,7 +849,7 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 	//   "id": "tasks.tasklists.list",
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 100.",
+	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
@@ -1742,7 +1743,8 @@ func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is 100.
+// of task lists returned on one page.  The default is 20 (max allowed:
+// 100).
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1913,7 +1915,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 100.",
+	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"

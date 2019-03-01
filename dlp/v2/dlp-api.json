@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190219",
+  "revision": "20190226",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -4457,6 +4457,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Result": {
+      "description": "All result fields mentioned below are updated while the job is processing.",
       "id": "GooglePrivacyDlpV2Result",
       "properties": {
         "infoTypeStats": {

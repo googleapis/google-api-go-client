@@ -733,7 +733,8 @@ func (s *ListTransferJobsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ObjectConditions: Conditions that determine which objects will be
-// transferred.
+// transferred. Applies only
+// to S3 and GCS objects.
 type ObjectConditions struct {
 	// ExcludePrefixes: `excludePrefixes` must follow the requirements
 	// described for
@@ -794,22 +795,34 @@ type ObjectConditions struct {
 	// The max size of `includePrefixes` is 1000.
 	IncludePrefixes []string `json:"includePrefixes,omitempty"`
 
-	// MaxTimeElapsedSinceLastModification:
-	// `maxTimeElapsedSinceLastModification` is the complement
-	// to
-	// `minTimeElapsedSinceLastModification`.
+	// MaxTimeElapsedSinceLastModification: If specified, only objects with
+	// a `lastModificationTime` on or after
+	// `NOW` - `maxTimeElapsedSinceLastModification` and objects that don't
+	// have
+	// a `lastModificationTime` are transferred.
+	//
+	// Note that `NOW` refers to the creation time of the transfer job,
+	// and
+	// `lastModificationTime` refers to the time of the last change to
+	// the
+	// object's content or metadata. Specifically, this would be the
+	// `updated`
+	// property of GCS objects and the `LastModified` field of S3 objects.
 	MaxTimeElapsedSinceLastModification string `json:"maxTimeElapsedSinceLastModification,omitempty"`
 
-	// MinTimeElapsedSinceLastModification: If unspecified,
-	// `minTimeElapsedSinceLastModification` takes a zero value
-	// and `maxTimeElapsedSinceLastModification` takes the maximum
-	// possible
-	// value of Duration. Objects that satisfy the object conditions
-	// must either have a `lastModificationTime` greater or equal to
-	// `NOW` - `maxTimeElapsedSinceLastModification` and less than
-	// `NOW` - `minTimeElapsedSinceLastModification`, or not have
-	// a
-	// `lastModificationTime`.
+	// MinTimeElapsedSinceLastModification: If specified, only objects with
+	// a `lastModificationTime` before
+	// `NOW` - `minTimeElapsedSinceLastModification` and objects that don't
+	// have a
+	// `lastModificationTime` are transferred.
+	//
+	// Note that `NOW` refers to the creation time of the transfer job,
+	// and
+	// `lastModificationTime` refers to the time of the last change to
+	// the
+	// object's content or metadata. Specifically, this would be the
+	// `updated`
+	// property of GCS objects and the `LastModified` field of S3 objects.
 	MinTimeElapsedSinceLastModification string `json:"minTimeElapsedSinceLastModification,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExcludePrefixes") to

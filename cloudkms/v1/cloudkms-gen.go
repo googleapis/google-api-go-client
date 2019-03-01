@@ -478,7 +478,7 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -1109,7 +1109,10 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 }
 
 // KeyOperationAttestation: Contains an HSM-generated attestation about
-// a key operation.
+// a key operation. For more
+// information, see [Verifying
+// attestations]
+// (https://cloud.google.com/kms/docs/attest-key).
 type KeyOperationAttestation struct {
 	// Content: Output only. The attestation data provided by the HSM when
 	// the key
@@ -1123,6 +1126,9 @@ type KeyOperationAttestation struct {
 	//   "CAVIUM_V1_COMPRESSED" - Cavium HSM attestation compressed with
 	// gzip. Note that this format is
 	// defined by Cavium and subject to change at any time.
+	//   "CAVIUM_V2_COMPRESSED" - Cavium HSM attestation V2 compressed with
+	// gzip. This is a new format
+	// introduced in Cavium's version 3.2-08.
 	Format string `json:"format,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to

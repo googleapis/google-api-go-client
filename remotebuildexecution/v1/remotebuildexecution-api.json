@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20190205",
+  "revision": "20190226",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -909,6 +909,11 @@
           "description": "Indicates whether we are using a cached Docker image (true) or had to pull\nthe Docker image (false) for this command.",
           "type": "boolean"
         },
+        "inputCacheMiss": {
+          "description": "The input cache miss ratio.",
+          "format": "float",
+          "type": "number"
+        },
         "numErrors": {
           "description": "The number of errors reported.",
           "format": "uint64",
@@ -1123,7 +1128,7 @@
           "type": "string"
         },
         "reserved": {
-          "description": "Determines whether the worker is reserved (and therefore won't be\npreempted).\nSee [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more\ndetails.",
+          "description": "Determines whether the worker is reserved (equivalent to a Compute Engine\non-demand VM and therefore won't be preempted).\nSee [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for more\ndetails.",
           "type": "boolean"
         }
       },

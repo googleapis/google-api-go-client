@@ -202,7 +202,8 @@ type ChangePlanRequest struct {
 	//
 	// Possible values are:
 	// - ANNUAL_MONTHLY_PAY - The annual commitment plan with monthly
-	// payments
+	// payments  Caution: ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
+	// API responses.
 	// - ANNUAL_YEARLY_PAY - The annual commitment plan with yearly payments
 	//
 	// - FLEXIBLE - The flexible plan
@@ -270,9 +271,11 @@ type Customer struct {
 	// Kind: Identifies the resource as a customer. Value: reseller#customer
 	Kind string `json:"kind,omitempty"`
 
-	// PhoneNumber: Customer contact phone number. This can be continuous
-	// numbers, with spaces, etc. But it must be a real phone number and
-	// not, for example, "123". See phone  local format conventions.
+	// PhoneNumber: Customer contact phone number. Must start with "+"
+	// followed by the country code. The rest of the number can be
+	// contiguous numbers or respect the phone local format conventions, but
+	// it must be a real phone number and not, for example, "123". This
+	// field is silently ignored if invalid.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
 
 	// PostalAddress: A customer's address information. Each field has a
@@ -420,51 +423,34 @@ func (s *ResellernotifyResource) MarshalJSON() ([]byte, error) {
 
 // Seats: JSON template for subscription seats.
 type Seats struct {
-	// Kind: Identifies the resource as a subscription change plan request.
-	// Value: subscriptions#seats
+	// Kind: Identifies the resource as a subscription seat setting. Value:
+	// subscriptions#seats
 	Kind string `json:"kind,omitempty"`
 
 	// LicensedNumberOfSeats: Read-only field containing the current number
-	// of licensed seats for FLEXIBLE Google-Apps subscriptions and
-	// secondary subscriptions such as Google-Vault and Drive-storage.
+	// of users that are assigned a license for the product defined in
+	// skuId. This field's value is equivalent to the numerical count of
+	// users returned by the Enterprise License Manager API method:
+	// listForProductAndSku
 	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
 
-	// MaximumNumberOfSeats: The maximumNumberOfSeats property is the
-	// maximum number of licenses that the customer can purchase. This
-	// property applies to plans other than the annual commitment plan. How
-	// a user's licenses are managed depends on the subscription's payment
-	// plan:
-	// - annual commitment plan (with monthly or yearly payments) — For
-	// this plan, a reseller is invoiced on the number of user licenses in
-	// the numberOfSeats property. The maximumNumberOfSeats property is a
-	// read-only property in the API's response.
-	// - flexible plan — For this plan, a reseller is invoiced on the
-	// actual number of users which is capped by the maximumNumberOfSeats.
-	// This is the maximum number of user licenses a customer has for user
-	// license provisioning. This quantity can be increased up to the
-	// maximum limit defined in the reseller's contract. And the minimum
-	// quantity is the current number of users in the customer account.
-	// - 30-day free trial plan — A subscription in a 30-day free trial is
-	// restricted to maximum 10 seats.
+	// MaximumNumberOfSeats: This is a required property and is exclusive to
+	// subscriptions with FLEXIBLE or TRIAL plans. This property sets the
+	// maximum number of licensed users allowed on a subscription. This
+	// quantity can be increased up to the maximum limit defined in the
+	// reseller's contract. The minimum quantity is the current number of
+	// users in the customer account. Note: G Suite subscriptions
+	// automatically assign a license to every user.
 	MaximumNumberOfSeats int64 `json:"maximumNumberOfSeats,omitempty"`
 
-	// NumberOfSeats: The numberOfSeats property holds the customer's number
-	// of user licenses. How a user's licenses are managed depends on the
-	// subscription's plan:
-	// - annual commitment plan (with monthly or yearly pay) — For this
-	// plan, a reseller is invoiced on the number of user licenses in the
-	// numberOfSeats property. This is the maximum number of user licenses
-	// that a reseller's customer can create. The reseller can add more
-	// licenses, but once set, the numberOfSeats can not be reduced until
-	// renewal. The reseller is invoiced based on the numberOfSeats value
-	// regardless of how many of these user licenses are provisioned users.
-	//
-	// - flexible plan — For this plan, a reseller is invoiced on the
-	// actual number of users which is capped by the maximumNumberOfSeats.
-	// The numberOfSeats property is not used in the request or response for
-	// flexible plan customers.
-	// - 30-day free trial plan — The numberOfSeats property is not used
-	// in the request or response for an account in a 30-day trial.
+	// NumberOfSeats: This is a required property and is exclusive to
+	// subscriptions with ANNUAL_MONTHLY_PAY and ANNUAL_YEARLY_PAY plans.
+	// This property sets the maximum number of licenses assignable to users
+	// on a subscription. The reseller can add more licenses, but once set,
+	// the numberOfSeats cannot be reduced until renewal. The reseller is
+	// invoiced based on the numberOfSeats value regardless of how many of
+	// these user licenses are assigned. Note: G Suite subscriptions
+	// automatically assign a license to every user.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -631,7 +617,9 @@ func (s *Subscription) MarshalJSON() ([]byte, error) {
 // API"s payment plans, see the API concepts.
 type SubscriptionPlan struct {
 	// CommitmentInterval: In this version of the API, annual commitment
-	// plan's interval is one year.
+	// plan's interval is one year.  Note: When billingMethod value is
+	// OFFLINE, the subscription property object plan.commitmentInterval is
+	// omitted in all API responses.
 	CommitmentInterval *SubscriptionPlanCommitmentInterval `json:"commitmentInterval,omitempty"`
 
 	// IsCommitmentPlan: The isCommitmentPlan property's boolean value
@@ -646,7 +634,8 @@ type SubscriptionPlan struct {
 	//
 	// Possible values are:
 	// - ANNUAL_MONTHLY_PAY — The annual commitment plan with monthly
-	// payments
+	// payments.  Caution: ANNUAL_MONTHLY_PAY is returned as ANNUAL in all
+	// API responses.
 	// - ANNUAL_YEARLY_PAY — The annual commitment plan with yearly
 	// payments
 	// - FLEXIBLE — The flexible plan
@@ -656,6 +645,8 @@ type SubscriptionPlan struct {
 	// activate the plan. A trial will automatically begin its assigned
 	// payment plan after its 30th free day or immediately after calling
 	// startPaidService.
+	// - FREE — The free plan is exclusive to the Cloud Identity SKU and
+	// does not incur any billing.
 	PlanName string `json:"planName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
@@ -683,7 +674,9 @@ func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
 }
 
 // SubscriptionPlanCommitmentInterval: In this version of the API,
-// annual commitment plan's interval is one year.
+// annual commitment plan's interval is one year.  Note: When
+// billingMethod value is OFFLINE, the subscription property object
+// plan.commitmentInterval is omitted in all API responses.
 type SubscriptionPlanCommitmentInterval struct {
 	// EndTime: An annual commitment plan's interval's endTime in
 	// milliseconds using the UNIX Epoch format. See an example Epoch
@@ -2365,7 +2358,7 @@ type SubscriptionsDeleteCall struct {
 	header_        http.Header
 }
 
-// Delete: Cancel, suspend or transfer a subscription to direct.
+// Delete: Cancel or transfer a subscription to direct.
 func (r *SubscriptionsService) Delete(customerId string, subscriptionId string, deletionType string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2435,7 +2428,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	}
 	return nil
 	// {
-	//   "description": "Cancel, suspend or transfer a subscription to direct.",
+	//   "description": "Cancel or transfer a subscription to direct.",
 	//   "httpMethod": "DELETE",
 	//   "id": "reseller.subscriptions.delete",
 	//   "parameterOrder": [
@@ -2454,14 +2447,10 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "description": "The deletionType query string enables the cancellation, downgrade, or suspension of a subscription.",
 	//       "enum": [
 	//         "cancel",
-	//         "downgrade",
-	//         "suspend",
 	//         "transfer_to_direct"
 	//       ],
 	//       "enumDescriptions": [
 	//         "Cancels the subscription immediately. This does not apply to a G Suite subscription.",
-	//         "Downgrades a G Suite subscription to a Google Apps Free edition subscription only if the customer was initially subscribed to a Google Apps Free edition (also known as the Standard edition). Once downgraded, the customer no longer has access to the previous G Suite subscription and is no longer managed by the reseller.\n\nA G Suite subscription's downgrade cannot be invoked if an active or suspended Google Drive or Google Vault subscription is present. The Google Drive or Google Vault subscription must be cancelled before the G Suite subscription's downgrade is invoked.\n\nThe downgrade deletionType does not apply to other products or G Suite SKUs.",
-	//         "(DEPRECATED) The G Suite account is suspended for four days and then cancelled. Once suspended, an administrator has access to the suspended account, but the account users can not access their services. A suspension can be lifted, using the reseller tools.\n\nA G Suite subscription's suspension can not be invoked if an active or suspended Google Drive or Google Vault subscription is present. The Google Drive or Google Vault subscription must be cancelled before the G Suite subscription's suspension is invoked.",
 	//         "Transfers a subscription directly to Google.  The customer is immediately transferred to a direct billing relationship with Google and is given a short amount of time with no service interruption. The customer can then choose to set up billing directly with Google by using a credit card, or they can transfer to another reseller."
 	//       ],
 	//       "location": "query",

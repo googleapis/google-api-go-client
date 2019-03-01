@@ -2164,7 +2164,8 @@ func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*GdataMedia, error
 	//     "https://www.googleapis.com/auth/yt-analytics-monetary.readonly",
 	//     "https://www.googleapis.com/auth/yt-analytics.readonly"
 	//   ],
-	//   "supportsMediaDownload": true
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
 	// }
 
 }

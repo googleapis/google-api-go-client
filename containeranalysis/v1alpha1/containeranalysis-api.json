@@ -1204,7 +1204,7 @@
       }
     }
   },
-  "revision": "20181207",
+  "revision": "20190222",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "Artifact": {
@@ -1336,7 +1336,7 @@
           "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -2111,23 +2111,23 @@
           ],
           "enumDescriptions": [
             "Default value for unsupported/missing directive",
-            "https://docs.docker.com/reference/builder/#maintainer",
-            "https://docs.docker.com/reference/builder/#run",
-            "https://docs.docker.com/reference/builder/#cmd",
-            "https://docs.docker.com/reference/builder/#label",
-            "https://docs.docker.com/reference/builder/#expose",
-            "https://docs.docker.com/reference/builder/#env",
-            "https://docs.docker.com/reference/builder/#add",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
             "https://docs.docker.com/reference/builder/#copy",
-            "https://docs.docker.com/reference/builder/#entrypoint",
-            "https://docs.docker.com/reference/builder/#volume",
-            "https://docs.docker.com/reference/builder/#user",
-            "https://docs.docker.com/reference/builder/#workdir",
-            "https://docs.docker.com/reference/builder/#arg",
-            "https://docs.docker.com/reference/builder/#onbuild",
-            "https://docs.docker.com/reference/builder/#stopsignal",
-            "https://docs.docker.com/reference/builder/#healthcheck",
-            "https://docs.docker.com/reference/builder/#shell"
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/",
+            "https://docs.docker.com/engine/reference/builder/"
           ],
           "type": "string"
         }
@@ -2473,7 +2473,6 @@
           "description": "The location of the available fix for vulnerability."
         },
         "severityName": {
-          "description": "The severity (eg: distro assigned severity) for this vulnerability.",
           "type": "string"
         }
       },

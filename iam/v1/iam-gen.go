@@ -438,7 +438,7 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -2870,7 +2870,12 @@ func (c *OrganizationsRolesListCall) ShowDeleted(showDeleted bool) *Organization
 }
 
 // View sets the optional parameter "view": Optional view for the
-// returned Role objects.
+// returned Role objects. When `FULL` is specified,
+// the `includedPermissions` field is returned, which includes a list of
+// all
+// permissions in the role. The default value is `BASIC`, which does
+// not
+// return the `includedPermissions` field.
 //
 // Possible values:
 //   "BASIC"
@@ -3010,7 +3015,7 @@ func (c *OrganizationsRolesListCall) Do(opts ...googleapi.CallOption) (*ListRole
 	//       "type": "boolean"
 	//     },
 	//     "view": {
-	//       "description": "Optional view for the returned Role objects.",
+	//       "description": "Optional view for the returned Role objects. When `FULL` is specified,\nthe `includedPermissions` field is returned, which includes a list of all\npermissions in the role. The default value is `BASIC`, which does not\nreturn the `includedPermissions` field.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
@@ -3965,7 +3970,12 @@ func (c *ProjectsRolesListCall) ShowDeleted(showDeleted bool) *ProjectsRolesList
 }
 
 // View sets the optional parameter "view": Optional view for the
-// returned Role objects.
+// returned Role objects. When `FULL` is specified,
+// the `includedPermissions` field is returned, which includes a list of
+// all
+// permissions in the role. The default value is `BASIC`, which does
+// not
+// return the `includedPermissions` field.
 //
 // Possible values:
 //   "BASIC"
@@ -4105,7 +4115,7 @@ func (c *ProjectsRolesListCall) Do(opts ...googleapi.CallOption) (*ListRolesResp
 	//       "type": "boolean"
 	//     },
 	//     "view": {
-	//       "description": "Optional view for the returned Role objects.",
+	//       "description": "Optional view for the returned Role objects. When `FULL` is specified,\nthe `includedPermissions` field is returned, which includes a list of all\npermissions in the role. The default value is `BASIC`, which does not\nreturn the `includedPermissions` field.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"
@@ -4859,9 +4869,30 @@ type ProjectsServiceAccountsGetIamPolicyCall struct {
 	header_    http.Header
 }
 
-// GetIamPolicy: Returns the IAM access control policy for
+// GetIamPolicy: Returns the Cloud IAM access control policy for
 // a
 // ServiceAccount.
+//
+// Note: Service accounts are both
+// [resources and
+// identities](/iam/docs/service-accounts#service_account_permissions).
+// T
+// his method treats the service account as a resource. It returns the
+// Cloud
+// IAM policy that reflects what members have access to the service
+// account.
+//
+// This method does not return what resources the service account has
+// access
+// to. To see if a service account has access to a resource, call
+// the
+// `getIamPolicy` method on the target resource. For example, to view
+// grants
+// for a project, call
+// the
+// [projects.getIamPolicy](/resource-manager/reference/rest/v1/projec
+// ts/getIamPolicy)
+// method.
 func (r *ProjectsServiceAccountsService) GetIamPolicy(resource string) *ProjectsServiceAccountsGetIamPolicyCall {
 	c := &ProjectsServiceAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4953,7 +4984,7 @@ func (c *ProjectsServiceAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the IAM access control policy for a\nServiceAccount.",
+	//   "description": "Returns the Cloud IAM access control policy for a\nServiceAccount.\n\nNote: Service accounts are both\n[resources and identities](/iam/docs/service-accounts#service_account_permissions).\nThis method treats the service account as a resource. It returns the Cloud\nIAM policy that reflects what members have access to the service account.\n\nThis method does not return what resources the service account has access\nto. To see if a service account has access to a resource, call the\n`getIamPolicy` method on the target resource. For example, to view grants\nfor a project, call the\n[projects.getIamPolicy](/resource-manager/reference/rest/v1/projects/getIamPolicy)\nmethod.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:getIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "iam.projects.serviceAccounts.getIamPolicy",
@@ -5186,9 +5217,33 @@ type ProjectsServiceAccountsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the IAM access control policy for
+// SetIamPolicy: Sets the Cloud IAM access control policy for
 // a
 // ServiceAccount.
+//
+// Note: Service accounts are both
+// [resources and
+// identities](/iam/docs/service-accounts#service_account_permissions).
+// T
+// his method treats the service account as a resource. Use it to
+// grant
+// members access to the service account, such as when they need
+// to
+// impersonate it.
+//
+// This method does not grant the service account access to other
+// resources,
+// such as projects. To grant a service account access to resources,
+// include
+// the service account in the Cloud IAM policy for the desired resource,
+// then
+// call the appropriate `setIamPolicy` method on the target resource.
+// For
+// example, to grant a service account access to a project, call
+// the
+// [projects.setIamPolicy](/resource-manager/reference/rest/v1/projec
+// ts/setIamPolicy)
+// method.
 func (r *ProjectsServiceAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsServiceAccountsSetIamPolicyCall {
 	c := &ProjectsServiceAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5286,7 +5341,7 @@ func (c *ProjectsServiceAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Sets the IAM access control policy for a\nServiceAccount.",
+	//   "description": "Sets the Cloud IAM access control policy for a\nServiceAccount.\n\nNote: Service accounts are both\n[resources and identities](/iam/docs/service-accounts#service_account_permissions).\nThis method treats the service account as a resource. Use it to grant\nmembers access to the service account, such as when they need to\nimpersonate it.\n\nThis method does not grant the service account access to other resources,\nsuch as projects. To grant a service account access to resources, include\nthe service account in the Cloud IAM policy for the desired resource, then\ncall the appropriate `setIamPolicy` method on the target resource. For\nexample, to grant a service account access to a project, call the\n[projects.setIamPolicy](/resource-manager/reference/rest/v1/projects/setIamPolicy)\nmethod.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}:setIamPolicy",
 	//   "httpMethod": "POST",
 	//   "id": "iam.projects.serviceAccounts.setIamPolicy",
@@ -5907,7 +5962,11 @@ type ProjectsServiceAccountsUpdateCall struct {
 	header_        http.Header
 }
 
-// Update: Updates a ServiceAccount.
+// Update: Note: This method is in the process of being deprecated.
+// Use
+// PatchServiceAccount instead.
+//
+// Updates a ServiceAccount.
 //
 // Currently, only the following fields are updatable:
 // `display_name` .
@@ -6009,7 +6068,7 @@ func (c *ProjectsServiceAccountsUpdateCall) Do(opts ...googleapi.CallOption) (*S
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
+	//   "description": "Note: This method is in the process of being deprecated. Use\nPatchServiceAccount instead.\n\nUpdates a ServiceAccount.\n\nCurrently, only the following fields are updatable:\n`display_name` .\nThe `etag` is mandatory.",
 	//   "flatPath": "v1/projects/{projectsId}/serviceAccounts/{serviceAccountsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "iam.projects.serviceAccounts.update",
@@ -6835,7 +6894,12 @@ func (c *RolesListCall) ShowDeleted(showDeleted bool) *RolesListCall {
 }
 
 // View sets the optional parameter "view": Optional view for the
-// returned Role objects.
+// returned Role objects. When `FULL` is specified,
+// the `includedPermissions` field is returned, which includes a list of
+// all
+// permissions in the role. The default value is `BASIC`, which does
+// not
+// return the `includedPermissions` field.
 //
 // Possible values:
 //   "BASIC"
@@ -6968,7 +7032,7 @@ func (c *RolesListCall) Do(opts ...googleapi.CallOption) (*ListRolesResponse, er
 	//       "type": "boolean"
 	//     },
 	//     "view": {
-	//       "description": "Optional view for the returned Role objects.",
+	//       "description": "Optional view for the returned Role objects. When `FULL` is specified,\nthe `includedPermissions` field is returned, which includes a list of all\npermissions in the role. The default value is `BASIC`, which does not\nreturn the `includedPermissions` field.",
 	//       "enum": [
 	//         "BASIC",
 	//         "FULL"

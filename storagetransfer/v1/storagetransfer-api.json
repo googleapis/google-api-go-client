@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20190219",
+  "revision": "20190226",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -630,7 +630,7 @@
       "type": "object"
     },
     "ObjectConditions": {
-      "description": "Conditions that determine which objects will be transferred.",
+      "description": "Conditions that determine which objects will be transferred. Applies only\nto S3 and GCS objects.",
       "id": "ObjectConditions",
       "properties": {
         "excludePrefixes": {
@@ -648,12 +648,12 @@
           "type": "array"
         },
         "maxTimeElapsedSinceLastModification": {
-          "description": "`maxTimeElapsedSinceLastModification` is the complement to\n`minTimeElapsedSinceLastModification`.",
+          "description": "If specified, only objects with a `lastModificationTime` on or after\n`NOW` - `maxTimeElapsedSinceLastModification` and objects that don't have\na `lastModificationTime` are transferred.\n\nNote that `NOW` refers to the creation time of the transfer job, and\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata. Specifically, this would be the `updated`\nproperty of GCS objects and the `LastModified` field of S3 objects.",
           "format": "google-duration",
           "type": "string"
         },
         "minTimeElapsedSinceLastModification": {
-          "description": "If unspecified, `minTimeElapsedSinceLastModification` takes a zero value\nand `maxTimeElapsedSinceLastModification` takes the maximum possible\nvalue of Duration. Objects that satisfy the object conditions\nmust either have a `lastModificationTime` greater or equal to\n`NOW` - `maxTimeElapsedSinceLastModification` and less than\n`NOW` - `minTimeElapsedSinceLastModification`, or not have a\n`lastModificationTime`.",
+          "description": "If specified, only objects with a `lastModificationTime` before\n`NOW` - `minTimeElapsedSinceLastModification` and objects that don't have a\n`lastModificationTime` are transferred.\n\nNote that `NOW` refers to the creation time of the transfer job, and\n`lastModificationTime` refers to the time of the last change to the\nobject's content or metadata. Specifically, this would be the `updated`\nproperty of GCS objects and the `LastModified` field of S3 objects.",
           "format": "google-duration",
           "type": "string"
         }

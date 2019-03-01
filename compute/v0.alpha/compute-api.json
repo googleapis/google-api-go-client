@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/5bNm1r7buxeHuENnfSndCatyqIE\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/sXqmqAshED7kuWF0B4n3YF3752g\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -8869,7 +8869,7 @@
           ]
         },
         "reset": {
-          "description": "Performs a reset on the instance. This is a hard reset; the VM does not do a graceful shutdown. For more information, see Resetting an instance.",
+          "description": "Performs a reset on the instance. This is a hard reset the VM does not do a graceful shutdown. For more information, see Resetting an instance.",
           "httpMethod": "POST",
           "id": "compute.instances.reset",
           "parameterOrder": [
@@ -14189,6 +14189,11 @@
             "securityPolicy"
           ],
           "parameters": {
+            "replaceExistingAssociation": {
+              "description": "Indicates whether or not to replace it if an association of the attachment already exists. This is false by default, in which case an error will be returned if an assocation already exists.",
+              "location": "query",
+              "type": "boolean"
+            },
             "requestId": {
               "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
               "location": "query",
@@ -27144,7 +27149,7 @@
       }
     }
   },
-  "revision": "20190201",
+  "revision": "20190211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -28742,6 +28747,13 @@
           "description": "Labels to apply to this disk. These can be later modified by the disks.setLabels method. This field is only applicable for persistent disks.",
           "type": "object"
         },
+        "replicaZones": {
+          "description": "URLs of the zones where the disk should be replicated to. Only applicable for regional resources.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "sourceImage": {
           "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
           "type": "string"
@@ -28821,14 +28833,14 @@
       "id": "AuthenticationPolicy",
       "properties": {
         "origins": {
-          "description": "List of authentication methods that can be used for origin authentication. Similar to peers, these will be evaluated in order; the first valid one will be used to set origin identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if origin authentication is not required.",
+          "description": "List of authentication methods that can be used for origin authentication. Similar to peers, these will be evaluated in order the first valid one will be used to set origin identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if origin authentication is not required.",
           "items": {
             "$ref": "OriginAuthenticationMethod"
           },
           "type": "array"
         },
         "peers": {
-          "description": "List of authentication methods that can be used for peer authentication. They will be evaluated in order; the first valid one will be used to set peer identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if peer authentication is not required.",
+          "description": "List of authentication methods that can be used for peer authentication. They will be evaluated in order the first valid one will be used to set peer identity. If none of these methods pass, the request will be rejected with authentication failed error (401). Leave the list empty if peer authentication is not required.",
           "items": {
             "$ref": "PeerAuthenticationMethod"
           },
@@ -35408,7 +35420,7 @@
               "type": "string"
             },
             "sha1Checksum": {
-              "description": "An optional SHA1 checksum of the disk image before unpackaging; provided by the client when the disk image is created.",
+              "description": "An optional SHA1 checksum of the disk image before unpackaging provided by the client when the disk image is created.",
               "pattern": "[a-f0-9]{40}",
               "type": "string"
             },
@@ -36564,7 +36576,7 @@
         },
         "maxUnavailable": {
           "$ref": "FixedOrPercent",
-          "description": "Maximum number of instances that can be unavailable when autohealing. The instance is considered available if all of the following conditions are satisfied: 1. Instance's status is RUNNING. 2. Instance's liveness health check result was observed to be HEALTHY at least once. By default, a percent value of 100% is used."
+          "description": "Maximum number of instances that can be unavailable when autohealing. When 'percent' is used, the value is rounded UP. The instance is considered available if all of the following conditions are satisfied: 1. Instance's status is RUNNING. 2. Instance's currentAction is NONE (in particular its liveness health check result was observed to be HEALTHY at least once as it passed VERIFYING). 3. There is no outgoing action on an instance triggered by IGM.\n\nBy default, number of concurrently autohealed instances is smaller than the managed instance group target size. However, if a zonal managed instance group has only one instance, or a regional managed instance group has only one instance per zone, autohealing will recreate these instances when they become unhealthy."
         }
       },
       "type": "object"
@@ -38313,7 +38325,7 @@
           "type": "string"
         },
         "googleReferenceId": {
-          "description": "[Output Only] Google reference ID; to be used when raising support tickets with Google or otherwise to debug backend connectivity issues.",
+          "description": "[Output Only] Google reference ID to be used when raising support tickets with Google or otherwise to debug backend connectivity issues.",
           "type": "string"
         },
         "id": {
@@ -41427,9 +41439,11 @@
         "networkEndpointType": {
           "description": "Type of network endpoints in this network endpoint group. Currently the only supported value is GCE_VM_IP_PORT.",
           "enum": [
-            "GCE_VM_IP_PORT"
+            "GCE_VM_IP_PORT",
+            "NON_GCP_PRIVATE_IP_PORT"
           ],
           "enumDescriptions": [
+            "",
             ""
           ],
           "type": "string"
@@ -42156,8 +42170,16 @@
           "description": "Whether to export the custom routes to peer network.",
           "type": "boolean"
         },
+        "exportSubnetRoutesWithPublicIp": {
+          "description": "Whether subnet routes with public IP range are exported. The default value is true, all subnet routes are exported. The IPv4 special-use ranges (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always exported to peers and are not controlled by this field.",
+          "type": "boolean"
+        },
         "importCustomRoutes": {
           "description": "Whether to import the custom routes from peer network.",
+          "type": "boolean"
+        },
+        "importSubnetRoutesWithPublicIp": {
+          "description": "Whether subnet routes with public IP range are imported. The default value is false. The IPv4 special-use ranges (https://en.wikipedia.org/wiki/IPv4#Special_addresses) are always imported from peers and are not controlled by this field.",
           "type": "boolean"
         },
         "name": {
@@ -48916,6 +48938,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "rateLimitOptions": {
+          "$ref": "SecurityPolicyRuleRateLimitOptions",
+          "description": "Must be specified if the action is \"rate_based_blacklist\" or \"throttle\". Cannot be specified for any other actions."
+        },
         "targetResources": {
           "description": "A list of network resource URLs to which this rule applies. This field allows you to control which network?s VMs get this rule. If this field is left blank, all VMs within the organization will receive the rule.\n\nThis field may only be specified when versioned_expr is set to FIREWALL.",
           "items": {
@@ -48993,6 +49019,42 @@
             "type": "string"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SecurityPolicyRuleRateLimitOptions": {
+      "id": "SecurityPolicyRuleRateLimitOptions",
+      "properties": {
+        "blockDuration": {
+          "description": "Can only be specifed if the action for the rule is \"rate_based_blacklist\" If specified, determines the time (in seconds) the traffic will continue to be blocked by the rate limit after the rate falls below the threshold. The default value is 0 seconds.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "conformAction": {
+          "description": "Action to take when requests are under the given threshold. When requests are throttled, this is also the action for all requests which are not dropped. Valid options are \"allow\", \"fairshare\", and \"drop_overload\".",
+          "type": "string"
+        },
+        "enforceOnKey": {
+          "description": "Determines the key to enforce the threshold_rps limit on. If key is \"IP\", each IP has this limit enforced separately, whereas \"ALL_IPs\" means a single limit is applied to all requests matching this rule.",
+          "enum": [
+            "ALL_IPS",
+            "IP"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "exceedAction": {
+          "description": "When a request is denied, returns the HTTP response code specified. Valid options are \"deny()\" where valid values for status are 403, 404, 429, and 502.",
+          "type": "string"
+        },
+        "thresholdRps": {
+          "description": "Rate in requests per second at which to begin ratelimiting.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

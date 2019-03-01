@@ -9,7 +9,7 @@
           "description": "See and download your contacts"
         },
         "https://www.googleapis.com/auth/plus.login": {
-          "description": "Know the list of people in your circles, your age range, and language"
+          "description": "View your basic profile info, including your age range and language"
         },
         "https://www.googleapis.com/auth/user.addresses.read": {
           "description": "View your street addresses"
@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20181128",
+  "revision": "20190227",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

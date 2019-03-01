@@ -6208,6 +6208,8 @@ func (s *GooglePrivacyDlpV2RequestedOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Result: All result fields mentioned below are
+// updated while the job is processing.
 type GooglePrivacyDlpV2Result struct {
 	// InfoTypeStats: Statistics of how many instances of each info type
 	// were found during

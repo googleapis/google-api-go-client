@@ -509,7 +509,7 @@
    "name": "bigquerydatatransfer",
    "version": "v1",
    "title": "BigQuery Data Transfer API",
-   "description": "Transfers data from partner SaaS applications to Google BigQuery on a scheduled, managed basis.",
+   "description": "Schedule queries or transfer external data from SaaS applications to Google BigQuery on a regular basis.",
    "discoveryRestUrl": "https://bigquerydatatransfer.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3130,7 +3130,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://cloud.google.com/storage/transfer",
+   "documentationLink": "https://cloud.google.com/storage-transfer/docs",
    "preferred": true
   },
   {
@@ -3201,7 +3201,7 @@
    "name": "tasks",
    "version": "v1",
    "title": "Tasks API",
-   "description": "Lets you manage your tasks and task lists.",
+   "description": "Manages your tasks and task lists.",
    "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/tasks/v1/rest",
    "discoveryLink": "./apis/tasks/v1/rest",
    "icons": {

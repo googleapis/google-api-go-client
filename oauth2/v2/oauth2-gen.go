@@ -52,7 +52,7 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know the list of people in your circles, your age range, and language
+	// View your basic profile info, including your age range and language
 	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
 
 	// Know who you are on Google

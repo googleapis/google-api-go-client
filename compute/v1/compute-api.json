@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/CUu6daxOV8c9M51_jy2QKTAmiCk\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/WcH2XiX4nTJ7auoMOh6kP7JS8TU\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -6380,7 +6380,7 @@
           ]
         },
         "reset": {
-          "description": "Performs a reset on the instance. This is a hard reset; the VM does not do a graceful shutdown. For more information, see Resetting an instance.",
+          "description": "Performs a reset on the instance. This is a hard reset the VM does not do a graceful shutdown. For more information, see Resetting an instance.",
           "httpMethod": "POST",
           "id": "compute.instances.reset",
           "parameterOrder": [
@@ -17736,7 +17736,7 @@
       }
     }
   },
-  "revision": "20190201",
+  "revision": "20190211",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -18261,9 +18261,11 @@
           "enum": [
             "DNS_RESOLVER",
             "GCE_ENDPOINT",
+            "NAT_AUTO",
             "VPC_PEERING"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -23372,7 +23374,7 @@
               "type": "string"
             },
             "sha1Checksum": {
-              "description": "An optional SHA1 checksum of the disk image before unpackaging; provided by the client when the disk image is created.",
+              "description": "An optional SHA1 checksum of the disk image before unpackaging provided by the client when the disk image is created.",
               "pattern": "[a-f0-9]{40}",
               "type": "string"
             },
@@ -25795,7 +25797,7 @@
           "type": "string"
         },
         "googleReferenceId": {
-          "description": "[Output Only] Google reference ID; to be used when raising support tickets with Google or otherwise to debug backend connectivity issues.",
+          "description": "[Output Only] Google reference ID to be used when raising support tickets with Google or otherwise to debug backend connectivity issues.",
           "type": "string"
         },
         "id": {
@@ -27827,6 +27829,10 @@
         "lastAttempt": {
           "$ref": "ManagedInstanceLastAttempt",
           "description": "[Output Only] Information about the last attempt to create or delete the instance."
+        },
+        "version": {
+          "$ref": "ManagedInstanceVersion",
+          "description": "[Output Only] Intended version of this instance."
         }
       },
       "type": "object"
@@ -27860,6 +27866,20 @@
             }
           },
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedInstanceVersion": {
+      "id": "ManagedInstanceVersion",
+      "properties": {
+        "instanceTemplate": {
+          "description": "[Output Only] The intended template of the instance. This field is empty when current_action is one of { DELETING, ABANDONING }.",
+          "type": "string"
+        },
+        "name": {
+          "description": "[Output Only] Name of the version.",
+          "type": "string"
         }
       },
       "type": "object"

@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/g9puVF3XrAXG-em5ovotDUu2Cuo\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/8hSjQRrsOw0lKiNcmAE2BZ2_zio\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -288,47 +288,6 @@
                 "https://www.googleapis.com/auth/fitness.oxygen_saturation.read",
                 "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
                 "https://www.googleapis.com/auth/fitness.reproductive_health.read",
-                "https://www.googleapis.com/auth/fitness.reproductive_health.write"
-              ]
-            },
-            "patch": {
-              "description": "Updates the specified data source. The dataStreamId, dataType, type, dataStreamName, and device properties with the exception of version, cannot be modified.\n\nData sources are identified by their dataStreamId. This method supports patch semantics.",
-              "httpMethod": "PATCH",
-              "id": "fitness.users.dataSources.patch",
-              "parameterOrder": [
-                "userId",
-                "dataSourceId"
-              ],
-              "parameters": {
-                "dataSourceId": {
-                  "description": "The data stream ID of the data source to update.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                },
-                "userId": {
-                  "description": "Update the data source for the person identified. Use me to indicate the authenticated user. Only me is supported at this time.",
-                  "location": "path",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "{userId}/dataSources/{dataSourceId}",
-              "request": {
-                "$ref": "DataSource"
-              },
-              "response": {
-                "$ref": "DataSource"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/fitness.activity.write",
-                "https://www.googleapis.com/auth/fitness.blood_glucose.write",
-                "https://www.googleapis.com/auth/fitness.blood_pressure.write",
-                "https://www.googleapis.com/auth/fitness.body.write",
-                "https://www.googleapis.com/auth/fitness.body_temperature.write",
-                "https://www.googleapis.com/auth/fitness.location.write",
-                "https://www.googleapis.com/auth/fitness.nutrition.write",
-                "https://www.googleapis.com/auth/fitness.oxygen_saturation.write",
                 "https://www.googleapis.com/auth/fitness.reproductive_health.write"
               ]
             },
@@ -802,7 +761,7 @@
       }
     }
   },
-  "revision": "20190218",
+  "revision": "20190224",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {

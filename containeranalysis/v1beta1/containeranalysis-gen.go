@@ -661,7 +661,7 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -1504,7 +1504,7 @@ func (s *Fingerprint) MarshalJSON() ([]byte, error) {
 }
 
 // FixableTotalByDigest: Per resource and severity counts of fixable and
-// total vulnerabilites.
+// total vulnerabilities.
 type FixableTotalByDigest struct {
 	// FixableCount: The number of fixable vulnerabilities associated with
 	// this resource.
@@ -1837,6 +1837,21 @@ type GrafeasV1beta1VulnerabilityDetails struct {
 	// severity.
 	CvssScore float64 `json:"cvssScore,omitempty"`
 
+	// EffectiveSeverity: The distro assigned severity for this
+	// vulnerability when it is
+	// available, and note provider assigned severity when distro has not
+	// yet
+	// assigned a severity for this vulnerability.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unknown.
+	//   "MINIMAL" - Minimal severity.
+	//   "LOW" - Low severity.
+	//   "MEDIUM" - Medium severity.
+	//   "HIGH" - High severity.
+	//   "CRITICAL" - Critical severity.
+	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+
 	// LongDescription: Output only. A detailed description of this
 	// vulnerability.
 	LongDescription string `json:"longDescription,omitempty"`
@@ -2063,27 +2078,23 @@ type Layer struct {
 	// Possible values:
 	//   "DIRECTIVE_UNSPECIFIED" - Default value for unsupported/missing
 	// directive.
-	//   "MAINTAINER" -
-	// https://docs.docker.com/reference/builder/#maintainer
-	//   "RUN" - https://docs.docker.com/reference/builder/#run
-	//   "CMD" - https://docs.docker.com/reference/builder/#cmd
-	//   "LABEL" - https://docs.docker.com/reference/builder/#label
-	//   "EXPOSE" - https://docs.docker.com/reference/builder/#expose
-	//   "ENV" - https://docs.docker.com/reference/builder/#env
-	//   "ADD" - https://docs.docker.com/reference/builder/#add
-	//   "COPY" - https://docs.docker.com/reference/builder/#copy
-	//   "ENTRYPOINT" -
-	// https://docs.docker.com/reference/builder/#entrypoint
-	//   "VOLUME" - https://docs.docker.com/reference/builder/#volume
-	//   "USER" - https://docs.docker.com/reference/builder/#user
-	//   "WORKDIR" - https://docs.docker.com/reference/builder/#workdir
-	//   "ARG" - https://docs.docker.com/reference/builder/#arg
-	//   "ONBUILD" - https://docs.docker.com/reference/builder/#onbuild
-	//   "STOPSIGNAL" -
-	// https://docs.docker.com/reference/builder/#stopsignal
-	//   "HEALTHCHECK" -
-	// https://docs.docker.com/reference/builder/#healthcheck
-	//   "SHELL" - https://docs.docker.com/reference/builder/#shell
+	//   "MAINTAINER" - https://docs.docker.com/engine/reference/builder/
+	//   "RUN" - https://docs.docker.com/engine/reference/builder/
+	//   "CMD" - https://docs.docker.com/engine/reference/builder/
+	//   "LABEL" - https://docs.docker.com/engine/reference/builder/
+	//   "EXPOSE" - https://docs.docker.com/engine/reference/builder/
+	//   "ENV" - https://docs.docker.com/engine/reference/builder/
+	//   "ADD" - https://docs.docker.com/engine/reference/builder/
+	//   "COPY" - https://docs.docker.com/engine/reference/builder/
+	//   "ENTRYPOINT" - https://docs.docker.com/engine/reference/builder/
+	//   "VOLUME" - https://docs.docker.com/engine/reference/builder/
+	//   "USER" - https://docs.docker.com/engine/reference/builder/
+	//   "WORKDIR" - https://docs.docker.com/engine/reference/builder/
+	//   "ARG" - https://docs.docker.com/engine/reference/builder/
+	//   "ONBUILD" - https://docs.docker.com/engine/reference/builder/
+	//   "STOPSIGNAL" - https://docs.docker.com/engine/reference/builder/
+	//   "HEALTHCHECK" - https://docs.docker.com/engine/reference/builder/
+	//   "SHELL" - https://docs.docker.com/engine/reference/builder/
 	Directive string `json:"directive,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Arguments") to
@@ -2549,8 +2560,8 @@ type PackageIssue struct {
 	// FixedLocation: The location of the available fix for vulnerability.
 	FixedLocation *VulnerabilityLocation `json:"fixedLocation,omitempty"`
 
-	// SeverityName: The severity (e.g., distro assigned severity) for this
-	// vulnerability.
+	// SeverityName: Deprecated, use Details.effective_severity instead
+	// The severity (e.g., distro assigned severity) for this vulnerability.
 	SeverityName string `json:"severityName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AffectedLocation") to

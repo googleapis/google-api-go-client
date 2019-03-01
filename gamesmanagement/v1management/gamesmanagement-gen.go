@@ -52,8 +52,7 @@ const basePath = "https://www.googleapis.com/games/v1management/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Share your Google+ profile information and view and manage your game
-	// activity
+	// Create, edit, and delete your Google Play Games activity
 	GamesScope = "https://www.googleapis.com/auth/games"
 )
 

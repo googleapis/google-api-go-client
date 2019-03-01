@@ -767,9 +767,7 @@ type ListLogEntriesRequest struct {
 
 	// ProjectIds: Deprecated. Use resource_names instead. One or more
 	// project identifiers or project numbers from which to retrieve log
-	// entries. Example: "my-project-1A". If present, these project
-	// identifiers are converted to resource name format and added to the
-	// list of resources in resource_names.
+	// entries. Example: "my-project-1A".
 	ProjectIds []string `json:"projectIds,omitempty"`
 
 	// ResourceNames: Required. Names of one or more parent resources from

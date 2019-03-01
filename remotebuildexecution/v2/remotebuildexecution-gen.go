@@ -2376,6 +2376,9 @@ type GoogleDevtoolsRemotebuildbotCommandEvents struct {
 	// the Docker image (false) for this command.
 	DockerCacheHit bool `json:"dockerCacheHit,omitempty"`
 
+	// InputCacheMiss: The input cache miss ratio.
+	InputCacheMiss float64 `json:"inputCacheMiss,omitempty"`
+
 	// NumErrors: The number of errors reported.
 	NumErrors uint64 `json:"numErrors,omitempty,string"`
 
@@ -2404,6 +2407,20 @@ func (s *GoogleDevtoolsRemotebuildbotCommandEvents) MarshalJSON() ([]byte, error
 	type NoMethod GoogleDevtoolsRemotebuildbotCommandEvents
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleDevtoolsRemotebuildbotCommandEvents) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleDevtoolsRemotebuildbotCommandEvents
+	var s1 struct {
+		InputCacheMiss gensupport.JSONFloat64 `json:"inputCacheMiss"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.InputCacheMiss = float64(s1.InputCacheMiss)
+	return nil
 }
 
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest:
@@ -2870,9 +2887,9 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// Platforms](https://cloud.google.com/compute/docs/cpu-platforms).
 	MinCpuPlatform string `json:"minCpuPlatform,omitempty"`
 
-	// Reserved: Determines whether the worker is reserved (and therefore
-	// won't be
-	// preempted).
+	// Reserved: Determines whether the worker is reserved (equivalent to a
+	// Compute Engine
+	// on-demand VM and therefore won't be preempted).
 	// See [Preemptible VMs](https://cloud.google.com/preemptible-vms/) for
 	// more
 	// details.

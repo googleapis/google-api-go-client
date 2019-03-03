@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190216",
+  "revision": "20190226",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1261,6 +1261,11 @@
         "hyperparameterMetricTag": {
           "description": "Optional. The Tensorflow summary tag name to use for optimizing trials. For\ncurrent versions of Tensorflow, this tag name should exactly match what is\nshown in Tensorboard, including all scopes.  For versions of Tensorflow\nprior to 0.12, this should be only the tag passed to tf.Summary.\nBy default, \"training/hptuning/metric\" will be used.",
           "type": "string"
+        },
+        "maxFailedTrials": {
+          "description": "Optional. How many failed trials that need to be seen before failing the\nhyperparameter tuning job. User can specify this field to override the\ndefault failing criteria for CloudML Engine hyperparameter tuning jobs.\n\nDefaults to zero, which means to let the service decide when a\nhyperparameter job should fail.",
+          "format": "int32",
+          "type": "integer"
         },
         "maxParallelTrials": {
           "description": "Optional. The number of training trials to run concurrently.\nYou can reduce the time it takes to perform hyperparameter tuning by adding\ntrials in parallel. However, each trail only benefits from the information\ngained in completed trials. That means that a trial does not get access to\nthe results of trials running at the same time, which could reduce the\nquality of the overall optimization.\n\nEach trial will use the same scale tier and machine types.\n\nDefaults to one.",
@@ -1662,10 +1667,6 @@
       "description": "Represents input parameters for a prediction job.",
       "id": "GoogleCloudMlV1__PredictionInput",
       "properties": {
-        "accelerator": {
-          "$ref": "GoogleCloudMlV1__AcceleratorConfig",
-          "description": "Optional. The type and number of accelerators to be attached to each\nmachine running the job."
-        },
         "batchSize": {
           "description": "Optional. Number of records per batch, defaults to 64.\nThe service will buffer batch_size number of records in memory before\ninvoking one Tensorflow prediction call internally. So take the record\nsize and memory available into consideration when setting this parameter.",
           "format": "int64",
@@ -2090,7 +2091,7 @@
           "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },

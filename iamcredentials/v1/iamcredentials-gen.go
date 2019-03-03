@@ -116,7 +116,9 @@ type GenerateAccessTokenRequest struct {
 	//
 	// The delegates must have the following
 	// format:
-	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`
+	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+	// wildcard
+	// character is required; replacing it with a project ID is invalid.
 	Delegates []string `json:"delegates,omitempty"`
 
 	// Lifetime: The desired lifetime duration of the access token in
@@ -214,7 +216,9 @@ type GenerateIdTokenRequest struct {
 	//
 	// The delegates must have the following
 	// format:
-	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`
+	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+	// wildcard
+	// character is required; replacing it with a project ID is invalid.
 	Delegates []string `json:"delegates,omitempty"`
 
 	// IncludeEmail: Include the service account email in the token. If set
@@ -421,7 +425,9 @@ type SignBlobRequest struct {
 	//
 	// The delegates must have the following
 	// format:
-	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`
+	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+	// wildcard
+	// character is required; replacing it with a project ID is invalid.
 	Delegates []string `json:"delegates,omitempty"`
 
 	// Payload: The bytes to sign.
@@ -499,7 +505,9 @@ type SignJwtRequest struct {
 	//
 	// The delegates must have the following
 	// format:
-	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`
+	// `projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-`
+	// wildcard
+	// character is required; replacing it with a project ID is invalid.
 	Delegates []string `json:"delegates,omitempty"`
 
 	// Payload: The JWT payload to sign: a JSON object that contains a JWT
@@ -682,7 +690,7 @@ func (c *ProjectsServiceAccountsGenerateAccessTokenCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard\ncharacter is required; replacing it with a project ID is invalid.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -822,7 +830,7 @@ func (c *ProjectsServiceAccountsGenerateIdTokenCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard\ncharacter is required; replacing it with a project ID is invalid.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -963,7 +971,7 @@ func (c *ProjectsServiceAccountsGenerateIdentityBindingAccessTokenCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard\ncharacter is required; replacing it with a project ID is invalid.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -1100,7 +1108,7 @@ func (c *ProjectsServiceAccountsSignBlobCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard\ncharacter is required; replacing it with a project ID is invalid.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,
@@ -1240,7 +1248,7 @@ func (c *ProjectsServiceAccountsSignJwtCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`.",
+	//       "description": "The resource name of the service account for which the credentials\nare requested, in the following format:\n`projects/-/serviceAccounts/{ACCOUNT_EMAIL_OR_UNIQUEID}`. The `-` wildcard\ncharacter is required; replacing it with a project ID is invalid.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/serviceAccounts/[^/]+$",
 	//       "required": true,

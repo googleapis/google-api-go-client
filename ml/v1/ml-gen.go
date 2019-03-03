@@ -625,6 +625,18 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// By default, "training/hptuning/metric" will be used.
 	HyperparameterMetricTag string `json:"hyperparameterMetricTag,omitempty"`
 
+	// MaxFailedTrials: Optional. How many failed trials that need to be
+	// seen before failing the
+	// hyperparameter tuning job. User can specify this field to override
+	// the
+	// default failing criteria for CloudML Engine hyperparameter tuning
+	// jobs.
+	//
+	// Defaults to zero, which means to let the service decide when
+	// a
+	// hyperparameter job should fail.
+	MaxFailedTrials int64 `json:"maxFailedTrials,omitempty"`
+
 	// MaxParallelTrials: Optional. The number of training trials to run
 	// concurrently.
 	// You can reduce the time it takes to perform hyperparameter tuning by
@@ -1317,11 +1329,6 @@ func (s *GoogleCloudMlV1__PredictRequest) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__PredictionInput: Represents input parameters for a
 // prediction job.
 type GoogleCloudMlV1__PredictionInput struct {
-	// Accelerator: Optional. The type and number of accelerators to be
-	// attached to each
-	// machine running the job.
-	Accelerator *GoogleCloudMlV1__AcceleratorConfig `json:"accelerator,omitempty"`
-
 	// BatchSize: Optional. Number of records per batch, defaults to 64.
 	// The service will buffer batch_size number of records in memory
 	// before
@@ -1432,7 +1439,7 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// VERSION"
 	VersionName string `json:"versionName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Accelerator") to
+	// ForceSendFields is a list of field names (e.g. "BatchSize") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1440,10 +1447,10 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Accelerator") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BatchSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2410,7 +2417,7 @@ type GoogleIamV1__Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.

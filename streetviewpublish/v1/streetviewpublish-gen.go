@@ -103,9 +103,9 @@ type PhotosService struct {
 
 // BatchDeletePhotosRequest: Request to delete multiple Photos.
 type BatchDeletePhotosRequest struct {
-	// PhotoIds: Required. IDs of the Photos. For HTTP
-	// GET requests, the URL query parameter should
-	// be
+	// PhotoIds: Required. IDs of the Photos. HTTP
+	// GET requests require the following syntax for the URL query
+	// parameter:
 	// `photoIds=<id1>&photoIds=<id2>&...`.
 	PhotoIds []string `json:"photoIds,omitempty"`
 
@@ -438,10 +438,9 @@ type ListPhotosResponse struct {
 	// results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Photos: List of photos. The maximum number of items returned is based
-	// on the
+	// Photos: List of photos. The
 	// pageSize field
-	// in the request.
+	// in the request determines the number of items returned.
 	Photos []*Photo `json:"photos,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -564,8 +563,8 @@ type Photo struct {
 	DownloadUrl string `json:"downloadUrl,omitempty"`
 
 	// MapsPublishStatus: Output only. Status in Google Maps, whether this
-	// photo was published, or
-	// rejected for a possibly specified reason.
+	// photo was published or
+	// rejected.
 	//
 	// Possible values:
 	//   "UNSPECIFIED_MAPS_PUBLISH_STATUS" - The status of the photo is
@@ -786,13 +785,11 @@ type Pose struct {
 	// https://cloud.google.com/datastore/docs/reference/rest/Shared.Ty
 	// pes/LatLng
 	// When creating a Photo, if the
-	// latitude and longitude pair are not provided here, the geolocation
-	// from the
-	// exif header will be used. If the latitude and longitude pair is
-	// not
-	// provided and cannot be found in the exif header, the create photo
-	// process
-	// will fail.
+	// latitude and longitude pair are not provided, the geolocation from
+	// the
+	// exif header is used. A latitude and longitude pair not provided in
+	// the
+	// photo or exif header causes the photo process to fail.
 	LatLngPair *LatLng `json:"latLngPair,omitempty"`
 
 	// Level: Level (the floor in a building) used to configure vertical
@@ -860,20 +857,20 @@ func (s *Pose) UnmarshalJSON(data []byte) error {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -989,7 +986,7 @@ type UpdatePhotoRequest struct {
 	// UpdateMask: Mask that identifies fields on the photo metadata to
 	// update.
 	// If not present, the old Photo
-	// metadata will be entirely replaced with the
+	// metadata is entirely replaced with the
 	// new Photo metadata in this request.
 	// The update fails if invalid fields are specified. Multiple fields can
 	// be
@@ -1007,15 +1004,15 @@ type UpdatePhotoRequest struct {
 	// * `places`
 	//
 	//
-	// <aside class="note"><b>Note:</b> Repeated fields in
+	// <aside class="note"><b>Note:</b> When
 	// updateMask
-	// mean the entire set of repeated values will be replaced with the
-	// new
-	// contents. For example, if
+	// contains repeated fields, the entire set of repeated values get
+	// replaced
+	// with the new contents. For example, if
 	// updateMask
 	// contains `connections` and `UpdatePhotoRequest.photo.connections` is
 	// empty,
-	// all connections will be removed.</aside>
+	// all connections are removed.</aside>
 	UpdateMask string `json:"updateMask,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Photo") to
@@ -1101,11 +1098,9 @@ type PhotoCreateCall struct {
 // XMP
 // metadata](https://developers.google.com/streetview/spherical-metad
 // ata) in
-// the photo bytes. The `pose.heading`, `pose.pitch`,
-// `pose.roll`,
-// `pose.altitude`, and `pose.level` fields in Pose are ignored
-// for
-// CreatePhoto.
+// the photo bytes. CreatePhoto ignores the  `pose.heading`,
+// `pose.pitch`,
+// `pose.roll`, `pose.altitude`, and `pose.level` fields in Pose.
 //
 // This method returns the following error codes:
 //
@@ -1209,7 +1204,7 @@ func (c *PhotoCreateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "After the client finishes uploading the photo with the returned\nUploadRef,\nCreatePhoto\npublishes the uploaded Photo to\nStreet View on Google Maps.\n\nCurrently, the only way to set heading, pitch, and roll in CreatePhoto is\nthrough the [Photo Sphere XMP\nmetadata](https://developers.google.com/streetview/spherical-metadata) in\nthe photo bytes. The `pose.heading`, `pose.pitch`, `pose.roll`,\n`pose.altitude`, and `pose.level` fields in Pose are ignored for\nCreatePhoto.\n\nThis method returns the following error codes:\n\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed or if\nthe uploaded photo is not a 360 photo.\n* google.rpc.Code.NOT_FOUND if the upload reference does not exist.\n* google.rpc.Code.RESOURCE_EXHAUSTED if the account has reached the\nstorage limit.",
+	//   "description": "After the client finishes uploading the photo with the returned\nUploadRef,\nCreatePhoto\npublishes the uploaded Photo to\nStreet View on Google Maps.\n\nCurrently, the only way to set heading, pitch, and roll in CreatePhoto is\nthrough the [Photo Sphere XMP\nmetadata](https://developers.google.com/streetview/spherical-metadata) in\nthe photo bytes. CreatePhoto ignores the  `pose.heading`, `pose.pitch`,\n`pose.roll`, `pose.altitude`, and `pose.level` fields in Pose.\n\nThis method returns the following error codes:\n\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed or if\nthe uploaded photo is not a 360 photo.\n* google.rpc.Code.NOT_FOUND if the upload reference does not exist.\n* google.rpc.Code.RESOURCE_EXHAUSTED if the account has reached the\nstorage limit.",
 	//   "flatPath": "v1/photo",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photo.create",
@@ -1401,7 +1396,7 @@ func (r *PhotoService) Get(photoId string) *PhotoGetCall {
 // If
 //  language_code is unspecified, the user's language preference for
 // Google
-// services will be used.
+// services is used.
 func (c *PhotoGetCall) LanguageCode(languageCode string) *PhotoGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -1526,7 +1521,7 @@ func (c *PhotoGetCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -1568,15 +1563,16 @@ type PhotoStartUploadCall struct {
 }
 
 // StartUpload: Creates an upload session to start uploading photo
-// bytes. The upload URL of
-// the returned UploadRef is used to
-// upload the bytes for the Photo.
+// bytes.  The method uses
+// the upload URL of the returned
+// UploadRef to upload the bytes for
+// the Photo.
 //
 // In addition to the photo requirements shown
 // in
 // https://support.google.com/maps/answer/7012050?hl=en&ref_topic=6275
 // 604,
-// the photo must also meet the following requirements:
+// the photo must meet the following requirements:
 //
 // * Photo Sphere XMP metadata must be included in the photo medadata.
 // See
@@ -1589,8 +1585,8 @@ type PhotoStartUploadCall struct {
 // 604, and
 // the photo must be a full 360 horizontally.
 //
-// After the upload is complete, the
-// UploadRef is used with
+// After the upload completes, the method uses
+// UploadRef with
 // CreatePhoto
 // to create the Photo object entry.
 func (r *PhotoService) StartUpload(empty *Empty) *PhotoStartUploadCall {
@@ -1686,7 +1682,7 @@ func (c *PhotoStartUploadCall) Do(opts ...googleapi.CallOption) (*UploadRef, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an upload session to start uploading photo bytes. The upload URL of\nthe returned UploadRef is used to\nupload the bytes for the Photo.\n\nIn addition to the photo requirements shown in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604,\nthe photo must also meet the following requirements:\n\n* Photo Sphere XMP metadata must be included in the photo medadata. See\nhttps://developers.google.com/streetview/spherical-metadata for the\nrequired fields.\n* The pixel size of the photo must meet the size requirements listed in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and\nthe photo must be a full 360 horizontally.\n\nAfter the upload is complete, the\nUploadRef is used with\nCreatePhoto\nto create the Photo object entry.",
+	//   "description": "Creates an upload session to start uploading photo bytes.  The method uses\nthe upload URL of the returned\nUploadRef to upload the bytes for\nthe Photo.\n\nIn addition to the photo requirements shown in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604,\nthe photo must meet the following requirements:\n\n* Photo Sphere XMP metadata must be included in the photo medadata. See\nhttps://developers.google.com/streetview/spherical-metadata for the\nrequired fields.\n* The pixel size of the photo must meet the size requirements listed in\nhttps://support.google.com/maps/answer/7012050?hl=en\u0026ref_topic=6275604, and\nthe photo must be a full 360 horizontally.\n\nAfter the upload completes, the method uses\nUploadRef with\nCreatePhoto\nto create the Photo object entry.",
 	//   "flatPath": "v1/photo:startUpload",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photo.startUpload",
@@ -1728,12 +1724,6 @@ type PhotoUpdateCall struct {
 // all
 // fields.
 //
-// <aside class="note"><b>Note:</b> To
-// update
-// Pose.altitude,
-// Pose.latLngPair has to be
-// filled as well. Otherwise, the request will fail.</aside>
-//
 // This method returns the following error codes:
 //
 // * google.rpc.Code.PERMISSION_DENIED if the requesting user did
@@ -1753,7 +1743,7 @@ func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 // UpdateMask sets the optional parameter "updateMask": Mask that
 // identifies fields on the photo metadata to update.
 // If not present, the old Photo
-// metadata will be entirely replaced with the
+// metadata is entirely replaced with the
 // new Photo metadata in this request.
 // The update fails if invalid fields are specified. Multiple fields can
 // be
@@ -1771,15 +1761,15 @@ func (r *PhotoService) Update(id string, photo *Photo) *PhotoUpdateCall {
 // * `places`
 //
 //
-// <aside class="note"><b>Note:</b> Repeated fields in
+// <aside class="note"><b>Note:</b> When
 // updateMask
-// mean the entire set of repeated values will be replaced with the
-// new
-// contents. For example, if
+// contains repeated fields, the entire set of repeated values get
+// replaced
+// with the new contents. For example, if
 // updateMask
 // contains `connections` and `UpdatePhotoRequest.photo.connections` is
 // empty,
-// all connections will be removed.</aside>
+// all connections are removed.</aside>
 func (c *PhotoUpdateCall) UpdateMask(updateMask string) *PhotoUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1875,7 +1865,7 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the metadata of a Photo, such\nas pose, place association, connections, etc. Changing the pixels of a\nphoto is not supported.\n\nOnly the fields specified in the\nupdateMask\nfield are used. If `updateMask` is not present, the update applies to all\nfields.\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e To update\nPose.altitude,\nPose.latLngPair has to be\nfilled as well. Otherwise, the request will fail.\u003c/aside\u003e\n\nThis method returns the following error codes:\n\n* google.rpc.Code.PERMISSION_DENIED if the requesting user did not\ncreate the requested photo.\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed.\n* google.rpc.Code.NOT_FOUND if the requested photo does not exist.\n* google.rpc.Code.UNAVAILABLE if the requested\nPhoto is still being indexed.",
+	//   "description": "Updates the metadata of a Photo, such\nas pose, place association, connections, etc. Changing the pixels of a\nphoto is not supported.\n\nOnly the fields specified in the\nupdateMask\nfield are used. If `updateMask` is not present, the update applies to all\nfields.\n\nThis method returns the following error codes:\n\n* google.rpc.Code.PERMISSION_DENIED if the requesting user did not\ncreate the requested photo.\n* google.rpc.Code.INVALID_ARGUMENT if the request is malformed.\n* google.rpc.Code.NOT_FOUND if the requested photo does not exist.\n* google.rpc.Code.UNAVAILABLE if the requested\nPhoto is still being indexed.",
 	//   "flatPath": "v1/photo/{id}",
 	//   "httpMethod": "PUT",
 	//   "id": "streetviewpublish.photo.update",
@@ -1890,7 +1880,7 @@ func (c *PhotoUpdateCall) Do(opts ...googleapi.CallOption) (*Photo, error) {
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies fields on the photo metadata to update.\nIf not present, the old Photo\nmetadata will be entirely replaced with the\nnew Photo metadata in this request.\nThe update fails if invalid fields are specified. Multiple fields can be\nspecified in a comma-delimited list.\n\nThe following fields are valid:\n\n* `pose.heading`\n* `pose.latLngPair`\n* `pose.pitch`\n* `pose.roll`\n* `pose.level`\n* `pose.altitude`\n* `connections`\n* `places`\n\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e Repeated fields in\nupdateMask\nmean the entire set of repeated values will be replaced with the new\ncontents. For example, if\nupdateMask\ncontains `connections` and `UpdatePhotoRequest.photo.connections` is empty,\nall connections will be removed.\u003c/aside\u003e",
+	//       "description": "Mask that identifies fields on the photo metadata to update.\nIf not present, the old Photo\nmetadata is entirely replaced with the\nnew Photo metadata in this request.\nThe update fails if invalid fields are specified. Multiple fields can be\nspecified in a comma-delimited list.\n\nThe following fields are valid:\n\n* `pose.heading`\n* `pose.latLngPair`\n* `pose.pitch`\n* `pose.roll`\n* `pose.level`\n* `pose.altitude`\n* `connections`\n* `places`\n\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e When\nupdateMask\ncontains repeated fields, the entire set of repeated values get replaced\nwith the new contents. For example, if\nupdateMask\ncontains `connections` and `UpdatePhotoRequest.photo.connections` is empty,\nall connections are removed.\u003c/aside\u003e",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -1925,13 +1915,12 @@ type PhotosBatchDeleteCall struct {
 //
 // Note that if
 // BatchDeletePhotos
-// fails, either critical fields are missing or there was an
+// fails, either critical fields are missing or there is an
 // authentication
 // error. Even if
 // BatchDeletePhotos
-// succeeds, there may have been failures for single photos in the
-// batch.
-// These failures will be specified in
+// succeeds, individual photos in the batch may have failures.
+// These failures are specified in
 // each
 // PhotoResponse.status
 // in
@@ -2033,7 +2022,7 @@ func (c *PhotosBatchDeleteCall) Do(opts ...googleapi.CallOption) (*BatchDeletePh
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a list of Photos and their\nmetadata.\n\nNote that if\nBatchDeletePhotos\nfails, either critical fields are missing or there was an authentication\nerror. Even if\nBatchDeletePhotos\nsucceeds, there may have been failures for single photos in the batch.\nThese failures will be specified in each\nPhotoResponse.status\nin\nBatchDeletePhotosResponse.results.\nSee\nDeletePhoto\nfor specific failures that can occur per photo.",
+	//   "description": "Deletes a list of Photos and their\nmetadata.\n\nNote that if\nBatchDeletePhotos\nfails, either critical fields are missing or there is an authentication\nerror. Even if\nBatchDeletePhotos\nsucceeds, individual photos in the batch may have failures.\nThese failures are specified in each\nPhotoResponse.status\nin\nBatchDeletePhotosResponse.results.\nSee\nDeletePhoto\nfor specific failures that can occur per photo.",
 	//   "flatPath": "v1/photos:batchDelete",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photos.batchDelete",
@@ -2068,13 +2057,12 @@ type PhotosBatchGetCall struct {
 //
 // Note that if
 // BatchGetPhotos
-// fails, either critical fields are missing or there was an
+// fails, either critical fields are missing or there is an
 // authentication
 // error. Even if
 // BatchGetPhotos
-// succeeds, there may have been failures for single photos in the
-// batch.
-// These failures will be specified in
+// succeeds, individual photos in the batch may have failures.
+// These failures are specified in
 // each
 // PhotoResponse.status
 // in
@@ -2096,7 +2084,7 @@ func (r *PhotosService) BatchGet() *PhotosBatchGetCall {
 // If
 //  language_code is unspecified, the user's language preference for
 // Google
-// services will be used.
+// services is used.
 func (c *PhotosBatchGetCall) LanguageCode(languageCode string) *PhotosBatchGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -2219,14 +2207,14 @@ func (c *PhotosBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetPhotosRe
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the metadata of the specified\nPhoto batch.\n\nNote that if\nBatchGetPhotos\nfails, either critical fields are missing or there was an authentication\nerror. Even if\nBatchGetPhotos\nsucceeds, there may have been failures for single photos in the batch.\nThese failures will be specified in each\nPhotoResponse.status\nin\nBatchGetPhotosResponse.results.\nSee\nGetPhoto\nfor specific failures that can occur per photo.",
+	//   "description": "Gets the metadata of the specified\nPhoto batch.\n\nNote that if\nBatchGetPhotos\nfails, either critical fields are missing or there is an authentication\nerror. Even if\nBatchGetPhotos\nsucceeds, individual photos in the batch may have failures.\nThese failures are specified in each\nPhotoResponse.status\nin\nBatchGetPhotosResponse.results.\nSee\nGetPhoto\nfor specific failures that can occur per photo.",
 	//   "flatPath": "v1/photos:batchGet",
 	//   "httpMethod": "GET",
 	//   "id": "streetviewpublish.photos.batchGet",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2274,13 +2262,12 @@ type PhotosBatchUpdateCall struct {
 //
 // Note that if
 // BatchUpdatePhotos
-// fails, either critical fields are missing or there was an
+// fails, either critical fields are missing or there is an
 // authentication
 // error. Even if
 // BatchUpdatePhotos
-// succeeds, there may have been failures for single photos in the
-// batch.
-// These failures will be specified in
+// succeeds, individual photos in the batch may have failures.
+// These failures are specified in
 // each
 // PhotoResponse.status
 // in
@@ -2400,7 +2387,7 @@ func (c *PhotosBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdatePh
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the metadata of Photos, such\nas pose, place association, connections, etc. Changing the pixels of photos\nis not supported.\n\nNote that if\nBatchUpdatePhotos\nfails, either critical fields are missing or there was an authentication\nerror. Even if\nBatchUpdatePhotos\nsucceeds, there may have been failures for single photos in the batch.\nThese failures will be specified in each\nPhotoResponse.status\nin\nBatchUpdatePhotosResponse.results.\nSee\nUpdatePhoto\nfor specific failures that can occur per photo.\n\nOnly the fields specified in\nupdateMask\nfield are used. If `updateMask` is not present, the update applies to all\nfields.\n\nThe number of\nUpdatePhotoRequest\nmessages in a\nBatchUpdatePhotosRequest\nmust not exceed 20.\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e To update\nPose.altitude,\nPose.latLngPair has to be\nfilled as well. Otherwise, the request will fail.\u003c/aside\u003e",
+	//   "description": "Updates the metadata of Photos, such\nas pose, place association, connections, etc. Changing the pixels of photos\nis not supported.\n\nNote that if\nBatchUpdatePhotos\nfails, either critical fields are missing or there is an authentication\nerror. Even if\nBatchUpdatePhotos\nsucceeds, individual photos in the batch may have failures.\nThese failures are specified in each\nPhotoResponse.status\nin\nBatchUpdatePhotosResponse.results.\nSee\nUpdatePhoto\nfor specific failures that can occur per photo.\n\nOnly the fields specified in\nupdateMask\nfield are used. If `updateMask` is not present, the update applies to all\nfields.\n\nThe number of\nUpdatePhotoRequest\nmessages in a\nBatchUpdatePhotosRequest\nmust not exceed 20.\n\n\u003caside class=\"note\"\u003e\u003cb\u003eNote:\u003c/b\u003e To update\nPose.altitude,\nPose.latLngPair has to be\nfilled as well. Otherwise, the request will fail.\u003c/aside\u003e",
 	//   "flatPath": "v1/photos:batchUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "streetviewpublish.photos.batchUpdate",
@@ -2458,7 +2445,7 @@ func (c *PhotosListCall) Filter(filter string) *PhotosListCall {
 // If
 //  language_code is unspecified, the user's language preference for
 // Google
-// services will be used.
+// services is used.
 func (c *PhotosListCall) LanguageCode(languageCode string) *PhotosListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -2468,7 +2455,7 @@ func (c *PhotosListCall) LanguageCode(languageCode string) *PhotosListCall {
 // of photos to return.
 // `pageSize` must be non-negative. If `pageSize` is zero or is not
 // provided,
-// the default page size of 100 will be used.
+// the default page size of 100 is used.
 // The number of photos returned in the response may be less than
 // `pageSize`
 // if the number of photos that belong to the user is less than
@@ -2608,12 +2595,12 @@ func (c *PhotosListCall) Do(opts ...googleapi.CallOption) (*ListPhotosResponse, 
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices will be used.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". For more\ninformation, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nIf language_code is unspecified, the user's language preference for Google\nservices is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of photos to return.\n`pageSize` must be non-negative. If `pageSize` is zero or is not provided,\nthe default page size of 100 will be used.\nThe number of photos returned in the response may be less than `pageSize`\nif the number of photos that belong to the user is less than `pageSize`.",
+	//       "description": "The maximum number of photos to return.\n`pageSize` must be non-negative. If `pageSize` is zero or is not provided,\nthe default page size of 100 is used.\nThe number of photos returned in the response may be less than `pageSize`\nif the number of photos that belong to the user is less than `pageSize`.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

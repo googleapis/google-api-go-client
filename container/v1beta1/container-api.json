@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190206",
+  "revision": "20190227",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2535,21 +2535,6 @@
         "networkPolicyConfig": {
           "$ref": "NetworkPolicyConfig",
           "description": "Configuration for NetworkPolicy. This only tracks whether the addon\nis enabled or not on the Master, it does not track whether network policy\nis enabled for the nodes."
-        }
-      },
-      "type": "object"
-    },
-    "AuthenticatorGroupsConfig": {
-      "description": "Configuration for returning group information from authenticators.",
-      "id": "AuthenticatorGroupsConfig",
-      "properties": {
-        "enabled": {
-          "description": "Whether this cluster should return group membership lookups\nduring authentication using a group of security groups.",
-          "type": "boolean"
-        },
-        "securityGroup": {
-          "description": "The name of the security group-of-groups to be used. Only relevant\nif enabled = true.",
-          "type": "string"
         }
       },
       "type": "object"
@@ -2658,10 +2643,6 @@
         "addonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
-        },
-        "authenticatorGroupsConfig": {
-          "$ref": "AuthenticatorGroupsConfig",
-          "description": "Configuration controlling RBAC group membership information."
         },
         "autoscaling": {
           "$ref": "ClusterAutoscaling",

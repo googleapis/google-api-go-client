@@ -521,11 +521,12 @@ func (s *CustomerIndexStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Datasource is a logical namespace for items to be
-// indexed.
-// All items must belong to a datasource.  This is the prerequisite
-// before
-// items can be indexed into Cloud Search.
+// DataSource: Frontend protos implement autoconverters for this message
+// type. If you add
+// fields to this proto, please add corresponding fields to the frontend
+// proto
+// with the same names.
+// LINT.IfChange
 type DataSource struct {
 	// DisableModifications: If true, Indexing API rejects any modification
 	// calls to this datasource

@@ -692,6 +692,132 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExecuteBatchDmlRequest: The request for ExecuteBatchDml
+type ExecuteBatchDmlRequest struct {
+	// Seqno: A per-transaction sequence number used to identify this
+	// request. This is
+	// used in the same space as the seqno in
+	// ExecuteSqlRequest. See more details
+	// in ExecuteSqlRequest.
+	Seqno int64 `json:"seqno,omitempty,string"`
+
+	// Statements: The list of statements to execute in this batch.
+	// Statements are executed
+	// serially, such that the effects of statement i are visible to
+	// statement
+	// i+1. Each statement must be a DML statement. Execution will stop at
+	// the
+	// first failed statement; the remaining statements will not
+	// run.
+	//
+	// REQUIRES: statements_size() > 0.
+	Statements []*Statement `json:"statements,omitempty"`
+
+	// Transaction: The transaction to use. A ReadWrite transaction is
+	// required. Single-use
+	// transactions are not supported (to avoid replay).  The caller must
+	// either
+	// supply an existing transaction ID or begin a new transaction.
+	Transaction *TransactionSelector `json:"transaction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Seqno") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Seqno") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteBatchDmlRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteBatchDmlResponse: The response for ExecuteBatchDml. Contains a
+// list
+// of ResultSet, one for each DML statement that has successfully
+// executed.
+// If a statement fails, the error is returned as part of the response
+// payload.
+// Clients can determine whether all DML statements have run
+// successfully, or if
+// a statement failed, using one of the following approaches:
+//
+//   1. Check if 'status' field is OkStatus.
+//   2. Check if result_sets_size() equals the number of statements in
+//      ExecuteBatchDmlRequest.
+//
+// Example 1: A request with 5 DML statements, all executed
+// successfully.
+// Result: A response with 5 ResultSets, one for each statement in the
+// same
+// order, and an OK status.
+//
+// Example 2: A request with 5 DML statements. The 3rd statement has a
+// syntax
+// error.
+// Result: A response with 2 ResultSets, for the first 2 statements
+// that
+// run successfully, and a syntax error (INVALID_ARGUMENT) status.
+// From
+// result_set_size() client can determine that the 3rd statement has
+// failed.
+type ExecuteBatchDmlResponse struct {
+	// ResultSets: ResultSets, one for each statement in the request that
+	// ran successfully, in
+	// the same order as the statements in the request. Each ResultSet
+	// will
+	// not contain any rows. The ResultSetStats in each ResultSet
+	// will
+	// contain the number of rows modified by the statement.
+	//
+	// Only the first ResultSet in the response contains a
+	// valid
+	// ResultSetMetadata.
+	ResultSets []*ResultSet `json:"resultSets,omitempty"`
+
+	// Status: If all DML statements are executed successfully, status will
+	// be OK.
+	// Otherwise, the error status of the first failed statement.
+	Status *Status `json:"status,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ResultSets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResultSets") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecuteBatchDmlResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteBatchDmlResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExecuteSqlRequest: The request for ExecuteSql
 // and
 // ExecuteStreamingSql.
@@ -2785,6 +2911,66 @@ type ShortRepresentation struct {
 
 func (s *ShortRepresentation) MarshalJSON() ([]byte, error) {
 	type NoMethod ShortRepresentation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Statement: A single DML statement.
+type Statement struct {
+	// ParamTypes: It is not always possible for Cloud Spanner to infer the
+	// right SQL type
+	// from a JSON value.  For example, values of type `BYTES` and values
+	// of type `STRING` both appear in params as JSON strings.
+	//
+	// In these cases, `param_types` can be used to specify the exact
+	// SQL type for some or all of the SQL statement parameters. See
+	// the
+	// definition of Type for more information
+	// about SQL types.
+	ParamTypes map[string]Type `json:"paramTypes,omitempty"`
+
+	// Params: The DML string can contain parameter placeholders. A
+	// parameter
+	// placeholder consists of `'@'` followed by the parameter
+	// name. Parameter names consist of any combination of letters,
+	// numbers, and underscores.
+	//
+	// Parameters can appear anywhere that a literal value is expected.
+	// The
+	// same parameter name can be used more than once, for example:
+	//   "WHERE id > @msg_id AND id < @msg_id + 100"
+	//
+	// It is an error to execute an SQL statement with unbound
+	// parameters.
+	//
+	// Parameter values are specified using `params`, which is a JSON
+	// object whose keys are parameter names, and whose values are
+	// the
+	// corresponding parameter values.
+	Params googleapi.RawMessage `json:"params,omitempty"`
+
+	// Sql: Required. The DML string.
+	Sql string `json:"sql,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ParamTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ParamTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Statement) MarshalJSON() ([]byte, error) {
+	type NoMethod Statement
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8114,6 +8300,173 @@ func (c *ProjectsInstancesDatabasesSessionsDeleteCall) Do(opts ...googleapi.Call
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.data"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.databases.sessions.executeBatchDml":
+
+type ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall struct {
+	s                      *Service
+	session                string
+	executebatchdmlrequest *ExecuteBatchDmlRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// ExecuteBatchDml: Executes a batch of SQL DML statements. This method
+// allows many statements
+// to be run with lower latency than submitting them sequentially
+// with
+// ExecuteSql.
+//
+// Statements are executed in order,
+// sequentially.
+// ExecuteBatchDmlResponse will contain a
+// ResultSet for each DML statement that has successfully executed. If
+// a
+// statement fails, its error status will be returned as part of
+// the
+// ExecuteBatchDmlResponse. Execution will
+// stop at the first failed statement; the remaining statements will not
+// run.
+//
+// ExecuteBatchDml is expected to return an OK status with a response
+// even if
+// there was an error while processing one of the DML statements.
+// Clients must
+// inspect response.status to determine if there were any errors
+// while
+// processing the request.
+//
+// See more details in
+// ExecuteBatchDmlRequest and
+// ExecuteBatchDmlResponse.
+func (r *ProjectsInstancesDatabasesSessionsService) ExecuteBatchDml(session string, executebatchdmlrequest *ExecuteBatchDmlRequest) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
+	c := &ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.session = session
+	c.executebatchdmlrequest = executebatchdmlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Fields(s ...googleapi.Field) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Context(ctx context.Context) *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.executebatchdmlrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+session}:executeBatchDml")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"session": c.session,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.databases.sessions.executeBatchDml" call.
+// Exactly one of *ExecuteBatchDmlResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ExecuteBatchDmlResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesDatabasesSessionsExecuteBatchDmlCall) Do(opts ...googleapi.CallOption) (*ExecuteBatchDmlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ExecuteBatchDmlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in order, sequentially.\nExecuteBatchDmlResponse will contain a\nResultSet for each DML statement that has successfully executed. If a\nstatement fails, its error status will be returned as part of the\nExecuteBatchDmlResponse. Execution will\nstop at the first failed statement; the remaining statements will not run.\n\nExecuteBatchDml is expected to return an OK status with a response even if\nthere was an error while processing one of the DML statements. Clients must\ninspect response.status to determine if there were any errors while\nprocessing the request.\n\nSee more details in\nExecuteBatchDmlRequest and\nExecuteBatchDmlResponse.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeBatchDml",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.databases.sessions.executeBatchDml",
+	//   "parameterOrder": [
+	//     "session"
+	//   ],
+	//   "parameters": {
+	//     "session": {
+	//       "description": "Required. The session in which the DML statements should be performed.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+session}:executeBatchDml",
+	//   "request": {
+	//     "$ref": "ExecuteBatchDmlRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ExecuteBatchDmlResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

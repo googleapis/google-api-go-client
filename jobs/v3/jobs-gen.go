@@ -355,7 +355,7 @@ type ClientEvent struct {
 	// implements Cloud Talent Solution.
 	JobEvent *JobEvent `json:"jobEvent,omitempty"`
 
-	// ParentEventId: Required except the first event.
+	// ParentEventId: Optional.
 	//
 	// The event_id of an event that resulted in the current event. For
 	// example, a

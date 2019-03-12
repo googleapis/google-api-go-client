@@ -481,7 +481,7 @@
       }
     }
   },
-  "revision": "20190215",
+  "revision": "20190308",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
@@ -564,11 +564,11 @@
       "type": "object"
     },
     "AttestorPublicKey": {
-      "description": "An attestator public key that will be used to\nverify attestations signed by this attestor.",
+      "description": "An attestor public key that will be used to verify\nattestations signed by this attestor.",
       "id": "AttestorPublicKey",
       "properties": {
         "asciiArmoredPgpPublicKey": {
-          "description": "ASCII-armored representation of a PGP public key, as the entire output by\nthe command `gpg --export --armor foo@example.com` (either LF or CRLF\nline endings).",
+          "description": "ASCII-armored representation of a PGP public key, as the entire output by\nthe command `gpg --export --armor foo@example.com` (either LF or CRLF\nline endings).\nWhen using this field, `id` should be left blank.  The BinAuthz API\nhandlers will calculate the ID and fill it in automatically.  BinAuthz\ncomputes this ID as the OpenPGP RFC4880 V4 fingerprint, represented as\nupper-case hex.  If `id` is provided by the caller, it will be\noverwritten by the API-calculated ID.",
           "type": "string"
         },
         "comment": {
@@ -576,7 +576,7 @@
           "type": "string"
         },
         "id": {
-          "description": "Output only. This field will be overwritten with key ID information, for\nexample, an identifier extracted from a PGP public key. This field may not\nbe updated.",
+          "description": "The ID of this public key.\nSignatures verified by BinAuthz must include the ID of the public key that\ncan be used to verify them, and that ID must match the contents of this\nfield exactly.\nAdditional restrictions on this field can be imposed based on which public\nkey type is encapsulated. See the documentation on `public_key` cases below\nfor details.",
           "type": "string"
         }
       },
@@ -591,7 +591,7 @@
           "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
           "items": {
             "type": "string"
           },
@@ -695,7 +695,7 @@
         },
         "defaultAdmissionRule": {
           "$ref": "AdmissionRule",
-          "description": "Required. Default admission rule for a cluster without a per-cluster\nadmission rule."
+          "description": "Required. Default admission rule for a cluster without a per-cluster, per-\nkubernetes-service-account, or per-istio-service-identity admission rule."
         },
         "description": {
           "description": "Optional. A descriptive comment.",

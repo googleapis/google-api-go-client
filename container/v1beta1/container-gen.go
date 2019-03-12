@@ -320,42 +320,6 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuthenticatorGroupsConfig: Configuration for returning group
-// information from authenticators.
-type AuthenticatorGroupsConfig struct {
-	// Enabled: Whether this cluster should return group membership
-	// lookups
-	// during authentication using a group of security groups.
-	Enabled bool `json:"enabled,omitempty"`
-
-	// SecurityGroup: The name of the security group-of-groups to be used.
-	// Only relevant
-	// if enabled = true.
-	SecurityGroup string `json:"securityGroup,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AuthenticatorGroupsConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AutoUpgradeOptions: AutoUpgradeOptions defines the set of options for
 // the user to control how
 // the Auto Upgrades will proceed.
@@ -602,10 +566,6 @@ type Cluster struct {
 	// AddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
 	AddonsConfig *AddonsConfig `json:"addonsConfig,omitempty"`
-
-	// AuthenticatorGroupsConfig: Configuration controlling RBAC group
-	// membership information.
-	AuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"authenticatorGroupsConfig,omitempty"`
 
 	// Autoscaling: Cluster-level autoscaling configuration.
 	Autoscaling *ClusterAutoscaling `json:"autoscaling,omitempty"`

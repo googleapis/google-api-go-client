@@ -925,6 +925,35 @@
                         "https://www.googleapis.com/auth/spanner.data"
                       ]
                     },
+                    "executeBatchDml": {
+                      "description": "Executes a batch of SQL DML statements. This method allows many statements\nto be run with lower latency than submitting them sequentially with\nExecuteSql.\n\nStatements are executed in order, sequentially.\nExecuteBatchDmlResponse will contain a\nResultSet for each DML statement that has successfully executed. If a\nstatement fails, its error status will be returned as part of the\nExecuteBatchDmlResponse. Execution will\nstop at the first failed statement; the remaining statements will not run.\n\nExecuteBatchDml is expected to return an OK status with a response even if\nthere was an error while processing one of the DML statements. Clients must\ninspect response.status to determine if there were any errors while\nprocessing the request.\n\nSee more details in\nExecuteBatchDmlRequest and\nExecuteBatchDmlResponse.",
+                      "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeBatchDml",
+                      "httpMethod": "POST",
+                      "id": "spanner.projects.instances.databases.sessions.executeBatchDml",
+                      "parameterOrder": [
+                        "session"
+                      ],
+                      "parameters": {
+                        "session": {
+                          "description": "Required. The session in which the DML statements should be performed.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/instances/[^/]+/databases/[^/]+/sessions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+session}:executeBatchDml",
+                      "request": {
+                        "$ref": "ExecuteBatchDmlRequest"
+                      },
+                      "response": {
+                        "$ref": "ExecuteBatchDmlResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/spanner.data"
+                      ]
+                    },
                     "executeSql": {
                       "description": "Executes an SQL statement, returning all results in a single reply. This\nmethod cannot be used to return a result set larger than 10 MiB;\nif the query yields more data than that, the query fails with\na `FAILED_PRECONDITION` error.\n\nOperations inside read-write transactions might return `ABORTED`. If\nthis occurs, the application should restart the transaction from\nthe beginning. See Transaction for more details.\n\nLarger result sets can be fetched in streaming fashion by calling\nExecuteStreamingSql instead.",
                       "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/databases/{databasesId}/sessions/{sessionsId}:executeSql",
@@ -1329,7 +1358,7 @@
       }
     }
   },
-  "revision": "20190212",
+  "revision": "20190214",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -1545,6 +1574,47 @@
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "ExecuteBatchDmlRequest": {
+      "description": "The request for ExecuteBatchDml",
+      "id": "ExecuteBatchDmlRequest",
+      "properties": {
+        "seqno": {
+          "description": "A per-transaction sequence number used to identify this request. This is\nused in the same space as the seqno in\nExecuteSqlRequest. See more details\nin ExecuteSqlRequest.",
+          "format": "int64",
+          "type": "string"
+        },
+        "statements": {
+          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement i are visible to statement\ni+1. Each statement must be a DML statement. Execution will stop at the\nfirst failed statement; the remaining statements will not run.\n\nREQUIRES: statements_size() \u003e 0.",
+          "items": {
+            "$ref": "Statement"
+          },
+          "type": "array"
+        },
+        "transaction": {
+          "$ref": "TransactionSelector",
+          "description": "The transaction to use. A ReadWrite transaction is required. Single-use\ntransactions are not supported (to avoid replay).  The caller must either\nsupply an existing transaction ID or begin a new transaction."
+        }
+      },
+      "type": "object"
+    },
+    "ExecuteBatchDmlResponse": {
+      "description": "The response for ExecuteBatchDml. Contains a list\nof ResultSet, one for each DML statement that has successfully executed.\nIf a statement fails, the error is returned as part of the response payload.\nClients can determine whether all DML statements have run successfully, or if\na statement failed, using one of the following approaches:\n\n  1. Check if 'status' field is OkStatus.\n  2. Check if result_sets_size() equals the number of statements in\n     ExecuteBatchDmlRequest.\n\nExample 1: A request with 5 DML statements, all executed successfully.\nResult: A response with 5 ResultSets, one for each statement in the same\norder, and an OK status.\n\nExample 2: A request with 5 DML statements. The 3rd statement has a syntax\nerror.\nResult: A response with 2 ResultSets, for the first 2 statements that\nrun successfully, and a syntax error (INVALID_ARGUMENT) status. From\nresult_set_size() client can determine that the 3rd statement has failed.",
+      "id": "ExecuteBatchDmlResponse",
+      "properties": {
+        "resultSets": {
+          "description": "ResultSets, one for each statement in the request that ran successfully, in\nthe same order as the statements in the request. Each ResultSet will\nnot contain any rows. The ResultSetStats in each ResultSet will\ncontain the number of rows modified by the statement.\n\nOnly the first ResultSet in the response contains a valid\nResultSetMetadata.",
+          "items": {
+            "$ref": "ResultSet"
+          },
+          "type": "array"
+        },
+        "status": {
+          "$ref": "Status",
+          "description": "If all DML statements are executed successfully, status will be OK.\nOtherwise, the error status of the first failed statement."
+        }
+      },
       "type": "object"
     },
     "ExecuteSqlRequest": {
@@ -2407,6 +2477,32 @@
           },
           "description": "A mapping of (subquery variable name) -\u003e (subquery node id) for cases\nwhere the `description` string of this node references a `SCALAR`\nsubquery contained in the expression subtree rooted at this node. The\nreferenced `SCALAR` subquery may not necessarily be a direct child of\nthis node.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Statement": {
+      "description": "A single DML statement.",
+      "id": "Statement",
+      "properties": {
+        "paramTypes": {
+          "additionalProperties": {
+            "$ref": "Type"
+          },
+          "description": "It is not always possible for Cloud Spanner to infer the right SQL type\nfrom a JSON value.  For example, values of type `BYTES` and values\nof type `STRING` both appear in params as JSON strings.\n\nIn these cases, `param_types` can be used to specify the exact\nSQL type for some or all of the SQL statement parameters. See the\ndefinition of Type for more information\nabout SQL types.",
+          "type": "object"
+        },
+        "params": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "The DML string can contain parameter placeholders. A parameter\nplaceholder consists of `'@'` followed by the parameter\nname. Parameter names consist of any combination of letters,\nnumbers, and underscores.\n\nParameters can appear anywhere that a literal value is expected.  The\nsame parameter name can be used more than once, for example:\n  `\"WHERE id \u003e @msg_id AND id \u003c @msg_id + 100\"`\n\nIt is an error to execute an SQL statement with unbound parameters.\n\nParameter values are specified using `params`, which is a JSON\nobject whose keys are parameter names, and whose values are the\ncorresponding parameter values.",
+          "type": "object"
+        },
+        "sql": {
+          "description": "Required. The DML string.",
+          "type": "string"
         }
       },
       "type": "object"

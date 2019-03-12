@@ -458,7 +458,7 @@
       }
     }
   },
-  "revision": "20190128",
+  "revision": "20190308",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -602,7 +602,8 @@
             "UPDATING",
             "DELETING",
             "REPAIRING",
-            "MAINTENANCE"
+            "MAINTENANCE",
+            "FAILING_OVER"
           ],
           "enumDescriptions": [
             "Not set.",
@@ -611,7 +612,8 @@
             "Redis instance configuration is being updated. Certain kinds of updates\nmay cause the instance to become unusable while the update is in\nprogress.",
             "Redis instance is being deleted.",
             "Redis instance is being repaired and may be unusable.",
-            "Maintenance is being performed on this Redis instance."
+            "Maintenance is being performed on this Redis instance.",
+            "Redis instance is failing over (availability may be affected)."
           ],
           "type": "string"
         },

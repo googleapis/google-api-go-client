@@ -324,7 +324,7 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -949,7 +949,8 @@ type Project struct {
 	//   "ACTIVE" - The normal and active state.
 	//   "DELETE_REQUESTED" - The project has been marked for deletion by
 	// the user
-	// (by invoking DeleteProject)
+	// (by invoking
+	// DeleteProject)
 	// or by the system (Google Cloud Platform).
 	// This can generally be reversed by invoking UndeleteProject.
 	//   "DELETE_IN_PROGRESS" - This lifecycle state is no longer used and

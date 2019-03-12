@@ -360,6 +360,8 @@ type Instance struct {
 	//   "REPAIRING" - Redis instance is being repaired and may be unusable.
 	//   "MAINTENANCE" - Maintenance is being performed on this Redis
 	// instance.
+	//   "FAILING_OVER" - Redis instance is failing over (availability may
+	// be affected).
 	State string `json:"state,omitempty"`
 
 	// StatusMessage: Output only. Additional information about the current

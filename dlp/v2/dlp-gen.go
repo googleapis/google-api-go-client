@@ -1459,7 +1459,7 @@ type GooglePrivacyDlpV2CreateDeidentifyTemplateRequest struct {
 	// TemplateId: The template id can contain uppercase and lowercase
 	// letters,
 	// numbers, and hyphens; that is, it must match the regular
-	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// expression: `[a-zA-Z\\d-_]+`. The maximum length is 100
 	// characters. Can be empty to allow the system to generate one.
 	TemplateId string `json:"templateId,omitempty"`
 
@@ -1498,7 +1498,7 @@ type GooglePrivacyDlpV2CreateDlpJobRequest struct {
 	// JobId: The job id can contain uppercase and lowercase
 	// letters,
 	// numbers, and hyphens; that is, it must match the regular
-	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// expression: `[a-zA-Z\\d-_]+`. The maximum length is 100
 	// characters. Can be empty to allow the system to generate one.
 	JobId string `json:"jobId,omitempty"`
 
@@ -1536,7 +1536,7 @@ type GooglePrivacyDlpV2CreateInspectTemplateRequest struct {
 	// TemplateId: The template id can contain uppercase and lowercase
 	// letters,
 	// numbers, and hyphens; that is, it must match the regular
-	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// expression: `[a-zA-Z\\d-_]+`. The maximum length is 100
 	// characters. Can be empty to allow the system to generate one.
 	TemplateId string `json:"templateId,omitempty"`
 
@@ -1573,7 +1573,7 @@ type GooglePrivacyDlpV2CreateJobTriggerRequest struct {
 	// TriggerId: The trigger id can contain uppercase and lowercase
 	// letters,
 	// numbers, and hyphens; that is, it must match the regular
-	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// expression: `[a-zA-Z\\d-_]+`. The maximum length is 100
 	// characters. Can be empty to allow the system to generate one.
 	TriggerId string `json:"triggerId,omitempty"`
 
@@ -1609,7 +1609,7 @@ type GooglePrivacyDlpV2CreateStoredInfoTypeRequest struct {
 	// StoredInfoTypeId: The storedInfoType ID can contain uppercase and
 	// lowercase letters,
 	// numbers, and hyphens; that is, it must match the regular
-	// expression: `[a-zA-Z\\d-]+`. The maximum length is 100
+	// expression: `[a-zA-Z\\d-_]+`. The maximum length is 100
 	// characters. Can be empty to allow the system to generate one.
 	StoredInfoTypeId string `json:"storedInfoTypeId,omitempty"`
 
@@ -1709,21 +1709,11 @@ func (s *GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig: Replaces an identifier
-// with a surrogate using FPE with the FFX
-// mode of operation; however when used in the `ReidentifyContent` API
-// method,
-// it serves the opposite function by reversing the surrogate back
-// into
-// the original identifier.
-// The identifier must be encoded as ASCII.
-// For a given crypto key and context, the same identifier will
-// be
-// replaced with the same surrogate.
-// Identifiers must be at least two characters long.
-// In the case that the identifier is the empty string, it will be
-// skipped.
-// See https://cloud.google.com/dlp/docs/pseudonymization to learn more.
+// GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig: Note: We recommend using
+//  CryptoDeterministicConfig for all use cases which
+// do not require preserving the input alphabet space and size, plus
+// warrant
+// referential integrity.
 type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// Possible values:
 	//   "FFX_COMMON_NATIVE_ALPHABET_UNSPECIFIED"
@@ -4580,6 +4570,7 @@ func (s *GooglePrivacyDlpV2KindExpression) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2KmsWrappedCryptoKey: Include to use an existing
 // data crypto key wrapped by KMS.
+// The wrapped key must be a 128/192/256 bit key.
 // Authorization requires the following IAM permissions when sending a
 // request
 // to perform a crypto transformation using a kms-wrapped crypto
@@ -6208,6 +6199,8 @@ func (s *GooglePrivacyDlpV2RequestedOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Result: All result fields mentioned below are
+// updated while the job is processing.
 type GooglePrivacyDlpV2Result struct {
 	// InfoTypeStats: Statistics of how many instances of each info type
 	// were found during
@@ -6989,7 +6982,7 @@ func (s *GooglePrivacyDlpV2TransformationOverview) MarshalJSON() ([]byte, error)
 }
 
 // GooglePrivacyDlpV2TransformationSummary: Summary of a single
-// tranformation.
+// transformation.
 // Only one of 'transformation', 'field_transformation', or
 // 'record_suppress'
 // will be set.
@@ -7114,7 +7107,7 @@ func (s *GooglePrivacyDlpV2Trigger) MarshalJSON() ([]byte, error) {
 // security risks due to accidentally
 // leaking the key. Choose another type of key if possible.
 type GooglePrivacyDlpV2UnwrappedCryptoKey struct {
-	// Key: The AES 128/192/256 bit key. [required]
+	// Key: A 128/192/256 bit key. [required]
 	Key string `json:"key,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to

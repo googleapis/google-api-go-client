@@ -502,6 +502,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "export": {
+                      "description": "Export\nAnnotations from\nthe Annotation\nstore.\nErrors are noted in the error\nfield. Otherwise, a detailed response is returned of type\nExportAnnotationsResponse, contained in the\nresponse field when the\noperation finishes. The metadata\nfield type is OperationMetadata.",
+                      "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationStores/{annotationStoresId}:export",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.annotationStores.export",
+                      "parameterOrder": [
+                        "annotationStore"
+                      ],
+                      "parameters": {
+                        "annotationStore": {
+                          "description": "The Annotation store name to export annotations to. The name should be in\nthe format\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha2/{+annotationStore}:export",
+                      "request": {
+                        "$ref": "ExportAnnotationsRequest"
+                      },
+                      "response": {
+                        "$ref": "Operation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "get": {
                       "description": "Gets the specified Annotation store or returns NOT_FOUND if it does not\nexist.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationStores/{annotationStoresId}",
@@ -1148,11 +1176,11 @@
                   "resources": {
                     "dicomWeb": {
                       "methods": {
-                        "instances": {
+                        "searchForInstances": {
                           "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/instances",
                           "httpMethod": "GET",
-                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.instances",
+                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.searchForInstances",
                           "parameterOrder": [
                             "parent",
                             "dicomWebPath"
@@ -1162,6 +1190,39 @@
                               "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
                               "location": "path",
                               "pattern": "^instances$",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "parent": {
+                              "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
+                          "response": {
+                            "$ref": "HttpBody"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform"
+                          ]
+                        },
+                        "searchForSeries": {
+                          "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                          "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/series",
+                          "httpMethod": "GET",
+                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.searchForSeries",
+                          "parameterOrder": [
+                            "parent",
+                            "dicomWebPath"
+                          ],
+                          "parameters": {
+                            "dicomWebPath": {
+                              "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`series`).",
+                              "location": "path",
+                              "pattern": "^series$",
                               "required": true,
                               "type": "string"
                             },
@@ -1214,44 +1275,11 @@
                             "https://www.googleapis.com/auth/cloud-platform"
                           ]
                         },
-                        "series": {
-                          "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
-                          "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/series",
-                          "httpMethod": "GET",
-                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.series",
-                          "parameterOrder": [
-                            "parent",
-                            "dicomWebPath"
-                          ],
-                          "parameters": {
-                            "dicomWebPath": {
-                              "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`series`).",
-                              "location": "path",
-                              "pattern": "^series$",
-                              "required": true,
-                              "type": "string"
-                            },
-                            "parent": {
-                              "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
-                              "location": "path",
-                              "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
-                              "required": true,
-                              "type": "string"
-                            }
-                          },
-                          "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
-                          "response": {
-                            "$ref": "HttpBody"
-                          },
-                          "scopes": [
-                            "https://www.googleapis.com/auth/cloud-platform"
-                          ]
-                        },
-                        "studies": {
+                        "storeInstances": {
                           "description": "StoreInstances stores DICOM instances associated with study instance unique\nidentifiers (SUID). See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.6.1.",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
                           "httpMethod": "POST",
-                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies",
+                          "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.storeInstances",
                           "parameterOrder": [
                             "parent",
                             "dicomWebPath"
@@ -1315,39 +1343,6 @@
                               "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
                               "response": {
                                 "$ref": "Empty"
-                              },
-                              "scopes": [
-                                "https://www.googleapis.com/auth/cloud-platform"
-                              ]
-                            },
-                            "instances": {
-                              "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
-                              "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/instances",
-                              "httpMethod": "GET",
-                              "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.instances",
-                              "parameterOrder": [
-                                "parent",
-                                "dicomWebPath"
-                              ],
-                              "parameters": {
-                                "dicomWebPath": {
-                                  "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
-                                  "location": "path",
-                                  "pattern": "^studies/[^/]+/instances$",
-                                  "required": true,
-                                  "type": "string"
-                                },
-                                "parent": {
-                                  "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
-                                  "location": "path",
-                                  "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
-                                  "required": true,
-                                  "type": "string"
-                                }
-                              },
-                              "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
-                              "response": {
-                                "$ref": "HttpBody"
                               },
                               "scopes": [
                                 "https://www.googleapis.com/auth/cloud-platform"
@@ -1419,11 +1414,44 @@
                                 "https://www.googleapis.com/auth/cloud-platform"
                               ]
                             },
-                            "series": {
+                            "searchForInstances": {
+                              "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                              "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/instances",
+                              "httpMethod": "GET",
+                              "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.searchForInstances",
+                              "parameterOrder": [
+                                "parent",
+                                "dicomWebPath"
+                              ],
+                              "parameters": {
+                                "dicomWebPath": {
+                                  "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
+                                  "location": "path",
+                                  "pattern": "^studies/[^/]+/instances$",
+                                  "required": true,
+                                  "type": "string"
+                                },
+                                "parent": {
+                                  "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
+                              "response": {
+                                "$ref": "HttpBody"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform"
+                              ]
+                            },
+                            "searchForSeries": {
                               "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
                               "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series",
                               "httpMethod": "GET",
-                              "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series",
+                              "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.searchForSeries",
                               "parameterOrder": [
                                 "parent",
                                 "dicomWebPath"
@@ -1525,39 +1553,6 @@
                                     "https://www.googleapis.com/auth/cloud-platform"
                                   ]
                                 },
-                                "instances": {
-                                  "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
-                                  "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances",
-                                  "httpMethod": "GET",
-                                  "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.instances",
-                                  "parameterOrder": [
-                                    "parent",
-                                    "dicomWebPath"
-                                  ],
-                                  "parameters": {
-                                    "dicomWebPath": {
-                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
-                                      "location": "path",
-                                      "pattern": "^studies/[^/]+/series/[^/]+/instances$",
-                                      "required": true,
-                                      "type": "string"
-                                    },
-                                    "parent": {
-                                      "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
-                                      "location": "path",
-                                      "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
-                                      "required": true,
-                                      "type": "string"
-                                    }
-                                  },
-                                  "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
-                                  "response": {
-                                    "$ref": "HttpBody"
-                                  },
-                                  "scopes": [
-                                    "https://www.googleapis.com/auth/cloud-platform"
-                                  ]
-                                },
                                 "metadata": {
                                   "description": "RetrieveSeriesMetadata returns instance associated with the given study and\nseries, presented as metadata with the bulk data removed. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.6.",
                                   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/metadata",
@@ -1605,6 +1600,39 @@
                                       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}/series/{series_id}`).",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+$",
+                                      "required": true,
+                                      "type": "string"
+                                    },
+                                    "parent": {
+                                      "description": "The name of the DICOM store that is being accessed (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`).",
+                                      "location": "path",
+                                      "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+                                      "required": true,
+                                      "type": "string"
+                                    }
+                                  },
+                                  "path": "v1alpha2/{+parent}/dicomWeb/{+dicomWebPath}",
+                                  "response": {
+                                    "$ref": "HttpBody"
+                                  },
+                                  "scopes": [
+                                    "https://www.googleapis.com/auth/cloud-platform"
+                                  ]
+                                },
+                                "searchForInstances": {
+                                  "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                                  "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances",
+                                  "httpMethod": "GET",
+                                  "id": "healthcare.projects.locations.datasets.dicomStores.dicomWeb.studies.series.searchForInstances",
+                                  "parameterOrder": [
+                                    "parent",
+                                    "dicomWebPath"
+                                  ],
+                                  "parameters": {
+                                    "dicomWebPath": {
+                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
+                                      "location": "path",
+                                      "pattern": "^studies/[^/]+/series/[^/]+/instances$",
                                       "required": true,
                                       "type": "string"
                                     },
@@ -1878,7 +1906,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes the FHIR store and removes all resources that are contained within\nit.",
+                      "description": "Deletes the specified FHIR store and removes all resources within it.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
                       "httpMethod": "DELETE",
                       "id": "healthcare.projects.locations.datasets.fhirStores.delete",
@@ -1902,8 +1930,36 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "executeBundle": {
+                      "description": "Executes all the requests in the given Bundle.",
+                      "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.fhirStores.executeBundle",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Name of the FHIR store in which this bundle will be executed.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha2/{+parent}/fhir",
+                      "request": {
+                        "$ref": "HttpBody"
+                      },
+                      "response": {
+                        "$ref": "HttpBody"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "export": {
-                      "description": "Export resources from the FHIR store to the specified destination.\nFatal errors will be populated in the\nerror field.\nOtherwise a detailed response will be returned as of type\nExportResourcesResponse contained in the\nresponse field when the operation\nfinishes.\nThe metadata field type is\nOperationMetadata.",
+                      "description": "Export resources from the FHIR store to the specified destination.\n\nThis method returns an Operation that can\nbe used to track the status of the export by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field.\nOtherwise, when the operation finishes, a detailed response of type\nExportResourcesResponse is returned in the\nresponse field.\nThe metadata field type for this\noperation is OperationMetadata.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:export",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.fhirStores.export",
@@ -1930,36 +1986,8 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
-                    "fhir": {
-                      "description": "Executes all the requests in the given Bundle.  Conforms to\nhttp://hl7.org/fhir/http.html#transaction except that only the transaction\nupdate is supported.",
-                      "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir",
-                      "httpMethod": "POST",
-                      "id": "healthcare.projects.locations.datasets.fhirStores.fhir",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Name of the FHIR store in which this bundle will be executed.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha2/{+parent}/fhir",
-                      "request": {
-                        "$ref": "HttpBody"
-                      },
-                      "response": {
-                        "$ref": "HttpBody"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
                     "get": {
-                      "description": "Gets the specified FHIR store.",
+                      "description": "Gets the configuration of the specified FHIR store.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
                       "httpMethod": "GET",
                       "id": "healthcare.projects.locations.datasets.fhirStores.get",
@@ -2009,7 +2037,7 @@
                       ]
                     },
                     "getMetadata": {
-                      "description": "Gets the capabilities statement for the store.\n",
+                      "description": "Gets the FHIR capability statement for the store, which contains a\ndescription of functionality supported by the server.\n",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/metadata",
                       "httpMethod": "GET",
                       "id": "healthcare.projects.locations.datasets.fhirStores.getMetadata",
@@ -2034,7 +2062,7 @@
                       ]
                     },
                     "import": {
-                      "description": "Import resources to the FHIR store by loading data from the specified\nsources.\nFatal errors will be populated in the\nerror field.\nOtherwise a detailed response will be returned as of type\nImportResourcesResponse contained in the\nresponse field when the operation\nfinishes.\nThe metadata field type is\nOperationMetadata.",
+                      "description": "Import resources to the FHIR store by loading data from the specified\nsources.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field.\nOtherwise, when the operation finishes, a detailed response of type\nImportResourcesResponse is returned in the\nresponse field.\nThe metadata field type for this\noperation is OperationMetadata.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -2103,7 +2131,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the FHIR store.",
+                      "description": "Updates the configuration of the specified FHIR store.",
                       "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
                       "httpMethod": "PATCH",
                       "id": "healthcare.projects.locations.datasets.fhirStores.patch",
@@ -2225,7 +2253,7 @@
                           ]
                         },
                         "conditionalDeleteResource": {
-                          "description": "Deletes FHIR resources matching a search query.\nNote: unless resource versioning is disabled by setting the\ndisable_resource_versioning flag\non the FHIR store, the deleted resources will be moved to a history\nrepository that can still be retrieved through GetResourceVersion and\nrelated methods, unless they are removed by the DeleteResourceVersions\nmethod.",
+                          "description": "Deletes FHIR resources matching a search query.\n\nNote: unless resource versioning is disabled by setting the\ndisable_resource_versioning flag\non the FHIR store, the deleted resources will be moved to a history\nrepository that can still be retrieved through GetResourceVersion and\nrelated methods, unless they are removed by the DeleteResourceVersions\nmethod.",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
                           "httpMethod": "DELETE",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalDeleteResource",
@@ -2366,7 +2394,7 @@
                           ]
                         },
                         "delete": {
-                          "description": "Deletes a FHIR resource.\nNote: unless resource versioning is disabled by setting the\ndisable_resource_versioning flag\non the FHIR store, the deleted resources will be moved to a history\nrepository that can still be retrieved through GetResourceVersion and\nrelated methods, unless they are removed by the DeleteResourceVersions\nmethod.",
+                          "description": "Deletes a FHIR resource.\n\nNote: unless resource versioning is disabled by setting the\ndisable_resource_versioning flag\non the FHIR store, the deleted resources will be moved to a history\nrepository that can still be retrieved through GetResourceVersion and\nrelated methods, unless they are removed by the DeleteResourceVersions\nmethod.",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
                           "httpMethod": "DELETE",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.delete",
@@ -2391,7 +2419,7 @@
                           ]
                         },
                         "delete$purge": {
-                          "description": "Deletes all the historical versions of a resource (excluding current\nversion) from the FHIR store. To remove all versions of a resource, first\ndelete the current version and call this API.",
+                          "description": "Deletes all the historical versions of a resource (excluding current\nversion) from the FHIR store. To remove all versions of a resource, first\ndelete the current version and call this method.",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}/$purge",
                           "httpMethod": "DELETE",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.delete$purge",
@@ -2441,7 +2469,7 @@
                           ]
                         },
                         "getMetadata": {
-                          "description": "Gets the capabilities statement for the store.\n",
+                          "description": "Gets the FHIR capability statement for the store, which contains a\ndescription of functionality supported by the server.\n",
                           "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/metadata",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.getMetadata",
@@ -2631,11 +2659,32 @@
                                 "name"
                               ],
                               "parameters": {
+                                "at": {
+                                  "description": "Only include resource versions that were current at some point during the\ntime period specified in the date time value. The date parameter format is\nyyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]\nClients may specify any of the following:\nAn entire year: `_at=2019`\nAn entire month: `_at=2019-01`\nA specific day: `_at=2019-01-20`\nA specific second: `_at=2018-12-31T23:59:58Z`",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "count": {
+                                  "description": "The maximum number of search results on a page.",
+                                  "format": "int32",
+                                  "location": "query",
+                                  "type": "integer"
+                                },
                                 "name": {
                                   "description": "The name of the resource to retrieve.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                                   "required": true,
+                                  "type": "string"
+                                },
+                                "page": {
+                                  "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of the\n`link.url` field returned in the response to the previous request, where\n`link.relation` is \"first\", \"previous\", \"next\" or \"last\".\nOmit `page` if no previous request has been made.",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "since": {
+                                  "description": "Only include resource versions that were created at or after the given\ninstant in time. The instant in time uses the format\nYYYY-MM-DDThh:mm:ss.sss+zz:zz (for example 2015-02-07T13:28:17.239+02:00 or\n2017-01-01T00:00:00Z). The time must be specified to the second and\ninclude a time zone.",
+                                  "location": "query",
                                   "type": "string"
                                 }
                               },
@@ -3082,7 +3131,7 @@
                           ],
                           "parameters": {
                             "filter": {
-                              "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nFields/functions available for filtering are:\n- message_type, from the MSH-9 segment, e.g. 'NOT message_type = \"ADT\"'\n- send_date or sendDate, the YYYY-MM-DD date the message was sent in the\n  dataset's time_zone, from the MSH-7 segment; e.g.\n  'send_date \u003c \"2017-01-02\"'\n- send_time, the timestamp of when the message was sent, using the RFC3339\n  time format for comparisons, from the MSH-7 segment; e.g. 'send_time \u003c\n  \"2017-01-02T00:00:00-05:00\"'\n- send_facility, the hospital/trust that the message came from, from the\n  MSH-4 segment, e.g. 'send_facility = \"RAL\"'\n- HL7RegExp(expr), which does regular expression matching of expr against\n  the HL7 message payload using re2 (http://code.google.com/p/re2/)\n  syntax; e.g. 'HL7RegExp(\"^.*\\|.*\\|CERNER\")'\n- PatientId(value, type), which matches if the message lists a patient\n  having an ID of the given value and type in the PID-2, PID-3, or PID-4\n  segments; e.g. 'PatientId(\"123456\", \"MRN\")'\n- HasLabel(x), a boolean returning true if the message has a label with\n  key x (having any value) set using the labels map in Message; e.g.\n  'HasLabel(\"priority\")'\n- Label(x), a string value of the label with key x as set using the labels\n  map in Message, e.g. 'Label(\"priority\") = \"high\"'\nNegation on the patient ID function and the label function are not\nsupported, e.g. invalid queries: 'NOT PatientId(\"123456\", \"MRN\")',\n'NOT HasLabel(\"tag1\")', 'NOT Label(\"tag2\") = \"val2\"'.\nConjunction of multiple patient ID functions is not supported, e.g. an\ninvalid query: 'PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")'.\nConjunction of multiple label functions is also not supported, e.g. an\ninvalid query: 'HasLabel(\"tag1\") AND Label(\"tag2\") = \"val2\"'.\nConjunction of one patient ID function, one label function and other fields\nis supported, e.g. a valid query:\n'PatientId(\"123456\", \"MRN\") AND HasLabel(\"tag1\") AND message_type = \"ADT\"'.",
+                              "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nFields/functions available for filtering are:\n- message_type, from the MSH-9 segment, e.g. 'NOT message_type = \"ADT\"'\n- send_date or sendDate, the YYYY-MM-DD date the message was sent in the\n  dataset's time_zone, from the MSH-7 segment; e.g.\n  'send_date \u003c \"2017-01-02\"'\n- send_time, the timestamp of when the message was sent, using the RFC3339\n  time format for comparisons, from the MSH-7 segment; e.g. 'send_time \u003c\n  \"2017-01-02T00:00:00-05:00\"'\n- send_facility, the hospital/trust that the message came from, from the\n  MSH-4 segment, e.g. 'send_facility = \"RAL\"'\n- HL7RegExp(expr), which does regular expression matching of expr against\n  the HL7 message payload using re2 (http://code.google.com/p/re2/)\n  syntax; e.g. 'HL7RegExp(\"^.*\\|.*\\|CERNER\")'\n- PatientId(value, type), which matches if the message lists a patient\n  having an ID of the given value and type in the PID-2, PID-3, or PID-4\n  segments; e.g. 'PatientId(\"123456\", \"MRN\")'\n- labels.x, a string value of the label with key x as set using the labels\n  map in Message, e.g. 'labels.\"priority\"=\"high\"'. \":*\" can be used to\n  assert the existence of a label, e.g. 'labels.\"priority\":*'.\nNegation on the patient ID function or the labels field is not supported,\ne.g. invalid queries: 'NOT PatientId(\"123456\", \"MRN\")',\n'NOT labels.\"tag1\":*', 'NOT labels.\"tag2\"=\"val2\"'.\nConjunction of multiple patient ID functions is not supported, e.g. an\ninvalid query: 'PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")'.\nConjunction of multiple labels fields is also not supported, e.g. an\ninvalid query: 'labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"'.\nConjunction of one patient ID function, one labels field and other fields\nis supported, e.g. a valid query:\n'PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"'.\nHasLabel(x) and Label(x) are deprecated.",
                               "location": "query",
                               "type": "string"
                             },
@@ -3233,7 +3282,7 @@
       }
     }
   },
-  "revision": "20190223",
+  "revision": "20190308",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3335,6 +3384,21 @@
             "Data writes. Example: CloudSQL Users create",
             "Data reads. Example: CloudSQL Users list"
           ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BigQueryDestination": {
+      "description": "The BigQuery table for export.",
+      "id": "BigQueryDestination",
+      "properties": {
+        "force": {
+          "description": "If the destination table already exists and this flag is `TRUE`, the table\nwill be overwritten by the contents of the input store. If the flag is not\nset and the destination table already exists, the export call returns an\nerror.",
+          "type": "boolean"
+        },
+        "tableUri": {
+          "description": "BigQuery URI to a table, up to 2000 characters long, must be of the form\nbq://projectId.bqDatasetId.tableId.",
           "type": "string"
         }
       },
@@ -3516,6 +3580,21 @@
       },
       "type": "object"
     },
+    "ExportAnnotationsRequest": {
+      "description": "Request to export\nAnnotations. The\nexport operation is not atomic; in the event of a failure any annotations\nalready exported will not be removed.",
+      "id": "ExportAnnotationsRequest",
+      "properties": {
+        "bigqueryDestination": {
+          "$ref": "BigQueryDestination",
+          "description": "The BigQuery output destination.\nThe table schema is the flattened version of\nAnnotation\nFor now, only exporting to a dataset in the current project is supported.\nThe BigQuery location requires two IAM roles:\n  `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`."
+        },
+        "gcsDestination": {
+          "$ref": "GcsDestination",
+          "description": "The Cloud Storage destination, which requires the\n`roles/storage.objectAdmin` Cloud IAM role."
+        }
+      },
+      "type": "object"
+    },
     "ExportDicomDataRequest": {
       "description": "Exports data from the specified DICOM store.\nIf a given resource (e.g., a DICOM object with the same SOPInstance UID)\nalready exists in the output, it is overwritten with the version\nin the source dataset.\nExported DICOM data will persist when the DICOM store from which it was\nexported is deleted.",
       "id": "ExportDicomDataRequest",
@@ -3537,7 +3616,7 @@
       "properties": {
         "bigqueryDestination": {
           "$ref": "GoogleCloudHealthcareV1alpha2FhirBigQueryDestination",
-          "description": "The BigQuery output destination.\n\nThe BigQuery location requires two IAM roles:\n`roles/bigquery.dataEditor` and `roles/bigquery.jobUser`.\n\nThe output will be one BigQuery table per resource type.\nThe server implements a data-driven FHIR-to-SQL schema mapping in support\nof analytics workloads with BigQuery. Incompatible changes to the output\nschema may be introduced in the future as a result of continuous\ncollaboration with the FHIR community to refine the\n[desired SQL projection of FHIR\nresources](https://github.com/FHIR/sql-on-fhir/blob/master/sql-on-fhir.md)"
+          "description": "The BigQuery output destination.\n\nThe BigQuery location requires two IAM roles:\n`roles/bigquery.dataEditor` and `roles/bigquery.jobUser`.\n\nThe output will be one BigQuery table per resource type."
         },
         "gcsDestination": {
           "$ref": "GoogleCloudHealthcareV1alpha2FhirRestGcsDestination",
@@ -3633,6 +3712,17 @@
       },
       "type": "object"
     },
+    "GcsDestination": {
+      "description": "The Cloud Storage location for export.",
+      "id": "GcsDestination",
+      "properties": {
+        "uriPrefix": {
+          "description": "The Cloud Storage destination to export to.\nURI for a Cloud Storage directory where result files should be written (in\nthe format `gs://{bucket-id}/{path/to/destination/dir}`). If there is no\ntrailing slash, the service will append one when composing the object path.\nThe user is responsible for creating the Cloud Storage bucket referenced in\n`uri_prefix`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GetIamPolicyRequest": {
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
@@ -3648,7 +3738,7 @@
           "type": "boolean"
         },
         "tableUri": {
-          "description": "BigQuery URI to a table, up to 2000 characters long.\nAccepted forms:\n*  BigQuery gs path e.g. bq://projectId.bqDatasetId.tableId",
+          "description": "BigQuery URI to a table, up to 2000 characters long, in the format\n`bq://projectId.bqDatasetId.tableId`",
           "type": "string"
         }
       },
@@ -3685,7 +3775,7 @@
       "id": "GoogleCloudHealthcareV1alpha2FhirBigQueryDestination",
       "properties": {
         "datasetUri": {
-          "description": "BigQuery URI to a dataset, up to 2000 characters long.\nAccepted forms:\n*  BigQuery gs path e.g. bq://projectId.bqDatasetId",
+          "description": "BigQuery URI to a dataset, up to 2000 characters long, in the format\n`bq://projectId.bqDatasetId`",
           "type": "string"
         },
         "schemaConfig": {
@@ -3723,11 +3813,11 @@
       "type": "object"
     },
     "GoogleCloudHealthcareV1alpha2FhirRestGcsErrorDestination": {
-      "description": "Specifies the Cloud Storage destination for exporting errors to.",
+      "description": "Specifies the Cloud Storage destination where errors will be recorded.",
       "id": "GoogleCloudHealthcareV1alpha2FhirRestGcsErrorDestination",
       "properties": {
         "uriPrefix": {
-          "description": "URI for a Cloud Storage directory to which result files\nshould be written (in the\nformat `gs://{bucket-id}/{path/to/destination/dir}`). If there is no\ntrailing slash, the service will append one when composing the object path.\nThe user is responsible for creating the Cloud Storage bucket referenced in\n`uri_prefix`.",
+          "description": "URI for a Cloud Storage directory to which error report files should be\nwritten (in the format `gs://{bucket-id}/{path/to/destination/dir}`). If\nthere is no trailing slash, the service will append one when composing the\nobject path. The user is responsible for creating the Cloud Storage bucket\nreferenced in `uri_prefix`.",
           "type": "string"
         }
       },
@@ -3738,7 +3828,7 @@
       "id": "GoogleCloudHealthcareV1alpha2FhirRestGcsSource",
       "properties": {
         "uri": {
-          "description": "Points to a Cloud Storage URI containing file(s) with\ncontent only. The URI must be in the following format:\n`gs://{bucket_id}/{object_id}`. The URI can include wildcards in\n`object_id` and thus identify multiple files. Supported wildcards:\n '*' to match 0 or more non-separator characters\n '**' to match 0 or more characters (including separators). Must be used at\n      the end of a path and with no other wildcards in the\n      path. Can also be used with a file extension (such as .dcm), which\n      imports all files with the extension in the specified directory and\n      its sub-directories. For example,\n      `gs://my-bucket/my-directory/**.dcm` imports all files with .dcm\n      extensions in `my-directory/` and its sub-directories.\n '?' to match 1 character\nAll other URI formats are invalid.\nFiles matching the wildcard are expected to contain content only, no\nmetadata.",
+          "description": "Points to a Cloud Storage URI containing file(s) to import.\n\nThe URI must be in the following format: `gs://{bucket_id}/{object_id}`.\nThe URI can include wildcards in `object_id` and thus identify multiple\nfiles. Supported wildcards:\n\n*  `*` to match 0 or more non-separator characters\n*  `**` to match 0 or more characters (including separators). Must be used\nat the end of a path and with no other wildcards in the\npath. Can also be used with a file extension (such as .ndjson), which\nimports all files with the extension in the specified directory and\nits sub-directories. For example, `gs://my-bucket/my-directory/**.ndjson`\nimports all files with `.ndjson` extensions in `my-directory/` and its\nsub-directories.\n*  `?` to match 1 character\n\nFiles matching the wildcard are expected to contain content only, no\nmetadata.",
           "type": "string"
         }
       },
@@ -4387,7 +4477,7 @@
       "id": "SchemaConfig",
       "properties": {
         "recursiveStructureDepth": {
-          "description": "The depth for all recursive structures in the output analytics\nschema. For example, concept in the CodeSystem resource is a recursive\nstructure; when the depth is 2, the CodeSystem table will have a column\ncalled `concept.concept` but not `concept.concept.concept`. If not\nspecified or set to 0, the server will use the default value 2.",
+          "description": "The depth for all recursive structures in the output analytics\nschema. For example, `concept` in the CodeSystem resource is a recursive\nstructure; when the depth is 2, the CodeSystem table will have a column\ncalled `concept.concept` but not `concept.concept.concept`. If not\nspecified or set to 0, the server will use the default value 2.",
           "format": "int64",
           "type": "string"
         },
@@ -4400,8 +4490,8 @@
           ],
           "enumDescriptions": [
             "No schema type specified. Same as `LOSSLESS`.",
-            "Schema generated from original FHIR data.",
-            "Analytics schema defined by the FHIR community.\nSee https://github.com/rbrush/sql-on-fhir/blob/master/sql-on-fhir.md."
+            "A data-driven schema generated from the fields present in the FHIR data\nbeing exported, with no additional simplification.",
+            "Analytics schema defined by the FHIR community.\nSee https://github.com/FHIR/sql-on-fhir/blob/master/sql-on-fhir.md."
           ],
           "type": "string"
         }
@@ -4472,7 +4562,7 @@
       "type": "object"
     },
     "Status": {
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error\nmessage, and error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
       "properties": {
         "code": {

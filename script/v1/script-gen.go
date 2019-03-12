@@ -841,9 +841,6 @@ type GoogleAppsScriptTypeProcess struct {
 	// Duration: Duration the execution spent executing.
 	Duration string `json:"duration,omitempty"`
 
-	// ExecutingUser: User-facing name for the user executing the script.
-	ExecutingUser string `json:"executingUser,omitempty"`
-
 	// FunctionName: Name of the function the started the execution.
 	FunctionName string `json:"functionName,omitempty"`
 

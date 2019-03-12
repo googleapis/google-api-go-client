@@ -770,9 +770,11 @@ type Empty struct {
 //    bluetooth client) handle the identity key, and obviously on how
 //    securely the identity key was generated.
 //
-// See [the Eddystone
-// specification](https://github.com/google/eddystone/tree/master/eddysto
-// ne-eid) at GitHub.
+// See [the
+// Eddystone
+// specification](https://github.com/google/eddystone/tree/mast
+// er/eddystone-eid)
+// at GitHub.
 type EphemeralIdRegistration struct {
 	// BeaconEcdhPublicKey: The beacon's public key used for the Elliptic
 	// curve Diffie-Hellman
@@ -814,9 +816,10 @@ type EphemeralIdRegistration struct {
 	// rotation of the beacon's
 	// ephemeral ID. "Nominal" because the beacon should randomize
 	// the
-	// actual interval. See [the spec at
-	// github](https://github.com/google/eddystone/tree/master/eddystone-eid)
-	//
+	// actual interval. See [the spec
+	// at
+	// github](https://github.com/google/eddystone/tree/master/eddystone-e
+	// id)
 	// for details. This value corresponds to a power-of-two scaler on
 	// the
 	// beacon's clock: when the scaler value is K, the beacon will

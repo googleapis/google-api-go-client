@@ -32,7 +32,7 @@
   "description": "A data platform for customers to create, manage, share and query data.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/vevhQEzVDceq4B-ApaLKUhTa9zg\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/TOaauesIbrP2CllN8u56dQTSTrM\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/search-16.gif",
     "x32": "https://www.google.com/images/icons/product/search-32.gif"
@@ -1003,7 +1003,7 @@
       }
     }
   },
-  "revision": "20190215",
+  "revision": "20190303",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "BigQueryModelTraining": {
@@ -1168,7 +1168,7 @@
                 "type": "string"
               },
               "role": {
-                "description": "[Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER.",
+                "description": "[Required] An IAM role ID that should be granted to the user, group, or domain specified in this access entry. The following legacy mappings will be applied: OWNER  roles/bigquery.dataOwner WRITER  roles/bigquery.dataEditor READER  roles/bigquery.dataViewer This field will accept any of the above formats, but will return only the legacy format. For example, if you set this field to \"roles/bigquery.dataOwner\", it will be returned back as \"OWNER\".",
                 "type": "string"
               },
               "specialGroup": {
@@ -2422,7 +2422,7 @@
           "type": "string"
         },
         "totalBytesProcessedAccuracy": {
-          "description": "[Output-only] For dry-run jobs, totalBytesProcessed is an estimate and this field specifies the accuracy of the estimate. Possible values can be: UNKNOWN: accuracy of the estimate is unknown. PRECISE: estimate is precise. LOWER_BOUND: estimate is lower bound of what the query would cost. UPPER_BOUND: estiamte is upper bound of what the query would cost.",
+          "description": "[Output-only] For dry-run jobs, totalBytesProcessed is an estimate and this field specifies the accuracy of the estimate. Possible values can be: UNKNOWN: accuracy of the estimate is unknown. PRECISE: estimate is precise. LOWER_BOUND: estimate is lower bound of what the query would cost. UPPER_BOUND: estimate is upper bound of what the query would cost.",
           "type": "string"
         },
         "totalPartitionsProcessed": {

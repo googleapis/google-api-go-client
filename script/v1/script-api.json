@@ -821,7 +821,7 @@
       }
     }
   },
-  "revision": "20190131",
+  "revision": "20190304",
   "rootUrl": "https://script.googleapis.com/",
   "schemas": {
     "Content": {
@@ -1166,10 +1166,6 @@
         "duration": {
           "description": "Duration the execution spent executing.",
           "format": "google-duration",
-          "type": "string"
-        },
-        "executingUser": {
-          "description": "User-facing name for the user executing the script.",
           "type": "string"
         },
         "functionName": {

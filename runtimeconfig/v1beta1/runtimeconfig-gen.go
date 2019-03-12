@@ -1004,10 +1004,10 @@ type Variable struct {
 	Name string `json:"name,omitempty"`
 
 	// State: Output only. The current state of the variable. The variable
-	// state indicates
-	// the outcome of the `variables().watch` call and is visible through
-	// the
-	// `get` and `list` calls.
+	// state
+	// indicates the outcome of the `variables().watch` call and is
+	// visible
+	// through the `get` and `list` calls.
 	//
 	// Possible values:
 	//   "VARIABLE_STATE_UNSPECIFIED" - Default variable state.
@@ -1067,12 +1067,12 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 }
 
 // Waiter: A Waiter resource waits for some end condition within a
-// RuntimeConfig resource
-// to be met before it returns. For example, assume you have a
-// distributed
-// system where each node writes to a Variable resource indicating the
-// node's
-// readiness as part of the startup process.
+// RuntimeConfig
+// resource to be met before it returns. For example, assume you have
+// a
+// distributed system where each node writes to a Variable resource
+// indicating
+// the node's readiness as part of the startup process.
 //
 // You then configure a Waiter resource with the success condition set
 // to wait
@@ -1085,10 +1085,11 @@ func (s *Variable) MarshalJSON() ([]byte, error) {
 // Once created, a Waiter resource is immutable.
 //
 // To learn more about using waiters, read the
-// [Creating a
+// [Creating
+// a
 // Waiter](/deployment-manager/runtime-configurator/creating-a-waiter)
-// do
-// cumentation.
+//
+// documentation.
 type Waiter struct {
 	// CreateTime: Output only. The instant at which this Waiter resource
 	// was created. Adding
@@ -1142,11 +1143,11 @@ type Waiter struct {
 
 	// Success: [Required] The success condition. If this condition is met,
 	// `done` will be
-	// set to `true` and the `error` value will remain unset. The failure
-	// condition
-	// takes precedence over the success condition. If both conditions are
-	// met, a
-	// failure will be indicated.
+	// set to `true` and the `error` value will remain unset. The
+	// failure
+	// condition takes precedence over the success condition. If both
+	// conditions
+	// are met, a failure will be indicated.
 	Success *EndCondition `json:"success,omitempty"`
 
 	// Timeout: [Required] Specifies the timeout of the waiter in seconds,

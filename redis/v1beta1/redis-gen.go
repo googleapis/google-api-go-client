@@ -380,6 +380,8 @@ type Instance struct {
 	// instance.
 	//   "IMPORTING" - Redis instance is importing data (availability may be
 	// affected).
+	//   "FAILING_OVER" - Redis instance is failing over (availability may
+	// be affected).
 	State string `json:"state,omitempty"`
 
 	// StatusMessage: Output only. Additional information about the current

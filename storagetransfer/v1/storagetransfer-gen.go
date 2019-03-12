@@ -984,20 +984,20 @@ func (s *Schedule) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -2009,11 +2009,12 @@ func (r *TransferJobsService) List() *TransferJobsListCall {
 // "job_statuses":["status1","status2",...]}.
 // Since `job_names` and `job_statuses` support multiple values, their
 // values
-// must be specified with array notation. `project_id` is required.
-// `job_names`
-// and `job_statuses` are optional.  The valid values for `job_statuses`
-// are
-// case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.
+// must be specified with array notation. `project_id` is
+// required.
+// `job_names` and `job_statuses` are optional.  The valid values
+// for
+// `job_statuses` are case-insensitive: `ENABLED`, `DISABLED`, and
+// `DELETED`.
 func (c *TransferJobsListCall) Filter(filter string) *TransferJobsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2135,7 +2136,7 @@ func (c *TransferJobsListCall) Do(opts ...googleapi.CallOption) (*ListTransferJo
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A list of query parameters specified as JSON text in the form of\n{\"project_id\":\"my_project_id\",\n\"job_names\":[\"jobid1\",\"jobid2\",...],\n\"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project_id` is required. `job_names`\nand `job_statuses` are optional.  The valid values for `job_statuses` are\ncase-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.",
+	//       "description": "A list of query parameters specified as JSON text in the form of\n{\"project_id\":\"my_project_id\",\n\"job_names\":[\"jobid1\",\"jobid2\",...],\n\"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project_id` is required.\n`job_names` and `job_statuses` are optional.  The valid values for\n`job_statuses` are case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

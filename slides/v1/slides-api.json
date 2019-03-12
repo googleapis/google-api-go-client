@@ -302,7 +302,7 @@
       }
     }
   },
-  "revision": "20190109",
+  "revision": "20190305",
   "rootUrl": "https://slides.googleapis.com/",
   "schemas": {
     "AffineTransform": {
@@ -4479,7 +4479,7 @@
           "type": "string"
         },
         "weight": {
-          "description": "The rendered weight of the text. This field can have any value that is a\nmultiple of `100` between `100` and `900`, inclusive. This range\ncorresponds to the numerical values described in the CSS 2.1\nSpecification, [section 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness),\nwith non-numerical values disallowed. Weights greater than or equal to\n`700` are considered bold, and weights less than `700`are not bold. The\ndefault value is `400` (\"normal\").",
+          "description": "The rendered weight of the text. This field can have any value that is a\nmultiple of `100` between `100` and `900`, inclusive. This range\ncorresponds to the numerical values described in the CSS 2.1\nSpecification,\n[section 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness),\nwith non-numerical values disallowed. Weights greater than or equal to\n`700` are considered bold, and weights less than `700`are not bold. The\ndefault value is `400` (\"normal\").",
           "format": "int32",
           "type": "integer"
         }

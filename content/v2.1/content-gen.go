@@ -816,7 +816,7 @@ type AccountTaxTaxRule struct {
 	Country string `json:"country,omitempty"`
 
 	// LocationId: State (or province) is which the tax is applicable,
-	// described by its location id (also called criteria id).
+	// described by its location ID (also called criteria ID).
 	LocationId uint64 `json:"locationId,omitempty,string"`
 
 	// RatePercent: Explicit tax rate in percent, represented as a floating
@@ -4039,16 +4039,13 @@ func (s *OrderCancellation) MarshalJSON() ([]byte, error) {
 }
 
 type OrderCustomer struct {
-	// Email: Deprecated.
-	Email string `json:"email,omitempty"`
-
 	// FullName: Full name of the customer.
 	FullName string `json:"fullName,omitempty"`
 
 	// MarketingRightsInfo: Customer's marketing preferences.
 	MarketingRightsInfo *OrderCustomerMarketingRightsInfo `json:"marketingRightsInfo,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Email") to
+	// ForceSendFields is a list of field names (e.g. "FullName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4056,8 +4053,8 @@ type OrderCustomer struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "FullName") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -4082,8 +4079,9 @@ type OrderCustomerMarketingRightsInfo struct {
 	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
 
 	// MarketingEmailAddress: Email address that can be used for marketing
-	// purposes. This field is only filled when explicitMarketingPreference
-	// is equal to 'granted'.
+	// purposes. The field may be empty even if explicitMarketingPreference
+	// is 'granted'. This happens when retrieving an old order from the
+	// customer who deleted his account.
 	MarketingEmailAddress string `json:"marketingEmailAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4266,8 +4264,8 @@ type OrderLineItemProduct struct {
 
 	// VariantAttributes: Variant attributes for the item. These are
 	// dimensions of the product, such as color, gender, material, pattern,
-	// and size. You can find a comprehensive list of variant attributes <a
-	// href="
+	// and size. You can find a comprehensive list of variant attributes
+	// here.
 	VariantAttributes []*OrderLineItemProductVariantAttribute `json:"variantAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
@@ -4679,10 +4677,10 @@ type OrderReportTransaction struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// MerchantOrderId: Merchant-provided id of the order.
+	// MerchantOrderId: Merchant-provided ID of the order.
 	MerchantOrderId string `json:"merchantOrderId,omitempty"`
 
-	// OrderId: The id of the order.
+	// OrderId: The ID of the order.
 	OrderId string `json:"orderId,omitempty"`
 
 	// ProductAmount: Total amount for the items.
@@ -7310,9 +7308,9 @@ type Product struct {
 	// Gtin: Global Trade Item Number (GTIN) of the item.
 	Gtin string `json:"gtin,omitempty"`
 
-	// Id: The REST id of the product. Content API methods that operate on
+	// Id: The REST ID of the product. Content API methods that operate on
 	// products take this as their productId parameter.
-	// The REST id for a product is of the form
+	// The REST ID for a product is of the form
 	// channel:contentLanguage:targetCountry:offerId.
 	Id string `json:"id,omitempty"`
 
@@ -7385,7 +7383,7 @@ type Product struct {
 	// whitespaces are stripped and multiple whitespaces are replaced by a
 	// single whitespace upon submission. Only valid unicode characters are
 	// accepted. See the products feed specification for details.
-	// Note: Content API methods that operate on products take the REST id
+	// Note: Content API methods that operate on products take the REST ID
 	// of the product, not this identifier.
 	OfferId string `json:"offerId,omitempty"`
 
@@ -7547,7 +7545,7 @@ type ProductShipping struct {
 	// represented by a location group name.
 	LocationGroupName string `json:"locationGroupName,omitempty"`
 
-	// LocationId: The numeric id of a location that the shipping rate
+	// LocationId: The numeric ID of a location that the shipping rate
 	// applies to as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
@@ -7708,7 +7706,7 @@ type ProductStatus struct {
 	// Link: The link to the product.
 	Link string `json:"link,omitempty"`
 
-	// ProductId: The id of the product for which status is reported.
+	// ProductId: The ID of the product for which status is reported.
 	ProductId string `json:"productId,omitempty"`
 
 	// Title: The title of the product.
@@ -7825,7 +7823,7 @@ type ProductTax struct {
 	// CLDR territory code.
 	Country string `json:"country,omitempty"`
 
-	// LocationId: The numeric id of a location that the tax rate applies to
+	// LocationId: The numeric ID of a location that the tax rate applies to
 	// as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
@@ -8419,7 +8417,7 @@ type RegionalInventory struct {
 	// Price: The price of the product.
 	Price *Price `json:"price,omitempty"`
 
-	// RegionId: The id (name) of the region.
+	// RegionId: The ID (name) of the region.
 	RegionId string `json:"regionId,omitempty"`
 
 	// SalePrice: The sale price of the product. Mandatory if
@@ -9161,9 +9159,6 @@ func (s *Table) MarshalJSON() ([]byte, error) {
 }
 
 type TestOrder struct {
-	// Customer: The details of the customer who placed the order.
-	Customer *TestOrderCustomer `json:"customer,omitempty"`
-
 	// EnableOrderinvoices: Whether the orderinvoices service should support
 	// this order.
 	EnableOrderinvoices bool `json:"enableOrderinvoices,omitempty"`
@@ -9187,6 +9182,9 @@ type TestOrder struct {
 	// delivery addresses for the delivery.
 	PredefinedDeliveryAddress string `json:"predefinedDeliveryAddress,omitempty"`
 
+	// PredefinedEmail: Email address of the customer.
+	PredefinedEmail string `json:"predefinedEmail,omitempty"`
+
 	// Promotions: Promotions associated with the order.
 	Promotions []*OrderPromotion `json:"promotions,omitempty"`
 
@@ -9199,93 +9197,26 @@ type TestOrder struct {
 	// ShippingOption: The requested shipping option.
 	ShippingOption string `json:"shippingOption,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Customer") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "EnableOrderinvoices")
+	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Customer") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EnableOrderinvoices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestOrder) MarshalJSON() ([]byte, error) {
 	type NoMethod TestOrder
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TestOrderCustomer struct {
-	// Email: Deprecated.
-	Email string `json:"email,omitempty"`
-
-	// FullName: Full name of the customer.
-	FullName string `json:"fullName,omitempty"`
-
-	// MarketingRightsInfo: Customer's marketing preferences.
-	MarketingRightsInfo *TestOrderCustomerMarketingRightsInfo `json:"marketingRightsInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Email") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Email") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TestOrderCustomer) MarshalJSON() ([]byte, error) {
-	type NoMethod TestOrderCustomer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-type TestOrderCustomerMarketingRightsInfo struct {
-	// ExplicitMarketingPreference: Last know user use selection regards
-	// marketing preferences. In certain cases selection might not be known,
-	// so this field would be empty.
-	ExplicitMarketingPreference string `json:"explicitMarketingPreference,omitempty"`
-
-	// LastUpdatedTimestamp: Timestamp when last time marketing preference
-	// was updated. Could be empty, if user wasn't offered a selection yet.
-	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ExplicitMarketingPreference") to unconditionally include in API
-	// requests. By default, fields with empty values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ExplicitMarketingPreference") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TestOrderCustomerMarketingRightsInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod TestOrderCustomerMarketingRightsInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -17441,7 +17372,7 @@ type OrdersGetbymerchantorderidCall struct {
 	header_         http.Header
 }
 
-// Getbymerchantorderid: Retrieves an order using merchant order id.
+// Getbymerchantorderid: Retrieves an order using merchant order ID.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
 	c := &OrdersGetbymerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17549,7 +17480,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an order using merchant order id.",
+	//   "description": "Retrieves an order using merchant order ID.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.getbymerchantorderid",
 	//   "parameterOrder": [
@@ -17565,7 +17496,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 	//       "type": "string"
 	//     },
 	//     "merchantOrderId": {
-	//       "description": "The merchant order id to be looked for.",
+	//       "description": "The merchant order ID to be looked for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20503,7 +20434,7 @@ func (c *ProductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -20652,7 +20583,7 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21269,7 +21200,7 @@ func (c *ProductstatusesGetCall) Do(opts ...googleapi.CallOption) (*ProductStatu
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21743,7 +21674,7 @@ func (c *RegionalinventoryInsertCall) Do(opts ...googleapi.CallOption) (*Regiona
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product for which to update the regional inventory.",
+	//       "description": "The REST ID of the product for which to update the regional inventory.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

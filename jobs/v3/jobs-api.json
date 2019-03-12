@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20190130",
+  "revision": "20190306",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -729,7 +729,7 @@
           "description": "A event issued when a job seeker interacts with the application that\nimplements Cloud Talent Solution."
         },
         "parentEventId": {
-          "description": "Required except the first event.\n\nThe event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
+          "description": "Optional.\n\nThe event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
           "type": "string"
         },
         "requestId": {

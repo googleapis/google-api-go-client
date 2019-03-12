@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190221",
+  "revision": "20190227",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -1510,7 +1510,7 @@
       "type": "object"
     },
     "DataSource": {
-      "description": "Datasource is a logical namespace for items to be indexed.\nAll items must belong to a datasource.  This is the prerequisite before\nitems can be indexed into Cloud Search.",
+      "description": "Frontend protos implement autoconverters for this message type. If you add\nfields to this proto, please add corresponding fields to the frontend proto\nwith the same names.\nLINT.IfChange",
       "id": "DataSource",
       "properties": {
         "disableModifications": {

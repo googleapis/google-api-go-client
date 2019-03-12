@@ -797,6 +797,11 @@ type BuildTrigger struct {
 	// template.
 	Filename string `json:"filename,omitempty"`
 
+	// Github: GitHubEventsConfig describes the configuration of a trigger
+	// that creates
+	// a build whenever a GitHub event is received.
+	Github *GitHubEventsConfig `json:"github,omitempty"`
+
 	// Id: Output only. Unique identifier of the trigger.
 	Id string `json:"id,omitempty"`
 
@@ -915,6 +920,12 @@ type CancelBuildRequest struct {
 type CancelOperationRequest struct {
 }
 
+// CheckSuiteFilter: A CheckSuiteFilter is a filter that indicates that
+// we should build on all
+// check suite events.
+type CheckSuiteFilter struct {
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated
 // empty messages in your APIs. A typical example is to use it as the
@@ -960,6 +971,55 @@ type FileHashes struct {
 
 func (s *FileHashes) MarshalJSON() ([]byte, error) {
 	type NoMethod FileHashes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GitHubEventsConfig: GitHubEventsConfig describes the configuration of
+// a trigger that creates a
+// build whenever a GitHub event is received.
+//
+// This message is experimental.
+type GitHubEventsConfig struct {
+	// CheckSuite: Output only. Indicates that a build was generated from a
+	// check suite
+	// event.
+	CheckSuite *CheckSuiteFilter `json:"checkSuite,omitempty"`
+
+	// InstallationId: The installationID that emmits the GitHub event.
+	InstallationId int64 `json:"installationId,omitempty,string"`
+
+	// Name: Name of the repository.
+	Name string `json:"name,omitempty"`
+
+	// Owner: Owner of the repository.
+	Owner string `json:"owner,omitempty"`
+
+	// PullRequest: filter to match changes in pull requests.
+	PullRequest *PullRequestFilter `json:"pullRequest,omitempty"`
+
+	// Push: filter to match changes in refs like branches, tags.
+	Push *PushFilter `json:"push,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckSuite") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckSuite") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GitHubEventsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GitHubEventsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1177,6 +1237,92 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PullRequestFilter: PullRequestFilter contains filter properties for
+// matching GitHub Pull
+// Requests.
+type PullRequestFilter struct {
+	// Branch: Regex of branches to match.
+	//
+	// The syntax of the regular expressions accepted is the syntax accepted
+	// by
+	// RE2 and described at https://github.com/google/re2/wiki/Syntax
+	Branch string `json:"branch,omitempty"`
+
+	// CommentControl: Whether to block builds on a "/gcbrun" comment from a
+	// repository owner or
+	// collaborator.
+	//
+	// Possible values:
+	//   "COMMENTS_DISABLED" - Do not require comments on Pull Requests
+	// before builds are triggered.
+	//   "COMMENTS_ENABLED" - Enforce that repository owners or
+	// collaborators must comment on Pull
+	// Requests before builds are triggered.
+	CommentControl string `json:"commentControl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Branch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PullRequestFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PullRequestFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PushFilter: Push contains filter properties for matching GitHub git
+// pushes.
+type PushFilter struct {
+	// Branch: Regexes of branches to match.
+	//
+	// The syntax of the regular expressions accepted is the syntax accepted
+	// by
+	// RE2 and described at https://github.com/google/re2/wiki/Syntax
+	Branch string `json:"branch,omitempty"`
+
+	// Tag: Regexes of tags to match.
+	//
+	// The syntax of the regular expressions accepted is the syntax accepted
+	// by
+	// RE2 and described at https://github.com/google/re2/wiki/Syntax
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Branch") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PushFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod PushFilter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1422,20 +1568,20 @@ func (s *SourceProvenance) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

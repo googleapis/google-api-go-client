@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/WcH2XiX4nTJ7auoMOh6kP7JS8TU\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ymaNz3T0_A6ek7x1VQpuUhOwVeg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -17736,7 +17736,7 @@
       }
     }
   },
-  "revision": "20190211",
+  "revision": "20190221",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -19649,6 +19649,13 @@
           "description": "[Output Only] Creation timestamp in RFC3339 text format.",
           "type": "string"
         },
+        "customRequestHeaders": {
+          "description": "Headers that the HTTP/S load balancer should add to proxied requests.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
@@ -19714,12 +19721,14 @@
           "description": "The protocol this BackendService uses to communicate with backends.\n\nPossible values are HTTP, HTTPS, TCP, and SSL. The default is HTTP.\n\nFor internal load balancing, the possible values are TCP and UDP, and the default is TCP.",
           "enum": [
             "HTTP",
+            "HTTP2",
             "HTTPS",
             "SSL",
             "TCP",
             "UDP"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -20155,7 +20164,7 @@
           "description": "Unimplemented. The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
         },
         "members": {
-          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: A Google Apps domain name that represents all the users of that domain. For example, `google.com` or `example.com`.",
+          "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`.",
           "items": {
             "type": "string"
           },
@@ -20763,13 +20772,15 @@
           "type": "string"
         },
         "state": {
-          "description": "The deprecation state of this resource. This can be DEPRECATED, OBSOLETE, or DELETED. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.",
+          "description": "The deprecation state of this resource. This can be ACTIVE DEPRECATED, OBSOLETE, or DELETED. Operations which communicate the end of life date for an image, can use ACTIVE. Operations which create a new resource using a DEPRECATED resource will return successfully, but with a warning indicating the deprecated resource and recommending its replacement. Operations which use OBSOLETE or DELETED resources will be rejected and result in an error.",
           "enum": [
+            "ACTIVE",
             "DELETED",
             "DEPRECATED",
             "OBSOLETE"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             ""
@@ -22577,6 +22588,45 @@
       },
       "type": "object"
     },
+    "HTTP2HealthCheck": {
+      "id": "HTTP2HealthCheck",
+      "properties": {
+        "host": {
+          "description": "The value of the host header in the HTTP/2 health check request. If left empty (default value), the IP on behalf of which this health check is performed will be used.",
+          "type": "string"
+        },
+        "port": {
+          "description": "The TCP port number for the health check request. The default value is 443. Valid values are 1 through 65535.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "portName": {
+          "description": "Port name as defined in InstanceGroup#NamedPort#name. If both port and port_name are defined, port takes precedence.",
+          "type": "string"
+        },
+        "proxyHeader": {
+          "description": "Specifies the type of proxy header to append before sending data to the backend, either NONE or PROXY_V1. The default is NONE.",
+          "enum": [
+            "NONE",
+            "PROXY_V1"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "requestPath": {
+          "description": "The request path of the HTTP/2 health check request. The default value is /.",
+          "type": "string"
+        },
+        "response": {
+          "description": "The string to match anywhere in the first 1024 bytes of the response body. If left empty (the default value), the status code determines health. The response data can only be ASCII.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "HTTPHealthCheck": {
       "id": "HTTPHealthCheck",
       "properties": {
@@ -22677,6 +22727,9 @@
           "format": "int32",
           "type": "integer"
         },
+        "http2HealthCheck": {
+          "$ref": "HTTP2HealthCheck"
+        },
         "httpHealthCheck": {
           "$ref": "HTTPHealthCheck"
         },
@@ -22717,12 +22770,14 @@
           "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
           "enum": [
             "HTTP",
+            "HTTP2",
             "HTTPS",
             "INVALID",
             "SSL",
             "TCP"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -23692,6 +23747,7 @@
           "description": "[Output Only] The status of the instance. One of the following values: PROVISIONING, STAGING, RUNNING, STOPPING, STOPPED, SUSPENDING, SUSPENDED, and TERMINATED.",
           "enum": [
             "PROVISIONING",
+            "REPAIRING",
             "RUNNING",
             "STAGING",
             "STOPPED",
@@ -23701,6 +23757,7 @@
             "TERMINATED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -25561,6 +25618,7 @@
           "description": "[Output Only] The status of the instance.",
           "enum": [
             "PROVISIONING",
+            "REPAIRING",
             "RUNNING",
             "STAGING",
             "STOPPED",
@@ -25570,6 +25628,7 @@
             "TERMINATED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -27806,6 +27865,7 @@
           "description": "[Output Only] The status of the instance. This field is empty when the instance does not exist.",
           "enum": [
             "PROVISIONING",
+            "REPAIRING",
             "RUNNING",
             "STAGING",
             "STOPPED",
@@ -27815,6 +27875,7 @@
             "TERMINATED"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -32497,7 +32558,7 @@
       "type": "object"
     },
     "RouterStatusNatStatus": {
-      "description": "Status of a NAT contained in this router.",
+      "description": "Status of a NAT contained in this router. Next tag: 9",
       "id": "RouterStatusNatStatus",
       "properties": {
         "autoAllocatedNatIps": {
@@ -35909,7 +35970,7 @@
           "type": "string"
         },
         "forwardingRules": {
-          "description": "[Output Only] A list of URLs to the ForwardingRule resources. ForwardingRules are created using compute.forwardingRules.insert and associated to a VPN gateway.",
+          "description": "[Output Only] A list of URLs to the ForwardingRule resources. ForwardingRules are created using compute.forwardingRules.insert and associated with a VPN gateway.",
           "items": {
             "type": "string"
           },
@@ -35953,7 +36014,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of the VPN gateway.",
+          "description": "[Output Only] The status of the VPN gateway, which can be one of the following: CREATING, READY, FAILED, or DELETING.",
           "enum": [
             "CREATING",
             "DELETING",
@@ -35969,7 +36030,7 @@
           "type": "string"
         },
         "tunnels": {
-          "description": "[Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are created using compute.vpntunnels.insert method and associated to a VPN gateway.",
+          "description": "[Output Only] A list of URLs to VpnTunnel resources. VpnTunnels are created using the compute.vpntunnels.insert method and associated with a VPN gateway.",
           "items": {
             "type": "string"
           },
@@ -36206,7 +36267,7 @@
       "id": "TargetVpnGatewaysScopedList",
       "properties": {
         "targetVpnGateways": {
-          "description": "[Output Only] A list of target vpn gateways contained in this scope.",
+          "description": "[Output Only] A list of target VPN gateways contained in this scope.",
           "items": {
             "$ref": "TargetVpnGateway"
           },
@@ -36939,7 +37000,7 @@
           "type": "string"
         },
         "ikeVersion": {
-          "description": "IKE protocol version to use when establishing the VPN tunnel with peer VPN gateway. Acceptable IKE versions are 1 or 2. Default version is 2.",
+          "description": "IKE protocol version to use when establishing the VPN tunnel with the peer VPN gateway. Acceptable IKE versions are 1 or 2. The default version is 2.",
           "format": "int32",
           "type": "integer"
         },
@@ -36949,7 +37010,7 @@
           "type": "string"
         },
         "localTrafficSelector": {
-          "description": "Local traffic selector to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is supported.",
+          "description": "Local traffic selector to use when establishing the VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges must be disjoint. Only IPv4 is supported.",
           "items": {
             "type": "string"
           },
@@ -36974,14 +37035,14 @@
           "type": "string"
         },
         "remoteTrafficSelector": {
-          "description": "Remote traffic selectors to use when establishing the VPN tunnel with peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is supported.",
+          "description": "Remote traffic selectors to use when establishing the VPN tunnel with the peer VPN gateway. The value should be a CIDR formatted string, for example: 192.168.0.0/16. The ranges should be disjoint. Only IPv4 is supported.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "router": {
-          "description": "URL of router resource to be used for dynamic routing.",
+          "description": "URL of the router resource to be used for dynamic routing.",
           "type": "string"
         },
         "selfLink": {
@@ -36997,7 +37058,7 @@
           "type": "string"
         },
         "status": {
-          "description": "[Output Only] The status of the VPN tunnel.",
+          "description": "[Output Only] The status of the VPN tunnel, which can be one of the following: \n- PROVISIONING: Resource is being allocated for the VPN tunnel. \n- WAITING_FOR_FULL_CONFIG: Waiting to receive all VPN-related configs from the user. Network, TargetVpnGateway, VpnTunnel, ForwardingRule, and Route resources are needed to setup the VPN tunnel. \n- FIRST_HANDSHAKE: Successful first handshake with the peer VPN. \n- ESTABLISHED: Secure session is successfully established with the peer VPN. \n- NETWORK_ERROR: Deprecated, replaced by NO_INCOMING_PACKETS \n- AUTHORIZATION_ERROR: Auth error (for example, bad shared secret). \n- NEGOTIATION_FAILURE: Handshake failed. \n- DEPROVISIONING: Resources are being deallocated for the VPN tunnel. \n- FAILED: Tunnel creation has failed and the tunnel is not ready to be used.",
           "enum": [
             "ALLOCATING_RESOURCES",
             "AUTHORIZATION_ERROR",
@@ -37045,7 +37106,7 @@
         "items": {
           "additionalProperties": {
             "$ref": "VpnTunnelsScopedList",
-            "description": "Name of the scope containing this set of vpn tunnels."
+            "description": "Name of the scope containing this set of VPN tunnels."
           },
           "description": "A list of VpnTunnelsScopedList resources.",
           "type": "object"
@@ -37263,7 +37324,7 @@
       "id": "VpnTunnelsScopedList",
       "properties": {
         "vpnTunnels": {
-          "description": "A list of vpn tunnels contained in this scope.",
+          "description": "A list of VPN tunnels contained in this scope.",
           "items": {
             "$ref": "VpnTunnel"
           },

@@ -45,6 +45,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "accesscontextmanager:v1",
+   "name": "accesscontextmanager",
+   "version": "v1",
+   "title": "Access Context Manager API",
+   "description": "An API for setting attribute based access control to requests to GCP services.",
+   "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
    "preferred": true
   },
   {
@@ -524,7 +539,7 @@
    "name": "bigtableadmin",
    "version": "v1",
    "title": "Cloud Bigtable Admin API",
-   "description": "",
+   "description": "Administer your Cloud Bigtable tables and instances.",
    "discoveryRestUrl": "https://bigtableadmin.googleapis.com/$discovery/rest?version=v1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -539,7 +554,7 @@
    "name": "bigtableadmin",
    "version": "v2",
    "title": "Cloud Bigtable Admin API",
-   "description": "",
+   "description": "Administer your Cloud Bigtable tables and instances.",
    "discoveryRestUrl": "https://bigtableadmin.googleapis.com/$discovery/rest?version=v2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -831,6 +846,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudiot:v1alpha1",
+   "name": "cloudiot",
+   "version": "v1alpha1",
+   "title": "Cloud IoT API",
+   "description": "Registers and manages IoT (Internet of Things) devices that connect to the Google Cloud Platform.",
+   "discoveryRestUrl": "https://cloudiot.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/iot",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudiot:v1",
    "name": "cloudiot",
    "version": "v1",
@@ -857,6 +887,36 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/kms/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudprivatecatalog:v1beta1",
+   "name": "cloudprivatecatalog",
+   "version": "v1beta1",
+   "title": "Cloud Private Catalog API",
+   "description": "Enable cloud users to discover enterprise catalogs and products in their organizations.",
+   "discoveryRestUrl": "https://cloudprivatecatalog.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "cloudprivatecatalogproducer:v1beta1",
+   "name": "cloudprivatecatalogproducer",
+   "version": "v1beta1",
+   "title": "Cloud Private Catalog Producer API",
+   "description": "Enables cloud users to manage and share enterprise catalogs intheir organizations.",
+   "discoveryRestUrl": "https://cloudprivatecatalogproducer.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
    "preferred": true
   },
   {
@@ -2461,21 +2521,6 @@
     "x32": "https://www.google.com/images/icons/product/pagespeed-32.png"
    },
    "documentationLink": "https://developers.google.com/speed/docs/insights/v5/get-started",
-   "preferred": true
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "partners:v2",
-   "name": "partners",
-   "version": "v2",
-   "title": "Google Partners API",
-   "description": "Searches certified companies and creates contact leads with them, and also audits the usage of clients.",
-   "discoveryRestUrl": "https://partners.googleapis.com/$discovery/rest?version=v2",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://developers.google.com/partners/",
    "preferred": true
   },
   {

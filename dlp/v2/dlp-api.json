@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190219",
+  "revision": "20190307",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2157,7 +2157,7 @@
           "description": "The DeidentifyTemplate to create."
         },
         "templateId": {
-          "description": "The template id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "description": "The template id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -2171,7 +2171,7 @@
           "$ref": "GooglePrivacyDlpV2InspectJobConfig"
         },
         "jobId": {
-          "description": "The job id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "description": "The job id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
           "type": "string"
         },
         "riskJob": {
@@ -2189,7 +2189,7 @@
           "description": "The InspectTemplate to create."
         },
         "templateId": {
-          "description": "The template id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "description": "The template id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -2204,7 +2204,7 @@
           "description": "The JobTrigger to create."
         },
         "triggerId": {
-          "description": "The trigger id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "description": "The trigger id can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -2219,7 +2219,7 @@
           "description": "Configuration of the storedInfoType to create."
         },
         "storedInfoTypeId": {
-          "description": "The storedInfoType ID can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
+          "description": "The storedInfoType ID can contain uppercase and lowercase letters,\nnumbers, and hyphens; that is, it must match the regular\nexpression: `[a-zA-Z\\\\d-_]+`. The maximum length is 100\ncharacters. Can be empty to allow the system to generate one.",
           "type": "string"
         }
       },
@@ -2253,7 +2253,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig": {
-      "description": "Replaces an identifier with a surrogate using FPE with the FFX\nmode of operation; however when used in the `ReidentifyContent` API method,\nit serves the opposite function by reversing the surrogate back into\nthe original identifier.\nThe identifier must be encoded as ASCII.\nFor a given crypto key and context, the same identifier will be\nreplaced with the same surrogate.\nIdentifiers must be at least two characters long.\nIn the case that the identifier is the empty string, it will be skipped.\nSee https://cloud.google.com/dlp/docs/pseudonymization to learn more.",
+      "description": "Note: We recommend using  CryptoDeterministicConfig for all use cases which\ndo not require preserving the input alphabet space and size, plus warrant\nreferential integrity.",
       "id": "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig",
       "properties": {
         "commonAlphabet": {
@@ -3671,7 +3671,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2KmsWrappedCryptoKey": {
-      "description": "Include to use an existing data crypto key wrapped by KMS.\nAuthorization requires the following IAM permissions when sending a request\nto perform a crypto transformation using a kms-wrapped crypto key:\ndlp.kms.encrypt",
+      "description": "Include to use an existing data crypto key wrapped by KMS.\nThe wrapped key must be a 128/192/256 bit key.\nAuthorization requires the following IAM permissions when sending a request\nto perform a crypto transformation using a kms-wrapped crypto key:\ndlp.kms.encrypt",
       "id": "GooglePrivacyDlpV2KmsWrappedCryptoKey",
       "properties": {
         "cryptoKeyName": {
@@ -4457,6 +4457,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2Result": {
+      "description": "All result fields mentioned below are updated while the job is processing.",
       "id": "GooglePrivacyDlpV2Result",
       "properties": {
         "infoTypeStats": {
@@ -4848,7 +4849,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2TransformationSummary": {
-      "description": "Summary of a single tranformation.\nOnly one of 'transformation', 'field_transformation', or 'record_suppress'\nwill be set.",
+      "description": "Summary of a single transformation.\nOnly one of 'transformation', 'field_transformation', or 'record_suppress'\nwill be set.",
       "id": "GooglePrivacyDlpV2TransformationSummary",
       "properties": {
         "field": {
@@ -4915,7 +4916,7 @@
       "id": "GooglePrivacyDlpV2UnwrappedCryptoKey",
       "properties": {
         "key": {
-          "description": "The AES 128/192/256 bit key. [required]",
+          "description": "A 128/192/256 bit key. [required]",
           "format": "byte",
           "type": "string"
         }

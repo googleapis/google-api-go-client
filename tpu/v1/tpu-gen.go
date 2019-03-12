@@ -592,6 +592,9 @@ type Node struct {
 	//   "TERMINATED" - TPU node has been terminated due to maintenance or
 	// has reached the end of
 	// its life cycle (for preemptible nodes).
+	//   "HIDING" - TPU node is currently hiding.
+	//   "HIDDEN" - TPU node has been hidden.
+	//   "UNHIDING" - TPU node is currently unhiding.
 	State string `json:"state,omitempty"`
 
 	// TensorflowVersion: The version of Tensorflow running in the

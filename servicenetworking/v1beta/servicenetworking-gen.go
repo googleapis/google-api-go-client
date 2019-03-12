@@ -302,9 +302,10 @@ func (s *Api) MarshalJSON() ([]byte, error) {
 
 // AuthProvider: Configuration for an anthentication provider, including
 // support for
-// [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// [JSON Web
+// Token
+// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-tok
+// en-32).
 type AuthProvider struct {
 	// Audiences: The list of
 	// JWT
@@ -351,18 +352,21 @@ type AuthProvider struct {
 	Issuer string `json:"issuer,omitempty"`
 
 	// JwksUri: URL of the provider's public key set to validate signature
-	// of the JWT. See
+	// of the JWT.
+	// See
 	// [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html#
-	// ProviderMetadata).
+	// Discovery](https://openid.net/specs/openid-connect-discove
+	// ry-1_0.html#ProviderMetadata).
 	// Optional if the key set document:
 	//  - can be retrieved from
 	//    [OpenID
-	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
 	//
-	//    of the issuer.
-	//  - can be inferred from the email domain of the issuer (e.g. a Google
-	// service account).
+	// Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html
+	// of
+	//    the issuer.
+	//  - can be inferred from the email domain of the issuer (e.g. a
+	// Google
+	//  service account).
 	//
 	// Example: https://www.googleapis.com/oauth2/v1/certs
 	JwksUri string `json:"jwksUri,omitempty"`
@@ -392,9 +396,10 @@ func (s *AuthProvider) MarshalJSON() ([]byte, error) {
 
 // AuthRequirement: User-defined authentication requirements, including
 // support for
-// [JSON Web Token
-// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32)
-// .
+// [JSON Web
+// Token
+// (JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-tok
+// en-32).
 type AuthRequirement struct {
 	// Audiences: NOTE: This will be deprecated soon, once
 	// AuthProvider.audiences is
@@ -680,10 +685,12 @@ type BackendRule struct {
 	//
 	//     Request path: /api/company/widgetworks/user/johndoe
 	//     Translated:
+	//
 	// https://example.cloudfunctions.net/getUser?cid=widgetworks&uid=johndoe
 	//
 	//     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
 	//     Translated:
+	//
 	// https://example.cloudfunctions.net/getUser?timezone=EST&cid=widgetworks&uid=johndoe
 	//   "APPEND_PATH_TO_ADDRESS" - The request path will be appended to the
 	// backend address.
@@ -701,10 +708,12 @@ type BackendRule struct {
 	//
 	//     Request path: /api/company/widgetworks/user/johndoe
 	//     Translated:
+	//
 	// https://example.appspot.com/api/company/widgetworks/user/johndoe
 	//
 	//     Request path: /api/company/widgetworks/user/johndoe?timezone=EST
 	//     Translated:
+	//
 	// https://example.appspot.com/api/company/widgetworks/user/johndoe?timezone=EST
 	PathTranslation string `json:"pathTranslation,omitempty"`
 
@@ -1318,8 +1327,8 @@ func (s *Documentation) MarshalJSON() ([]byte, error) {
 // individual API elements.
 type DocumentationRule struct {
 	// DeprecationDescription: Deprecation description of the selected
-	// element(s). It can be provided if an
-	// element is marked as `deprecated`.
+	// element(s). It can be provided if
+	// an element is marked as `deprecated`.
 	DeprecationDescription string `json:"deprecationDescription,omitempty"`
 
 	// Description: Description of the selected API(s).
@@ -1415,11 +1424,13 @@ type Endpoint struct {
 
 	// Target: The specification of an Internet routable address of API
 	// frontend that will
-	// handle requests to this [API
-	// Endpoint](https://cloud.google.com/apis/design/glossary).
-	// It should be either a valid IPv4 address or a fully-qualified domain
-	// name.
-	// For example, "8.8.8.8" or "myservice.appspot.com".
+	// handle requests to this
+	// [API
+	// Endpoint](https://cloud.google.com/apis/design/glossary). It should
+	// be
+	// either a valid IPv4 address or a fully-qualified domain name. For
+	// example,
+	// "8.8.8.8" or "myservice.appspot.com".
 	Target string `json:"target,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aliases") to
@@ -3300,8 +3311,8 @@ func (s *Option) MarshalJSON() ([]byte, error) {
 // nested documentation set structure.
 type Page struct {
 	// Content: The Markdown content of the page. You can use <code>&#40;==
-	// include {path} ==&#41;</code>
-	// to include content from a Markdown file.
+	// include {path}
+	// ==&#41;</code> to include content from a Markdown file.
 	Content string `json:"content,omitempty"`
 
 	// Name: The name of the page. It will be used as an identity of the
@@ -3865,20 +3876,20 @@ func (s *SourceInfo) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

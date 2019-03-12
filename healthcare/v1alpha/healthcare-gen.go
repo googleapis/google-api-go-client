@@ -1074,17 +1074,6 @@ func (s *ExportDicomDataRequest) MarshalJSON() ([]byte, error) {
 type ExportResourcesRequest struct {
 	// BigqueryDestinationLocation: The BigQuery destination location.
 	// The output will be one BigQuery table per resource type.
-	// The server implements a data-driven FHIR-to-SQL schema mapping in
-	// support
-	// of analytics workloads with BigQuery. Incompatible changes to the
-	// output
-	// schema may be introduced in the future as a result of
-	// continuous
-	// collaboration with the FHIR community to refine the
-	// [desired SQL projection of
-	// FHIR
-	// resources](https://github.com/FHIR/sql-on-fhir/blob/master/sql-on
-	// -fhir.md)
 	BigqueryDestinationLocation *BigQueryLocation `json:"bigqueryDestinationLocation,omitempty"`
 
 	// GcsDestinationLocation: The Cloud Storage destination
@@ -3181,20 +3170,20 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -9412,10 +9401,6 @@ type ProjectsLocationsDatasetsFhirStoresExecuteBundleCall struct {
 }
 
 // ExecuteBundle: Executes all the requests in the given Bundle.
-// Conforms to
-// http://hl7.org/fhir/http.html#transaction except that only the
-// transaction
-// update is supported.
 func (r *ProjectsLocationsDatasetsFhirStoresService) ExecuteBundle(parent string, httpbody *HttpBody) *ProjectsLocationsDatasetsFhirStoresExecuteBundleCall {
 	c := &ProjectsLocationsDatasetsFhirStoresExecuteBundleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9513,7 +9498,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresExecuteBundleCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Executes all the requests in the given Bundle.  Conforms to\nhttp://hl7.org/fhir/http.html#transaction except that only the transaction\nupdate is supported.",
+	//   "description": "Executes all the requests in the given Bundle.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.executeBundle",
@@ -12998,6 +12983,55 @@ func (r *ProjectsLocationsDatasetsFhirStoresResourcesHistoryService) List(name s
 	return c
 }
 
+// At sets the optional parameter "at": Only include resource versions
+// that were current at some point during the
+// time period specified in the date time value. The date parameter
+// format is
+// yyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]
+// Clients may specify any of the following:
+// An entire year: `_at=2019`
+// An entire month: `_at=2019-01`
+// A specific day: `_at=2019-01-20`
+// A specific second: `_at=2018-12-31T23:59:58Z`
+func (c *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall) At(at string) *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall {
+	c.urlParams_.Set("at", at)
+	return c
+}
+
+// Count sets the optional parameter "count": The maximum number of
+// search results on a page.
+func (c *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall) Count(count int64) *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall {
+	c.urlParams_.Set("count", fmt.Sprint(count))
+	return c
+}
+
+// Page sets the optional parameter "page": Used to retrieve the first,
+// previous, next, or last page of resource
+// versions when using pagination. Value should be set to the value of
+// the
+// `link.url` field returned in the response to the previous request,
+// where
+// `link.relation` is "first", "previous", "next" or "last".
+// Omit `page` if no previous request has been made.
+func (c *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall) Page(page string) *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall {
+	c.urlParams_.Set("page", page)
+	return c
+}
+
+// Since sets the optional parameter "since": Only include resource
+// versions that were created at or after the given
+// instant in time. The instant in time uses the
+// format
+// YYYY-MM-DDThh:mm:ss.sss+zz:zz (for example
+// 2015-02-07T13:28:17.239+02:00 or
+// 2017-01-01T00:00:00Z). The time must be specified to the second
+// and
+// include a time zone.
+func (c *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall) Since(since string) *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall {
+	c.urlParams_.Set("since", since)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -13104,11 +13138,32 @@ func (c *ProjectsLocationsDatasetsFhirStoresResourcesHistoryListCall) Do(opts ..
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "at": {
+	//       "description": "Only include resource versions that were current at some point during the\ntime period specified in the date time value. The date parameter format is\nyyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]\nClients may specify any of the following:\nAn entire year: `_at=2019`\nAn entire month: `_at=2019-01`\nA specific day: `_at=2019-01-20`\nA specific second: `_at=2018-12-31T23:59:58Z`",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "count": {
+	//       "description": "The maximum number of search results on a page.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "name": {
 	//       "description": "The name of the resource to retrieve.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/resources/[^/]+/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "page": {
+	//       "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of the\n`link.url` field returned in the response to the previous request, where\n`link.relation` is \"first\", \"previous\", \"next\" or \"last\".\nOmit `page` if no previous request has been made.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "since": {
+	//       "description": "Only include resource versions that were created at or after the given\ninstant in time. The instant in time uses the format\nYYYY-MM-DDThh:mm:ss.sss+zz:zz (for example 2015-02-07T13:28:17.239+02:00 or\n2017-01-01T00:00:00Z). The time must be specified to the second and\ninclude a time zone.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

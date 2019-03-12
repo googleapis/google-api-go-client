@@ -1310,7 +1310,7 @@
                       ]
                     },
                     "executeBundle": {
-                      "description": "Executes all the requests in the given Bundle.  Conforms to\nhttp://hl7.org/fhir/http.html#transaction except that only the transaction\nupdate is supported.",
+                      "description": "Executes all the requests in the given Bundle.",
                       "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.fhirStores.executeBundle",
@@ -2036,11 +2036,32 @@
                                 "name"
                               ],
                               "parameters": {
+                                "at": {
+                                  "description": "Only include resource versions that were current at some point during the\ntime period specified in the date time value. The date parameter format is\nyyyy-mm-ddThh:mm:ss[Z|(+|-)hh:mm]\nClients may specify any of the following:\nAn entire year: `_at=2019`\nAn entire month: `_at=2019-01`\nA specific day: `_at=2019-01-20`\nA specific second: `_at=2018-12-31T23:59:58Z`",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "count": {
+                                  "description": "The maximum number of search results on a page.",
+                                  "format": "int32",
+                                  "location": "query",
+                                  "type": "integer"
+                                },
                                 "name": {
                                   "description": "The name of the resource to retrieve.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/resources/[^/]+/[^/]+$",
                                   "required": true,
+                                  "type": "string"
+                                },
+                                "page": {
+                                  "description": "Used to retrieve the first, previous, next, or last page of resource\nversions when using pagination. Value should be set to the value of the\n`link.url` field returned in the response to the previous request, where\n`link.relation` is \"first\", \"previous\", \"next\" or \"last\".\nOmit `page` if no previous request has been made.",
+                                  "location": "query",
+                                  "type": "string"
+                                },
+                                "since": {
+                                  "description": "Only include resource versions that were created at or after the given\ninstant in time. The instant in time uses the format\nYYYY-MM-DDThh:mm:ss.sss+zz:zz (for example 2015-02-07T13:28:17.239+02:00 or\n2017-01-01T00:00:00Z). The time must be specified to the second and\ninclude a time zone.",
+                                  "location": "query",
                                   "type": "string"
                                 }
                               },
@@ -2636,7 +2657,7 @@
       }
     }
   },
-  "revision": "20190223",
+  "revision": "20190308",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -2955,7 +2976,7 @@
       "properties": {
         "bigqueryDestinationLocation": {
           "$ref": "BigQueryLocation",
-          "description": "The BigQuery destination location.\nThe output will be one BigQuery table per resource type.\nThe server implements a data-driven FHIR-to-SQL schema mapping in support\nof analytics workloads with BigQuery. Incompatible changes to the output\nschema may be introduced in the future as a result of continuous\ncollaboration with the FHIR community to refine the\n[desired SQL projection of FHIR\nresources](https://github.com/FHIR/sql-on-fhir/blob/master/sql-on-fhir.md)"
+          "description": "The BigQuery destination location.\nThe output will be one BigQuery table per resource type."
         },
         "gcsDestinationLocation": {
           "$ref": "GcsDataLocation",
@@ -3833,7 +3854,7 @@
       "type": "object"
     },
     "Status": {
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error\nmessage, and error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
       "properties": {
         "code": {

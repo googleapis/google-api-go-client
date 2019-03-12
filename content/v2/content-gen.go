@@ -935,7 +935,7 @@ type AccountTaxTaxRule struct {
 	Country string `json:"country,omitempty"`
 
 	// LocationId: State (or province) is which the tax is applicable,
-	// described by its location id (also called criteria id).
+	// described by its location ID (also called criteria ID).
 	LocationId uint64 `json:"locationId,omitempty,string"`
 
 	// RatePercent: Explicit tax rate in percent, represented as a floating
@@ -4654,8 +4654,9 @@ type OrderCustomerMarketingRightsInfo struct {
 	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
 
 	// MarketingEmailAddress: Email address that can be used for marketing
-	// purposes. This field is only filled when explicitMarketingPreference
-	// is equal to 'granted'.
+	// purposes. The field may be empty even if explicitMarketingPreference
+	// is 'granted'. This happens when retrieving an old order from the
+	// customer who deleted his account.
 	MarketingEmailAddress string `json:"marketingEmailAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4935,8 +4936,8 @@ type OrderLineItemProduct struct {
 
 	// VariantAttributes: Variant attributes for the item. These are
 	// dimensions of the product, such as color, gender, material, pattern,
-	// and size. You can find a comprehensive list of variant attributes <a
-	// href="
+	// and size. You can find a comprehensive list of variant attributes
+	// here.
 	VariantAttributes []*OrderLineItemProductVariantAttribute `json:"variantAttributes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Brand") to
@@ -5311,10 +5312,10 @@ type OrderReportTransaction struct {
 	// MerchantId: The ID of the managing account.
 	MerchantId uint64 `json:"merchantId,omitempty,string"`
 
-	// MerchantOrderId: Merchant-provided id of the order.
+	// MerchantOrderId: Merchant-provided ID of the order.
 	MerchantOrderId string `json:"merchantOrderId,omitempty"`
 
-	// OrderId: The id of the order.
+	// OrderId: The ID of the order.
 	OrderId string `json:"orderId,omitempty"`
 
 	// ProductAmount: Total amount for the items.
@@ -9078,9 +9079,9 @@ type Product struct {
 	// Gtin: Global Trade Item Number (GTIN) of the item.
 	Gtin string `json:"gtin,omitempty"`
 
-	// Id: The REST id of the product. Content API methods that operate on
+	// Id: The REST ID of the product. Content API methods that operate on
 	// products take this as their productId parameter.
-	// The REST id for a product is of the form
+	// The REST ID for a product is of the form
 	// channel:contentLanguage:targetCountry:offerId.
 	Id string `json:"id,omitempty"`
 
@@ -9147,7 +9148,7 @@ type Product struct {
 	// whitespaces are stripped and multiple whitespaces are replaced by a
 	// single whitespace upon submission. Only valid unicode characters are
 	// accepted. See the products feed specification for details.
-	// Note: Content API methods that operate on products take the REST id
+	// Note: Content API methods that operate on products take the REST ID
 	// of the product, not this identifier.
 	OfferId string `json:"offerId,omitempty"`
 
@@ -9387,7 +9388,7 @@ type ProductShipping struct {
 	// represented by a location group name.
 	LocationGroupName string `json:"locationGroupName,omitempty"`
 
-	// LocationId: The numeric id of a location that the shipping rate
+	// LocationId: The numeric ID of a location that the shipping rate
 	// applies to as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
@@ -9555,7 +9556,7 @@ type ProductStatus struct {
 	// Product: Product data after applying all the join inputs.
 	Product *Product `json:"product,omitempty"`
 
-	// ProductId: The id of the product for which status is reported.
+	// ProductId: The ID of the product for which status is reported.
 	ProductId string `json:"productId,omitempty"`
 
 	// Title: The title of the product.
@@ -9598,7 +9599,7 @@ type ProductStatusDataQualityIssue struct {
 	// FetchStatus: The fetch status for landing_page_errors.
 	FetchStatus string `json:"fetchStatus,omitempty"`
 
-	// Id: The id of the data quality issue.
+	// Id: The ID of the data quality issue.
 	Id string `json:"id,omitempty"`
 
 	// Location: The attribute name that is relevant for the issue.
@@ -9734,7 +9735,7 @@ type ProductTax struct {
 	// CLDR territory code.
 	Country string `json:"country,omitempty"`
 
-	// LocationId: The numeric id of a location that the tax rate applies to
+	// LocationId: The numeric ID of a location that the tax rate applies to
 	// as defined in the AdWords API.
 	LocationId int64 `json:"locationId,omitempty,string"`
 
@@ -10970,7 +10971,7 @@ func (s *TestOrder) MarshalJSON() ([]byte, error) {
 }
 
 type TestOrderCustomer struct {
-	// Email: Deprecated.
+	// Email: Email address of the customer.
 	Email string `json:"email,omitempty"`
 
 	// ExplicitMarketingPreference: Deprecated. Please use
@@ -16306,7 +16307,7 @@ func (c *InventorySetCall) Do(opts ...googleapi.CallOption) (*InventorySetRespon
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product for which to update price and availability.",
+	//       "description": "The REST ID of the product for which to update price and availability.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -21101,7 +21102,7 @@ type OrdersGetbymerchantorderidCall struct {
 	header_         http.Header
 }
 
-// Getbymerchantorderid: Retrieves an order using merchant order id.
+// Getbymerchantorderid: Retrieves an order using merchant order ID.
 func (r *OrdersService) Getbymerchantorderid(merchantId uint64, merchantOrderId string) *OrdersGetbymerchantorderidCall {
 	c := &OrdersGetbymerchantorderidCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -21209,7 +21210,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves an order using merchant order id.",
+	//   "description": "Retrieves an order using merchant order ID.",
 	//   "httpMethod": "GET",
 	//   "id": "content.orders.getbymerchantorderid",
 	//   "parameterOrder": [
@@ -21225,7 +21226,7 @@ func (c *OrdersGetbymerchantorderidCall) Do(opts ...googleapi.CallOption) (*Orde
 	//       "type": "string"
 	//     },
 	//     "merchantOrderId": {
-	//       "description": "The merchant order id to be looked for.",
+	//       "description": "The merchant order ID to be looked for.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -24554,7 +24555,7 @@ func (c *ProductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -24703,7 +24704,7 @@ func (c *ProductsGetCall) Do(opts ...googleapi.CallOption) (*Product, error) {
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -25375,7 +25376,7 @@ func (c *ProductstatusesGetCall) Do(opts ...googleapi.CallOption) (*ProductStatu
 	//       "type": "string"
 	//     },
 	//     "productId": {
-	//       "description": "The REST id of the product.",
+	//       "description": "The REST ID of the product.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"

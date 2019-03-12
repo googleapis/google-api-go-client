@@ -555,9 +555,9 @@ type DynamicLinkInfo struct {
 	// DynamicLinkDomain: Dynamic Links domain that the project owns, e.g.
 	// abcd.app.goo.gl
 	// [Learn
-	// more](https://firebase.google.com/docs/dynamic-links/android/receive)
-	//
-	// on how to set up Dynamic Link domain associated with your Firebase
+	// more](https://firebase.google.com/docs/dynamic-
+	// links/android/receive) on
+	// how to set up Dynamic Link domain associated with your Firebase
 	// project.
 	//
 	// Required if missing domain_uri_prefix.
@@ -1053,15 +1053,16 @@ func (s *GetIosReopenAttributionResponse) MarshalJSON() ([]byte, error) {
 // GooglePlayAnalytics: Parameters for Google Play Campaign
 // Measurements.
 // [Learn
-// more](https://developers.google.com/analytics/devguides/collection/and
-// roid/v4/campaigns#campaign-params)
+// more](https://developers.google.com/analytics/dev
+// guides/collection/android/v4/campaigns#campaign-params)
 type GooglePlayAnalytics struct {
-	// Gclid: [AdWords autotagging
-	// parameter](https://support.google.com/analytics/answer/1033981?hl=en);
-	//
-	// used to measure Google AdWords ads. This value is generated
-	// dynamically
-	// and should never be modified.
+	// Gclid: [AdWords
+	// autotagging
+	// parameter](https://support.google.com/analytics/answer/103
+	// 3981?hl=en); used
+	// to measure Google AdWords ads. This value is generated dynamically
+	// and
+	// should never be modified.
 	Gclid string `json:"gclid,omitempty"`
 
 	// UtmCampaign: Campaign name; used for keyword analysis to identify a

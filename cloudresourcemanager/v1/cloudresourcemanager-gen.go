@@ -360,7 +360,7 @@ type Binding struct {
 	//    For example, `admins@example.com`.
 	//
 	//
-	// * `domain:{domain}`: A Google Apps domain name that represents all
+	// * `domain:{domain}`: The G Suite domain (primary) that represents all
 	// the
 	//    users of that domain. For example, `google.com` or
 	// `example.com`.
@@ -414,11 +414,13 @@ type BooleanPolicy struct {
 	// any
 	// configuration is acceptable.
 	//
-	// Suppose you have a `Constraint`
-	// `constraints/compute.disableSerialPortAccess`
-	// with `constraint_default` set to `ALLOW`. A `Policy` for
-	// that
-	// `Constraint` exhibits the following behavior:
+	// Suppose you have a
+	// `Constraint`
+	// `constraints/compute.disableSerialPortAccess` with
+	// `constraint_default`
+	// set to `ALLOW`. A `Policy` for that `Constraint` exhibits the
+	// following
+	// behavior:
 	//   - If the `Policy` at this resource has enforced set to `false`,
 	// serial
 	//     port connection attempts will be allowed.

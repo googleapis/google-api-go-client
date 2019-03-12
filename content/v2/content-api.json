@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/0plx6wutrRUyEys9iizIZM-pd2I\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/GZmZvuq0wnJO-_buay64M_5ocFI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1089,7 +1089,7 @@
               "type": "string"
             },
             "productId": {
-              "description": "The REST id of the product for which to update price and availability.",
+              "description": "The REST ID of the product for which to update price and availability.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -2206,7 +2206,7 @@
           ]
         },
         "getbymerchantorderid": {
-          "description": "Retrieves an order using merchant order id.",
+          "description": "Retrieves an order using merchant order ID.",
           "httpMethod": "GET",
           "id": "content.orders.getbymerchantorderid",
           "parameterOrder": [
@@ -2222,7 +2222,7 @@
               "type": "string"
             },
             "merchantOrderId": {
-              "description": "The merchant order id to be looked for.",
+              "description": "The merchant order ID to be looked for.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3025,7 +3025,7 @@
               "type": "string"
             },
             "productId": {
-              "description": "The REST id of the product.",
+              "description": "The REST ID of the product.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3053,7 +3053,7 @@
               "type": "string"
             },
             "productId": {
-              "description": "The REST id of the product.",
+              "description": "The REST ID of the product.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3193,7 +3193,7 @@
               "type": "string"
             },
             "productId": {
-              "description": "The REST id of the product.",
+              "description": "The REST ID of the product.",
               "location": "path",
               "required": true,
               "type": "string"
@@ -3482,7 +3482,7 @@
       }
     }
   },
-  "revision": "20190222",
+  "revision": "20190304",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -3962,7 +3962,7 @@
               "content.accounttax.update"
             ]
           },
-          "description": "State (or province) is which the tax is applicable, described by its location id (also called criteria id).",
+          "description": "State (or province) is which the tax is applicable, described by its location ID (also called criteria ID).",
           "format": "uint64",
           "type": "string"
         },
@@ -6253,7 +6253,7 @@
           "type": "string"
         },
         "marketingEmailAddress": {
-          "description": "Email address that can be used for marketing purposes. This field is only filled when explicitMarketingPreference is equal to 'granted'.",
+          "description": "Email address that can be used for marketing purposes. The field may be empty even if explicitMarketingPreference is 'granted'. This happens when retrieving an old order from the customer who deleted his account.",
           "type": "string"
         }
       },
@@ -6486,7 +6486,7 @@
           "type": "string"
         },
         "variantAttributes": {
-          "description": "Variant attributes for the item. These are dimensions of the product, such as color, gender, material, pattern, and size. You can find a comprehensive list of variant attributes \u003ca href=\"",
+          "description": "Variant attributes for the item. These are dimensions of the product, such as color, gender, material, pattern, and size. You can find a comprehensive list of variant attributes here.",
           "items": {
             "$ref": "OrderLineItemProductVariantAttribute"
           },
@@ -6754,11 +6754,11 @@
           "type": "string"
         },
         "merchantOrderId": {
-          "description": "Merchant-provided id of the order.",
+          "description": "Merchant-provided ID of the order.",
           "type": "string"
         },
         "orderId": {
-          "description": "The id of the order.",
+          "description": "The ID of the order.",
           "type": "string"
         },
         "productAmount": {
@@ -9253,7 +9253,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The REST id of the product. Content API methods that operate on products take this as their productId parameter.\nThe REST id for a product is of the form channel:contentLanguage:targetCountry:offerId.",
+          "description": "The REST ID of the product. Content API methods that operate on products take this as their productId parameter.\nThe REST ID for a product is of the form channel:contentLanguage:targetCountry:offerId.",
           "type": "string"
         },
         "identifierExists": {
@@ -9330,7 +9330,7 @@
               "content.products.insert"
             ]
           },
-          "description": "A unique identifier for the item. Leading and trailing whitespaces are stripped and multiple whitespaces are replaced by a single whitespace upon submission. Only valid unicode characters are accepted. See the products feed specification for details.\nNote: Content API methods that operate on products take the REST id of the product, not this identifier.",
+          "description": "A unique identifier for the item. Leading and trailing whitespaces are stripped and multiple whitespaces are replaced by a single whitespace upon submission. Only valid unicode characters are accepted. See the products feed specification for details.\nNote: Content API methods that operate on products take the REST ID of the product, not this identifier.",
           "type": "string"
         },
         "onlineOnly": {
@@ -9522,7 +9522,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "The numeric id of a location that the shipping rate applies to as defined in the AdWords API.",
+          "description": "The numeric ID of a location that the shipping rate applies to as defined in the AdWords API.",
           "format": "int64",
           "type": "string"
         },
@@ -9626,7 +9626,7 @@
           "description": "Product data after applying all the join inputs."
         },
         "productId": {
-          "description": "The id of the product for which status is reported.",
+          "description": "The ID of the product for which status is reported.",
           "type": "string"
         },
         "title": {
@@ -9652,7 +9652,7 @@
           "type": "string"
         },
         "id": {
-          "description": "The id of the data quality issue.",
+          "description": "The ID of the data quality issue.",
           "type": "string"
         },
         "location": {
@@ -9746,7 +9746,7 @@
           "type": "string"
         },
         "locationId": {
-          "description": "The numeric id of a location that the tax rate applies to as defined in the AdWords API.",
+          "description": "The numeric ID of a location that the tax rate applies to as defined in the AdWords API.",
           "format": "int64",
           "type": "string"
         },
@@ -10502,7 +10502,12 @@
       "id": "TestOrderCustomer",
       "properties": {
         "email": {
-          "description": "Deprecated.",
+          "annotations": {
+            "required": [
+              "content.orders.createtestorder"
+            ]
+          },
+          "description": "Email address of the customer.",
           "type": "string"
         },
         "explicitMarketingPreference": {

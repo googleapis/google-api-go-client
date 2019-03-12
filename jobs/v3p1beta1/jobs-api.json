@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190212",
+  "revision": "20190306",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -759,7 +759,7 @@
           "description": "A event issued when a job seeker interacts with the application that\nimplements Cloud Talent Solution."
         },
         "parentEventId": {
-          "description": "Required except the first event.\n\nThe event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
+          "description": "Optional.\n\nThe event_id of an event that resulted in the current event. For example, a\nJob view event usually follows a parent\nimpression event: A job seeker first does a\nsearch where a list of jobs appears\n(impression). The job seeker then selects a\nresult and views the description of a particular job (Job\nview).",
           "type": "string"
         },
         "requestId": {
@@ -784,16 +784,14 @@
             "DRIVING",
             "TRANSIT",
             "WALKING",
-            "CYCLING",
-            "TRANSIT_ACCESSIBLE"
+            "CYCLING"
           ],
           "enumDescriptions": [
             "Commute method is not specified.",
             "Commute time is calculated based on driving time.",
             "Commute time is calculated based on public transit including bus, metro,\nsubway, etc.",
             "Commute time is calculated based on walking time.",
-            "Commute time is calculated based on biking time.",
-            "Commute time is calculated based on public transit that is wheelchair\naccessible."
+            "Commute time is calculated based on biking time."
           ],
           "type": "string"
         },

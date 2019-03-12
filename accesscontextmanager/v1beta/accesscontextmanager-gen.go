@@ -335,6 +335,11 @@ type Condition struct {
 	// be satisfied. Defaults to false.
 	Negate bool `json:"negate,omitempty"`
 
+	// Regions: The request must originate from one of the provided
+	// countries/regions.
+	// Must be valid ISO 3166-1 alpha-2 codes.
+	Regions []string `json:"regions,omitempty"`
+
 	// RequiredAccessLevels: A list of other access levels defined in the
 	// same `Policy`, referenced by
 	// resource name. Referencing an `AccessLevel` which does not exist is
@@ -419,6 +424,13 @@ type DevicePolicy struct {
 	// OsConstraints: Allowed OS versions, an empty list allows all types
 	// and all versions.
 	OsConstraints []*OsConstraint `json:"osConstraints,omitempty"`
+
+	// RequireAdminApproval: Whether the device needs to be approved by the
+	// customer admin.
+	RequireAdminApproval bool `json:"requireAdminApproval,omitempty"`
+
+	// RequireCorpOwned: Whether the device needs to be corp owned.
+	RequireCorpOwned bool `json:"requireCorpOwned,omitempty"`
 
 	// RequireScreenlock: Whether or not screenlock is required for the
 	// DevicePolicy to be true.
@@ -657,9 +669,16 @@ type OsConstraint struct {
 	//   "DESKTOP_WINDOWS" - A desktop Windows operating system.
 	//   "DESKTOP_LINUX" - A desktop Linux operating system.
 	//   "DESKTOP_CHROME_OS" - A desktop ChromeOS operating system.
-	//   "ANDROID" - An Android operating system.
-	//   "IOS" - An iOS operating system.
 	OsType string `json:"osType,omitempty"`
+
+	// RequireVerifiedChromeOs: Only allows requests from devices with a
+	// verified Chrome OS.
+	// Verifications includes requirements that the device is
+	// enterprise-managed,
+	// conformant to Dasher domain policies, and the caller has permission
+	// to call
+	// the API targeted by the request.
+	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinimumVersion") to
 	// unconditionally include in API requests. By default, fields with
@@ -803,52 +822,20 @@ type ServicePerimeterConfig struct {
 	Resources []string `json:"resources,omitempty"`
 
 	// RestrictedServices: GCP services that are subject to the Service
-	// Perimeter restrictions. May
-	// contain a list of services or a single wildcard "*". For example,
-	// if
+	// Perimeter restrictions. Must
+	// contain a list of services. For example, if
 	// `storage.googleapis.com` is specified, access to the storage
 	// buckets
-	// inside the perimeter must meet the perimeter's access
-	// restrictions.
-	//
-	// Wildcard means that unless explicitly specified by
-	// "unrestricted_services"
-	// list, any service is treated as restricted. One of the
-	// fields
-	// "restricted_services", "unrestricted_services" must contain a
-	// wildcard "*",
-	// otherwise the Service Perimeter specification is invalid. It also
-	// means
-	// that both field being empty is invalid as well. "restricted_services"
-	// can
-	// be empty if and only if "unrestricted_services" list contains a
-	// "*"
-	// wildcard.
+	// inside the perimeter must meet the perimeter's access restrictions.
 	RestrictedServices []string `json:"restrictedServices,omitempty"`
 
 	// UnrestrictedServices: GCP services that are not subject to the
-	// Service Perimeter restrictions.
-	// May contain a list of services or a single wildcard "*". For example,
-	// if
-	// `logging.googleapis.com` is unrestricted, users can access logs
-	// inside the
-	// perimeter as if the perimeter doesn't exist, and it also means VMs
-	// inside
-	// the perimeter can access logs outside the perimeter.
+	// Service Perimeter
+	// restrictions. Deprecated. Must be set to a single wildcard "*".
 	//
 	// The wildcard means that unless explicitly specified
 	// by
 	// "restricted_services" list, any service is treated as unrestricted.
-	// One of
-	// the fields "restricted_services", "unrestricted_services" must
-	// contain a
-	// wildcard "*", otherwise the Service Perimeter specification is
-	// invalid. It
-	// also means that both field being empty is invalid as
-	// well.
-	// "unrestricted_services" can be empty if and only if
-	// "restricted_services"
-	// list contains a "*" wildcard.
 	UnrestrictedServices []string `json:"unrestrictedServices,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
@@ -875,20 +862,20 @@ func (s *ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

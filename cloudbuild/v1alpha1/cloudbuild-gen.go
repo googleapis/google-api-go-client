@@ -1630,7 +1630,7 @@ type ProjectsWorkerPoolsDeleteCall struct {
 }
 
 // Delete: Deletes a `WorkerPool` by its project ID and WorkerPool
-// ID.
+// name.
 //
 // This API is experimental.
 func (r *ProjectsWorkerPoolsService) Delete(name string) *ProjectsWorkerPoolsDeleteCall {
@@ -1724,7 +1724,7 @@ func (c *ProjectsWorkerPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a `WorkerPool` by its project ID and WorkerPool ID.\n\nThis API is experimental.",
+	//   "description": "Deletes a `WorkerPool` by its project ID and WorkerPool name.\n\nThis API is experimental.",
 	//   "flatPath": "v1alpha1/projects/{projectsId}/workerPools/{workerPoolsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudbuild.projects.workerPools.delete",

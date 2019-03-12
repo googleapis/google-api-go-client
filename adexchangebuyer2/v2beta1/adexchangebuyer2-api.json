@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20190206",
+  "revision": "20190311",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2967,7 +2967,7 @@
       "type": "object"
     },
     "Creative": {
-      "description": "A creative and its classification data.\n\nNext ID: 40",
+      "description": "A creative and its classification data.\n\nNext ID: 42",
       "id": "Creative",
       "properties": {
         "accountId": {

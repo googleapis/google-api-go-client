@@ -7892,7 +7892,8 @@ type WeightedFontFamily struct {
 	// range
 	// corresponds to the numerical values described in the CSS
 	// 2.1
-	// Specification, [section
+	// Specification,
+	// [section
 	// 15.6](https://www.w3.org/TR/CSS21/fonts.html#font-boldness),
 	// with non-numerical values disallowed. Weights greater than or equal
 	// to

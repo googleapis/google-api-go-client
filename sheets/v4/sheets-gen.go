@@ -3128,8 +3128,15 @@ func (s *ClearValuesResponse) MarshalJSON() ([]byte, error) {
 // "+colorWithRed:green:blue:alpha"
 // method in iOS; and, with just a little work, it can be easily
 // formatted into
-// a CSS "rgba()" string in JavaScript, as well. Here are some
-// examples:
+// a CSS "rgba()" string in JavaScript, as well.
+//
+// Note: this proto does not carry information about the absolute color
+// space
+// that should be used to interpret the RGB value (e.g. sRGB, Adobe
+// RGB,
+// DCI-P3, BT.2020, etc.). By default, applications SHOULD assume the
+// sRGB color
+// space.
 //
 // Example (Java):
 //
@@ -6285,8 +6292,8 @@ type NumberFormat struct {
 	// pattern based on
 	// the user's locale will be used if necessary for the given type.
 	// See the [Date and Number Formats guide](/sheets/api/guides/formats)
-	// for more
-	// information about the supported patterns.
+	// for
+	// more information about the supported patterns.
 	Pattern string `json:"pattern,omitempty"`
 
 	// Type: The type of the number format.
@@ -8155,9 +8162,11 @@ type TextRotation struct {
 	// Positive
 	// angles are angled upwards, negative are angled downwards.
 	//
-	// Note: For LTR text direction positive angles are in the
-	// counterclockwise
-	// direction, whereas for RTL they are in the clockwise direction
+	// Note: For LTR text direction positive angles are in
+	// the
+	// counterclockwise direction, whereas for RTL they are in the
+	// clockwise
+	// direction
 	Angle int64 `json:"angle,omitempty"`
 
 	// Vertical: If true, text reads top to bottom, but the orientation of

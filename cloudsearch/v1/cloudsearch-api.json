@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190227",
+  "revision": "20190305",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -2555,7 +2555,7 @@
           "type": "array"
         },
         "readers": {
-          "description": "List of principals who are allowed to see the item in search results.\nOptional if inheriting permissions from another item or if the item\nis not intended to be visible, such as\nvirtual containers.\nThe maximum number of elements is 1000.",
+          "description": "List of principals who are allowed to see the item in search results.\nOptional if inheriting permissions from another item or if the item\nis not intended to be visible, such as\nvirtual\ncontainers.\nThe maximum number of elements is 1000.",
           "items": {
             "$ref": "Principal"
           },
@@ -3791,7 +3791,7 @@
           "type": "array"
         },
         "operationIds": {
-          "description": "IDs of the Long Running Operations (LROs) currently running for this\nschema. After modifying the schema, wait for opeations to complete\nbefore indexing additional content.",
+          "description": "IDs of the Long Running Operations (LROs) currently running for this\nschema. After modifying the schema, wait for operations to complete\nbefore indexing additional content.",
           "items": {
             "type": "string"
           },

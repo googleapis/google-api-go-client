@@ -562,7 +562,7 @@
       }
     }
   },
-  "revision": "20190307",
+  "revision": "20190314",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1323,6 +1323,10 @@
         "artifactManifest": {
           "description": "Path to the artifact manifest. Only populated when artifacts are uploaded.",
           "type": "string"
+        },
+        "artifactTiming": {
+          "$ref": "TimeSpan",
+          "description": "Time to push all non-container artifacts."
         },
         "buildStepImages": {
           "description": "List of build step digests, in the order corresponding to build step\nindices.",

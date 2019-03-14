@@ -30,7 +30,7 @@
           "description": "View your email address"
         },
         "https://www.googleapis.com/auth/userinfo.profile": {
-          "description": "View your basic profile info"
+          "description": "See your personal info, including any personal info you've made publically available"
         }
       }
     }
@@ -41,7 +41,7 @@
   "description": "Builds on top of the Google+ platform for Google Apps Domains.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/+/domains/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/GXNaI2yu_gDF4YlRqtF4BhBQJtA\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/i92XADu-jYkxWsaEBWE352t2jKE\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/gplus-16.png",
     "x32": "http://www.google.com/images/icons/product/gplus-32.png"
@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20190227",
+  "revision": "20190313",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {

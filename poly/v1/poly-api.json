@@ -290,7 +290,7 @@
       }
     }
   },
-  "revision": "20180808",
+  "revision": "20190309",
   "rootUrl": "https://poly.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -435,11 +435,11 @@
       "id": "File",
       "properties": {
         "contentType": {
-          "description": "The MIME content-type, such as `image/png`.\nFor more information, see\n[MIME types](//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).",
+          "description": "The MIME content-type, such as `image/png`.\nFor more information, see\n[MIME\ntypes](//developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types).",
           "type": "string"
         },
         "relativePath": {
-          "description": "The path of the resource file relative to the root file.\nFor root or thumbnail files, this is just the filename.",
+          "description": "The path of the resource file relative to the\nroot file. For root or thumbnail files,\nthis is just the filename.",
           "type": "string"
         },
         "url": {
@@ -470,7 +470,7 @@
         },
         "root": {
           "$ref": "File",
-          "description": "The root of the file hierarchy. This will always be populated.\nFor some format_types - such as `TILT`, which are self-contained -\nthis is all of the data.\n\nOther types - such as `OBJ` - often reference other data elements.\nThese are contained in the resources field."
+          "description": "The root of the file hierarchy. This will always be populated.\nFor some format_types - such as `TILT`, which are\nself-contained - this is all of the data.\n\nOther types - such as `OBJ` - often reference other data elements.\nThese are contained in the resources field."
         }
       },
       "type": "object"

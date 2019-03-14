@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/tPA0_g3dJ23l78NhK1kP4Y4uPDg\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/JLTtElhO_yZgirWM-iDsLteIwa0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -357,7 +357,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves the status of a Merchant Center account. Multi-client accounts can only call this method for sub-accounts.",
+          "description": "Retrieves the status of a Merchant Center account. No itemLevelIssues are returned for multi-client accounts.",
           "httpMethod": "GET",
           "id": "content.accountstatuses.get",
           "parameterOrder": [
@@ -2884,7 +2884,7 @@
       }
     }
   },
-  "revision": "20190304",
+  "revision": "20190308",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5063,10 +5063,6 @@
           "$ref": "OrderAddress",
           "description": "The billing address."
         },
-        "channelType": {
-          "description": "The channel type of the order: \"purchaseOnGoogle\" or \"googleExpress\".",
-          "type": "string"
-        },
         "customer": {
           "$ref": "OrderCustomer",
           "description": "The details of the customer who placed the order."
@@ -5252,7 +5248,7 @@
           "type": "string"
         },
         "marketingEmailAddress": {
-          "description": "Email address that can be used for marketing purposes. The field may be empty even if explicitMarketingPreference is 'granted'. This happens when retrieving an old order from the customer who deleted his account.",
+          "description": "Email address that can be used for marketing purposes. The field may be empty even if explicitMarketingPreference is 'granted'. This happens when retrieving an old order from the customer who deleted their account.",
           "type": "string"
         }
       },
@@ -5358,10 +5354,6 @@
       "properties": {
         "brand": {
           "description": "Brand of the item.",
-          "type": "string"
-        },
-        "channel": {
-          "description": "The item's channel (online or local).",
           "type": "string"
         },
         "condition": {
@@ -7829,7 +7821,7 @@
       "type": "object"
     },
     "ProductStatus": {
-      "description": "The status of a product, i.e., information about a product computed asynchronously by the data quality analysis.",
+      "description": "The status of a product, i.e., information about a product computed asynchronously.",
       "id": "ProductStatus",
       "properties": {
         "creationDate": {
@@ -8847,15 +8839,6 @@
             ]
           },
           "description": "Brand of the item.",
-          "type": "string"
-        },
-        "channel": {
-          "annotations": {
-            "required": [
-              "content.orders.createtestorder"
-            ]
-          },
-          "description": "The item's channel.",
           "type": "string"
         },
         "condition": {

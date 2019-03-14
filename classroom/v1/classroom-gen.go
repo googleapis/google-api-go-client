@@ -1,4 +1,4 @@
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2019 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,13 +6,39 @@
 
 // Package classroom provides access to the Google Classroom API.
 //
-// See https://developers.google.com/classroom/
+// For product documentation, see: https://developers.google.com/classroom/
+//
+// Creating a client
 //
 // Usage example:
 //
 //   import "google.golang.org/api/classroom/v1"
 //   ...
-//   classroomService, err := classroom.New(oauthHttpClient)
+//   ctx := context.Background()
+//   classroomService, err := classroom.NewService(ctx)
+//
+// In this example, Google Application Default Credentials are used for authentication.
+//
+// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+//
+// Other authentication options
+//
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   classroomService, err := classroom.NewService(ctx, option.WithScopes(classroom.ClassroomStudentSubmissionsStudentsReadonlyScope))
+//
+// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+//
+//   classroomService, err := classroom.NewService(ctx, option.WithAPIKey("AIza..."))
+//
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+//
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   classroomService, err := classroom.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//
+// See https://godoc.org/google.golang.org/api/option/ for details on options.
 package classroom // import "google.golang.org/api/classroom/v1"
 
 import (
@@ -29,6 +55,8 @@ import (
 
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	option "google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -112,6 +140,49 @@ const (
 	ClassroomStudentSubmissionsStudentsReadonlyScope = "https://www.googleapis.com/auth/classroom.student-submissions.students.readonly"
 )
 
+// NewService creates a new Service.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/classroom.announcements",
+		"https://www.googleapis.com/auth/classroom.announcements.readonly",
+		"https://www.googleapis.com/auth/classroom.courses",
+		"https://www.googleapis.com/auth/classroom.courses.readonly",
+		"https://www.googleapis.com/auth/classroom.coursework.me",
+		"https://www.googleapis.com/auth/classroom.coursework.me.readonly",
+		"https://www.googleapis.com/auth/classroom.coursework.students",
+		"https://www.googleapis.com/auth/classroom.coursework.students.readonly",
+		"https://www.googleapis.com/auth/classroom.guardianlinks.me.readonly",
+		"https://www.googleapis.com/auth/classroom.guardianlinks.students",
+		"https://www.googleapis.com/auth/classroom.guardianlinks.students.readonly",
+		"https://www.googleapis.com/auth/classroom.profile.emails",
+		"https://www.googleapis.com/auth/classroom.profile.photos",
+		"https://www.googleapis.com/auth/classroom.push-notifications",
+		"https://www.googleapis.com/auth/classroom.rosters",
+		"https://www.googleapis.com/auth/classroom.rosters.readonly",
+		"https://www.googleapis.com/auth/classroom.student-submissions.me.readonly",
+		"https://www.googleapis.com/auth/classroom.student-submissions.students.readonly",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
+	client, endpoint, err := htransport.NewClient(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+	s, err := New(client)
+	if err != nil {
+		return nil, err
+	}
+	if endpoint != "" {
+		s.BasePath = endpoint
+	}
+	return s, nil
+}
+
+// New creates a new Service. It uses the provided http.Client for requests.
+//
+// Deprecated: please use NewService instead.
+// To provide a custom HTTP client, use option.WithHTTPClient.
+// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")

@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/ATSzBKlKlNuMbykFz6TPz-5v-_s\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/MUEA1ZMhfI9iAzfPfacPlOXY3F4\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -702,7 +702,7 @@
       }
     }
   },
-  "revision": "20190213",
+  "revision": "20190312",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Change": {
@@ -968,6 +968,20 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "privateVisibilityConfig": {
+          "$ref": "ManagedZonePrivateVisibilityConfig"
+        },
+        "visibility": {
+          "enum": [
+            "private",
+            "public"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -1032,6 +1046,37 @@
             "$ref": "Operation"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePrivateVisibilityConfig": {
+      "id": "ManagedZonePrivateVisibilityConfig",
+      "properties": {
+        "kind": {
+          "default": "dns#managedZonePrivateVisibilityConfig",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePrivateVisibilityConfig\".",
+          "type": "string"
+        },
+        "networks": {
+          "items": {
+            "$ref": "ManagedZonePrivateVisibilityConfigNetwork"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePrivateVisibilityConfigNetwork": {
+      "id": "ManagedZonePrivateVisibilityConfigNetwork",
+      "properties": {
+        "kind": {
+          "default": "dns#managedZonePrivateVisibilityConfigNetwork",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePrivateVisibilityConfigNetwork\".",
+          "type": "string"
+        },
+        "networkUrl": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -1157,6 +1202,14 @@
           "type": "string"
         },
         "managedZones": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "managedZonesPerNetwork": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "networksPerManagedZone": {
           "format": "int32",
           "type": "integer"
         },

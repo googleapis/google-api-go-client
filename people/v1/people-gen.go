@@ -1,4 +1,4 @@
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2019 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,13 +6,39 @@
 
 // Package people provides access to the People API.
 //
-// See https://developers.google.com/people/
+// For product documentation, see: https://developers.google.com/people/
+//
+// Creating a client
 //
 // Usage example:
 //
 //   import "google.golang.org/api/people/v1"
 //   ...
-//   peopleService, err := people.New(oauthHttpClient)
+//   ctx := context.Background()
+//   peopleService, err := people.NewService(ctx)
+//
+// In this example, Google Application Default Credentials are used for authentication.
+//
+// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+//
+// Other authentication options
+//
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   peopleService, err := people.NewService(ctx, option.WithScopes(people.UserinfoProfileScope))
+//
+// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+//
+//   peopleService, err := people.NewService(ctx, option.WithAPIKey("AIza..."))
+//
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+//
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   peopleService, err := people.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//
+// See https://godoc.org/google.golang.org/api/option/ for details on options.
 package people // import "google.golang.org/api/people/v1"
 
 import (
@@ -29,6 +55,8 @@ import (
 
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	option "google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -80,6 +108,40 @@ const (
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
+// NewService creates a new Service.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/contacts",
+		"https://www.googleapis.com/auth/contacts.readonly",
+		"https://www.googleapis.com/auth/plus.login",
+		"https://www.googleapis.com/auth/user.addresses.read",
+		"https://www.googleapis.com/auth/user.birthday.read",
+		"https://www.googleapis.com/auth/user.emails.read",
+		"https://www.googleapis.com/auth/user.phonenumbers.read",
+		"https://www.googleapis.com/auth/userinfo.email",
+		"https://www.googleapis.com/auth/userinfo.profile",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
+	client, endpoint, err := htransport.NewClient(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+	s, err := New(client)
+	if err != nil {
+		return nil, err
+	}
+	if endpoint != "" {
+		s.BasePath = endpoint
+	}
+	return s, nil
+}
+
+// New creates a new Service. It uses the provided http.Client for requests.
+//
+// Deprecated: please use NewService instead.
+// To provide a custom HTTP client, use option.WithHTTPClient.
+// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -3471,6 +3533,12 @@ type ContactGroupsMembersModifyCall struct {
 
 // Modify: Modify the members of a contact group owned by the
 // authenticated user.
+// <br>
+// The only system contact groups that can have members added
+// are
+// `contactGroups/myContacts` and `contactGroups/starred`. Other
+// system
+// contact groups are deprecated and can only have contacts removed.
 func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactgroupmembersrequest *ModifyContactGroupMembersRequest) *ContactGroupsMembersModifyCall {
 	c := &ContactGroupsMembersModifyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -3569,7 +3637,7 @@ func (c *ContactGroupsMembersModifyCall) Do(opts ...googleapi.CallOption) (*Modi
 	}
 	return ret, nil
 	// {
-	//   "description": "Modify the members of a contact group owned by the authenticated user.",
+	//   "description": "Modify the members of a contact group owned by the authenticated user.\n\u003cbr\u003e\nThe only system contact groups that can have members added are\n`contactGroups/myContacts` and `contactGroups/starred`. Other system\ncontact groups are deprecated and can only have contacts removed.",
 	//   "flatPath": "v1/contactGroups/{contactGroupsId}/members:modify",
 	//   "httpMethod": "POST",
 	//   "id": "people.contactGroups.members.modify",

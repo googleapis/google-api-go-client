@@ -1,4 +1,4 @@
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2019 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,13 +6,35 @@
 
 // Package content provides access to the Content API for Shopping.
 //
-// See https://developers.google.com/shopping-content
+// For product documentation, see: https://developers.google.com/shopping-content
+//
+// Creating a client
 //
 // Usage example:
 //
 //   import "google.golang.org/api/content/v2"
 //   ...
-//   contentService, err := content.New(oauthHttpClient)
+//   ctx := context.Background()
+//   contentService, err := content.NewService(ctx)
+//
+// In this example, Google Application Default Credentials are used for authentication.
+//
+// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+//
+// Other authentication options
+//
+// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+//
+//   contentService, err := content.NewService(ctx, option.WithAPIKey("AIza..."))
+//
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+//
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   contentService, err := content.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//
+// See https://godoc.org/google.golang.org/api/option/ for details on options.
 package content // import "google.golang.org/api/content/v2"
 
 import (
@@ -29,6 +51,8 @@ import (
 
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	option "google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -56,6 +80,32 @@ const (
 	ContentScope = "https://www.googleapis.com/auth/content"
 )
 
+// NewService creates a new APIService.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, error) {
+	scopesOption := option.WithScopes(
+		"https://www.googleapis.com/auth/content",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
+	client, endpoint, err := htransport.NewClient(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+	s, err := New(client)
+	if err != nil {
+		return nil, err
+	}
+	if endpoint != "" {
+		s.BasePath = endpoint
+	}
+	return s, nil
+}
+
+// New creates a new APIService. It uses the provided http.Client for requests.
+//
+// Deprecated: please use NewService instead.
+// To provide a custom HTTP client, use option.WithHTTPClient.
+// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
 func New(client *http.Client) (*APIService, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")
@@ -574,7 +624,7 @@ type AccountStatus struct {
 	// AccountLevelIssues: A list of account level issues.
 	AccountLevelIssues []*AccountStatusAccountLevelIssue `json:"accountLevelIssues,omitempty"`
 
-	// DataQualityIssues: A list of data quality issues.
+	// DataQualityIssues: DEPRECATED - never populated.
 	DataQualityIssues []*AccountStatusDataQualityIssue `json:"dataQualityIssues,omitempty"`
 
 	// Kind: Identifies what kind of resource this is. Value: the fixed
@@ -661,38 +711,26 @@ func (s *AccountStatusAccountLevelIssue) MarshalJSON() ([]byte, error) {
 }
 
 type AccountStatusDataQualityIssue struct {
-	// Country: Country for which this issue is reported.
 	Country string `json:"country,omitempty"`
 
-	// Destination: The destination the issue applies to.
 	Destination string `json:"destination,omitempty"`
 
-	// Detail: A more detailed description of the issue.
 	Detail string `json:"detail,omitempty"`
 
-	// DisplayedValue: Actual value displayed on the landing page.
 	DisplayedValue string `json:"displayedValue,omitempty"`
 
-	// ExampleItems: Example items featuring the issue.
 	ExampleItems []*AccountStatusExampleItem `json:"exampleItems,omitempty"`
 
-	// Id: Issue identifier.
 	Id string `json:"id,omitempty"`
 
-	// LastChecked: Last time the account was checked for this issue.
 	LastChecked string `json:"lastChecked,omitempty"`
 
-	// Location: The attribute name that is relevant for the issue.
 	Location string `json:"location,omitempty"`
 
-	// NumItems: Number of items in the account found to have the said
-	// issue.
 	NumItems int64 `json:"numItems,omitempty"`
 
-	// Severity: Severity of the problem.
 	Severity string `json:"severity,omitempty"`
 
-	// SubmittedValue: Submitted value that causes the issue.
 	SubmittedValue string `json:"submittedValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Country") to
@@ -718,23 +756,15 @@ func (s *AccountStatusDataQualityIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AccountStatusExampleItem: An example of an item that has poor data
-// quality. An item value on the landing page differs from what is
-// submitted, or conflicts with a policy.
 type AccountStatusExampleItem struct {
-	// ItemId: Unique item ID as specified in the uploaded product data.
 	ItemId string `json:"itemId,omitempty"`
 
-	// Link: Landing page of the item.
 	Link string `json:"link,omitempty"`
 
-	// SubmittedValue: The item value that was submitted.
 	SubmittedValue string `json:"submittedValue,omitempty"`
 
-	// Title: Title of the item.
 	Title string `json:"title,omitempty"`
 
-	// ValueOnLandingPage: The actual value on the landing page.
 	ValueOnLandingPage string `json:"valueOnLandingPage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ItemId") to
@@ -4413,8 +4443,7 @@ type Order struct {
 	// Acknowledged: Whether the order was acknowledged.
 	Acknowledged bool `json:"acknowledged,omitempty"`
 
-	// ChannelType: The channel type of the order: "purchaseOnGoogle" or
-	// "googleExpress".
+	// ChannelType: Deprecated.
 	ChannelType string `json:"channelType,omitempty"`
 
 	// Customer: The details of the customer who placed the order.
@@ -4452,9 +4481,8 @@ type Order struct {
 	// PlacedDate: The date when the order was placed, in ISO 8601 format.
 	PlacedDate string `json:"placedDate,omitempty"`
 
-	// Promotions: Deprecated. Ignored if provided for createTestOrder. The
-	// details of the merchant provided promotions applied to the order.
-	// More details about the program are here.
+	// Promotions: The details of the merchant provided promotions applied
+	// to the order. More details about the program are here.
 	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
 	// Refunds: Refunds for the order.
@@ -4656,7 +4684,7 @@ type OrderCustomerMarketingRightsInfo struct {
 	// MarketingEmailAddress: Email address that can be used for marketing
 	// purposes. The field may be empty even if explicitMarketingPreference
 	// is 'granted'. This happens when retrieving an old order from the
-	// customer who deleted his account.
+	// customer who deleted their account.
 	MarketingEmailAddress string `json:"marketingEmailAddress,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -9522,14 +9550,13 @@ func (s *ProductShippingWeight) UnmarshalJSON(data []byte) error {
 }
 
 // ProductStatus: The status of a product, i.e., information about a
-// product computed asynchronously by the data quality analysis.
+// product computed asynchronously.
 type ProductStatus struct {
 	// CreationDate: Date on which the item has been created, in ISO 8601
 	// format.
 	CreationDate string `json:"creationDate,omitempty"`
 
-	// DataQualityIssues: A list of data quality issues associated with the
-	// product.
+	// DataQualityIssues: DEPRECATED - never populated
 	DataQualityIssues []*ProductStatusDataQualityIssue `json:"dataQualityIssues,omitempty"`
 
 	// DestinationStatuses: The intended destinations for the product.
@@ -9590,32 +9617,22 @@ func (s *ProductStatus) MarshalJSON() ([]byte, error) {
 }
 
 type ProductStatusDataQualityIssue struct {
-	// Destination: The destination the issue applies to.
 	Destination string `json:"destination,omitempty"`
 
-	// Detail: A more detailed error string.
 	Detail string `json:"detail,omitempty"`
 
-	// FetchStatus: The fetch status for landing_page_errors.
 	FetchStatus string `json:"fetchStatus,omitempty"`
 
-	// Id: The ID of the data quality issue.
 	Id string `json:"id,omitempty"`
 
-	// Location: The attribute name that is relevant for the issue.
 	Location string `json:"location,omitempty"`
 
-	// Severity: The severity of the data quality issue.
 	Severity string `json:"severity,omitempty"`
 
-	// Timestamp: The time stamp of the data quality issue.
 	Timestamp string `json:"timestamp,omitempty"`
 
-	// ValueOnLandingPage: The value of that attribute that was found on the
-	// landing page
 	ValueOnLandingPage string `json:"valueOnLandingPage,omitempty"`
 
-	// ValueProvided: The value the attribute had at time of evaluation.
 	ValueProvided string `json:"valueProvided,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destination") to
@@ -10930,9 +10947,7 @@ type TestOrder struct {
 	// delivery addresses for the delivery.
 	PredefinedDeliveryAddress string `json:"predefinedDeliveryAddress,omitempty"`
 
-	// Promotions: Deprecated. The details of the merchant provided
-	// promotions applied to the order. More details about the program are
-	// here.
+	// Promotions: Deprecated. Ignored if provided.
 	Promotions []*OrderLegacyPromotion `json:"promotions,omitempty"`
 
 	// ShippingCost: The price of shipping for all items. Shipping tax is
@@ -11085,7 +11100,7 @@ type TestOrderLineItemProduct struct {
 	// Brand: Brand of the item.
 	Brand string `json:"brand,omitempty"`
 
-	// Channel: The item's channel.
+	// Channel: Deprecated.
 	Channel string `json:"channel,omitempty"`
 
 	// Condition: Condition or state of the item.
@@ -13131,8 +13146,8 @@ type AccountstatusesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves the status of a Merchant Center account. Multi-client
-// accounts can only call this method for sub-accounts.
+// Get: Retrieves the status of a Merchant Center account. No
+// itemLevelIssues are returned for multi-client accounts.
 func (r *AccountstatusesService) Get(merchantId uint64, accountId uint64) *AccountstatusesGetCall {
 	c := &AccountstatusesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -13247,7 +13262,7 @@ func (c *AccountstatusesGetCall) Do(opts ...googleapi.CallOption) (*AccountStatu
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the status of a Merchant Center account. Multi-client accounts can only call this method for sub-accounts.",
+	//   "description": "Retrieves the status of a Merchant Center account. No itemLevelIssues are returned for multi-client accounts.",
 	//   "httpMethod": "GET",
 	//   "id": "content.accountstatuses.get",
 	//   "parameterOrder": [

@@ -1,4 +1,4 @@
-// Copyright 2019 Google Inc. All rights reserved.
+// Copyright 2019 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -6,13 +6,39 @@
 
 // Package script provides access to the Apps Script API.
 //
-// See https://developers.google.com/apps-script/api/
+// For product documentation, see: https://developers.google.com/apps-script/api/
+//
+// Creating a client
 //
 // Usage example:
 //
 //   import "google.golang.org/api/script/v1"
 //   ...
-//   scriptService, err := script.New(oauthHttpClient)
+//   ctx := context.Background()
+//   scriptService, err := script.NewService(ctx)
+//
+// In this example, Google Application Default Credentials are used for authentication.
+//
+// For information on how to create and obtain Application Default Credentials, see https://developers.google.com/identity/protocols/application-default-credentials.
+//
+// Other authentication options
+//
+// By default, all available scopes (see "Constants") are used to authenticate. To restrict scopes, use option.WithScopes:
+//
+//   scriptService, err := script.NewService(ctx, option.WithScopes(script.UserinfoEmailScope))
+//
+// To use an API key for authentication (note: some APIs do not support API keys), use option.WithAPIKey:
+//
+//   scriptService, err := script.NewService(ctx, option.WithAPIKey("AIza..."))
+//
+// To use an OAuth token (e.g., a user token obtained via a three-legged OAuth flow), use option.WithTokenSource:
+//
+//   config := &oauth2.Config{...}
+//   // ...
+//   token, err := config.Exchange(ctx, ...)
+//   scriptService, err := script.NewService(ctx, option.WithTokenSource(config.TokenSource(ctx, token)))
+//
+// See https://godoc.org/google.golang.org/api/option/ for details on options.
 package script // import "google.golang.org/api/script/v1"
 
 import (
@@ -29,6 +55,8 @@ import (
 
 	gensupport "google.golang.org/api/gensupport"
 	googleapi "google.golang.org/api/googleapi"
+	option "google.golang.org/api/option"
+	htransport "google.golang.org/api/transport/http"
 )
 
 // Always reference these packages, just in case the auto-generated code
@@ -108,6 +136,49 @@ const (
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
+// NewService creates a new Service.
+func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := option.WithScopes(
+		"https://mail.google.com/",
+		"https://www.google.com/calendar/feeds",
+		"https://www.google.com/m8/feeds",
+		"https://www.googleapis.com/auth/admin.directory.group",
+		"https://www.googleapis.com/auth/admin.directory.user",
+		"https://www.googleapis.com/auth/documents",
+		"https://www.googleapis.com/auth/drive",
+		"https://www.googleapis.com/auth/forms",
+		"https://www.googleapis.com/auth/forms.currentonly",
+		"https://www.googleapis.com/auth/groups",
+		"https://www.googleapis.com/auth/script.deployments",
+		"https://www.googleapis.com/auth/script.deployments.readonly",
+		"https://www.googleapis.com/auth/script.metrics",
+		"https://www.googleapis.com/auth/script.processes",
+		"https://www.googleapis.com/auth/script.projects",
+		"https://www.googleapis.com/auth/script.projects.readonly",
+		"https://www.googleapis.com/auth/spreadsheets",
+		"https://www.googleapis.com/auth/userinfo.email",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
+	client, endpoint, err := htransport.NewClient(ctx, opts...)
+	if err != nil {
+		return nil, err
+	}
+	s, err := New(client)
+	if err != nil {
+		return nil, err
+	}
+	if endpoint != "" {
+		s.BasePath = endpoint
+	}
+	return s, nil
+}
+
+// New creates a new Service. It uses the provided http.Client for requests.
+//
+// Deprecated: please use NewService instead.
+// To provide a custom HTTP client, use option.WithHTTPClient.
+// If you are using google.golang.org/api/googleapis/transport.APIKey, use option.WithAPIKey with NewService instead.
 func New(client *http.Client) (*Service, error) {
 	if client == nil {
 		return nil, errors.New("client is nil")

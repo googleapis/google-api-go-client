@@ -12,7 +12,7 @@
           "description": "View your email address"
         },
         "https://www.googleapis.com/auth/userinfo.profile": {
-          "description": "View your basic profile info"
+          "description": "See your personal info, including any personal info you've made publically available"
         }
       }
     }
@@ -23,7 +23,7 @@
   "description": "Obtains end-user authorization grants for use with other Google APIs.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/accounts/docs/OAuth2",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/U5EXQKGUG9hiq9AyhuNHr4nL5-E\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/6QczsO--rzxmz6GMdr2EY6-AXwc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

@@ -304,7 +304,7 @@
         "members": {
           "methods": {
             "modify": {
-              "description": "Modify the members of a contact group owned by the authenticated user.",
+              "description": "Modify the members of a contact group owned by the authenticated user.\n\u003cbr\u003e\nThe only system contact groups that can have members added are\n`contactGroups/myContacts` and `contactGroups/starred`. Other system\ncontact groups are deprecated and can only have contacts removed.",
               "flatPath": "v1/contactGroups/{contactGroupsId}/members:modify",
               "httpMethod": "POST",
               "id": "people.contactGroups.members.modify",
@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20190309",
+  "revision": "20190313",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

@@ -427,7 +427,8 @@ type HttpRequest struct {
 	Status int64 `json:"status,omitempty"`
 
 	// UserAgent: The user agent sent by the client. Example: "Mozilla/4.0
-	// (compatible; MSIE 6.0; Windows 98; Q312461; .NET CLR 1.0.3705)".
+	// (compatible; MSIE 6.0; Windows 98; Q312461; .NET
+	// CLR 1.0.3705)".
 	UserAgent string `json:"userAgent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheFillBytes") to

@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190206",
+  "revision": "20190311",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -490,9 +490,40 @@
           "format": "int32",
           "type": "integer"
         },
+        "privateEnvironmentConfig": {
+          "$ref": "PrivateEnvironmentConfig",
+          "description": "The configuration used for the private Composer environment."
+        },
         "softwareConfig": {
           "$ref": "SoftwareConfig",
           "description": "The configuration settings for software inside the environment."
+        }
+      },
+      "type": "object"
+    },
+    "IPAllocationPolicy": {
+      "description": "Configuration for controlling how IPs are allocated in the\nGKE cluster.",
+      "id": "IPAllocationPolicy",
+      "properties": {
+        "clusterIpv4CidrBlock": {
+          "description": "Optional. The IP address range used to allocate IP addresses to pods in\nthe cluster.\n\nThis field is applicable only when `use_ip_aliases` is true.\n\nSet to blank to have GKE choose a range with the default size.\n\nSet to /netmask (e.g. `/14`) to have GKE choose a range with a specific\nnetmask.\n\nSet to a\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g.\n`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range\nto use.\nSpecify `cluster_secondary_range_name` or `cluster_ipv4_cidr_block`\nbut not both.",
+          "type": "string"
+        },
+        "clusterSecondaryRangeName": {
+          "description": "Optional. The name of the cluster's secondary range used to allocate\nIP addresses to pods. Specify either `cluster_secondary_range_name`\nor `cluster_ipv4_cidr_block` but not both.",
+          "type": "string"
+        },
+        "servicesIpv4CidrBlock": {
+          "description": "Optional. The IP address range of the services IP addresses in this\ncluster.\n\nThis field is applicable only when `use_ip_aliases` is true.\n\nSet to blank to have GKE choose a range with the default size.\n\nSet to /netmask (e.g. `/14`) to have GKE choose a range with a specific\nnetmask.\n\nSet to a\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g.\n`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range\nto use.\nSpecify `services_secondary_range_name` or `services_ipv4_cidr_block`\nbut not both.",
+          "type": "string"
+        },
+        "servicesSecondaryRangeName": {
+          "description": "Optional. The name of the services' secondary range used to allocate\nIP addresses to the cluster. Specify either `services_secondary_range_name`\nor `services_ipv4_cidr_block` but not both.",
+          "type": "string"
+        },
+        "useIpAliases": {
+          "description": "Optional. Whether or not to enable Alias IPs in the GKE cluster.\nIf true or if left blank, a VPC-native cluster is created.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -581,6 +612,10 @@
           "description": "Optional. The disk size in GB used for node VMs. Minimum size is 20GB.\nIf unspecified, defaults to 100GB. Cannot be updated.",
           "format": "int32",
           "type": "integer"
+        },
+        "ipAllocationPolicy": {
+          "$ref": "IPAllocationPolicy",
+          "description": "Optional. The IPAllocationPolicy fields for the GKE cluster."
         },
         "location": {
           "description": "Optional. The Compute Engine [zone](/compute/docs/regions-zones) in which\nto deploy the VMs used to run the Apache Airflow software, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example: \"projects/{projectId}/zones/{zoneId}\".\n\nThis `location` must belong to the enclosing environment's project and\nlocation. If both this field and `nodeConfig.machineType` are specified,\n`nodeConfig.machineType` must belong to this `location`; if both are\nunspecified, the service will pick a zone in the Compute Engine region\ncorresponding to the Cloud Composer location, and propagate that choice to\nboth fields. If only one field (`location` or `nodeConfig.machineType`) is\nspecified, the location information from the specified field will be\npropagated to the unspecified field.",
@@ -713,6 +748,36 @@
       },
       "type": "object"
     },
+    "PrivateClusterConfig": {
+      "description": "Configuration options for private cluster of Composer environment.",
+      "id": "PrivateClusterConfig",
+      "properties": {
+        "enablePrivateEndpoint": {
+          "description": "Optional. If true, access to public endpoint of gke cluster will be denied.\n`IPAllocationPolicy.use_ip_aliases` must be true if this field is\nset to true. Default value is false.",
+          "type": "boolean"
+        },
+        "masterIpv4CidrBlock": {
+          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the cluster\nmaster or set of masters, as well as the ILB VIP (Internal Load Balance\nVirtual IP).This range must not overlap with any other ranges in use\nwithin the cluster's network. If left blank, default value of\n'172.16.0.0/28' will be used.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "PrivateEnvironmentConfig": {
+      "description": "The configuration information for configuring a private Composer environment.",
+      "id": "PrivateEnvironmentConfig",
+      "properties": {
+        "enablePrivateEnvironment": {
+          "description": "Optional. If `true`, a private Composer environment is created.",
+          "type": "boolean"
+        },
+        "privateClusterConfig": {
+          "$ref": "PrivateClusterConfig",
+          "description": "Optional. Configuration for private cluster for a private Composer\nenvironment."
+        }
+      },
+      "type": "object"
+    },
     "SoftwareConfig": {
       "description": "Specifies the selection and configuration of software inside the environment.",
       "id": "SoftwareConfig",
@@ -750,7 +815,7 @@
       "type": "object"
     },
     "Status": {
-      "description": "The `Status` type defines a logical error model that is suitable for different\nprogramming environments, including REST APIs and RPC APIs. It is used by\n[gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error message,\nand error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
+      "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error\nmessage, and error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
       "properties": {
         "code": {

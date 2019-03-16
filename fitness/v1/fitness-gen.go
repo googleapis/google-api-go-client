@@ -3336,7 +3336,7 @@ func (c *UsersSessionsListCall) IncludeDeleted(includeDeleted bool) *UsersSessio
 // since epoch). If specified, the API returns sessions modified since
 // this time. The page token is ignored if either start or end time is
 // specified. If none of start time, end time, and the page token is
-// specified, sessions modified in the last 7 days are returned.
+// specified, sessions modified in the last 30 days are returned.
 func (c *UsersSessionsListCall) PageToken(pageToken string) *UsersSessionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3466,7 +3466,7 @@ func (c *UsersSessionsListCall) Do(opts ...googleapi.CallOption) (*ListSessionsR
 	//       "type": "boolean"
 	//     },
 	//     "pageToken": {
-	//       "description": "The continuation token, which is used for incremental syncing. To get the next batch of changes, set this parameter to the value of nextPageToken from the previous response. This token is treated as a timestamp (in millis since epoch). If specified, the API returns sessions modified since this time. The page token is ignored if either start or end time is specified. If none of start time, end time, and the page token is specified, sessions modified in the last 7 days are returned.",
+	//       "description": "The continuation token, which is used for incremental syncing. To get the next batch of changes, set this parameter to the value of nextPageToken from the previous response. This token is treated as a timestamp (in millis since epoch). If specified, the API returns sessions modified since this time. The page token is ignored if either start or end time is specified. If none of start time, end time, and the page token is specified, sessions modified in the last 30 days are returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

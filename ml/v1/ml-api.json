@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190226",
+  "revision": "20190313",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1106,6 +1106,29 @@
           "description": "Optional. The minimum number of nodes to allocate for this model. These\nnodes are always up, starting from the time the model is deployed.\nTherefore, the cost of operating this model will be at least\n`rate` * `min_nodes` * number of hours since last billing cycle,\nwhere `rate` is the cost per node-hour as documented in the\n[pricing guide](/ml-engine/docs/pricing),\neven if no predictions are performed. There is additional cost for each\nprediction performed.\n\nUnlike manual scaling, if the load gets too heavy for the nodes\nthat are up, the service will automatically add nodes to handle the\nincreased load as well as scale back as traffic drops, always maintaining\nat least `min_nodes`. You will be charged for the time in which additional\nnodes are used.\n\nIf not specified, `min_nodes` defaults to 0, in which case, when traffic\nto a model stops (and after a cool-down period), nodes will be shut down\nand no charges will be incurred until traffic to the model resumes.\n\nYou can set `min_nodes` when creating the model version, and you can also\nupdate `min_nodes` for an existing version:\n\u003cpre\u003e\nupdate_body.json:\n{\n  'autoScaling': {\n    'minNodes': 5\n  }\n}\n\u003c/pre\u003e\nHTTP request:\n\u003cpre\u003e\nPATCH\nhttps://ml.googleapis.com/v1/{name=projects/*/models/*/versions/*}?update_mask=autoScaling.minNodes\n-d @./update_body.json\n\u003c/pre\u003e",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudMlV1__BuiltInAlgorithmOutput": {
+      "description": "Represents output related to a built-in algorithm Job.",
+      "id": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
+      "properties": {
+        "framework": {
+          "description": "Framework on which the built-in algorithm was trained on.",
+          "type": "string"
+        },
+        "modelPath": {
+          "description": "Built-in algorithm's saved model path.\nOnly set for non-hptuning succeeded jobs.",
+          "type": "string"
+        },
+        "pythonVersion": {
+          "description": "Python version on which the built-in algorithm was trained on.",
+          "type": "string"
+        },
+        "runtimeVersion": {
+          "description": "CMLE runtime version on which the built-in algorithm was trained on.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -1199,6 +1222,10 @@
             "$ref": "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric"
           },
           "type": "array"
+        },
+        "builtInAlgorithmOutput": {
+          "$ref": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
+          "description": "Details related to built-in algorithms job.\nOnly set this for built-in algorithms jobs and for trials that succeeded."
         },
         "finalMetric": {
           "$ref": "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric",
@@ -1905,6 +1932,10 @@
       "description": "Represents results of a training job. Output only.",
       "id": "GoogleCloudMlV1__TrainingOutput",
       "properties": {
+        "builtInAlgorithmOutput": {
+          "$ref": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
+          "description": "Details related to built-in algorithms job.\nOnly set for built-in algorithms jobs."
+        },
         "completedTrialCount": {
           "description": "The number of hyperparameter tuning trials that completed successfully.\nOnly set for hyperparameter tuning jobs.",
           "format": "int64",
@@ -1914,6 +1945,10 @@
           "description": "The amount of ML units consumed by the job.",
           "format": "double",
           "type": "number"
+        },
+        "isBuiltInAlgorithmJob": {
+          "description": "Whether this job is a built-in Algorithm job.",
+          "type": "boolean"
         },
         "isHyperparameterTuningJob": {
           "description": "Whether this job is a hyperparameter tuning job.",

@@ -65,7 +65,7 @@
   "description": "Stores and accesses user data in the fitness store from apps on any platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/fit/rest/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/8hSjQRrsOw0lKiNcmAE2BZ2_zio\"",
+  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/EzrkenHVGWaHqnlGSQKFq8sseBU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -676,7 +676,7 @@
                   "type": "boolean"
                 },
                 "pageToken": {
-                  "description": "The continuation token, which is used for incremental syncing. To get the next batch of changes, set this parameter to the value of nextPageToken from the previous response. This token is treated as a timestamp (in millis since epoch). If specified, the API returns sessions modified since this time. The page token is ignored if either start or end time is specified. If none of start time, end time, and the page token is specified, sessions modified in the last 7 days are returned.",
+                  "description": "The continuation token, which is used for incremental syncing. To get the next batch of changes, set this parameter to the value of nextPageToken from the previous response. This token is treated as a timestamp (in millis since epoch). If specified, the API returns sessions modified since this time. The page token is ignored if either start or end time is specified. If none of start time, end time, and the page token is specified, sessions modified in the last 30 days are returned.",
                   "location": "query",
                   "type": "string"
                 },
@@ -761,7 +761,7 @@
       }
     }
   },
-  "revision": "20190224",
+  "revision": "20190312",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateBucket": {

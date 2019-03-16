@@ -317,6 +317,10 @@ type EnvironmentConfig struct {
 	// used to run this environment.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
+	// PrivateEnvironmentConfig: The configuration used for the private
+	// Composer environment.
+	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
+
 	// SoftwareConfig: The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
@@ -340,6 +344,106 @@ type EnvironmentConfig struct {
 
 func (s *EnvironmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IPAllocationPolicy: Configuration for controlling how IPs are
+// allocated in the
+// GKE cluster.
+type IPAllocationPolicy struct {
+	// ClusterIpv4CidrBlock: Optional. The IP address range used to allocate
+	// IP addresses to pods in
+	// the cluster.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	//
+	// Set to blank to have GKE choose a range with the default size.
+	//
+	// Set to /netmask (e.g. `/14`) to have GKE choose a range with a
+	// specific
+	// netmask.
+	//
+	// Set to
+	// a
+	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	// (e.g.
+	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
+	// range
+	// to use.
+	// Specify `cluster_secondary_range_name` or
+	// `cluster_ipv4_cidr_block`
+	// but not both.
+	ClusterIpv4CidrBlock string `json:"clusterIpv4CidrBlock,omitempty"`
+
+	// ClusterSecondaryRangeName: Optional. The name of the cluster's
+	// secondary range used to allocate
+	// IP addresses to pods. Specify either
+	// `cluster_secondary_range_name`
+	// or `cluster_ipv4_cidr_block` but not both.
+	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
+
+	// ServicesIpv4CidrBlock: Optional. The IP address range of the services
+	// IP addresses in this
+	// cluster.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
+	//
+	// Set to blank to have GKE choose a range with the default size.
+	//
+	// Set to /netmask (e.g. `/14`) to have GKE choose a range with a
+	// specific
+	// netmask.
+	//
+	// Set to
+	// a
+	// [CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)
+	//
+	// notation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks
+	// (e.g.
+	// `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific
+	// range
+	// to use.
+	// Specify `services_secondary_range_name` or
+	// `services_ipv4_cidr_block`
+	// but not both.
+	ServicesIpv4CidrBlock string `json:"servicesIpv4CidrBlock,omitempty"`
+
+	// ServicesSecondaryRangeName: Optional. The name of the services'
+	// secondary range used to allocate
+	// IP addresses to the cluster. Specify either
+	// `services_secondary_range_name`
+	// or `services_ipv4_cidr_block` but not both.
+	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
+
+	// UseIpAliases: Optional. Whether or not to enable Alias IPs in the GKE
+	// cluster.
+	// If true or if left blank, a VPC-native cluster is created.
+	UseIpAliases bool `json:"useIpAliases,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterIpv4CidrBlock") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClusterIpv4CidrBlock") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod IPAllocationPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -502,6 +606,10 @@ type NodeConfig struct {
 	// size is 20GB.
 	// If unspecified, defaults to 100GB. Cannot be updated.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
+
+	// IpAllocationPolicy: Optional. The IPAllocationPolicy fields for the
+	// GKE cluster.
+	IpAllocationPolicy *IPAllocationPolicy `json:"ipAllocationPolicy,omitempty"`
 
 	// Location: Optional. The Compute Engine
 	// [zone](/compute/docs/regions-zones) in which
@@ -788,6 +896,90 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PrivateClusterConfig: Configuration options for private cluster of
+// Composer environment.
+type PrivateClusterConfig struct {
+	// EnablePrivateEndpoint: Optional. If true, access to public endpoint
+	// of gke cluster will be denied.
+	// `IPAllocationPolicy.use_ip_aliases` must be true if this field is
+	// set to true. Default value is false.
+	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
+
+	// MasterIpv4CidrBlock: The IP range in CIDR notation to use for the
+	// hosted master network. This
+	// range will be used for assigning internal IP addresses to the
+	// cluster
+	// master or set of masters, as well as the ILB VIP (Internal Load
+	// Balance
+	// Virtual IP).This range must not overlap with any other ranges in
+	// use
+	// within the cluster's network. If left blank, default value
+	// of
+	// '172.16.0.0/28' will be used.
+	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnablePrivateEndpoint") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablePrivateEndpoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateClusterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateEnvironmentConfig: The configuration information for
+// configuring a private Composer environment.
+type PrivateEnvironmentConfig struct {
+	// EnablePrivateEnvironment: Optional. If `true`, a private Composer
+	// environment is created.
+	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
+
+	// PrivateClusterConfig: Optional. Configuration for private cluster for
+	// a private Composer
+	// environment.
+	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnablePrivateEnvironment") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnablePrivateEnvironment")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateEnvironmentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateEnvironmentConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SoftwareConfig: Specifies the selection and configuration of software
 // inside the environment.
 type SoftwareConfig struct {
@@ -928,20 +1120,20 @@ func (s *SoftwareConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

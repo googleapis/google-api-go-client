@@ -463,6 +463,47 @@ func (s *GoogleCloudMlV1__AutoScaling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudMlV1__BuiltInAlgorithmOutput: Represents output related to
+// a built-in algorithm Job.
+type GoogleCloudMlV1__BuiltInAlgorithmOutput struct {
+	// Framework: Framework on which the built-in algorithm was trained on.
+	Framework string `json:"framework,omitempty"`
+
+	// ModelPath: Built-in algorithm's saved model path.
+	// Only set for non-hptuning succeeded jobs.
+	ModelPath string `json:"modelPath,omitempty"`
+
+	// PythonVersion: Python version on which the built-in algorithm was
+	// trained on.
+	PythonVersion string `json:"pythonVersion,omitempty"`
+
+	// RuntimeVersion: CMLE runtime version on which the built-in algorithm
+	// was trained on.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Framework") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Framework") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudMlV1__BuiltInAlgorithmOutput) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudMlV1__BuiltInAlgorithmOutput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudMlV1__CancelJobRequest: Request message for the CancelJob
 // method.
 type GoogleCloudMlV1__CancelJobRequest struct {
@@ -593,6 +634,12 @@ type GoogleCloudMlV1__HyperparameterOutput struct {
 	// not currently
 	// populated.
 	AllMetrics []*GoogleCloudMlV1HyperparameterOutputHyperparameterMetric `json:"allMetrics,omitempty"`
+
+	// BuiltInAlgorithmOutput: Details related to built-in algorithms
+	// job.
+	// Only set this for built-in algorithms jobs and for trials that
+	// succeeded.
+	BuiltInAlgorithmOutput *GoogleCloudMlV1__BuiltInAlgorithmOutput `json:"builtInAlgorithmOutput,omitempty"`
 
 	// FinalMetric: The final objective metric seen for this trial.
 	FinalMetric *GoogleCloudMlV1HyperparameterOutputHyperparameterMetric `json:"finalMetric,omitempty"`
@@ -2011,6 +2058,11 @@ func (s *GoogleCloudMlV1__TrainingInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudMlV1__TrainingOutput: Represents results of a training
 // job. Output only.
 type GoogleCloudMlV1__TrainingOutput struct {
+	// BuiltInAlgorithmOutput: Details related to built-in algorithms
+	// job.
+	// Only set for built-in algorithms jobs.
+	BuiltInAlgorithmOutput *GoogleCloudMlV1__BuiltInAlgorithmOutput `json:"builtInAlgorithmOutput,omitempty"`
+
 	// CompletedTrialCount: The number of hyperparameter tuning trials that
 	// completed successfully.
 	// Only set for hyperparameter tuning jobs.
@@ -2018,6 +2070,9 @@ type GoogleCloudMlV1__TrainingOutput struct {
 
 	// ConsumedMLUnits: The amount of ML units consumed by the job.
 	ConsumedMLUnits float64 `json:"consumedMLUnits,omitempty"`
+
+	// IsBuiltInAlgorithmJob: Whether this job is a built-in Algorithm job.
+	IsBuiltInAlgorithmJob bool `json:"isBuiltInAlgorithmJob,omitempty"`
 
 	// IsHyperparameterTuningJob: Whether this job is a hyperparameter
 	// tuning job.
@@ -2027,18 +2082,19 @@ type GoogleCloudMlV1__TrainingOutput struct {
 	// Only set for hyperparameter tuning jobs.
 	Trials []*GoogleCloudMlV1__HyperparameterOutput `json:"trials,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "CompletedTrialCount")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BuiltInAlgorithmOutput") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CompletedTrialCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "BuiltInAlgorithmOutput")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.

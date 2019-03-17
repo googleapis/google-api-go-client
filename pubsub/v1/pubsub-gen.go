@@ -312,7 +312,13 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CreateSnapshotRequest: Request for the `CreateSnapshot` method.
+// CreateSnapshotRequest: Request for the `CreateSnapshot`
+// method.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be changed in
+// backward-incompatible ways and is not recommended for production
+// use.
+// It is not subject to any SLA or deprecation policy.
 type CreateSnapshotRequest struct {
 	// Labels: See <a href="https://cloud.google.com/pubsub/docs/labels">
 	// Creating and
@@ -468,7 +474,13 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ListSnapshotsResponse: Response for the `ListSnapshots` method.
+// ListSnapshotsResponse: Response for the `ListSnapshots`
+// method.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 type ListSnapshotsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// snapshot that match the
@@ -546,7 +558,12 @@ func (s *ListSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListTopicSnapshotsResponse: Response for the `ListTopicSnapshots`
-// method.
+// method.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 type ListTopicSnapshotsResponse struct {
 	// NextPageToken: If not empty, indicates that there may be more
 	// snapshots that match
@@ -1144,7 +1161,12 @@ func (s *ReceivedMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SeekRequest: Request for the `Seek` method.
+// SeekRequest: Request for the `Seek` method. <br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 type SeekRequest struct {
 	// Snapshot: The snapshot to seek to. The snapshot's topic must be the
 	// same as that of
@@ -1246,7 +1268,12 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 // the
 // acknowledgment state of messages in an existing subscription to the
 // state
-// captured by a snapshot.
+// captured by a snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 type Snapshot struct {
 	// ExpireTime: The snapshot is guaranteed to exist up until this time.
 	// A newly-created snapshot expires no later than 7 days from the time
@@ -1373,7 +1400,12 @@ type Subscription struct {
 	// `Seek`
 	// can be done. Defaults to 7 days. Cannot be more than 7 days or less
 	// than 10
-	// minutes.
+	// minutes.<br><br>
+	// <b>BETA:</b> This feature is part of a beta release. This API might
+	// be
+	// changed in backward-incompatible ways and is not recommended for
+	// production
+	// use. It is not subject to any SLA or deprecation policy.
 	MessageRetentionDuration string `json:"messageRetentionDuration,omitempty"`
 
 	// Name: The name of the subscription. It must have the
@@ -1407,6 +1439,12 @@ type Subscription struct {
 	// href="https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_t
 	// ime">
 	// Seek to a timestamp</a>.
+	// <br><br>
+	// <b>BETA:</b> This feature is part of a beta release. This API might
+	// be
+	// changed in backward-incompatible ways and is not recommended for
+	// production
+	// use. It is not subject to any SLA or deprecation policy.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 
 	// Topic: The name of the topic from which this subscription is
@@ -1562,7 +1600,13 @@ func (s *Topic) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpdateSnapshotRequest: Request for the UpdateSnapshot method.
+// UpdateSnapshotRequest: Request for the UpdateSnapshot
+// method.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 type UpdateSnapshotRequest struct {
 	// Snapshot: The updated snapshot object.
 	Snapshot *Snapshot `json:"snapshot,omitempty"`
@@ -1690,7 +1734,13 @@ type ProjectsSnapshotsCreateCall struct {
 // acknowledgment state of messages in an existing subscription to the
 // state
 // captured by a snapshot.
-// <br><br>If the snapshot already exists, returns `ALREADY_EXISTS`.
+// <br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.<br><br>
+// If the snapshot already exists, returns `ALREADY_EXISTS`.
 // If the requested subscription doesn't exist, returns `NOT_FOUND`.
 // If the backlog in the subscription is too old -- and the resulting
 // snapshot
@@ -1805,7 +1855,7 @@ func (c *ProjectsSnapshotsCreateCall) Do(opts ...googleapi.CallOption) (*Snapsho
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\n\u003cbr\u003e\u003cbr\u003eIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/admin#resource_names).\nThe generated name is populated in the returned Snapshot object. Note that\nfor REST API requests, you must specify a name in the request.",
+	//   "description": "Creates a snapshot from the requested subscription. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\n\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\u003cbr\u003e\u003cbr\u003e\nIf the snapshot already exists, returns `ALREADY_EXISTS`.\nIf the requested subscription doesn't exist, returns `NOT_FOUND`.\nIf the backlog in the subscription is too old -- and the resulting snapshot\nwould expire in less than 1 hour -- then `FAILED_PRECONDITION` is returned.\nSee also the `Snapshot.expire_time` field. If the name is not provided in\nthe request, the server will assign a random\nname for this snapshot on the same project as the subscription, conforming\nto the\n[resource name format](https://cloud.google.com/pubsub/docs/admin#resource_names).\nThe generated name is populated in the returned Snapshot object. Note that\nfor REST API requests, you must specify a name in the request.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "pubsub.projects.snapshots.create",
@@ -1856,6 +1906,11 @@ type ProjectsSnapshotsDeleteCall struct {
 // acknowledgment state of messages in an existing subscription to the
 // state
 // captured by a snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 // When the snapshot is deleted, all messages retained in the
 // snapshot
 // are immediately dropped. After a snapshot is deleted, a new one may
@@ -1955,7 +2010,7 @@ func (c *ProjectsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
+	//   "description": "Removes an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nWhen the snapshot is deleted, all messages retained in the snapshot\nare immediately dropped. After a snapshot is deleted, a new one may be\ncreated with the same name, but the new one has no association with the old\nsnapshot or its subscription, unless the same subscription is specified.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "pubsub.projects.snapshots.delete",
@@ -2003,7 +2058,13 @@ type ProjectsSnapshotsGetCall struct {
 // That
 // is, you can set the acknowledgment state of messages in an
 // existing
-// subscription to the state captured by a snapshot.
+// subscription to the state captured by a
+// snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 func (r *ProjectsSnapshotsService) Get(snapshot string) *ProjectsSnapshotsGetCall {
 	c := &ProjectsSnapshotsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.snapshot = snapshot
@@ -2108,7 +2169,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow you to manage message acknowledgments in bulk. That\nis, you can set the acknowledgment state of messages in an existing\nsubscription to the state captured by a snapshot.",
+	//   "description": "Gets the configuration details of a snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow you to manage message acknowledgments in bulk. That\nis, you can set the acknowledgment state of messages in an existing\nsubscription to the state captured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.get",
@@ -2303,7 +2364,12 @@ type ProjectsSnapshotsListCall struct {
 // the
 // acknowledgment state of messages in an existing subscription to the
 // state
-// captured by a snapshot.
+// captured by a snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 func (r *ProjectsSnapshotsService) List(project string) *ProjectsSnapshotsListCall {
 	c := &ProjectsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -2425,7 +2491,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the existing snapshots. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Lists the existing snapshots. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.snapshots.list",
@@ -2505,7 +2571,13 @@ type ProjectsSnapshotsPatchCall struct {
 // the
 // acknowledgment state of messages in an existing subscription to the
 // state
-// captured by a snapshot.
+// captured by a snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
+// Note that certain properties of a snapshot are not modifiable.
 func (r *ProjectsSnapshotsService) Patch(name string, updatesnapshotrequest *UpdateSnapshotRequest) *ProjectsSnapshotsPatchCall {
 	c := &ProjectsSnapshotsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2603,7 +2675,7 @@ func (c *ProjectsSnapshotsPatchCall) Do(opts ...googleapi.CallOption) (*Snapshot
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Updates an existing snapshot. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.\nNote that certain properties of a snapshot are not modifiable.",
 	//   "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "pubsub.projects.snapshots.patch",
@@ -4465,7 +4537,12 @@ type ProjectsSubscriptionsSeekCall struct {
 // state
 // captured by a snapshot. Note that both the subscription and the
 // snapshot
-// must be on the same topic.
+// must be on the same topic.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 func (r *ProjectsSubscriptionsService) Seek(subscription string, seekrequest *SeekRequest) *ProjectsSubscriptionsSeekCall {
 	c := &ProjectsSubscriptionsSeekCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.subscription = subscription
@@ -4563,7 +4640,7 @@ func (c *ProjectsSubscriptionsSeekCall) Do(opts ...googleapi.CallOption) (*SeekR
 	}
 	return ret, nil
 	// {
-	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot. Note that both the subscription and the snapshot\nmust be on the same topic.",
+	//   "description": "Seeks an existing subscription to a point in time or to a given snapshot,\nwhichever is provided in the request. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot. Note that both the subscription and the snapshot\nmust be on the same topic.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}:seek",
 	//   "httpMethod": "POST",
 	//   "id": "pubsub.projects.subscriptions.seek",
@@ -6249,7 +6326,12 @@ type ProjectsTopicsSnapshotsListCall struct {
 // the
 // acknowledgment state of messages in an existing subscription to the
 // state
-// captured by a snapshot.
+// captured by a snapshot.<br><br>
+// <b>BETA:</b> This feature is part of a beta release. This API might
+// be
+// changed in backward-incompatible ways and is not recommended for
+// production
+// use. It is not subject to any SLA or deprecation policy.
 func (r *ProjectsTopicsSnapshotsService) List(topic string) *ProjectsTopicsSnapshotsListCall {
 	c := &ProjectsTopicsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.topic = topic
@@ -6371,7 +6453,7 @@ func (c *ProjectsTopicsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*Lis
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.",
+	//   "description": "Lists the names of the snapshots on this topic. Snapshots are used in\n\u003ca href=\"https://cloud.google.com/pubsub/docs/replay-overview\"\u003eSeek\u003c/a\u003e\noperations, which allow\nyou to manage message acknowledgments in bulk. That is, you can set the\nacknowledgment state of messages in an existing subscription to the state\ncaptured by a snapshot.\u003cbr\u003e\u003cbr\u003e\n\u003cb\u003eBETA:\u003c/b\u003e This feature is part of a beta release. This API might be\nchanged in backward-incompatible ways and is not recommended for production\nuse. It is not subject to any SLA or deprecation policy.",
 	//   "flatPath": "v1/projects/{projectsId}/topics/{topicsId}/snapshots",
 	//   "httpMethod": "GET",
 	//   "id": "pubsub.projects.topics.snapshots.list",

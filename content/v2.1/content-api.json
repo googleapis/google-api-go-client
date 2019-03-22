@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/JLTtElhO_yZgirWM-iDsLteIwa0\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/TKtjOzQ2WKkyJyMETIOLZ50ooNI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -561,6 +561,7 @@
     "datafeeds": {
       "methods": {
         "custombatch": {
+          "description": "Deletes, fetches, gets, inserts and updates multiple datafeeds in a single request.",
           "httpMethod": "POST",
           "id": "content.datafeeds.custombatch",
           "path": "datafeeds/batch",
@@ -769,6 +770,7 @@
     "datafeedstatuses": {
       "methods": {
         "custombatch": {
+          "description": "Gets multiple Merchant Center datafeed statuses in a single request.",
           "httpMethod": "POST",
           "id": "content.datafeedstatuses.custombatch",
           "path": "datafeedstatuses/batch",
@@ -1825,7 +1827,7 @@
           ]
         },
         "instorerefundlineitem": {
-          "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).",
+          "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).\nNote: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding via Google then via an in-store return.",
           "httpMethod": "POST",
           "id": "content.orders.instorerefundlineitem",
           "parameterOrder": [
@@ -2884,7 +2886,7 @@
       }
     }
   },
-  "revision": "20190308",
+  "revision": "20190320",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5871,7 +5873,7 @@
           "type": "string"
         },
         "shipmentGroupId": {
-          "description": "[required] ID of the shipment group.",
+          "description": "[required] ID of the shipment group. It is assigned by the merchant in the shipLineItems method and is used to group multiple line items that have the same kind of shipping charges.",
           "type": "string"
         }
       },
@@ -6555,7 +6557,7 @@
       "id": "OrdersUpdateLineItemShippingDetailsRequest",
       "properties": {
         "deliverByDate": {
-          "description": "Updated delivery by date, in ISO 8601 format. If not specified only ship by date is updated.",
+          "description": "Updated delivery by date, in ISO 8601 format. If not specified only ship by date is updated.\n\nProvided date should be within 1 year timeframe and can not be a date in the past.",
           "type": "string"
         },
         "lineItemId": {
@@ -6571,7 +6573,7 @@
           "type": "string"
         },
         "shipByDate": {
-          "description": "Updated ship by date, in ISO 8601 format. If not specified only deliver by date is updated.",
+          "description": "Updated ship by date, in ISO 8601 format. If not specified only deliver by date is updated.\n\nProvided date should be within 1 year timeframe and can not be a date in the past.",
           "type": "string"
         }
       },
@@ -8472,7 +8474,7 @@
           "type": "array"
         },
         "shipmentGroupId": {
-          "description": "[required] ID of the shipment group.",
+          "description": "[required] ID of the shipment group. It is assigned by the merchant in the shipLineItems method and is used to group multiple line items that have the same kind of shipping charges.",
           "type": "string"
         }
       },
@@ -8490,7 +8492,7 @@
           "type": "string"
         },
         "shipmentUnitIds": {
-          "description": "[required] Unit IDs to define specific units within the line item.",
+          "description": "[required] The shipment unit ID is assigned by the merchant and defines individual quantities within a line item. The same ID can be assigned to units that are the same while units that differ must be assigned a different ID (for example: free or promotional units).",
           "items": {
             "type": "string"
           },

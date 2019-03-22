@@ -583,12 +583,11 @@ func (s *CustomerIndexStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DataSource: Frontend protos implement autoconverters for this message
-// type. If you add
-// fields to this proto, please add corresponding fields to the frontend
-// proto
-// with the same names.
-// LINT.IfChange
+// DataSource: Datasource is a logical namespace for items to be
+// indexed.
+// All items must belong to a datasource.  This is the prerequisite
+// before
+// items can be indexed into Cloud Search.
 type DataSource struct {
 	// DisableModifications: If true, Indexing API rejects any modification
 	// calls to this datasource
@@ -627,7 +626,8 @@ type DataSource struct {
 	Name string `json:"name,omitempty"`
 
 	// OperationIds: IDs of the Long Running Operations (LROs) currently
-	// running for this schema.
+	// running for this
+	// schema.
 	OperationIds []string `json:"operationIds,omitempty"`
 
 	// ShortName: A short name or alias for the source.  This value will be
@@ -1593,13 +1593,18 @@ func (s *ErrorMessage) MarshalJSON() ([]byte, error) {
 // type of the field bucketed.
 // FacetBucket is currently used only for returning the response object.
 type FacetBucket struct {
-	// Count: Number of results that match the bucket value.
+	// Count: Number of results that match the bucket value. Counts are only
+	// returned
+	// for searches when count accuracy is ensured. Can be empty.
 	Count int64 `json:"count,omitempty"`
 
 	// Percentage: Percent of results that match the bucket value. This
 	// value is between
-	// (0-100].
-	// This may not be accurate and is a best effort estimate.
+	// (0-100]. Percentages are returned for all searches, but are an
+	// estimate.
+	// Because percentages are always returned, you should render
+	// percentages
+	// instead of counts.
 	Percentage int64 `json:"percentage,omitempty"`
 
 	Value *Value `json:"value,omitempty"`
@@ -1632,6 +1637,12 @@ func (s *FacetBucket) MarshalJSON() ([]byte, error) {
 // FacetResult for every source_name/object_type/operator_name
 // combination.
 type FacetOptions struct {
+	// NumFacetBuckets: Maximum number of facet buckets that should be
+	// returned for this facet.
+	// Defaults to 10.
+	// Maximum value is 100.
+	NumFacetBuckets int64 `json:"numFacetBuckets,omitempty"`
+
 	// ObjectType: If object_type is set, only those objects of that type
 	// will be used to
 	// compute facets. If empty, then all objects will be used to compute
@@ -1648,7 +1659,7 @@ type FacetOptions struct {
 	// If empty, all data sources will be used.
 	SourceName string `json:"sourceName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ObjectType") to
+	// ForceSendFields is a list of field names (e.g. "NumFacetBuckets") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1656,12 +1667,13 @@ type FacetOptions struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ObjectType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NumFacetBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1673,7 +1685,7 @@ func (s *FacetOptions) MarshalJSON() ([]byte, error) {
 
 // FacetResult: Source specific facet response
 type FacetResult struct {
-	// Buckets: FacetBuckets for values in response containing atleast a
+	// Buckets: FacetBuckets for values in response containing at least a
 	// single result.
 	Buckets []*FacetBucket `json:"buckets,omitempty"`
 
@@ -5066,7 +5078,9 @@ func (s *Schema) MarshalJSON() ([]byte, error) {
 type ScoringConfig struct {
 	// DisableFreshness: Whether to use freshness as a ranking signal. By
 	// default, freshness is used
-	// as a ranking signal.
+	// as a ranking signal. Note that this setting is not available in the
+	// Admin
+	// UI.
 	DisableFreshness bool `json:"disableFreshness,omitempty"`
 
 	// DisablePersonalization: Whether to personalize the results. By
@@ -5434,7 +5448,9 @@ type SearchResult struct {
 	// Title: Title of the search result.
 	Title string `json:"title,omitempty"`
 
-	// Url: The URL of the result.
+	// Url: The URL of the search result. The URL contains a Google redirect
+	// to the
+	// actual item.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusteredResults") to
@@ -5814,20 +5830,20 @@ func (s *StartUploadItemRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -9549,7 +9565,7 @@ func (c *IndexingDatasourcesItemsUploadCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the Data Source to start a resumable upload.\nFormat: datasources/{source_id}",
+	//       "description": "Name of the Item to start a resumable upload.\nFormat: datasources/{source_id}/items/{item_id}.",
 	//       "location": "path",
 	//       "pattern": "^datasources/[^/]+/items/[^/]+$",
 	//       "required": true,
@@ -12127,7 +12143,10 @@ type StatsGetIndexCall struct {
 }
 
 // GetIndex: Gets indexed item statistics aggreggated across all data
-// sources.
+// sources. This
+// API only returns statistics for previous dates; it doesn't
+// return
+// statistics for the current day.
 func (r *StatsService) GetIndex() *StatsGetIndexCall {
 	c := &StatsGetIndexCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -12270,7 +12289,7 @@ func (c *StatsGetIndexCall) Do(opts ...googleapi.CallOption) (*GetCustomerIndexS
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets indexed item statistics aggreggated across all data sources.",
+	//   "description": "Gets indexed item statistics aggreggated across all data sources. This\nAPI only returns statistics for previous dates; it doesn't return\nstatistics for the current day.",
 	//   "flatPath": "v1/stats/index",
 	//   "httpMethod": "GET",
 	//   "id": "cloudsearch.stats.getIndex",

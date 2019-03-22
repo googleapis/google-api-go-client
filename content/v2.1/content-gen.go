@@ -4914,7 +4914,9 @@ type OrderinvoicesCreateChargeInvoiceRequest struct {
 	// operations for a given order.
 	OperationId string `json:"operationId,omitempty"`
 
-	// ShipmentGroupId: [required] ID of the shipment group.
+	// ShipmentGroupId: [required] ID of the shipment group. It is assigned
+	// by the merchant in the shipLineItems method and is used to group
+	// multiple line items that have the same kind of shipping charges.
 	ShipmentGroupId string `json:"shipmentGroupId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InvoiceId") to
@@ -6264,6 +6266,9 @@ func (s *OrdersShipLineItemsResponse) MarshalJSON() ([]byte, error) {
 type OrdersUpdateLineItemShippingDetailsRequest struct {
 	// DeliverByDate: Updated delivery by date, in ISO 8601 format. If not
 	// specified only ship by date is updated.
+	//
+	// Provided date should be within 1 year timeframe and can not be a date
+	// in the past.
 	DeliverByDate string `json:"deliverByDate,omitempty"`
 
 	// LineItemId: The ID of the line item to set metadata. Either
@@ -6281,6 +6286,9 @@ type OrdersUpdateLineItemShippingDetailsRequest struct {
 
 	// ShipByDate: Updated ship by date, in ISO 8601 format. If not
 	// specified only deliver by date is updated.
+	//
+	// Provided date should be within 1 year timeframe and can not be a date
+	// in the past.
 	ShipByDate string `json:"shipByDate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeliverByDate") to
@@ -8773,7 +8781,9 @@ type ShipmentInvoice struct {
 	// LineItemInvoices: [required] Invoice details per line item.
 	LineItemInvoices []*ShipmentInvoiceLineItemInvoice `json:"lineItemInvoices,omitempty"`
 
-	// ShipmentGroupId: [required] ID of the shipment group.
+	// ShipmentGroupId: [required] ID of the shipment group. It is assigned
+	// by the merchant in the shipLineItems method and is used to group
+	// multiple line items that have the same kind of shipping charges.
 	ShipmentGroupId string `json:"shipmentGroupId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InvoiceSummary") to
@@ -8809,8 +8819,11 @@ type ShipmentInvoiceLineItemInvoice struct {
 	// products service. Either lineItemId or productId must be set.
 	ProductId string `json:"productId,omitempty"`
 
-	// ShipmentUnitIds: [required] Unit IDs to define specific units within
-	// the line item.
+	// ShipmentUnitIds: [required] The shipment unit ID is assigned by the
+	// merchant and defines individual quantities within a line item. The
+	// same ID can be assigned to units that are the same while units that
+	// differ must be assigned a different ID (for example: free or
+	// promotional units).
 	ShipmentUnitIds []string `json:"shipmentUnitIds,omitempty"`
 
 	// UnitInvoice: [required] Invoice details for a single unit.
@@ -12066,7 +12079,8 @@ type DatafeedsCustombatchCall struct {
 	header_                     http.Header
 }
 
-// Custombatch:
+// Custombatch: Deletes, fetches, gets, inserts and updates multiple
+// datafeeds in a single request.
 func (r *DatafeedsService) Custombatch(datafeedscustombatchrequest *DatafeedsCustomBatchRequest) *DatafeedsCustombatchCall {
 	c := &DatafeedsCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datafeedscustombatchrequest = datafeedscustombatchrequest
@@ -12160,6 +12174,7 @@ func (c *DatafeedsCustombatchCall) Do(opts ...googleapi.CallOption) (*DatafeedsC
 	}
 	return ret, nil
 	// {
+	//   "description": "Deletes, fetches, gets, inserts and updates multiple datafeeds in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.datafeeds.custombatch",
 	//   "path": "datafeeds/batch",
@@ -13070,7 +13085,8 @@ type DatafeedstatusesCustombatchCall struct {
 	header_                            http.Header
 }
 
-// Custombatch:
+// Custombatch: Gets multiple Merchant Center datafeed statuses in a
+// single request.
 func (r *DatafeedstatusesService) Custombatch(datafeedstatusescustombatchrequest *DatafeedstatusesCustomBatchRequest) *DatafeedstatusesCustombatchCall {
 	c := &DatafeedstatusesCustombatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.datafeedstatusescustombatchrequest = datafeedstatusescustombatchrequest
@@ -13165,6 +13181,7 @@ func (c *DatafeedstatusesCustombatchCall) Do(opts ...googleapi.CallOption) (*Dat
 	}
 	return ret, nil
 	// {
+	//   "description": "Gets multiple Merchant Center datafeed statuses in a single request.",
 	//   "httpMethod": "POST",
 	//   "id": "content.datafeedstatuses.custombatch",
 	//   "path": "datafeedstatuses/batch",
@@ -17746,6 +17763,13 @@ type OrdersInstorerefundlineitemCall struct {
 // Instorerefundlineitem: Notifies that item return and refund was
 // handled directly by merchant outside of Google payments processing
 // (e.g. cash refund done in store).
+// Note: We recommend calling the returnrefundlineitem method to refund
+// in-store returns. We will issue the refund directly to the customer.
+// This helps to prevent possible differences arising between merchant
+// and Google transaction records. We also recommend having the point of
+// sale system communicate with Google to ensure that customers do not
+// receive a double refund by first refunding via Google then via an
+// in-store return.
 func (r *OrdersService) Instorerefundlineitem(merchantId uint64, orderId string, ordersinstorerefundlineitemrequest *OrdersInStoreRefundLineItemRequest) *OrdersInstorerefundlineitemCall {
 	c := &OrdersInstorerefundlineitemCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.merchantId = merchantId
@@ -17846,7 +17870,7 @@ func (c *OrdersInstorerefundlineitemCall) Do(opts ...googleapi.CallOption) (*Ord
 	}
 	return ret, nil
 	// {
-	//   "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).",
+	//   "description": "Notifies that item return and refund was handled directly by merchant outside of Google payments processing (e.g. cash refund done in store).\nNote: We recommend calling the returnrefundlineitem method to refund in-store returns. We will issue the refund directly to the customer. This helps to prevent possible differences arising between merchant and Google transaction records. We also recommend having the point of sale system communicate with Google to ensure that customers do not receive a double refund by first refunding via Google then via an in-store return.",
 	//   "httpMethod": "POST",
 	//   "id": "content.orders.instorerefundlineitem",
 	//   "parameterOrder": [

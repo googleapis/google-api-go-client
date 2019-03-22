@@ -357,6 +357,18 @@ type AttestorPublicKey struct {
 	// for details.
 	Id string `json:"id,omitempty"`
 
+	// PkixPublicKey: A raw PKIX SubjectPublicKeyInfo format public
+	// key.
+	//
+	// NOTE: `id` may be explicitly provided by the caller when using
+	// this
+	// type of public key, but it MUST be a valid RFC3986 URI. If `id` is
+	// left
+	// blank, a default one will be computed based on the digest of the
+	// DER
+	// encoding of the public key.
+	PkixPublicKey *PkixPublicKey `json:"pkixPublicKey,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AsciiArmoredPgpPublicKey") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -384,8 +396,7 @@ func (s *AttestorPublicKey) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
@@ -672,6 +683,77 @@ func (s *ListAttestorsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PkixPublicKey: A public key in the PkixPublicKey format
+// (see
+// https://tools.ietf.org/html/rfc5280#section-4.1.2.7 for
+// details).
+// Public keys of this type are typically textually encoded using the
+// PEM
+// format.
+type PkixPublicKey struct {
+	// PublicKeyPem: A PEM-encoded public key, as described
+	// in
+	// https://tools.ietf.org/html/rfc7468#section-13
+	PublicKeyPem string `json:"publicKeyPem,omitempty"`
+
+	// SignatureAlgorithm: The signature algorithm used to verify a message
+	// against a signature using
+	// this key.
+	// These signature algorithm must match the structure and any
+	// object
+	// identifiers encoded in `public_key_pem` (i.e. this algorithm must
+	// match
+	// that of the public key).
+	//
+	// Possible values:
+	//   "SIGNATURE_ALGORITHM_UNSPECIFIED" - Not specified.
+	//   "RSA_PSS_2048_SHA256" - RSASSA-PSS 2048 bit key with a SHA256
+	// digest.
+	//   "RSA_PSS_3072_SHA256" - RSASSA-PSS 3072 bit key with a SHA256
+	// digest.
+	//   "RSA_PSS_4096_SHA256" - RSASSA-PSS 4096 bit key with a SHA256
+	// digest.
+	//   "RSA_PSS_4096_SHA512" - RSASSA-PSS 4096 bit key with a SHA512
+	// digest.
+	//   "RSA_SIGN_PKCS1_2048_SHA256" - RSASSA-PKCS1-v1_5 with a 2048 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_3072_SHA256" - RSASSA-PKCS1-v1_5 with a 3072 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA256" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA256 digest.
+	//   "RSA_SIGN_PKCS1_4096_SHA512" - RSASSA-PKCS1-v1_5 with a 4096 bit
+	// key and a SHA512 digest.
+	//   "ECDSA_P256_SHA256" - ECDSA on the NIST P-256 curve with a SHA256
+	// digest.
+	//   "ECDSA_P384_SHA384" - ECDSA on the NIST P-384 curve with a SHA384
+	// digest.
+	//   "ECDSA_P521_SHA512" - ECDSA on the NIST P-521 curve with a SHA512
+	// digest.
+	SignatureAlgorithm string `json:"signatureAlgorithm,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyPem") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PkixPublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod PkixPublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: A policy for container image binary authorization.
 type Policy struct {
 	// AdmissionWhitelistPatterns: Optional. Admission policy whitelisting.
@@ -703,6 +785,21 @@ type Policy struct {
 
 	// Description: Optional. A descriptive comment.
 	Description string `json:"description,omitempty"`
+
+	// GlobalPolicyEvaluationMode: Optional. Controls the evaluation of a
+	// Google-maintained global admission
+	// policy for common system-level images. Images not covered by the
+	// global
+	// policy will be subject to the project admission policy. This
+	// setting
+	// has no effect when specified inside a global admission policy.
+	//
+	// Possible values:
+	//   "GLOBAL_POLICY_EVALUATION_MODE_UNSPECIFIED" - Not specified:
+	// DISABLE is assumed.
+	//   "ENABLE" - Enables global policy evaluation.
+	//   "DISABLE" - Disables global policy evaluation.
+	GlobalPolicyEvaluationMode string `json:"globalPolicyEvaluationMode,omitempty"`
 
 	// Name: Output only. The resource name, in the format
 	// `projects/*/policy`. There is

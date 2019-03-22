@@ -646,49 +646,9 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BigQueryDestination: The BigQuery table for export.
-type BigQueryDestination struct {
-	// Force: If the destination table already exists and this flag is
-	// `TRUE`, the table
-	// will be overwritten by the contents of the input store. If the flag
-	// is not
-	// set and the destination table already exists, the export call returns
-	// an
-	// error.
-	Force bool `json:"force,omitempty"`
-
-	// TableUri: BigQuery URI to a table, up to 2000 characters long, must
-	// be of the form
-	// bq://projectId.bqDatasetId.tableId.
-	TableUri string `json:"tableUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Force") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Force") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
-	type NoMethod BigQueryDestination
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
@@ -787,6 +747,37 @@ func (s *BoundingPoly) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CharacterMaskConfig: Mask a string by replacing its characters with a
+// fixed character.
+type CharacterMaskConfig struct {
+	// MaskingCharacter: Character to mask the sensitive values. If not
+	// supplied, defaults to "*".
+	MaskingCharacter string `json:"maskingCharacter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaskingCharacter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaskingCharacter") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CharacterMaskConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CharacterMaskConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CloudHealthcareSource: Cloud Healthcare API resource.
 type CloudHealthcareSource struct {
 	// Name: Full path of a Cloud Healthcare API resource.
@@ -843,6 +834,42 @@ func (s *CreateMessageRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CryptoHashConfig: Pseudonymization method that generates surrogates
+// via cryptographic hashing.
+// Uses SHA-256.
+// Outputs a base64-encoded representation of the hashed output
+// (for example, `L7k0BHmF1ha5U3NfGykjro4xWi1MPVQPjhMAZbSV9mM=`).
+type CryptoHashConfig struct {
+	// CryptoKey: An AES 128/192/256 bit key. Causes the hash to be computed
+	// based on this
+	// key. A default key is generated for each DeidentifyDataset operation
+	// and is
+	// used wherever crypto_key is not specified.
+	CryptoKey string `json:"cryptoKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CryptoKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CryptoHashConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CryptoHashConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Dataset: A message representing a health dataset.
 //
 // A health dataset represents a collection of healthcare data
@@ -893,6 +920,42 @@ func (s *Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DateShiftConfig: Shift a date forward or backward in time by a random
+// amount which is
+// consistent for a given patient and crypto key combination.
+type DateShiftConfig struct {
+	// CryptoKey: An AES 128/192/256 bit key. Causes the shift to be
+	// computed based on this
+	// key and the patient ID. A default key is generated for
+	// each
+	// DeidentifyDataset operation and is used wherever crypto_key is
+	// not
+	// specified.
+	CryptoKey string `json:"cryptoKey,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CryptoKey") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CryptoKey") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DateShiftConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DateShiftConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeidentifyConfig: Configures de-id options specific to different
 // types of content.
 // Each submessage customizes the handling of
@@ -911,6 +974,11 @@ type DeidentifyConfig struct {
 	// found in the
 	// source_dataset.
 	Image *ImageConfig `json:"image,omitempty"`
+
+	// Text: Configures de-identification of text wherever it is found in
+	// the
+	// source_dataset.
+	Text *TextConfig `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dicom") to
 	// unconditionally include in API requests. By default, fields with
@@ -973,6 +1041,80 @@ func (s *DeidentifyDatasetRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeidentifyErrorDetails: Contains the status of the Deidentify
+// operation.
+type DeidentifyErrorDetails struct {
+	// FailureResourceCount: Number of resources failed to process.
+	FailureResourceCount int64 `json:"failureResourceCount,omitempty,string"`
+
+	// FailureStoreCount: Number of stores failed to process.
+	FailureStoreCount int64 `json:"failureStoreCount,omitempty,string"`
+
+	// SuccessResourceCount: Number of resources successfully processed.
+	SuccessResourceCount int64 `json:"successResourceCount,omitempty,string"`
+
+	// SuccessStoreCount: Number of stores successfully processed.
+	SuccessStoreCount int64 `json:"successStoreCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FailureResourceCount") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FailureResourceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeidentifyErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DeidentifyErrorDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeidentifySummary: Contains a detailed summary of the Deidentify
+// operation.
+type DeidentifySummary struct {
+	// SuccessResourceCount: Number of resources successfully processed.
+	SuccessResourceCount int64 `json:"successResourceCount,omitempty,string"`
+
+	// SuccessStoreCount: Number of stores successfully processed.
+	SuccessStoreCount int64 `json:"successStoreCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SuccessResourceCount") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SuccessResourceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeidentifySummary) MarshalJSON() ([]byte, error) {
+	type NoMethod DeidentifySummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Detail: Contains multiple sensitive information findings for each
 // resource slice.
 type Detail struct {
@@ -1004,10 +1146,32 @@ func (s *Detail) MarshalJSON() ([]byte, error) {
 // DicomConfig: Specifies the parameters needed for de-identification of
 // DICOM stores.
 type DicomConfig struct {
+	// FilterProfile: Tag filtering profile that determines which tags to
+	// keep/remove.
+	//
+	// Possible values:
+	//   "TAG_FILTER_PROFILE_UNSPECIFIED" - No tag filtration profile
+	// provided. Same as KEEP_ALL_PROFILE.
+	//   "MINIMAL_KEEP_LIST_PROFILE" - Keep only tags required to produce
+	// valid DICOM.
+	//   "ATTRIBUTE_CONFIDENTIALITY_BASIC_PROFILE" - Remove tags based on
+	// DICOM Standard's Attribute Confidentiality Basic
+	// Profile (DICOM Standard Edition 2018e).
+	//   "KEEP_ALL_PROFILE" - Keep all tags.
+	//   "DEIDENTIFY_TAG_CONTENTS" - Inspects within tag contents and
+	// replaces sensitive text with its type.
+	// Applies to all tags with the following Value Representation
+	// names:
+	// AE, LO, LT, PN, SH, ST, UC, UT
+	FilterProfile string `json:"filterProfile,omitempty"`
+
 	// KeepList: List of tags to keep. Remove all other tags.
 	KeepList *TagFilterList `json:"keepList,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KeepList") to
+	// RemoveList: List of tags to remove. Keep all other tags.
+	RemoveList *TagFilterList `json:"removeList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FilterProfile") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1015,10 +1179,10 @@ type DicomConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KeepList") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "FilterProfile") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1137,50 +1301,6 @@ type ErrorDetail struct {
 
 func (s *ErrorDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ExportAnnotationsRequest: Request to export
-// Annotations. The
-// export operation is not atomic; in the event of a failure any
-// annotations
-// already exported will not be removed.
-type ExportAnnotationsRequest struct {
-	// BigqueryDestination: The BigQuery output destination.
-	// The table schema is the flattened version of
-	// Annotation
-	// For now, only exporting to a dataset in the current project is
-	// supported.
-	// The BigQuery location requires two IAM roles:
-	//   `roles/bigquery.dataEditor` and `roles/bigquery.jobUser`.
-	BigqueryDestination *BigQueryDestination `json:"bigqueryDestination,omitempty"`
-
-	// GcsDestination: The Cloud Storage destination, which requires
-	// the
-	// `roles/storage.objectAdmin` Cloud IAM role.
-	GcsDestination *GcsDestination `json:"gcsDestination,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BigqueryDestination")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BigqueryDestination") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ExportAnnotationsRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod ExportAnnotationsRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1342,6 +1462,35 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // FhirConfig: Specifies how de-identification of a FHIR store should be
 // handled.
 type FhirConfig struct {
+	// FieldMetadataList: Specifies FHIR paths to match and how to transform
+	// them. Any field that
+	// is not matched by a FieldMetadata will be passed through to the
+	// output
+	// dataset unmodified. All extensions are removed in the output.
+	FieldMetadataList []*FieldMetadata `json:"fieldMetadataList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldMetadataList")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldMetadataList") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FhirConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FhirConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // FhirStore: Represents a FHIR store.
@@ -1470,6 +1619,61 @@ func (s *FhirStore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FieldMetadata: Specifies FHIR paths to match, and how to handle
+// de-identification of
+// matching fields.
+type FieldMetadata struct {
+	// Action: Deidentify action for one field.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - No action specified.
+	//   "TRANSFORM" - Transform the entire field.
+	//   "INSPECT_AND_TRANSFORM" - Should be inspected and any PHI found
+	// should be
+	// transformed.
+	//   "DO_NOT_TRANSFORM" - Do not transform.
+	Action string `json:"action,omitempty"`
+
+	// Paths: List of paths to FHIR fields to be redacted. Each path is
+	// a
+	// period-separated list where each component is either a field name
+	// or
+	// FHIR type name, for example: Patient, HumanName.
+	// For "choice" types (those defined in the FHIR spec with the
+	// form:
+	// field[x]) we use two separate components. e.g. "deceasedAge.unit"
+	// is
+	// matched by "Deceased.Age.unit".
+	// Supported types are: AdministrativeGenderCode, Code, Date,
+	// DateTime,
+	// Decimal, HumanName, Id, LanguageCode, Markdown, MimeTypeCode,
+	// Oid,
+	// String, Uri, Uuid, Xhtml.
+	Paths []string `json:"paths,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Finding struct {
 	// End: Zero-based ending index of the found text, exclusively.
 	End int64 `json:"end,omitempty,string"`
@@ -1501,43 +1705,6 @@ type Finding struct {
 
 func (s *Finding) MarshalJSON() ([]byte, error) {
 	type NoMethod Finding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GcsDestination: The Cloud Storage location for export.
-type GcsDestination struct {
-	// UriPrefix: The Cloud Storage destination to export to.
-	// URI for a Cloud Storage directory where result files should be
-	// written (in
-	// the format `gs://{bucket-id}/{path/to/destination/dir}`). If there is
-	// no
-	// trailing slash, the service will append one when composing the object
-	// path.
-	// The user is responsible for creating the Cloud Storage bucket
-	// referenced in
-	// `uri_prefix`.
-	UriPrefix string `json:"uriPrefix,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "UriPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UriPrefix") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GcsDestination) MarshalJSON() ([]byte, error) {
-	type NoMethod GcsDestination
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2183,6 +2350,8 @@ type ImageConfig struct {
 	//   "TEXT_REDACTION_MODE_UNSPECIFIED" - No text redaction specified.
 	// Same as REDACT_NO_TEXT.
 	//   "REDACT_ALL_TEXT" - Redact all text.
+	//   "REDACT_SENSITIVE_TEXT" - Redact sensitive text.
+	//   "REDACT_NO_TEXT" - Do not redact text.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TextRedactionMode")
@@ -2220,9 +2389,11 @@ type ImportDicomDataErrorDetails struct {
 	// taset_id}/dicomStores/{dicom_store_id}`
 	DicomStore string `json:"dicomStore,omitempty"`
 
-	// SampleErrors: Contains sample errors encountered in imports of
-	// individual resources
-	// (e.g., a Cloud Storage object).
+	// SampleErrors: Deprecated. Use only for debugging purposes.
+	//
+	// Contains sample errors encountered in imports of individual
+	// resources
+	// (for example, a Cloud Storage object).
 	SampleErrors []*ErrorDetail `json:"sampleErrors,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DicomStore") to
@@ -2288,15 +2459,6 @@ func (s *ImportDicomDataRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ImportResourcesRequest: Request to import resources.
-// The FHIR resources to be imported must have client supplied IDs. The
-// server
-// will retain the resource IDs. The import operation is idempotent.
-// Retry will
-// overwrite existing data identified by client supplied IDs. The
-// import
-// operation is not transactional. The server will not roll back any
-// committed
-// changes upon partial failures.
 type ImportResourcesRequest struct {
 	// ContentStructure: The content structure in the source location. The
 	// default is
@@ -2305,7 +2467,8 @@ type ImportResourcesRequest struct {
 	// Possible values:
 	//   "CONTENT_STRUCTURE_UNSPECIFIED"
 	//   "BUNDLE" - Each unit is a bundle, which contains one or more
-	// resources.
+	// resources. Set the
+	// bundle type to `history` to import resource versions.
 	//   "RESOURCE" - Each unit is a single resource.
 	ContentStructure string `json:"contentStructure,omitempty"`
 
@@ -2331,6 +2494,13 @@ type ImportResourcesRequest struct {
 	// Each Cloud Storage object should be a text file that contains
 	// newline
 	// delimited JSON structures conforming to FHIR standard.
+	//
+	// To improve performance, use multiple Cloud Storage objects where
+	// each
+	// object contains a subset of all of the newline-delimited JSON
+	// structures.
+	// You can select all of the objects using the uri as the
+	// prefix. The maximum number of objects is 1,000.
 	GcsSource *GoogleCloudHealthcareV1alpha2FhirRestGcsSource `json:"gcsSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentStructure") to
@@ -2353,6 +2523,54 @@ type ImportResourcesRequest struct {
 
 func (s *ImportResourcesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportResourcesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InfoTypeTransformation: A transformation to apply to text that is
+// identified as a specific
+// info_type.
+type InfoTypeTransformation struct {
+	// CharacterMaskConfig: Config for character mask.
+	CharacterMaskConfig *CharacterMaskConfig `json:"characterMaskConfig,omitempty"`
+
+	// CryptoHashConfig: Config for crypto hash.
+	CryptoHashConfig *CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
+
+	// DateShiftConfig: Config for date shift.
+	DateShiftConfig *DateShiftConfig `json:"dateShiftConfig,omitempty"`
+
+	// InfoTypes: InfoTypes to apply this transformation to. If this is not
+	// specified, the
+	// transformation applies to any info_type.
+	InfoTypes []string `json:"infoTypes,omitempty"`
+
+	// RedactConfig: Config for text redaction.
+	RedactConfig *RedactConfig `json:"redactConfig,omitempty"`
+
+	// ReplaceWithInfoTypeConfig: Config for replace with InfoType.
+	ReplaceWithInfoTypeConfig *ReplaceWithInfoTypeConfig `json:"replaceWithInfoTypeConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CharacterMaskConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CharacterMaskConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InfoTypeTransformation) MarshalJSON() ([]byte, error) {
+	type NoMethod InfoTypeTransformation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3312,6 +3530,20 @@ func (s *ProgressCounter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RedactConfig: Define how to redact sensitive values. Default
+// behaviour is erase,
+// e.g. "My name is Jake." becomes "My name is ."
+type RedactConfig struct {
+}
+
+// ReplaceWithInfoTypeConfig: When using the INSPECT_AND_TRANSFORM
+// action, each match is replaced with
+// the name of the info_type. For example, "My name is Jake" becomes "My
+// name is
+// [PERSON_NAME]." The TRANSFORM action is equivalent to redacting.
+type ReplaceWithInfoTypeConfig struct {
+}
+
 // ResourceAnnotation: Resource level annotation.
 type ResourceAnnotation struct {
 	Label string `json:"label,omitempty"`
@@ -3769,6 +4001,39 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type TextConfig struct {
+	// ExperimentalConfig: Experimental de-identification config to use. For
+	// internal use only.
+	// If not specified, it is ignored and standard DLP is used.
+	ExperimentalConfig string `json:"experimentalConfig,omitempty"`
+
+	// Transformations: The transformations to apply to the detected data.
+	Transformations []*InfoTypeTransformation `json:"transformations,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExperimentalConfig")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExperimentalConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TextConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5805,155 +6070,6 @@ func (c *ProjectsLocationsDatasetsAnnotationStoresDeleteCall) Do(opts ...googlea
 	//   "path": "v1alpha2/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "healthcare.projects.locations.datasets.annotationStores.export":
-
-type ProjectsLocationsDatasetsAnnotationStoresExportCall struct {
-	s                        *Service
-	annotationStore          string
-	exportannotationsrequest *ExportAnnotationsRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// Export: Export
-// Annotations from
-// the Annotation
-// store.
-// Errors are noted in the error
-// field. Otherwise, a detailed response is returned of
-// type
-// ExportAnnotationsResponse, contained in the
-// response field when the
-// operation finishes. The metadata
-// field type is OperationMetadata.
-func (r *ProjectsLocationsDatasetsAnnotationStoresService) Export(annotationStore string, exportannotationsrequest *ExportAnnotationsRequest) *ProjectsLocationsDatasetsAnnotationStoresExportCall {
-	c := &ProjectsLocationsDatasetsAnnotationStoresExportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.annotationStore = annotationStore
-	c.exportannotationsrequest = exportannotationsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsAnnotationStoresExportCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Context(ctx context.Context) *ProjectsLocationsDatasetsAnnotationStoresExportCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportannotationsrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha2/{+annotationStore}:export")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"annotationStore": c.annotationStore,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "healthcare.projects.locations.datasets.annotationStores.export" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsDatasetsAnnotationStoresExportCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Export\nAnnotations from\nthe Annotation\nstore.\nErrors are noted in the error\nfield. Otherwise, a detailed response is returned of type\nExportAnnotationsResponse, contained in the\nresponse field when the\noperation finishes. The metadata\nfield type is OperationMetadata.",
-	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/annotationStores/{annotationStoresId}:export",
-	//   "httpMethod": "POST",
-	//   "id": "healthcare.projects.locations.datasets.annotationStores.export",
-	//   "parameterOrder": [
-	//     "annotationStore"
-	//   ],
-	//   "parameters": {
-	//     "annotationStore": {
-	//       "description": "The Annotation store name to export annotations to. The name should be in\nthe format\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha2/{+annotationStore}:export",
-	//   "request": {
-	//     "$ref": "ExportAnnotationsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -13358,7 +13474,29 @@ type ProjectsLocationsDatasetsFhirStoresImportCall struct {
 
 // Import: Import resources to the FHIR store by loading data from the
 // specified
-// sources.
+// sources. Each resource must have a client-supplied ID, which is
+// retained
+// by the server.
+//
+// The import operation is idempotent. Upon retry, the most recent
+// data
+// (matching the client-supplied ID) is overwritten, without creating a
+// new
+// resource version. If partial failures occur during the import,
+// successful
+// changes are not rolled back.
+//
+// If history imports are enabled
+// (enable_history_import is set in the
+// FHIR store's configuration), you can import historical versions of
+// a
+// resource by supplying a bundle of type `history`. The historical
+// versions
+// in the bundle must have `lastUpdated` timestamps. If a current
+// or
+// historical version with the supplied resource ID already exists,
+// the
+// bundle is rejected.
 //
 // This method returns an Operation that can
 // be used to track the status of the import by
@@ -13470,7 +13608,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresImportCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field.\nOtherwise, when the operation finishes, a detailed response of type\nImportResourcesResponse is returned in the\nresponse field.\nThe metadata field type for this\noperation is OperationMetadata.",
+	//   "description": "Import resources to the FHIR store by loading data from the specified\nsources. Each resource must have a client-supplied ID, which is retained\nby the server.\n\nThe import operation is idempotent. Upon retry, the most recent data\n(matching the client-supplied ID) is overwritten, without creating a new\nresource version. If partial failures occur during the import, successful\nchanges are not rolled back.\n\nIf history imports are enabled\n(enable_history_import is set in the\nFHIR store's configuration), you can import historical versions of a\nresource by supplying a bundle of type `history`. The historical versions\nin the bundle must have `lastUpdated` timestamps. If a current or\nhistorical version with the supplied resource ID already exists, the\nbundle is rejected.\n\nThis method returns an Operation that can\nbe used to track the status of the import by calling\nGetOperation.\n\nImmediate fatal errors appear in the\nerror field.\nOtherwise, when the operation finishes, a detailed response of type\nImportResourcesResponse is returned in the\nresponse field.\nThe metadata field type for this\noperation is OperationMetadata.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:import",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.import",
@@ -14168,6 +14306,29 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 }
 
 // Search: Searches resources in the given FHIR store.
+//
+// # Search Parameters
+//
+// The server's capability statement, retrieved
+// through
+// GetCapabilityStatement, indicates which search
+// parameters are supported on each FHIR resource.
+//
+// # Search Modifiers
+//
+// Modifier   | Supported
+// ----------- | ---------
+// `:missing`  | Yes
+// `:exact`    | Yes
+// `:contains` | Yes
+// `:text`     | Yes
+// `:in`       | Yes
+// `:not-in`   | Yes
+// `:above`    | Yes
+// `:below`    | Yes
+// `:[type]`   | Yes
+// `:not`      | Yes
+// `:recurse`  | No
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Search(parent string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -14265,7 +14426,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches resources in the given FHIR store.",
+	//   "description": "Searches resources in the given FHIR store.\n\n# Search Parameters\n\nThe server's capability statement, retrieved through\nGetCapabilityStatement, indicates which search\nparameters are supported on each FHIR resource.\n\n# Search Modifiers\n\nModifier   | Supported\n----------- | ---------\n`:missing`  | Yes\n`:exact`    | Yes\n`:contains` | Yes\n`:text`     | Yes\n`:in`       | Yes\n`:not-in`   | Yes\n`:above`    | Yes\n`:below`    | Yes\n`:[type]`   | Yes\n`:not`      | Yes\n`:recurse`  | No",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir._search",
@@ -15619,6 +15780,29 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchResourcesCall struct {
 }
 
 // SearchResources: Searches resources in the given FHIR store.
+//
+// # Search Parameters
+//
+// The server's capability statement, retrieved
+// through
+// GetCapabilityStatement, indicates which search
+// parameters are supported on each FHIR resource.
+//
+// # Search Modifiers
+//
+// Modifier   | Supported
+// ----------- | ---------
+// `:missing`  | Yes
+// `:exact`    | Yes
+// `:contains` | Yes
+// `:text`     | Yes
+// `:in`       | Yes
+// `:not-in`   | Yes
+// `:above`    | Yes
+// `:below`    | Yes
+// `:[type]`   | Yes
+// `:not`      | Yes
+// `:recurse`  | No
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) SearchResources(parent string, resourceType string) *ProjectsLocationsDatasetsFhirStoresFhirSearchResourcesCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15725,7 +15909,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchResourcesCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches resources in the given FHIR store.",
+	//   "description": "Searches resources in the given FHIR store.\n\n# Search Parameters\n\nThe server's capability statement, retrieved through\nGetCapabilityStatement, indicates which search\nparameters are supported on each FHIR resource.\n\n# Search Modifiers\n\nModifier   | Supported\n----------- | ---------\n`:missing`  | Yes\n`:exact`    | Yes\n`:contains` | Yes\n`:text`     | Yes\n`:in`       | Yes\n`:not-in`   | Yes\n`:above`    | Yes\n`:below`    | Yes\n`:[type]`   | Yes\n`:not`      | Yes\n`:recurse`  | No",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.searchResources",
@@ -18580,54 +18764,67 @@ func (r *ProjectsLocationsDatasetsHl7V2StoresMessagesService) List(parent string
 // Syntax:
 // https://cloud.google.com/appengine/docs/standard/python/search
 // /query_strings
+//
 // Fields/functions available for filtering are:
-// - message_type, from the MSH-9 segment, e.g. 'NOT message_type =
-// "ADT"'
-// - send_date or sendDate, the YYYY-MM-DD date the message was sent in
+//
+// *  `message_type`, from the MSH-9 segment; for example
+// `NOT message_type = "ADT"
+// *  `send_date` or `sendDate`, the YYYY-MM-DD date the message was
+// sent in
+// the dataset's time_zone, from the MSH-7 segment; for
+// example
+// `send_date < "2017-01-02"
+// *  `send_time`, the timestamp of when the message was sent, using
 // the
-//   dataset's time_zone, from the MSH-7 segment; e.g.
-//   'send_date < "2017-01-02"'
-// - send_time, the timestamp of when the message was sent, using the
-// RFC3339
-//   time format for comparisons, from the MSH-7 segment; e.g.
-// 'send_time <
-//   "2017-01-02T00:00:00-05:00"'
-// - send_facility, the hospital/trust that the message came from, from
+// RFC3339 time format for comparisons, from the MSH-7 segment; for
+// example
+// `send_time < "2017-01-02T00:00:00-05:00"
+// *  `send_facility`, the care center that the message came from, from
 // the
-//   MSH-4 segment, e.g. 'send_facility = "RAL"'
-// - HL7RegExp(expr), which does regular expression matching of expr
-// against
-//   the HL7 message payload using re2 (http://code.google.com/p/re2/)
-//   syntax; e.g. 'HL7RegExp("^.*\|.*\|CERNER")'
-// - PatientId(value, type), which matches if the message lists a
+// MSH-4 segment; for example `send_facility = "ABC"
+// *  `HL7RegExp(expr)`, which does regular expression matching of
+// `expr`
+// against the message payload using re2
+// (http://code.google.com/p/re2/)
+// syntax; for example `HL7RegExp("^.*\|.*\|EMERG")`
+// *  `PatientId(value, type)`, which matches if the message lists a
 // patient
-//   having an ID of the given value and type in the PID-2, PID-3, or
+// having an ID of the given value and type in the PID-2, PID-3, or
 // PID-4
-//   segments; e.g. 'PatientId("123456", "MRN")'
-// - labels.x, a string value of the label with key x as set using the
-// labels
-//   map in Message, e.g. 'labels."priority"="high"'. ":*" can be used
-// to
-//   assert the existence of a label, e.g.
-// 'labels."priority":*'.
-// Negation on the patient ID function or the labels field is not
-// supported,
-// e.g. invalid queries: 'NOT PatientId("123456", "MRN")',
-// 'NOT labels."tag1":*', 'NOT labels."tag2"="val2"'.
-// Conjunction of multiple patient ID functions is not supported, e.g.
-// an
-// invalid query: 'PatientId("123456", "MRN") AND PatientId("456789",
-// "MRN")'.
-// Conjunction of multiple labels fields is also not supported, e.g.
-// an
-// invalid query: 'labels."tag1":* AND
-// labels."tag2"="val2"'.
-// Conjunction of one patient ID function, one labels field and other
-// fields
-// is supported, e.g. a valid query:
-// 'PatientId("123456", "MRN") AND labels."tag1":* AND message_type =
-// "ADT"'.
-// HasLabel(x) and Label(x) are deprecated.
+// segments; for example `PatientId("123456", "MRN")`
+// *  `labels.x`, a string value of the label with key `x` as set using
+// the
+// Message.labels
+// map, for example `labels."priority"="high". The operator `:*` can be
+// used
+// to assert the existence of a label, for example
+// `labels."priority":*`.
+//
+// Limitations on conjunctions:
+//
+// *  Negation on the patient ID function or the labels field is
+// not
+// supported, for example these queries are invalid:
+// `NOT PatientId("123456", "MRN")`, `NOT labels."tag1":*`,
+// `NOT labels."tag2"="val2".
+// *  Conjunction of multiple patient ID functions is not supported,
+// for
+// example this query is invalid:
+// `PatientId("123456", "MRN") AND PatientId("456789", "MRN")`.
+// *  Conjunction of multiple labels fields is also not supported,
+// for
+// example this query is invalid: `labels."tag1":* AND
+// labels."tag2"="val2".
+// *  Conjunction of one patient ID function, one labels field and
+// conditions
+// on other fields is supported, for example this query is
+// valid:
+// `PatientId("123456", "MRN") AND labels."tag1":* AND message_type =
+// "ADT".
+//
+// The HasLabel(x) and Label(x) syntax from previous API versions
+// are
+// deprecated; replaced by the `labels.x` syntax.
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Filter(filter string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -18637,9 +18834,11 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Filter(filter str
 // returned by the specified order_by clause.
 // Syntax:
 // https://cloud.google.com/apis/design/design_patterns#sorting_order
-// Fie
-// lds available for ordering are:
-// - send_time
+//
+// Fi
+// elds available for ordering are:
+//
+// *  `send_time`
 func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) OrderBy(orderBy string) *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -18768,12 +18967,12 @@ func (c *ProjectsLocationsDatasetsHl7V2StoresMessagesListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\nFields/functions available for filtering are:\n- message_type, from the MSH-9 segment, e.g. 'NOT message_type = \"ADT\"'\n- send_date or sendDate, the YYYY-MM-DD date the message was sent in the\n  dataset's time_zone, from the MSH-7 segment; e.g.\n  'send_date \u003c \"2017-01-02\"'\n- send_time, the timestamp of when the message was sent, using the RFC3339\n  time format for comparisons, from the MSH-7 segment; e.g. 'send_time \u003c\n  \"2017-01-02T00:00:00-05:00\"'\n- send_facility, the hospital/trust that the message came from, from the\n  MSH-4 segment, e.g. 'send_facility = \"RAL\"'\n- HL7RegExp(expr), which does regular expression matching of expr against\n  the HL7 message payload using re2 (http://code.google.com/p/re2/)\n  syntax; e.g. 'HL7RegExp(\"^.*\\|.*\\|CERNER\")'\n- PatientId(value, type), which matches if the message lists a patient\n  having an ID of the given value and type in the PID-2, PID-3, or PID-4\n  segments; e.g. 'PatientId(\"123456\", \"MRN\")'\n- labels.x, a string value of the label with key x as set using the labels\n  map in Message, e.g. 'labels.\"priority\"=\"high\"'. \":*\" can be used to\n  assert the existence of a label, e.g. 'labels.\"priority\":*'.\nNegation on the patient ID function or the labels field is not supported,\ne.g. invalid queries: 'NOT PatientId(\"123456\", \"MRN\")',\n'NOT labels.\"tag1\":*', 'NOT labels.\"tag2\"=\"val2\"'.\nConjunction of multiple patient ID functions is not supported, e.g. an\ninvalid query: 'PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")'.\nConjunction of multiple labels fields is also not supported, e.g. an\ninvalid query: 'labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"'.\nConjunction of one patient ID function, one labels field and other fields\nis supported, e.g. a valid query:\n'PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"'.\nHasLabel(x) and Label(x) are deprecated.",
+	//       "description": "Restricts messages returned to those matching a filter. Syntax:\nhttps://cloud.google.com/appengine/docs/standard/python/search/query_strings\n\nFields/functions available for filtering are:\n\n*  `message_type`, from the MSH-9 segment; for example\n`NOT message_type = \"ADT\"`\n*  `send_date` or `sendDate`, the YYYY-MM-DD date the message was sent in\nthe dataset's time_zone, from the MSH-7 segment; for example\n`send_date \u003c \"2017-01-02\"`\n*  `send_time`, the timestamp of when the message was sent, using the\nRFC3339 time format for comparisons, from the MSH-7 segment; for example\n`send_time \u003c \"2017-01-02T00:00:00-05:00\"`\n*  `send_facility`, the care center that the message came from, from the\nMSH-4 segment; for example `send_facility = \"ABC\"`\n*  `HL7RegExp(expr)`, which does regular expression matching of `expr`\nagainst the message payload using re2 (http://code.google.com/p/re2/)\nsyntax; for example `HL7RegExp(\"^.*\\|.*\\|EMERG\")`\n*  `PatientId(value, type)`, which matches if the message lists a patient\nhaving an ID of the given value and type in the PID-2, PID-3, or PID-4\nsegments; for example `PatientId(\"123456\", \"MRN\")`\n*  `labels.x`, a string value of the label with key `x` as set using the\nMessage.labels\nmap, for example `labels.\"priority\"=\"high\"`. The operator `:*` can be used\nto assert the existence of a label, for example `labels.\"priority\":*`.\n\nLimitations on conjunctions:\n\n*  Negation on the patient ID function or the labels field is not\nsupported, for example these queries are invalid:\n`NOT PatientId(\"123456\", \"MRN\")`, `NOT labels.\"tag1\":*`,\n`NOT labels.\"tag2\"=\"val2\"`.\n*  Conjunction of multiple patient ID functions is not supported, for\nexample this query is invalid:\n`PatientId(\"123456\", \"MRN\") AND PatientId(\"456789\", \"MRN\")`.\n*  Conjunction of multiple labels fields is also not supported, for\nexample this query is invalid: `labels.\"tag1\":* AND labels.\"tag2\"=\"val2\"`.\n*  Conjunction of one patient ID function, one labels field and conditions\non other fields is supported, for example this query is valid:\n`PatientId(\"123456\", \"MRN\") AND labels.\"tag1\":* AND message_type = \"ADT\"`.\n\nThe HasLabel(x) and Label(x) syntax from previous API versions are\ndeprecated; replaced by the `labels.x` syntax.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Orders messages returned by the specified order_by clause.\nSyntax: https://cloud.google.com/apis/design/design_patterns#sorting_order\nFields available for ordering are:\n- send_time",
+	//       "description": "Orders messages returned by the specified order_by clause.\nSyntax: https://cloud.google.com/apis/design/design_patterns#sorting_order\n\nFields available for ordering are:\n\n*  `send_time`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

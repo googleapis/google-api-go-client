@@ -275,7 +275,7 @@
    "id": "analyticsreporting:v4",
    "name": "analyticsreporting",
    "version": "v4",
-   "title": "Google Analytics Reporting API",
+   "title": "Analytics Reporting API",
    "description": "Accesses Analytics report data.",
    "discoveryRestUrl": "https://analyticsreporting.googleapis.com/$discovery/rest?version=v4",
    "icons": {
@@ -1056,6 +1056,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudtasks:v2",
+   "name": "cloudtasks",
+   "version": "v2",
+   "title": "Cloud Tasks API",
+   "description": "Manages the execution of large numbers of distributed requests.",
+   "discoveryRestUrl": "https://cloudtasks.googleapis.com/$discovery/rest?version=v2",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/tasks/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudtasks:v2beta2",
    "name": "cloudtasks",
    "version": "v2beta2",
@@ -1082,7 +1097,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/tasks/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -2037,7 +2052,7 @@
    "name": "healthcare",
    "version": "v1alpha",
    "title": "Cloud Healthcare API",
-   "description": "",
+   "description": "Manage, store, and access healthcare data in Google Cloud Platform.",
    "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2052,7 +2067,7 @@
    "name": "healthcare",
    "version": "v1alpha2",
    "title": "Cloud Healthcare API",
-   "description": "",
+   "description": "Manage, store, and access healthcare data in Google Cloud Platform.",
    "discoveryRestUrl": "https://healthcare.googleapis.com/$discovery/rest?version=v1alpha2",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",

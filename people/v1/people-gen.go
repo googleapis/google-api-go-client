@@ -104,7 +104,8 @@ const (
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
-	// View your basic profile info
+	// See your personal info, including any personal info you've made
+	// publically available
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 

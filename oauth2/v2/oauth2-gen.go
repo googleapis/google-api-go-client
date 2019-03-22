@@ -80,9 +80,6 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View your basic profile info, including your age range and language
-	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
-
 	// Know who you are on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 
@@ -97,7 +94,6 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
-		"https://www.googleapis.com/auth/plus.login",
 		"https://www.googleapis.com/auth/plus.me",
 		"https://www.googleapis.com/auth/userinfo.email",
 		"https://www.googleapis.com/auth/userinfo.profile",
@@ -751,7 +747,6 @@ func (c *UserinfoGetCall) Do(opts ...googleapi.CallOption) (*Userinfoplus, error
 	//     "$ref": "Userinfoplus"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/userinfo.email",
 	//     "https://www.googleapis.com/auth/userinfo.profile"
@@ -878,7 +873,6 @@ func (c *UserinfoV2MeGetCall) Do(opts ...googleapi.CallOption) (*Userinfoplus, e
 	//     "$ref": "Userinfoplus"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/plus.me",
 	//     "https://www.googleapis.com/auth/userinfo.email",
 	//     "https://www.googleapis.com/auth/userinfo.profile"

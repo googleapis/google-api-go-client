@@ -1360,6 +1360,11 @@ type FeatureSettings struct {
 	// always true, this setting can be removed.
 	SplitHealthChecks bool `json:"splitHealthChecks,omitempty"`
 
+	// UseContainerOptimizedOs: If true, use Container-Optimized OS
+	// (https://cloud.google.com/container-optimized-os/) base image for
+	// VMs, rather than a base Debian image.
+	UseContainerOptimizedOs bool `json:"useContainerOptimizedOs,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "SplitHealthChecks")
 	// to unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -3532,6 +3537,9 @@ type Version struct {
 	// machine.
 	Vm bool `json:"vm,omitempty"`
 
+	// VpcAccessConnector: Enables VPC connectivity for standard apps.
+	VpcAccessConnector *VpcAccessConnector `json:"vpcAccessConnector,omitempty"`
+
 	// Zones: The Google Compute Engine zones that are supported by this
 	// version in the App Engine flexible environment. Deprecated.
 	Zones []string `json:"zones,omitempty"`
@@ -3610,6 +3618,35 @@ func (s *Volume) UnmarshalJSON(data []byte) error {
 	}
 	s.SizeGb = float64(s1.SizeGb)
 	return nil
+}
+
+// VpcAccessConnector: VPC access connector specification.
+type VpcAccessConnector struct {
+	// Name: Full Serverless VPC Access Connector name e.g.
+	// /projects/my-project/locations/us-central1/connectors/c1.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VpcAccessConnector) MarshalJSON() ([]byte, error) {
+	type NoMethod VpcAccessConnector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ZipInfo: The zip file information for a zip deployment.

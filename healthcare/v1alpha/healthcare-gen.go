@@ -680,8 +680,7 @@ func (s *BigQueryLocation) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
@@ -10965,6 +10964,29 @@ type ProjectsLocationsDatasetsFhirStoresResourcesSearchCall struct {
 }
 
 // Search: Searches resources in the given FHIR store.
+//
+// # Search Parameters
+//
+// The server's capability statement, retrieved
+// through
+// GetCapabilityStatement, indicates which search
+// parameters are supported on each FHIR resource.
+//
+// # Search Modifiers
+//
+// Modifier   | Supported
+// ----------- | ---------
+// `:missing`  | Yes
+// `:exact`    | Yes
+// `:contains` | Yes
+// `:text`     | Yes
+// `:in`       | Yes
+// `:not-in`   | Yes
+// `:above`    | Yes
+// `:below`    | Yes
+// `:[type]`   | Yes
+// `:not`      | Yes
+// `:recurse`  | No
 func (r *ProjectsLocationsDatasetsFhirStoresResourcesService) Search(parent string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresResourcesSearchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresResourcesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11062,7 +11084,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresResourcesSearchCall) Do(opts ...goog
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches resources in the given FHIR store.",
+	//   "description": "Searches resources in the given FHIR store.\n\n# Search Parameters\n\nThe server's capability statement, retrieved through\nGetCapabilityStatement, indicates which search\nparameters are supported on each FHIR resource.\n\n# Search Modifiers\n\nModifier   | Supported\n----------- | ---------\n`:missing`  | Yes\n`:exact`    | Yes\n`:contains` | Yes\n`:text`     | Yes\n`:in`       | Yes\n`:not-in`   | Yes\n`:above`    | Yes\n`:below`    | Yes\n`:[type]`   | Yes\n`:not`      | Yes\n`:recurse`  | No",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/resources/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.resources._search",
@@ -12412,6 +12434,29 @@ type ProjectsLocationsDatasetsFhirStoresResourcesSearchResourcesCall struct {
 }
 
 // SearchResources: Searches resources in the given FHIR store.
+//
+// # Search Parameters
+//
+// The server's capability statement, retrieved
+// through
+// GetCapabilityStatement, indicates which search
+// parameters are supported on each FHIR resource.
+//
+// # Search Modifiers
+//
+// Modifier   | Supported
+// ----------- | ---------
+// `:missing`  | Yes
+// `:exact`    | Yes
+// `:contains` | Yes
+// `:text`     | Yes
+// `:in`       | Yes
+// `:not-in`   | Yes
+// `:above`    | Yes
+// `:below`    | Yes
+// `:[type]`   | Yes
+// `:not`      | Yes
+// `:recurse`  | No
 func (r *ProjectsLocationsDatasetsFhirStoresResourcesService) SearchResources(parent string, resourceType string) *ProjectsLocationsDatasetsFhirStoresResourcesSearchResourcesCall {
 	c := &ProjectsLocationsDatasetsFhirStoresResourcesSearchResourcesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12518,7 +12563,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresResourcesSearchResourcesCall) Do(opt
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches resources in the given FHIR store.",
+	//   "description": "Searches resources in the given FHIR store.\n\n# Search Parameters\n\nThe server's capability statement, retrieved through\nGetCapabilityStatement, indicates which search\nparameters are supported on each FHIR resource.\n\n# Search Modifiers\n\nModifier   | Supported\n----------- | ---------\n`:missing`  | Yes\n`:exact`    | Yes\n`:contains` | Yes\n`:text`     | Yes\n`:in`       | Yes\n`:not-in`   | Yes\n`:above`    | Yes\n`:below`    | Yes\n`:[type]`   | Yes\n`:not`      | Yes\n`:recurse`  | No",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/resources/{resourcesId}",
 	//   "httpMethod": "GET",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.resources.searchResources",

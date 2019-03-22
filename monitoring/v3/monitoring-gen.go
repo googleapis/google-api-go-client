@@ -2955,7 +2955,7 @@ type NotificationChannel struct {
 	// Description: An optional human-readable description of this
 	// notification channel. This description may provide additional
 	// details, beyond the display name, for the channel. This may not
-	// exceeed 1024 Unicode characters.
+	// exceed 1024 Unicode characters.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: An optional human-readable name for this notification

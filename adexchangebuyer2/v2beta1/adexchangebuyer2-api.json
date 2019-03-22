@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20190311",
+  "revision": "20190320",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2996,6 +2996,8 @@
           "description": "All attributes for the ads that may be shown from this creative.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
           "enumDescriptions": [
             "Do not use. This is a placeholder value only.",
+            "The creative is of type image/rich media. For pretargeting.",
+            "The creative is of video type Adobe Flash FLV. For pretargeting.",
             "The creative is tagged.",
             "The creative is cookie targeted.",
             "The creative is user interest targeted.",
@@ -3018,11 +3020,16 @@
             "The creative is MRAID.",
             "The creative is Flash.",
             "The creative is HTML5.",
+            "The creative has an instream VAST video type of skippable instream video.\nFor pretargeting.",
             "The creative is SSL.",
             "The creative is non-SSL.",
             "The creative is an interstitial.",
+            "The creative has an instream VAST video type of non-skippable instream\nvideo. For pretargeting.",
             "The creative is eligible for native.",
+            "The creative has an instream VAST video type of non-VPAID. For\npretargeting.",
             "The creative is not eligible for native.",
+            "The creative has an interstitial size of any interstitial. For\npretargeting.",
+            "The creative has an interstitial size of non interstitial. For\npretargeting.",
             "The video type is in-banner video.",
             "The creative can dynamically resize to fill a variety of slot sizes.",
             "The open measurement SDK is supported."
@@ -3030,6 +3037,8 @@
           "items": {
             "enum": [
               "ATTRIBUTE_UNSPECIFIED",
+              "IMAGE_RICH_MEDIA",
+              "ADOBE_FLASH_FLV",
               "IS_TAGGED",
               "IS_COOKIE_TARGETED",
               "IS_USER_INTEREST_TARGETED",
@@ -3052,11 +3061,16 @@
               "RICH_MEDIA_CAPABILITY_TYPE_MRAID",
               "RICH_MEDIA_CAPABILITY_TYPE_FLASH",
               "RICH_MEDIA_CAPABILITY_TYPE_HTML5",
+              "SKIPPABLE_INSTREAM_VIDEO",
               "RICH_MEDIA_CAPABILITY_TYPE_SSL",
               "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL",
               "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL",
+              "NON_SKIPPABLE_INSTREAM_VIDEO",
               "NATIVE_ELIGIBILITY_ELIGIBLE",
+              "NON_VPAID",
               "NATIVE_ELIGIBILITY_NOT_ELIGIBLE",
+              "ANY_INTERSTITIAL",
+              "NON_INTERSTITIAL",
               "IN_BANNER_VIDEO",
               "RENDERING_SIZELESS_ADX",
               "OMSDK_1_0"

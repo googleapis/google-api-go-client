@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20190308",
+  "revision": "20190315",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -908,6 +908,9 @@
       "description": "Occurrence that represents a single \"attestation\". The authenticity of an\nattestation can be verified using the attached signature. If the verifier\ntrusts the public key of the signer, then verifying the signature is\nsufficient to establish trust. In this circumstance, the authority to which\nthis attestation is attached is primarily useful for look-up (how to find\nthis attestation if you already know the authority and artifact to be\nverified) and intent (which authority was this attestation intended to sign\nfor).",
       "id": "Attestation",
       "properties": {
+        "genericSignedAttestation": {
+          "$ref": "GenericSignedAttestation"
+        },
         "pgpSignedAttestation": {
           "$ref": "PgpSignedAttestation",
           "description": "A PGP signed attestation."
@@ -1051,7 +1054,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
@@ -1617,6 +1620,37 @@
           "description": "The total number of vulnerabilities associated with this resource.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GenericSignedAttestation": {
+      "description": "An attestation wrapper that uses the Grafeas `Signature` message.\nThis attestation must define the `plaintext` that the `signatures` verify\nand any metadata necessary to interpret that plaintext.  The signatures\nshould always be over the `plaintext` bytestring.",
+      "id": "GenericSignedAttestation",
+      "properties": {
+        "contentType": {
+          "description": "Type (for example schema) of the attestation payload that was signed.\nThe verifier must ensure that the provided type is one that the verifier\nsupports, and that the attestation payload is a valid instantiation of that\ntype (for example by validating a JSON schema).",
+          "enum": [
+            "CONTENT_TYPE_UNSPECIFIED",
+            "SIMPLE_SIGNING_JSON"
+          ],
+          "enumDescriptions": [
+            "`ContentType` is not set.",
+            "Atomic format attestation signature. See\nhttps://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276c3e0f64e77723e7/docs/atomic-signature.md\nThe payload extracted in `plaintext` is a JSON blob conforming to the\nlinked schema."
+          ],
+          "type": "string"
+        },
+        "serializedPayload": {
+          "description": "The serialized payload that is verified by one or more `signatures`.\nThe encoding and semantic meaning of this payload must match what is set in\n`content_type`.",
+          "format": "byte",
+          "type": "string"
+        },
+        "signatures": {
+          "description": "One or more signatures over `serialized_payload`.  Verifier implementations\nshould consider this attestation message verified if at least one\n`signature` verifies `serialized_payload`.  See `Signature` in common.proto\nfor more details on signature structure and verification.",
+          "items": {
+            "$ref": "Signature"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2416,6 +2450,22 @@
         "updateMask": {
           "description": "OPTIONAL: A FieldMask specifying which fields of the policy to modify. Only\nthe fields in the mask will be modified. If no mask is provided, the\nfollowing default mask is used:\npaths: \"bindings, etag\"\nThis field is only used by Cloud IAM.",
           "format": "google-fieldmask",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Signature": {
+      "description": "Verifiers (e.g. Kritis implementations) MUST verify signatures\nwith respect to the trust anchors defined in policy (e.g. a Kritis policy).\nTypically this means that the verifier has been configured with a map from\n`public_key_id` to public key material (and any required parameters, e.g.\nsigning algorithm).\n\nIn particular, verification implementations MUST NOT treat the signature\n`public_key_id` as anything more than a key lookup hint. The `public_key_id`\nDOES NOT validate or authenticate a public key; it only provides a mechanism\nfor quickly selecting a public key ALREADY CONFIGURED on the verifier through\na trusted channel. Verification implementations MUST reject signatures in any\nof the following circumstances:\n  * The `public_key_id` is not recognized by the verifier.\n  * The public key that `public_key_id` refers to does not verify the\n    signature with respect to the payload.\n\nThe `signature` contents SHOULD NOT be \"attached\" (where the payload is\nincluded with the serialized `signature` bytes). Verifiers MUST ignore any\n\"attached\" payload and only verify signatures with respect to explicitly\nprovided payload (e.g. a `payload` field on the proto message that holds\nthis Signature, or the canonical serialization of the proto message that\nholds this signature).",
+      "id": "Signature",
+      "properties": {
+        "publicKeyId": {
+          "description": "The identifier for the public key that verifies this signature.\n  * The `public_key_id` is required.\n  * The `public_key_id` MUST be an RFC3986 conformant URI.\n  * When possible, the `public_key_id` SHOULD be an immutable reference,\n    such as a cryptographic digest.\n\nExamples of valid `public_key_id`s:\n\nOpenPGP V4 public key fingerprint:\n  * \"openpgp4fpr:74FAF3B861BDA0870C7B6DEF607E48D2A663AEEA\"\nSee https://www.iana.org/assignments/uri-schemes/prov/openpgp4fpr for more\ndetails on this scheme.\n\nRFC6920 digest-named SubjectPublicKeyInfo (digest of the DER\nserialization):\n  * \"ni:///sha-256;cD9o9Cq6LG3jD0iKXqEi_vdjJGecm_iXkbqVoScViaU\"\n  * \"nih:///sha-256;703f68f42aba2c6de30f488a5ea122fef76324679c9bf89791ba95a1271589a5\"",
+          "type": "string"
+        },
+        "signature": {
+          "description": "The content of the signature, an opaque bytestring.\nThe payload that this signature verifies MUST be unambiguously provided\nwith the Signature during verification. A wrapper message might provide\nthe payload explicitly. Alternatively, a message might have a canonical\nserialization that can always be unambiguously computed to derive the\npayload.",
+          "format": "byte",
           "type": "string"
         }
       },

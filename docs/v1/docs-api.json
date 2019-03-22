@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190212",
+  "revision": "20190312",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -1439,6 +1439,46 @@
       },
       "type": "object"
     },
+    "InsertPageBreakRequest": {
+      "description": "Inserts a page break followed by a newline at the specified location.",
+      "id": "InsertPageBreakRequest",
+      "properties": {
+        "endOfSegmentLocation": {
+          "$ref": "EndOfSegmentLocation",
+          "description": "Inserts the page break at the end of the document body.\n\nPage breaks cannot be inserted inside a footnote, header or footer.\nSince page breaks can only be inserted inside the body, the segment ID field must be\nempty."
+        },
+        "location": {
+          "$ref": "Location",
+          "description": "Inserts the page break at a specific index in the document.\n\nThe page break must be inserted inside the bounds of an existing\nParagraph. For instance, it cannot be\ninserted at a table's start index (i.e. between the table and its\npreceding paragraph).\n\nPage breaks cannot be inserted inside a table, equation, footnote, header\nor footer. Since page breaks can only be inserted inside the body, the\nsegment ID field must be\nempty."
+        }
+      },
+      "type": "object"
+    },
+    "InsertTableRequest": {
+      "description": "Inserts a table at the specified location.\n\nA newline character will be inserted before the inserted table.",
+      "id": "InsertTableRequest",
+      "properties": {
+        "columns": {
+          "description": "The number of columns in the table.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "endOfSegmentLocation": {
+          "$ref": "EndOfSegmentLocation",
+          "description": "Inserts the table at the end of the given header, footer or document\nbody. A newline character will be inserted before the inserted table.\n\nTables cannot be inserted inside a footnote."
+        },
+        "location": {
+          "$ref": "Location",
+          "description": "Inserts the table at a specific model index.\n\nA newline character will be inserted before the inserted table, therefore\nthe table start index will be at the specified location index + 1.\n\nThe table must be inserted inside the bounds of an existing\nParagraph. For instance, it cannot be\ninserted at a table's start index (i.e. between an existing table and its\npreceding paragraph).\n\nTables cannot be inserted inside a footnote or equation."
+        },
+        "rows": {
+          "description": "The number of rows in the table.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "InsertTableRowRequest": {
       "description": "Inserts an empty row into a table.",
       "id": "InsertTableRowRequest",
@@ -2487,6 +2527,14 @@
         "insertInlineImage": {
           "$ref": "InsertInlineImageRequest",
           "description": "Inserts an inline image at the specified location."
+        },
+        "insertPageBreak": {
+          "$ref": "InsertPageBreakRequest",
+          "description": "Inserts a page break at the specified location."
+        },
+        "insertTable": {
+          "$ref": "InsertTableRequest",
+          "description": "Inserts a table at the specified location."
         },
         "insertTableRow": {
           "$ref": "InsertTableRowRequest",
@@ -3564,7 +3612,11 @@
       "id": "WriteControl",
       "properties": {
         "requiredRevisionId": {
-          "description": "The ID of the revision of the document that the write request will be\napplied to. If this is not the latest revision of the document, the\nrequest will not be processed and will return a 400 bad request error.\n\nWhen a required revision ID is returned in a response, it indicates the\nrevision ID of the document after the request was applied.",
+          "description": "The revision ID of the\ndocument that the write request will be applied to. If this is not the\nlatest revision of the document, the request will not be processed and\nwill return a 400 bad request error.\n\nWhen a required revision ID is returned in a response, it indicates the\nrevision ID of the document after the request was applied.",
+          "type": "string"
+        },
+        "targetRevisionId": {
+          "description": "The target revision ID of the\ndocument that the write request will be applied to.\n\nIf collaborator changes have occurred after the document was read using\nthe API, the changes produced by this write request will be transformed\nagainst the collaborator changes. This results in a new revision of the\ndocument which incorporates both the changes in the request and the\ncollaborator changes, and the Docs server will resolve conflicting\nchanges. When using `target_revision_id`, the API client can be thought\nof as another collaborator of the document.\n\nThe target revision ID may only be used to write to recent versions of a\ndocument. If the target revision is too far behind the latest revision,\nthe request will not be processed and will return a 400 bad request error\nand the request should be retried after reading the latest version of the\ndocument. In most cases a `revision_id` will remain valid for use as a\ntarget revision for several minutes after it is read, but for\nfrequently-edited documents this window may be shorter.",
           "type": "string"
         }
       },

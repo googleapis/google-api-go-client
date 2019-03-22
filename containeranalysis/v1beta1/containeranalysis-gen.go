@@ -288,22 +288,24 @@ func (s *Artifact) MarshalJSON() ([]byte, error) {
 // to sign
 // for).
 type Attestation struct {
+	GenericSignedAttestation *GenericSignedAttestation `json:"genericSignedAttestation,omitempty"`
+
 	// PgpSignedAttestation: A PGP signed attestation.
 	PgpSignedAttestation *PgpSignedAttestation `json:"pgpSignedAttestation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "PgpSignedAttestation") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
+	// "GenericSignedAttestation") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
 	// field is empty or not. This may be used to include empty fields in
 	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PgpSignedAttestation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "GenericSignedAttestation")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -675,8 +677,7 @@ func (s *BatchCreateOccurrencesResponse) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
@@ -1599,6 +1600,72 @@ type FixableTotalByDigest struct {
 
 func (s *FixableTotalByDigest) MarshalJSON() ([]byte, error) {
 	type NoMethod FixableTotalByDigest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenericSignedAttestation: An attestation wrapper that uses the
+// Grafeas `Signature` message.
+// This attestation must define the `plaintext` that the `signatures`
+// verify
+// and any metadata necessary to interpret that plaintext.  The
+// signatures
+// should always be over the `plaintext` bytestring.
+type GenericSignedAttestation struct {
+	// ContentType: Type (for example schema) of the attestation payload
+	// that was signed.
+	// The verifier must ensure that the provided type is one that the
+	// verifier
+	// supports, and that the attestation payload is a valid instantiation
+	// of that
+	// type (for example by validating a JSON schema).
+	//
+	// Possible values:
+	//   "CONTENT_TYPE_UNSPECIFIED" - `ContentType` is not set.
+	//   "SIMPLE_SIGNING_JSON" - Atomic format attestation signature.
+	// See
+	// https://github.com/containers/image/blob/8a5d2f82a6e3263290c8e0276
+	// c3e0f64e77723e7/docs/atomic-signature.md
+	// The payload extracted in `plaintext` is a JSON blob conforming to
+	// the
+	// linked schema.
+	ContentType string `json:"contentType,omitempty"`
+
+	// SerializedPayload: The serialized payload that is verified by one or
+	// more `signatures`.
+	// The encoding and semantic meaning of this payload must match what is
+	// set in
+	// `content_type`.
+	SerializedPayload string `json:"serializedPayload,omitempty"`
+
+	// Signatures: One or more signatures over `serialized_payload`.
+	// Verifier implementations
+	// should consider this attestation message verified if at least
+	// one
+	// `signature` verifies `serialized_payload`.  See `Signature` in
+	// common.proto
+	// for more details on signature structure and verification.
+	Signatures []*Signature `json:"signatures,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ContentType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenericSignedAttestation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericSignedAttestation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3067,6 +3134,104 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Signature: Verifiers (e.g. Kritis implementations) MUST verify
+// signatures
+// with respect to the trust anchors defined in policy (e.g. a Kritis
+// policy).
+// Typically this means that the verifier has been configured with a map
+// from
+// `public_key_id` to public key material (and any required parameters,
+// e.g.
+// signing algorithm).
+//
+// In particular, verification implementations MUST NOT treat the
+// signature
+// `public_key_id` as anything more than a key lookup hint. The
+// `public_key_id`
+// DOES NOT validate or authenticate a public key; it only provides a
+// mechanism
+// for quickly selecting a public key ALREADY CONFIGURED on the verifier
+// through
+// a trusted channel. Verification implementations MUST reject
+// signatures in any
+// of the following circumstances:
+//   * The `public_key_id` is not recognized by the verifier.
+//   * The public key that `public_key_id` refers to does not verify
+// the
+//     signature with respect to the payload.
+//
+// The `signature` contents SHOULD NOT be "attached" (where the payload
+// is
+// included with the serialized `signature` bytes). Verifiers MUST
+// ignore any
+// "attached" payload and only verify signatures with respect to
+// explicitly
+// provided payload (e.g. a `payload` field on the proto message that
+// holds
+// this Signature, or the canonical serialization of the proto message
+// that
+// holds this signature).
+type Signature struct {
+	// PublicKeyId: The identifier for the public key that verifies this
+	// signature.
+	//   * The `public_key_id` is required.
+	//   * The `public_key_id` MUST be an RFC3986 conformant URI.
+	//   * When possible, the `public_key_id` SHOULD be an immutable
+	// reference,
+	//     such as a cryptographic digest.
+	//
+	// Examples of valid `public_key_id`s:
+	//
+	// OpenPGP V4 public key fingerprint:
+	//   * "openpgp4fpr:74FAF3B861BDA0870C7B6DEF607E48D2A663AEEA"
+	// See https://www.iana.org/assignments/uri-schemes/prov/openpgp4fpr for
+	// more
+	// details on this scheme.
+	//
+	// RFC6920 digest-named SubjectPublicKeyInfo (digest of the
+	// DER
+	// serialization):
+	//   * "ni:///sha-256;cD9o9Cq6LG3jD0iKXqEi_vdjJGecm_iXkbqVoScViaU"
+	//   *
+	// "nih:///sha-256;703f68f42aba2c6de30f488a5ea122fef76324679c9bf89791ba95
+	// a1271589a5"
+	PublicKeyId string `json:"publicKeyId,omitempty"`
+
+	// Signature: The content of the signature, an opaque bytestring.
+	// The payload that this signature verifies MUST be unambiguously
+	// provided
+	// with the Signature during verification. A wrapper message might
+	// provide
+	// the payload explicitly. Alternatively, a message might have a
+	// canonical
+	// serialization that can always be unambiguously computed to derive
+	// the
+	// payload.
+	Signature string `json:"signature,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Signature) MarshalJSON() ([]byte, error) {
+	type NoMethod Signature
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

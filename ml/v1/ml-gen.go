@@ -791,7 +791,8 @@ func (s *GoogleCloudMlV1__HyperparameterSpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudMlV1__Job: Represents a training or prediction job.
+// GoogleCloudMlV1__Job: Represents a training, prediction or
+// explanation job.
 type GoogleCloudMlV1__Job struct {
 	// CreateTime: Output only. When the job was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1161,8 +1162,33 @@ type GoogleCloudMlV1__Model struct {
 	// The model name must be unique within the project it is created in.
 	Name string `json:"name,omitempty"`
 
-	// OnlinePredictionLogging: Optional. If true, enables StackDriver
-	// Logging for online prediction.
+	// OnlinePredictionConsoleLogging: Optional. If true, enables logging of
+	// stderr and stdout streams
+	// for online prediction in Stackdriver Logging. These can be more
+	// verbose
+	// than the standard access logs (see `online_prediction_logging`) and
+	// thus
+	// can incur higher cost. However, they are helpful for debugging. Note
+	// that
+	// since Stackdriver logs may incur a cost, particularly if the total
+	// QPS
+	// in your project is high, be sure to estimate your costs before
+	// enabling
+	// this flag.
+	//
+	// Default is false.
+	OnlinePredictionConsoleLogging bool `json:"onlinePredictionConsoleLogging,omitempty"`
+
+	// OnlinePredictionLogging: Optional. If true, online prediction access
+	// logs are sent to StackDriver
+	// Logging. These logs are like standard server access logs,
+	// containing
+	// information like timestamp and latency for each request. Note
+	// that
+	// Stackdriver logs may incur a cost, particular if the total QPS in
+	// your
+	// project is high.
+	//
 	// Default is false.
 	OnlinePredictionLogging bool `json:"onlinePredictionLogging,omitempty"`
 
@@ -1442,17 +1468,21 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//   "JSON" - Each line of the file is a JSON dictionary representing
 	// one record.
 	//   "TEXT" - Deprecated. Use JSON instead.
-	//   "TF_RECORD" - INPUT ONLY. The source file is a TFRecord file.
-	//   "TF_RECORD_GZIP" - INPUT ONLY. The source file is a GZIP-compressed
-	// TFRecord file.
-	//   "CSV" - OUTPUT ONLY. Output values will be in comma-separated rows,
-	// with keys
-	// in a separate file.
+	//   "TF_RECORD" - The source file is a TFRecord file.
+	// Currently available only for input data.
+	//   "TF_RECORD_GZIP" - The source file is a GZIP-compressed TFRecord
+	// file.
+	// Currently available only for input data.
+	//   "CSV" - Values are comma-separated rows, with keys in a separate
+	// file.
+	// Currently available only for output data.
 	DataFormat string `json:"dataFormat,omitempty"`
 
 	// InputPaths: Required. The Google Cloud Storage location of the input
 	// data files.
-	// May contain wildcards.
+	// May contain wildcards. See <a
+	// href="https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNa
+	// mes</a>
 	InputPaths []string `json:"inputPaths,omitempty"`
 
 	// MaxWorkerCount: Optional. The maximum number of workers to be used
@@ -1476,12 +1506,14 @@ type GoogleCloudMlV1__PredictionInput struct {
 	//   "JSON" - Each line of the file is a JSON dictionary representing
 	// one record.
 	//   "TEXT" - Deprecated. Use JSON instead.
-	//   "TF_RECORD" - INPUT ONLY. The source file is a TFRecord file.
-	//   "TF_RECORD_GZIP" - INPUT ONLY. The source file is a GZIP-compressed
-	// TFRecord file.
-	//   "CSV" - OUTPUT ONLY. Output values will be in comma-separated rows,
-	// with keys
-	// in a separate file.
+	//   "TF_RECORD" - The source file is a TFRecord file.
+	// Currently available only for input data.
+	//   "TF_RECORD_GZIP" - The source file is a GZIP-compressed TFRecord
+	// file.
+	// Currently available only for input data.
+	//   "CSV" - Values are comma-separated rows, with keys in a separate
+	// file.
+	// Currently available only for output data.
 	OutputDataFormat string `json:"outputDataFormat,omitempty"`
 
 	// OutputPath: Required. The output Google Cloud Storage location.
@@ -1701,7 +1733,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// one of
 	// `masterConfig.imageUri` and `runtimeVersion` should be set. Learn
 	// more about
-	// [configuring custom
+	// [configuring
+	// custom
 	// containers](/ml-engine/docs/distributed-training-containers).
 	MasterConfig *GoogleCloudMlV1__ReplicaConfig `json:"masterConfig,omitempty"`
 
@@ -1855,7 +1888,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// your parameter server. If `parameterServerConfig.imageUri` has not
 	// been
 	// set, Cloud ML Engine uses the value of `masterConfig.imageUri`.
-	// Learn more about [configuring custom
+	// Learn more about [configuring
+	// custom
 	// containers](/ml-engine/docs/distributed-training-containers).
 	ParameterServerConfig *GoogleCloudMlV1__ReplicaConfig `json:"parameterServerConfig,omitempty"`
 
@@ -1990,7 +2024,8 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// worker. If `workerConfig.imageUri` has not been set, Cloud ML Engine
 	// uses
 	// the value of `masterConfig.imageUri`. Learn more about
-	// [configuring custom
+	// [configuring
+	// custom
 	// containers](/ml-engine/docs/distributed-training-containers).
 	WorkerConfig *GoogleCloudMlV1__ReplicaConfig `json:"workerConfig,omitempty"`
 
@@ -2131,7 +2166,7 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
-// Next ID: 29
+// Next ID: 30
 type GoogleCloudMlV1__Version struct {
 	// AutoScaling: Automatically scale the number of nodes used to serve
 	// the model in
@@ -2911,20 +2946,20 @@ type GoogleProtobuf__Empty struct {
 }
 
 // GoogleRpc__Status: The `Status` type defines a logical error model
-// that is suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// that is suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

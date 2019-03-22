@@ -1388,6 +1388,10 @@ type Creative struct {
 	// Possible values:
 	//   "ATTRIBUTE_UNSPECIFIED" - Do not use. This is a placeholder value
 	// only.
+	//   "IMAGE_RICH_MEDIA" - The creative is of type image/rich media. For
+	// pretargeting.
+	//   "ADOBE_FLASH_FLV" - The creative is of video type Adobe Flash FLV.
+	// For pretargeting.
 	//   "IS_TAGGED" - The creative is tagged.
 	//   "IS_COOKIE_TARGETED" - The creative is cookie targeted.
 	//   "IS_USER_INTEREST_TARGETED" - The creative is user interest
@@ -1417,14 +1421,29 @@ type Creative struct {
 	//   "RICH_MEDIA_CAPABILITY_TYPE_MRAID" - The creative is MRAID.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_FLASH" - The creative is Flash.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_HTML5" - The creative is HTML5.
+	//   "SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
+	// video type of skippable instream video.
+	// For pretargeting.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_SSL" - The creative is SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_NON_SSL" - The creative is non-SSL.
 	//   "RICH_MEDIA_CAPABILITY_TYPE_INTERSTITIAL" - The creative is an
 	// interstitial.
+	//   "NON_SKIPPABLE_INSTREAM_VIDEO" - The creative has an instream VAST
+	// video type of non-skippable instream
+	// video. For pretargeting.
 	//   "NATIVE_ELIGIBILITY_ELIGIBLE" - The creative is eligible for
 	// native.
+	//   "NON_VPAID" - The creative has an instream VAST video type of
+	// non-VPAID. For
+	// pretargeting.
 	//   "NATIVE_ELIGIBILITY_NOT_ELIGIBLE" - The creative is not eligible
 	// for native.
+	//   "ANY_INTERSTITIAL" - The creative has an interstitial size of any
+	// interstitial. For
+	// pretargeting.
+	//   "NON_INTERSTITIAL" - The creative has an interstitial size of non
+	// interstitial. For
+	// pretargeting.
 	//   "IN_BANNER_VIDEO" - The video type is in-banner video.
 	//   "RENDERING_SIZELESS_ADX" - The creative can dynamically resize to
 	// fill a variety of slot sizes.

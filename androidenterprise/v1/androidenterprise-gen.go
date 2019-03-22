@@ -2768,6 +2768,9 @@ type ProductPolicy struct {
 	// AutoInstallPolicy: The auto-install policy for the product.
 	AutoInstallPolicy *AutoInstallPolicy `json:"autoInstallPolicy,omitempty"`
 
+	// ManagedConfiguration: The managed configuration for the product.
+	ManagedConfiguration *ManagedConfiguration `json:"managedConfiguration,omitempty"`
+
 	// ProductId: The ID of the product. For example,
 	// "app:com.google.android.gm".
 	ProductId string `json:"productId,omitempty"`

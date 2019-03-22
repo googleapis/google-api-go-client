@@ -2738,7 +2738,7 @@ func (r *ProjectsRulesetsService) List(name string) *ProjectsRulesetsListCall {
 // parses strings that conform to the RFC 3339 date/time
 // specifications.
 //
-// Example: `create_time > date("2017-01-01") AND name=UUID-*`
+// Example: `create_time > date("2017-01-01T00:00:00Z") AND name=UUID-*`
 func (c *ProjectsRulesetsListCall) Filter(filter string) *ProjectsRulesetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2870,7 +2870,7 @@ func (c *ProjectsRulesetsListCall) Do(opts ...googleapi.CallOption) (*ListRulese
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "`Ruleset` filter. The list method supports filters with restrictions on\n`Ruleset.name`.\n\nFilters on `Ruleset.create_time` should use the `date` function which\nparses strings that conform to the RFC 3339 date/time specifications.\n\nExample: `create_time \u003e date(\"2017-01-01\") AND name=UUID-*`",
+	//       "description": "`Ruleset` filter. The list method supports filters with restrictions on\n`Ruleset.name`.\n\nFilters on `Ruleset.create_time` should use the `date` function which\nparses strings that conform to the RFC 3339 date/time specifications.\n\nExample: `create_time \u003e date(\"2017-01-01T00:00:00Z\") AND name=UUID-*`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

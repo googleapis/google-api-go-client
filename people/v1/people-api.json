@@ -27,7 +27,7 @@
           "description": "View your email address"
         },
         "https://www.googleapis.com/auth/userinfo.profile": {
-          "description": "View your basic profile info"
+          "description": "See your personal info, including any personal info you've made publically available"
         }
       }
     }
@@ -585,7 +585,7 @@
       }
     }
   },
-  "revision": "20190313",
+  "revision": "20190320",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

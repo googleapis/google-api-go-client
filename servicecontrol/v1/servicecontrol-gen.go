@@ -1666,7 +1666,7 @@ type Operation struct {
 	// - This can be in one of the following formats:
 	//     - project:PROJECT_ID,
 	//     - project`_`number:PROJECT_NUMBER,
-	//     - projects/RPOJECT_ID or PROJECT_NUMBER,
+	//     - projects/PROJECT_ID or PROJECT_NUMBER,
 	//     - folders/FOLDER_NUMBER,
 	//     - organizations/ORGANIZATION_NUMBER,
 	//     - api`_`key:API_KEY.

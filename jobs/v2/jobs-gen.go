@@ -2863,10 +2863,10 @@ type Job struct {
 	// updated with the UpdateJob API. An expired job can be updated
 	// and
 	// opened again by using a future expiration timestamp. Updating an
-	// expired job fails if there is another
-	// existing open job with same requisition_id, company_name
-	// and
-	// language_code.
+	// expired
+	// job fails if there is another existing open job with
+	// same
+	// requisition_id, company_name and language_code.
 	//
 	// The expired jobs are retained in our system for 90 days. However,
 	// the
@@ -2891,12 +2891,13 @@ type Job struct {
 	// time not provided.
 	//
 	// If this value is not provided at the time of job creation or is
-	// invalid, the job posting
-	// expires after 30 days from the job's creation time. For example, if
-	// the
-	// job was created on 2017/01/01 13:00AM UTC with an unspecified
-	// expiration
-	// date, the job expires after 2017/01/31 13:00AM UTC.
+	// invalid,
+	// the job posting expires after 30 days from the job's creation time.
+	// For
+	// example, if the job was created on 2017/01/01 13:00AM UTC with
+	// an
+	// unspecified expiration date, the job expires after 2017/01/31 13:00AM
+	// UTC.
 	//
 	// If this value is not provided but expiry_date is, expiry_date
 	// is

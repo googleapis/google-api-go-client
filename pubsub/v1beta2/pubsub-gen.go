@@ -555,6 +555,59 @@ func (s *ModifyPushConfigRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OidcToken: Contains information needed for generating an
+// [OpenID
+// Connect
+// token](https://developers.google.com/identity/protocols/OpenID
+// Connect).
+type OidcToken struct {
+	// Audience: Audience to be used when generating OIDC token. The
+	// audience claim
+	// identifies the recipients that the JWT is intended for. The
+	// audience
+	// value is a single case-sensitive string. Having multiple values
+	// (array)
+	// for the audience field is not supported. More info about the OIDC
+	// JWT
+	// token audience here:
+	// https://tools.ietf.org/html/rfc7519#section-4.1.3
+	// Note: if not specified, the Push endpoint URL will be used.
+	Audience string `json:"audience,omitempty"`
+
+	// ServiceAccountEmail: [Service
+	// account
+	// email](https://cloud.google.com/iam/docs/service-accounts)
+	// to be used for generating the OIDC token. The caller
+	// (for
+	// CreateSubscription, UpdateSubscription, and ModifyPushConfig RPCs)
+	// must
+	// have the iam.serviceAccounts.actAs permission for the service
+	// account.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audience") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OidcToken) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcToken
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: Defines an Identity and Access Management (IAM) policy. It is
 // used to
 // specify access control policies for Cloud Platform resources.
@@ -893,6 +946,11 @@ type PushConfig struct {
 	// * `v1` or `v1beta2`: uses the push format defined in the v1 Pub/Sub
 	// API.
 	Attributes map[string]string `json:"attributes,omitempty"`
+
+	// OidcToken: If specified, Pub/Sub will generate and attach an OIDC JWT
+	// token as an
+	// `Authorization` header in the HTTP request for every pushed message.
+	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
 	// PushEndpoint: A URL locating the endpoint to which messages should be
 	// pushed.

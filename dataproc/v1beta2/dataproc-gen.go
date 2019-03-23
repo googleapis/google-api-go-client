@@ -288,48 +288,6 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AllocationAffinity: Allocation Affinity for consuming Zonal
-// allocation.
-type AllocationAffinity struct {
-	// Possible values:
-	//   "TYPE_UNSPECIFIED"
-	//   "NO_ALLOCATION" - Do not consume from any allocated capacity.
-	//   "ANY_ALLOCATION" - Consume any allocation available.
-	//   "SPECIFIC_ALLOCATION" - Must consume from a specific allocation.
-	// Must specify key value fields for specifying the allocations.
-	ConsumeAllocationType string `json:"consumeAllocationType,omitempty"`
-
-	// Key: Corresponds to the label key of Allocation resource.
-	Key string `json:"key,omitempty"`
-
-	// Values: Corresponds to the label values of allocation resource.
-	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ConsumeAllocationType") to unconditionally include in API requests.
-	// By default, fields with empty values are omitted from API requests.
-	// However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConsumeAllocationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AllocationAffinity) MarshalJSON() ([]byte, error) {
-	type NoMethod AllocationAffinity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AutoscalingConfig: Autoscaling Policy config associated with the
 // cluster.
 type AutoscalingConfig struct {
@@ -696,8 +654,10 @@ type ClusterConfig struct {
 	// and all worker nodes. You can test a node's <code>role</code>
 	// metadata to run an executable on a master or worker node, as shown
 	// below using curl (you can also use wget):
-	// ROLE=$(curl -H Metadata-Flavor:Google
-	// http://metadata/computeMetadata/v1beta2/instance/attributes/dataproc-role)
+	// ROLE=$(curl -H
+	// Metadata-Flavor:Google
+	// http://metadata/computeMetadata/v1beta2/instanc
+	// e/attributes/dataproc-role)
 	// if [[ "${ROLE}" == 'Master' ]]; then
 	//   ... master specific actions ...
 	// else
@@ -1223,10 +1183,6 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 // GceClusterConfig: Common config settings for resources of Compute
 // Engine cluster instances, applicable to all instances in the cluster.
 type GceClusterConfig struct {
-	// AllocationAffinity: Allocation Affinity for consuming Zonal
-	// allocation.
-	AllocationAffinity *AllocationAffinity `json:"allocationAffinity,omitempty"`
-
 	// InternalIpOnly: Optional. If true, all instances in the cluster will
 	// only have internal IP addresses. By default, clusters are not
 	// restricted to internal IP addresses, and will have ephemeral external
@@ -1255,6 +1211,10 @@ type GceClusterConfig struct {
 	// de
 	// fault
 	NetworkUri string `json:"networkUri,omitempty"`
+
+	// ReservationAffinity: Optional. Reservation Affinity for consuming
+	// Zonal reservation.
+	ReservationAffinity *ReservationAffinity `json:"reservationAffinity,omitempty"`
 
 	// ServiceAccount: Optional. The service account of the instances.
 	// Defaults to the default Compute Engine service account. Custom
@@ -1312,15 +1272,15 @@ type GceClusterConfig struct {
 	// us-central1-f
 	ZoneUri string `json:"zoneUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AllocationAffinity")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "InternalIpOnly") to
+	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
 	// server regardless of whether the field is empty or not. This may be
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllocationAffinity") to
+	// NullFields is a list of field names (e.g. "InternalIpOnly") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1471,8 +1431,10 @@ func (s *HiveJob) MarshalJSON() ([]byte, error) {
 type InstanceGroupAutoscalingPolicyConfig struct {
 	// MaxInstances: Optional. Maximum number of instances for this group.
 	// Required for primary workers. Note that by default, clusters will not
-	// use secondary workers.Primary workers - Bounds: [min_instances, ).
-	// Secondary workers - Bounds: [min_instances, ). Default: 0.
+	// use secondary workers. Required for secondary workers if the minimum
+	// secondary instances is set.Primary workers - Bounds: [min_instances,
+	// ). Required. Secondary workers - Bounds: [min_instances, ). Default:
+	// 0.
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 
 	// MinInstances: Optional. Minimum number of instances for this
@@ -1480,19 +1442,6 @@ type InstanceGroupAutoscalingPolicyConfig struct {
 	// Secondary workers - Bounds: 0, max_instances. Default: 0.
 	MinInstances int64 `json:"minInstances,omitempty"`
 
-	// Weight: Optional. Weight for instance group. Determines fraction of
-	// total workers in cluster that will be composed of instances from this
-	// instance group (e.g. if primary workers have weight 2 and secondary
-	// workers have weight 1, then the cluster should have approximately 2
-	// primary workers to each secondary worker. Cluster may not reach these
-	// exact weights if constrained by min/max bounds or other autoscaling
-	// configurations.Note that all groups have an equal weight by default,
-	// so the cluster will attempt to maintain an equal number of workers in
-	// each group within configured size bounds per group. The cluster may
-	// not reach this balance of weights if not allowed by worker-count
-	// bounds. For example, if max_instances for secondary workers is 0,
-	// only primary workers will be added. The cluster can also be out of
-	// balance when created.Default: 1.
 	Weight int64 `json:"weight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxInstances") to
@@ -2874,6 +2823,51 @@ type RegexValidation struct {
 
 func (s *RegexValidation) MarshalJSON() ([]byte, error) {
 	type NoMethod RegexValidation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReservationAffinity: Reservation Affinity for consuming Zonal
+// reservation.
+type ReservationAffinity struct {
+	// ConsumeReservationType: Optional. Type of reservation to consume
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "NO_RESERVATION" - Do not consume from any allocated capacity.
+	//   "ANY_RESERVATION" - Consume any reservation available.
+	//   "SPECIFIC_RESERVATION" - Must consume from a specific reservation.
+	// Must specify key value fields for specifying the reservations.
+	ConsumeReservationType string `json:"consumeReservationType,omitempty"`
+
+	// Key: Optional. Corresponds to the label key of reservation resource.
+	Key string `json:"key,omitempty"`
+
+	// Values: Optional. Corresponds to the label values of reservation
+	// resource.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConsumeReservationType") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumeReservationType")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReservationAffinity) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationAffinity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8776,33 +8770,38 @@ func (c *ProjectsRegionsClustersPatchCall) RequestId(requestId string) *Projects
 // </tr>
 // <tr>
 // <td>config.worker_config.num_instances</td><td>
-// Resize primary worker
+// Resize primary
+// worker
 // group</td>
 // </tr>
 // <tr>
-// <td>config.secondary_worker_config.num_instances
-// </td><td>Resize secondary worker
+// <td>config.secondary_worker_config.num_in
+// stances</td><td>Resize secondary
+// worker
 // group</td>
 // </tr>
 // <tr>
 // <td>config.lifecycle_config.auto_delete_ttl</td>
-// <td>Reset MAX TTL
+// <td>Reset MAX
+// TTL
 // duration</td>
 // </tr>
 // <tr>
-// <td>config.lifecycle_config.auto_delete_time<
-// /td><td>Update MAX TTL deletion
+// <td>config.lifecycle_config.auto_delete_t
+// ime</td><td>Update MAX TTL
+// deletion
 // timestamp</td>
 // </tr>
 // <tr>
 // <td>config.lifecycle_config.idle_delete_ttl<
-// /td><td>Update Idle TTL
+// /td><td>Update Idle
+// TTL
 // duration</td>
 // </tr>
 // <tr>
-// <td>config.autoscaling_config.policy_uri</td>
-// <td>Use, stop using, or change autoscaling
-// policies</td>
+// <td>config.autoscaling_config.policy_uri<
+// /td><td>Use, stop using, or change
+// autoscaling policies</td>
 // </tr>
 // </table>
 func (c *ProjectsRegionsClustersPatchCall) UpdateMask(updateMask string) *ProjectsRegionsClustersPatchCall {
@@ -8942,7 +8941,7 @@ func (c *ProjectsRegionsClustersPatchCall) Do(opts ...googleapi.CallOption) (*Op
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Specifies the path, relative to Cluster, of the field to update. For example, to change the number of workers in a cluster to 5, the update_mask parameter would be specified as config.worker_config.num_instances, and the PATCH request body would specify the new value, as follows:\n{\n  \"config\":{\n    \"workerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\nSimilarly, to change the number of preemptible workers in a cluster to 5, the update_mask parameter would be config.secondary_worker_config.num_instances, and the PATCH request body would be set as follows:\n{\n  \"config\":{\n    \"secondaryWorkerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\n\u003cstrong\u003eNote:\u003c/strong\u003e currently only the following fields can be updated:\n\u003ctable\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eMask\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e\u003cstrong\u003ePurpose\u003c/strong\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003elabels\u003c/td\u003e\u003ctd\u003eUpdates labels\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.worker_config.num_instances\u003c/td\u003e\u003ctd\u003eResize primary worker group\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.secondary_worker_config.num_instances\u003c/td\u003e\u003ctd\u003eResize secondary worker group\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.auto_delete_ttl\u003c/td\u003e\u003ctd\u003eReset MAX TTL duration\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.auto_delete_time\u003c/td\u003e\u003ctd\u003eUpdate MAX TTL deletion timestamp\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.idle_delete_ttl\u003c/td\u003e\u003ctd\u003eUpdate Idle TTL duration\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.autoscaling_config.policy_uri\u003c/td\u003e\u003ctd\u003eUse, stop using, or change autoscaling policies\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/table\u003e",
+	//       "description": "Required. Specifies the path, relative to Cluster, of the field to update. For example, to change the number of workers in a cluster to 5, the update_mask parameter would be specified as config.worker_config.num_instances, and the PATCH request body would specify the new value, as follows:\n{\n  \"config\":{\n    \"workerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\nSimilarly, to change the number of preemptible workers in a cluster to 5, the update_mask parameter would be config.secondary_worker_config.num_instances, and the PATCH request body would be set as follows:\n{\n  \"config\":{\n    \"secondaryWorkerConfig\":{\n      \"numInstances\":\"5\"\n    }\n  }\n}\n\u003cstrong\u003eNote:\u003c/strong\u003e currently only the following fields can be updated:\n\u003ctable\u003e\n\u003ctr\u003e\n\u003ctd\u003e\u003cstrong\u003eMask\u003c/strong\u003e\u003c/td\u003e\u003ctd\u003e\u003cstrong\u003ePurpose\u003c/strong\u003e\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003elabels\u003c/td\u003e\u003ctd\u003eUpdates labels\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.worker_config.num_instances\u003c/td\u003e\u003ctd\u003eResize primary worker\ngroup\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.secondary_worker_config.num_instances\u003c/td\u003e\u003ctd\u003eResize secondary\nworker group\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.auto_delete_ttl\u003c/td\u003e\u003ctd\u003eReset MAX TTL\nduration\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.auto_delete_time\u003c/td\u003e\u003ctd\u003eUpdate MAX TTL\ndeletion timestamp\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.lifecycle_config.idle_delete_ttl\u003c/td\u003e\u003ctd\u003eUpdate Idle TTL\nduration\u003c/td\u003e\n\u003c/tr\u003e\n\u003ctr\u003e\n\u003ctd\u003econfig.autoscaling_config.policy_uri\u003c/td\u003e\u003ctd\u003eUse, stop using, or change\nautoscaling policies\u003c/td\u003e\n\u003c/tr\u003e\n\u003c/table\u003e",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

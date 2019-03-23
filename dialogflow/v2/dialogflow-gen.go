@@ -250,7 +250,9 @@ type GoogleCloudDialogflowV2Agent struct {
 	// AvatarUri: Optional. The URI of the agent's avatar.
 	// Avatars are used throughout the Dialogflow console and in the
 	// self-hosted
-	// [Web Demo](https://dialogflow.com/docs/integrations/web-demo)
+	// [Web
+	// Demo](https://cloud.google.com/dialogflow-enterprise/
+	// docs/integrations/web-demo)
 	// integration.
 	AvatarUri string `json:"avatarUri,omitempty"`
 
@@ -270,11 +272,14 @@ type GoogleCloudDialogflowV2Agent struct {
 	ClassificationThreshold float64 `json:"classificationThreshold,omitempty"`
 
 	// DefaultLanguageCode: Required. The default language of the agent as a
-	// language tag. See
-	// [Language Support](https://dialogflow.com/docs/reference/language)
-	// for a
-	// list of the currently supported language codes.
-	// This field cannot be set by the `Update` method.
+	// language tag.
+	// See
+	// [Language
+	// Support](https://cloud.google.com/dialogflow-enterprise/
+	// docs/reference/language)
+	// for a list of the currently supported language codes. This field
+	// cannot be
+	// set by the `Update` method.
 	DefaultLanguageCode string `json:"defaultLanguageCode,omitempty"`
 
 	// Description: Optional. The description of this agent.
@@ -366,13 +371,14 @@ type GoogleCloudDialogflowV2BatchCreateEntitiesRequest struct {
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
 	// `entities`. If not
-	// specified, the agent's default language is used.
-	// [More than a
-	// dozen
-	// languages](https://dialogflow.com/docs/reference/language) are
-	// supported.
-	// Note: languages must be enabled in the agent, before they can be
+	// specified, the agent's default language is
 	// used.
+	// [Many
+	// languages](https://cloud.google.com/dialogflow-enterprise/
+	// docs/reference/language)
+	// are supported. Note: languages must be enabled in the agent before
+	// they can
+	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Entities") to
@@ -410,13 +416,14 @@ type GoogleCloudDialogflowV2BatchDeleteEntitiesRequest struct {
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
 	// `entities`. If not
-	// specified, the agent's default language is used.
-	// [More than a
-	// dozen
-	// languages](https://dialogflow.com/docs/reference/language) are
-	// supported.
-	// Note: languages must be enabled in the agent, before they can be
+	// specified, the agent's default language is
 	// used.
+	// [Many
+	// languages](https://cloud.google.com/dialogflow-enterprise/
+	// docs/reference/language)
+	// are supported. Note: languages must be enabled in the agent before
+	// they can
+	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EntityValues") to
@@ -513,13 +520,14 @@ type GoogleCloudDialogflowV2BatchUpdateEntitiesRequest struct {
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
 	// `entities`. If not
-	// specified, the agent's default language is used.
-	// [More than a
-	// dozen
-	// languages](https://dialogflow.com/docs/reference/language) are
-	// supported.
-	// Note: languages must be enabled in the agent, before they can be
+	// specified, the agent's default language is
 	// used.
+	// [Many
+	// languages](https://cloud.google.com/dialogflow-enterprise/
+	// docs/reference/language)
+	// are supported. Note: languages must be enabled in the agent before
+	// they can
+	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -566,13 +574,14 @@ type GoogleCloudDialogflowV2BatchUpdateEntityTypesRequest struct {
 
 	// LanguageCode: Optional. The language of entity synonyms defined in
 	// `entity_types`. If not
-	// specified, the agent's default language is used.
-	// [More than a
-	// dozen
-	// languages](https://dialogflow.com/docs/reference/language) are
-	// supported.
-	// Note: languages must be enabled in the agent, before they can be
+	// specified, the agent's default language is
 	// used.
+	// [Many
+	// languages](https://cloud.google.com/dialogflow-enterprise/
+	// docs/reference/language)
+	// are supported. Note: languages must be enabled in the agent before
+	// they can
+	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -658,12 +667,13 @@ type GoogleCloudDialogflowV2BatchUpdateIntentsRequest struct {
 	// and rich messages
 	// defined in `intents`. If not specified, the agent's default language
 	// is
-	// used. [More than a
-	// dozen
-	// languages](https://dialogflow.com/docs/reference/language) are
-	// supported.
-	// Note: languages must be enabled in the agent, before they can be
 	// used.
+	// [Many
+	// languages](https://cloud.google.com/dialogflow-enterprise/docs/r
+	// eference/language)
+	// are supported. Note: languages must be enabled in the agent before
+	// they can
+	// be used.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// UpdateMask: Optional. The mask to control which fields get updated.
@@ -745,9 +755,11 @@ type GoogleCloudDialogflowV2Context struct {
 
 	// Parameters: Optional. The collection of parameters associated with
 	// this context.
-	// Refer to [this
-	// doc](https://dialogflow.com/docs/actions-and-parameters) for
-	// syntax.
+	// Refer to
+	// [this
+	// doc](https://cloud.google.com/dialogflow-enterprise/docs/intents
+	// -actions-parameters)
+	// for syntax.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1038,11 +1050,12 @@ func (s *GoogleCloudDialogflowV2EntityTypeEntity) MarshalJSON() ([]byte, error) 
 type GoogleCloudDialogflowV2EventInput struct {
 	// LanguageCode: Required. The language of this query. See
 	// [Language
-	// Support](https://dialogflow.com/docs/languages) for a list of
-	// the
-	// currently supported language codes. Note that queries in the same
-	// session
-	// do not necessarily need to specify the same language.
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/language)
+	// for a list of the currently supported language codes. Note that
+	// queries in
+	// the same session do not necessarily need to specify the same
+	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.
@@ -1268,11 +1281,12 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// Dialogflow does not do
 	// translations. See
 	// [Language
-	// Support](https://dialogflow.com/docs/languages) for a list of
-	// the
-	// currently supported language codes. Note that queries in the same
-	// session
-	// do not necessarily need to specify the same language.
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/languages)
+	// for a list of the currently supported language codes. Note that
+	// queries in
+	// the same session do not necessarily need to specify the same
+	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// PhraseHints: Optional. The collection of phrase hints which are used
@@ -2957,8 +2971,10 @@ type GoogleCloudDialogflowV2QueryResult struct {
 
 	// LanguageCode: The language that was triggered during intent
 	// detection.
-	// See [Language
-	// Support](https://dialogflow.com/docs/reference/language)
+	// See
+	// [Language
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/language)
 	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -3226,12 +3242,14 @@ func (s *GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error)
 // text to be processed.
 type GoogleCloudDialogflowV2TextInput struct {
 	// LanguageCode: Required. The language of this conversational query.
-	// See [Language
-	// Support](https://dialogflow.com/docs/languages) for a list of
-	// the
-	// currently supported language codes. Note that queries in the same
-	// session
-	// do not necessarily need to specify the same language.
+	// See
+	// [Language
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/language)
+	// for a list of the currently supported language codes. Note that
+	// queries in
+	// the same session do not necessarily need to specify the same
+	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Text: Required. The UTF-8 encoded natural language text to be
@@ -3490,9 +3508,11 @@ type GoogleCloudDialogflowV2beta1Context struct {
 
 	// Parameters: Optional. The collection of parameters associated with
 	// this context.
-	// Refer to [this
-	// doc](https://dialogflow.com/docs/actions-and-parameters) for
-	// syntax.
+	// Refer to
+	// [this
+	// doc](https://cloud.google.com/dialogflow-enterprise/docs/intents
+	// -actions-parameters)
+	// for syntax.
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LifespanCount") to
@@ -3656,11 +3676,12 @@ func (s *GoogleCloudDialogflowV2beta1EntityTypeEntity) MarshalJSON() ([]byte, er
 type GoogleCloudDialogflowV2beta1EventInput struct {
 	// LanguageCode: Required. The language of this query. See
 	// [Language
-	// Support](https://dialogflow.com/docs/languages) for a list of
-	// the
-	// currently supported language codes. Note that queries in the same
-	// session
-	// do not necessarily need to specify the same language.
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/language)
+	// for a list of the currently supported language codes. Note that
+	// queries in
+	// the same session do not necessarily need to specify the same
+	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// Name: Required. The unique identifier of the event.
@@ -5407,8 +5428,10 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 
 	// LanguageCode: The language that was triggered during intent
 	// detection.
-	// See [Language
-	// Support](https://dialogflow.com/docs/reference/language)
+	// See
+	// [Language
+	// Support](https://cloud.google.com/dialogflow-enterprise/docs
+	// /reference/language)
 	// for a list of the currently supported language codes.
 	LanguageCode string `json:"languageCode,omitempty"`
 
@@ -7237,13 +7260,14 @@ func (r *ProjectsAgentEntityTypesService) Create(parent string, googleclouddialo
 
 // LanguageCode sets the optional parameter "languageCode": The language
 // of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
+// specified, the agent's default language is
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentEntityTypesCreateCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -7349,7 +7373,7 @@ func (c *ProjectsAgentEntityTypesCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7526,13 +7550,14 @@ func (r *ProjectsAgentEntityTypesService) Get(name string) *ProjectsAgentEntityT
 
 // LanguageCode sets the optional parameter "languageCode": The language
 // to retrieve entity synonyms for. If not specified,
-// the agent's default language is used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
+// the agent's default language is
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentEntityTypesGetCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -7646,7 +7671,7 @@ func (c *ProjectsAgentEntityTypesGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language to retrieve entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7690,13 +7715,14 @@ func (r *ProjectsAgentEntityTypesService) List(parent string) *ProjectsAgentEnti
 
 // LanguageCode sets the optional parameter "languageCode": The language
 // to list entity synonyms for. If not specified,
-// the agent's default language is used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
+// the agent's default language is
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentEntityTypesListCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -7826,7 +7852,7 @@ func (c *ProjectsAgentEntityTypesListCall) Do(opts ...googleapi.CallOption) (*Go
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language to list entity synonyms for. If not specified,\nthe agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -7903,13 +7929,14 @@ func (r *ProjectsAgentEntityTypesService) Patch(nameid string, googleclouddialog
 
 // LanguageCode sets the optional parameter "languageCode": The language
 // of entity synonyms defined in `entity_type`. If not
-// specified, the agent's default language is used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
+// specified, the agent's default language is
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentEntityTypesPatchCall) LanguageCode(languageCode string) *ProjectsAgentEntityTypesPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -8022,7 +8049,7 @@ func (c *ProjectsAgentEntityTypesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "languageCode": {
-	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language of entity synonyms defined in `entity_type`. If not\nspecified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8806,12 +8833,13 @@ func (c *ProjectsAgentIntentsCreateCall) IntentView(intentView string) *Projects
 // of training phrases, parameters and rich messages
 // defined in `intent`. If not specified, the agent's default language
 // is
-// used. [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/docs/r
+// eference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentIntentsCreateCall) LanguageCode(languageCode string) *ProjectsAgentIntentsCreateCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -8925,7 +8953,7 @@ func (c *ProjectsAgentIntentsCreateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9116,12 +9144,12 @@ func (c *ProjectsAgentIntentsGetCall) IntentView(intentView string) *ProjectsAge
 // to retrieve training phrases, parameters and rich
 // messages for. If not specified, the agent's default language is
 // used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
-// used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentIntentsGetCall) LanguageCode(languageCode string) *ProjectsAgentIntentsGetCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -9243,7 +9271,7 @@ func (c *ProjectsAgentIntentsGetCall) Do(opts ...googleapi.CallOption) (*GoogleC
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language to retrieve training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9300,11 +9328,12 @@ func (c *ProjectsAgentIntentsListCall) IntentView(intentView string) *ProjectsAg
 // to list training phrases, parameters and rich
 // messages for. If not specified, the agent's default language is
 // used.
-// [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent before they can be used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/
+// docs/reference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentIntentsListCall) LanguageCode(languageCode string) *ProjectsAgentIntentsListCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -9443,7 +9472,7 @@ func (c *ProjectsAgentIntentsListCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent before they can be used.",
+	//       "description": "Optional. The language to list training phrases, parameters and rich\nmessages for. If not specified, the agent's default language is used.\n[Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9533,12 +9562,13 @@ func (c *ProjectsAgentIntentsPatchCall) IntentView(intentView string) *ProjectsA
 // of training phrases, parameters and rich messages
 // defined in `intent`. If not specified, the agent's default language
 // is
-// used. [More than a
-// dozen
-// languages](https://dialogflow.com/docs/reference/language) are
-// supported.
-// Note: languages must be enabled in the agent, before they can be
 // used.
+// [Many
+// languages](https://cloud.google.com/dialogflow-enterprise/docs/r
+// eference/language)
+// are supported. Note: languages must be enabled in the agent before
+// they can
+// be used.
 func (c *ProjectsAgentIntentsPatchCall) LanguageCode(languageCode string) *ProjectsAgentIntentsPatchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
@@ -9659,7 +9689,7 @@ func (c *ProjectsAgentIntentsPatchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//       "type": "string"
 	//     },
 	//     "languageCode": {
-	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [More than a dozen\nlanguages](https://dialogflow.com/docs/reference/language) are supported.\nNote: languages must be enabled in the agent, before they can be used.",
+	//       "description": "Optional. The language of training phrases, parameters and rich messages\ndefined in `intent`. If not specified, the agent's default language is\nused. [Many\nlanguages](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nare supported. Note: languages must be enabled in the agent before they can\nbe used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

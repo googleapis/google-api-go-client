@@ -167,8 +167,8 @@ type ServicesTenancyUnitsService struct {
 // configured tenant project to a tenancy
 // unit.
 type AddTenantProjectRequest struct {
-	// ProjectConfig: Configuration of the new tenant project that will be
-	// added to tenancy unit
+	// ProjectConfig: Configuration of the new tenant project to be added to
+	// tenancy unit
 	// resources.
 	ProjectConfig *TenantProjectConfig `json:"projectConfig,omitempty"`
 
@@ -340,10 +340,12 @@ type AttachTenantProjectRequest struct {
 	ExternalResource string `json:"externalResource,omitempty"`
 
 	// ReservedResource: When attaching a reserved project already in
-	// Tenancy Units, this is the
-	// tag of tenant resource under the tenancy unit for the service's
-	// producer
-	// project. The reserved tenant resource must be in active state.
+	// tenancy units, this is the
+	// tag of a tenant resource under the tenancy unit for the managed
+	// service's
+	// service producer project. The reserved tenant resource must be in
+	// an
+	// active state.
 	ReservedResource string `json:"reservedResource,omitempty"`
 
 	// Tag: Tag of the tenant resource after attachment.
@@ -895,7 +897,7 @@ func (s *Billing) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BillingConfig: Describes billing configuration for a new tenant
+// BillingConfig: Describes the billing configuration for a new tenant
 // project.
 type BillingConfig struct {
 	// BillingAccount: Name of the billing account.
@@ -1131,19 +1133,21 @@ func (s *Control) MarshalJSON() ([]byte, error) {
 }
 
 // CreateTenancyUnitRequest: Request to create a tenancy unit for a
-// consumer of a service.
+// service consumer of a managed service.
 type CreateTenancyUnitRequest struct {
-	// TenancyUnitId: Optional producer provided identifier of the tenancy
-	// unit.
+	// TenancyUnitId: Optional service producer-provided identifier of the
+	// tenancy unit.
 	// Must be no longer than 40 characters and preferably URI friendly.
-	// If it is not provided, a UID for the tenancy unit will be auto
-	// generated.
-	// It must be unique across a service.
-	// If the tenancy unit already exists for the service and consumer
-	// pair,
-	// `CreateTenancyUnit` will return the existing tenancy unit if the
-	// provided
-	// identifier is identical or empty, otherwise the call will fail.
+	// If it isn't provided, a UID for the tenancy unit is
+	// automatically
+	// generated. The identifier must be unique across a managed service.
+	// If the tenancy unit already exists for the managed service and
+	// service
+	// consumer pair, calling `CreateTenancyUnit` returns the existing
+	// tenancy
+	// unit if the provided identifier is identical or empty, otherwise the
+	// call
+	// fails.
 	TenancyUnitId string `json:"tenancyUnitId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TenancyUnitId") to
@@ -3466,7 +3470,7 @@ func (s *Page) MarshalJSON() ([]byte, error) {
 // this level)
 type PolicyBinding struct {
 	// Members: Uses the same format as in IAM policy.
-	// `member` must include both prefix and ID. For example,
+	// `member` must include both a prefix and ID. For example,
 	// `user:{emailId}`,
 	// `serviceAccount:{emailId}`, `group:{emailId}`.
 	Members []string `json:"members,omitempty"`
@@ -3672,8 +3676,8 @@ func (s *QuotaLimit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RemoveTenantProjectRequest: Request message to remove tenant project
-// resource from the tenancy unit.
+// RemoveTenantProjectRequest: Request message to remove a tenant
+// project resource from the tenancy unit.
 type RemoveTenantProjectRequest struct {
 	// Tag: Tag of the resource within the tenancy unit.
 	Tag string `json:"tag,omitempty"`
@@ -3929,19 +3933,19 @@ func (s *Service) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ServiceAccountConfig: Describes service account configuration for the
-// tenant project.
+// ServiceAccountConfig: Describes the service account configuration for
+// the tenant project.
 type ServiceAccountConfig struct {
 	// AccountId: ID of the IAM service account to be created in tenant
 	// project.
-	// The email format of the service account will
-	// be
+	// The email format of the service account
+	// is
 	// "<account-id>@<tenant-project-id>.iam.gserviceaccount.com".
-	// This account id has to be unique within tenant project and
-	// producers
-	// have to guarantee it. And it must be 6-30 characters long, and
-	// matches the
-	// regular expression `[a-z]([-a-z0-9]*[a-z0-9])`.
+	// This account ID must be unique within tenant project and
+	// service
+	// producers have to guarantee it. The ID must be 6-30 characters long,
+	// and
+	// match the following regular expression: `[a-z]([-a-z0-9]*[a-z0-9])`.
 	AccountId string `json:"accountId,omitempty"`
 
 	// TenantProjectRoles: Roles for the associated service account for the
@@ -4322,7 +4326,8 @@ type TenancyUnit struct {
 	// id}/tenancyUnits/{unit}"
 	Name string `json:"name,omitempty"`
 
-	// Service: @OutputOnly Google Cloud API name of the service owning this
+	// Service: Output only. Google Cloud API name of the managed service
+	// owning this
 	// tenancy unit.
 	// For example 'serviceconsumermanagement.googleapis.com'.
 	Service string `json:"service,omitempty"`
@@ -4360,21 +4365,20 @@ func (s *TenancyUnit) MarshalJSON() ([]byte, error) {
 
 // TenantProjectConfig: This structure defines a tenant project to be
 // added to the specified tenancy
-// unit and its initial configuration and properties. A project lien
-// will be
-// created for the tenant project to prevent the tenant project from
-// being
-// deleted accidentally. The lien will be deleted as part of tenant
-// project
-// removal.
+// unit and its initial configuration and properties. A project lien is
+// created
+// for the tenant project to prevent the tenant project from being
+// deleted
+// accidentally. The lien is deleted as part of tenant project removal.
 type TenantProjectConfig struct {
-	// BillingConfig: Billing account properties.  Billing account must be
-	// specified.
+	// BillingConfig: Billing account properties. The billing account must
+	// be specified.
 	BillingConfig *BillingConfig `json:"billingConfig,omitempty"`
 
 	// Folder: Folder where project in this tenancy unit must be
 	// located
-	// This folder must have been previously created with proper
+	// This folder must have been previously created with the
+	// required
 	// permissions for the caller to create and configure a project in
 	// it.
 	// Valid folder resource names have the format
@@ -4382,18 +4386,18 @@ type TenantProjectConfig struct {
 	// (for example, `folders/123456`).
 	Folder string `json:"folder,omitempty"`
 
-	// Labels: Labels that will be applied to this project.
+	// Labels: Labels that are applied to this project.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// ServiceAccountConfig: Configuration for IAM service account on tenant
-	// project.
+	// ServiceAccountConfig: Configuration for the IAM service account on
+	// the tenant project.
 	ServiceAccountConfig *ServiceAccountConfig `json:"serviceAccountConfig,omitempty"`
 
-	// Services: Google Cloud API names of services that will be activated
-	// on this project
-	// during provisioning.  If any of these services can not be
+	// Services: Google Cloud API names of services that are activated on
+	// this project
+	// during provisioning.  If any of these services can't be
 	// activated,
-	// request will fail.
+	// the request fails.
 	// For example: 'compute.googleapis.com','cloudfunctions.googleapis.com'
 	Services []string `json:"services,omitempty"`
 
@@ -4435,9 +4439,9 @@ type TenantProjectPolicy struct {
 	// account.
 	// At least one binding must have the role `roles/owner`. Among the list
 	// of
-	// members for `roles/owner`, at least one of them must be either `user`
-	// or
-	// `group` type.
+	// members for `roles/owner`, at least one of them must be either the
+	// `user`
+	// or `group` type.
 	PolicyBindings []*PolicyBinding `json:"policyBindings,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PolicyBindings") to
@@ -5356,7 +5360,7 @@ type ServicesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search tenancy units for a service.
+// Search: Search tenancy units for a managed service.
 func (r *ServicesService) Search(parent string) *ServicesSearchCall {
 	c := &ServicesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5365,10 +5369,9 @@ func (r *ServicesService) Search(parent string) *ServicesSearchCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of results returned by this request. Currently, the
-// default maximum is set to 1000. If page_size is not provided or the
+// default maximum is set to 1000. If `page_size` isn't provided or the
 // size
-// provided is a number larger than 1000, it will be automatically set
-// to
+// provided is a number larger than 1000, it's automatically set to
 // 1000.
 func (c *ServicesSearchCall) PageSize(pageSize int64) *ServicesSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -5395,11 +5398,11 @@ func (c *ServicesSearchCall) PageToken(pageToken string) *ServicesSearchCall {
 //
 // For example, to search tenancy units that contain at least one
 // tenant
-// resource with given tag 'xyz', use query
+// resource with a given tag 'xyz', use the query
 // `tenant_resources.tag=xyz`.
 // To search tenancy units that contain at least one tenant resource
 // with
-// given resource name 'projects/123456', use
+// a given resource name 'projects/123456', use the
 // query
 // `tenant_resources.resource=projects/123456`.
 //
@@ -5512,7 +5515,7 @@ func (c *ServicesSearchCall) Do(opts ...googleapi.CallOption) (*SearchTenancyUni
 	}
 	return ret, nil
 	// {
-	//   "description": "Search tenancy units for a service.",
+	//   "description": "Search tenancy units for a managed service.",
 	//   "flatPath": "v1/services/{servicesId}:search",
 	//   "httpMethod": "GET",
 	//   "id": "serviceconsumermanagement.services.search",
@@ -5521,7 +5524,7 @@ func (c *ServicesSearchCall) Do(opts ...googleapi.CallOption) (*SearchTenancyUni
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of results returned by this request. Currently, the\ndefault maximum is set to 1000. If page_size is not provided or the size\nprovided is a number larger than 1000, it will be automatically set to\n1000.\n\nOptional.",
+	//       "description": "The maximum number of results returned by this request. Currently, the\ndefault maximum is set to 1000. If `page_size` isn't provided or the size\nprovided is a number larger than 1000, it's automatically set to 1000.\n\nOptional.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -5539,7 +5542,7 @@ func (c *ServicesSearchCall) Do(opts ...googleapi.CallOption) (*SearchTenancyUni
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Set a query `{expression}` for querying tenancy units. Your `{expression}`\nmust be in the format: `field_name=literal_string`. The `field_name` is the\nname of the field you want to compare. Supported fields are\n`tenant_resources.tag` and `tenant_resources.resource`.\n\nFor example, to search tenancy units that contain at least one tenant\nresource with given tag 'xyz', use query `tenant_resources.tag=xyz`.\nTo search tenancy units that contain at least one tenant resource with\ngiven resource name 'projects/123456', use query\n`tenant_resources.resource=projects/123456`.\n\nMultiple expressions can be joined with `AND`s. Tenancy units must match\nall expressions to be included in the result set. For example,\n`tenant_resources.tag=xyz AND tenant_resources.resource=projects/123456`\n\nOptional.",
+	//       "description": "Set a query `{expression}` for querying tenancy units. Your `{expression}`\nmust be in the format: `field_name=literal_string`. The `field_name` is the\nname of the field you want to compare. Supported fields are\n`tenant_resources.tag` and `tenant_resources.resource`.\n\nFor example, to search tenancy units that contain at least one tenant\nresource with a given tag 'xyz', use the query `tenant_resources.tag=xyz`.\nTo search tenancy units that contain at least one tenant resource with\na given resource name 'projects/123456', use the query\n`tenant_resources.resource=projects/123456`.\n\nMultiple expressions can be joined with `AND`s. Tenancy units must match\nall expressions to be included in the result set. For example,\n`tenant_resources.tag=xyz AND tenant_resources.resource=projects/123456`\n\nOptional.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5588,12 +5591,13 @@ type ServicesTenancyUnitsAddProjectCall struct {
 }
 
 // AddProject: Add a new tenant project to the tenancy unit.
-// There can be at most 512 tenant projects in a tenancy unit.
+// There can be a maximum of 512 tenant projects in a tenancy unit.
 // If there are previously failed `AddTenantProject` calls, you might
 // need to
-// call `RemoveTenantProject` first to clean them before you can make
-// another
-// `AddTenantProject` with the same tag.
+// call `RemoveTenantProject` first to resolve them before you can
+// make
+// another call to `AddTenantProject` with the same
+// tag.
 // Operation<response: Empty>.
 func (r *ServicesTenancyUnitsService) AddProject(parent string, addtenantprojectrequest *AddTenantProjectRequest) *ServicesTenancyUnitsAddProjectCall {
 	c := &ServicesTenancyUnitsAddProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5692,7 +5696,7 @@ func (c *ServicesTenancyUnitsAddProjectCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new tenant project to the tenancy unit.\nThere can be at most 512 tenant projects in a tenancy unit.\nIf there are previously failed `AddTenantProject` calls, you might need to\ncall `RemoveTenantProject` first to clean them before you can make another\n`AddTenantProject` with the same tag.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Add a new tenant project to the tenancy unit.\nThere can be a maximum of 512 tenant projects in a tenancy unit.\nIf there are previously failed `AddTenantProject` calls, you might need to\ncall `RemoveTenantProject` first to resolve them before you can make\nanother call to `AddTenantProject` with the same tag.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:addProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.addProject",
@@ -5733,28 +5737,26 @@ type ServicesTenancyUnitsApplyProjectConfigCall struct {
 	header_                         http.Header
 }
 
-// ApplyProjectConfig: Apply configuration to an existing tenant
+// ApplyProjectConfig: Apply a configuration to an existing tenant
 // project.
-// This project must exist in active state and have the original
+// This project must exist in an active state and have the original
 // owner
-// account. Caller must have the permission to add a project to the
+// account. The caller must have permission to add a project to the
 // given
-// tenancy unit. Configuration will be applied, but any existing
-// settings on
-// the project will not be modified.
-// Specified policy bindings will be applied. Existing binding will not
-// be
+// tenancy unit. The configuration is applied, but any existing settings
+// on
+// the project aren't modified.
+// Specified policy bindings are applied. Existing bindings aren't
 // modified.
-// Specified services will be activated.   No service will be
-// deactivated.
-// New billing configuration will be applied if specified.
-// Omit billing configuration to keep the existing one.
-// Service account in the project will be created if previously non
-// existing.
-// Specified folder will be ignored, moving tenant project to a
+// Specified services are activated. No service is deactivated.
+// If specified, new billing configuration is applied.
+// Omit a billing configuration to keep the existing one.
+// A service account in the project is created if previously non
+// existed.
+// The specified folder is ignored, as moving a tenant project to a
 // different
-// folder is not supported.
-// Operation fails if any of the steps fail, but no rollback of
+// folder isn't supported.
+// The operation fails if any of the steps fail, but no rollback of
 // already
 // applied configuration changes is attempted.
 // Operation<response: Empty>.
@@ -5855,7 +5857,7 @@ func (c *ServicesTenancyUnitsApplyProjectConfigCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Apply configuration to an existing tenant project.\nThis project must exist in active state and have the original owner\naccount. Caller must have the permission to add a project to the given\ntenancy unit. Configuration will be applied, but any existing settings on\nthe project will not be modified.\nSpecified policy bindings will be applied. Existing binding will not be\nmodified.\nSpecified services will be activated.   No service will be deactivated.\nNew billing configuration will be applied if specified.\nOmit billing configuration to keep the existing one.\nService account in the project will be created if previously non existing.\nSpecified folder will be ignored, moving tenant project to a different\nfolder is not supported.\nOperation fails if any of the steps fail, but no rollback of already\napplied configuration changes is attempted.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Apply a configuration to an existing tenant project.\nThis project must exist in an active state and have the original owner\naccount. The caller must have permission to add a project to the given\ntenancy unit. The configuration is applied, but any existing settings on\nthe project aren't modified.\nSpecified policy bindings are applied. Existing bindings aren't modified.\nSpecified services are activated. No service is deactivated.\nIf specified, new billing configuration is applied.\nOmit a billing configuration to keep the existing one.\nA service account in the project is created if previously non existed.\nThe specified folder is ignored, as moving a tenant project to a different\nfolder isn't supported.\nThe operation fails if any of the steps fail, but no rollback of already\napplied configuration changes is attempted.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:applyProjectConfig",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.applyProjectConfig",
@@ -5898,22 +5900,21 @@ type ServicesTenancyUnitsAttachProjectCall struct {
 
 // AttachProject: Attach an existing project to the tenancy unit as a
 // new tenant
-// resource. The project could be either the tenant project reserved
+// resource. The project could either be the tenant project reserved
 // by
-// calling AddTenantProject under tenancy unit for the producer project
-// of
-// service, or from outside.
-// Caller will be checked against the permission as if
+// calling `AddTenantProject` under a tenancy unit of a service
+// producer's
+// project of a managed service, or from a separate project.
+// The caller is checked against a set of permissions as if
 // calling
-// AddTenantProject on the same consumer.
+// `AddTenantProject` on the same service consumer.
 // To trigger the attachement, the targeted tenant project must be in
 // a
-// folder. Please also make sure ServiceConsumerManagement service
-// account is
-// the owner of that project. Note that these two requirements are
-// already met
-// if the project is reserved through
-// AddTenantProject.
+// folder. Make sure the ServiceConsumerManagement service account
+// is
+// the owner of that project. These two requirements are already met
+// if the project is reserved by calling
+// `AddTenantProject`.
 // Operation<response: Empty>.
 func (r *ServicesTenancyUnitsService) AttachProject(name string, attachtenantprojectrequest *AttachTenantProjectRequest) *ServicesTenancyUnitsAttachProjectCall {
 	c := &ServicesTenancyUnitsAttachProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6012,7 +6013,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could be either the tenant project reserved by\ncalling AddTenantProject under tenancy unit for the producer project of\nservice, or from outside.\nCaller will be checked against the permission as if calling\nAddTenantProject on the same consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Please also make sure ServiceConsumerManagement service account is\nthe owner of that project. Note that these two requirements are already met\nif the project is reserved through AddTenantProject.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",
@@ -6021,7 +6022,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the tenancy unit that project will be attached to.",
+	//       "description": "Name of the tenancy unit that the project will be attached to.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
 	//       "required": true,
@@ -6160,7 +6161,7 @@ func (c *ServicesTenancyUnitsCreateCall) Do(opts ...googleapi.CallOption) (*Tena
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "services/{service}/{collection id}/{resource id}\n{collection id} is the cloud resource collection type representing the\nservice consumer, for example 'projects', or 'organizations'.\n{resource id} is the consumer numeric id, such as project number: '123456'.\n{service} the name of a service, for example 'service.googleapis.com'.\nEnabled service binding using the new tenancy unit.",
+	//       "description": "services/{service}/{collection id}/{resource id}\n{collection id} is the cloud resource collection type representing the\nservice consumer, for example 'projects', or 'organizations'.\n{resource id} is the consumer numeric id, such as project number: '123456'.\n{service} the name of a managed service, such as 'service.googleapis.com'.\nEnables service binding using the new tenancy unit.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -6191,9 +6192,10 @@ type ServicesTenancyUnitsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a tenancy unit.  Before the tenancy unit is deleted,
+// Delete: Delete a tenancy unit. Before you delete the tenancy unit,
 // there should be
-// no tenant resources in it not in DELETED state.
+// no tenant resources in it that aren't in a DELETED
+// state.
 // Operation<response: Empty>.
 func (r *ServicesTenancyUnitsService) Delete(name string) *ServicesTenancyUnitsDeleteCall {
 	c := &ServicesTenancyUnitsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6286,7 +6288,7 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Delete a tenancy unit.  Before the tenancy unit is deleted, there should be\nno tenant resources in it not in DELETED state.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Delete a tenancy unit. Before you delete the tenancy unit, there should be\nno tenant resources in it that aren't in a DELETED state.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.delete",
@@ -6324,12 +6326,15 @@ type ServicesTenancyUnitsListCall struct {
 	header_      http.Header
 }
 
-// List: Find the tenancy unit for a service and consumer.
-// This method should not be used in producers' runtime path, for
-// example
-// finding the tenant project number when creating VMs. Producers
-// should
-// persist the tenant project information after the project is created.
+// List: Find the tenancy unit for a managed service and service
+// consumer.
+// This method shouldn't be used in a service producer's runtime path,
+// for
+// example to find the tenant project number when creating VMs.
+// Service
+// producers must persist the tenant project's information after the
+// project
+// is created.
 func (r *ServicesTenancyUnitsService) List(parent string) *ServicesTenancyUnitsListCall {
 	c := &ServicesTenancyUnitsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6458,7 +6463,7 @@ func (c *ServicesTenancyUnitsListCall) Do(opts ...googleapi.CallOption) (*ListTe
 	}
 	return ret, nil
 	// {
-	//   "description": "Find the tenancy unit for a service and consumer.\nThis method should not be used in producers' runtime path, for example\nfinding the tenant project number when creating VMs. Producers should\npersist the tenant project information after the project is created.",
+	//   "description": "Find the tenancy unit for a managed service and service consumer.\nThis method shouldn't be used in a service producer's runtime path, for\nexample to find the tenant project number when creating VMs. Service\nproducers must persist the tenant project's information after the project\nis created.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits",
 	//   "httpMethod": "GET",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.list",
@@ -6483,7 +6488,7 @@ func (c *ServicesTenancyUnitsListCall) Do(opts ...googleapi.CallOption) (*ListTe
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Service and consumer. Required.\nservices/{service}/{collection id}/{resource id}\n{collection id} is the cloud resource collection type representing the\nservice consumer, for example 'projects', or 'organizations'.\n{resource id} is the consumer numeric id, such as project number: '123456'.\n{service} the name of a service, for example 'service.googleapis.com'.",
+	//       "description": "Managed service and service consumer. Required.\nservices/{service}/{collection id}/{resource id}\n{collection id} is the cloud resource collection type representing the\nservice consumer, for example 'projects', or 'organizations'.\n{resource id} is the consumer numeric id, such as project number: '123456'.\n{service} the name of a service, such as 'service.googleapis.com'.",
 	//       "location": "path",
 	//       "pattern": "^services/[^/]+/[^/]+/[^/]+$",
 	//       "required": true,
@@ -6533,16 +6538,16 @@ type ServicesTenancyUnitsRemoveProjectCall struct {
 	header_                    http.Header
 }
 
-// RemoveProject: Removes specified project resource identified by
+// RemoveProject: Removes the specified project resource identified by a
 // tenant resource tag.
-// It will remove project lien with 'TenantManager' origin if that was
-// added.
-// It will then attempt to delete the project. If that operation fails,
-// this
-// method fails.
+// The method removes the project lien with 'TenantManager' origin if
+// that
+// was added. It then attempts to delete the project. If that
+// operation
+// fails, this method also fails.
 // Calls to remove already removed or non-existent tenant project
-// will succeed.
-// After the project has been deleted, or if was already in DELETED
+// succeed.
+// After the project has been deleted, or if was already in a DELETED
 // state,
 // resource metadata is permanently removed from the tenancy
 // unit.
@@ -6644,7 +6649,7 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Removes specified project resource identified by tenant resource tag.\nIt will remove project lien with 'TenantManager' origin if that was added.\nIt will then attempt to delete the project. If that operation fails, this\nmethod fails.\nCalls to remove already removed or non-existent tenant project\nwill succeed.\nAfter the project has been deleted, or if was already in DELETED state,\nresource metadata is permanently removed from the tenancy unit.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Removes the specified project resource identified by a tenant resource tag.\nThe method removes the project lien with 'TenantManager' origin if that\nwas added. It then attempts to delete the project. If that operation\nfails, this method also fails.\nCalls to remove already removed or non-existent tenant project succeed.\nAfter the project has been deleted, or if was already in a DELETED state,\nresource metadata is permanently removed from the tenancy unit.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:removeProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.removeProject",

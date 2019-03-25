@@ -251,13 +251,15 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // The task will be delivered to the App Engine app which belongs to the
 // same
 // project as the queue. For more information, see
-// [How Requests are
-// Routed](https://cloud.google.com/appengine/docs/standard/python/how-re
-// quests-are-routed)
-// and how routing is affected by
+// [How Requests
+// are
+// Routed](https://cloud.google.com/appengine/docs/standard/python/ho
+// w-requests-are-routed)
+// and how routing is affected
+// by
 // [dispatch
-// files](https://cloud.google.com/appengine/docs/python/config/dispatchr
-// ef).
+// files](https://cloud.google.com/appengine/docs/python/con
+// fig/dispatchref).
 // Traffic is encrypted during transport and never leaves Google
 // datacenters.
 // Because this traffic is carried over a communication mechanism
@@ -286,16 +288,18 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 //
 // Tasks can be dispatched to secure app handlers, unsecure app
 // handlers, and
-// URIs restricted with
+// URIs restricted
+// with
 // [`login:
-// admin`](https://cloud.google.com/appengine/docs/standard/python/config
-// /appref).
+// admin`](https://cloud.google.com/appengine/docs/standard
+// /python/config/appref).
 // Because tasks are not run as any user, they cannot be dispatched to
 // URIs
-// restricted with
+// restricted
+// with
 // [`login:
-// required`](https://cloud.google.com/appengine/docs/standard/python/con
-// fig/appref)
+// required`](https://cloud.google.com/appengine/docs/stand
+// ard/python/config/appref)
 // Task dispatches also do not follow redirects.
 //
 // The task attempt has succeeded if the app's request handler
@@ -363,10 +367,11 @@ type AppEngineHttpRequest struct {
 	//
 	// In addition, Cloud Tasks sets some headers when the task is
 	// dispatched,
-	// such as headers containing information about the task; see
+	// such as headers containing information about the task;
+	// see
 	// [request
-	// headers](https://cloud.google.com/appengine/docs/python/taskqueue/push
-	// /creating-handlers#reading_request_headers).
+	// headers](https://cloud.google.com/appengine/docs/python/t
+	// askqueue/push/creating-handlers#reading_request_headers).
 	// These headers are set only when the task is dispatched, so they are
 	// not
 	// visible when the task is returned in a Cloud Tasks
@@ -387,15 +392,17 @@ type AppEngineHttpRequest struct {
 	// HTTP requests with this http_method, otherwise the task attempt will
 	// fail
 	// with error code 405 (Method Not Allowed). See
-	// [Writing a push task request
-	// handler](https://cloud.google.com/appengine/docs/java/taskqueue/push/c
-	// reating-handlers#writing_a_push_task_request_handler)
+	// [Writing a push task
+	// request
+	// handler](https://cloud.google.com/appengine/docs/java/taskqueu
+	// e/push/creating-handlers#writing_a_push_task_request_handler)
 	// and the documentation for the request handlers in the language your
 	// app is
 	// written in e.g.
-	// [Python Request
-	// Handler](https://cloud.google.com/appengine/docs/python/tools/webapp/r
-	// equesthandlerclass).
+	// [Python
+	// Request
+	// Handler](https://cloud.google.com/appengine/docs/python/tools/
+	// webapp/requesthandlerclass).
 	//
 	// Possible values:
 	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
@@ -449,18 +456,22 @@ func (s *AppEngineHttpRequest) MarshalJSON() ([]byte, error) {
 // and instance.
 //
 // For more information about services, versions, and instances see
-// [An Overview of App
-// Engine](https://cloud.google.com/appengine/docs/python/an-overview-of-
-// app-engine),
-// [Microservices Architecture on Google App
-// Engine](https://cloud.google.com/appengine/docs/python/microservices-o
-// n-app-engine),
-// [App Engine Standard request
-// routing](https://cloud.google.com/appengine/docs/standard/python/how-r
-// equests-are-routed),
-// and [App Engine Flex request
-// routing](https://cloud.google.com/appengine/docs/flexible/python/how-r
-// equests-are-routed).
+// [An Overview of
+// App
+// Engine](https://cloud.google.com/appengine/docs/python/an-overview
+// -of-app-engine),
+// [Microservices Architecture on Google
+// App
+// Engine](https://cloud.google.com/appengine/docs/python/microservic
+// es-on-app-engine),
+// [App Engine Standard
+// request
+// routing](https://cloud.google.com/appengine/docs/standard/pyth
+// on/how-requests-are-routed),
+// and [App Engine Flex
+// request
+// routing](https://cloud.google.com/appengine/docs/flexible/pyth
+// on/how-requests-are-routed).
 type AppEngineRouting struct {
 	// Host: Output only. The host that the task is sent to.
 	//
@@ -473,9 +484,10 @@ type AppEngineRouting struct {
 	// the App Engine SDK might have a custom domain name.
 	//
 	// For more information, see
-	// [How Requests are
-	// Routed](https://cloud.google.com/appengine/docs/standard/python/how-re
-	// quests-are-routed).
+	// [How Requests
+	// are
+	// Routed](https://cloud.google.com/appengine/docs/standard/python/ho
+	// w-requests-are-routed).
 	Host string `json:"host,omitempty"`
 
 	// Instance: App instance.
@@ -485,17 +497,20 @@ type AppEngineRouting struct {
 	// the task is attempted.
 	//
 	// Requests can only be sent to a specific instance if
-	// [manual scaling is used in App Engine
-	// Standard](https://cloud.google.com/appengine/docs/python/an-overview-o
-	// f-app-engine?hl=en_US#scaling_types_and_instance_classes).
+	// [manual scaling is used in App
+	// Engine
+	// Standard](https://cloud.google.com/appengine/docs/python/an-ove
+	// rview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
 	// App Engine Flex does not support instances. For more information,
 	// see
-	// [App Engine Standard request
-	// routing](https://cloud.google.com/appengine/docs/standard/python/how-r
-	// equests-are-routed)
-	// and [App Engine Flex request
-	// routing](https://cloud.google.com/appengine/docs/flexible/python/how-r
-	// equests-are-routed).
+	// [App Engine Standard
+	// request
+	// routing](https://cloud.google.com/appengine/docs/standard/pyth
+	// on/how-requests-are-routed)
+	// and [App Engine Flex
+	// request
+	// routing](https://cloud.google.com/appengine/docs/flexible/pyth
+	// on/how-requests-are-routed).
 	Instance string `json:"instance,omitempty"`
 
 	// Service: App service.
@@ -1179,6 +1194,7 @@ type Queue struct {
 	//    hyphens (-), colons (:), or periods (.).
 	//    For more information, see
 	//    [Identifying
+	//
 	// projects](https://cloud.google.com/resource-manager/docs/creating-mana
 	// ging-projects#identifying_projects)
 	// * `LOCATION_ID` is the canonical ID for the queue's location.
@@ -1196,10 +1212,11 @@ type Queue struct {
 	// were purged.
 	//
 	// A queue can be purged using PurgeQueue, the
-	// [App Engine Task Queue SDK, or the Cloud
-	// Console](https://cloud.google.com/appengine/docs/standard/python/taskq
-	// ueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
-	//
+	// [App Engine Task Queue SDK, or the
+	// Cloud
+	// Console](https://cloud.google.com/appengine/docs/standard/python
+	// /taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_que
+	// ue).
 	//
 	// Purge time will be truncated to the nearest microsecond. Purge
 	// time will be unset if the queue has never been purged.
@@ -1224,8 +1241,8 @@ type Queue struct {
 	// The queue's actual dispatch rate is the result of:
 	//
 	// * Number of tasks in the queue
-	// * User-specified throttling: rate limits
-	//   retry configuration, and the
+	// * User-specified throttling: rate_limits,
+	//   retry_config, and the
 	//   queue's state.
 	// * System throttling due to `429` (Too Many Requests) or `503`
 	// (Service
@@ -1247,6 +1264,7 @@ type Queue struct {
 	//   explicitly set on the task and were created by the App Engine SDK.
 	// See
 	//   [App Engine
+	//
 	// documentation](https://cloud.google.com/appengine/docs/standard/python
 	// /taskqueue/push/retrying-tasks).
 	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
@@ -1395,9 +1413,10 @@ type RateLimits struct {
 	//
 	//
 	// This field has the same meaning as
-	// [max_concurrent_requests in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#max_concurrent_requests).
+	// [max_concurrent_requests
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#max_concurrent_requests).
 	MaxConcurrentDispatches int64 `json:"maxConcurrentDispatches,omitempty"`
 
 	// MaxDispatchesPerSecond: The maximum rate at which tasks are
@@ -1412,9 +1431,10 @@ type RateLimits struct {
 	//
 	//
 	// This field has the same meaning as
-	// [rate in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#rate).
+	// [rate
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#rate).
 	MaxDispatchesPerSecond float64 `json:"maxDispatchesPerSecond,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxBurstSize") to
@@ -1477,9 +1497,10 @@ type RetryConfig struct {
 	// -1 indicates unlimited attempts.
 	//
 	// This field has the same meaning as
-	// [task_retry_limit in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// [task_retry_limit
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#retry_parameters).
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
 
 	// MaxBackoff: A task will be scheduled for retry between
@@ -1497,9 +1518,10 @@ type RetryConfig struct {
 	// `max_backoff` will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
-	// [max_backoff_seconds in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// [max_backoff_seconds
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#retry_parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
 
 	// MaxDoublings: The time between retries will double `max_doublings`
@@ -1530,9 +1552,10 @@ type RetryConfig struct {
 	//
 	//
 	// This field has the same meaning as
-	// [max_doublings in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// [max_doublings
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#retry_parameters).
 	MaxDoublings int64 `json:"maxDoublings,omitempty"`
 
 	// MaxRetryDuration: If positive, `max_retry_duration` specifies the
@@ -1555,9 +1578,10 @@ type RetryConfig struct {
 	// `max_retry_duration` will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
-	// [task_age_limit in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// [task_age_limit
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#retry_parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
 
 	// MinBackoff: A task will be scheduled for retry between
@@ -1575,9 +1599,10 @@ type RetryConfig struct {
 	// `min_backoff` will be truncated to the nearest second.
 	//
 	// This field has the same meaning as
-	// [min_backoff_seconds in
-	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/pytho
-	// n/config/queueref#retry_parameters).
+	// [min_backoff_seconds
+	// in
+	// queue.yaml/xml](https://cloud.google.com/appengine/docs/standard/py
+	// thon/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
@@ -1701,20 +1726,20 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -1863,6 +1888,7 @@ type Task struct {
 	//   request has the default deadline. The default deadline depends on
 	// the
 	//   [scaling
+	//
 	// type](https://cloud.google.com/appengine/docs/standard/go/how-instance
 	// s-are-managed#instance_scaling)
 	//   of the service: 10 minutes for standard apps with automatic
@@ -1911,6 +1937,7 @@ type Task struct {
 	//    hyphens (-), colons (:), or periods (.).
 	//    For more information, see
 	//    [Identifying
+	//
 	// projects](https://cloud.google.com/resource-manager/docs/creating-mana
 	// ging-projects#identifying_projects)
 	// * `LOCATION_ID` is the canonical ID for the task's location.
@@ -3371,7 +3398,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Caller-specified and required in CreateQueue,\nafter which it becomes output only.\n\nThe queue name.\n\nThe queue name must have the following format:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`\n\n* `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),\n   hyphens (-), colons (:), or periods (.).\n   For more information, see\n   [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)\n* `LOCATION_ID` is the canonical ID for the queue's location.\n   The list of available locations can be obtained by calling\n   ListLocations.\n   For more information, see https://cloud.google.com/about/locations/.\n* `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or\n  hyphens (-). The maximum length is 100 characters.",
+	//       "description": "Caller-specified and required in CreateQueue,\nafter which it becomes output only.\n\nThe queue name.\n\nThe queue name must have the following format:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`\n\n* `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),\n   hyphens (-), colons (:), or periods (.).\n   For more information, see\n   [Identifying\n   projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)\n* `LOCATION_ID` is the canonical ID for the queue's location.\n   The list of available locations can be obtained by calling\n   ListLocations.\n   For more information, see https://cloud.google.com/about/locations/.\n* `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or\n  hyphens (-). The maximum length is 100 characters.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
 	//       "required": true,

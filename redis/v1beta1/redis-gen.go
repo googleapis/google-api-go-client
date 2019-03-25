@@ -373,17 +373,6 @@ type Instance struct {
 	// [alternative_location_id] fields for more details.
 	Name string `json:"name,omitempty"`
 
-	// PersistenceIamIdentity: Output only. Cloud IAM identity used by
-	// import / export operations to
-	// transfer data to/from Cloud Storage. Format
-	// is
-	// "serviceAccount:<service_account_email>". The value may change over
-	// time
-	// for a given instance so should be checked before each
-	// import/export
-	// operation.
-	PersistenceIamIdentity string `json:"persistenceIamIdentity,omitempty"`
-
 	// Port: Output only. The port number of the exposed Redis endpoint.
 	Port int64 `json:"port,omitempty"`
 

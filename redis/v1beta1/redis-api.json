@@ -458,7 +458,7 @@
       }
     }
   },
-  "revision": "20190308",
+  "revision": "20190320",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -571,10 +571,6 @@
         },
         "name": {
           "description": "Required. Unique name of the resource in this scope including project and\nlocation using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\n\nNote: Redis instances are managed and addressed at regional level so\nlocation_id here refers to a GCP region; however, users may choose which\nspecific zone (or collection of zones for cross-zone instances) an instance\nshould be provisioned in. Refer to [location_id] and\n[alternative_location_id] fields for more details.",
-          "type": "string"
-        },
-        "persistenceIamIdentity": {
-          "description": "Output only. Cloud IAM identity used by import / export operations to\ntransfer data to/from Cloud Storage. Format is\n\"serviceAccount:\u003cservice_account_email\u003e\". The value may change over time\nfor a given instance so should be checked before each import/export\noperation.",
           "type": "string"
         },
         "port": {

@@ -1688,6 +1688,9 @@ func (meth *Method) generateCode() {
 	pn("\n// method id %q:", meth.Id())
 
 	retType := responseType(a, meth.m)
+	if meth.IsRawHTTP() {
+		retType = "*http.Response"
+	}
 	retTypeComma := retType
 	if retTypeComma != "" {
 		retTypeComma += ", "
@@ -1913,23 +1916,28 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 	pn("var body io.Reader = nil")
-	if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
-		if meth.m.ID == "ml.projects.predict" {
-			// Skip JSONReader for APIs that require clients to pass in JSON already.
-			pn("body = strings.NewReader(c.%s.HttpBody.Data)", ba.goname)
-		} else {
-			style := "WithoutDataWrapper"
-			if a.needsDataWrapper() {
-				style = "WithDataWrapper"
+	if meth.IsRawHTTP() {
+		pn("body = c.body_")
+	} else {
+		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
+			if meth.m.ID == "ml.projects.predict" {
+				// TODO(cbro): move ML API to rawHTTP (it will be a breaking change)
+				// Skip JSONReader for APIs that require clients to pass in JSON already.
+				pn("body = strings.NewReader(c.%s.HttpBody.Data)", ba.goname)
+			} else {
+				style := "WithoutDataWrapper"
+				if a.needsDataWrapper() {
+					style = "WithDataWrapper"
+				}
+				pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
+				pn("if err != nil { return nil, err }")
 			}
-			pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
-			pn("if err != nil { return nil, err }")
-		}
 
-		pn(`reqHeaders.Set("Content-Type", "application/json")`)
+			pn(`reqHeaders.Set("Content-Type", "application/json")`)
+		}
+		pn(`c.urlParams_.Set("alt", alt)`)
+		pn(`c.urlParams_.Set("prettyPrint", "false")`)
 	}
-	pn(`c.urlParams_.Set("alt", alt)`)
-	pn(`c.urlParams_.Set("prettyPrint", "false")`)
 
 	pn("urls := googleapi.ResolveRelative(c.s.BasePath, %q)", meth.m.Path)
 	if meth.supportsMediaUpload() {
@@ -1948,7 +1956,7 @@ func (meth *Method) generateCode() {
 		pn("body, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)")
 		pn("defer cleanup()")
 	}
-	pn("urls += \"?\" + c.urlParams_.Encode()")
+	pn(`urls += "?" + c.urlParams_.Encode()`)
 	pn("req, err := http.NewRequest(%q, urls, body)", httpMethod)
 	pn("if err != nil { return nil, err }")
 	pn("req.Header = reqHeaders")
@@ -1988,7 +1996,7 @@ func (meth *Method) generateCode() {
 
 	mapRetType := strings.HasPrefix(retTypeComma, "map[")
 	pn("\n// Do executes the %q call.", meth.m.ID)
-	if retTypeComma != "" && !mapRetType {
+	if retTypeComma != "" && !mapRetType && !meth.IsRawHTTP() {
 		commentFmtStr := "Exactly one of %v or error will be non-nil. " +
 			"Any non-2xx status code is an error. " +
 			"Response headers are in either %v.ServerResponse.Header " +
@@ -2004,67 +2012,71 @@ func (meth *Method) generateCode() {
 		nilRet = "nil, "
 	}
 	pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
-	pn(`res, err := c.doRequest("json")`)
-
-	if retTypeComma != "" && !mapRetType {
-		pn("if res != nil && res.StatusCode == http.StatusNotModified {")
-		pn(" if res.Body != nil { res.Body.Close() }")
-		pn(" return nil, &googleapi.Error{")
-		pn("  Code: res.StatusCode,")
-		pn("  Header: res.Header,")
-		pn(" }")
-		pn("}")
-	}
-	pn("if err != nil { return %serr }", nilRet)
-	pn("defer googleapi.CloseBody(res)")
-	pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
-	if meth.supportsMediaUpload() {
-		pn(`rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))`)
-		pn("if rx != nil {")
-		pn(" rx.Client = c.s.client")
-		pn(" rx.UserAgent = c.s.userAgent()")
-		pn(" ctx := c.ctx_")
-		pn(" if ctx == nil {")
-		// TODO(mcgreevy): Require context when calling Media, or Do.
-		pn("  ctx = context.TODO()")
-		pn(" }")
-		pn(" res, err = rx.Upload(ctx)")
-		pn(" if err != nil { return %serr }", nilRet)
-		pn(" defer res.Body.Close()")
-		pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
-		pn("}")
-	}
-	if retTypeComma == "" {
-		pn("return nil")
+	if meth.IsRawHTTP() {
+		pn(`return c.doRequest("")`)
 	} else {
-		if mapRetType {
-			pn("var ret %s", responseType(a, meth.m))
-		} else {
-			pn("ret := &%s{", responseTypeLiteral(a, meth.m))
-			pn(" ServerResponse: googleapi.ServerResponse{")
+		pn(`res, err := c.doRequest("json")`)
+
+		if retTypeComma != "" && !mapRetType {
+			pn("if res != nil && res.StatusCode == http.StatusNotModified {")
+			pn(" if res.Body != nil { res.Body.Close() }")
+			pn(" return nil, &googleapi.Error{")
+			pn("  Code: res.StatusCode,")
 			pn("  Header: res.Header,")
-			pn("  HTTPStatusCode: res.StatusCode,")
-			pn(" },")
+			pn(" }")
 			pn("}")
 		}
-		if a.needsDataWrapper() {
-			pn("target := &struct {")
-			pn("  Data %s `json:\"data\"`", responseType(a, meth.m))
-			pn("}{ret}")
-		} else {
-			pn("target := &ret")
+		pn("if err != nil { return %serr }", nilRet)
+		pn("defer googleapi.CloseBody(res)")
+		pn("if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+		if meth.supportsMediaUpload() {
+			pn(`rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))`)
+			pn("if rx != nil {")
+			pn(" rx.Client = c.s.client")
+			pn(" rx.UserAgent = c.s.userAgent()")
+			pn(" ctx := c.ctx_")
+			pn(" if ctx == nil {")
+			// TODO(mcgreevy): Require context when calling Media, or Do.
+			pn("  ctx = context.TODO()")
+			pn(" }")
+			pn(" res, err = rx.Upload(ctx)")
+			pn(" if err != nil { return %serr }", nilRet)
+			pn(" defer res.Body.Close()")
+			pn(" if err := googleapi.CheckResponse(res); err != nil { return %serr }", nilRet)
+			pn("}")
 		}
+		if retTypeComma == "" {
+			pn("return nil")
+		} else {
+			if mapRetType {
+				pn("var ret %s", responseType(a, meth.m))
+			} else {
+				pn("ret := &%s{", responseTypeLiteral(a, meth.m))
+				pn(" ServerResponse: googleapi.ServerResponse{")
+				pn("  Header: res.Header,")
+				pn("  HTTPStatusCode: res.StatusCode,")
+				pn(" },")
+				pn("}")
+			}
+			if a.needsDataWrapper() {
+				pn("target := &struct {")
+				pn("  Data %s `json:\"data\"`", responseType(a, meth.m))
+				pn("}{ret}")
+			} else {
+				pn("target := &ret")
+			}
 
-		if meth.m.ID == "ml.projects.predict" {
-			pn("var b bytes.Buffer")
-			pn("if _, err := io.Copy(&b, res.Body); err != nil { return nil, err }")
-			pn("if err := res.Body.Close(); err != nil { return nil, err }")
-			pn("if err := json.NewDecoder(bytes.NewReader(b.Bytes())).Decode(target); err != nil { return nil, err }")
-			pn("ret.Data = b.String()")
-		} else {
-			pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+			if meth.m.ID == "ml.projects.predict" {
+				pn("var b bytes.Buffer")
+				pn("if _, err := io.Copy(&b, res.Body); err != nil { return nil, err }")
+				pn("if err := res.Body.Close(); err != nil { return nil, err }")
+				pn("if err := json.NewDecoder(bytes.NewReader(b.Bytes())).Decode(target); err != nil { return nil, err }")
+				pn("ret.Data = b.String()")
+			} else {
+				pn("if err := gensupport.DecodeResponse(target, res); err != nil { return nil, err }")
+			}
+			pn("return ret, nil")
 		}
-		pn("return ret, nil")
 	}
 
 	bs, err := json.MarshalIndent(meth.m.JSONMap, "\t// ", "  ")
@@ -2175,6 +2187,14 @@ func resolveRelative(basestr, relstr string) string {
 	return u.String()
 }
 
+func (meth *Method) IsRawHTTP() bool {
+	if meth.m.Request == nil {
+		return false
+	}
+	// TODO(cbro): enable across other APIs.
+	return meth.api.Name == "healthcare" && meth.m.Request.Ref == "HttpBody"
+}
+
 func (meth *Method) NewArguments() *arguments {
 	args := &arguments{
 		method: meth,
@@ -2193,7 +2213,14 @@ func (meth *Method) NewArguments() *arguments {
 		args.AddArg(arg)
 	}
 	if rs := meth.m.Request; rs != nil {
-		args.AddArg(meth.NewBodyArg(rs))
+		if meth.IsRawHTTP() {
+			args.AddArg(&argument{
+				goname: "body_",
+				gotype: "io.Reader",
+			})
+		} else {
+			args.AddArg(meth.NewBodyArg(rs))
+		}
 	}
 	return args
 }

@@ -1282,7 +1282,7 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// translations. See
 	// [Language
 	// Support](https://cloud.google.com/dialogflow-enterprise/docs
-	// /reference/languages)
+	// /reference/language)
 	// for a list of the currently supported language codes. Note that
 	// queries in
 	// the same session do not necessarily need to specify the same

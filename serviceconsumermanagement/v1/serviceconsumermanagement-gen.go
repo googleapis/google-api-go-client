@@ -336,7 +336,7 @@ func (s *ApplyTenantProjectConfigRequest) MarshalJSON() ([]byte, error) {
 type AttachTenantProjectRequest struct {
 	// ExternalResource: When attaching an external project, this is in the
 	// format of
-	// `projects/{project_number}’.
+	// `projects/{project_number}`.
 	ExternalResource string `json:"externalResource,omitempty"`
 
 	// ReservedResource: When attaching a reserved project already in
@@ -5908,7 +5908,7 @@ type ServicesTenancyUnitsAttachProjectCall struct {
 // The caller is checked against a set of permissions as if
 // calling
 // `AddTenantProject` on the same service consumer.
-// To trigger the attachement, the targeted tenant project must be in
+// To trigger the attachment, the targeted tenant project must be in
 // a
 // folder. Make sure the ServiceConsumerManagement service account
 // is
@@ -6013,7 +6013,7 @@ func (c *ServicesTenancyUnitsAttachProjectCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
+	//   "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachment, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
 	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
 	//   "httpMethod": "POST",
 	//   "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",

@@ -159,6 +159,11 @@ type Groups struct {
 	// CustomReplyTo: Default email to which reply to any message should go.
 	CustomReplyTo string `json:"customReplyTo,omitempty"`
 
+	// CustomRolesEnabledForSettingsToBeMerged: If any of the settings that
+	// will be merged have custom roles which is anything other than owners,
+	// managers, or group scopes.
+	CustomRolesEnabledForSettingsToBeMerged string `json:"customRolesEnabledForSettingsToBeMerged,omitempty"`
+
 	// DefaultMessageDenyNotificationText: Default message deny notification
 	// message
 	DefaultMessageDenyNotificationText string `json:"defaultMessageDenyNotificationText,omitempty"`
@@ -168,6 +173,10 @@ type Groups struct {
 
 	// Email: Email id of the group
 	Email string `json:"email,omitempty"`
+
+	// EnableCollaborativeInbox: If a primary Collab Inbox feature is
+	// enabled.
+	EnableCollaborativeInbox string `json:"enableCollaborativeInbox,omitempty"`
 
 	// FavoriteRepliesOnTop: If favorite replies should be displayed above
 	// other replies.
@@ -234,20 +243,57 @@ type Groups struct {
 	// OWNERS_AND_MANAGERS ALL_MEMBERS
 	WhoCanAddReferences string `json:"whoCanAddReferences,omitempty"`
 
+	// WhoCanApproveMembers: Permission to approve members. Possible values
+	// are: ALL_OWNERS_CAN_APPROVE ALL_MANAGERS_CAN_APPROVE
+	// ALL_MEMBERS_CAN_APPROVE NONE_CAN_APPROVE
+	WhoCanApproveMembers string `json:"whoCanApproveMembers,omitempty"`
+
+	// WhoCanApproveMessages: Permission to approve pending messages in the
+	// moderation queue. Possible values are: NONE OWNERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanApproveMessages string `json:"whoCanApproveMessages,omitempty"`
+
 	// WhoCanAssignTopics: Permission to assign topics in a forum to another
 	// user. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
 	// OWNERS_AND_MANAGERS ALL_MEMBERS
 	WhoCanAssignTopics string `json:"whoCanAssignTopics,omitempty"`
+
+	// WhoCanAssistContent: Permission for content assistants. Possible
+	// values are: Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanAssistContent string `json:"whoCanAssistContent,omitempty"`
+
+	// WhoCanBanUsers: Permission to ban users. Possible values are: NONE
+	// OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanBanUsers string `json:"whoCanBanUsers,omitempty"`
 
 	// WhoCanContactOwner: Permission to contact owner of the group via web
 	// UI. Possible values are: ANYONE_CAN_CONTACT ALL_IN_DOMAIN_CAN_CONTACT
 	// ALL_MEMBERS_CAN_CONTACT ALL_MANAGERS_CAN_CONTACT
 	WhoCanContactOwner string `json:"whoCanContactOwner,omitempty"`
 
+	// WhoCanDeleteAnyPost: Permission to delete replies to topics. Possible
+	// values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanDeleteAnyPost string `json:"whoCanDeleteAnyPost,omitempty"`
+
+	// WhoCanDeleteTopics: Permission to delete topics. Possible values are:
+	// NONE OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanDeleteTopics string `json:"whoCanDeleteTopics,omitempty"`
+
+	// WhoCanDiscoverGroup: Permission for who can discover the group.
+	// Possible values are: ALL_MEMBERS_CAN_DISCOVER
+	// ALL_IN_DOMAIN_CAN_DISCOVER ANYONE_CAN_DISCOVER
+	WhoCanDiscoverGroup string `json:"whoCanDiscoverGroup,omitempty"`
+
 	// WhoCanEnterFreeFormTags: Permission to enter free form tags for
 	// topics in a forum. Possible values are: NONE OWNERS_ONLY
 	// MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
 	WhoCanEnterFreeFormTags string `json:"whoCanEnterFreeFormTags,omitempty"`
+
+	// WhoCanHideAbuse: Permission to hide posts by reporting them as abuse.
+	// Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
+	// OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanHideAbuse string `json:"whoCanHideAbuse,omitempty"`
 
 	// WhoCanInvite: Permissions to invite members. Possible values are:
 	// ALL_MEMBERS_CAN_INVITE ALL_MANAGERS_CAN_INVITE ALL_OWNERS_CAN_INVITE
@@ -263,6 +309,15 @@ type Groups struct {
 	// ALL_MANAGERS_CAN_LEAVE ALL_OWNERS_CAN_LEAVE ALL_MEMBERS_CAN_LEAVE
 	// NONE_CAN_LEAVE
 	WhoCanLeaveGroup string `json:"whoCanLeaveGroup,omitempty"`
+
+	// WhoCanLockTopics: Permission to lock topics. Possible values are:
+	// NONE OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanLockTopics string `json:"whoCanLockTopics,omitempty"`
+
+	// WhoCanMakeTopicsSticky: Permission to make topics appear at the top
+	// of the topic list. Possible values are: NONE OWNERS_ONLY
+	// MANAGERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanMakeTopicsSticky string `json:"whoCanMakeTopicsSticky,omitempty"`
 
 	// WhoCanMarkDuplicate: Permission to mark a topic as a duplicate of
 	// another topic. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
@@ -284,10 +339,38 @@ type Groups struct {
 	// OWNERS_AND_MANAGERS ALL_MEMBERS
 	WhoCanMarkNoResponseNeeded string `json:"whoCanMarkNoResponseNeeded,omitempty"`
 
+	// WhoCanModerateContent: Permission for content moderation. Possible
+	// values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanModerateContent string `json:"whoCanModerateContent,omitempty"`
+
+	// WhoCanModerateMembers: Permission for membership moderation. Possible
+	// values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS ALL_MEMBERS
+	WhoCanModerateMembers string `json:"whoCanModerateMembers,omitempty"`
+
+	// WhoCanModifyMembers: Permission to modify members (change member
+	// roles). Possible values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS
+	// ALL_MEMBERS
+	WhoCanModifyMembers string `json:"whoCanModifyMembers,omitempty"`
+
 	// WhoCanModifyTagsAndCategories: Permission to change tags and
 	// categories. Possible values are: NONE OWNERS_ONLY MANAGERS_ONLY
 	// OWNERS_AND_MANAGERS ALL_MEMBERS
 	WhoCanModifyTagsAndCategories string `json:"whoCanModifyTagsAndCategories,omitempty"`
+
+	// WhoCanMoveTopicsIn: Permission to move topics into the group or
+	// forum. Possible values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS
+	// ALL_MEMBERS
+	WhoCanMoveTopicsIn string `json:"whoCanMoveTopicsIn,omitempty"`
+
+	// WhoCanMoveTopicsOut: Permission to move topics out of the group or
+	// forum. Possible values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS
+	// ALL_MEMBERS
+	WhoCanMoveTopicsOut string `json:"whoCanMoveTopicsOut,omitempty"`
+
+	// WhoCanPostAnnouncements: Permission to post announcements, a special
+	// topic type. Possible values are: NONE OWNERS_ONLY OWNERS_AND_MANAGERS
+	// ALL_MEMBERS
+	WhoCanPostAnnouncements string `json:"whoCanPostAnnouncements,omitempty"`
 
 	// WhoCanPostMessage: Permissions to post messages to the group.
 	// Possible values are: NONE_CAN_POST ALL_MANAGERS_CAN_POST
@@ -317,7 +400,7 @@ type Groups struct {
 
 	// WhoCanViewMembership: Permissions to view membership. Possible values
 	// are: ALL_IN_DOMAIN_CAN_VIEW ALL_MEMBERS_CAN_VIEW
-	// ALL_MANAGERS_CAN_VIEW
+	// ALL_MANAGERS_CAN_VIEW ALL_OWNERS_CAN_VIEW
 	WhoCanViewMembership string `json:"whoCanViewMembership,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

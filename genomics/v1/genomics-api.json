@@ -208,7 +208,7 @@
       }
     }
   },
-  "revision": "20190312",
+  "revision": "20190326",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -401,34 +401,6 @@
       },
       "type": "object"
     },
-    "ImportReadGroupSetsResponse": {
-      "description": "The read group set import response.",
-      "id": "ImportReadGroupSetsResponse",
-      "properties": {
-        "readGroupSetIds": {
-          "description": "IDs of the read group sets that were created.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "ImportVariantsResponse": {
-      "description": "The variant data import response.",
-      "id": "ImportVariantsResponse",
-      "properties": {
-        "callSetIds": {
-          "description": "IDs of the call sets created during the import.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "ListOperationsResponse": {
       "description": "The response message for Operations.ListOperations.",
       "id": "ListOperationsResponse",
@@ -476,7 +448,7 @@
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
-          "description": "If importing ReadGroupSets, an ImportReadGroupSetsResponse is returned. If importing Variants, an ImportVariantsResponse is returned. For pipelines and exports, an Empty response is returned.",
+          "description": "An Empty object.",
           "type": "object"
         }
       },

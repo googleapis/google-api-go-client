@@ -657,6 +657,14 @@ type DatabaseInstance struct {
 	// MYSQL_5_6 (default) or MYSQL_5_5
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
+	// DiskEncryptionConfiguration: Disk encryption configuration specific
+	// to an instance. Applies only to Second Generation instances.
+	DiskEncryptionConfiguration *DiskEncryptionConfiguration `json:"diskEncryptionConfiguration,omitempty"`
+
+	// DiskEncryptionStatus: Disk encryption status specific to an instance.
+	// Applies only to Second Generation instances.
+	DiskEncryptionStatus *DiskEncryptionStatus `json:"diskEncryptionStatus,omitempty"`
+
 	// Etag: This field is deprecated and will be removed from a future
 	// version of the API. Use the settings.settingsVersion field instead.
 	Etag string `json:"etag,omitempty"`
@@ -982,6 +990,69 @@ type DemoteMasterMySqlReplicaConfiguration struct {
 
 func (s *DemoteMasterMySqlReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	type NoMethod DemoteMasterMySqlReplicaConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskEncryptionConfiguration: Disk encryption configuration.
+type DiskEncryptionConfiguration struct {
+	// Kind: This is always sql#diskEncryptionConfiguration.
+	Kind string `json:"kind,omitempty"`
+
+	// KmsKeyName: KMS key resource name
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskEncryptionConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskEncryptionConfiguration
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskEncryptionStatus: Disk encryption status.
+type DiskEncryptionStatus struct {
+	// Kind: This is always sql#diskEncryptionStatus.
+	Kind string `json:"kind,omitempty"`
+
+	// KmsKeyVersionName: KMS key version used to encrypt the Cloud SQL
+	// instance disk
+	KmsKeyVersionName string `json:"kmsKeyVersionName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskEncryptionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskEncryptionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

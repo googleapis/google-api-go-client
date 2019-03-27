@@ -3254,7 +3254,7 @@
       }
     }
   },
-  "revision": "20190321",
+  "revision": "20190325",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -4044,10 +4044,6 @@
       "description": "Returns the errors encountered during DICOM store import.",
       "id": "ImportDicomDataErrorDetails",
       "properties": {
-        "dicomStore": {
-          "description": "The name of the DICOM store where the resources have been imported, in the\nformat\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`",
-          "type": "string"
-        },
         "sampleErrors": {
           "description": "Deprecated. Use only for debugging purposes.\n\nContains sample errors encountered in imports of individual resources\n(for example, a Cloud Storage object).",
           "items": {

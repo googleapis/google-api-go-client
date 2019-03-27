@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190318",
+  "revision": "20190326",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1780,7 +1780,7 @@
           "type": "string"
         },
         "languageCode": {
-          "description": "Required. The language of the supplied audio. Dialogflow does not do\ntranslations. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/languages)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "description": "Required. The language of the supplied audio. Dialogflow does not do\ntranslations. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
           "type": "string"
         },
         "phraseHints": {

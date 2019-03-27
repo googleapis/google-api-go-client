@@ -678,8 +678,7 @@ type RecognitionConfig struct {
 	// source to 16000 Hz. If that's not possible, use the native sample
 	// rate of
 	// the audio source (instead of re-sampling).
-	// This field is optional for `FLAC`,  `WAV`. and 'MP3' audio files, and
-	// is
+	// This field is optional for FLAC and WAV audio files, but is
 	// required for all other audio formats. For details, see AudioEncoding.
 	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
 
@@ -2137,6 +2136,10 @@ type SpeechLongrunningrecognizeCall struct {
 // an
 // `Operation.error` or an `Operation.response` which contains
 // a `LongRunningRecognizeResponse` message.
+// For more information on asynchronous speech recognition, see
+// the
+// [how-to](https://cloud.google.com/speech-to-text/docs/async-recogn
+// ize).
 func (r *SpeechService) Longrunningrecognize(longrunningrecognizerequest *LongRunningRecognizeRequest) *SpeechLongrunningrecognizeCall {
 	c := &SpeechLongrunningrecognizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.longrunningrecognizerequest = longrunningrecognizerequest
@@ -2230,7 +2233,7 @@ func (c *SpeechLongrunningrecognizeCall) Do(opts ...googleapi.CallOption) (*Oper
 	}
 	return ret, nil
 	// {
-	//   "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `LongRunningRecognizeResponse` message.",
+	//   "description": "Performs asynchronous speech recognition: receive results via the\ngoogle.longrunning.Operations interface. Returns either an\n`Operation.error` or an `Operation.response` which contains\na `LongRunningRecognizeResponse` message.\nFor more information on asynchronous speech recognition, see the\n[how-to](https://cloud.google.com/speech-to-text/docs/async-recognize).",
 	//   "flatPath": "v1/speech:longrunningrecognize",
 	//   "httpMethod": "POST",
 	//   "id": "speech.speech.longrunningrecognize",

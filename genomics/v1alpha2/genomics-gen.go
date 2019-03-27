@@ -797,63 +797,6 @@ func (s *FailedEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ImportReadGroupSetsResponse: The read group set import response.
-type ImportReadGroupSetsResponse struct {
-	// ReadGroupSetIds: IDs of the read group sets that were created.
-	ReadGroupSetIds []string `json:"readGroupSetIds,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ReadGroupSetIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReadGroupSetIds") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportReadGroupSetsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportReadGroupSetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// ImportVariantsResponse: The variant data import response.
-type ImportVariantsResponse struct {
-	// CallSetIds: IDs of the call sets created during the import.
-	CallSetIds []string `json:"callSetIds,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CallSetIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallSetIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ImportVariantsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ImportVariantsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1034,9 +977,7 @@ type Operation struct {
 	// `operations/CJHU7Oi_ChDrveSpBRjfuL-qzoWAgEw`
 	Name string `json:"name,omitempty"`
 
-	// Response: If importing ReadGroupSets, an ImportReadGroupSetsResponse
-	// is returned. If importing Variants, an ImportVariantsResponse is
-	// returned. For pipelines and exports, an Empty response is returned.
+	// Response: An Empty object.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

@@ -331,7 +331,7 @@
               ]
             },
             "attachProject": {
-              "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachement, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
+              "description": "Attach an existing project to the tenancy unit as a new tenant\nresource. The project could either be the tenant project reserved by\ncalling `AddTenantProject` under a tenancy unit of a service producer's\nproject of a managed service, or from a separate project.\nThe caller is checked against a set of permissions as if calling\n`AddTenantProject` on the same service consumer.\nTo trigger the attachment, the targeted tenant project must be in a\nfolder. Make sure the ServiceConsumerManagement service account is\nthe owner of that project. These two requirements are already met\nif the project is reserved by calling `AddTenantProject`.\nOperation\u003cresponse: Empty\u003e.",
               "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:attachProject",
               "httpMethod": "POST",
               "id": "serviceconsumermanagement.services.tenancyUnits.attachProject",
@@ -485,7 +485,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190325",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -575,7 +575,7 @@
       "id": "AttachTenantProjectRequest",
       "properties": {
         "externalResource": {
-          "description": "When attaching an external project, this is in the format of\n`projects/{project_number}’.",
+          "description": "When attaching an external project, this is in the format of\n`projects/{project_number}`.",
           "type": "string"
         },
         "reservedResource": {

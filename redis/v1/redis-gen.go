@@ -195,6 +195,50 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// FailoverInstanceRequest: Request for Failover.
+type FailoverInstanceRequest struct {
+	// DataProtectionMode: Optional. Available data protection modes that
+	// the user can choose. If it's
+	// unspecified, data protection mode will be LIMITED_DATA_LOSS by
+	// default.
+	//
+	// Possible values:
+	//   "DATA_PROTECTION_MODE_UNSPECIFIED"
+	//   "LIMITED_DATA_LOSS" - Instance failover will be protected with data
+	// loss control. More
+	// specifically, the failover will only be performed if the
+	// current
+	// replication offset diff between master and replica is under a
+	// certain
+	// threshold.
+	//   "FORCE_DATA_LOSS" - Instance failover will be performed without
+	// data loss control.
+	DataProtectionMode string `json:"dataProtectionMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DataProtectionMode")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DataProtectionMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod FailoverInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRedisV1LocationMetadata: This location metadata represents
 // additional configuration options for a
 // given location where a Redis instance may be created. All fields are
@@ -729,20 +773,20 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -1488,6 +1532,147 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 	//     }
 	//   },
 	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "redis.projects.locations.instances.failover":
+
+type ProjectsLocationsInstancesFailoverCall struct {
+	s                       *Service
+	name                    string
+	failoverinstancerequest *FailoverInstanceRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Failover: Failover the master role to current replica node against a
+// specific
+// STANDARD tier redis instance.
+func (r *ProjectsLocationsInstancesService) Failover(name string, failoverinstancerequest *FailoverInstanceRequest) *ProjectsLocationsInstancesFailoverCall {
+	c := &ProjectsLocationsInstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.failoverinstancerequest = failoverinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsInstancesFailoverCall) Fields(s ...googleapi.Field) *ProjectsLocationsInstancesFailoverCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsInstancesFailoverCall) Context(ctx context.Context) *ProjectsLocationsInstancesFailoverCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsInstancesFailoverCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInstancesFailoverCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.failoverinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:failover")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.instances.failover" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInstancesFailoverCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Failover the master role to current replica node against a specific\nSTANDARD tier redis instance.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
+	//   "httpMethod": "POST",
+	//   "id": "redis.projects.locations.instances.failover",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:failover",
+	//   "request": {
+	//     "$ref": "FailoverInstanceRequest"
+	//   },
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/6lcnxNsebL6KFpum0g-qiNemtCY\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/BOTTKzP457X9Q_sw0Cuw6ICrJyE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2911,7 +2911,7 @@
       }
     }
   },
-  "revision": "20190313",
+  "revision": "20190320",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -4708,11 +4708,11 @@
       "type": "object"
     },
     "WebApp": {
-      "description": "WebApp resource info.",
+      "description": "A WebApps resource represents a web app created for an enterprise. Web apps are published to managed Google Play and can be distributed like other Android apps. On a user's device, a web app opens its specified URL.",
       "id": "WebApp",
       "properties": {
         "displayMode": {
-          "description": "The display mode of the web app.",
+          "description": "The display mode of the web app.\n\nPossible values include: \n- \"minimalUi\", the device's status bar, navigation bar, the app's URL, and a refresh button are visible when the app is open. For HTTP URLs, you can only select this option.\n- \"standalone\", the device's status bar and navigation bar are visible when the app is open.\n- \"fullScreen\", the app opens in full screen mode, hiding the device's status and navigation bars. All browser UI elements, page URL, system status bar and back button are not visible, and the web app takes up the entirety of the available display area.",
           "type": "string"
         },
         "icons": {
@@ -4731,7 +4731,7 @@
           "type": "string"
         },
         "title": {
-          "description": "The title of the web application as displayed to the user (e.g., amongst a list of other applications, or as a label for an icon).",
+          "description": "The title of the web app as displayed to the user (e.g., amongst a list of other applications, or as a label for an icon).",
           "type": "string"
         },
         "versionCode": {
@@ -4740,7 +4740,7 @@
           "type": "string"
         },
         "webAppId": {
-          "description": "The ID of the application.",
+          "description": "The ID of the application. A string of the form \"app:\u003cpackage name\u003e\" where the package name always starts with the prefix \"com.google.enterprise.webapp.\" followed by a random id.",
           "type": "string"
         }
       },

@@ -109,7 +109,7 @@
         "environments": {
           "methods": {
             "authorize": {
-              "description": "Sends an access token to a running environment on behalf of a user. When\nthis completes, the environment will be authorized to run gcloud commands\nwithout requiring the user to manually authenticate.",
+              "description": "Sends OAuth credentials to a running environment on behalf of a user. When\nthis completes, the environment will be authorized to run various Google\nCloud command line tools without requiring the user to manually\nauthenticate.",
               "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}:authorize",
               "httpMethod": "POST",
               "id": "cloudshell.users.environments.authorize",
@@ -118,7 +118,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Name of the resource that should receive the token, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
+                  "description": "Name of the resource that should receive the credentials, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
                   "location": "path",
                   "pattern": "^users/[^/]+/environments/[^/]+$",
                   "required": true,
@@ -287,7 +287,7 @@
       }
     }
   },
-  "revision": "20190318",
+  "revision": "20190323",
   "rootUrl": "https://cloudshell.googleapis.com/",
   "schemas": {
     "AuthorizeEnvironmentRequest": {
@@ -299,8 +299,12 @@
           "type": "string"
         },
         "expireTime": {
-          "description": "The time when the token expires. If not set, defaults to one hour from when\nthe server received the request.",
+          "description": "The time when the credentials expire. If not set, defaults to one hour from\nwhen the server received the request.",
           "format": "google-datetime",
+          "type": "string"
+        },
+        "idToken": {
+          "description": "The OAuth ID token that should be sent to the environment.",
           "type": "string"
         }
       },

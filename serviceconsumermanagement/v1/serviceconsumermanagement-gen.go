@@ -1288,6 +1288,35 @@ func (s *CustomHttpPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DeleteTenantProjectRequest: Request message to delete tenant project
+// resource from the tenancy unit.
+type DeleteTenantProjectRequest struct {
+	// Tag: Tag of the resource within the tenancy unit.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeleteTenantProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteTenantProjectRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Documentation: `Documentation` provides the information for
 // describing a service.
 //
@@ -1432,10 +1461,10 @@ type DocumentationRule struct {
 	// Wildcards are only allowed at the end and for a whole component of
 	// the
 	// qualified name, i.e. "foo.*" is ok, but not "foo.b*" or "foo.*.bar".
-	// To
-	// specify a default for all applicable elements, the whole pattern
-	// "*"
-	// is used.
+	// A
+	// wildcard will match one or more components. To specify a default for
+	// all
+	// applicable elements, the whole pattern "*" is used.
 	Selector string `json:"selector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3503,6 +3532,61 @@ func (s *PolicyBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Quota: Quota configuration helps to achieve fairness and budgeting in
+// service
+// usage.
+//
+// The metric based quota configuration works this way:
+// - The service configuration defines a set of metrics.
+// - For API calls, the quota.metric_rules maps methods to metrics with
+//   corresponding costs.
+// - The quota.limits defines limits on the metrics, which will be used
+// for
+//   quota checks at runtime.
+//
+// An example quota configuration in yaml format:
+//
+//    quota:
+//      limits:
+//
+//      - name: apiWriteQpsPerProject
+//        metric: library.googleapis.com/write_calls
+//        unit: "1/min/{project}"  # rate limit for consumer projects
+//        values:
+//          STANDARD: 10000
+//
+//
+//      # The metric rules bind all methods to the read_calls metric,
+//      # except for the UpdateBook and DeleteBook methods. These two
+// methods
+//      # are mapped to the write_calls metric, with the UpdateBook
+// method
+//      # consuming at twice rate as the DeleteBook method.
+//      metric_rules:
+//      - selector: "*"
+//        metric_costs:
+//          library.googleapis.com/read_calls: 1
+//      - selector: google.example.library.v1.LibraryService.UpdateBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 2
+//      - selector: google.example.library.v1.LibraryService.DeleteBook
+//        metric_costs:
+//          library.googleapis.com/write_calls: 1
+//
+//  Corresponding Metric definition:
+//
+//      metrics:
+//      - name: library.googleapis.com/read_calls
+//        display_name: Read requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//      - name: library.googleapis.com/write_calls
+//        display_name: Write requests
+//        metric_kind: DELTA
+//        value_type: INT64
+//
+//
 type Quota struct {
 	// Limits: List of `QuotaLimit` definitions for the service.
 	Limits []*QuotaLimit `json:"limits,omitempty"`
@@ -4557,6 +4641,36 @@ type Type struct {
 
 func (s *Type) MarshalJSON() ([]byte, error) {
 	type NoMethod Type
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UndeleteTenantProjectRequest: Request message to undelete tenant
+// project resource previously deleted from
+// the tenancy unit.
+type UndeleteTenantProjectRequest struct {
+	// Tag: Tag of the resource within the tenancy unit.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Tag") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Tag") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteTenantProjectRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteTenantProjectRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6315,6 +6429,160 @@ func (c *ServicesTenancyUnitsDeleteCall) Do(opts ...googleapi.CallOption) (*Oper
 
 }
 
+// method id "serviceconsumermanagement.services.tenancyUnits.deleteProject":
+
+type ServicesTenancyUnitsDeleteProjectCall struct {
+	s                          *APIService
+	name                       string
+	deletetenantprojectrequest *DeleteTenantProjectRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// DeleteProject: Deletes the specified project resource identified by a
+// tenant resource tag.
+// The mothod removes a project lien with a 'TenantManager' origin if
+// that was
+// added. It will then attempt to delete the project. If that operation
+// fails,
+// this method also fails.
+// After the project has been deleted, the tenant resource state is set
+// to
+// DELETED.  To permanently remove resource metadata, call
+// the
+// `RemoveTenantProject` method.
+// New resources with the same tag can't be added if there are
+// existing
+// resources in a DELETED state.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) DeleteProject(name string, deletetenantprojectrequest *DeleteTenantProjectRequest) *ServicesTenancyUnitsDeleteProjectCall {
+	c := &ServicesTenancyUnitsDeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deletetenantprojectrequest = deletetenantprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsDeleteProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Context(ctx context.Context) *ServicesTenancyUnitsDeleteProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsDeleteProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deletetenantprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:deleteProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.deleteProject" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsDeleteProjectCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified project resource identified by a tenant resource tag.\nThe mothod removes a project lien with a 'TenantManager' origin if that was\nadded. It will then attempt to delete the project. If that operation fails,\nthis method also fails.\nAfter the project has been deleted, the tenant resource state is set to\nDELETED.  To permanently remove resource metadata, call the\n`RemoveTenantProject` method.\nNew resources with the same tag can't be added if there are existing\nresources in a DELETED state.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:deleteProject",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.deleteProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit.\nSuch as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:deleteProject",
+	//   "request": {
+	//     "$ref": "DeleteTenantProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "serviceconsumermanagement.services.tenancyUnits.list":
 
 type ServicesTenancyUnitsListCall struct {
@@ -6668,6 +6936,154 @@ func (c *ServicesTenancyUnitsRemoveProjectCall) Do(opts ...googleapi.CallOption)
 	//   "path": "v1/{+name}:removeProject",
 	//   "request": {
 	//     "$ref": "RemoveTenantProjectRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "serviceconsumermanagement.services.tenancyUnits.undeleteProject":
+
+type ServicesTenancyUnitsUndeleteProjectCall struct {
+	s                            *APIService
+	name                         string
+	undeletetenantprojectrequest *UndeleteTenantProjectRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// UndeleteProject: Attempts to undelete a previously deleted tenant
+// project. The project must
+// be in a DELETED state.
+// There are no guarantees that an undeleted project will be in
+// a fully restored and functional state. Call the
+// `ApplyTenantProjectConfig`
+// method to update its configuration and then validate all managed
+// service
+// resources.
+// Operation<response: Empty>.
+func (r *ServicesTenancyUnitsService) UndeleteProject(name string, undeletetenantprojectrequest *UndeleteTenantProjectRequest) *ServicesTenancyUnitsUndeleteProjectCall {
+	c := &ServicesTenancyUnitsUndeleteProjectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.undeletetenantprojectrequest = undeletetenantprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Fields(s ...googleapi.Field) *ServicesTenancyUnitsUndeleteProjectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Context(ctx context.Context) *ServicesTenancyUnitsUndeleteProjectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ServicesTenancyUnitsUndeleteProjectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletetenantprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undeleteProject")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "serviceconsumermanagement.services.tenancyUnits.undeleteProject" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ServicesTenancyUnitsUndeleteProjectCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Attempts to undelete a previously deleted tenant project. The project must\nbe in a DELETED state.\nThere are no guarantees that an undeleted project will be in\na fully restored and functional state. Call the `ApplyTenantProjectConfig`\nmethod to update its configuration and then validate all managed service\nresources.\nOperation\u003cresponse: Empty\u003e.",
+	//   "flatPath": "v1/services/{servicesId}/{servicesId1}/{servicesId2}/tenancyUnits/{tenancyUnitsId}:undeleteProject",
+	//   "httpMethod": "POST",
+	//   "id": "serviceconsumermanagement.services.tenancyUnits.undeleteProject",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Name of the tenancy unit.\nSuch as 'services/service.googleapis.com/projects/12345/tenancyUnits/abcd'.",
+	//       "location": "path",
+	//       "pattern": "^services/[^/]+/[^/]+/[^/]+/tenancyUnits/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:undeleteProject",
+	//   "request": {
+	//     "$ref": "UndeleteTenantProjectRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

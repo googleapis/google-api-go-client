@@ -27,7 +27,7 @@
           "description": "View your email address"
         },
         "https://www.googleapis.com/auth/userinfo.profile": {
-          "description": "See your personal info, including any personal info you've made publically available"
+          "description": "See your personal info, including any personal info you've made publicly available"
         }
       }
     }
@@ -38,7 +38,7 @@
   "description": "Builds on top of the Google+ platform for Google Apps Domains.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/+/domains/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/gYoLKAjj0P6KeBeXDv50eS4yV-Y\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/2_7rfkcxGEyURAjUJ8X0jf46KhQ\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/gplus-16.png",
     "x32": "http://www.google.com/images/icons/product/gplus-32.png"

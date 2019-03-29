@@ -2522,8 +2522,7 @@ func (s *GoogleIamV1__AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleIamV1__Binding: Associates `members` with a `role`.
 type GoogleIamV1__Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are

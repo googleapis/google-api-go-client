@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190311",
+  "revision": "20190323",
   "rootUrl": "https://composer.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -492,7 +492,7 @@
         },
         "privateEnvironmentConfig": {
           "$ref": "PrivateEnvironmentConfig",
-          "description": "The configuration used for the private Composer environment."
+          "description": "The configuration used for the Private IP Cloud Composer environment."
         },
         "softwareConfig": {
           "$ref": "SoftwareConfig",
@@ -510,7 +510,7 @@
           "type": "string"
         },
         "clusterSecondaryRangeName": {
-          "description": "Optional. The name of the cluster's secondary range used to allocate\nIP addresses to pods. Specify either `cluster_secondary_range_name`\nor `cluster_ipv4_cidr_block` but not both.",
+          "description": "Optional. The name of the cluster's secondary range used to allocate\nIP addresses to pods. Specify either `cluster_secondary_range_name`\nor `cluster_ipv4_cidr_block` but not both.\n\nThis field is applicable only when `use_ip_aliases` is true.",
           "type": "string"
         },
         "servicesIpv4CidrBlock": {
@@ -518,11 +518,11 @@
           "type": "string"
         },
         "servicesSecondaryRangeName": {
-          "description": "Optional. The name of the services' secondary range used to allocate\nIP addresses to the cluster. Specify either `services_secondary_range_name`\nor `services_ipv4_cidr_block` but not both.",
+          "description": "Optional. The name of the services' secondary range used to allocate\nIP addresses to the cluster. Specify either `services_secondary_range_name`\nor `services_ipv4_cidr_block` but not both.\n\nThis field is applicable only when `use_ip_aliases` is true.",
           "type": "string"
         },
         "useIpAliases": {
-          "description": "Optional. Whether or not to enable Alias IPs in the GKE cluster.\nIf true or if left blank, a VPC-native cluster is created.",
+          "description": "Optional. Whether or not to enable Alias IPs in the GKE cluster.\nIf `true`, a VPC-native cluster is created.",
           "type": "boolean"
         }
       },
@@ -630,7 +630,7 @@
           "type": "string"
         },
         "oauthScopes": {
-          "description": "Optional. The set of Google API scopes to be made available on all\nnode VMs. Defaults to\n[\"https://www.googleapis.com/auth/cloud-platform\"] and must be included in\nthe list of specified scopes. Cannot be updated.",
+          "description": "Optional. The set of Google API scopes to be made available on all\nnode VMs. If `oauth_scopes` is empty, defaults to\n[\"https://www.googleapis.com/auth/cloud-platform\"]. Cannot be updated.",
           "items": {
             "type": "string"
           },
@@ -641,7 +641,7 @@
           "type": "string"
         },
         "subnetwork": {
-          "description": "Optional. The Compute Engine subnetwork to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example:\n\"projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}\"\n\nIf a subnetwork is provided, `nodeConfig.network` must also be provided,\nand the subnetwork must belong to the same project as the network.\n\nFor Shared VPC, you must configure the subnetwork with secondary ranges\nnamed \u003cstrong\u003ecomposer-pods\u003c/strong\u003e and\n\u003cstrong\u003ecomposer-services\u003c/strong\u003e to support Alias IPs.",
+          "description": "Optional. The Compute Engine subnetwork to be used for machine\ncommunications, specified as a\n[relative resource name](/apis/design/resource_names#relative_resource_name).\nFor example:\n\"projects/{projectId}/regions/{regionId}/subnetworks/{subnetworkId}\"\n\nIf a subnetwork is provided, `nodeConfig.network` must also be provided,\nand the subnetwork must belong to the enclosing environment's project and\nlocation.",
           "type": "string"
         },
         "tags": {
@@ -749,31 +749,31 @@
       "type": "object"
     },
     "PrivateClusterConfig": {
-      "description": "Configuration options for private cluster of Composer environment.",
+      "description": "Configuration options for the private GKE cluster in a Cloud Composer\nenvironment.",
       "id": "PrivateClusterConfig",
       "properties": {
         "enablePrivateEndpoint": {
-          "description": "Optional. If true, access to public endpoint of gke cluster will be denied.\n`IPAllocationPolicy.use_ip_aliases` must be true if this field is\nset to true. Default value is false.",
+          "description": "Optional. If `true`, access to the public endpoint of the GKE cluster is\ndenied.",
           "type": "boolean"
         },
         "masterIpv4CidrBlock": {
-          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange will be used for assigning internal IP addresses to the cluster\nmaster or set of masters, as well as the ILB VIP (Internal Load Balance\nVirtual IP).This range must not overlap with any other ranges in use\nwithin the cluster's network. If left blank, default value of\n'172.16.0.0/28' will be used.",
+          "description": "The IP range in CIDR notation to use for the hosted master network. This\nrange is used for assigning internal IP addresses to the cluster\nmaster or set of masters and to the internal load balancer virtual IP.\nThis range must not overlap with any other ranges in use\nwithin the cluster's network. If left blank, the default value of\n'172.16.0.0/28' is used.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "PrivateEnvironmentConfig": {
-      "description": "The configuration information for configuring a private Composer environment.",
+      "description": "The configuration information for configuring a Private IP Cloud Composer\nenvironment.",
       "id": "PrivateEnvironmentConfig",
       "properties": {
         "enablePrivateEnvironment": {
-          "description": "Optional. If `true`, a private Composer environment is created.",
+          "description": "Optional. If `true`, a Private IP Cloud Composer environment is created.\nIf this field is true, `use_ip_aliases` must be true.",
           "type": "boolean"
         },
         "privateClusterConfig": {
           "$ref": "PrivateClusterConfig",
-          "description": "Optional. Configuration for private cluster for a private Composer\nenvironment."
+          "description": "Optional. Configuration for the private GKE cluster for a Private IP\nCloud Composer environment."
         }
       },
       "type": "object"

@@ -23,7 +23,7 @@
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/dl6oVHz1KLsMGWjKgNG5BO_5VGs\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/aNGUvbrklgu_TPFr0cWVV-vnyRs\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -907,7 +907,7 @@
       }
     }
   },
-  "revision": "20190213",
+  "revision": "20190328",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Change": {
@@ -1177,6 +1177,9 @@
           },
           "type": "array"
         },
+        "peeringConfig": {
+          "$ref": "ManagedZonePeeringConfig"
+        },
         "privateVisibilityConfig": {
           "$ref": "ManagedZonePrivateVisibilityConfig"
         },
@@ -1285,6 +1288,37 @@
             "$ref": "Operation"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePeeringConfig": {
+      "id": "ManagedZonePeeringConfig",
+      "properties": {
+        "kind": {
+          "default": "dns#managedZonePeeringConfig",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePeeringConfig\".",
+          "type": "string"
+        },
+        "targetNetwork": {
+          "$ref": "ManagedZonePeeringConfigTargetNetwork"
+        }
+      },
+      "type": "object"
+    },
+    "ManagedZonePeeringConfigTargetNetwork": {
+      "id": "ManagedZonePeeringConfigTargetNetwork",
+      "properties": {
+        "deactivateTime": {
+          "type": "string"
+        },
+        "kind": {
+          "default": "dns#managedZonePeeringConfigTargetNetwork",
+          "description": "Identifies what kind of resource this is. Value: the fixed string \"dns#managedZonePeeringConfigTargetNetwork\".",
+          "type": "string"
+        },
+        "networkUrl": {
+          "type": "string"
         }
       },
       "type": "object"
@@ -1464,6 +1498,9 @@
           "type": "string"
         },
         "enableInboundForwarding": {
+          "type": "boolean"
+        },
+        "enableLogging": {
           "type": "boolean"
         },
         "id": {

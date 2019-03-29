@@ -76,14 +76,14 @@ const basePath = "https://factchecktools.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// View and manage your data across Google Cloud Platform services
-	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+	// View your email address
+	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := option.WithScopes(
-		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1023,7 +1023,7 @@ func (c *PagesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1152,7 +1152,7 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty
 	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1298,7 +1298,7 @@ func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFact
 	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1512,7 +1512,7 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFac
 	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 
@@ -1683,7 +1683,7 @@ func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
+	//     "https://www.googleapis.com/auth/userinfo.email"
 	//   ]
 	// }
 

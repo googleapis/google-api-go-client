@@ -2,8 +2,8 @@
   "auth": {
     "oauth2": {
       "scopes": {
-        "https://www.googleapis.com/auth/cloud-platform": {
-          "description": "View and manage your data across Google Cloud Platform services"
+        "https://www.googleapis.com/auth/userinfo.email": {
+          "description": "View your email address"
         }
       }
     }
@@ -176,7 +176,7 @@
             "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/userinfo.email"
           ]
         },
         "delete": {
@@ -201,7 +201,7 @@
             "$ref": "GoogleProtobufEmpty"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/userinfo.email"
           ]
         },
         "get": {
@@ -226,7 +226,7 @@
             "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/userinfo.email"
           ]
         },
         "list": {
@@ -269,7 +269,7 @@
             "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/userinfo.email"
           ]
         },
         "update": {
@@ -297,13 +297,13 @@
             "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/userinfo.email"
           ]
         }
       }
     }
   },
-  "revision": "20190325",
+  "revision": "20190328",
   "rootUrl": "https://factchecktools.googleapis.com/",
   "schemas": {
     "GoogleFactcheckingFactchecktoolsV1alpha1Claim": {

@@ -370,6 +370,42 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AuthenticatorGroupsConfig: Configuration for returning group
+// information from authenticators.
+type AuthenticatorGroupsConfig struct {
+	// Enabled: Whether this cluster should return group membership
+	// lookups
+	// during authentication using a group of security groups.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// SecurityGroup: The name of the security group-of-groups to be used.
+	// Only relevant
+	// if enabled = true.
+	SecurityGroup string `json:"securityGroup,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthenticatorGroupsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthenticatorGroupsConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutoUpgradeOptions: AutoUpgradeOptions defines the set of options for
 // the user to control how
 // the Auto Upgrades will proceed.
@@ -616,6 +652,10 @@ type Cluster struct {
 	// AddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
 	AddonsConfig *AddonsConfig `json:"addonsConfig,omitempty"`
+
+	// AuthenticatorGroupsConfig: Configuration controlling RBAC group
+	// membership information.
+	AuthenticatorGroupsConfig *AuthenticatorGroupsConfig `json:"authenticatorGroupsConfig,omitempty"`
 
 	// Autoscaling: Cluster-level autoscaling configuration.
 	Autoscaling *ClusterAutoscaling `json:"autoscaling,omitempty"`
@@ -1058,6 +1098,10 @@ type ClusterUpdate struct {
 	// DesiredImageType: The desired image type for the node pool.
 	// NOTE: Set the "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
+
+	// DesiredIntraNodeVisibilityConfig: The desired config of Intra-node
+	// visibility.
+	DesiredIntraNodeVisibilityConfig *IntraNodeVisibilityConfig `json:"desiredIntraNodeVisibilityConfig,omitempty"`
 
 	// DesiredLocations: The desired list of Google Compute
 	// Engine
@@ -1782,6 +1826,36 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IntraNodeVisibilityConfig: IntraNodeVisibilityConfig contains the
+// desired config of the intra-node
+// visibility on this cluster.
+type IntraNodeVisibilityConfig struct {
+	// Enabled: Enables intra node visibility for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IntraNodeVisibilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IntraNodeVisibilityConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IstioConfig: Configuration options for Istio addon.
 type IstioConfig struct {
 	// Auth: The specified Istio auth mode, either none, or mutual TLS.
@@ -2435,6 +2509,11 @@ func (s *Metric) UnmarshalJSON(data []byte) error {
 // NetworkConfig: NetworkConfig reports the relative names of network &
 // subnetwork.
 type NetworkConfig struct {
+	// EnableIntraNodeVisibility: Whether Intra-node visibility is enabled
+	// for this cluster.
+	// This makes same node pod to pod traffic visible for VPC network.
+	EnableIntraNodeVisibility bool `json:"enableIntraNodeVisibility,omitempty"`
+
 	// Network: Output only. The relative name of the Google Compute
 	// Engine
 	// network(/compute/docs/networks-and-firewalls#networks) to which
@@ -2450,20 +2529,22 @@ type NetworkConfig struct {
 	// projects/my-project/regions/us-central1/subnetworks/my-subnet
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Network") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableIntraNodeVisibility") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Network") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "EnableIntraNodeVisibility") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

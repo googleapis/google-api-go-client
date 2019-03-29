@@ -706,7 +706,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview",
+   "documentationLink": "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory",
    "preferred": true
   },
   {
@@ -721,7 +721,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview",
+   "documentationLink": "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory",
    "preferred": false
   },
   {
@@ -2414,6 +2414,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "monitoring:v3p1alpha1",
+   "name": "monitoring",
+   "version": "v3p1alpha1",
+   "title": "Stackdriver Monitoring API",
+   "description": "Manages your Stackdriver Monitoring data and configurations. Most projects must be associated with a Stackdriver account, with a few exceptions as noted on the individual method pages.",
+   "discoveryRestUrl": "https://monitoring.googleapis.com/$discovery/rest?version=v3p1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/monitoring/api/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "monitoring:v3",
    "name": "monitoring",
    "version": "v3",
@@ -2817,6 +2832,36 @@
    "labels": [
     "limited_availability"
    ],
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "run:v1alpha1",
+   "name": "run",
+   "version": "v1alpha1",
+   "title": "Cloud Run API",
+   "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
+   "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1alpha1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/run/",
+   "preferred": false
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "run:v1",
+   "name": "run",
+   "version": "v1",
+   "title": "Cloud Run API",
+   "description": "Deploy and manage user provided container images that scale automatically based on HTTP traffic.",
+   "discoveryRestUrl": "https://run.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/run/",
    "preferred": true
   },
   {

@@ -509,6 +509,8 @@ type ManagedZone struct {
 
 	NameServers []string `json:"nameServers,omitempty"`
 
+	PeeringConfig *ManagedZonePeeringConfig `json:"peeringConfig,omitempty"`
+
 	PrivateVisibilityConfig *ManagedZonePrivateVisibilityConfig `json:"privateVisibilityConfig,omitempty"`
 
 	// Possible values:
@@ -678,6 +680,69 @@ type ManagedZoneOperationsListResponse struct {
 
 func (s *ManagedZoneOperationsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagedZoneOperationsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ManagedZonePeeringConfig struct {
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dns#managedZonePeeringConfig".
+	Kind string `json:"kind,omitempty"`
+
+	TargetNetwork *ManagedZonePeeringConfigTargetNetwork `json:"targetNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedZonePeeringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedZonePeeringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ManagedZonePeeringConfigTargetNetwork struct {
+	DeactivateTime string `json:"deactivateTime,omitempty"`
+
+	// Kind: Identifies what kind of resource this is. Value: the fixed
+	// string "dns#managedZonePeeringConfigTargetNetwork".
+	Kind string `json:"kind,omitempty"`
+
+	NetworkUrl string `json:"networkUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeactivateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeactivateTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ManagedZonePeeringConfigTargetNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod ManagedZonePeeringConfigTargetNetwork
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -991,6 +1056,8 @@ type Policy struct {
 	Description string `json:"description,omitempty"`
 
 	EnableInboundForwarding bool `json:"enableInboundForwarding,omitempty"`
+
+	EnableLogging bool `json:"enableLogging,omitempty"`
 
 	Id uint64 `json:"id,omitempty,string"`
 

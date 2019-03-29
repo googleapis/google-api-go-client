@@ -474,6 +474,17 @@
                 "projectId"
               ],
               "parameters": {
+                "pageSize": {
+                  "description": "Number of results to return in the list.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Token to provide to skip to a particular spot in the list.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "projectId": {
                   "description": "ID of the project for which to list BuildTriggers.",
                   "location": "path",
@@ -562,7 +573,7 @@
       }
     }
   },
-  "revision": "20190314",
+  "revision": "20190323",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1166,6 +1177,10 @@
       "description": "Response containing existing `BuildTriggers`.",
       "id": "ListBuildTriggersResponse",
       "properties": {
+        "nextPageToken": {
+          "description": "Token to receive the next page of results.",
+          "type": "string"
+        },
         "triggers": {
           "description": "`BuildTriggers` for the project, sorted by `create_time` descending.",
           "items": {

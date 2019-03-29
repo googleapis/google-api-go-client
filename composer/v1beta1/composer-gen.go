@@ -317,8 +317,8 @@ type EnvironmentConfig struct {
 	// used to run this environment.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 
-	// PrivateEnvironmentConfig: The configuration used for the private
-	// Composer environment.
+	// PrivateEnvironmentConfig: The configuration used for the Private IP
+	// Cloud Composer environment.
 	PrivateEnvironmentConfig *PrivateEnvironmentConfig `json:"privateEnvironmentConfig,omitempty"`
 
 	// SoftwareConfig: The configuration settings for software inside the
@@ -383,6 +383,8 @@ type IPAllocationPolicy struct {
 	// IP addresses to pods. Specify either
 	// `cluster_secondary_range_name`
 	// or `cluster_ipv4_cidr_block` but not both.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
 	ClusterSecondaryRangeName string `json:"clusterSecondaryRangeName,omitempty"`
 
 	// ServicesIpv4CidrBlock: Optional. The IP address range of the services
@@ -416,11 +418,13 @@ type IPAllocationPolicy struct {
 	// IP addresses to the cluster. Specify either
 	// `services_secondary_range_name`
 	// or `services_ipv4_cidr_block` but not both.
+	//
+	// This field is applicable only when `use_ip_aliases` is true.
 	ServicesSecondaryRangeName string `json:"servicesSecondaryRangeName,omitempty"`
 
 	// UseIpAliases: Optional. Whether or not to enable Alias IPs in the GKE
 	// cluster.
-	// If true or if left blank, a VPC-native cluster is created.
+	// If `true`, a VPC-native cluster is created.
 	UseIpAliases bool `json:"useIpAliases,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -687,11 +691,10 @@ type NodeConfig struct {
 
 	// OauthScopes: Optional. The set of Google API scopes to be made
 	// available on all
-	// node VMs. Defaults
+	// node VMs. If `oauth_scopes` is empty, defaults
 	// to
-	// ["https://www.googleapis.com/auth/cloud-platform"] and must be
-	// included in
-	// the list of specified scopes. Cannot be updated.
+	// ["https://www.googleapis.com/auth/cloud-platform"]. Cannot be
+	// updated.
 	OauthScopes []string `json:"oauthScopes,omitempty"`
 
 	// ServiceAccount: Optional. The Google Cloud Platform Service Account
@@ -713,14 +716,9 @@ type NodeConfig struct {
 	//
 	// If a subnetwork is provided, `nodeConfig.network` must also be
 	// provided,
-	// and the subnetwork must belong to the same project as the
-	// network.
-	//
-	// For Shared VPC, you must configure the subnetwork with secondary
-	// ranges
-	// named <strong>composer-pods</strong>
+	// and the subnetwork must belong to the enclosing environment's project
 	// and
-	// <strong>composer-services</strong> to support Alias IPs.
+	// location.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
 	// Tags: Optional. The list of instance tags applied to all node VMs.
@@ -896,26 +894,25 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PrivateClusterConfig: Configuration options for private cluster of
-// Composer environment.
+// PrivateClusterConfig: Configuration options for the private GKE
+// cluster in a Cloud Composer
+// environment.
 type PrivateClusterConfig struct {
-	// EnablePrivateEndpoint: Optional. If true, access to public endpoint
-	// of gke cluster will be denied.
-	// `IPAllocationPolicy.use_ip_aliases` must be true if this field is
-	// set to true. Default value is false.
+	// EnablePrivateEndpoint: Optional. If `true`, access to the public
+	// endpoint of the GKE cluster is
+	// denied.
 	EnablePrivateEndpoint bool `json:"enablePrivateEndpoint,omitempty"`
 
 	// MasterIpv4CidrBlock: The IP range in CIDR notation to use for the
 	// hosted master network. This
-	// range will be used for assigning internal IP addresses to the
+	// range is used for assigning internal IP addresses to the
 	// cluster
-	// master or set of masters, as well as the ILB VIP (Internal Load
-	// Balance
-	// Virtual IP).This range must not overlap with any other ranges in
-	// use
-	// within the cluster's network. If left blank, default value
+	// master or set of masters and to the internal load balancer virtual
+	// IP.
+	// This range must not overlap with any other ranges in use
+	// within the cluster's network. If left blank, the default value
 	// of
-	// '172.16.0.0/28' will be used.
+	// '172.16.0.0/28' is used.
 	MasterIpv4CidrBlock string `json:"masterIpv4CidrBlock,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -944,15 +941,17 @@ func (s *PrivateClusterConfig) MarshalJSON() ([]byte, error) {
 }
 
 // PrivateEnvironmentConfig: The configuration information for
-// configuring a private Composer environment.
+// configuring a Private IP Cloud Composer
+// environment.
 type PrivateEnvironmentConfig struct {
-	// EnablePrivateEnvironment: Optional. If `true`, a private Composer
-	// environment is created.
+	// EnablePrivateEnvironment: Optional. If `true`, a Private IP Cloud
+	// Composer environment is created.
+	// If this field is true, `use_ip_aliases` must be true.
 	EnablePrivateEnvironment bool `json:"enablePrivateEnvironment,omitempty"`
 
-	// PrivateClusterConfig: Optional. Configuration for private cluster for
-	// a private Composer
-	// environment.
+	// PrivateClusterConfig: Optional. Configuration for the private GKE
+	// cluster for a Private IP
+	// Cloud Composer environment.
 	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

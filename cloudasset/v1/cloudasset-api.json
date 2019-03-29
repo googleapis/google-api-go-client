@@ -14,7 +14,7 @@
   "canonicalName": "Cloud Asset",
   "description": "The cloud asset API manages the history and inventory of cloud resources.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://console.cloud.google.com/apis/api/cloudasset.googleapis.com/overview",
+  "documentationLink": "https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/quickstart-cloud-asset-inventory",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -219,7 +219,7 @@
       }
     }
   },
-  "revision": "20190321",
+  "revision": "20190327",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {

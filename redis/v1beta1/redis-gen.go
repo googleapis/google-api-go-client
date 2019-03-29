@@ -382,8 +382,16 @@ type Instance struct {
 	// parameters
 	// are:
 	//
+	//  Redis 3.2 and above:
+	//
 	//  *   maxmemory-policy
 	//  *   notify-keyspace-events
+	//
+	//  Redis 4.0 and above:
+	//
+	//  *   activedefrag
+	//  *   lfu-log-factor
+	//  *   lfu-decay-time
 	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 
 	// RedisVersion: Optional. The version of Redis software.
@@ -391,7 +399,10 @@ type Instance struct {
 	// the
 	// version will perform an upgrade/downgrade to the new version.
 	// Currently,
-	// the supported values are `REDIS_3_2` for Redis 3.2.
+	// the supported values are:
+	//
+	//  *   `REDIS_4_0` for Redis 4.0 compatibility
+	//  *   `REDIS_3_2` for Redis 3.2 compatibility
 	RedisVersion string `json:"redisVersion,omitempty"`
 
 	// ReservedIpRange: Optional. The CIDR range of internal addresses that
@@ -738,20 +749,20 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

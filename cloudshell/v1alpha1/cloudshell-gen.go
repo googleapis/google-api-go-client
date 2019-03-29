@@ -170,10 +170,13 @@ type AuthorizeEnvironmentRequest struct {
 	// environment.
 	AccessToken string `json:"accessToken,omitempty"`
 
-	// ExpireTime: The time when the token expires. If not set, defaults to
-	// one hour from when
-	// the server received the request.
+	// ExpireTime: The time when the credentials expire. If not set,
+	// defaults to one hour from
+	// when the server received the request.
 	ExpireTime string `json:"expireTime,omitempty"`
+
+	// IdToken: The OAuth ID token that should be sent to the environment.
+	IdToken string `json:"idToken,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessToken") to
 	// unconditionally include in API requests. By default, fields with
@@ -717,11 +720,13 @@ type UsersEnvironmentsAuthorizeCall struct {
 	header_                     http.Header
 }
 
-// Authorize: Sends an access token to a running environment on behalf
+// Authorize: Sends OAuth credentials to a running environment on behalf
 // of a user. When
-// this completes, the environment will be authorized to run gcloud
-// commands
-// without requiring the user to manually authenticate.
+// this completes, the environment will be authorized to run various
+// Google
+// Cloud command line tools without requiring the user to
+// manually
+// authenticate.
 func (r *UsersEnvironmentsService) Authorize(name string, authorizeenvironmentrequest *AuthorizeEnvironmentRequest) *UsersEnvironmentsAuthorizeCall {
 	c := &UsersEnvironmentsAuthorizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -819,7 +824,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Sends an access token to a running environment on behalf of a user. When\nthis completes, the environment will be authorized to run gcloud commands\nwithout requiring the user to manually authenticate.",
+	//   "description": "Sends OAuth credentials to a running environment on behalf of a user. When\nthis completes, the environment will be authorized to run various Google\nCloud command line tools without requiring the user to manually\nauthenticate.",
 	//   "flatPath": "v1alpha1/users/{usersId}/environments/{environmentsId}:authorize",
 	//   "httpMethod": "POST",
 	//   "id": "cloudshell.users.environments.authorize",
@@ -828,7 +833,7 @@ func (c *UsersEnvironmentsAuthorizeCall) Do(opts ...googleapi.CallOption) (*Empt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the resource that should receive the token, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
+	//       "description": "Name of the resource that should receive the credentials, for example\n`users/me/environments/default` or\n`users/someone@example.com/environments/default`.",
 	//       "location": "path",
 	//       "pattern": "^users/[^/]+/environments/[^/]+$",
 	//       "required": true,

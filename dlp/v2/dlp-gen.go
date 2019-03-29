@@ -1686,6 +1686,111 @@ func (s *GooglePrivacyDlpV2CreateStoredInfoTypeRequest) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CryptoDeterministicConfig: Pseudonymization method
+// that generates deterministic encryption for the given
+// input. Outputs a base64 encoded representation of the encrypted
+// output.
+// Uses AES-SIV based on the RFC https://tools.ietf.org/html/rfc5297.
+type GooglePrivacyDlpV2CryptoDeterministicConfig struct {
+	// Context: Optional. A context may be used for higher security and
+	// maintaining
+	// referential integrity such that the same identifier in two
+	// different
+	// contexts will be given a distinct surrogate. The context is appended
+	// to
+	// plaintext value being encrypted. On decryption the provided context
+	// is
+	// validated against the value used during encryption. If a context
+	// was
+	// provided during encryption, same context must be provided during
+	// decryption
+	// as well.
+	//
+	// If the context is not set, plaintext would be used as is for
+	// encryption.
+	// If the context is set but:
+	//
+	// 1. there is no record present when transforming a given value or
+	// 2. the field is not present when transforming a given
+	// value,
+	//
+	// plaintext would be used as is for encryption.
+	//
+	// Note that case (1) is expected when an `InfoTypeTransformation`
+	// is
+	// applied to both structured and non-structured `ContentItem`s.
+	Context *GooglePrivacyDlpV2FieldId `json:"context,omitempty"`
+
+	// CryptoKey: The key used by the encryption function.
+	CryptoKey *GooglePrivacyDlpV2CryptoKey `json:"cryptoKey,omitempty"`
+
+	// SurrogateInfoType: The custom info type to annotate the surrogate
+	// with.
+	// This annotation will be applied to the surrogate by prefixing it
+	// with
+	// the name of the custom info type followed by the number of
+	// characters comprising the surrogate. The following scheme defines
+	// the
+	// format: <info type name>(<surrogate character
+	// count>):<surrogate>
+	//
+	// For example, if the name of custom info type is 'MY_TOKEN_INFO_TYPE'
+	// and
+	// the surrogate is 'abc', the full replacement value
+	// will be: 'MY_TOKEN_INFO_TYPE(3):abc'
+	//
+	// This annotation identifies the surrogate when inspecting content
+	// using the
+	// custom info type 'Surrogate'. This facilitates reversal of
+	// the
+	// surrogate when it occurs in free text.
+	//
+	// In order for inspection to work properly, the name of this info type
+	// must
+	// not occur naturally anywhere in your data; otherwise, inspection may
+	// either
+	//
+	// - reverse a surrogate that does not correspond to an actual
+	// identifier
+	// - be unable to parse the surrogate and result in an error
+	//
+	// Therefore, choose your custom info type name carefully after
+	// considering
+	// what your data looks like. One way to select a name that has a high
+	// chance
+	// of yielding reliable detection is to include one or more unicode
+	// characters
+	// that are highly improbable to exist in your data.
+	// For example, assuming your data is entered from a regular ASCII
+	// keyboard,
+	// the symbol with the hex code point 29DD might be used like
+	// so:
+	// ⧝MY_TOKEN_TYPE
+	SurrogateInfoType *GooglePrivacyDlpV2InfoType `json:"surrogateInfoType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Context") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Context") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CryptoDeterministicConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CryptoDeterministicConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CryptoHashConfig: Pseudonymization method that
 // generates surrogates via cryptographic hashing.
 // Uses SHA-256.
@@ -5435,6 +5540,8 @@ type GooglePrivacyDlpV2PrimitiveTransformation struct {
 	BucketingConfig *GooglePrivacyDlpV2BucketingConfig `json:"bucketingConfig,omitempty"`
 
 	CharacterMaskConfig *GooglePrivacyDlpV2CharacterMaskConfig `json:"characterMaskConfig,omitempty"`
+
+	CryptoDeterministicConfig *GooglePrivacyDlpV2CryptoDeterministicConfig `json:"cryptoDeterministicConfig,omitempty"`
 
 	CryptoHashConfig *GooglePrivacyDlpV2CryptoHashConfig `json:"cryptoHashConfig,omitempty"`
 

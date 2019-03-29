@@ -2415,7 +2415,7 @@
       }
     }
   },
-  "revision": "20190206",
+  "revision": "20190316",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2565,6 +2565,10 @@
           "description": "Kubernetes alpha features are enabled on this cluster. This includes alpha\nAPI groups (e.g. v1alpha1) and features that may not be production ready in\nthe kubernetes version of the master and nodes.\nThe cluster has no SLA for uptime and master/node upgrades are disabled.\nAlpha enabled clusters are automatically deleted thirty days after\ncreation.",
           "type": "boolean"
         },
+        "enableTpu": {
+          "description": "Enable the ability to use Cloud TPUs in this cluster.",
+          "type": "boolean"
+        },
         "endpoint": {
           "description": "[Output only] The IP address of this cluster's master endpoint.\nThe endpoint can be accessed from the internet at\n`https://username:password@endpoint/`.\n\nSee the `masterAuth` property of this resource for username and\npassword information.",
           "type": "string"
@@ -2711,6 +2715,10 @@
         },
         "subnetwork": {
           "description": "The name of the Google Compute Engine\n[subnetwork](/compute/docs/subnetworks) to which the\ncluster is connected.",
+          "type": "string"
+        },
+        "tpuIpv4CidrBlock": {
+          "description": "[Output only] The IP address range of the Cloud TPUs in this cluster, in\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `1.2.3.4/29`).",
           "type": "string"
         },
         "zone": {
@@ -2988,6 +2996,10 @@
         },
         "subnetworkName": {
           "description": "A custom subnetwork name to be used if `create_subnetwork` is true.  If\nthis field is empty, then an automatic name will be chosen for the new\nsubnetwork.",
+          "type": "string"
+        },
+        "tpuIpv4CidrBlock": {
+          "description": "The IP address range of the Cloud TPUs in this cluster. If unspecified, a\nrange will be automatically chosen with the default size.\n\nThis field is only applicable when `use_ip_aliases` is true.\n\nIf unspecified, the range will use the default size.\n\nSet to /netmask (e.g. `/14`) to have a range chosen with a specific\nnetmask.\n\nSet to a\n[CIDR](http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing)\nnotation (e.g. `10.96.0.0/14`) from the RFC-1918 private networks (e.g.\n`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`) to pick a specific range\nto use.",
           "type": "string"
         },
         "useIpAliases": {

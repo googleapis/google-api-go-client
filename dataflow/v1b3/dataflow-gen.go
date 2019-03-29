@@ -1658,6 +1658,16 @@ type Environment struct {
 	// the default account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
+	// ServiceKmsKeyName: If set, contains the Cloud KMS key identifier used
+	// to encrypt data
+	// at rest, AKA a Customer Managed Encryption Key (CMEK).
+	//
+	// Format:
+	//
+	// projects/PROJECT_ID/locations/LOCATION/keyRings/KEY_RING/cryptoKeys/KE
+	// Y
+	ServiceKmsKeyName string `json:"serviceKmsKeyName,omitempty"`
+
 	// TempStoragePrefix: The prefix of the resources the system should use
 	// for temporary
 	// storage.  The system will append the suffix "/temp-{JOBNAME} to
@@ -5507,20 +5517,20 @@ func (s *StateFamilyConfig) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The

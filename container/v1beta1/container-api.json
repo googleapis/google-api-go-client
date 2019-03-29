@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190227",
+  "revision": "20190316",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2535,6 +2535,21 @@
         "networkPolicyConfig": {
           "$ref": "NetworkPolicyConfig",
           "description": "Configuration for NetworkPolicy. This only tracks whether the addon\nis enabled or not on the Master, it does not track whether network policy\nis enabled for the nodes."
+        }
+      },
+      "type": "object"
+    },
+    "AuthenticatorGroupsConfig": {
+      "description": "Configuration for returning group information from authenticators.",
+      "id": "AuthenticatorGroupsConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether this cluster should return group membership lookups\nduring authentication using a group of security groups.",
+          "type": "boolean"
+        },
+        "securityGroup": {
+          "description": "The name of the security group-of-groups to be used. Only relevant\nif enabled = true.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -2643,6 +2658,10 @@
         "addonsConfig": {
           "$ref": "AddonsConfig",
           "description": "Configurations for the various addons available to run in the cluster."
+        },
+        "authenticatorGroupsConfig": {
+          "$ref": "AuthenticatorGroupsConfig",
+          "description": "Configuration controlling RBAC group membership information."
         },
         "autoscaling": {
           "$ref": "ClusterAutoscaling",
@@ -2920,6 +2939,10 @@
         "desiredImageType": {
           "description": "The desired image type for the node pool.\nNOTE: Set the \"desired_node_pool\" field as well.",
           "type": "string"
+        },
+        "desiredIntraNodeVisibilityConfig": {
+          "$ref": "IntraNodeVisibilityConfig",
+          "description": "The desired config of Intra-node visibility."
         },
         "desiredLocations": {
           "description": "The desired list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the cluster's nodes\nshould be located. Changing the locations a cluster is in will result\nin nodes being either created or removed from the cluster, depending on\nwhether locations are being added or removed.\n\nThis list must always include the cluster's primary zone.",
@@ -3230,6 +3253,17 @@
         },
         "useIpAliases": {
           "description": "Whether alias IPs will be used for pod IPs in the cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "IntraNodeVisibilityConfig": {
+      "description": "IntraNodeVisibilityConfig contains the desired config of the intra-node\nvisibility on this cluster.",
+      "id": "IntraNodeVisibilityConfig",
+      "properties": {
+        "enabled": {
+          "description": "Enables intra node visibility for this cluster.",
           "type": "boolean"
         }
       },
@@ -3556,6 +3590,10 @@
       "description": "NetworkConfig reports the relative names of network \u0026 subnetwork.",
       "id": "NetworkConfig",
       "properties": {
+        "enableIntraNodeVisibility": {
+          "description": "Whether Intra-node visibility is enabled for this cluster.\nThis makes same node pod to pod traffic visible for VPC network.",
+          "type": "boolean"
+        },
         "network": {
           "description": "Output only. The relative name of the Google Compute Engine\nnetwork(/compute/docs/networks-and-firewalls#networks) to which\nthe cluster is connected.\nExample: projects/my-project/global/networks/my-network",
           "type": "string"

@@ -2521,7 +2521,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190328",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2783,13 +2783,15 @@
             "ENTITY_TYPE_UNSPECIFIED",
             "ADVERTISER",
             "BRAND",
-            "AGENCY"
+            "AGENCY",
+            "ENTITY_TYPE_UNCLASSIFIED"
           ],
           "enumDescriptions": [
             "A placeholder for an undefined client entity type. Should not be used.",
             "An advertiser.",
             "A brand.",
-            "An advertising agency."
+            "An advertising agency.",
+            "An explicit value for a client that was not yet classified\nas any particular entity."
           ],
           "type": "string"
         },
@@ -2967,7 +2969,7 @@
       "type": "object"
     },
     "Creative": {
-      "description": "A creative and its classification data.\n\nNext ID: 42",
+      "description": "A creative and its classification data.",
       "id": "Creative",
       "properties": {
         "accountId": {
@@ -3162,7 +3164,7 @@
         },
         "filteringStats": {
           "$ref": "FilteringStats",
-          "description": "@OutputOnly The filtering stats for this creative."
+          "description": "@OutputOnly The filtering stats for this creative.\nDeprecated; please use\nbidders.accounts.filterSets.filteredBids.creatives.list\nmethod instead."
         },
         "html": {
           "$ref": "HtmlContent",

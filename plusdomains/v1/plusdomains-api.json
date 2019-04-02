@@ -20,9 +20,6 @@
         "https://www.googleapis.com/auth/plus.stream.read": {
           "description": "View your Google+ posts, comments, and stream"
         },
-        "https://www.googleapis.com/auth/plus.stream.write": {
-          "description": "Manage your Google+ posts, comments, and stream"
-        },
         "https://www.googleapis.com/auth/userinfo.email": {
           "description": "View your email address"
         },
@@ -38,7 +35,7 @@
   "description": "Builds on top of the Google+ platform for Google Apps Domains.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/+/domains/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/2_7rfkcxGEyURAjUJ8X0jf46KhQ\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/By0J492w_3B2d4SXwF42I0gv340\"",
   "icons": {
     "x16": "http://www.google.com/images/icons/product/gplus-16.png",
     "x32": "http://www.google.com/images/icons/product/gplus-32.png"
@@ -98,7 +95,7 @@
     "activities": {
       "methods": {
         "get": {
-          "description": "Get an activity.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.activities.get",
           "parameterOrder": [
@@ -123,7 +120,7 @@
           ]
         },
         "list": {
-          "description": "List all of the activities in the specified collection for a particular user.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.activities.list",
           "parameterOrder": [
@@ -179,7 +176,7 @@
     "audiences": {
       "methods": {
         "list": {
-          "description": "List all of the audiences to which a user can share.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.audiences.list",
           "parameterOrder": [
@@ -222,7 +219,7 @@
     "circles": {
       "methods": {
         "list": {
-          "description": "List all of the circles for a user.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.circles.list",
           "parameterOrder": [
@@ -265,7 +262,7 @@
     "comments": {
       "methods": {
         "get": {
-          "description": "Get a comment.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.comments.get",
           "parameterOrder": [
@@ -288,35 +285,8 @@
             "https://www.googleapis.com/auth/plus.stream.read"
           ]
         },
-        "insert": {
-          "description": "Create a new comment in reply to an activity.",
-          "httpMethod": "POST",
-          "id": "plusDomains.comments.insert",
-          "parameterOrder": [
-            "activityId"
-          ],
-          "parameters": {
-            "activityId": {
-              "description": "The ID of the activity to reply to.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "activities/{activityId}/comments",
-          "request": {
-            "$ref": "Comment"
-          },
-          "response": {
-            "$ref": "Comment"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/plus.login",
-            "https://www.googleapis.com/auth/plus.stream.write"
-          ]
-        },
         "list": {
-          "description": "List all of the comments for an activity.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.comments.list",
           "parameterOrder": [
@@ -372,7 +342,7 @@
     "media": {
       "methods": {
         "insert": {
-          "description": "Add a new media item to an album. The current upload size limitations are 36MB for a photo and 1GB for a video. Uploads do not count against quota if photos are less than 2048 pixels on their longest side or videos are less than 15 minutes in length.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "POST",
           "id": "plusDomains.media.insert",
           "mediaUpload": {
@@ -525,7 +495,7 @@
           ]
         },
         "listByActivity": {
-          "description": "List all of the people in the specified collection for a particular activity.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.people.listByActivity",
           "parameterOrder": [
@@ -580,7 +550,7 @@
           ]
         },
         "listByCircle": {
-          "description": "List all of the people who are members of a circle.",
+          "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
           "httpMethod": "GET",
           "id": "plusDomains.people.listByCircle",
           "parameterOrder": [
@@ -620,7 +590,7 @@
       }
     }
   },
-  "revision": "20190322",
+  "revision": "20190328",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Acl": {

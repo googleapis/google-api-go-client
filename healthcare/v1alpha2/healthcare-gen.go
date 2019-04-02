@@ -1006,16 +1006,20 @@ func (s *DeidentifyConfig) MarshalJSON() ([]byte, error) {
 // DeidentifyDatasetRequest: Redacts identifying information from the
 // specified dataset.
 type DeidentifyDatasetRequest struct {
-	// Config: Deidentify configuration
+	// Config: Deidentify configuration.
 	Config *DeidentifyConfig `json:"config,omitempty"`
 
-	// DestinationDataset: The name of the dataset resource to which the
-	// redacted data should be
-	// written
+	// DestinationDataset: The name of the dataset resource to create and
+	// write the redacted data
+	// to
 	// (e.g.,
-	// `projects/{project_id}/locations/{location_id}/datasets/{datase
-	// t_id}`).
-	// The new dataset must not exist, or the request will fail.
+	// `projects/{project_id}/locations/{location_id}/datasets/{dat
+	// aset_id}`).
+	//
+	//  * The destination dataset must not exist.
+	//  * The destination dataset must be in the same project as the source
+	//    dataset. De-identifying data across multiple projects is not
+	// supported.
 	DestinationDataset string `json:"destinationDataset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
@@ -1159,10 +1163,11 @@ type DicomConfig struct {
 	// Profile (DICOM Standard Edition 2018e).
 	//   "KEEP_ALL_PROFILE" - Keep all tags.
 	//   "DEIDENTIFY_TAG_CONTENTS" - Inspects within tag contents and
-	// replaces sensitive text with its type.
+	// replaces sensitive text. The process
+	// can be configured using the TextConfig.
 	// Applies to all tags with the following Value Representation
 	// names:
-	// AE, LO, LT, PN, SH, ST, UC, UT
+	// AE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS
 	FilterProfile string `json:"filterProfile,omitempty"`
 
 	// KeepList: List of tags to keep. Remove all other tags.

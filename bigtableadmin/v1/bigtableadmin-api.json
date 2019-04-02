@@ -3,7 +3,7 @@
   "baseUrl": "https://bigtableadmin.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Bigtable Admin",
-  "description": "",
+  "description": "Administer your Cloud Bigtable tables and instances.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigtable/",
   "fullyEncodeReservedExpansion": true,
@@ -164,7 +164,7 @@
       }
     }
   },
-  "revision": "20190207",
+  "revision": "20190328",
   "rootUrl": "https://bigtableadmin.googleapis.com/",
   "schemas": {
     "Cluster": {

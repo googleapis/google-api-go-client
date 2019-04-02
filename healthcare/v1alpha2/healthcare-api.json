@@ -3254,7 +3254,7 @@
       }
     }
   },
-  "revision": "20190325",
+  "revision": "20190401",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -3500,10 +3500,10 @@
       "properties": {
         "config": {
           "$ref": "DeidentifyConfig",
-          "description": "Deidentify configuration"
+          "description": "Deidentify configuration."
         },
         "destinationDataset": {
-          "description": "The name of the dataset resource to which the redacted data should be\nwritten (e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`).\nThe new dataset must not exist, or the request will fail.",
+          "description": "The name of the dataset resource to create and write the redacted data to\n(e.g.,\n`projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`).\n\n * The destination dataset must not exist.\n * The destination dataset must be in the same project as the source\n   dataset. De-identifying data across multiple projects is not supported.",
           "type": "string"
         }
       },
@@ -3584,7 +3584,7 @@
             "Keep only tags required to produce valid DICOM.",
             "Remove tags based on DICOM Standard's Attribute Confidentiality Basic\nProfile (DICOM Standard Edition 2018e).",
             "Keep all tags.",
-            "Inspects within tag contents and replaces sensitive text with its type.\nApplies to all tags with the following Value Representation names:\nAE, LO, LT, PN, SH, ST, UC, UT"
+            "Inspects within tag contents and replaces sensitive text. The process\ncan be configured using the TextConfig.\nApplies to all tags with the following Value Representation names:\nAE, LO, LT, PN, SH, ST, UC, UT, DA, DT, AS"
           ],
           "type": "string"
         },

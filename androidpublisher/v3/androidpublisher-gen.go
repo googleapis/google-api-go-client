@@ -680,6 +680,34 @@ func (s *Comment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type CountryTargeting struct {
+	Countries []string `json:"countries,omitempty"`
+
+	IncludeRestOfWorld bool `json:"includeRestOfWorld,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Countries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Countries") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CountryTargeting) MarshalJSON() ([]byte, error) {
+	type NoMethod CountryTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeobfuscationFile: Represents a deobfuscation file.
 type DeobfuscationFile struct {
 	// SymbolType: The type of the deobfuscation file.
@@ -2237,6 +2265,8 @@ func (s *Track) MarshalJSON() ([]byte, error) {
 }
 
 type TrackRelease struct {
+	CountryTargeting *CountryTargeting `json:"countryTargeting,omitempty"`
+
 	// Name: The release name, used to identify this release in the Play
 	// Console UI. Not required to be unique. This is optional, if not set
 	// it will be generated from the version_name in the APKs.
@@ -2260,7 +2290,7 @@ type TrackRelease struct {
 	// active, including those you wish to retain from previous releases.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "CountryTargeting") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2268,12 +2298,13 @@ type TrackRelease struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CountryTargeting") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

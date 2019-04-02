@@ -98,9 +98,6 @@ const (
 	// View your Google+ posts, comments, and stream
 	PlusStreamReadScope = "https://www.googleapis.com/auth/plus.stream.read"
 
-	// Manage your Google+ posts, comments, and stream
-	PlusStreamWriteScope = "https://www.googleapis.com/auth/plus.stream.write"
-
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
@@ -118,7 +115,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/plus.media.upload",
 		"https://www.googleapis.com/auth/plus.profiles.read",
 		"https://www.googleapis.com/auth/plus.stream.read",
-		"https://www.googleapis.com/auth/plus.stream.write",
 		"https://www.googleapis.com/auth/userinfo.email",
 		"https://www.googleapis.com/auth/userinfo.profile",
 	)
@@ -2834,7 +2830,8 @@ type ActivitiesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get an activity.
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *ActivitiesService) Get(activityId string) *ActivitiesGetCall {
 	c := &ActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -2939,7 +2936,7 @@ func (c *ActivitiesGetCall) Do(opts ...googleapi.CallOption) (*Activity, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Get an activity.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.activities.get",
 	//   "parameterOrder": [
@@ -2978,8 +2975,8 @@ type ActivitiesListCall struct {
 	header_      http.Header
 }
 
-// List: List all of the activities in the specified collection for a
-// particular user.
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *ActivitiesService) List(userId string, collection string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3104,7 +3101,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*ActivityFeed, er
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the activities in the specified collection for a particular user.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.activities.list",
 	//   "parameterOrder": [
@@ -3190,7 +3187,8 @@ type AudiencesListCall struct {
 	header_      http.Header
 }
 
-// List: List all of the audiences to which a user can share.
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *AudiencesService) List(userId string) *AudiencesListCall {
 	c := &AudiencesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3313,7 +3311,7 @@ func (c *AudiencesListCall) Do(opts ...googleapi.CallOption) (*AudiencesFeed, er
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the audiences to which a user can share.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.audiences.list",
 	//   "parameterOrder": [
@@ -3386,7 +3384,8 @@ type CirclesListCall struct {
 	header_      http.Header
 }
 
-// List: List all of the circles for a user.
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *CirclesService) List(userId string) *CirclesListCall {
 	c := &CirclesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -3509,7 +3508,7 @@ func (c *CirclesListCall) Do(opts ...googleapi.CallOption) (*CircleFeed, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the circles for a user.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.circles.list",
 	//   "parameterOrder": [
@@ -3582,7 +3581,8 @@ type CommentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get a comment.
+// Get: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *CommentsService) Get(commentId string) *CommentsGetCall {
 	c := &CommentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.commentId = commentId
@@ -3687,7 +3687,7 @@ func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Get a comment.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.comments.get",
 	//   "parameterOrder": [
@@ -3713,144 +3713,6 @@ func (c *CommentsGetCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
 
 }
 
-// method id "plusDomains.comments.insert":
-
-type CommentsInsertCall struct {
-	s          *Service
-	activityId string
-	comment    *Comment
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Insert: Create a new comment in reply to an activity.
-func (r *CommentsService) Insert(activityId string, comment *Comment) *CommentsInsertCall {
-	c := &CommentsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.activityId = activityId
-	c.comment = comment
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *CommentsInsertCall) Fields(s ...googleapi.Field) *CommentsInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *CommentsInsertCall) Context(ctx context.Context) *CommentsInsertCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *CommentsInsertCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *CommentsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.comment)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "activities/{activityId}/comments")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"activityId": c.activityId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "plusDomains.comments.insert" call.
-// Exactly one of *Comment or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Comment.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *CommentsInsertCall) Do(opts ...googleapi.CallOption) (*Comment, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Comment{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Create a new comment in reply to an activity.",
-	//   "httpMethod": "POST",
-	//   "id": "plusDomains.comments.insert",
-	//   "parameterOrder": [
-	//     "activityId"
-	//   ],
-	//   "parameters": {
-	//     "activityId": {
-	//       "description": "The ID of the activity to reply to.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "activities/{activityId}/comments",
-	//   "request": {
-	//     "$ref": "Comment"
-	//   },
-	//   "response": {
-	//     "$ref": "Comment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/plus.login",
-	//     "https://www.googleapis.com/auth/plus.stream.write"
-	//   ]
-	// }
-
-}
-
 // method id "plusDomains.comments.list":
 
 type CommentsListCall struct {
@@ -3862,7 +3724,8 @@ type CommentsListCall struct {
 	header_      http.Header
 }
 
-// List: List all of the comments for an activity.
+// List: Shut down. See https://developers.google.com/+/api-shutdown for
+// more details.
 func (r *CommentsService) List(activityId string) *CommentsListCall {
 	c := &CommentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -3996,7 +3859,7 @@ func (c *CommentsListCall) Do(opts ...googleapi.CallOption) (*CommentFeed, error
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the comments for an activity.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.comments.list",
 	//   "parameterOrder": [
@@ -4084,10 +3947,8 @@ type MediaInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Add a new media item to an album. The current upload size
-// limitations are 36MB for a photo and 1GB for a video. Uploads do not
-// count against quota if photos are less than 2048 pixels on their
-// longest side or videos are less than 15 minutes in length.
+// Insert: Shut down. See https://developers.google.com/+/api-shutdown
+// for more details.
 func (r *MediaService) Insert(userId string, collection string, media *Media) *MediaInsertCall {
 	c := &MediaInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
@@ -4254,7 +4115,7 @@ func (c *MediaInsertCall) Do(opts ...googleapi.CallOption) (*Media, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Add a new media item to an album. The current upload size limitations are 36MB for a photo and 1GB for a video. Uploads do not count against quota if photos are less than 2048 pixels on their longest side or videos are less than 15 minutes in length.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "POST",
 	//   "id": "plusDomains.media.insert",
 	//   "mediaUpload": {
@@ -4706,8 +4567,8 @@ type PeopleListByActivityCall struct {
 	header_      http.Header
 }
 
-// ListByActivity: List all of the people in the specified collection
-// for a particular activity.
+// ListByActivity: Shut down. See
+// https://developers.google.com/+/api-shutdown for more details.
 func (r *PeopleService) ListByActivity(activityId string, collection string) *PeopleListByActivityCall {
 	c := &PeopleListByActivityCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.activityId = activityId
@@ -4832,7 +4693,7 @@ func (c *PeopleListByActivityCall) Do(opts ...googleapi.CallOption) (*PeopleFeed
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the people in the specified collection for a particular activity.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.people.listByActivity",
 	//   "parameterOrder": [
@@ -4921,7 +4782,8 @@ type PeopleListByCircleCall struct {
 	header_      http.Header
 }
 
-// ListByCircle: List all of the people who are members of a circle.
+// ListByCircle: Shut down. See
+// https://developers.google.com/+/api-shutdown for more details.
 func (r *PeopleService) ListByCircle(circleId string) *PeopleListByCircleCall {
 	c := &PeopleListByCircleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.circleId = circleId
@@ -5044,7 +4906,7 @@ func (c *PeopleListByCircleCall) Do(opts ...googleapi.CallOption) (*PeopleFeed, 
 	}
 	return ret, nil
 	// {
-	//   "description": "List all of the people who are members of a circle.",
+	//   "description": "Shut down. See https://developers.google.com/+/api-shutdown for more details.",
 	//   "httpMethod": "GET",
 	//   "id": "plusDomains.people.listByCircle",
 	//   "parameterOrder": [

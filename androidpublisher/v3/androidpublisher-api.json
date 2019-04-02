@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/eVpQc0jG6TIyPBL3ViLHrjLeGpk\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/lK39TL4R_WsPo_zwDEzTlyK8Gs8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2226,7 +2226,7 @@
       }
     }
   },
-  "revision": "20190120",
+  "revision": "20190331",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -2379,6 +2379,21 @@
         "userComment": {
           "$ref": "UserComment",
           "description": "A comment from a user."
+        }
+      },
+      "type": "object"
+    },
+    "CountryTargeting": {
+      "id": "CountryTargeting",
+      "properties": {
+        "countries": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "includeRestOfWorld": {
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -3233,6 +3248,9 @@
     "TrackRelease": {
       "id": "TrackRelease",
       "properties": {
+        "countryTargeting": {
+          "$ref": "CountryTargeting"
+        },
         "name": {
           "description": "The release name, used to identify this release in the Play Console UI. Not required to be unique. This is optional, if not set it will be generated from the version_name in the APKs.",
           "type": "string"

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/TKtjOzQ2WKkyJyMETIOLZ50ooNI\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/uh6pImLtAzfcW3qnOu2tIOip1lc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2886,7 +2886,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190327",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7458,7 +7458,7 @@
           "description": "Cost of goods sold. Used for gross profit reporting."
         },
         "customAttributes": {
-          "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"type\": \"text\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
+          "description": "A list of custom (merchant-provided) attributes. It can also be used for submitting any attribute of the feed specification in its generic form (e.g., { \"name\": \"size type\", \"value\": \"regular\" }). This is useful for submitting attributes not explicitly exposed by the API.",
           "items": {
             "$ref": "CustomAttribute"
           },

@@ -9050,8 +9050,8 @@ type Product struct {
 	// CustomAttributes: A list of custom (merchant-provided) attributes. It
 	// can also be used for submitting any attribute of the feed
 	// specification in its generic form (e.g., { "name": "size type",
-	// "type": "text", "value": "regular" }). This is useful for submitting
-	// attributes not explicitly exposed by the API.
+	// "value": "regular" }). This is useful for submitting attributes not
+	// explicitly exposed by the API.
 	CustomAttributes []*CustomAttribute `json:"customAttributes,omitempty"`
 
 	// CustomGroups: A list of custom (merchant-provided) custom attribute

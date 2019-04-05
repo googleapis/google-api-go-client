@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190326",
+  "revision": "20190402",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -2272,7 +2272,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig": {
-      "description": "Note: We recommend using  CryptoDeterministicConfig for all use cases which\ndo not require preserving the input alphabet space and size, plus warrant\nreferential integrity.",
+      "description": "Replaces an identifier with a surrogate using Format Preserving Encryption\n(FPE) with the FFX mode of operation; however when used in the\n`ReidentifyContent` API method, it serves the opposite function by reversing\nthe surrogate back into the original identifier. The identifier must be\nencoded as ASCII. For a given crypto key and context, the same identifier\nwill be replaced with the same surrogate. Identifiers must be at least two\ncharacters long. In the case that the identifier is the empty string, it will\nbe skipped. See https://cloud.google.com/dlp/docs/pseudonymization to learn\nmore.\n\nNote: We recommend using  CryptoDeterministicConfig for all use cases which\ndo not require preserving the input alphabet space and size, plus warrant\nreferential integrity.",
       "id": "GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig",
       "properties": {
         "commonAlphabet": {

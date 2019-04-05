@@ -1457,7 +1457,7 @@
       }
     }
   },
-  "revision": "20190318",
+  "revision": "20190331",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {
@@ -3250,10 +3250,6 @@
             "$ref": "InternalChecker"
           },
           "type": "array"
-        },
-        "isInternal": {
-          "description": "If this is true, then checks are made only from the 'internal_checkers'. If it is false, then checks are made only from the 'selected_regions'. It is an error to provide 'selected_regions' when is_internal is true, or to provide 'internal_checkers' when is_internal is false.",
-          "type": "boolean"
         },
         "monitoredResource": {
           "$ref": "MonitoredResource",

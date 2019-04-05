@@ -15,7 +15,7 @@
   "description": "Manages the deployment of apps to Android for Work users.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android/work/play/emm-api",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/BOTTKzP457X9Q_sw0Cuw6ICrJyE\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/tMJPG1kuAV-MqSsPmggFhhbAchQ\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -599,32 +599,6 @@
           },
           "response": {
             "$ref": "EnterpriseAccount"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/androidenterprise"
-          ]
-        },
-        "setAndroidDevicePolicyConfig": {
-          "description": "Deprecated and unused.",
-          "httpMethod": "PUT",
-          "id": "androidenterprise.enterprises.setAndroidDevicePolicyConfig",
-          "parameterOrder": [
-            "enterpriseId"
-          ],
-          "parameters": {
-            "enterpriseId": {
-              "description": "The ID of the enterprise.",
-              "location": "path",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "enterprises/{enterpriseId}/androidDevicePolicyConfig",
-          "request": {
-            "$ref": "AndroidDevicePolicyConfig"
-          },
-          "response": {
-            "$ref": "AndroidDevicePolicyConfig"
           },
           "scopes": [
             "https://www.googleapis.com/auth/androidenterprise"
@@ -2911,7 +2885,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190401",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Administrator": {
@@ -3034,22 +3008,6 @@
         "enabled": {
           "description": "Whether the Web Apps page is displayed. Default is true.",
           "type": "boolean"
-        }
-      },
-      "type": "object"
-    },
-    "AndroidDevicePolicyConfig": {
-      "description": "Deprecated and unused.",
-      "id": "AndroidDevicePolicyConfig",
-      "properties": {
-        "kind": {
-          "default": "androidenterprise#androidDevicePolicyConfig",
-          "description": "Identifies what kind of resource this is. Value: the fixed string \"androidenterprise#androidDevicePolicyConfig\".",
-          "type": "string"
-        },
-        "state": {
-          "description": "Deprecated and unused.",
-          "type": "string"
         }
       },
       "type": "object"

@@ -86,9 +86,6 @@ const (
 	// See and download your contacts
 	ContactsReadonlyScope = "https://www.googleapis.com/auth/contacts.readonly"
 
-	// View your basic profile info, including your age range and language
-	PlusLoginScope = "https://www.googleapis.com/auth/plus.login"
-
 	// View your street addresses
 	UserAddressesReadScope = "https://www.googleapis.com/auth/user.addresses.read"
 
@@ -114,7 +111,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := option.WithScopes(
 		"https://www.googleapis.com/auth/contacts",
 		"https://www.googleapis.com/auth/contacts.readonly",
-		"https://www.googleapis.com/auth/plus.login",
 		"https://www.googleapis.com/auth/user.addresses.read",
 		"https://www.googleapis.com/auth/user.birthday.read",
 		"https://www.googleapis.com/auth/user.emails.read",
@@ -769,10 +765,9 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DomainMembership: A Google Apps Domain membership.
+// DomainMembership: A G Suite Domain membership.
 type DomainMembership struct {
-	// InViewerDomain: True if the person is in the viewer's Google Apps
-	// domain.
+	// InViewerDomain: True if the person is in the viewer's G Suite domain.
 	InViewerDomain bool `json:"inViewerDomain,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InViewerDomain") to
@@ -1973,7 +1968,7 @@ type ProfileMetadata struct {
 	//   "USER_TYPE_UNKNOWN" - The user type is not known.
 	//   "GOOGLE_USER" - The user is a Google user.
 	//   "GPLUS_USER" - The user is a Google+ user.
-	//   "GOOGLE_APPS_USER" - The user is a Google Apps for Work user.
+	//   "GOOGLE_APPS_USER" - The user is a G Suite user.
 	UserTypes []string `json:"userTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ObjectType") to
@@ -2298,8 +2293,8 @@ type Source struct {
 	// profile at https://profiles.google.com/<var>id</var>
 	// where
 	// <var>id</var> is the source id.
-	//   "DOMAIN_PROFILE" - [Google Apps domain
-	// profile](https://admin.google.com).
+	//   "DOMAIN_PROFILE" - [G Suite domain
+	// profile](https://support.google.com/a/answer/1628008).
 	//   "CONTACT" - [Google contact](https://contacts.google.com). You can
 	// view the
 	// contact at https://contact.google.com/<var>id</var> where
@@ -4143,7 +4138,6 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
-	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/user.addresses.read",
 	//     "https://www.googleapis.com/auth/user.birthday.read",
 	//     "https://www.googleapis.com/auth/user.emails.read",
@@ -4375,7 +4369,6 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
-	//     "https://www.googleapis.com/auth/plus.login",
 	//     "https://www.googleapis.com/auth/user.addresses.read",
 	//     "https://www.googleapis.com/auth/user.birthday.read",
 	//     "https://www.googleapis.com/auth/user.emails.read",

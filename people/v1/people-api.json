@@ -8,9 +8,6 @@
         "https://www.googleapis.com/auth/contacts.readonly": {
           "description": "See and download your contacts"
         },
-        "https://www.googleapis.com/auth/plus.login": {
-          "description": "View your basic profile info, including your age range and language"
-        },
         "https://www.googleapis.com/auth/user.addresses.read": {
           "description": "View your street addresses"
         },
@@ -422,7 +419,6 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts",
             "https://www.googleapis.com/auth/contacts.readonly",
-            "https://www.googleapis.com/auth/plus.login",
             "https://www.googleapis.com/auth/user.addresses.read",
             "https://www.googleapis.com/auth/user.birthday.read",
             "https://www.googleapis.com/auth/user.emails.read",
@@ -464,7 +460,6 @@
           "scopes": [
             "https://www.googleapis.com/auth/contacts",
             "https://www.googleapis.com/auth/contacts.readonly",
-            "https://www.googleapis.com/auth/plus.login",
             "https://www.googleapis.com/auth/user.addresses.read",
             "https://www.googleapis.com/auth/user.birthday.read",
             "https://www.googleapis.com/auth/user.emails.read",
@@ -585,7 +580,7 @@
       }
     }
   },
-  "revision": "20190323",
+  "revision": "20190403",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -899,11 +894,11 @@
       "type": "object"
     },
     "DomainMembership": {
-      "description": "A Google Apps Domain membership.",
+      "description": "A G Suite Domain membership.",
       "id": "DomainMembership",
       "properties": {
         "inViewerDomain": {
-          "description": "True if the person is in the viewer's Google Apps domain.",
+          "description": "True if the person is in the viewer's G Suite domain.",
           "type": "boolean"
         }
       },
@@ -1734,7 +1729,7 @@
             "The user type is not known.",
             "The user is a Google user.",
             "The user is a Google+ user.",
-            "The user is a Google Apps for Work user."
+            "The user is a G Suite user."
           ],
           "items": {
             "enum": [
@@ -1897,7 +1892,7 @@
             "Unspecified.",
             "[Google Account](https://accounts.google.com).",
             "[Google profile](https://profiles.google.com). You can view the\nprofile at https://profiles.google.com/\u003cvar\u003eid\u003c/var\u003e where\n\u003cvar\u003eid\u003c/var\u003e is the source id.",
-            "[Google Apps domain profile](https://admin.google.com).",
+            "[G Suite domain profile](https://support.google.com/a/answer/1628008).",
             "[Google contact](https://contacts.google.com). You can view the\ncontact at https://contact.google.com/\u003cvar\u003eid\u003c/var\u003e where \u003cvar\u003eid\u003c/var\u003e\nis the source id."
           ],
           "type": "string"

@@ -799,6 +799,13 @@ type GoogleCloudDialogflowV2DetectIntentRequest struct {
 	// A single request can contain up to 1 minute of speech audio data.
 	InputAudio string `json:"inputAudio,omitempty"`
 
+	// OutputAudioConfig: Optional. Instructs the speech synthesizer how to
+	// generate the output
+	// audio. If this field is not set and agent-level speech synthesizer is
+	// not
+	// configured, no output audio is generated.
+	OutputAudioConfig *GoogleCloudDialogflowV2OutputAudioConfig `json:"outputAudioConfig,omitempty"`
+
 	// QueryInput: Required. The input specification. It can be set to:
 	//
 	// 1.  an audio config
@@ -839,6 +846,23 @@ func (s *GoogleCloudDialogflowV2DetectIntentRequest) MarshalJSON() ([]byte, erro
 // GoogleCloudDialogflowV2DetectIntentResponse: The message returned
 // from the DetectIntent method.
 type GoogleCloudDialogflowV2DetectIntentResponse struct {
+	// OutputAudio: The audio data bytes encoded as specified in the
+	// request.
+	// Note: The output audio is generated based on the values of default
+	// platform
+	// text responses found in the `query_result.fulfillment_messages`
+	// field. If
+	// multiple default text responses exist, they will be concatenated
+	// when
+	// generating audio. If no default platform text responses exist,
+	// the
+	// generated audio content will be empty.
+	OutputAudio string `json:"outputAudio,omitempty"`
+
+	// OutputAudioConfig: The config used by the speech synthesizer to
+	// generate the output audio.
+	OutputAudioConfig *GoogleCloudDialogflowV2OutputAudioConfig `json:"outputAudioConfig,omitempty"`
+
 	// QueryResult: The selected results of the conversational query or
 	// event processing.
 	// See `alternative_query_results` for additional potential results.
@@ -857,7 +881,7 @@ type GoogleCloudDialogflowV2DetectIntentResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "QueryResult") to
+	// ForceSendFields is a list of field names (e.g. "OutputAudio") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -865,7 +889,7 @@ type GoogleCloudDialogflowV2DetectIntentResponse struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "QueryResult") to include
+	// NullFields is a list of field names (e.g. "OutputAudio") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -2818,6 +2842,65 @@ func (s *GoogleCloudDialogflowV2OriginalDetectIntentRequest) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2OutputAudioConfig: Instructs the speech
+// synthesizer how to generate the output audio content.
+type GoogleCloudDialogflowV2OutputAudioConfig struct {
+	// AudioEncoding: Required. Audio encoding of the synthesized audio
+	// content.
+	//
+	// Possible values:
+	//   "OUTPUT_AUDIO_ENCODING_UNSPECIFIED" - Not specified.
+	//   "OUTPUT_AUDIO_ENCODING_LINEAR_16" - Uncompressed 16-bit signed
+	// little-endian samples (Linear PCM).
+	// Audio content returned as LINEAR16 also contains a WAV header.
+	//   "OUTPUT_AUDIO_ENCODING_MP3" - MP3 audio.
+	//   "OUTPUT_AUDIO_ENCODING_OGG_OPUS" - Opus encoded audio wrapped in an
+	// ogg container. The result will be a
+	// file which can be played natively on Android, and in browsers (at
+	// least
+	// Chrome and Firefox). The quality of the encoding is considerably
+	// higher
+	// than MP3 while using approximately the same bitrate.
+	AudioEncoding string `json:"audioEncoding,omitempty"`
+
+	// SampleRateHertz: Optional. The synthesis sample rate (in hertz) for
+	// this audio. If not
+	// provided, then the synthesizer will use the default sample rate based
+	// on
+	// the audio encoding. If this is different from the voice's natural
+	// sample
+	// rate, then the synthesizer will honor this request by converting to
+	// the
+	// desired sample rate (which might result in worse audio quality).
+	SampleRateHertz int64 `json:"sampleRateHertz,omitempty"`
+
+	// SynthesizeSpeechConfig: Optional. Configuration of how speech should
+	// be synthesized.
+	SynthesizeSpeechConfig *GoogleCloudDialogflowV2SynthesizeSpeechConfig `json:"synthesizeSpeechConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AudioEncoding") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2OutputAudioConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2OutputAudioConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2QueryInput: Represents the query input. It can
 // contain either:
 //
@@ -2882,6 +2965,11 @@ type GoogleCloudDialogflowV2QueryParameters struct {
 	// the current session
 	// before the new ones are activated.
 	ResetContexts bool `json:"resetContexts,omitempty"`
+
+	// SentimentAnalysisRequestConfig: Optional. Configures the type of
+	// sentiment analysis to perform. If not
+	// provided, sentiment analysis is not performed.
+	SentimentAnalysisRequestConfig *GoogleCloudDialogflowV2SentimentAnalysisRequestConfig `json:"sentimentAnalysisRequestConfig,omitempty"`
 
 	// SessionEntityTypes: Optional. Additional session entity types to
 	// replace or extend developer
@@ -3000,6 +3088,11 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	//   multiple alternatives, a particular one is picked.
 	// - If an event was provided as input, `query_text` is not set.
 	QueryText string `json:"queryText,omitempty"`
+
+	// SentimentAnalysisResult: The sentiment analysis result, which depends
+	// on the
+	// `sentiment_analysis_request_config` specified in the request.
+	SentimentAnalysisResult *GoogleCloudDialogflowV2SentimentAnalysisResult `json:"sentimentAnalysisResult,omitempty"`
 
 	// SpeechRecognitionConfidence: The Speech recognition confidence
 	// between 0.0 and 1.0. A higher number
@@ -3156,6 +3249,126 @@ func (s *GoogleCloudDialogflowV2SearchAgentsResponse) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2Sentiment: The sentiment, such as
+// positive/negative feeling or association, for a unit
+// of analysis, such as the query text.
+type GoogleCloudDialogflowV2Sentiment struct {
+	// Magnitude: A non-negative number in the [0, +inf) range, which
+	// represents the absolute
+	// magnitude of sentiment, regardless of score (positive or negative).
+	Magnitude float64 `json:"magnitude,omitempty"`
+
+	// Score: Sentiment score between -1.0 (negative sentiment) and 1.0
+	// (positive
+	// sentiment).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Magnitude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Magnitude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2Sentiment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2Sentiment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2Sentiment) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2Sentiment
+	var s1 struct {
+		Magnitude gensupport.JSONFloat64 `json:"magnitude"`
+		Score     gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Magnitude = float64(s1.Magnitude)
+	s.Score = float64(s1.Score)
+	return nil
+}
+
+// GoogleCloudDialogflowV2SentimentAnalysisRequestConfig: Configures the
+// types of sentiment analysis to perform.
+type GoogleCloudDialogflowV2SentimentAnalysisRequestConfig struct {
+	// AnalyzeQueryTextSentiment: Optional. Instructs the service to perform
+	// sentiment analysis on
+	// `query_text`. If not provided, sentiment analysis is not performed
+	// on
+	// `query_text`.
+	AnalyzeQueryTextSentiment bool `json:"analyzeQueryTextSentiment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AnalyzeQueryTextSentiment") to unconditionally include in API
+	// requests. By default, fields with empty values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AnalyzeQueryTextSentiment") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SentimentAnalysisRequestConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SentimentAnalysisRequestConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2SentimentAnalysisResult: The result of
+// sentiment analysis as configured
+// by
+// `sentiment_analysis_request_config`.
+type GoogleCloudDialogflowV2SentimentAnalysisResult struct {
+	// QueryTextSentiment: The sentiment analysis result for `query_text`.
+	QueryTextSentiment *GoogleCloudDialogflowV2Sentiment `json:"queryTextSentiment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QueryTextSentiment")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QueryTextSentiment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SentimentAnalysisResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SentimentAnalysisResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowV2SessionEntityType: Represents a session entity
 // type.
 //
@@ -3238,6 +3451,94 @@ func (s *GoogleCloudDialogflowV2SessionEntityType) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowV2SynthesizeSpeechConfig: Configuration of how
+// speech should be synthesized.
+type GoogleCloudDialogflowV2SynthesizeSpeechConfig struct {
+	// EffectsProfileId: Optional. An identifier which selects 'audio
+	// effects' profiles that are
+	// applied on (post synthesized) text to speech. Effects are applied on
+	// top of
+	// each other in the order they are given.
+	EffectsProfileId []string `json:"effectsProfileId,omitempty"`
+
+	// Pitch: Optional. Speaking pitch, in the range [-20.0, 20.0]. 20 means
+	// increase 20
+	// semitones from the original pitch. -20 means decrease 20 semitones
+	// from the
+	// original pitch.
+	Pitch float64 `json:"pitch,omitempty"`
+
+	// SpeakingRate: Optional. Speaking rate/speed, in the range [0.25,
+	// 4.0]. 1.0 is the normal
+	// native speed supported by the specific voice. 2.0 is twice as fast,
+	// and
+	// 0.5 is half as fast. If unset(0.0), defaults to the native 1.0 speed.
+	// Any
+	// other values < 0.25 or > 4.0 will return an error.
+	SpeakingRate float64 `json:"speakingRate,omitempty"`
+
+	// Voice: Optional. The desired voice of the synthesized audio.
+	Voice *GoogleCloudDialogflowV2VoiceSelectionParams `json:"voice,omitempty"`
+
+	// VolumeGainDb: Optional. Volume gain (in dB) of the normal native
+	// volume supported by the
+	// specific voice, in the range [-96.0, 16.0]. If unset, or set to a
+	// value of
+	// 0.0 (dB), will play at normal native signal amplitude. A value of
+	// -6.0 (dB)
+	// will play at approximately half the amplitude of the normal native
+	// signal
+	// amplitude. A value of +6.0 (dB) will play at approximately twice
+	// the
+	// amplitude of the normal native signal amplitude. We strongly
+	// recommend not
+	// to exceed +10 (dB) as there's usually no effective increase in
+	// loudness for
+	// any value greater than that.
+	VolumeGainDb float64 `json:"volumeGainDb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EffectsProfileId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EffectsProfileId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2SynthesizeSpeechConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2SynthesizeSpeechConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2SynthesizeSpeechConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2SynthesizeSpeechConfig
+	var s1 struct {
+		Pitch        gensupport.JSONFloat64 `json:"pitch"`
+		SpeakingRate gensupport.JSONFloat64 `json:"speakingRate"`
+		VolumeGainDb gensupport.JSONFloat64 `json:"volumeGainDb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Pitch = float64(s1.Pitch)
+	s.SpeakingRate = float64(s1.SpeakingRate)
+	s.VolumeGainDb = float64(s1.VolumeGainDb)
+	return nil
+}
+
 // GoogleCloudDialogflowV2TextInput: Represents the natural language
 // text to be processed.
 type GoogleCloudDialogflowV2TextInput struct {
@@ -3283,6 +3584,57 @@ func (s *GoogleCloudDialogflowV2TextInput) MarshalJSON() ([]byte, error) {
 // GoogleCloudDialogflowV2TrainAgentRequest: The request message for
 // Agents.TrainAgent.
 type GoogleCloudDialogflowV2TrainAgentRequest struct {
+}
+
+// GoogleCloudDialogflowV2VoiceSelectionParams: Description of which
+// voice to use for speech synthesis.
+type GoogleCloudDialogflowV2VoiceSelectionParams struct {
+	// Name: Optional. The name of the voice. If not set, the service will
+	// choose a
+	// voice based on the other parameters such as language_code and gender.
+	Name string `json:"name,omitempty"`
+
+	// SsmlGender: Optional. The preferred gender of the voice. If not set,
+	// the service will
+	// choose a voice based on the other parameters such as language_code
+	// and
+	// name. Note that this is only a preference, not requirement. If
+	// a
+	// voice of the appropriate gender is not available, the synthesizer
+	// should
+	// substitute a voice with a different gender rather than failing the
+	// request.
+	//
+	// Possible values:
+	//   "SSML_VOICE_GENDER_UNSPECIFIED" - An unspecified gender, which
+	// means that the client doesn't care which
+	// gender the selected voice will have.
+	//   "SSML_VOICE_GENDER_MALE" - A male voice.
+	//   "SSML_VOICE_GENDER_FEMALE" - A female voice.
+	//   "SSML_VOICE_GENDER_NEUTRAL" - A gender-neutral voice.
+	SsmlGender string `json:"ssmlGender,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2VoiceSelectionParams) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2VoiceSelectionParams
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudDialogflowV2WebhookRequest: The request message for a

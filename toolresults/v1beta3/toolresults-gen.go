@@ -2729,6 +2729,7 @@ type TestIssue struct {
 	//   "iosException"
 	//   "launcherActivityNotFound"
 	//   "nativeCrash"
+	//   "nonSdkApiUsageReport"
 	//   "nonSdkApiUsageViolation"
 	//   "performedGoogleLogin"
 	//   "performedMonkeyActions"

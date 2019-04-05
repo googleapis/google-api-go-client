@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20190315",
+  "revision": "20190401",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -1625,7 +1625,7 @@
       "type": "object"
     },
     "GenericSignedAttestation": {
-      "description": "An attestation wrapper that uses the Grafeas `Signature` message.\nThis attestation must define the `plaintext` that the `signatures` verify\nand any metadata necessary to interpret that plaintext.  The signatures\nshould always be over the `plaintext` bytestring.",
+      "description": "An attestation wrapper that uses the Grafeas `Signature` message.\nThis attestation must define the `serialized_payload` that the `signatures`\nverify and any metadata necessary to interpret that plaintext.  The\nsignatures should always be over the `serialized_payload` bytestring.",
       "id": "GenericSignedAttestation",
       "properties": {
         "contentType": {

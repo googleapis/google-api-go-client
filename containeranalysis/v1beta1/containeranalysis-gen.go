@@ -1606,11 +1606,11 @@ func (s *FixableTotalByDigest) MarshalJSON() ([]byte, error) {
 
 // GenericSignedAttestation: An attestation wrapper that uses the
 // Grafeas `Signature` message.
-// This attestation must define the `plaintext` that the `signatures`
-// verify
-// and any metadata necessary to interpret that plaintext.  The
-// signatures
-// should always be over the `plaintext` bytestring.
+// This attestation must define the `serialized_payload` that the
+// `signatures`
+// verify and any metadata necessary to interpret that plaintext.
+// The
+// signatures should always be over the `serialized_payload` bytestring.
 type GenericSignedAttestation struct {
 	// ContentType: Type (for example schema) of the attestation payload
 	// that was signed.

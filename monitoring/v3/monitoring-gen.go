@@ -3786,13 +3786,6 @@ type UptimeCheckConfig struct {
 	// owns this CheckConfig.
 	InternalCheckers []*InternalChecker `json:"internalCheckers,omitempty"`
 
-	// IsInternal: If this is true, then checks are made only from the
-	// 'internal_checkers'. If it is false, then checks are made only from
-	// the 'selected_regions'. It is an error to provide 'selected_regions'
-	// when is_internal is true, or to provide 'internal_checkers' when
-	// is_internal is false.
-	IsInternal bool `json:"isInternal,omitempty"`
-
 	// MonitoredResource: The monitored resource
 	// (https://cloud.google.com/monitoring/api/resources) associated with
 	// the configuration. The following monitored resource types are

@@ -2,7 +2,7 @@ module google.golang.org/api
 
 require (
 	github.com/google/go-cmp v0.2.0
-	go.opencensus.io v0.20.1+alpha
+	go.opencensus.io v0.20.1-alpha
 	golang.org/x/lint v0.0.0-20190301231843-5614ed5bae6f
 	golang.org/x/oauth2 v0.0.0-20190226205417-e64efc72b421
 	golang.org/x/sync v0.0.0-20190227155943-e225da77a7e6

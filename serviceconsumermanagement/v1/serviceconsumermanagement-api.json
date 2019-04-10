@@ -541,7 +541,7 @@
       }
     }
   },
-  "revision": "20190328",
+  "revision": "20190406",
   "rootUrl": "https://serviceconsumermanagement.googleapis.com/",
   "schemas": {
     "AddTenantProjectRequest": {
@@ -646,7 +646,7 @@
       "type": "object"
     },
     "AuthProvider": {
-      "description": "Configuration for an anthentication provider, including support for\n[JSON Web Token\n(JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).",
+      "description": "Configuration for an authentication provider, including support for\n[JSON Web Token\n(JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).",
       "id": "AuthProvider",
       "properties": {
         "audiences": {
@@ -2418,6 +2418,167 @@
         "skipServiceControl": {
           "description": "If true, the selected method should skip service control and the control\nplane features, such as quota and billing, will not be available.\nThis flag is used by Google Cloud Endpoints to bypass checks for internal\nmethods, such as service health check methods.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "V1AddVisibilityLabelsResponse": {
+      "description": "Response message for the `AddVisibilityLabels` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1AddVisibilityLabelsResponse",
+      "properties": {
+        "labels": {
+          "description": "The updated set of visibility labels for this consumer on this service.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "V1Beta1BatchCreateProducerOverridesResponse": {
+      "description": "Response message for BatchCreateProducerOverrides",
+      "id": "V1Beta1BatchCreateProducerOverridesResponse",
+      "properties": {
+        "overrides": {
+          "description": "The overrides that were created.",
+          "items": {
+            "$ref": "V1Beta1QuotaOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "V1Beta1DisableConsumerResponse": {
+      "description": "Response message for the `DisableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1Beta1DisableConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1Beta1EnableConsumerResponse": {
+      "description": "Response message for the `EnableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1Beta1EnableConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1Beta1ImportProducerOverridesResponse": {
+      "description": "Response message for ImportProducerOverrides",
+      "id": "V1Beta1ImportProducerOverridesResponse",
+      "properties": {
+        "overrides": {
+          "description": "The overrides that were created from the imported data.",
+          "items": {
+            "$ref": "V1Beta1QuotaOverride"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "V1Beta1QuotaOverride": {
+      "description": "A quota override",
+      "id": "V1Beta1QuotaOverride",
+      "properties": {
+        "dimensions": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "If this map is nonempty, then this override applies only to specific values\nfor dimensions defined in the limit unit.\n\nFor example, an override on a limit with the unit 1/{project}/{region}\ncould contain an entry with the key \"region\" and the value \"us-east-1\";\nthe override is only applied to quota consumed in that region.\n\nThis map has the following restrictions:\n- Keys that are not defined in the limit's unit are not valid keys.\n  Any string appearing in {brackets} in the unit (besides {project} or\n  {user}) is a defined key.\n- \"project\" is not a valid key; the project is already specified in\n  the parent resource name.\n- \"user\" is not a valid key; the API does not support quota overrides\n  that apply only to a specific user.\n- If \"region\" appears as a key, its value must be a valid Cloud region.\n- If \"zone\" appears as a key, its value must be a valid Cloud zone.\n- If any valid key other than \"region\" or \"zone\" appears in the map, then\n  all valid keys other than \"region\" or \"zone\" must also appear in the map.",
+          "type": "object"
+        },
+        "metric": {
+          "description": "The name of the metric to which this override applies.\n\nAn example name would be:\n`compute.googleapis.com/cpus`",
+          "type": "string"
+        },
+        "name": {
+          "description": "The resource name of the producer override.\nAn example name would be:\n`services/compute.googleapis.com/projects/123/consumerQuotaMetrics/compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOverrides/4a3f2c1d`",
+          "type": "string"
+        },
+        "overrideValue": {
+          "description": "The overriding quota limit value.\nCan be any nonnegative integer, or -1 (unlimited quota).",
+          "format": "int64",
+          "type": "string"
+        },
+        "unit": {
+          "description": "The limit unit of the limit to which this override applies.\n\nAn example unit would be:\n`1/{project}/{region}`\nNote that `{project}` and `{region}` are not placeholders in this example;\nthe literal characters `{` and `}` occur in the string.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "V1Beta1RefreshConsumerResponse": {
+      "description": "Response message for the `RefreshConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1Beta1RefreshConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1DisableConsumerResponse": {
+      "description": "Response message for the `DisableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1DisableConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1EnableConsumerResponse": {
+      "description": "Response message for the `EnableConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1EnableConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1GenerateServiceAccountResponse": {
+      "description": "Response message for the `GenerateServiceAccount` method.\n\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1GenerateServiceAccountResponse",
+      "properties": {
+        "account": {
+          "$ref": "V1ServiceAccount",
+          "description": "ServiceAccount that was created or retrieved."
+        }
+      },
+      "type": "object"
+    },
+    "V1RefreshConsumerResponse": {
+      "description": "Response message for the `RefreshConsumer` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1RefreshConsumerResponse",
+      "properties": {},
+      "type": "object"
+    },
+    "V1RemoveVisibilityLabelsResponse": {
+      "description": "Response message for the `RemoveVisibilityLabels` method.\nThis response message is assigned to the `response` field of the returned\nOperation when that operation is done.",
+      "id": "V1RemoveVisibilityLabelsResponse",
+      "properties": {
+        "labels": {
+          "description": "The updated set of visibility labels for this consumer on this service.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "V1ServiceAccount": {
+      "description": "A service account in the Identity and Access Management API.",
+      "id": "V1ServiceAccount",
+      "properties": {
+        "email": {
+          "description": "The email address of the service account.",
+          "type": "string"
+        },
+        "iamAccountName": {
+          "description": "The IAM resource name of the service account in the following format:\nprojects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}.",
+          "type": "string"
+        },
+        "name": {
+          "description": "P4 SA resource name.\n\nAn example name would be:\n`services/serviceconsumermanagement.googleapis.com/projects/123/serviceAccounts/default`",
+          "type": "string"
+        },
+        "tag": {
+          "description": "The P4 SA configuration tag. This must be defined in activation_grants.\nIf not specified when creating the account, the tag is set to \"default\".",
+          "type": "string"
+        },
+        "uniqueId": {
+          "description": "The unique and stable id of the service account.",
+          "type": "string"
         }
       },
       "type": "object"

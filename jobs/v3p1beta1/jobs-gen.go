@@ -473,14 +473,24 @@ func (s *ClientEvent) MarshalJSON() ([]byte, error) {
 // Parameters needed for commute search.
 type CommuteFilter struct {
 	// AllowImpreciseAddresses: Optional.
-	// If `true`, jobs without street level addresses may also be
-	// returned.
-	// For city level addresses, the city center is used. For state and
-	// coarser
-	// level addresses, text matching is used.
-	// If this field is set to `false` or is not specified, only jobs that
-	// include
-	// street level addresses will be returned by commute search.
+	// If true, jobs without "precise" addresses (street level addresses or
+	// GPS
+	// coordinates) might also be returned. For city and coarser level
+	// addresses,
+	// text matching is used. If this field is set to false or is not
+	// specified,
+	// only jobs that include precise addresses are returned by
+	// Commute
+	// Search.
+	//
+	// Note: If `allow_imprecise_addresses` is set to true, Commute Search
+	// is not
+	// able to calculate accurate commute times to jobs with city level
+	// and
+	// coarser address information. Jobs with imprecise addresses will
+	// return a
+	// `travel_duration` time of 0 regardless of distance from the job
+	// seeker.
 	AllowImpreciseAddresses bool `json:"allowImpreciseAddresses,omitempty"`
 
 	// CommuteMethod: Required.
@@ -4382,12 +4392,11 @@ type SearchJobsRequest struct {
 	// Job.name, Job.requisition_id, Job.language_code.
 	//   "JOB_VIEW_MINIMAL" - A minimal view of the job, with the following
 	// attributes:
-	// Job.name, Job.requisition_id, Job.job_title,
+	// Job.name, Job.requisition_id, Job.title,
 	// Job.company_name, Job.DerivedInfo.locations, Job.language_code.
 	//   "JOB_VIEW_SMALL" - A small view of the job, with the following
 	// attributes in the search
-	// results: Job.name, Job.requisition_id,
-	// Job.job_title,
+	// results: Job.name, Job.requisition_id, Job.title,
 	// Job.company_name, Job.DerivedInfo.locations,
 	// Job.visibility,
 	// Job.language_code, Job.description.
@@ -5326,8 +5335,8 @@ type ProjectsClientEventsCreateCall struct {
 // tools](https://console.cloud.google.com/talent-solution/overvi
 // ew).
 // [Learn
-// more](https://cloud.google.com/talent-solution/job-search/
-// docs/management-tools)
+// more](https://cloud.google.com/talent-solution/docs/manage
+// ment-tools)
 // about self service tools.
 func (r *ProjectsClientEventsService) Create(parent string, createclienteventrequest *CreateClientEventRequest) *ProjectsClientEventsCreateCall {
 	c := &ProjectsClientEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5426,7 +5435,7 @@ func (c *ProjectsClientEventsCreateCall) Do(opts ...googleapi.CallOption) (*Clie
 	}
 	return ret, nil
 	// {
-	//   "description": "Report events issued when end user interacts with customer's application\nthat uses Cloud Talent Solution. You may inspect the created events in\n[self service\ntools](https://console.cloud.google.com/talent-solution/overview).\n[Learn\nmore](https://cloud.google.com/talent-solution/job-search/docs/management-tools)\nabout self service tools.",
+	//   "description": "Report events issued when end user interacts with customer's application\nthat uses Cloud Talent Solution. You may inspect the created events in\n[self service\ntools](https://console.cloud.google.com/talent-solution/overview).\n[Learn\nmore](https://cloud.google.com/talent-solution/docs/management-tools)\nabout self service tools.",
 	//   "flatPath": "v3p1beta1/projects/{projectsId}/clientEvents",
 	//   "httpMethod": "POST",
 	//   "id": "jobs.projects.clientEvents.create",

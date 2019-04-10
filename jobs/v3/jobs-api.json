@@ -188,7 +188,7 @@
         "clientEvents": {
           "methods": {
             "create": {
-              "description": "Report events issued when end user interacts with customer's application\nthat uses Cloud Talent Solution. You may inspect the created events in\n[self service\ntools](https://console.cloud.google.com/talent-solution/overview).\n[Learn\nmore](https://cloud.google.com/talent-solution/job-search/docs/management-tools)\nabout self service tools.",
+              "description": "Report events issued when end user interacts with customer's application\nthat uses Cloud Talent Solution. You may inspect the created events in\n[self service\ntools](https://console.cloud.google.com/talent-solution/overview).\n[Learn\nmore](https://cloud.google.com/talent-solution/docs/management-tools)\nabout self service tools.",
               "flatPath": "v3/projects/{projectsId}/clientEvents",
               "httpMethod": "POST",
               "id": "jobs.projects.clientEvents.create",
@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20190306",
+  "revision": "20190406",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -744,7 +744,7 @@
       "id": "CommuteFilter",
       "properties": {
         "allowImpreciseAddresses": {
-          "description": "Optional.\nIf `true`, jobs without street level addresses may also be returned.\nFor city level addresses, the city center is used. For state and coarser\nlevel addresses, text matching is used.\nIf this field is set to `false` or is not specified, only jobs that include\nstreet level addresses will be returned by commute search.",
+          "description": "Optional.\nIf true, jobs without \"precise\" addresses (street level addresses or GPS\ncoordinates) might also be returned. For city and coarser level addresses,\ntext matching is used. If this field is set to false or is not specified,\nonly jobs that include precise addresses are returned by Commute\nSearch.\n\nNote: If `allow_imprecise_addresses` is set to true, Commute Search is not\nable to calculate accurate commute times to jobs with city level and\ncoarser address information. Jobs with imprecise addresses will return a\n`travel_duration` time of 0 regardless of distance from the job seeker.",
           "type": "boolean"
         },
         "commuteMethod": {
@@ -2441,8 +2441,8 @@
           "enumDescriptions": [
             "Default value.",
             "A ID only view of job, with following attributes:\nJob.name, Job.requisition_id, Job.language_code.",
-            "A minimal view of the job, with the following attributes:\nJob.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.DerivedInfo.locations, Job.language_code.",
-            "A small view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.DerivedInfo.locations, Job.visibility,\nJob.language_code, Job.description.",
+            "A minimal view of the job, with the following attributes:\nJob.name, Job.requisition_id, Job.title,\nJob.company_name, Job.DerivedInfo.locations, Job.language_code.",
+            "A small view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.title,\nJob.company_name, Job.DerivedInfo.locations, Job.visibility,\nJob.language_code, Job.description.",
             "All available attributes are included in the search results."
           ],
           "type": "string"

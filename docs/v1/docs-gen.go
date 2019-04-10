@@ -5518,8 +5518,12 @@ func (s *TableCell) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellBorder: A border around a table cell.
+//
+// Table cell borders cannot be transparent. To hide a table cell
+// border, make
+// its width 0.
 type TableCellBorder struct {
-	// Color: The color of the border.
+	// Color: The color of the border. This color cannot be transparent.
 	Color *OptionalColor `json:"color,omitempty"`
 
 	// DashStyle: The dash style of the border.

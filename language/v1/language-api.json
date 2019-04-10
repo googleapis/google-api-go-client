@@ -226,7 +226,7 @@
       }
     }
   },
-  "revision": "20190308",
+  "revision": "20190405",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -795,7 +795,12 @@
             "EVENT",
             "WORK_OF_ART",
             "CONSUMER_GOOD",
-            "OTHER"
+            "OTHER",
+            "PHONE_NUMBER",
+            "ADDRESS",
+            "DATE",
+            "NUMBER",
+            "PRICE"
           ],
           "enumDescriptions": [
             "Unknown",
@@ -805,7 +810,12 @@
             "Event",
             "Work of art",
             "Consumer goods",
-            "Other types"
+            "Other types",
+            "Phone number",
+            "Address",
+            "Date",
+            "Number",
+            "Price"
           ],
           "type": "string"
         }

@@ -1000,6 +1000,11 @@ type Entity struct {
 	//   "WORK_OF_ART" - Work of art
 	//   "CONSUMER_GOOD" - Consumer goods
 	//   "OTHER" - Other types
+	//   "PHONE_NUMBER" - Phone number
+	//   "ADDRESS" - Address
+	//   "DATE" - Date
+	//   "NUMBER" - Number
+	//   "PRICE" - Price
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mentions") to

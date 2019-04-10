@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190312",
+  "revision": "20190408",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -3086,12 +3086,12 @@
       "type": "object"
     },
     "TableCellBorder": {
-      "description": "A border around a table cell.",
+      "description": "A border around a table cell.\n\nTable cell borders cannot be transparent. To hide a table cell border, make\nits width 0.",
       "id": "TableCellBorder",
       "properties": {
         "color": {
           "$ref": "OptionalColor",
-          "description": "The color of the border."
+          "description": "The color of the border. This color cannot be transparent."
         },
         "dashStyle": {
           "description": "The dash style of the border.",

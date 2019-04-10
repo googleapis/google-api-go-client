@@ -410,7 +410,7 @@
       }
     }
   },
-  "revision": "20190227",
+  "revision": "20190406",
   "rootUrl": "https://youtubereporting.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -900,7 +900,7 @@
       "id": "ListReportTypesResponse",
       "properties": {
         "nextPageToken": {
-          "description": "A token to retrieve next page of results.\nPass this value in the\nListReportTypesRequest.page_token\nfield in the subsequent call to `ListReportTypes` method to retrieve the next\npage of results.",
+          "description": "A token to retrieve next page of results.\nPass this value in the\nListReportTypesRequest.page_token\nfield in the subsequent call to `ListReportTypes` method to retrieve the\nnext page of results.",
           "type": "string"
         },
         "reportTypes": {

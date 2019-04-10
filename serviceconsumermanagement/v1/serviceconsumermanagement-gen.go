@@ -376,7 +376,7 @@ func (s *AttachTenantProjectRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AuthProvider: Configuration for an anthentication provider, including
+// AuthProvider: Configuration for an authentication provider, including
 // support for
 // [JSON Web
 // Token
@@ -4804,6 +4804,343 @@ type UsageRule struct {
 
 func (s *UsageRule) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1AddVisibilityLabelsResponse: Response message for the
+// `AddVisibilityLabels` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1AddVisibilityLabelsResponse struct {
+	// Labels: The updated set of visibility labels for this consumer on
+	// this service.
+	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1AddVisibilityLabelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1AddVisibilityLabelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1BatchCreateProducerOverridesResponse: Response message for
+// BatchCreateProducerOverrides
+type V1Beta1BatchCreateProducerOverridesResponse struct {
+	// Overrides: The overrides that were created.
+	Overrides []*V1Beta1QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1BatchCreateProducerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1BatchCreateProducerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1DisableConsumerResponse: Response message for the
+// `DisableConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1DisableConsumerResponse struct {
+}
+
+// V1Beta1EnableConsumerResponse: Response message for the
+// `EnableConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1EnableConsumerResponse struct {
+}
+
+// V1Beta1ImportProducerOverridesResponse: Response message for
+// ImportProducerOverrides
+type V1Beta1ImportProducerOverridesResponse struct {
+	// Overrides: The overrides that were created from the imported data.
+	Overrides []*V1Beta1QuotaOverride `json:"overrides,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Overrides") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Overrides") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1ImportProducerOverridesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1ImportProducerOverridesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1QuotaOverride: A quota override
+type V1Beta1QuotaOverride struct {
+	// Dimensions: If this map is nonempty, then this override applies only
+	// to specific values
+	// for dimensions defined in the limit unit.
+	//
+	// For example, an override on a limit with the unit
+	// 1/{project}/{region}
+	// could contain an entry with the key "region" and the value
+	// "us-east-1";
+	// the override is only applied to quota consumed in that region.
+	//
+	// This map has the following restrictions:
+	// - Keys that are not defined in the limit's unit are not valid keys.
+	//   Any string appearing in {brackets} in the unit (besides {project}
+	// or
+	//   {user}) is a defined key.
+	// - "project" is not a valid key; the project is already specified in
+	//   the parent resource name.
+	// - "user" is not a valid key; the API does not support quota
+	// overrides
+	//   that apply only to a specific user.
+	// - If "region" appears as a key, its value must be a valid Cloud
+	// region.
+	// - If "zone" appears as a key, its value must be a valid Cloud zone.
+	// - If any valid key other than "region" or "zone" appears in the map,
+	// then
+	//   all valid keys other than "region" or "zone" must also appear in
+	// the map.
+	Dimensions map[string]string `json:"dimensions,omitempty"`
+
+	// Metric: The name of the metric to which this override applies.
+	//
+	// An example name would be:
+	// `compute.googleapis.com/cpus`
+	Metric string `json:"metric,omitempty"`
+
+	// Name: The resource name of the producer override.
+	// An example name would
+	// be:
+	// `services/compute.googleapis.com/projects/123/consumerQuotaMetrics
+	// /compute.googleapis.com%2Fcpus/limits/%2Fproject%2Fregion/producerOver
+	// rides/4a3f2c1d`
+	Name string `json:"name,omitempty"`
+
+	// OverrideValue: The overriding quota limit value.
+	// Can be any nonnegative integer, or -1 (unlimited quota).
+	OverrideValue int64 `json:"overrideValue,omitempty,string"`
+
+	// Unit: The limit unit of the limit to which this override applies.
+	//
+	// An example unit would be:
+	// `1/{project}/{region}`
+	// Note that `{project}` and `{region}` are not placeholders in this
+	// example;
+	// the literal characters `{` and `}` occur in the string.
+	Unit string `json:"unit,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1QuotaOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1QuotaOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1Beta1RefreshConsumerResponse: Response message for the
+// `RefreshConsumer` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1Beta1RefreshConsumerResponse struct {
+}
+
+// V1DisableConsumerResponse: Response message for the `DisableConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1DisableConsumerResponse struct {
+}
+
+// V1EnableConsumerResponse: Response message for the `EnableConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1EnableConsumerResponse struct {
+}
+
+// V1GenerateServiceAccountResponse: Response message for the
+// `GenerateServiceAccount` method.
+//
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1GenerateServiceAccountResponse struct {
+	// Account: ServiceAccount that was created or retrieved.
+	Account *V1ServiceAccount `json:"account,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Account") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Account") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1GenerateServiceAccountResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1GenerateServiceAccountResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1RefreshConsumerResponse: Response message for the `RefreshConsumer`
+// method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1RefreshConsumerResponse struct {
+}
+
+// V1RemoveVisibilityLabelsResponse: Response message for the
+// `RemoveVisibilityLabels` method.
+// This response message is assigned to the `response` field of the
+// returned
+// Operation when that operation is done.
+type V1RemoveVisibilityLabelsResponse struct {
+	// Labels: The updated set of visibility labels for this consumer on
+	// this service.
+	Labels []string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1RemoveVisibilityLabelsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod V1RemoveVisibilityLabelsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// V1ServiceAccount: A service account in the Identity and Access
+// Management API.
+type V1ServiceAccount struct {
+	// Email: The email address of the service account.
+	Email string `json:"email,omitempty"`
+
+	// IamAccountName: The IAM resource name of the service account in the
+	// following format:
+	// projects/{PROJECT_ID}/serviceAccounts/{ACCOUNT}.
+	IamAccountName string `json:"iamAccountName,omitempty"`
+
+	// Name: P4 SA resource name.
+	//
+	// An example name would
+	// be:
+	// `services/serviceconsumermanagement.googleapis.com/projects/123/se
+	// rviceAccounts/default`
+	Name string `json:"name,omitempty"`
+
+	// Tag: The P4 SA configuration tag. This must be defined in
+	// activation_grants.
+	// If not specified when creating the account, the tag is set to
+	// "default".
+	Tag string `json:"tag,omitempty"`
+
+	// UniqueId: The unique and stable id of the service account.
+	UniqueId string `json:"uniqueId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1ServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod V1ServiceAccount
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

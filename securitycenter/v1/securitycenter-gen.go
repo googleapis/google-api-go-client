@@ -1895,8 +1895,8 @@ type Source struct {
 	// outdated/insecure libraries."
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: The source’s display name.
-	// A source’s display name must be unique amongst its siblings, for
+	// DisplayName: The source's display name.
+	// A source's display name must be unique amongst its siblings, for
 	// example,
 	// two sources with the same parent can't share the same display
 	// name.

@@ -306,7 +306,7 @@
       }
     }
   },
-  "revision": "20190328",
+  "revision": "20190406",
   "rootUrl": "https://servicenetworking.googleapis.com/",
   "schemas": {
     "AddSubnetworkRequest": {
@@ -405,7 +405,7 @@
       "type": "object"
     },
     "AuthProvider": {
-      "description": "Configuration for an anthentication provider, including support for\n[JSON Web Token\n(JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).",
+      "description": "Configuration for an authentication provider, including support for\n[JSON Web Token\n(JWT)](https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-32).",
       "id": "AuthProvider",
       "properties": {
         "audiences": {

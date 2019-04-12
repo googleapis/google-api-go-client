@@ -596,10 +596,10 @@ type Node struct {
 	Network string `json:"network,omitempty"`
 
 	// NetworkEndpoints: Output only. The network endpoints where TPU
-	// workers can be accessed and sent work.
-	// It is recommended that Tensorflow clients of the node reach out to
-	// the 0th
-	// entry in this map first.
+	// workers can be accessed and
+	// sent work. It is recommended that Tensorflow clients of the node
+	// reach out
+	// to the 0th entry in this map first.
 	NetworkEndpoints []*NetworkEndpoint `json:"networkEndpoints,omitempty"`
 
 	// Port: Output only.
@@ -633,8 +633,7 @@ type Node struct {
 	//   "REPAIRING" - TPU node is being repaired and may be unusable.
 	// Details can be
 	// found in the `help_description` field.
-	//   "STOPPED" - 7 - Reserved. Was SUSPENDED.
-	// TPU node is stopped.
+	//   "STOPPED" - TPU node is stopped.
 	//   "STOPPING" - TPU node is currently stopping.
 	//   "STARTING" - TPU node is currently starting.
 	//   "PREEMPTED" - TPU node has been preempted. Only applies to

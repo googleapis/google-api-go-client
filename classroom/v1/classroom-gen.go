@@ -415,9 +415,9 @@ type Announcement struct {
 	// IndividualStudentsOptions: Identifiers of students with access to the
 	// announcement.
 	// This field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.
-	// If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only students
-	// specified in this
-	// field will be able to see the announcement.
+	// If the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only
+	// students
+	// specified in this field will be able to see the announcement.
 	IndividualStudentsOptions *IndividualStudentsOptions `json:"individualStudentsOptions,omitempty"`
 
 	// Materials: Additional materials.
@@ -794,7 +794,8 @@ type Course struct {
 	// all teachers of the
 	// course.
 	//
-	// This field will only be set for teachers of the course and domain
+	// This field will only be set for teachers of the course and
+	// domain
 	// administrators.
 	//
 	// Read-only.

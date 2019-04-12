@@ -267,7 +267,6 @@ type BiddersService struct {
 
 func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 	rs := &BiddersAccountsService{s: s}
-	rs.Creatives = NewBiddersAccountsCreativesService(s)
 	rs.FilterSets = NewBiddersAccountsFilterSetsService(s)
 	return rs
 }
@@ -275,18 +274,7 @@ func NewBiddersAccountsService(s *Service) *BiddersAccountsService {
 type BiddersAccountsService struct {
 	s *Service
 
-	Creatives *BiddersAccountsCreativesService
-
 	FilterSets *BiddersAccountsFilterSetsService
-}
-
-func NewBiddersAccountsCreativesService(s *Service) *BiddersAccountsCreativesService {
-	rs := &BiddersAccountsCreativesService{s: s}
-	return rs
-}
-
-type BiddersAccountsCreativesService struct {
-	s *Service
 }
 
 func NewBiddersAccountsFilterSetsService(s *Service) *BiddersAccountsFilterSetsService {
@@ -941,10 +929,11 @@ func (s *Buyer) MarshalJSON() ([]byte, error) {
 // described by
 // the specified callout status.
 type CalloutStatusRow struct {
-	// CalloutStatusId: The ID of the callout status.
+	// CalloutStatusId: The ID of the callout
+	// status.
 	// See
-	// [callout-status-codes](https://developers.google.com/authorized-buyers
-	// /rtb/downloads/callout-status-codes).
+	// [callout-status-codes](https://developers.google.com/autho
+	// rized-buyers/rtb/downloads/callout-status-codes).
 	CalloutStatusId int64 `json:"calloutStatusId,omitempty"`
 
 	// ImpressionCount: The number of impressions for which there was a bid
@@ -1850,10 +1839,11 @@ type CreativeStatusRow struct {
 	// BidCount: The number of bids with the specified status.
 	BidCount *MetricValue `json:"bidCount,omitempty"`
 
-	// CreativeStatusId: The ID of the creative status.
+	// CreativeStatusId: The ID of the creative
+	// status.
 	// See
-	// [creative-status-codes](https://developers.google.com/authorized-buyer
-	// s/rtb/downloads/creative-status-codes).
+	// [creative-status-codes](https://developers.google.com/auth
+	// orized-buyers/rtb/downloads/creative-status-codes).
 	CreativeStatusId int64 `json:"creativeStatusId,omitempty"`
 
 	// RowDimensions: The values of all dimensions associated with metric
@@ -1992,10 +1982,11 @@ type DayPart struct {
 	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
 
-	// EndTime: The ending time of the day for the ad to show (minute level
-	// granularity).
-	// The end time is exclusive.
-	// This field is not available for filtering in PQL queries.
+	// EndTime: The ending time of the day for the ad to show (minute
+	// level
+	// granularity). The end time is exclusive. This field is not
+	// available
+	// for filtering in PQL queries.
 	EndTime *TimeOfDay `json:"endTime,omitempty"`
 
 	// StartTime: The starting time of day for the ad to show (minute level
@@ -2067,9 +2058,9 @@ func (s *DayPartTargeting) MarshalJSON() ([]byte, error) {
 
 // Deal: A deal represents a segment of inventory for displaying ads
 // on.
-// A proposal can contain multiple deals. A deal contains the terms and
-// targeting information that
-// is used for serving.
+// A proposal can contain multiple deals. A deal contains the terms
+// and
+// targeting information that is used for serving.
 type Deal struct {
 	// AvailableEndTime: Proposed flight end time of the deal.
 	// This will generally be stored in a granularity of a second.
@@ -2079,11 +2070,12 @@ type Deal struct {
 	// AvailableStartTime: Optional proposed flight start time of the
 	// deal.
 	// This will generally be stored in the granularity of one second since
-	// deal serving
-	// starts at seconds boundary. Any time specified with more
-	// granularity
-	// (e.g., in milliseconds) will be truncated towards the start of time
-	// in seconds.
+	// deal
+	// serving starts at seconds boundary. Any time specified with
+	// more
+	// granularity (e.g., in milliseconds) will be truncated towards the
+	// start of
+	// time in seconds.
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// BuyerPrivateData: Buyer private data (hidden from seller).
@@ -2129,7 +2121,8 @@ type Deal struct {
 
 	// CreativeRestrictions: Restricitions about the creatives associated
 	// with the deal (i.e., size)
-	// This is available for Programmatic Guaranteed/Preferred Deals in Ad
+	// This is available for Programmatic Guaranteed/Preferred Deals in
+	// Ad
 	// Manager.
 	// @OutputOnly
 	CreativeRestrictions *CreativeRestrictions `json:"creativeRestrictions,omitempty"`
@@ -3627,9 +3620,10 @@ type ListCreativeStatusBreakdownByDetailResponse struct {
 	// uyers/rtb/downloads/ad-product-categories).
 	//   "DISAPPROVAL_REASON" - Indicates that the detail ID refers to a
 	// disapproval reason; see
-	// DisapprovalReason enum in
-	// [snippet-status-report-proto](https://developers.google.com/authorized
-	// -buyers/rtb/downloads/snippet-status-report-proto).
+	// DisapprovalReason enum
+	// in
+	// [snippet-status-report-proto](https://developers.google.com/authori
+	// zed-buyers/rtb/downloads/snippet-status-report-proto).
 	DetailType string `json:"detailType,omitempty"`
 
 	// FilteredBidDetailRows: List of rows, with counts of bids with a given
@@ -4853,15 +4847,15 @@ func (s *PrivateData) MarshalJSON() ([]byte, error) {
 // know more about the inventory.
 type Product struct {
 	// AvailableEndTime: The proposed end time for the deal. The field will
-	// be truncated to the order of
-	// seconds during serving.
+	// be truncated to the
+	// order of seconds during serving.
 	AvailableEndTime string `json:"availableEndTime,omitempty"`
 
 	// AvailableStartTime: Inventory availability dates. The start time will
-	// be truncated to seconds during serving.
-	// Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS) will be
-	// truncated to 3:23:34
-	// when serving.
+	// be truncated to seconds
+	// during serving. Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS)
+	// will
+	// be truncated to 3:23:34 when serving.
 	AvailableStartTime string `json:"availableStartTime,omitempty"`
 
 	// CreateTime: Creation time.
@@ -4988,8 +4982,9 @@ type Proposal struct {
 	BuyerPrivateData *PrivateData `json:"buyerPrivateData,omitempty"`
 
 	// Deals: The deals associated with this proposal. For Private Auction
-	// proposals (whose deals have
-	// NonGuaranteedAuctionTerms), there will only be one deal.
+	// proposals
+	// (whose deals have NonGuaranteedAuctionTerms), there will only be one
+	// deal.
 	Deals []*Deal `json:"deals,omitempty"`
 
 	// DisplayName: The name for the proposal.
@@ -5122,39 +5117,42 @@ func (s *Proposal) MarshalJSON() ([]byte, error) {
 // Represents a publisher profile in Marketplace.
 //
 // All fields are read only. All string fields are free-form text
-// entered by the publisher
-// unless noted otherwise.
+// entered by the
+// publisher unless noted otherwise.
 type PublisherProfile struct {
 	// AudienceDescription: Description on the publisher's audience.
 	AudienceDescription string `json:"audienceDescription,omitempty"`
 
 	// BuyerPitchStatement: Statement explaining what's unique about
-	// publisher's business, and why buyers should
-	// partner with the publisher.
+	// publisher's business, and why
+	// buyers should partner with the publisher.
 	BuyerPitchStatement string `json:"buyerPitchStatement,omitempty"`
 
 	// DirectDealsContact: Contact information for direct reservation deals.
-	// This is free text entered by the publisher
-	// and may include information like names, phone numbers and email
-	// addresses.
+	// This is free text entered
+	// by the publisher and may include information like names, phone
+	// numbers and
+	// email addresses.
 	DirectDealsContact string `json:"directDealsContact,omitempty"`
 
 	// DisplayName: Name of the publisher profile.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Domains: The list of domains represented in this publisher profile.
-	// Empty if this is a parent profile.
-	// These are top private domains, meaning that these will not contain a
-	// string like
-	// "photos.google.co.uk/123", but will instead contain "google.co.uk".
+	// Empty if this is
+	// a parent profile. These are top private domains, meaning that these
+	// will
+	// not contain a string like "photos.google.co.uk/123", but will
+	// instead
+	// contain "google.co.uk".
 	Domains []string `json:"domains,omitempty"`
 
 	// GooglePlusUrl: URL to publisher's Google+ page.
 	GooglePlusUrl string `json:"googlePlusUrl,omitempty"`
 
 	// LogoUrl: A Google public URL to the logo for this publisher profile.
-	// The logo is stored as
-	// a PNG, JPG, or GIF image.
+	// The logo is
+	// stored as a PNG, JPG, or GIF image.
 	LogoUrl string `json:"logoUrl,omitempty"`
 
 	// MediaKitUrl: URL to additional marketing and sales materials.
@@ -5164,9 +5162,10 @@ type PublisherProfile struct {
 	Overview string `json:"overview,omitempty"`
 
 	// ProgrammaticDealsContact: Contact information for programmatic deals.
-	// This is free text entered by the publisher
-	// and may include information like names, phone numbers and email
-	// addresses.
+	// This is free text entered by
+	// the publisher and may include information like names, phone numbers
+	// and
+	// email addresses.
 	ProgrammaticDealsContact string `json:"programmaticDealsContact,omitempty"`
 
 	// PublisherProfileId: Unique ID for publisher profile.
@@ -7367,8 +7366,10 @@ func (c *AccountsClientsUsersListCall) PageSize(pageSize int64) *AccountsClients
 // Typically, this is the value
 // of
 // ListClientUsersResponse.nextPageToken
-// returned from the previous call to the
-// accounts.clients.users.list method.
+// returned from the previous call to
+// the
+// accounts.clients.users.list
+// method.
 func (c *AccountsClientsUsersListCall) PageToken(pageToken string) *AccountsClientsUsersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7502,7 +7503,7 @@ func (c *AccountsClientsUsersListCall) Do(opts ...googleapi.CallOption) (*ListCl
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list method.",
+	//       "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list\nmethod.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -11788,151 +11789,6 @@ func (c *AccountsPublisherProfilesListCall) Pages(ctx context.Context, f func(*L
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-// method id "adexchangebuyer2.bidders.accounts.creatives.delete":
-
-type BiddersAccountsCreativesDeleteCall struct {
-	s          *Service
-	ownerName  string
-	creativeId string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a single creative.
-//
-// A creative is deactivated upon deletion and does not count against
-// active
-// snippet quota. A deleted creative should not be used in bidding (all
-// bids
-// with that creative will be rejected).
-func (r *BiddersAccountsCreativesService) Delete(ownerName string, creativeId string) *BiddersAccountsCreativesDeleteCall {
-	c := &BiddersAccountsCreativesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.ownerName = ownerName
-	c.creativeId = creativeId
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *BiddersAccountsCreativesDeleteCall) Fields(s ...googleapi.Field) *BiddersAccountsCreativesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *BiddersAccountsCreativesDeleteCall) Context(ctx context.Context) *BiddersAccountsCreativesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *BiddersAccountsCreativesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *BiddersAccountsCreativesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+ownerName}/creatives/{creativeId}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"ownerName":  c.ownerName,
-		"creativeId": c.creativeId,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "adexchangebuyer2.bidders.accounts.creatives.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *BiddersAccountsCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, &googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		}
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, err
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a single creative.\n\nA creative is deactivated upon deletion and does not count against active\nsnippet quota. A deleted creative should not be used in bidding (all bids\nwith that creative will be rejected).",
-	//   "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/creatives/{creativeId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "adexchangebuyer2.bidders.accounts.creatives.delete",
-	//   "parameterOrder": [
-	//     "ownerName",
-	//     "creativeId"
-	//   ],
-	//   "parameters": {
-	//     "creativeId": {
-	//       "description": "The ID of the creative to delete.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "ownerName": {
-	//       "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
-	//       "location": "path",
-	//       "pattern": "^bidders/[^/]+/accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta1/{+ownerName}/creatives/{creativeId}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/adexchange.buyer"
-	//   ]
-	// }
-
 }
 
 // method id "adexchangebuyer2.bidders.accounts.filterSets.create":

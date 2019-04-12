@@ -444,7 +444,7 @@
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list method.",
+                      "description": "A token identifying a page of results the server should return.\nTypically, this is the value of\nListClientUsersResponse.nextPageToken\nreturned from the previous call to the\naccounts.clients.users.list\nmethod.",
                       "location": "query",
                       "type": "string"
                     }
@@ -1394,42 +1394,6 @@
       "resources": {
         "accounts": {
           "resources": {
-            "creatives": {
-              "methods": {
-                "delete": {
-                  "description": "Deletes a single creative.\n\nA creative is deactivated upon deletion and does not count against active\nsnippet quota. A deleted creative should not be used in bidding (all bids\nwith that creative will be rejected).",
-                  "flatPath": "v2beta1/bidders/{biddersId}/accounts/{accountsId}/creatives/{creativeId}",
-                  "httpMethod": "DELETE",
-                  "id": "adexchangebuyer2.bidders.accounts.creatives.delete",
-                  "parameterOrder": [
-                    "ownerName",
-                    "creativeId"
-                  ],
-                  "parameters": {
-                    "creativeId": {
-                      "description": "The ID of the creative to delete.",
-                      "location": "path",
-                      "required": true,
-                      "type": "string"
-                    },
-                    "ownerName": {
-                      "description": "Name of the owner (bidder or account) of the creative to be deleted.\nFor example:\n\n- For an account-level creative for the buyer account representing bidder\n  123: `bidders/123/accounts/123`\n\n- For an account-level creative for the child seat buyer account 456\n  whose bidder is 123: `bidders/123/accounts/456`",
-                      "location": "path",
-                      "pattern": "^bidders/[^/]+/accounts/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v2beta1/{+ownerName}/creatives/{creativeId}",
-                  "response": {
-                    "$ref": "Empty"
-                  },
-                  "scopes": [
-                    "https://www.googleapis.com/auth/adexchange.buyer"
-                  ]
-                }
-              }
-            },
             "filterSets": {
               "methods": {
                 "create": {
@@ -2521,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190328",
+  "revision": "20190410",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2734,7 +2698,7 @@
       "id": "CalloutStatusRow",
       "properties": {
         "calloutStatusId": {
-          "description": "The ID of the callout status.\nSee [callout-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/callout-status-codes).",
+          "description": "The ID of the callout status.\nSee\n[callout-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/callout-status-codes).",
           "format": "int32",
           "type": "integer"
         },
@@ -3415,7 +3379,7 @@
           "description": "The number of bids with the specified status."
         },
         "creativeStatusId": {
-          "description": "The ID of the creative status.\nSee [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
+          "description": "The ID of the creative status.\nSee\n[creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
           "format": "int32",
           "type": "integer"
         },
@@ -3501,7 +3465,7 @@
         },
         "endTime": {
           "$ref": "TimeOfDay",
-          "description": "The ending time of the day for the ad to show (minute level granularity).\nThe end time is exclusive.\nThis field is not available for filtering in PQL queries."
+          "description": "The ending time of the day for the ad to show (minute level\ngranularity). The end time is exclusive. This field is not available\nfor filtering in PQL queries."
         },
         "startTime": {
           "$ref": "TimeOfDay",
@@ -3539,7 +3503,7 @@
       "type": "object"
     },
     "Deal": {
-      "description": "A deal represents a segment of inventory for displaying ads on.\nA proposal can contain multiple deals. A deal contains the terms and targeting information that\nis used for serving.",
+      "description": "A deal represents a segment of inventory for displaying ads on.\nA proposal can contain multiple deals. A deal contains the terms and\ntargeting information that is used for serving.",
       "id": "Deal",
       "properties": {
         "availableEndTime": {
@@ -3548,7 +3512,7 @@
           "type": "string"
         },
         "availableStartTime": {
-          "description": "Optional proposed flight start time of the deal.\nThis will generally be stored in the granularity of one second since deal serving\nstarts at seconds boundary. Any time specified with more granularity\n(e.g., in milliseconds) will be truncated towards the start of time in seconds.",
+          "description": "Optional proposed flight start time of the deal.\nThis will generally be stored in the granularity of one second since deal\nserving starts at seconds boundary. Any time specified with more\ngranularity (e.g., in milliseconds) will be truncated towards the start of\ntime in seconds.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3586,7 +3550,7 @@
         },
         "creativeRestrictions": {
           "$ref": "CreativeRestrictions",
-          "description": "Restricitions about the creatives associated with the deal (i.e., size)\nThis is available for Programmatic Guaranteed/Preferred Deals in Ad Manager.\n@OutputOnly"
+          "description": "Restricitions about the creatives associated with the deal (i.e., size)\nThis is available for Programmatic Guaranteed/Preferred Deals in Ad\nManager.\n@OutputOnly"
         },
         "creativeSafeFrameCompatibility": {
           "description": "Specifies whether the creative is safeFrame compatible.\n@OutputOnly",
@@ -4585,7 +4549,7 @@
             "Indicates that the detail ID refers to a vendor; see\n[vendors](https://developers.google.com/authorized-buyers/rtb/downloads/vendors).",
             "Indicates that the detail ID refers to a sensitive category; see\n[ad-sensitive-categories](https://developers.google.com/authorized-buyers/rtb/downloads/ad-sensitive-categories).",
             "Indicates that the detail ID refers to a product category; see\n[ad-product-categories](https://developers.google.com/authorized-buyers/rtb/downloads/ad-product-categories).",
-            "Indicates that the detail ID refers to a disapproval reason; see\nDisapprovalReason enum in [snippet-status-report-proto](https://developers.google.com/authorized-buyers/rtb/downloads/snippet-status-report-proto)."
+            "Indicates that the detail ID refers to a disapproval reason; see\nDisapprovalReason enum in\n[snippet-status-report-proto](https://developers.google.com/authorized-buyers/rtb/downloads/snippet-status-report-proto)."
           ],
           "type": "string"
         },
@@ -5180,12 +5144,12 @@
       "id": "Product",
       "properties": {
         "availableEndTime": {
-          "description": "The proposed end time for the deal. The field will be truncated to the order of\nseconds during serving.",
+          "description": "The proposed end time for the deal. The field will be truncated to the\norder of seconds during serving.",
           "format": "google-datetime",
           "type": "string"
         },
         "availableStartTime": {
-          "description": "Inventory availability dates. The start time will be truncated to seconds during serving.\nThus, a field specified as 3:23:34.456 (HH:mm:ss.SSS) will be truncated to 3:23:34\nwhen serving.",
+          "description": "Inventory availability dates. The start time will be truncated to seconds\nduring serving. Thus, a field specified as 3:23:34.456 (HH:mm:ss.SSS) will\nbe truncated to 3:23:34 when serving.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5291,7 +5255,7 @@
           "description": "Private data for buyer. (hidden from seller)."
         },
         "deals": {
-          "description": "The deals associated with this proposal. For Private Auction proposals (whose deals have\nNonGuaranteedAuctionTerms), there will only be one deal.",
+          "description": "The deals associated with this proposal. For Private Auction proposals\n(whose deals have NonGuaranteedAuctionTerms), there will only be one deal.",
           "items": {
             "$ref": "Deal"
           },
@@ -5397,7 +5361,7 @@
       "type": "object"
     },
     "PublisherProfile": {
-      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the publisher\nunless noted otherwise.",
+      "description": "Note: this resource requires whitelisting for access. Please contact your\naccount manager for access to Marketplace resources.\n\nRepresents a publisher profile in Marketplace.\n\nAll fields are read only. All string fields are free-form text entered by the\npublisher unless noted otherwise.",
       "id": "PublisherProfile",
       "properties": {
         "audienceDescription": {
@@ -5405,11 +5369,11 @@
           "type": "string"
         },
         "buyerPitchStatement": {
-          "description": "Statement explaining what's unique about publisher's business, and why buyers should\npartner with the publisher.",
+          "description": "Statement explaining what's unique about publisher's business, and why\nbuyers should partner with the publisher.",
           "type": "string"
         },
         "directDealsContact": {
-          "description": "Contact information for direct reservation deals. This is free text entered by the publisher\nand may include information like names, phone numbers and email addresses.",
+          "description": "Contact information for direct reservation deals. This is free text entered\nby the publisher and may include information like names, phone numbers and\nemail addresses.",
           "type": "string"
         },
         "displayName": {
@@ -5417,7 +5381,7 @@
           "type": "string"
         },
         "domains": {
-          "description": "The list of domains represented in this publisher profile. Empty if this is a parent profile.\nThese are top private domains, meaning that these will not contain a string like\n\"photos.google.co.uk/123\", but will instead contain \"google.co.uk\".",
+          "description": "The list of domains represented in this publisher profile. Empty if this is\na parent profile. These are top private domains, meaning that these will\nnot contain a string like \"photos.google.co.uk/123\", but will instead\ncontain \"google.co.uk\".",
           "items": {
             "type": "string"
           },
@@ -5428,7 +5392,7 @@
           "type": "string"
         },
         "logoUrl": {
-          "description": "A Google public URL to the logo for this publisher profile. The logo is stored as\na PNG, JPG, or GIF image.",
+          "description": "A Google public URL to the logo for this publisher profile. The logo is\nstored as a PNG, JPG, or GIF image.",
           "type": "string"
         },
         "mediaKitUrl": {
@@ -5440,7 +5404,7 @@
           "type": "string"
         },
         "programmaticDealsContact": {
-          "description": "Contact information for programmatic deals. This is free text entered by the publisher\nand may include information like names, phone numbers and email addresses.",
+          "description": "Contact information for programmatic deals. This is free text entered by\nthe publisher and may include information like names, phone numbers and\nemail addresses.",
           "type": "string"
         },
         "publisherProfileId": {

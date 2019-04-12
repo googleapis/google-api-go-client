@@ -243,8 +243,8 @@ type CreateManagedShortLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be
 	// shortened.
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// more](https://firebase.google.com/docs/reference/dyn
+	// amic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
@@ -254,8 +254,8 @@ type CreateManagedShortLinkRequest struct {
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=co
 	// m.sample",
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// more](https://firebase.google.com/docs/reference/dyn
+	// amic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// Name: Link name to associate with the link. It's used for marketer to
@@ -344,8 +344,8 @@ type CreateShortDynamicLinkRequest struct {
 	// DynamicLinkInfo: Information about the Dynamic Link to be
 	// shortened.
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// more](https://firebase.google.com/docs/reference/dyn
+	// amic-links/link-shortener).
 	DynamicLinkInfo *DynamicLinkInfo `json:"dynamicLinkInfo,omitempty"`
 
 	// LongDynamicLink: Full long Dynamic Link URL with desired query
@@ -355,8 +355,8 @@ type CreateShortDynamicLinkRequest struct {
 	// "https://sample.app.goo.gl/?link=http://www.google.com&apn=co
 	// m.sample",
 	// [Learn
-	// more](https://firebase.google.com/docs/reference/dynamic-links/link-sh
-	// ortener).
+	// more](https://firebase.google.com/docs/reference/dyn
+	// amic-links/link-shortener).
 	LongDynamicLink string `json:"longDynamicLink,omitempty"`
 
 	// SdkVersion: Google SDK version. Version takes the form

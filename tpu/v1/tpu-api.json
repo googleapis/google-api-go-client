@@ -658,7 +658,7 @@
       }
     }
   },
-  "revision": "20190312",
+  "revision": "20190408",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
@@ -894,7 +894,7 @@
           "type": "string"
         },
         "networkEndpoints": {
-          "description": "Output only. The network endpoints where TPU workers can be accessed and sent work.\nIt is recommended that Tensorflow clients of the node reach out to the 0th\nentry in this map first.",
+          "description": "Output only. The network endpoints where TPU workers can be accessed and\nsent work. It is recommended that Tensorflow clients of the node reach out\nto the 0th entry in this map first.",
           "items": {
             "$ref": "NetworkEndpoint"
           },
@@ -938,7 +938,7 @@
             "TPU node is undergoing reimaging.",
             "TPU node is being deleted.",
             "TPU node is being repaired and may be unusable. Details can be\nfound in the `help_description` field.",
-            "7 - Reserved. Was SUSPENDED.\nTPU node is stopped.",
+            "TPU node is stopped.",
             "TPU node is currently stopping.",
             "TPU node is currently starting.",
             "TPU node has been preempted. Only applies to Preemptible TPU Nodes.",

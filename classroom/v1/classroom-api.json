@@ -2151,7 +2151,7 @@
       }
     }
   },
-  "revision": "20190401",
+  "revision": "20190409",
   "rootUrl": "https://classroom.googleapis.com/",
   "schemas": {
     "Announcement": {
@@ -2195,7 +2195,7 @@
         },
         "individualStudentsOptions": {
           "$ref": "IndividualStudentsOptions",
-          "description": "Identifiers of students with access to the announcement.\nThis field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.\nIf the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only students specified in this\nfield will be able to see the announcement."
+          "description": "Identifiers of students with access to the announcement.\nThis field is set only if `assigneeMode` is `INDIVIDUAL_STUDENTS`.\nIf the `assigneeMode` is `INDIVIDUAL_STUDENTS`, then only students\nspecified in this field will be able to see the announcement."
         },
         "materials": {
           "description": "Additional materials.\n\nAnnouncements must have no more than 20 material items.",
@@ -2382,7 +2382,7 @@
         },
         "teacherFolder": {
           "$ref": "DriveFolder",
-          "description": "Information about a Drive Folder that is shared with all teachers of the\ncourse.\n\nThis field will only be set for teachers of the course and domain administrators.\n\nRead-only."
+          "description": "Information about a Drive Folder that is shared with all teachers of the\ncourse.\n\nThis field will only be set for teachers of the course and domain\nadministrators.\n\nRead-only."
         },
         "teacherGroupEmail": {
           "description": "The email address of a Google group containing all teachers of the course.\nThis group does not accept email and can only be used for permissions.\n\nRead-only.",

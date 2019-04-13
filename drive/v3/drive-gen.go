@@ -6066,8 +6066,9 @@ func (c *PermissionsCreateCall) TransferOwnership(transferOwnership bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the item belongs.
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a Team Drive and the requester is an
+// administrator of the domain to which the Team Drive belongs.
 func (c *PermissionsCreateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsCreateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6200,7 +6201,7 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6248,8 +6249,9 @@ func (c *PermissionsDeleteCall) SupportsTeamDrives(supportsTeamDrives bool) *Per
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the item belongs.
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a Team Drive and the requester is an
+// administrator of the domain to which the Team Drive belongs.
 func (c *PermissionsDeleteCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6344,7 +6346,7 @@ func (c *PermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6387,8 +6389,9 @@ func (c *PermissionsGetCall) SupportsTeamDrives(supportsTeamDrives bool) *Permis
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the item belongs.
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a Team Drive and the requester is an
+// administrator of the domain to which the Team Drive belongs.
 func (c *PermissionsGetCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsGetCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6521,7 +6524,7 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6586,8 +6589,9 @@ func (c *PermissionsListCall) SupportsTeamDrives(supportsTeamDrives bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the item belongs.
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a Team Drive and the requester is an
+// administrator of the domain to which the Team Drive belongs.
 func (c *PermissionsListCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsListCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6725,7 +6729,7 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -6813,8 +6817,9 @@ func (c *PermissionsUpdateCall) TransferOwnership(transferOwnership bool) *Permi
 
 // UseDomainAdminAccess sets the optional parameter
 // "useDomainAdminAccess": Issue the request as a domain administrator;
-// if set to true, then the requester will be granted access if they are
-// an administrator of the domain to which the item belongs.
+// if set to true, then the requester will be granted access if the file
+// ID parameter refers to a Team Drive and the requester is an
+// administrator of the domain to which the Team Drive belongs.
 func (c *PermissionsUpdateCall) UseDomainAdminAccess(useDomainAdminAccess bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("useDomainAdminAccess", fmt.Sprint(useDomainAdminAccess))
 	return c
@@ -6951,7 +6956,7 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "useDomainAdminAccess": {
 	//       "default": "false",
-	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+	//       "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

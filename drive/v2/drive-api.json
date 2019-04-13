@@ -38,7 +38,7 @@
   "description": "Manages files in Drive including uploading, downloading, searching, detecting changes, and updating sharing permissions.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/drive/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/XBo3v2wypoRQ0OatiSPR_63Htp4\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/lKOGBhFMu3-vffJ-yofbFGthirM\"",
   "icons": {
     "x16": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_16.png",
     "x32": "https://ssl.gstatic.com/docs/doclist/images/drive_icon_32.png"
@@ -1883,7 +1883,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -1923,7 +1923,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -2004,7 +2004,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -2056,7 +2056,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -2115,7 +2115,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -2173,7 +2173,7 @@
             },
             "useDomainAdminAccess": {
               "default": "false",
-              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if they are an administrator of the domain to which the item belongs.",
+              "description": "Issue the request as a domain administrator; if set to true, then the requester will be granted access if the file ID parameter refers to a Team Drive and the requester is an administrator of the domain to which the Team Drive belongs.",
               "location": "query",
               "type": "boolean"
             }
@@ -3080,7 +3080,7 @@
       }
     }
   },
-  "revision": "20190311",
+  "revision": "20190404",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {

@@ -543,14 +543,17 @@ func (s *ContactGroup) MarshalJSON() ([]byte, error) {
 
 // ContactGroupMembership: A Google contact group membership.
 type ContactGroupMembership struct {
-	// ContactGroupId: The contact group ID for the contact group
-	// membership. The contact group
-	// ID can be custom or one of these predefined values:
-	//
-	// *  `myContacts`
-	// *  `starred`
-	// *  A numerical ID for user-created groups.
+	// ContactGroupId: The read-only contact group ID for the contact group
+	// membership.
 	ContactGroupId string `json:"contactGroupId,omitempty"`
+
+	// ContactGroupResourceName: The resource name for the contact group,
+	// assigned by the server. An ASCII
+	// string, in the form of
+	// `contactGroups/`<var>contact_group_id</var>.
+	// Only contact_group_resource_name can be used for modifying
+	// memberships.
+	ContactGroupResourceName string `json:"contactGroupResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to
 	// unconditionally include in API requests. By default, fields with
@@ -765,7 +768,7 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DomainMembership: A G Suite Domain membership.
+// DomainMembership: A read-only G Suite Domain membership.
 type DomainMembership struct {
 	// InViewerDomain: True if the person is in the viewer's G Suite domain.
 	InViewerDomain bool `json:"inViewerDomain,omitempty"`
@@ -1241,12 +1244,14 @@ func (s *Locale) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Membership: A person's read-only membership in a group.
+// Membership: A person's membership in a group. Only contact group
+// memberships can be
+// modified.
 type Membership struct {
 	// ContactGroupMembership: The contact group membership.
 	ContactGroupMembership *ContactGroupMembership `json:"contactGroupMembership,omitempty"`
 
-	// DomainMembership: The domain membership.
+	// DomainMembership: The read-only domain membership.
 	DomainMembership *DomainMembership `json:"domainMembership,omitempty"`
 
 	// Metadata: Metadata about the membership.
@@ -1649,7 +1654,7 @@ type Person struct {
 	// Locales: The person's locale preferences.
 	Locales []*Locale `json:"locales,omitempty"`
 
-	// Memberships: The person's read-only group memberships.
+	// Memberships: The person's group memberships.
 	Memberships []*Membership `json:"memberships,omitempty"`
 
 	// Metadata: Read-only metadata about the person.

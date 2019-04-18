@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190329",
+  "revision": "20190416",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -1173,6 +1173,13 @@
           "description": "The package name of the app that installed this app.",
           "type": "string"
         },
+        "keyedAppStates": {
+          "description": "List of keyed app states reported by the app.",
+          "items": {
+            "$ref": "KeyedAppState"
+          },
+          "type": "array"
+        },
         "packageName": {
           "description": "Package name of the app.",
           "type": "string"
@@ -1208,6 +1215,17 @@
         "versionName": {
           "description": "The app version as displayed to the user.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ApplicationReportingSettings": {
+      "description": "Settings controlling the behavior of application reports.",
+      "id": "ApplicationReportingSettings",
+      "properties": {
+        "includeRemovedApps": {
+          "description": "Whether removed apps are included in application reports.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -1923,6 +1941,49 @@
             "type": "number"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "KeyedAppState": {
+      "description": "Keyed app state reported by the app.",
+      "id": "KeyedAppState",
+      "properties": {
+        "createTime": {
+          "description": "The creation time of the app state on the device.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "data": {
+          "description": "Optionally, a machine-readable value to be read by the EMM. For example, setting values that the admin can choose to query against in the EMM console (e.g. “notify me if the battery_warning data \u003c 10”).",
+          "type": "string"
+        },
+        "key": {
+          "description": "The key for the app state. Acts as a point of reference for what the app is providing state for. For example, when providing managed configuration feedback, this key could be the managed configuration key.",
+          "type": "string"
+        },
+        "lastUpdateTime": {
+          "description": "The time the app state was most recently updated.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "message": {
+          "description": "Optionally, a free-form message string to explain the app state. If the state was triggered by a particular value (e.g. a managed configuration value), it should be included in the message.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "The severity of the app state.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "INFO",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Unspecified severity level.",
+            "Information severity level.",
+            "Error severity level. This should only be set for genuine error conditions that a management organization needs to take action to fix."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3157,6 +3218,10 @@
       "description": "Settings controlling the behavior of status reports.",
       "id": "StatusReportingSettings",
       "properties": {
+        "applicationReportingSettings": {
+          "$ref": "ApplicationReportingSettings",
+          "description": "Application reporting settings. Only applicable if application_reports_enabled is true."
+        },
         "applicationReportsEnabled": {
           "description": "Whether app reports are enabled.",
           "type": "boolean"

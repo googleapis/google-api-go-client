@@ -179,7 +179,7 @@
             "queues": {
               "methods": {
                 "create": {
-                  "description": "Creates a queue.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+                  "description": "Creates a queue.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
                   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues",
                   "httpMethod": "POST",
                   "id": "cloudtasks.projects.locations.queues.create",
@@ -207,7 +207,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+                  "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
                   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
                   "httpMethod": "DELETE",
                   "id": "cloudtasks.projects.locations.queues.delete",
@@ -294,7 +294,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs Filters](https://cloud.google.com/logging/docs/view/advanced_filters).\n\nSample filter \"state: PAUSED\".\n\nNote that using filters might cause fewer queues than the\nrequested page_size to be returned.",
+                      "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs\nFilters](https://cloud.google.com/logging/docs/view/advanced_filters).\n\nSample filter \"state: PAUSED\".\n\nNote that using filters might cause fewer queues than the\nrequested page_size to be returned.",
                       "location": "query",
                       "type": "string"
                     },
@@ -326,7 +326,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+                  "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
                   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
                   "httpMethod": "PATCH",
                   "id": "cloudtasks.projects.locations.queues.patch",
@@ -416,7 +416,7 @@
                   ]
                 },
                 "resume": {
-                  "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nPAUSED or\nDISABLED. The state of a queue is stored\nin the queue's state; after calling this method it\nwill be set to RUNNING.\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).",
+                  "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nPAUSED or\nDISABLED. The state of a queue is stored\nin the queue's state; after calling this method it\nwill be set to RUNNING.\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling\nRisks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).",
                   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:resume",
                   "httpMethod": "POST",
                   "id": "cloudtasks.projects.locations.queues.resume",
@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20190326",
+  "revision": "20190412",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpQueue": {
@@ -794,7 +794,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+          "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",

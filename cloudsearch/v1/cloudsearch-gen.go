@@ -722,6 +722,11 @@ type DataSourceRestriction struct {
 	// the resulting expressions are joined disjunctively.
 	//
 	// The maximum number of elements is 20.
+	//
+	// NOTE: Suggest API supports only few filters at the moment:
+	//   "objecttype", "type" and "mimetype".
+	// For now, schema specific filters cannot be used to filter
+	// suggestions.
 	FilterOptions []*FilterOptions `json:"filterOptions,omitempty"`
 
 	// Source: The source of restriction.
@@ -929,9 +934,9 @@ func (s *DateValues) MarshalJSON() ([]byte, error) {
 // DebugOptions: Shared request debug options for all cloudsearch RPC
 // methods.
 type DebugOptions struct {
-	// EnableDebugging: If set, the request will enable debugging features
-	// of Cloud Search.
-	// Only turn on this field, if asked by Google to help with debugging.
+	// EnableDebugging: If you are asked by Google to help with debugging,
+	// set this field.
+	// Otherwise, ignore this field.
 	EnableDebugging bool `json:"enableDebugging,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EnableDebugging") to
@@ -3793,7 +3798,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PeopleSuggestion: A people suggestion.
+// PeopleSuggestion: This field contains information about the person
+// being suggested.
 type PeopleSuggestion struct {
 	// Person: Suggested person. All fields of the person object might not
 	// be populated.
@@ -4614,7 +4620,9 @@ func (s *QuerySource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// QuerySuggestion: A completed query suggestion.
+// QuerySuggestion: This field does not contain anything as of now and
+// is just used as an
+// indicator that the suggest result was a phrase completion.
 type QuerySuggestion struct {
 }
 
@@ -4685,6 +4693,13 @@ type RequestOptions struct {
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	// Fo
 	// r translations.
+	//
+	// When specified, the documents in search results are biased towards
+	// the
+	// specified language.
+	// Suggest API does not use this parameter. It autocompletes only based
+	// on
+	// characters in the query.
 	LanguageCode string `json:"languageCode,omitempty"`
 
 	// SearchApplicationId: Id of the application created using
@@ -6012,9 +6027,16 @@ type SuggestRequest struct {
 	// DataSourceRestrictions: The sources to use for suggestions. If not
 	// specified, all data sources
 	// from the current search application are used.
+	// Suggestions are based on Gmail titles. Suggestions from third party
+	// sources
+	// are not available.
 	DataSourceRestrictions []*DataSourceRestriction `json:"dataSourceRestrictions,omitempty"`
 
-	// Query: Partial query for the completion suggestion.
+	// Query: Partial query for which autocomplete suggestions will be
+	// shown.
+	// For example, if the query is "sea", then the server might
+	// return
+	// "season", "search", "seagull" and so on.
 	Query string `json:"query,omitempty"`
 
 	// RequestOptions: Request options, such as the search application and
@@ -6048,7 +6070,7 @@ func (s *SuggestRequest) MarshalJSON() ([]byte, error) {
 
 // SuggestResponse: Response of the suggest API.
 type SuggestResponse struct {
-	// SuggestResults: List of suggestion results.
+	// SuggestResults: List of suggestions.
 	SuggestResults []*SuggestResult `json:"suggestResults,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6081,8 +6103,16 @@ func (s *SuggestResponse) MarshalJSON() ([]byte, error) {
 
 // SuggestResult: One suggestion result.
 type SuggestResult struct {
+	// PeopleSuggestion: This is present when the suggestion indicates a
+	// person. It
+	// contains more information about the person - like their email
+	// ID,
+	// name etc.
 	PeopleSuggestion *PeopleSuggestion `json:"peopleSuggestion,omitempty"`
 
+	// QuerySuggestion: This field will be present if the suggested query is
+	// a word/phrase
+	// completion.
 	QuerySuggestion *QuerySuggestion `json:"querySuggestion,omitempty"`
 
 	// Source: The source of the suggestion.
@@ -6684,9 +6714,9 @@ func (r *DebugDatasourcesItemsService) CheckAccess(name string, principal *Princ
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *DebugDatasourcesItemsCheckAccessCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugDatasourcesItemsCheckAccessCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -6791,7 +6821,7 @@ func (c *DebugDatasourcesItemsCheckAccessCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7000,9 +7030,9 @@ func (r *DebugDatasourcesItemsUnmappedidsService) List(parent string) *DebugData
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *DebugDatasourcesItemsUnmappedidsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugDatasourcesItemsUnmappedidsListCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -7130,7 +7160,7 @@ func (c *DebugDatasourcesItemsUnmappedidsListCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7206,9 +7236,9 @@ func (r *DebugIdentitysourcesItemsService) ListForunmappedidentity(parent string
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugIdentitysourcesItemsListForunmappedidentityCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -7350,7 +7380,7 @@ func (c *DebugIdentitysourcesItemsListForunmappedidentityCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7433,9 +7463,9 @@ func (r *DebugIdentitysourcesUnmappedidsService) List(parent string) *DebugIdent
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *DebugIdentitysourcesUnmappedidsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *DebugIdentitysourcesUnmappedidsListCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -7578,7 +7608,7 @@ func (c *DebugIdentitysourcesUnmappedidsListCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7665,9 +7695,9 @@ func (r *IndexingDatasourcesService) DeleteSchema(name string) *IndexingDatasour
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *IndexingDatasourcesDeleteSchemaCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *IndexingDatasourcesDeleteSchemaCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -7767,7 +7797,7 @@ func (c *IndexingDatasourcesDeleteSchemaCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7811,9 +7841,9 @@ func (r *IndexingDatasourcesService) GetSchema(name string) *IndexingDatasources
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *IndexingDatasourcesGetSchemaCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *IndexingDatasourcesGetSchemaCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -7926,7 +7956,7 @@ func (c *IndexingDatasourcesGetSchemaCall) Do(opts ...googleapi.CallOption) (*Sc
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8119,9 +8149,9 @@ func (c *IndexingDatasourcesItemsDeleteCall) ConnectorName(connectorName string)
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *IndexingDatasourcesItemsDeleteCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *IndexingDatasourcesItemsDeleteCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -8253,7 +8283,7 @@ func (c *IndexingDatasourcesItemsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8462,9 +8492,9 @@ func (c *IndexingDatasourcesItemsGetCall) ConnectorName(connectorName string) *I
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *IndexingDatasourcesItemsGetCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *IndexingDatasourcesItemsGetCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -8582,7 +8612,7 @@ func (c *IndexingDatasourcesItemsGetCall) Do(opts ...googleapi.CallOption) (*Ite
 	//       "type": "string"
 	//     },
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8794,9 +8824,9 @@ func (c *IndexingDatasourcesItemsListCall) ConnectorName(connectorName string) *
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *IndexingDatasourcesItemsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *IndexingDatasourcesItemsListCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -8937,7 +8967,7 @@ func (c *IndexingDatasourcesItemsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10257,9 +10287,9 @@ func (c *QuerySourcesListCall) PageToken(pageToken string) *QuerySourcesListCall
 }
 
 // RequestOptionsDebugOptionsEnableDebugging sets the optional parameter
-// "requestOptions.debugOptions.enableDebugging": If set, the request
-// will enable debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "requestOptions.debugOptions.enableDebugging": If you are asked by
+// Google to help with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(requestOptionsDebugOptionsEnableDebugging bool) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.debugOptions.enableDebugging", fmt.Sprint(requestOptionsDebugOptionsEnableDebugging))
 	return c
@@ -10273,6 +10303,13 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 // Fo
 // r translations.
+//
+// When specified, the documents in search results are biased towards
+// the
+// specified language.
+// Suggest API does not use this parameter. It autocompletes only based
+// on
+// characters in the query.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
 	return c
@@ -10408,12 +10445,12 @@ func (c *QuerySourcesListCall) Do(opts ...googleapi.CallOption) (*ListQuerySourc
 	//       "type": "string"
 	//     },
 	//     "requestOptions.debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "requestOptions.languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.",
+	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\".\nFor more information, see\nhttp://www.unicode.org/reports/tr35/#Unicode_locale_identifier.\nFor translations.\n\nWhen specified, the documents in search results are biased towards the\nspecified language.\nSuggest API does not use this parameter. It autocompletes only based on\ncharacters in the query.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10605,9 +10642,9 @@ func (r *SettingsDatasourcesService) Delete(name string) *SettingsDatasourcesDel
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsDatasourcesDeleteCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsDatasourcesDeleteCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -10707,7 +10744,7 @@ func (c *SettingsDatasourcesDeleteCall) Do(opts ...googleapi.CallOption) (*Opera
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10751,9 +10788,9 @@ func (r *SettingsDatasourcesService) Get(name string) *SettingsDatasourcesGetCal
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsDatasourcesGetCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsDatasourcesGetCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -10866,7 +10903,7 @@ func (c *SettingsDatasourcesGetCall) Do(opts ...googleapi.CallOption) (*DataSour
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10908,9 +10945,9 @@ func (r *SettingsDatasourcesService) List() *SettingsDatasourcesListCall {
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsDatasourcesListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsDatasourcesListCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -11034,7 +11071,7 @@ func (c *SettingsDatasourcesListCall) Do(opts ...googleapi.CallOption) (*ListDat
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -11369,9 +11406,9 @@ func (r *SettingsSearchapplicationsService) Delete(name string) *SettingsSearcha
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsSearchapplicationsDeleteCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsSearchapplicationsDeleteCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -11471,7 +11508,7 @@ func (c *SettingsSearchapplicationsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -11515,9 +11552,9 @@ func (r *SettingsSearchapplicationsService) Get(name string) *SettingsSearchappl
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsSearchapplicationsGetCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsSearchapplicationsGetCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -11630,7 +11667,7 @@ func (c *SettingsSearchapplicationsGetCall) Do(opts ...googleapi.CallOption) (*S
 	//   ],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -11672,9 +11709,9 @@ func (r *SettingsSearchapplicationsService) List() *SettingsSearchapplicationsLi
 }
 
 // DebugOptionsEnableDebugging sets the optional parameter
-// "debugOptions.enableDebugging": If set, the request will enable
-// debugging features of Cloud Search.
-// Only turn on this field, if asked by Google to help with debugging.
+// "debugOptions.enableDebugging": If you are asked by Google to help
+// with debugging, set this field.
+// Otherwise, ignore this field.
 func (c *SettingsSearchapplicationsListCall) DebugOptionsEnableDebugging(debugOptionsEnableDebugging bool) *SettingsSearchapplicationsListCall {
 	c.urlParams_.Set("debugOptions.enableDebugging", fmt.Sprint(debugOptionsEnableDebugging))
 	return c
@@ -11798,7 +11835,7 @@ func (c *SettingsSearchapplicationsListCall) Do(opts ...googleapi.CallOption) (*
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "debugOptions.enableDebugging": {
-	//       "description": "If set, the request will enable debugging features of Cloud Search.\nOnly turn on this field, if asked by Google to help with debugging.",
+	//       "description": "If you are asked by Google to help with debugging, set this field.\nOtherwise, ignore this field.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

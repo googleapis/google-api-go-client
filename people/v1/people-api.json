@@ -485,7 +485,7 @@
               "type": "string"
             },
             "updatePersonFields": {
-              "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
+              "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
               "format": "google-fieldmask",
               "location": "query",
               "type": "string"
@@ -580,7 +580,7 @@
       }
     }
   },
-  "revision": "20190411",
+  "revision": "20190416",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -804,7 +804,7 @@
           "type": "string"
         },
         "contactGroupResourceName": {
-          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.\nOnly contact_group_resource_name can be used for modifying memberships.",
+          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.\nOnly contact_group_resource_name can be used for modifying memberships.\nAny contact group membership can be removed, but only user group or\n\"myContacts\" or \"starred\" system groups memberships can be added.",
           "type": "string"
         }
       },
@@ -1154,7 +1154,7 @@
       "type": "object"
     },
     "ModifyContactGroupMembersRequest": {
-      "description": "A request to modify an existing contact group's members. Contacts can be\nremoved from any group but they can only be added to a user group or\nmyContacts or starred system groups.",
+      "description": "A request to modify an existing contact group's members. Contacts can be\nremoved from any group but they can only be added to a user group or\n\"myContacts\" or \"starred\" system groups.",
       "id": "ModifyContactGroupMembersRequest",
       "properties": {
         "resourceNamesToAdd": {

@@ -1927,9 +1927,11 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 //
 // HTTP | gRPC
 // -----|-----
-// `GET /v1/messages/123456?revision=2&sub.subfield=foo` |
+// `GET /v1/messages/123456?revision=2&sub.subfield=foo`
+// |
 // `GetMessage(message_id: "123456" revision: 2 sub:
-// SubMessage(subfield: "foo"))`
+// SubMessage(subfield:
+// "foo"))`
 //
 // Note that fields which are mapped to URL query parameters must have
 // a
@@ -1970,7 +1972,8 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
-// `UpdateMessage(message_id: "123456" message { text: "Hi!" })`
+// `UpdateMessage(message_id:
+// "123456" message { text: "Hi!" })`
 //
 // The special name `*` can be used in the body mapping to define
 // that
@@ -1999,7 +2002,8 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // HTTP | gRPC
 // -----|-----
 // `PATCH /v1/messages/123456 { "text": "Hi!" }` |
-// `UpdateMessage(message_id: "123456" text: "Hi!")`
+// `UpdateMessage(message_id:
+// "123456" text: "Hi!")`
 //
 // Note that when using `*` in the body mapping, it is not possible
 // to
@@ -2036,7 +2040,8 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // -----|-----
 // `GET /v1/messages/123456` | `GetMessage(message_id: "123456")`
 // `GET /v1/users/me/messages/123456` | `GetMessage(user_id: "me"
-// message_id: "123456")`
+// message_id:
+// "123456")`
 //
 // ## Rules for HTTP mapping
 //
@@ -2099,9 +2104,9 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // server side does the reverse decoding. Such variables show up in
 // the
 // [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// a
-// s `{var}`.
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{var}`.
 //
 // If a variable contains multiple path segments, such as
 // "{var=foo/*}"
@@ -2111,11 +2116,12 @@ func (s *Http) MarshalJSON() ([]byte, error) {
 // percent-encoded.
 // The server side does the reverse decoding, except "%2F" and "%2f" are
 // left
-// unchanged. Such variables show up in the
+// unchanged. Such variables show up in
+// the
 // [Discovery
-// Document](https://developers.google.com/discovery/v1/reference/apis)
-// a
-// s `{+var}`.
+// Document](https://developers.google.com/discovery/v1/re
+// ference/apis) as
+// `{+var}`.
 //
 // ## Using gRPC API Service Configuration
 //

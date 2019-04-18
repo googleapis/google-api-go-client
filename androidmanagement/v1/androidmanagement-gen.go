@@ -568,6 +568,9 @@ type ApplicationReport struct {
 	// app.
 	InstallerPackageName string `json:"installerPackageName,omitempty"`
 
+	// KeyedAppStates: List of keyed app states reported by the app.
+	KeyedAppStates []*KeyedAppState `json:"keyedAppStates,omitempty"`
+
 	// PackageName: Package name of the app.
 	PackageName string `json:"packageName,omitempty"`
 
@@ -617,6 +620,37 @@ type ApplicationReport struct {
 
 func (s *ApplicationReport) MarshalJSON() ([]byte, error) {
 	type NoMethod ApplicationReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationReportingSettings: Settings controlling the behavior of
+// application reports.
+type ApplicationReportingSettings struct {
+	// IncludeRemovedApps: Whether removed apps are included in application
+	// reports.
+	IncludeRemovedApps bool `json:"includeRemovedApps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeRemovedApps")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeRemovedApps") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApplicationReportingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationReportingSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1451,6 +1485,64 @@ type HardwareStatus struct {
 
 func (s *HardwareStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod HardwareStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// KeyedAppState: Keyed app state reported by the app.
+type KeyedAppState struct {
+	// CreateTime: The creation time of the app state on the device.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Data: Optionally, a machine-readable value to be read by the EMM. For
+	// example, setting values that the admin can choose to query against in
+	// the EMM console (e.g. “notify me if the battery_warning data <
+	// 10”).
+	Data string `json:"data,omitempty"`
+
+	// Key: The key for the app state. Acts as a point of reference for what
+	// the app is providing state for. For example, when providing managed
+	// configuration feedback, this key could be the managed configuration
+	// key.
+	Key string `json:"key,omitempty"`
+
+	// LastUpdateTime: The time the app state was most recently updated.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// Message: Optionally, a free-form message string to explain the app
+	// state. If the state was triggered by a particular value (e.g. a
+	// managed configuration value), it should be included in the message.
+	Message string `json:"message,omitempty"`
+
+	// Severity: The severity of the app state.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity level.
+	//   "INFO" - Information severity level.
+	//   "ERROR" - Error severity level. This should only be set for genuine
+	// error conditions that a management organization needs to take action
+	// to fix.
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *KeyedAppState) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyedAppState
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3125,6 +3217,10 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // StatusReportingSettings: Settings controlling the behavior of status
 // reports.
 type StatusReportingSettings struct {
+	// ApplicationReportingSettings: Application reporting settings. Only
+	// applicable if application_reports_enabled is true.
+	ApplicationReportingSettings *ApplicationReportingSettings `json:"applicationReportingSettings,omitempty"`
+
 	// ApplicationReportsEnabled: Whether app reports are enabled.
 	ApplicationReportsEnabled bool `json:"applicationReportsEnabled,omitempty"`
 
@@ -3151,7 +3247,7 @@ type StatusReportingSettings struct {
 	SoftwareInfoEnabled bool `json:"softwareInfoEnabled,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "ApplicationReportsEnabled") to unconditionally include in API
+	// "ApplicationReportingSettings") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -3160,10 +3256,10 @@ type StatusReportingSettings struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "ApplicationReportsEnabled") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
+	// "ApplicationReportingSettings") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
 	// null fields in Patch requests.
 	NullFields []string `json:"-"`

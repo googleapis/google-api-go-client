@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/2o22QuSdb8Z6OtEcpzcX3hmGyOU\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/8jtYocl4SBqDCwvVXpDW5TPH4G8\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -1604,9 +1604,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -1641,9 +1640,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -1681,9 +1679,8 @@
                   "type": "string"
                 },
                 "track": {
-                  "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+                  "description": "The track to read or modify.",
                   "location": "path",
-                  "pattern": "(alpha|beta|production|rollout|internal)",
                   "required": true,
                   "type": "string"
                 }
@@ -1771,7 +1768,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
+              "description": "Updates the track configuration for the specified track type. This method supports patch semantics.",
               "httpMethod": "PATCH",
               "id": "androidpublisher.edits.tracks.patch",
               "parameterOrder": [
@@ -1811,7 +1808,7 @@
               ]
             },
             "update": {
-              "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
+              "description": "Updates the track configuration for the specified track type.",
               "httpMethod": "PUT",
               "id": "androidpublisher.edits.tracks.update",
               "parameterOrder": [
@@ -2486,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190120",
+  "revision": "20190416",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {

@@ -226,7 +226,7 @@
       }
     }
   },
-  "revision": "20190405",
+  "revision": "20190412",
   "rootUrl": "https://language.googleapis.com/",
   "schemas": {
     "AnalyzeEntitiesRequest": {
@@ -248,7 +248,7 @@
           "enumDescriptions": [
             "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and JavaScript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
           ],
           "type": "string"
@@ -293,7 +293,7 @@
           "enumDescriptions": [
             "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and JavaScript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
           ],
           "type": "string"
@@ -338,7 +338,7 @@
           "enumDescriptions": [
             "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and JavaScript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
           ],
           "type": "string"
@@ -387,7 +387,7 @@
           "enumDescriptions": [
             "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and JavaScript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
           ],
           "type": "string"
@@ -439,7 +439,7 @@
           "enumDescriptions": [
             "If `EncodingType` is not specified, encoding-dependent information (such as\n`begin_offset`) will be set at `-1`.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-8 encoding of the input. C++ and Go are examples of languages\nthat use this encoding natively.",
-            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and Javascript are examples of\nlanguages that use this encoding natively.",
+            "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-16 encoding of the input. Java and JavaScript are examples of\nlanguages that use this encoding natively.",
             "Encoding-dependent information (such as `begin_offset`) is calculated based\non the UTF-32 encoding of the input. Python is an example of a language\nthat uses this encoding natively."
           ],
           "type": "string"
@@ -769,7 +769,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Metadata associated with the entity.\n\nCurrently, Wikipedia URLs and Knowledge Graph MIDs are provided, if\navailable. The associated keys are \"wikipedia_url\" and \"mid\", respectively.",
+          "description": "Metadata associated with the entity.\n\nFor most entity types, the metadata is a Wikipedia URL (`wikipedia_url`)\nand Knowledge Graph MID (`mid`), if they are available. For the metadata\nassociated with other entity types, see the Type table below.",
           "type": "object"
         },
         "name": {
@@ -808,14 +808,14 @@
             "Location",
             "Organization",
             "Event",
-            "Work of art",
-            "Consumer goods",
-            "Other types",
-            "Phone number",
-            "Address",
-            "Date",
-            "Number",
-            "Price"
+            "Artwork",
+            "Consumer product",
+            "Other types of entities",
+            "Phone number\u003cbr\u003e\u003cbr\u003e\nThe metadata lists the phone number, formatted according to local\nconvention, plus whichever additional elements appear in the text:\u003cul\u003e\n\u003cli\u003e\u003ccode\u003enumber\u003c/code\u003e \u0026ndash; the actual number, broken down into\nsections as per local convention\u003c/li\u003e \u003cli\u003e\u003ccode\u003enational_prefix\u003c/code\u003e\n\u0026ndash; country code, if detected\u003c/li\u003e \u003cli\u003e\u003ccode\u003earea_code\u003c/code\u003e \u0026ndash;\nregion or area code, if detected\u003c/li\u003e \u003cli\u003e\u003ccode\u003eextension\u003c/code\u003e \u0026ndash;\nphone extension (to be dialed after connection), if detected\u003c/li\u003e\u003c/ul\u003e",
+            "Address\u003cbr\u003e\u003cbr\u003e\nThe metadata identifies the street number and locality plus whichever\nadditional elements appear in the text:\u003cul\u003e\n\u003cli\u003e\u003ccode\u003estreet_number\u003c/code\u003e \u0026ndash; street number\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003elocality\u003c/code\u003e \u0026ndash; city or town\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003estreet_name\u003c/code\u003e \u0026ndash; street/route name, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003epostal_code\u003c/code\u003e \u0026ndash; postal code, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003ecountry\u003c/code\u003e \u0026ndash; country, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003ebroad_region\u003c/code\u003e \u0026ndash; administrative area, such as the\nstate, if detected\u003c/li\u003e \u003cli\u003e\u003ccode\u003enarrow_region\u003c/code\u003e \u0026ndash; smaller\nadministrative area, such as county, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003esublocality\u003c/code\u003e \u0026ndash; used in Asian addresses to demark a\ndistrict within a city, if detected\u003c/li\u003e\u003c/ul\u003e",
+            "Date\u003cbr\u003e\u003cbr\u003e\nThe metadata identifies the components of the date:\u003cul\u003e\n\u003cli\u003e\u003ccode\u003eyear\u003c/code\u003e \u0026ndash; four digit year, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003emonth\u003c/code\u003e \u0026ndash; two digit month number, if detected\u003c/li\u003e\n\u003cli\u003e\u003ccode\u003eday\u003c/code\u003e \u0026ndash; two digit day number, if detected\u003c/li\u003e\u003c/ul\u003e",
+            "Number\u003cbr\u003e\u003cbr\u003e\nThe metadata is the number itself.",
+            "Price\u003cbr\u003e\u003cbr\u003e\nThe metadata identifies the `value` and `currency`"
           ],
           "type": "string"
         }

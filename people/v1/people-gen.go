@@ -553,6 +553,9 @@ type ContactGroupMembership struct {
 	// `contactGroups/`<var>contact_group_id</var>.
 	// Only contact_group_resource_name can be used for modifying
 	// memberships.
+	// Any contact group membership can be removed, but only user group
+	// or
+	// "myContacts" or "starred" system groups memberships can be added.
 	ContactGroupResourceName string `json:"contactGroupResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to
@@ -1286,7 +1289,7 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 // contact group's members. Contacts can be
 // removed from any group but they can only be added to a user group
 // or
-// myContacts or starred system groups.
+// "myContacts" or "starred" system groups.
 type ModifyContactGroupMembersRequest struct {
 	// ResourceNamesToAdd: The resource names of the contact people to add
 	// in the form of in the form
@@ -4437,6 +4440,7 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 // * imClients
 // * interests
 // * locales
+// * memberships
 // * names
 // * nicknames
 // * occupations
@@ -4558,7 +4562,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//       "type": "string"
 	//     },
 	//     "updatePersonFields": {
-	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
+	//       "description": "**Required.** A field mask to restrict which fields on the person are\nupdated. Multiple fields can be specified by separating them with commas.\nAll updated fields will be replaced. Valid values are:\n\n* addresses\n* biographies\n* birthdays\n* emailAddresses\n* events\n* genders\n* imClients\n* interests\n* locales\n* memberships\n* names\n* nicknames\n* occupations\n* organizations\n* phoneNumbers\n* relations\n* residences\n* sipAddresses\n* urls\n* userDefined",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

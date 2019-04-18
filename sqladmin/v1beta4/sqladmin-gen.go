@@ -732,6 +732,9 @@ type DatabaseInstance struct {
 	// ReplicaNames: The replicas of the instance.
 	ReplicaNames []string `json:"replicaNames,omitempty"`
 
+	// RootPassword: Initial root password. Use only on creation.
+	RootPassword string `json:"rootPassword,omitempty"`
+
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`
 

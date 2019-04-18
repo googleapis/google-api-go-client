@@ -154,7 +154,7 @@
       }
     }
   },
-  "revision": "20190309",
+  "revision": "20190412",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AnnotateFileResponse": {
@@ -772,7 +772,7 @@
       "id": "GcsDestination",
       "properties": {
         "uri": {
-          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "description": "Google Cloud Storage URI prefix where the results will be stored. Results\nwill be in JSON format and preceded by its corresponding input URI prefix.\nThis field can either represent a gcs file prefix or gcs directory. In\neither case, the uri should be unique because in order to get all of the\noutput files, you will need to do a wildcard gcs search on the uri prefix\nyou provide.\n\nExamples:\n\n*    File Prefix: gs://bucket-name/here/filenameprefix   The output files\nwill be created in gs://bucket-name/here/ and the names of the\noutput files will begin with \"filenameprefix\".\n\n*    Directory Prefix: gs://bucket-name/some/location/   The output files\nwill be created in gs://bucket-name/some/location/ and the names of the\noutput files could be anything because there was no filename prefix\nspecified.\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
           "type": "string"
         }
       },
@@ -1384,7 +1384,7 @@
       "id": "GoogleCloudVisionV1p1beta1GcsDestination",
       "properties": {
         "uri": {
-          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "description": "Google Cloud Storage URI prefix where the results will be stored. Results\nwill be in JSON format and preceded by its corresponding input URI prefix.\nThis field can either represent a gcs file prefix or gcs directory. In\neither case, the uri should be unique because in order to get all of the\noutput files, you will need to do a wildcard gcs search on the uri prefix\nyou provide.\n\nExamples:\n\n*    File Prefix: gs://bucket-name/here/filenameprefix   The output files\nwill be created in gs://bucket-name/here/ and the names of the\noutput files will begin with \"filenameprefix\".\n\n*    Directory Prefix: gs://bucket-name/some/location/   The output files\nwill be created in gs://bucket-name/some/location/ and the names of the\noutput files could be anything because there was no filename prefix\nspecified.\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
           "type": "string"
         }
       },
@@ -1682,7 +1682,7 @@
       "id": "GoogleCloudVisionV1p1beta1ProductSearchResults",
       "properties": {
         "indexTime": {
-          "description": "Timestamp of the index which provided these results. Changes made after\nthis time are not reflected in the current results.",
+          "description": "Timestamp of the index which provided these results. Products added to the\nproduct set and products removed from the product set after this time are\nnot reflected in the current results.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -2903,7 +2903,7 @@
       "id": "GoogleCloudVisionV1p2beta1GcsDestination",
       "properties": {
         "uri": {
-          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "description": "Google Cloud Storage URI prefix where the results will be stored. Results\nwill be in JSON format and preceded by its corresponding input URI prefix.\nThis field can either represent a gcs file prefix or gcs directory. In\neither case, the uri should be unique because in order to get all of the\noutput files, you will need to do a wildcard gcs search on the uri prefix\nyou provide.\n\nExamples:\n\n*    File Prefix: gs://bucket-name/here/filenameprefix   The output files\nwill be created in gs://bucket-name/here/ and the names of the\noutput files will begin with \"filenameprefix\".\n\n*    Directory Prefix: gs://bucket-name/some/location/   The output files\nwill be created in gs://bucket-name/some/location/ and the names of the\noutput files could be anything because there was no filename prefix\nspecified.\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
           "type": "string"
         }
       },
@@ -3281,7 +3281,7 @@
           "description": "The bounding polygon around the area of interest in the image.\nOptional. If it is not specified, system discretion will be applied."
         },
         "filter": {
-          "description": "The filtering expression. This can be used to restrict search results based\non Product labels. We currently support an AND of OR of key-value\nexpressions, where each expression within an OR must have the same key.\n\nFor example, \"(color = red OR color = blue) AND brand = Google\" is\nacceptable, but not \"(color = red OR brand = Google)\" or \"color: red\".",
+          "description": "The filtering expression. This can be used to restrict search results based\non Product labels. We currently support an AND of OR of key-value\nexpressions, where each expression within an OR must have the same key. An\n'=' should be used to connect the key and value.\n\nFor example, \"(color = red OR color = blue) AND brand = Google\" is\nacceptable, but \"(color = red OR brand = Google)\" is not acceptable.\n\"color: red\" is not acceptable because it uses a ':' instead of an '='.",
           "type": "string"
         },
         "productCategories": {
@@ -3303,7 +3303,7 @@
       "id": "GoogleCloudVisionV1p2beta1ProductSearchResults",
       "properties": {
         "indexTime": {
-          "description": "Timestamp of the index which provided these results. Changes made after\nthis time are not reflected in the current results.",
+          "description": "Timestamp of the index which provided these results. Products added to the\nproduct set and products removed from the product set after this time are\nnot reflected in the current results.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -4415,7 +4415,7 @@
       "id": "GoogleCloudVisionV1p3beta1GcsDestination",
       "properties": {
         "uri": {
-          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "description": "Google Cloud Storage URI prefix where the results will be stored. Results\nwill be in JSON format and preceded by its corresponding input URI prefix.\nThis field can either represent a gcs file prefix or gcs directory. In\neither case, the uri should be unique because in order to get all of the\noutput files, you will need to do a wildcard gcs search on the uri prefix\nyou provide.\n\nExamples:\n\n*    File Prefix: gs://bucket-name/here/filenameprefix   The output files\nwill be created in gs://bucket-name/here/ and the names of the\noutput files will begin with \"filenameprefix\".\n\n*    Directory Prefix: gs://bucket-name/some/location/   The output files\nwill be created in gs://bucket-name/some/location/ and the names of the\noutput files could be anything because there was no filename prefix\nspecified.\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
           "type": "string"
         }
       },
@@ -4734,7 +4734,7 @@
       "id": "GoogleCloudVisionV1p3beta1ProductSearchResults",
       "properties": {
         "indexTime": {
-          "description": "Timestamp of the index which provided these results. Changes made after\nthis time are not reflected in the current results.",
+          "description": "Timestamp of the index which provided these results. Products added to the\nproduct set and products removed from the product set after this time are\nnot reflected in the current results.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -5887,7 +5887,7 @@
       "id": "GoogleCloudVisionV1p4beta1GcsDestination",
       "properties": {
         "uri": {
-          "description": "Google Cloud Storage URI where the results will be stored. Results will\nbe in JSON format and preceded by its corresponding input URI. This field\ncan either represent a single file, or a prefix for multiple outputs.\nPrefixes must end in a `/`.\n\nExamples:\n\n*    File: gs://bucket-name/filename.json\n*    Prefix: gs://bucket-name/prefix/here/\n*    File: gs://bucket-name/prefix/here\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
+          "description": "Google Cloud Storage URI prefix where the results will be stored. Results\nwill be in JSON format and preceded by its corresponding input URI prefix.\nThis field can either represent a gcs file prefix or gcs directory. In\neither case, the uri should be unique because in order to get all of the\noutput files, you will need to do a wildcard gcs search on the uri prefix\nyou provide.\n\nExamples:\n\n*    File Prefix: gs://bucket-name/here/filenameprefix   The output files\nwill be created in gs://bucket-name/here/ and the names of the\noutput files will begin with \"filenameprefix\".\n\n*    Directory Prefix: gs://bucket-name/some/location/   The output files\nwill be created in gs://bucket-name/some/location/ and the names of the\noutput files could be anything because there was no filename prefix\nspecified.\n\nIf multiple outputs, each response is still AnnotateFileResponse, each of\nwhich contains some subset of the full list of AnnotateImageResponse.\nMultiple outputs can happen if, for example, the output JSON is too large\nand overflows into multiple sharded files.",
           "type": "string"
         }
       },
@@ -6211,7 +6211,7 @@
       "id": "GoogleCloudVisionV1p4beta1ProductSearchResults",
       "properties": {
         "indexTime": {
-          "description": "Timestamp of the index which provided these results. Changes made after\nthis time are not reflected in the current results.",
+          "description": "Timestamp of the index which provided these results. Products added to the\nproduct set and products removed from the product set after this time are\nnot reflected in the current results.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -7165,7 +7165,7 @@
       "id": "ProductSearchResults",
       "properties": {
         "indexTime": {
-          "description": "Timestamp of the index which provided these results. Changes made after\nthis time are not reflected in the current results.",
+          "description": "Timestamp of the index which provided these results. Products added to the\nproduct set and products removed from the product set after this time are\nnot reflected in the current results.",
           "format": "google-datetime",
           "type": "string"
         },

@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190327",
+  "revision": "20190412",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -494,7 +494,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+          "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
@@ -576,6 +576,10 @@
       "properties": {
         "uri": {
           "description": "The uri of the Cloud Storage object. It's the same uri that is used by\ngsutil. For example: \"gs://bucket_name/object_name\". See [Viewing and\nEditing Object\nMetadata](https://cloud.google.com/storage/docs/viewing-editing-metadata)\nfor more information.",
+          "type": "string"
+        },
+        "uriPrefix": {
+          "description": "The uri prefix of all generated Cloud Storage objects. For example:\n\"gs://bucket_name/object_name_prefix\". Each object uri is in format:\n\"gs://bucket_name/object_name_prefix/\u003casset type\u003e/\u003cshard number\u003e and only\ncontains assets for that type. \u003cshard number\u003e starts from 0. For example:\n\"gs://bucket_name/object_name_prefix/google.compute.disk/0\" is the first\nshard of output objects containing all google.compute.disk assets.\nAn INVALID_ARGUMENT error will be returned if file with the same name\n\"gs://bucket_name/object_name_prefix\" already exists.",
           "type": "string"
         }
       },

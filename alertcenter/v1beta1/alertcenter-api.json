@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190221",
+  "revision": "20190413",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -371,6 +371,70 @@
         "loginDetails": {
           "$ref": "LoginDetails",
           "description": "Optional. Details of the login action associated with the warning event.\nThis is only available for:\n\n* Suspicious login\n* Suspicious login (less secure app)\n* Suspicious programmatic login\n* User suspended (suspicious activity)"
+        }
+      },
+      "type": "object"
+    },
+    "ActivityRule": {
+      "description": "Alerts from G Suite Security Center rules service configured by admin.",
+      "id": "ActivityRule",
+      "properties": {
+        "actionNames": {
+          "description": "List of action names associated with the rule threshold.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "createTime": {
+          "description": "Rule create timestamp.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description of the rule.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Alert display name.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Rule name.",
+          "type": "string"
+        },
+        "query": {
+          "description": "Query that is used to get the data from the associated source.",
+          "type": "string"
+        },
+        "supersededAlerts": {
+          "description": "List of alert ids superseded by this alert. It is used to indicate that\nthis alert is essentially extension of superseded alerts and we found the\nrelationship after creating these alerts.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "supersedingAlert": {
+          "description": "Alert id superseding this alert. It is used to indicate that superseding\nalert is essentially extension of this alert and we found the relationship\nafter creating both alerts.",
+          "type": "string"
+        },
+        "threshold": {
+          "description": "Alert threshold is for example “COUNT \u003e 5”.",
+          "type": "string"
+        },
+        "triggerSource": {
+          "description": "The trigger sources for this rule.\n\n* GMAIL_EVENTS\n* DEVICE_EVENTS\n* USER_EVENTS",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "The timestamp of the last update to the rule.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "windowSize": {
+          "description": "Rule window size. Possible values are 1 hour or 24 hours.",
+          "format": "google-duration",
+          "type": "string"
         }
       },
       "type": "object"

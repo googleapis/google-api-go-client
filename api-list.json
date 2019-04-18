@@ -34,6 +34,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "accessapproval:v1beta1",
+   "name": "accessapproval",
+   "version": "v1beta1",
+   "title": "Access Approval API",
+   "description": "An API for controlling access to data by Google personnel.",
+   "discoveryRestUrl": "https://accessapproval.googleapis.com/$discovery/rest?version=v1beta1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/access-approval/docs",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "accesscontextmanager:v1beta",
    "name": "accesscontextmanager",
    "version": "v1beta",
@@ -1011,6 +1026,21 @@
   },
   {
    "kind": "discovery#directoryItem",
+   "id": "cloudscheduler:v1",
+   "name": "cloudscheduler",
+   "version": "v1",
+   "title": "Cloud Scheduler API",
+   "description": "Creates and manages jobs run on a regular recurring schedule.",
+   "discoveryRestUrl": "https://cloudscheduler.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://cloud.google.com/scheduler/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
    "id": "cloudscheduler:v1beta1",
    "name": "cloudscheduler",
    "version": "v1beta1",
@@ -1022,7 +1052,7 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://cloud.google.com/scheduler/",
-   "preferred": true
+   "preferred": false
   },
   {
    "kind": "discovery#directoryItem",
@@ -1165,7 +1195,7 @@
    "name": "commentanalyzer",
    "version": "v1alpha1",
    "title": "Perspective Comment Analyzer API",
-   "description": "The Perspective Comment Analyzer API provides information about the potential impact of a comment on a conversation (e.g. it can provide a score for the \"toxicity\" of a comment).",
+   "description": "The Perspective Comment Analyzer API provides information about the potential impact of a comment on a conversation (e.g. it can provide a score for the \"toxicity\" of a comment). Users can leverage the \"SuggestCommentScore\" method to submit corrections to improve Perspective over time. Users can set the \"doNotStore\" flag to ensure that all submitted comments are automatically deleted after scores are returned.",
    "discoveryRestUrl": "https://commentanalyzer.googleapis.com/$discovery/rest?version=v1alpha1",
    "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2380,21 +2410,6 @@
   },
   {
    "kind": "discovery#directoryItem",
-   "id": "logging:v2beta1",
-   "name": "logging",
-   "version": "v2beta1",
-   "title": "Stackdriver Logging API",
-   "description": "Writes log entries and manages your Logging configuration.",
-   "discoveryRestUrl": "https://logging.googleapis.com/$discovery/rest?version=v2beta1",
-   "icons": {
-    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-   },
-   "documentationLink": "https://cloud.google.com/logging/docs/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
    "id": "manufacturers:v1",
    "name": "manufacturers",
    "version": "v1",
@@ -3524,7 +3539,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://code.google.com/apis/language/translate/v2/getting_started.html",
+   "documentationLink": "https://cloud.google.com/translate/docs/quickstarts",
    "preferred": true
   },
   {

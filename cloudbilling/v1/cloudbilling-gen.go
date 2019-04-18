@@ -451,9 +451,8 @@ func (s *BillingAccount) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// Condition: The condition that is associated with this binding.
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1890,8 +1889,10 @@ type BillingAccountsListCall struct {
 
 // List: Lists the billing accounts that the current authenticated user
 // has
-// permission to
-// [view](https://cloud.google.com/billing/docs/how-to/billing-access).
+// permission
+// to
+// [view](https://cloud.google.com/billing/docs/how-to/billing-access)
+// .
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
 	c := &BillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -2027,7 +2028,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists the billing accounts that the current authenticated user has\npermission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
+	//   "description": "Lists the billing accounts that the current authenticated user has\npermission to\n[view](https://cloud.google.com/billing/docs/how-to/billing-access).",
 	//   "flatPath": "v1/billingAccounts",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.list",

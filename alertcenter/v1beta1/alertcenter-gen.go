@@ -201,6 +201,80 @@ func (s *AccountWarning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ActivityRule: Alerts from G Suite Security Center rules service
+// configured by admin.
+type ActivityRule struct {
+	// ActionNames: List of action names associated with the rule threshold.
+	ActionNames []string `json:"actionNames,omitempty"`
+
+	// CreateTime: Rule create timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Description of the rule.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Alert display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Rule name.
+	Name string `json:"name,omitempty"`
+
+	// Query: Query that is used to get the data from the associated source.
+	Query string `json:"query,omitempty"`
+
+	// SupersededAlerts: List of alert ids superseded by this alert. It is
+	// used to indicate that
+	// this alert is essentially extension of superseded alerts and we found
+	// the
+	// relationship after creating these alerts.
+	SupersededAlerts []string `json:"supersededAlerts,omitempty"`
+
+	// SupersedingAlert: Alert id superseding this alert. It is used to
+	// indicate that superseding
+	// alert is essentially extension of this alert and we found the
+	// relationship
+	// after creating both alerts.
+	SupersedingAlert string `json:"supersedingAlert,omitempty"`
+
+	// Threshold: Alert threshold is for example “COUNT > 5”.
+	Threshold string `json:"threshold,omitempty"`
+
+	// TriggerSource: The trigger sources for this rule.
+	//
+	// * GMAIL_EVENTS
+	// * DEVICE_EVENTS
+	// * USER_EVENTS
+	TriggerSource string `json:"triggerSource,omitempty"`
+
+	// UpdateTime: The timestamp of the last update to the rule.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WindowSize: Rule window size. Possible values are 1 hour or 24 hours.
+	WindowSize string `json:"windowSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionNames") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionNames") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivityRule) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityRule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Alert: An alert affecting a customer.
 type Alert struct {
 	// AlertId: Output only. The unique identifier for the alert.

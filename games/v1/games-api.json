@@ -9,7 +9,7 @@
           "description": "Create, edit, and delete your Google Play Games activity"
         },
         "https://www.googleapis.com/auth/plus.me": {
-          "description": "Know who you are on Google"
+          "description": "Associate you with your personal info on Google"
         }
       }
     }
@@ -21,7 +21,7 @@
   "description": "The API for Google Play Game Services.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/games/services/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/_DeCmHgO1KMeSrZgl_qr0ZfSTkY\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/vTbNAEVJ2tKv5PC3HpcvhhjhlkI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1958,7 +1958,7 @@
       }
     }
   },
-  "revision": "20190222",
+  "revision": "20190411",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AchievementDefinition": {

@@ -716,7 +716,7 @@ func (s *AttemptStatus) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -2929,9 +2929,11 @@ type ProjectsLocationsQueuesCreateCall struct {
 // using an App Engine `queue.yaml` or `queue.xml` file to manage your
 // queues.
 // Read
-// [Overview of Queue Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
-// before using this method.
+// [Overview of Queue Management
+// and
+// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
+// using
+// this method.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3029,7 +3031,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Q
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a queue.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+	//   "description": "Creates a queue.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.create",
@@ -3082,9 +3084,11 @@ type ProjectsLocationsQueuesDeleteCall struct {
 // using an App Engine `queue.yaml` or `queue.xml` file to manage your
 // queues.
 // Read
-// [Overview of Queue Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
-// before using this method.
+// [Overview of Queue Management
+// and
+// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
+// using
+// this method.
 func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQueuesDeleteCall {
 	c := &ProjectsLocationsQueuesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3176,7 +3180,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+	//   "description": "Deletes a queue.\n\nThis command will delete the queue even if it has tasks in it.\n\nNote: If you delete a queue, a queue with the same name can't be created\nfor 7 days.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "cloudtasks.projects.locations.queues.delete",
@@ -3521,9 +3525,10 @@ func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQ
 // For example: `<=, <, >=, >, !=, =, :`. The filter syntax is the same
 // as
 // described in
-// [Stackdriver's Advanced Logs
-// Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
-//
+// [Stackdriver's Advanced
+// Logs
+// Filters](https://cloud.google.com/logging/docs/view/advanced_filt
+// ers).
 //
 // Sample filter "app_engine_http_target: *".
 //
@@ -3671,7 +3676,7 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs Filters](https://cloud.google.com/logging/docs/view/advanced_filters).\n\nSample filter \"app_engine_http_target: *\".\n\nNote that using filters might cause fewer queues than the\nrequested_page size to be returned.",
+	//       "description": "`filter` can be used to specify a subset of queues. Any Queue\nfield can be used as a filter and several operators as supported.\nFor example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as\ndescribed in\n[Stackdriver's Advanced Logs\nFilters](https://cloud.google.com/logging/docs/view/advanced_filters).\n\nSample filter \"app_engine_http_target: *\".\n\nNote that using filters might cause fewer queues than the\nrequested_page size to be returned.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3753,9 +3758,11 @@ type ProjectsLocationsQueuesPatchCall struct {
 // using an App Engine `queue.yaml` or `queue.xml` file to manage your
 // queues.
 // Read
-// [Overview of Queue Management and
-// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)
-// before using this method.
+// [Overview of Queue Management
+// and
+// queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before
+// using
+// this method.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3862,7 +3869,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml)\nbefore using this method.",
+	//   "description": "Updates a queue.\n\nThis method creates the queue if it does not exist and updates\nthe queue if it does exist.\n\nQueues created with this method allow tasks to live for a maximum of 31\ndays. After a task is 31 days old, the task will be deleted regardless of whether\nit was dispatched or not.\n\nWARNING: Using this method may have unintended side effects if you are\nusing an App Engine `queue.yaml` or `queue.xml` file to manage your queues.\nRead\n[Overview of Queue Management and\nqueue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using\nthis method.",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "cloudtasks.projects.locations.queues.patch",
@@ -4213,8 +4220,10 @@ type ProjectsLocationsQueuesResumeCall struct {
 // WARNING: Resuming many high-QPS queues at the same time can
 // lead to target overloading. If you are resuming high-QPS
 // queues, follow the 500/50/5 pattern described in
-// [Managing Cloud Tasks Scaling
-// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
+// [Managing Cloud Tasks
+// Scaling
+// Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-s
+// caling).
 func (r *ProjectsLocationsQueuesService) Resume(name string, resumequeuerequest *ResumeQueueRequest) *ProjectsLocationsQueuesResumeCall {
 	c := &ProjectsLocationsQueuesResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4312,7 +4321,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Do(opts ...googleapi.CallOption) (*Q
 	}
 	return ret, nil
 	// {
-	//   "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nPAUSED or\nDISABLED. The state of a queue is stored\nin the queue's state; after calling this method it\nwill be set to RUNNING.\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).",
+	//   "description": "Resume a queue.\n\nThis method resumes a queue after it has been\nPAUSED or\nDISABLED. The state of a queue is stored\nin the queue's state; after calling this method it\nwill be set to RUNNING.\n\nWARNING: Resuming many high-QPS queues at the same time can\nlead to target overloading. If you are resuming high-QPS\nqueues, follow the 500/50/5 pattern described in\n[Managing Cloud Tasks Scaling\nRisks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).",
 	//   "flatPath": "v2beta2/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:resume",
 	//   "httpMethod": "POST",
 	//   "id": "cloudtasks.projects.locations.queues.resume",

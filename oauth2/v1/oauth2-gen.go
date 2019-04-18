@@ -80,14 +80,14 @@ const basePath = "https://www.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
-	// Know who you are on Google
+	// Associate you with your personal info on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 
 	// View your email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
 	// See your personal info, including any personal info you've made
-	// publically available
+	// publicly available
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 

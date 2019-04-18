@@ -18,7 +18,7 @@
   "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/2SPiELX-h-4hR8mUMh9TW7ZIzgg\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/QtjhOzVspxdYDcV-neBlaStEry0\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1617,7 +1617,7 @@
       }
     }
   },
-  "revision": "20190328",
+  "revision": "20190415",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1999,6 +1999,10 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "rootPassword": {
+          "description": "Initial root password. Use only on creation.",
+          "type": "string"
         },
         "selfLink": {
           "description": "The URI of this resource.",

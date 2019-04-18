@@ -1299,19 +1299,32 @@ func (s *FaceAnnotation) UnmarshalJSON(data []byte) error {
 // GcsDestination: The Google Cloud Storage location where the output
 // will be written to.
 type GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
 	//
 	// Examples:
 	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -2235,19 +2248,32 @@ func (s *GoogleCloudVisionV1p1beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p1beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p1beta1GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
 	//
 	// Examples:
 	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -2932,8 +2958,10 @@ func (s *GoogleCloudVisionV1p1beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p1beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Changes made after
-	// this time are not reflected in the current results.
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -4940,19 +4968,32 @@ func (s *GoogleCloudVisionV1p2beta1Feature) MarshalJSON() ([]byte, error) {
 // GoogleCloudVisionV1p2beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p2beta1GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
 	//
 	// Examples:
 	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -5837,12 +5878,15 @@ type GoogleCloudVisionV1p2beta1ProductSearchParams struct {
 	// on Product labels. We currently support an AND of OR of
 	// key-value
 	// expressions, where each expression within an OR must have the same
-	// key.
+	// key. An
+	// '=' should be used to connect the key and value.
 	//
 	// For example, "(color = red OR color = blue) AND brand = Google"
 	// is
-	// acceptable, but not "(color = red OR brand = Google)" or "color:
-	// red".
+	// acceptable, but "(color = red OR brand = Google)" is not
+	// acceptable.
+	// "color: red" is not acceptable because it uses a ':' instead of an
+	// '='.
 	Filter string `json:"filter,omitempty"`
 
 	// ProductCategories: The list of product categories to search in.
@@ -5887,8 +5931,10 @@ func (s *GoogleCloudVisionV1p2beta1ProductSearchParams) MarshalJSON() ([]byte, e
 // search request.
 type GoogleCloudVisionV1p2beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Changes made after
-	// this time are not reflected in the current results.
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -7705,19 +7751,32 @@ func (s *GoogleCloudVisionV1p3beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p3beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p3beta1GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
 	//
 	// Examples:
 	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -8450,8 +8509,10 @@ func (s *GoogleCloudVisionV1p3beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p3beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Changes made after
-	// this time are not reflected in the current results.
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -10361,19 +10422,32 @@ func (s *GoogleCloudVisionV1p4beta1FaceAnnotationLandmark) MarshalJSON() ([]byte
 // GoogleCloudVisionV1p4beta1GcsDestination: The Google Cloud Storage
 // location where the output will be written to.
 type GoogleCloudVisionV1p4beta1GcsDestination struct {
-	// Uri: Google Cloud Storage URI where the results will be stored.
-	// Results will
-	// be in JSON format and preceded by its corresponding input URI. This
-	// field
-	// can either represent a single file, or a prefix for multiple
-	// outputs.
-	// Prefixes must end in a `/`.
+	// Uri: Google Cloud Storage URI prefix where the results will be
+	// stored. Results
+	// will be in JSON format and preceded by its corresponding input URI
+	// prefix.
+	// This field can either represent a gcs file prefix or gcs directory.
+	// In
+	// either case, the uri should be unique because in order to get all of
+	// the
+	// output files, you will need to do a wildcard gcs search on the uri
+	// prefix
+	// you provide.
 	//
 	// Examples:
 	//
-	// *    File: gs://bucket-name/filename.json
-	// *    Prefix: gs://bucket-name/prefix/here/
-	// *    File: gs://bucket-name/prefix/here
+	// *    File Prefix: gs://bucket-name/here/filenameprefix   The output
+	// files
+	// will be created in gs://bucket-name/here/ and the names of the
+	// output files will begin with "filenameprefix".
+	//
+	// *    Directory Prefix: gs://bucket-name/some/location/   The output
+	// files
+	// will be created in gs://bucket-name/some/location/ and the names of
+	// the
+	// output files could be anything because there was no filename
+	// prefix
+	// specified.
 	//
 	// If multiple outputs, each response is still AnnotateFileResponse,
 	// each of
@@ -11116,8 +11190,10 @@ func (s *GoogleCloudVisionV1p4beta1ProductKeyValue) MarshalJSON() ([]byte, error
 // search request.
 type GoogleCloudVisionV1p4beta1ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Changes made after
-	// this time are not reflected in the current results.
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected
@@ -12943,8 +13019,10 @@ func (s *Product) MarshalJSON() ([]byte, error) {
 // ProductSearchResults: Results for a product search request.
 type ProductSearchResults struct {
 	// IndexTime: Timestamp of the index which provided these results.
-	// Changes made after
-	// this time are not reflected in the current results.
+	// Products added to the
+	// product set and products removed from the product set after this time
+	// are
+	// not reflected in the current results.
 	IndexTime string `json:"indexTime,omitempty"`
 
 	// ProductGroupedResults: List of results grouped by products detected

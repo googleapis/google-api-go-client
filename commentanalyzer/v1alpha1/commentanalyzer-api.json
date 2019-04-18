@@ -12,7 +12,7 @@
   "baseUrl": "https://commentanalyzer.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Comment Analyzer",
-  "description": "The Perspective Comment Analyzer API provides information about the potential impact of a comment on a conversation (e.g. it can provide a score for the \"toxicity\" of a comment).",
+  "description": "The Perspective Comment Analyzer API provides information about the potential impact of a comment on a conversation (e.g. it can provide a score for the \"toxicity\" of a comment). Users can leverage the \"SuggestCommentScore\" method to submit corrections to improve Perspective over time. Users can set the \"doNotStore\" flag to ensure that all submitted comments are automatically deleted after scores are returned.",
   "discoveryVersion": "v1",
   "documentationLink": "https://conversationai.github.io/",
   "icons": {
@@ -144,7 +144,7 @@
       }
     }
   },
-  "revision": "20190331",
+  "revision": "20190414",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {

@@ -86,7 +86,7 @@ const (
 	// Create, edit, and delete your Google Play Games activity
 	GamesScope = "https://www.googleapis.com/auth/games"
 
-	// Know who you are on Google
+	// Associate you with your personal info on Google
 	PlusMeScope = "https://www.googleapis.com/auth/plus.me"
 )
 

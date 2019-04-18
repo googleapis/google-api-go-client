@@ -8277,9 +8277,8 @@ func (c *EditsTestersGetCall) Do(opts ...googleapi.CallOption) (*Testers, error)
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8431,9 +8430,8 @@ func (c *EditsTestersPatchCall) Do(opts ...googleapi.CallOption) (*Testers, erro
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8588,9 +8586,8 @@ func (c *EditsTestersUpdateCall) Do(opts ...googleapi.CallOption) (*Testers, err
 	//       "type": "string"
 	//     },
 	//     "track": {
-	//       "description": "The track to read or modify. Acceptable values are: \"alpha\", \"beta\", \"production\", \"rollout\" or \"internal\".",
+	//       "description": "The track to read or modify.",
 	//       "location": "path",
-	//       "pattern": "(alpha|beta|production|rollout|internal)",
 	//       "required": true,
 	//       "type": "string"
 	//     }
@@ -8936,9 +8933,7 @@ type EditsTracksPatchCall struct {
 }
 
 // Patch: Updates the track configuration for the specified track type.
-// When halted, the rollout track cannot be updated without adding new
-// APKs, and adding new APKs will cause it to resume. This method
-// supports patch semantics.
+// This method supports patch semantics.
 func (r *EditsTracksService) Patch(packageNameid string, editId string, track string, track2 *Track) *EditsTracksPatchCall {
 	c := &EditsTracksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -9040,7 +9035,7 @@ func (c *EditsTracksPatchCall) Do(opts ...googleapi.CallOption) (*Track, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume. This method supports patch semantics.",
+	//   "description": "Updates the track configuration for the specified track type. This method supports patch semantics.",
 	//   "httpMethod": "PATCH",
 	//   "id": "androidpublisher.edits.tracks.patch",
 	//   "parameterOrder": [
@@ -9096,8 +9091,6 @@ type EditsTracksUpdateCall struct {
 }
 
 // Update: Updates the track configuration for the specified track type.
-// When halted, the rollout track cannot be updated without adding new
-// APKs, and adding new APKs will cause it to resume.
 func (r *EditsTracksService) Update(packageNameid string, editId string, track string, track2 *Track) *EditsTracksUpdateCall {
 	c := &EditsTracksUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageNameid = packageNameid
@@ -9199,7 +9192,7 @@ func (c *EditsTracksUpdateCall) Do(opts ...googleapi.CallOption) (*Track, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the track configuration for the specified track type. When halted, the rollout track cannot be updated without adding new APKs, and adding new APKs will cause it to resume.",
+	//   "description": "Updates the track configuration for the specified track type.",
 	//   "httpMethod": "PUT",
 	//   "id": "androidpublisher.edits.tracks.update",
 	//   "parameterOrder": [

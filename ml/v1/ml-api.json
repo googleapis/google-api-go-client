@@ -468,7 +468,7 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "Optional. The number of locations to retrieve per \"page\" of results. If there\nare more remaining results than this number, the response message will\ncontain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
+                  "description": "Optional. The number of locations to retrieve per \"page\" of results. If\nthere are more remaining results than this number, the response message\nwill contain a valid value in the `next_page_token` field.\n\nThe default value is 20, and the maximum page size is 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -1019,11 +1019,11 @@
       }
     }
   },
-  "revision": "20190325",
+  "revision": "20190416",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
-      "description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody) returns (google.protobuf.Empty);\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged.",
+      "description": "Message that represents an arbitrary HTTP body. It should only be used for\npayload formats that can't be represented as JSON, such as raw binary or\nan HTML page.\n\n\nThis message can be used both in streaming and non-streaming API methods in\nthe request as well as the response.\n\nIt can be used as a top-level request field, which is convenient if one\nwants to extract parameters from either the URL or HTTP template into the\nrequest fields and also want access to the raw HTTP body.\n\nExample:\n\n    message GetResourceRequest {\n      // A unique request id.\n      string request_id = 1;\n\n      // The raw HTTP body is bound to this field.\n      google.api.HttpBody http_body = 2;\n    }\n\n    service ResourceService {\n      rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);\n      rpc UpdateResource(google.api.HttpBody) returns\n      (google.protobuf.Empty);\n    }\n\nExample with streaming methods:\n\n    service CaldavService {\n      rpc GetCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n      rpc UpdateCalendar(stream google.api.HttpBody)\n        returns (stream google.api.HttpBody);\n    }\n\nUse of this type only changes how the request and response bodies are\nhandled, all other features will continue to work unchanged.",
       "id": "GoogleApi__HttpBody",
       "properties": {
         "contentType": {
@@ -1115,19 +1115,19 @@
       "id": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
       "properties": {
         "framework": {
-          "description": "Framework on which the built-in algorithm was trained on.",
+          "description": "Framework on which the built-in algorithm was trained.",
           "type": "string"
         },
         "modelPath": {
-          "description": "Built-in algorithm's saved model path.\nOnly set for non-hptuning succeeded jobs.",
+          "description": "The Cloud Storage path to the `model/` directory where the training job\nsaves the trained model. Only set for successful jobs that don't use\nhyperparameter tuning.",
           "type": "string"
         },
         "pythonVersion": {
-          "description": "Python version on which the built-in algorithm was trained on.",
+          "description": "Python version on which the built-in algorithm was trained.",
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "CMLE runtime version on which the built-in algorithm was trained on.",
+          "description": "Cloud ML Engine runtime version on which the built-in algorithm was\ntrained.",
           "type": "string"
         }
       },
@@ -1225,7 +1225,7 @@
         },
         "builtInAlgorithmOutput": {
           "$ref": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
-          "description": "Details related to built-in algorithms job.\nOnly set this for built-in algorithms jobs and for trials that succeeded."
+          "description": "Details related to built-in algorithms jobs.\nOnly set for trials of built-in algorithms jobs that have succeeded."
         },
         "finalMetric": {
           "$ref": "GoogleCloudMlV1_HyperparameterOutput_HyperparameterMetric",
@@ -1290,7 +1290,7 @@
           "type": "string"
         },
         "maxFailedTrials": {
-          "description": "Optional. How many failed trials that need to be seen before failing the\nhyperparameter tuning job. User can specify this field to override the\ndefault failing criteria for CloudML Engine hyperparameter tuning jobs.\n\nDefaults to zero, which means to let the service decide when a\nhyperparameter job should fail.",
+          "description": "Optional. The number of failed trials that need to be seen before failing\nthe hyperparameter tuning job. You can specify this field to override the\ndefault failing criteria for Cloud ML Engine hyperparameter tuning jobs.\n\nDefaults to zero, which means the service decides when a hyperparameter\njob should fail.",
           "format": "int32",
           "type": "integer"
         },
@@ -1319,7 +1319,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__Job": {
-      "description": "Represents a training, prediction or explanation job.",
+      "description": "Represents a training or prediction job.",
       "id": "GoogleCloudMlV1__Job",
       "properties": {
         "createTime": {
@@ -1724,7 +1724,7 @@
           "type": "string"
         },
         "inputPaths": {
-          "description": "Required. The Google Cloud Storage location of the input data files.\nMay contain wildcards. See \u003ca href=\"https://cloud.google.com/storage/docs/gsutil/addlhelp/WildcardNames\u003c/a\u003e",
+          "description": "Required. The Cloud Storage location of the input data files. May contain\n\u003ca href=\"/storage/docs/gsutil/addlhelp/WildcardNames\"\u003ewildcards\u003c/a\u003e.",
           "items": {
             "type": "string"
           },
@@ -1938,7 +1938,7 @@
       "properties": {
         "builtInAlgorithmOutput": {
           "$ref": "GoogleCloudMlV1__BuiltInAlgorithmOutput",
-          "description": "Details related to built-in algorithms job.\nOnly set for built-in algorithms jobs."
+          "description": "Details related to built-in algorithms jobs.\nOnly set for built-in algorithms jobs."
         },
         "completedTrialCount": {
           "description": "The number of hyperparameter tuning trials that completed successfully.\nOnly set for hyperparameter tuning jobs.",
@@ -2042,6 +2042,17 @@
           "description": "Required.The name specified for the version when it was created.\n\nThe version name must be unique within the model it is created in.",
           "type": "string"
         },
+        "packageUris": {
+          "description": "Optional. The Google Cloud Storage location of the packages for custom\nprediction and any additional dependencies.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "predictionClass": {
+          "description": "class PredictionClass(object):\n  \"\"\"A Model performs predictions on a given list of instances.\n\n  The input instances are the raw values sent by the user. It is the\n  responsibility of a Model to translate these instances into\n  actual predictions.\n\n  The input instances and the output use python data types. The input\n  instances have been decoded prior to being passed to the predict\n  method. The output, which should use python data types is\n  encoded after being returned from the predict method.\n  \"\"\"\n\n  def predict(self, instances, **kwargs):\n    \"\"\"Returns predictions for the provided instances.\n\n    Instances are the decoded values from the request. Clients need not\n    worry about decoding json nor base64 decoding.\n\n    Args:\n      instances: A list of instances, as described in the API.\n      **kwargs: Additional keyword arguments, will be passed into the\n          client's predict method.\n\n    Returns:\n      A list of outputs containing the prediction results.\n    \"\"\"\n\n  @classmethod\n  def from_path(cls, model_path):\n    \"\"\"Creates a model using the given model path.\n\n    Path is useful, e.g., to load files from the exported directory\n    containing the model.\n\n    Args:\n      model_path: The local directory that contains the exported model\n          file along with any additional files uploaded when creating the\n          version resource.\n\n    Returns:\n      An instance implementing this Model class.\n    \"\"\"",
+          "type": "string"
+        },
         "pythonVersion": {
           "description": "Optional. The version of Python used in prediction. If not set, the default\nversion is '2.7'. Python '3.5' is available when `runtime_version` is set\nto '1.4' and above. Python '2.7' works with all supported runtime versions.",
           "type": "string"
@@ -2127,7 +2138,7 @@
       "properties": {
         "condition": {
           "$ref": "GoogleType__Expr",
-          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+          "description": "The condition that is associated with this binding.\nNOTE: An unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",

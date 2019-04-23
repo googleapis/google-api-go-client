@@ -437,7 +437,7 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: An unsatisfied condition will not allow user access via
+	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -634,22 +634,6 @@ type GcsDestination struct {
 	// -metadata)
 	// for more information.
 	Uri string `json:"uri,omitempty"`
-
-	// UriPrefix: The uri prefix of all generated Cloud Storage objects. For
-	// example:
-	// "gs://bucket_name/object_name_prefix". Each object uri is in
-	// format:
-	// "gs://bucket_name/object_name_prefix/<asset type>/<shard number> and
-	// only
-	// contains assets for that type. <shard number> starts from 0. For
-	// example:
-	// "gs://bucket_name/object_name_prefix/google.compute.disk/0" is the
-	// first
-	// shard of output objects containing all google.compute.disk assets.
-	// An INVALID_ARGUMENT error will be returned if file with the same
-	// name
-	// "gs://bucket_name/object_name_prefix" already exists.
-	UriPrefix string `json:"uriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with

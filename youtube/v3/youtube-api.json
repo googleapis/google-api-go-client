@@ -30,7 +30,7 @@
   "description": "Supports core YouTube features, such as uploading videos, creating and managing playlists, searching for content, and much more.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/youtube/v3",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/1jg0CI2utjqWmZlLNTmtG27447k\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/vE_46pOxDHWLqzSanMM8GY5Yd3c\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/youtube-16.png",
     "x32": "https://www.google.com/images/icons/product/youtube-32.png"
@@ -3493,7 +3493,7 @@
       }
     }
   },
-  "revision": "20190128",
+  "revision": "20190415",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AccessPolicy": {
@@ -4153,7 +4153,7 @@
           "description": "The method or protocol used to transmit the video stream.",
           "enum": [
             "dash",
-            "http",
+            "hls",
             "rtmp",
             "webrtc"
           ],

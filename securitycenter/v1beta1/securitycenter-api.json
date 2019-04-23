@@ -895,7 +895,7 @@
       }
     }
   },
-  "revision": "20190403",
+  "revision": "20190419",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1133,6 +1133,62 @@
       "description": "Request message for `GetIamPolicy` method.",
       "id": "GetIamPolicyRequest",
       "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse": {
+      "description": "Response of asset discovery run",
+      "id": "GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse",
+      "properties": {
+        "duration": {
+          "description": "The duration between asset discovery run start and end",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of an asset discovery run.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "COMPLETED",
+            "SUPERSEDED",
+            "TERMINATED"
+          ],
+          "enumDescriptions": [
+            "Asset discovery run state was unspecified.",
+            "Asset discovery run completed successfully.",
+            "Asset discovery run was cancelled with tasks still pending, as another\nrun for the same organization was started with a higher priority.",
+            "Asset discovery run was killed and terminated."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse": {
+      "description": "Response of asset discovery run",
+      "id": "GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse",
+      "properties": {
+        "duration": {
+          "description": "The duration between asset discovery run start and end",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of an asset discovery run.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "COMPLETED",
+            "SUPERSEDED",
+            "TERMINATED"
+          ],
+          "enumDescriptions": [
+            "Asset discovery run state was unspecified.",
+            "Asset discovery run completed successfully.",
+            "Asset discovery run was cancelled with tasks still pending, as another\nrun for the same organization was started with a higher priority.",
+            "Asset discovery run was killed and terminated."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GroupAssetsRequest": {

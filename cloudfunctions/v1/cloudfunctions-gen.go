@@ -332,7 +332,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -515,9 +515,7 @@ type CloudFunction struct {
 
 	// MaxInstances: The limit on the maximum number of function instances
 	// that may coexist at a
-	// given time. This feature is currently in alpha, available only
-	// for
-	// whitelisted users.
+	// given time.
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 
 	// Name: A user-defined name of the function. Function names must be
@@ -553,16 +551,14 @@ type CloudFunction struct {
 	// users.
 	Network string `json:"network,omitempty"`
 
-	// Runtime: The runtime in which the function is going to run. Example
-	// values include:
-	// `go111`: for Go 1.11
-	// `nodejs6`: for Node.js 6
-	// `nodejs8`: for Node.js 8
-	// `nodejs10`: for Node.js 10
-	// `python37`: for Python 3.7
-	// `ruby25`: for Ruby 2.5
+	// Runtime: Required. The runtime in which the function is going to run.
+	// Choices:
 	//
-	// If empty, defaults to `nodejs6`.
+	// * `nodejs6`: Node.js 6
+	// * `nodejs8`: Node.js 8
+	// * `nodejs10`: Node.js 10
+	// * `python37`: Python 3.7
+	// * `go111`: Go 1.11
 	Runtime string `json:"runtime,omitempty"`
 
 	// ServiceAccountEmail: The email of the function's service account. If

@@ -452,7 +452,7 @@
       }
     }
   },
-  "revision": "20190318",
+  "revision": "20190406",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "CallFunctionRequest": {
@@ -525,7 +525,7 @@
           "type": "string"
         },
         "maxInstances": {
-          "description": "The limit on the maximum number of function instances that may coexist at a\ngiven time. This feature is currently in alpha, available only for\nwhitelisted users.",
+          "description": "The limit on the maximum number of function instances that may coexist at a\ngiven time.",
           "format": "int32",
           "type": "integer"
         },
@@ -538,7 +538,7 @@
           "type": "string"
         },
         "runtime": {
-          "description": "The runtime in which the function is going to run. If empty, defaults to\nNode.js 6.",
+          "description": "Required. The runtime in which the function is going to run. Choices:\n\n* `nodejs6`: Node.js 6\n* `nodejs8`: Node.js 8\n* `nodejs10`: Node.js 10\n* `python37`: Python 3.7\n* `go111`: Go 1.11",
           "type": "string"
         },
         "serviceAccount": {

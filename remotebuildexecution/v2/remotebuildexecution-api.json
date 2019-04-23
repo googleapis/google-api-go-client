@@ -430,7 +430,7 @@
       }
     }
   },
-  "revision": "20190312",
+  "revision": "20190415",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -1558,7 +1558,7 @@
       "id": "GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest",
       "properties": {
         "updateMask": {
-          "description": "The update mask applies to worker_pool. For the `FieldMask` definition,\nsee https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf an empty update_mask is provided, only the non-default valued field in\nthe worker pool field will be updated. Note that in order to update a field\nto the default value (zero, false, empty string) an explicit update_mask\nmust be provided.",
+          "description": "The update mask applies to worker_pool. For the `FieldMask` definition,\nsee\nhttps://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask\nIf an empty update_mask is provided, only the non-default valued field in\nthe worker pool field will be updated. Note that in order to update a field\nto the default value (zero, false, empty string) an explicit update_mask\nmust be provided.",
           "format": "google-fieldmask",
           "type": "string"
         },
@@ -1579,7 +1579,7 @@
           "type": "string"
         },
         "diskType": {
-          "description": "Required. Disk Type to use for the worker.\nSee [Storage options](https://cloud.google.com/compute/docs/disks/#introduction).\nCurrently only `pd-standard` is supported.",
+          "description": "Required. Disk Type to use for the worker.\nSee [Storage\noptions](https://cloud.google.com/compute/docs/disks/#introduction).\nCurrently only `pd-standard` is supported.",
           "type": "string"
         },
         "machineType": {

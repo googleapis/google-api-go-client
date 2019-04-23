@@ -605,27 +605,35 @@ type ReportedErrorEvent struct {
 	// Go.
 	// Supported stack trace formats are:
 	//
-	// * **Java**: Must be the return value of
-	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/docs/
-	// api/java/lang/Throwable.html#printStackTrace%28%29).
-	// * **Python**: Must be the return value of
-	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceback
-	// .html#traceback.format_exc).
-	// * **JavaScript**: Must be the value of
-	// [`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API)
-	// as returned by V8.
-	// * **Ruby**: Must contain frames returned by
-	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.html
-	// #method-i-backtrace).
-	// * **C#**: Must be the return value of
-	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/syst
-	// em.exception.tostring.aspx).
+	// * **Java**: Must be the return value
+	// of
+	// [`Throwable.printStackTrace()`](https://docs.oracle.com/javase/7/do
+	// cs/api/java/lang/Throwable.html#printStackTrace%28%29).
+	// * **Python**: Must be the return value
+	// of
+	// [`traceback.format_exc()`](https://docs.python.org/2/library/traceb
+	// ack.html#traceback.format_exc).
+	// * **JavaScript**: Must be the value
+	// of
+	// [`error.stack`](https://github.com/v8/v8/wiki/Stack-Trace-API) as
+	// returned
+	// by V8.
+	// * **Ruby**: Must contain frames returned
+	// by
+	// [`Exception.backtrace`](https://ruby-doc.org/core-2.2.0/Exception.h
+	// tml#method-i-backtrace).
+	// * **C#**: Must be the return value
+	// of
+	// [`Exception.ToString()`](https://msdn.microsoft.com/en-us/library/s
+	// ystem.exception.tostring.aspx).
 	// * **PHP**: Must start with `PHP (Notice|Parse error|Fatal
 	// error|Warning)`
-	// and contain the result of
-	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.php
-	// ).
-	// * **Go**: Must be the return value of
+	// and contain the result
+	// of
+	// [`(string)$exception`](http://php.net/manual/en/exception.tostring.
+	// php).
+	// * **Go**: Must be the return value
+	// of
 	// [`runtime.Stack()`](https://golang.org/pkg/runtime/debug/#Stack).
 	Message string `json:"message,omitempty"`
 
@@ -1286,10 +1294,12 @@ type ProjectsEventsReportCall struct {
 // key](https://support.google.com/cloud/answer/6158862)
 // for authentication. To use an API key, append it to the URL as the
 // value of
-// a `key` parameter. For example:
+// a `key` parameter. For
+// example:
 //
 // `POST
-// https://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456`
+// https://clouderrorreporting.googleapis.com/v1beta1/pro
+// jects/example-project/events:report?key=123ABC456`
 func (r *ProjectsEventsService) Report(projectName string, reportederrorevent *ReportedErrorEvent) *ProjectsEventsReportCall {
 	c := &ProjectsEventsReportCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectName = projectName
@@ -1387,7 +1397,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	}
 	return ret, nil
 	// {
-	//   "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST https://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456`",
+	//   "description": "Report an individual error event.\n\nThis endpoint accepts **either** an OAuth token,\n**or** an [API key](https://support.google.com/cloud/answer/6158862)\nfor authentication. To use an API key, append it to the URL as the value of\na `key` parameter. For example:\n\n`POST\nhttps://clouderrorreporting.googleapis.com/v1beta1/projects/example-project/events:report?key=123ABC456`",
 	//   "flatPath": "v1beta1/projects/{projectsId}/events:report",
 	//   "httpMethod": "POST",
 	//   "id": "clouderrorreporting.projects.events.report",
@@ -1396,7 +1406,7 @@ func (c *ProjectsEventsReportCall) Do(opts ...googleapi.CallOption) (*ReportErro
 	//   ],
 	//   "parameters": {
 	//     "projectName": {
-	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project ID](https://support.google.com/cloud/answer/6158840).\nExample: `projects/my-project-123`.",
+	//       "description": "[Required] The resource name of the Google Cloud Platform project. Written\nas `projects/` plus the\n[Google Cloud Platform project\nID](https://support.google.com/cloud/answer/6158840). Example:\n`projects/my-project-123`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,

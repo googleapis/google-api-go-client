@@ -111,7 +111,7 @@
             "usableSubnetworks": {
               "methods": {
                 "list": {
-                  "description": "Lists subnetworks that are usable for creating clusters in a project.",
+                  "description": "Lists subnetworks that can be used for creating clusters in a project.",
                   "flatPath": "v1beta1/projects/{projectsId}/aggregated/usableSubnetworks",
                   "httpMethod": "GET",
                   "id": "container.projects.aggregated.usableSubnetworks.list",
@@ -158,7 +158,7 @@
         "locations": {
           "methods": {
             "getServerConfig": {
-              "description": "Returns configuration info about the Kubernetes Engine service.",
+              "description": "Returns configuration info about the Google Kubernetes Engine service.",
               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/serverConfig",
               "httpMethod": "GET",
               "id": "container.projects.locations.getServerConfig",
@@ -193,7 +193,7 @@
               ]
             },
             "list": {
-              "description": "Used to fetch locations that offer GKE.",
+              "description": "Fetches locations that offer Google Kubernetes Engine.",
               "flatPath": "v1beta1/projects/{projectsId}/locations",
               "httpMethod": "GET",
               "id": "container.projects.locations.list",
@@ -250,7 +250,7 @@
                   ]
                 },
                 "create": {
-                  "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe cluster creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range is being used by the cluster.",
+                  "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe Kubelet creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range the cluster is using.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.create",
@@ -278,7 +278,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster\n(e.g. load balancer resources) will not be deleted if they weren't present\nat the initial create time.",
+                  "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster,\nsuch as load balancer resources, are not deleted if they weren't present\nwhen the cluster was initially created.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}",
                   "httpMethod": "DELETE",
                   "id": "container.projects.locations.clusters.delete",
@@ -358,7 +358,7 @@
                   ]
                 },
                 "getJwks": {
-                  "description": "GetJSONWebKeys gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+                  "description": "Gets the public component of the cluster signing keys in\nJSON Web Key format.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
                   "httpMethod": "GET",
                   "id": "container.projects.locations.clusters.getJwks",
@@ -558,7 +558,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+                  "description": "Sets master auth materials. Currently supports changing the admin password\nor a specific cluster, either via password generation or explicitly setting\nthe password.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setMasterAuth",
@@ -614,7 +614,7 @@
                   ]
                 },
                 "setNetworkPolicy": {
-                  "description": "Enables/Disables Network Policy for a cluster.",
+                  "description": "Enables or disables Network Policy for a cluster.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:setNetworkPolicy",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.setNetworkPolicy",
@@ -670,7 +670,7 @@
                   ]
                 },
                 "startIpRotation": {
-                  "description": "Start master IP rotation.",
+                  "description": "Starts master IP rotation.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:startIpRotation",
                   "httpMethod": "POST",
                   "id": "container.projects.locations.clusters.startIpRotation",
@@ -831,7 +831,7 @@
                       ]
                     },
                     "get": {
-                      "description": "Retrieves the node pool requested.",
+                      "description": "Retrieves the requested node pool.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}",
                       "httpMethod": "GET",
                       "id": "container.projects.locations.clusters.nodePools.get",
@@ -916,7 +916,7 @@
                       ]
                     },
                     "rollback": {
-                      "description": "Roll back the previously Aborted or Failed NodePool upgrade.\nThis will be an no-op if the last upgrade successfully completed.",
+                      "description": "Rolls back a previously Aborted or Failed NodePool upgrade.\nThis makes no changes if the last upgrade successfully completed.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/nodePools/{nodePoolsId}:rollback",
                       "httpMethod": "POST",
                       "id": "container.projects.locations.clusters.nodePools.rollback",
@@ -1060,7 +1060,7 @@
                 "well-known": {
                   "methods": {
                     "getOpenid-configuration": {
-                      "description": "GetOpenIDConfig gets the OIDC discovery document for the cluster.\nSee the OpenID Connect Discovery 1.0 specification for details.\nhttps://openid.net/specs/openid-connect-discovery-1_0.html\nThis API is not yet intended for general use, and is not available for all\nclusters.",
+                      "description": "Gets the OIDC discovery document for the cluster.\nSee the\n[OpenID Connect Discovery 1.0\nspecification](https://openid.net/specs/openid-connect-discovery-1_0.html)\nfor details.\nThis API is not yet intended for general use, and is not available for all\nclusters.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
                       "httpMethod": "GET",
                       "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",
@@ -1159,7 +1159,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists all operations in a project in a specific zone or all zones.",
+                  "description": "Lists all operations in a project in the specified zone or all zones.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/operations",
                   "httpMethod": "GET",
                   "id": "container.projects.locations.operations.list",
@@ -1200,7 +1200,7 @@
         "zones": {
           "methods": {
             "getServerconfig": {
-              "description": "Returns configuration info about the Kubernetes Engine service.",
+              "description": "Returns configuration info about the Google Kubernetes Engine service.",
               "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/serverconfig",
               "httpMethod": "GET",
               "id": "container.projects.zones.getServerconfig",
@@ -1322,7 +1322,7 @@
                   ]
                 },
                 "create": {
-                  "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe cluster creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range is being used by the cluster.",
+                  "description": "Creates a cluster, consisting of the specified number and type of Google\nCompute Engine instances.\n\nBy default, the cluster is created in the project's\n[default network](/compute/docs/networks-and-firewalls#networks).\n\nOne firewall is added for the cluster. After cluster creation,\nthe Kubelet creates routes for each node to allow the containers\non that node to communicate with all other instances in the\ncluster.\n\nFinally, an entry is added to the project's global metadata indicating\nwhich CIDR range the cluster is using.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.create",
@@ -1356,7 +1356,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster\n(e.g. load balancer resources) will not be deleted if they weren't present\nat the initial create time.",
+                  "description": "Deletes the cluster, including the Kubernetes endpoint and all worker\nnodes.\n\nFirewalls and routes that were configured during cluster creation\nare also deleted.\n\nOther Google Compute Engine resources that might be in use by the cluster,\nsuch as load balancer resources, are not deleted if they weren't present\nwhen the cluster was initially created.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}",
                   "httpMethod": "DELETE",
                   "id": "container.projects.zones.clusters.delete",
@@ -1765,7 +1765,7 @@
                   ]
                 },
                 "setMasterAuth": {
-                  "description": "Used to set master auth materials. Currently supports :-\nChanging the admin password for a specific cluster.\nThis can be either via password generation or explicitly set.\nModify basic_auth.csv and reset the K8S API server.",
+                  "description": "Sets master auth materials. Currently supports changing the admin password\nor a specific cluster, either via password generation or explicitly setting\nthe password.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setMasterAuth",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.setMasterAuth",
@@ -1806,7 +1806,7 @@
                   ]
                 },
                 "setNetworkPolicy": {
-                  "description": "Enables/Disables Network Policy for a cluster.",
+                  "description": "Enables or disables Network Policy for a cluster.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:setNetworkPolicy",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.setNetworkPolicy",
@@ -1847,7 +1847,7 @@
                   ]
                 },
                 "startIpRotation": {
-                  "description": "Start master IP rotation.",
+                  "description": "Starts master IP rotation.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}:startIpRotation",
                   "httpMethod": "POST",
                   "id": "container.projects.zones.clusters.startIpRotation",
@@ -2072,7 +2072,7 @@
                       ]
                     },
                     "get": {
-                      "description": "Retrieves the node pool requested.",
+                      "description": "Retrieves the requested node pool.",
                       "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}",
                       "httpMethod": "GET",
                       "id": "container.projects.zones.clusters.nodePools.get",
@@ -2165,7 +2165,7 @@
                       ]
                     },
                     "rollback": {
-                      "description": "Roll back the previously Aborted or Failed NodePool upgrade.\nThis will be an no-op if the last upgrade successfully completed.",
+                      "description": "Rolls back a previously Aborted or Failed NodePool upgrade.\nThis makes no changes if the last upgrade successfully completed.",
                       "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/clusters/{clusterId}/nodePools/{nodePoolId}:rollback",
                       "httpMethod": "POST",
                       "id": "container.projects.zones.clusters.nodePools.rollback",
@@ -2447,7 +2447,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists all operations in a project in a specific zone or all zones.",
+                  "description": "Lists all operations in a project in the specified zone or all zones.",
                   "flatPath": "v1beta1/projects/{projectId}/zones/{zone}/operations",
                   "httpMethod": "GET",
                   "id": "container.projects.zones.operations.list",
@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190316",
+  "revision": "20190319",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3100,7 +3100,7 @@
           "enumDescriptions": [
             "Should never be set",
             "Secrets in etcd are encrypted.",
-            "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to GCE level full disk encryption."
+            "Secrets in etcd are stored in plain text (at etcd level) - this is\nunrelated to Google Compute Engine level full disk encryption."
           ],
           "type": "string"
         }
@@ -4769,16 +4769,18 @@
       "id": "WorkloadMetadataConfig",
       "properties": {
         "nodeMetadata": {
-          "description": "NodeMetadata is the configuration for how to expose the node metadata to\nthe workload running on the node.",
+          "description": "NodeMetadata is the configuration for how to expose metadata to the\nworkloads running on the node.",
           "enum": [
             "UNSPECIFIED",
             "SECURE",
-            "EXPOSE"
+            "EXPOSE",
+            "GKE_METADATA_SERVER"
           ],
           "enumDescriptions": [
             "Not set.",
             "Prevent workloads not in hostNetwork from accessing certain VM metadata,\nspecifically kube-env, which contains Kubelet credentials, and the\ninstance identity token.\n\nMetadata concealment is a temporary security solution available while the\nbootstrapping process for cluster nodes is being redesigned with\nsignificant security improvements.  This feature is scheduled to be\ndeprecated in the future and later removed.",
-            "Expose all VM metadata to pods."
+            "Expose all VM metadata to pods.",
+            "Run the GKE Metadata Server on this node. The GKE Metadata Server exposes\na metadata API to workloads that is compatible with the V1 Compute\nMetadata APIs exposed by the Compute Engine and App Engine Metadata\nServers. This feature can only be enabled if Workload Identity is enabled\nat the cluster level."
           ],
           "type": "string"
         }

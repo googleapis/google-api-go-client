@@ -244,7 +244,7 @@
       }
     }
   },
-  "revision": "20190314",
+  "revision": "20190422",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -990,7 +990,7 @@
           "type": "string"
         },
         "projectId": {
-          "description": "The project ID of the GCP project in which the `WorkerPool` is created.",
+          "description": "The project ID of the GCP project for which the `WorkerPool` is created.",
           "type": "string"
         },
         "regions": {

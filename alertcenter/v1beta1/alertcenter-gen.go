@@ -332,6 +332,9 @@ type Alert struct {
 	// [G Suite Alert types](/admin-sdk/alertcenter/reference/alert-types).
 	Type string `json:"type,omitempty"`
 
+	// UpdateTime: Output only. The time this alert was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1654,7 +1657,9 @@ func (c *AlertsListCall) Filter(filter string) *AlertsListCall {
 // You can sort the results in descending order based on the
 // creation
 // timestamp using `order_by="create_time desc".
-// Currently, only sorting by `create_time desc` is supported.
+// Currently, supported sorting are `create_time asc`, `create_time
+// desc`,
+// `update_time desc`
 func (c *AlertsListCall) OrderBy(orderBy string) *AlertsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1791,7 +1796,7 @@ func (c *AlertsListCall) Do(opts ...googleapi.CallOption) (*ListAlertsResponse, 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. The sort order of the list results.\nIf not specified results may be returned in arbitrary order.\nYou can sort the results in descending order based on the creation\ntimestamp using `order_by=\"create_time desc\"`.\nCurrently, only sorting by `create_time desc` is supported.",
+	//       "description": "Optional. The sort order of the list results.\nIf not specified results may be returned in arbitrary order.\nYou can sort the results in descending order based on the creation\ntimestamp using `order_by=\"create_time desc\"`.\nCurrently, supported sorting are `create_time asc`, `create_time desc`,\n`update_time desc`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

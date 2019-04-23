@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/9i1yA_EvW_-C7Mkv3GxdonWRg64\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/aKSq_aUPuAn1vDfZ4ilQirFUTJ4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -4124,6 +4124,298 @@
         }
       }
     },
+    "globalNetworkEndpointGroups": {
+      "methods": {
+        "attachNetworkEndpoints": {
+          "description": "Attach a network endpoint to the specified network endpoint group.",
+          "httpMethod": "POST",
+          "id": "compute.globalNetworkEndpointGroups.attachNetworkEndpoints",
+          "parameterOrder": [
+            "project",
+            "networkEndpointGroup"
+          ],
+          "parameters": {
+            "networkEndpointGroup": {
+              "description": "The name of the network endpoint group where you are attaching network endpoints to. It should comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups/{networkEndpointGroup}/attachNetworkEndpoints",
+          "request": {
+            "$ref": "GlobalNetworkEndpointGroupsAttachEndpointsRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "delete": {
+          "description": "Deletes the specified network endpoint group.Note that the NEG cannot be deleted if there are backend services referencing it.",
+          "httpMethod": "DELETE",
+          "id": "compute.globalNetworkEndpointGroups.delete",
+          "parameterOrder": [
+            "project",
+            "networkEndpointGroup"
+          ],
+          "parameters": {
+            "networkEndpointGroup": {
+              "description": "The name of the network endpoint group to delete. It should comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups/{networkEndpointGroup}",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "detachNetworkEndpoints": {
+          "description": "Detach the network endpoint from the specified network endpoint group.",
+          "httpMethod": "POST",
+          "id": "compute.globalNetworkEndpointGroups.detachNetworkEndpoints",
+          "parameterOrder": [
+            "project",
+            "networkEndpointGroup"
+          ],
+          "parameters": {
+            "networkEndpointGroup": {
+              "description": "The name of the network endpoint group where you are removing network endpoints. It should comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups/{networkEndpointGroup}/detachNetworkEndpoints",
+          "request": {
+            "$ref": "GlobalNetworkEndpointGroupsDetachEndpointsRequest"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "get": {
+          "description": "Returns the specified network endpoint group. Gets a list of available network endpoint groups by making a list() request.",
+          "httpMethod": "GET",
+          "id": "compute.globalNetworkEndpointGroups.get",
+          "parameterOrder": [
+            "project",
+            "networkEndpointGroup"
+          ],
+          "parameters": {
+            "networkEndpointGroup": {
+              "description": "The name of the network endpoint group. It should comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups/{networkEndpointGroup}",
+          "response": {
+            "$ref": "NetworkEndpointGroup"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "insert": {
+          "description": "Creates a network endpoint group in the specified project using the parameters that are included in the request.",
+          "httpMethod": "POST",
+          "id": "compute.globalNetworkEndpointGroups.insert",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed.\n\nFor example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups",
+          "request": {
+            "$ref": "NetworkEndpointGroup"
+          },
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
+        "list": {
+          "description": "Retrieves the list of network endpoint groups that are located in the specified project.",
+          "httpMethod": "GET",
+          "id": "compute.globalNetworkEndpointGroups.list",
+          "parameterOrder": [
+            "project"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups",
+          "response": {
+            "$ref": "NetworkEndpointGroupList"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "listNetworkEndpoints": {
+          "description": "Lists the network endpoints in the specified network endpoint group.",
+          "httpMethod": "POST",
+          "id": "compute.globalNetworkEndpointGroups.listNetworkEndpoints",
+          "parameterOrder": [
+            "project",
+            "networkEndpointGroup"
+          ],
+          "parameters": {
+            "filter": {
+              "description": "A filter expression that filters resources listed in the response. The expression must specify the field name, a comparison operator, and the value that you want to use for filtering. The value must be a string, a number, or a boolean. The comparison operator must be either =, !=, \u003e, or \u003c.\n\nFor example, if you are filtering Compute Engine instances, you can exclude instances named example-instance by specifying name != example-instance.\n\nYou can also filter nested fields. For example, you could specify scheduling.automaticRestart = false to include instances only if they are not scheduled for automatic restarts. You can use filtering on nested fields to filter based on resource labels.\n\nTo filter on multiple expressions, provide each separate expression within parentheses. For example, (scheduling.automaticRestart = true) (cpuPlatform = \"Intel Skylake\"). By default, each expression is an AND expression. However, you can include AND and OR expressions explicitly. For example, (cpuPlatform = \"Intel Skylake\") OR (cpuPlatform = \"Intel Broadwell\") AND (scheduling.automaticRestart = true).",
+              "location": "query",
+              "type": "string"
+            },
+            "maxResults": {
+              "default": "500",
+              "description": "The maximum number of results per page that should be returned. If the number of available results is larger than maxResults, Compute Engine returns a nextPageToken that can be used to get the next page of results in subsequent list requests. Acceptable values are 0 to 500, inclusive. (Default: 500)",
+              "format": "uint32",
+              "location": "query",
+              "minimum": "0",
+              "type": "integer"
+            },
+            "networkEndpointGroup": {
+              "description": "The name of the network endpoint group from which you want to generate a list of included network endpoints. It should comply with RFC1035.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            },
+            "orderBy": {
+              "description": "Sorts list results by a certain order. By default, results are returned in alphanumerical order based on the resource name.\n\nYou can also sort results in descending order based on the creation timestamp using orderBy=\"creationTimestamp desc\". This sorts results based on the creationTimestamp field in reverse chronological order (newest result first). Use this to sort resources like operations so that the newest operation is returned first.\n\nCurrently, only sorting by name or creationTimestamp desc is supported.",
+              "location": "query",
+              "type": "string"
+            },
+            "pageToken": {
+              "description": "Specifies a page token to use. Set pageToken to the nextPageToken returned by a previous list request to get the next page of results.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networkEndpointGroups/{networkEndpointGroup}/listNetworkEndpoints",
+          "response": {
+            "$ref": "NetworkEndpointGroupsListNetworkEndpoints"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        }
+      }
+    },
     "globalOperations": {
       "methods": {
         "aggregatedList": {
@@ -7983,6 +8275,55 @@
           "path": "{project}/zones/{zone}/instances/{instance}",
           "response": {
             "$ref": "Instance"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getEffectiveFirewalls": {
+          "description": "Returns effective firewalls applied to an interface of the instance.",
+          "httpMethod": "GET",
+          "id": "compute.instances.getEffectiveFirewalls",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance",
+            "networkInterface"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "networkInterface": {
+              "description": "The name of the network interface to get the effective firewalls.",
+              "location": "query",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/zones/{zone}/instances/{instance}/getEffectiveFirewalls",
+          "response": {
+            "$ref": "InstancesGetEffectiveFirewallsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -12082,6 +12423,40 @@
           "path": "{project}/global/networks/{network}",
           "response": {
             "$ref": "Network"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute",
+            "https://www.googleapis.com/auth/compute.readonly"
+          ]
+        },
+        "getEffectiveFirewalls": {
+          "description": "Returns the effective firewalls on a given network.",
+          "httpMethod": "GET",
+          "id": "compute.networks.getEffectiveFirewalls",
+          "parameterOrder": [
+            "project",
+            "network"
+          ],
+          "parameters": {
+            "network": {
+              "description": "Name of the network for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "{project}/global/networks/{network}/getEffectiveFirewalls",
+          "response": {
+            "$ref": "NetworksGetEffectiveFirewallsResponse"
           },
           "scopes": [
             "https://www.googleapis.com/auth/cloud-platform",
@@ -27310,7 +27685,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190403",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -28475,6 +28850,13 @@
         },
         "replicaZones": {
           "description": "URLs of the zones where the disk should be replicated to. Only applicable for regional resources.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "resourcePolicies": {
+          "description": "Resource policies applied to this disk for automatic snapshot creations. Specified using the full or partial URL. For instance template, specify only the resource policy name.",
           "items": {
             "type": "string"
           },
@@ -30206,7 +30588,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
+          "description": "The condition that is associated with this binding. NOTE: An unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`.",
@@ -32838,7 +33220,7 @@
       "id": "FixedOrPercent",
       "properties": {
         "calculated": {
-          "description": "[Output Only] Absolute value of VM instances calculated based on the specific mode.\n\n \n- If the value is fixed, then the caculated value is equal to the fixed value. \n- If the value is a percent, then the calculated value is percent/100 * targetSize. For example, the calculated value of a 80% of a managed instance group with 150 instances would be (80/100 * 150) = 120 VM instances. If there is a remainder, the number is rounded up.",
+          "description": "[Output Only] Absolute value of VM instances calculated based on the specific mode.\n\n \n- If the value is fixed, then the calculated value is equal to the fixed value. \n- If the value is a percent, then the calculated value is percent/100 * targetSize. For example, the calculated value of a 80% of a managed instance group with 150 instances would be (80/100 * 150) = 120 VM instances. If there is a remainder, the number is rounded up.",
           "format": "int32",
           "type": "integer"
         },
@@ -33362,6 +33744,32 @@
       },
       "type": "object"
     },
+    "GlobalNetworkEndpointGroupsAttachEndpointsRequest": {
+      "id": "GlobalNetworkEndpointGroupsAttachEndpointsRequest",
+      "properties": {
+        "networkEndpoints": {
+          "description": "The list of network endpoints to be attached.",
+          "items": {
+            "$ref": "NetworkEndpoint"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GlobalNetworkEndpointGroupsDetachEndpointsRequest": {
+      "id": "GlobalNetworkEndpointGroupsDetachEndpointsRequest",
+      "properties": {
+        "networkEndpoints": {
+          "description": "The list of network endpoints to be detached.",
+          "items": {
+            "$ref": "NetworkEndpoint"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GlobalSetLabelsRequest": {
       "id": "GlobalSetLabelsRequest",
       "properties": {
@@ -33743,7 +34151,7 @@
           "type": "integer"
         },
         "type": {
-          "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+          "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
           "enum": [
             "HTTP",
             "HTTP2",
@@ -36143,7 +36551,7 @@
         },
         "pendingActions": {
           "$ref": "InstanceGroupManagerPendingActionsSummary",
-          "description": "[Output Only] The list of instance actions and the number of instances in this managed instance group that are pending for each of those actions."
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The list of instance actions and the number of instances in this managed instance group that are pending for each of those actions."
         },
         "region": {
           "description": "[Output Only] The URL of the region where the managed instance group resides (for regional resources).",
@@ -36192,7 +36600,7 @@
           "description": "The update policy for this managed instance group."
         },
         "versions": {
-          "description": "Specifies the instance templates used by this managed instance group to create instances.\n\nEach version is defined by an instanceTemplate. Every template can appear at most once per instance group. This field overrides the top-level instanceTemplate field. Read more about the relationships between these fields. Exactly one version must leave the targetSize field unset. That version will be applied to all remaining instances. For more information, read about canary updates.",
+          "description": "Specifies the instance templates used by this managed instance group to create instances.\n\nEach version is defined by an instanceTemplate and a name. Every version can appear at most once per instance group. This field overrides the top-level instanceTemplate field. Read more about the relationships between these fields. Exactly one version must leave the targetSize field unset. That version will be applied to all remaining instances. For more information, read about canary updates.",
           "items": {
             "$ref": "InstanceGroupManagerVersion"
           },
@@ -36504,22 +36912,22 @@
       "id": "InstanceGroupManagerPendingActionsSummary",
       "properties": {
         "creating": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be created.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be created.",
           "format": "int32",
           "type": "integer"
         },
         "deleting": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be deleted.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be deleted.",
           "format": "int32",
           "type": "integer"
         },
         "recreating": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be recreated.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be recreated.",
           "format": "int32",
           "type": "integer"
         },
         "restarting": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be restarted.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be restarted.",
           "format": "int32",
           "type": "integer"
         }
@@ -36623,6 +37031,7 @@
       "id": "InstanceGroupManagerVersion",
       "properties": {
         "instanceTemplate": {
+          "description": "The URL of the instance template that is specified for this managed instance group. The group uses this template to create new instances in the managed instance group until the `targetSize` for this version is reached.",
           "type": "string"
         },
         "name": {
@@ -37890,6 +38299,45 @@
           "description": "Resource policies to be added to this instance.",
           "items": {
             "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InstancesGetEffectiveFirewallsResponse": {
+      "id": "InstancesGetEffectiveFirewallsResponse",
+      "properties": {
+        "firewalls": {
+          "description": "Effective firewalls on the instance.",
+          "items": {
+            "$ref": "Firewall"
+          },
+          "type": "array"
+        },
+        "organizationFirewalls": {
+          "description": "Effective firewalls from organization policies.",
+          "items": {
+            "$ref": "InstancesGetEffectiveFirewallsResponseOrganizationFirewallPolicy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "InstancesGetEffectiveFirewallsResponseOrganizationFirewallPolicy": {
+      "description": "A pruned SecurityPolicy containing ID and any applicable firewall rules.",
+      "id": "InstancesGetEffectiveFirewallsResponseOrganizationFirewallPolicy",
+      "properties": {
+        "id": {
+          "description": "The unique identifier for the security policy. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "rules": {
+          "description": "The rules that apply to the network.",
+          "items": {
+            "$ref": "SecurityPolicyRule"
           },
           "type": "array"
         }
@@ -40026,6 +40474,24 @@
       },
       "type": "object"
     },
+    "LocalDisk": {
+      "id": "LocalDisk",
+      "properties": {
+        "diskCount": {
+          "description": "Specifies the number of such disks.",
+          "type": "string"
+        },
+        "diskSizeGb": {
+          "description": "Specifies the size of the disk in base-2 GB.",
+          "type": "string"
+        },
+        "diskType": {
+          "description": "Specifies the desired disk type on the node. This disk type must be a local storage type (e.g.: local-ssd). Note that for nodeTemplates, this should be the name of the disk type and not its URL.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "LogConfig": {
       "description": "Specifies what kind of log the caller must write",
       "id": "LogConfig",
@@ -41161,6 +41627,18 @@
           ],
           "type": "string"
         },
+        "multicastMode": {
+          "description": "The multicast mode for this network. If set to ZONAL, multicast is allowed within a zone. If set to DISABLED, multicast is disabled for this network. The default is DISABLED.",
+          "enum": [
+            "DISABLED",
+            "ZONAL"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "name": {
           "annotations": {
             "required": [
@@ -41603,6 +42081,13 @@
     "NetworkEndpointGroupsListEndpointsRequest": {
       "id": "NetworkEndpointGroupsListEndpointsRequest",
       "properties": {
+        "endpointFilters": {
+          "description": "Optional list of endpoints to query. This is a more efficient but also limited version of filter parameter. Endpoints in the filter must have ip_address and port fields populated, other fields are not supported.",
+          "items": {
+            "$ref": "NetworkEndpointGroupsListEndpointsRequestNetworkEndpointFilter"
+          },
+          "type": "array"
+        },
         "healthStatus": {
           "description": "Optional query parameter for showing the health status of each network endpoint. Valid options are SKIP or SHOW. If you don't specifiy this parameter, the health status of network endpoints will not be provided.",
           "enum": [
@@ -41614,6 +42099,15 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "NetworkEndpointGroupsListEndpointsRequestNetworkEndpointFilter": {
+      "id": "NetworkEndpointGroupsListEndpointsRequestNetworkEndpointFilter",
+      "properties": {
+        "networkEndpoint": {
+          "$ref": "NetworkEndpoint"
         }
       },
       "type": "object"
@@ -42112,6 +42606,45 @@
       },
       "type": "object"
     },
+    "NetworksGetEffectiveFirewallsResponse": {
+      "id": "NetworksGetEffectiveFirewallsResponse",
+      "properties": {
+        "firewalls": {
+          "description": "Effective firewalls on the network.",
+          "items": {
+            "$ref": "Firewall"
+          },
+          "type": "array"
+        },
+        "organizationFirewalls": {
+          "description": "Effective firewalls from organization policies.",
+          "items": {
+            "$ref": "NetworksGetEffectiveFirewallsResponseOrganizationFirewallPolicy"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "NetworksGetEffectiveFirewallsResponseOrganizationFirewallPolicy": {
+      "description": "A pruned SecurityPolicy containing ID and any applicable firewall rules.",
+      "id": "NetworksGetEffectiveFirewallsResponseOrganizationFirewallPolicy",
+      "properties": {
+        "id": {
+          "description": "[Output Only] The unique identifier for the security policy. This identifier is defined by the server.",
+          "format": "uint64",
+          "type": "string"
+        },
+        "rules": {
+          "description": "The rules that apply to the network.",
+          "items": {
+            "$ref": "SecurityPolicyRule"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "NetworksRemovePeeringRequest": {
       "id": "NetworksRemovePeeringRequest",
       "properties": {
@@ -42132,7 +42665,7 @@
       "type": "object"
     },
     "NodeGroup": {
-      "description": "A NodeGroup resource. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==)",
+      "description": "A NodeGroup resource. To create a node group, you must first create a node templates. To learn more about node groups and sole-tenant nodes, read the Sole-tenant nodes documentation. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==)",
       "id": "NodeGroup",
       "properties": {
         "autoscalingPolicy": {
@@ -42154,6 +42687,19 @@
         "kind": {
           "default": "compute#nodeGroup",
           "description": "[Output Only] The type of the resource. Always compute#nodeGroup for node group.",
+          "type": "string"
+        },
+        "managedHoldback": {
+          "enum": [
+            "MANAGED_HOLDBACK_UNSPECIFIED",
+            "OFF",
+            "ON"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
           "type": "string"
         },
         "name": {
@@ -42440,6 +42986,13 @@
     "NodeGroupNode": {
       "id": "NodeGroupNode",
       "properties": {
+        "disks": {
+          "description": "Local disk configurations.",
+          "items": {
+            "$ref": "LocalDisk"
+          },
+          "type": "array"
+        },
         "instances": {
           "description": "Instances scheduled on this node.",
           "items": {
@@ -42727,7 +43280,7 @@
       "type": "object"
     },
     "NodeTemplate": {
-      "description": "A Node Template resource.",
+      "description": "A Node Template resource. To learn more about node templates and sole-tenant nodes, read the Sole-tenant nodes documentation. (== resource_for beta.nodeTemplates ==) (== resource_for v1.nodeTemplates ==)",
       "id": "NodeTemplate",
       "properties": {
         "creationTimestamp": {
@@ -42737,6 +43290,12 @@
         "description": {
           "description": "An optional description of this resource. Provide this property when you create the resource.",
           "type": "string"
+        },
+        "disks": {
+          "items": {
+            "$ref": "LocalDisk"
+          },
+          "type": "array"
         },
         "id": {
           "description": "[Output Only] The unique identifier for the resource. This identifier is defined by the server.",
@@ -46937,6 +47496,22 @@
           "$ref": "ResourcePolicySnapshotSchedulePolicy",
           "description": "Resource policy for persistent disks for creating snapshots."
         },
+        "status": {
+          "description": "[Output Only] The status of resource policy creation.",
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "vmMaintenancePolicy": {
           "$ref": "ResourcePolicyVmMaintenancePolicy",
           "description": "Resource policy applicable to VMs for infrastructure maintenance."
@@ -47486,6 +48061,10 @@
         },
         "nextHopInstance": {
           "description": "The URL to an instance that should handle matching packets. You can specify this as a full or partial URL. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/",
+          "type": "string"
+        },
+        "nextHopInterconnectAttachment": {
+          "description": "[Output Only] The URL to an InterconnectAttachment which is the next hop for the route. This field will only be populated for the dynamic routes generated by Cloud Router with a linked interconnectAttachment.",
           "type": "string"
         },
         "nextHopIp": {
@@ -48105,7 +48684,7 @@
           "type": "integer"
         },
         "mode": {
-          "description": "The BFD session initiation mode for this BGP peer. If set to ACTIVE, the Cloud Router will initiate the BFD session for this BGP peer. If set to PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP peer. The default is PASSIVE.",
+          "description": "The BFD session initialization mode for this BGP peer. If set to ACTIVE, the Cloud Router will initiate the BFD session for this BGP peer. If set to PASSIVE, the Cloud Router will wait for the peer router to initiate the BFD session for this BGP peer. If set to DISABLED, BFD is disabled for this BGP peer. The default is PASSIVE.",
           "enum": [
             "ACTIVE",
             "DISABLED",
@@ -48956,6 +49535,10 @@
       "properties": {
         "automaticRestart": {
           "description": "Specifies whether the instance should be automatically restarted if it is terminated by Compute Engine (not terminated by a user). You can only set the automatic restart option for standard instances. Preemptible instances cannot be automatically restarted.\n\nBy default, this is set to true so an instance is automatically restarted if it is terminated by Compute Engine.",
+          "type": "boolean"
+        },
+        "latencyTolerant": {
+          "description": "Defines whether the instance is tolerant of higher cpu latency. This can only be set during instance creation, or when the instance is not currently running. It must not be set if the preemptible option is also set.",
           "type": "boolean"
         },
         "minNodeCpus": {
@@ -56242,7 +56825,7 @@
       "type": "object"
     },
     "Zone": {
-      "description": "A Zone resource. (== resource_for beta.zones ==) (== resource_for v1.zones ==)",
+      "description": "A Zone resource. (== resource_for beta.zones ==) (== resource_for v1.zones ==) Next ID: 17",
       "id": "Zone",
       "properties": {
         "availableCpuPlatforms": {

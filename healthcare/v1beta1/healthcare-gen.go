@@ -476,7 +476,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1372,9 +1372,10 @@ type FieldMetadata struct {
 	// Possible values:
 	//   "ACTION_UNSPECIFIED" - No action specified.
 	//   "TRANSFORM" - Transform the entire field.
-	//   "INSPECT_AND_TRANSFORM" - Should be inspected and any PHI found
-	// should be
-	// transformed.
+	//   "INSPECT_AND_TRANSFORM" - Inspect and transform any found PHI. When
+	// `AnnotationConfig` is
+	// provided, annotations of PHI will be generated, except for Date and
+	// Datetime.
 	//   "DO_NOT_TRANSFORM" - Do not transform.
 	Action string `json:"action,omitempty"`
 
@@ -1925,7 +1926,7 @@ func (s *Hl7V2Store) MarshalJSON() ([]byte, error) {
 //       rpc GetResource(GetResourceRequest) returns
 // (google.api.HttpBody);
 //       rpc UpdateResource(google.api.HttpBody) returns
-// (google.protobuf.Empty);
+//       (google.protobuf.Empty);
 //     }
 //
 // Example with streaming methods:

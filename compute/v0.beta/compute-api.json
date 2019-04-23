@@ -29,7 +29,7 @@
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/xrkdcXHl_qVsPViapaT_mzdZ57Y\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/FcIdq7K0sVtzHMLqHzM5hbg05bw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -22462,7 +22462,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190403",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -23578,6 +23578,13 @@
           "description": "Labels to apply to this disk. These can be later modified by the disks.setLabels method. This field is only applicable for persistent disks.",
           "type": "object"
         },
+        "resourcePolicies": {
+          "description": "Resource policies applied to this disk for automatic snapshot creations. Specified using the full or partial URL. For instance template, specify only the resource policy name.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "sourceImage": {
           "description": "The source image to create this disk. When creating a new instance, one of initializeParams.sourceImage or disks.source is required except for local SSD.\n\nTo create a disk with one of the public operating system images, specify the image by its family name. For example, specify family/debian-9 to use the latest Debian 9 image:\nprojects/debian-cloud/global/images/family/debian-9\n\n\nAlternatively, use a specific version of a public operating system image:\nprojects/debian-cloud/global/images/debian-9-stretch-vYYYYMMDD\n\n\nTo create a disk with a custom image that you created, specify the image name in the following format:\nglobal/images/my-custom-image\n\n\nYou can also specify a custom image by its image family, which returns the latest version of the image in that family. Replace the image name with family/family-name:\nglobal/images/family/my-image-family\n\n\nIf the source image is deleted later, this field will not be set.",
           "type": "string"
@@ -23585,6 +23592,14 @@
         "sourceImageEncryptionKey": {
           "$ref": "CustomerEncryptionKey",
           "description": "The customer-supplied encryption key of the source image. Required if the source image is protected by a customer-supplied encryption key.\n\nInstance templates do not store customer-supplied encryption keys, so you cannot create disks for instances in a managed instance group if the source images are encrypted with your own keys."
+        },
+        "sourceSnapshot": {
+          "description": "The source snapshot to create this disk. When creating a new instance, one of initializeParams.sourceSnapshot or disks.source is required except for local SSD.\n\nTo create a disk with a snapshot that you created, specify the snapshot name in the following format:\nglobal/snapshots/my-backup\n\n\nIf the source snapshot is deleted later, this field will not be set.",
+          "type": "string"
+        },
+        "sourceSnapshotEncryptionKey": {
+          "$ref": "CustomerEncryptionKey",
+          "description": "The customer-supplied encryption key of the source snapshot."
         }
       },
       "type": "object"
@@ -25055,7 +25070,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "The condition that is associated with this binding. NOTE: an unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
+          "description": "The condition that is associated with this binding. NOTE: An unsatisfied condition will not allow user access via current binding. Different bindings, including their conditions, are examined independently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource. `members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@gmail.com` .\n\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`.\n\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`.",
@@ -27361,7 +27376,7 @@
       "id": "FixedOrPercent",
       "properties": {
         "calculated": {
-          "description": "[Output Only] Absolute value of VM instances calculated based on the specific mode.\n\n \n- If the value is fixed, then the caculated value is equal to the fixed value. \n- If the value is a percent, then the calculated value is percent/100 * targetSize. For example, the calculated value of a 80% of a managed instance group with 150 instances would be (80/100 * 150) = 120 VM instances. If there is a remainder, the number is rounded up.",
+          "description": "[Output Only] Absolute value of VM instances calculated based on the specific mode.\n\n \n- If the value is fixed, then the calculated value is equal to the fixed value. \n- If the value is a percent, then the calculated value is percent/100 * targetSize. For example, the calculated value of a 80% of a managed instance group with 150 instances would be (80/100 * 150) = 120 VM instances. If there is a remainder, the number is rounded up.",
           "format": "int32",
           "type": "integer"
         },
@@ -28222,7 +28237,7 @@
           "type": "integer"
         },
         "type": {
-          "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP or HTTPS. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
+          "description": "Specifies the type of the healthCheck, either TCP, SSL, HTTP, HTTPS or HTTP2. If not specified, the default is TCP. Exactly one of the protocol-specific health check field must be specified, which must match type field.",
           "enum": [
             "HTTP",
             "HTTP2",
@@ -29793,7 +29808,7 @@
         },
         "pendingActions": {
           "$ref": "InstanceGroupManagerPendingActionsSummary",
-          "description": "[Output Only] The list of instance actions and the number of instances in this managed instance group that are pending for each of those actions."
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The list of instance actions and the number of instances in this managed instance group that are pending for each of those actions."
         },
         "region": {
           "description": "[Output Only] The URL of the region where the managed instance group resides (for regional resources).",
@@ -29834,7 +29849,7 @@
           "description": "The update policy for this managed instance group."
         },
         "versions": {
-          "description": "Specifies the instance templates used by this managed instance group to create instances.\n\nEach version is defined by an instanceTemplate. Every template can appear at most once per instance group. This field overrides the top-level instanceTemplate field. Read more about the relationships between these fields. Exactly one version must leave the targetSize field unset. That version will be applied to all remaining instances. For more information, read about canary updates.",
+          "description": "Specifies the instance templates used by this managed instance group to create instances.\n\nEach version is defined by an instanceTemplate and a name. Every version can appear at most once per instance group. This field overrides the top-level instanceTemplate field. Read more about the relationships between these fields. Exactly one version must leave the targetSize field unset. That version will be applied to all remaining instances. For more information, read about canary updates.",
           "items": {
             "$ref": "InstanceGroupManagerVersion"
           },
@@ -30142,22 +30157,22 @@
       "id": "InstanceGroupManagerPendingActionsSummary",
       "properties": {
         "creating": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be created.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be created.",
           "format": "int32",
           "type": "integer"
         },
         "deleting": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be deleted.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be deleted.",
           "format": "int32",
           "type": "integer"
         },
         "recreating": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be recreated.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be recreated.",
           "format": "int32",
           "type": "integer"
         },
         "restarting": {
-          "description": "[Output Only] The number of instances in the managed instance group that are pending to be restarted.",
+          "description": "[Deprecated] This field is deprecated and will be removed. Prefer using the status field instead. Please contact cloud-updater-feedback@google.com to leave feedback if your workload relies on this field. [Output Only] The number of instances in the managed instance group that are pending to be restarted.",
           "format": "int32",
           "type": "integer"
         }
@@ -30191,6 +30206,17 @@
     "InstanceGroupManagerUpdatePolicy": {
       "id": "InstanceGroupManagerUpdatePolicy",
       "properties": {
+        "instanceRedistributionType": {
+          "enum": [
+            "NONE",
+            "PROACTIVE"
+          ],
+          "enumDescriptions": [
+            "",
+            ""
+          ],
+          "type": "string"
+        },
         "maxSurge": {
           "$ref": "FixedOrPercent",
           "description": "The maximum number of instances that can be created above the specified targetSize during the update process. By default, a fixed value of 1 is used. This value can be either a fixed number or a percentage if the instance group has 10 or more instances. If you set a percentage, the number of instances will be rounded up if necessary.\n\nAt least one of either maxSurge or maxUnavailable must be greater than 0. Learn more about maxSurge."
@@ -30234,6 +30260,7 @@
       "id": "InstanceGroupManagerVersion",
       "properties": {
         "instanceTemplate": {
+          "description": "The URL of the instance template that is specified for this managed instance group. The group uses this template to create new instances in the managed instance group until the `targetSize` for this version is reached.",
           "type": "string"
         },
         "name": {
@@ -34631,7 +34658,7 @@
       "type": "object"
     },
     "NodeGroup": {
-      "description": "A NodeGroup resource. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==)",
+      "description": "A NodeGroup resource. To create a node group, you must first create a node templates. To learn more about node groups and sole-tenant nodes, read the Sole-tenant nodes documentation. (== resource_for beta.nodeGroups ==) (== resource_for v1.nodeGroups ==)",
       "id": "NodeGroup",
       "properties": {
         "creationTimestamp": {
@@ -35196,7 +35223,7 @@
       "type": "object"
     },
     "NodeTemplate": {
-      "description": "A Node Template resource.",
+      "description": "A Node Template resource. To learn more about node templates and sole-tenant nodes, read the Sole-tenant nodes documentation. (== resource_for beta.nodeTemplates ==) (== resource_for v1.nodeTemplates ==)",
       "id": "NodeTemplate",
       "properties": {
         "creationTimestamp": {
@@ -38552,6 +38579,22 @@
         "snapshotSchedulePolicy": {
           "$ref": "ResourcePolicySnapshotSchedulePolicy",
           "description": "Resource policy for persistent disks for creating snapshots."
+        },
+        "status": {
+          "description": "[Output Only] The status of resource policy creation.",
+          "enum": [
+            "CREATING",
+            "DELETING",
+            "INVALID",
+            "READY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -39024,6 +39067,10 @@
         },
         "nextHopInstance": {
           "description": "The URL to an instance that should handle matching packets. You can specify this as a full or partial URL. For example:\nhttps://www.googleapis.com/compute/v1/projects/project/zones/zone/instances/",
+          "type": "string"
+        },
+        "nextHopInterconnectAttachment": {
+          "description": "[Output Only] The URL to an InterconnectAttachment which is the next hop for the route. This field will only be populated for the dynamic routes generated by Cloud Router with a linked interconnectAttachment.",
           "type": "string"
         },
         "nextHopIp": {
@@ -45936,7 +45983,7 @@
       "type": "object"
     },
     "Zone": {
-      "description": "A Zone resource. (== resource_for beta.zones ==) (== resource_for v1.zones ==)",
+      "description": "A Zone resource. (== resource_for beta.zones ==) (== resource_for v1.zones ==) Next ID: 17",
       "id": "Zone",
       "properties": {
         "availableCpuPlatforms": {

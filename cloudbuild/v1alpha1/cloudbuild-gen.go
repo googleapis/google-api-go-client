@@ -1451,7 +1451,7 @@ type WorkerPool struct {
 	// Name: User-defined name of the `WorkerPool`.
 	Name string `json:"name,omitempty"`
 
-	// ProjectId: The project ID of the GCP project in which the
+	// ProjectId: The project ID of the GCP project for which the
 	// `WorkerPool` is created.
 	ProjectId string `json:"projectId,omitempty"`
 

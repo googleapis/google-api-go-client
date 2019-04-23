@@ -2095,9 +2095,11 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsResponse) 
 //  The request used for UpdateWorkerPool.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaUpdateWorkerPoolRequest struct {
 	// UpdateMask: The update mask applies to worker_pool. For the
-	// `FieldMask` definition,
+	// `FieldMask`
+	// definition,
 	// see
-	// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+	// https://developers.google.com/protocol-buffers/docs/re
+	// ference/google.protobuf#fieldmask
 	// If an empty update_mask is provided, only the non-default valued
 	// field in
 	// the worker pool field will be updated. Note that in order to update a
@@ -2143,10 +2145,11 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
 
 	// DiskType: Required. Disk Type to use for the worker.
-	// See [Storage
-	// options](https://cloud.google.com/compute/docs/disks/#introduction).
-	// C
-	// urrently only `pd-standard` is supported.
+	// See
+	// [Storage
+	// options](https://cloud.google.com/compute/docs/disks/#introdu
+	// ction).
+	// Currently only `pd-standard` is supported.
 	DiskType string `json:"diskType,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as

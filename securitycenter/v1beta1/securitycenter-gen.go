@@ -715,6 +715,86 @@ func (s *Finding) MarshalJSON() ([]byte, error) {
 type GetIamPolicyRequest struct {
 }
 
+// GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse: Response of
+// asset discovery run
+type GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse struct {
+	// Duration: The duration between asset discovery run start and end
+	Duration string `json:"duration,omitempty"`
+
+	// State: The state of an asset discovery run.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
+	//   "COMPLETED" - Asset discovery run completed successfully.
+	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
+	// pending, as another
+	// run for the same organization was started with a higher priority.
+	//   "TERMINATED" - Asset discovery run was killed and terminated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1RunAssetDiscoveryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse: Response
+// of asset discovery run
+type GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse struct {
+	// Duration: The duration between asset discovery run start and end
+	Duration string `json:"duration,omitempty"`
+
+	// State: The state of an asset discovery run.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Asset discovery run state was unspecified.
+	//   "COMPLETED" - Asset discovery run completed successfully.
+	//   "SUPERSEDED" - Asset discovery run was cancelled with tasks still
+	// pending, as another
+	// run for the same organization was started with a higher priority.
+	//   "TERMINATED" - Asset discovery run was killed and terminated.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV1beta1RunAssetDiscoveryResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GroupAssetsRequest: Request message for grouping by assets.
 type GroupAssetsRequest struct {
 	// CompareDuration: When compare_duration is set, the Asset's "state"

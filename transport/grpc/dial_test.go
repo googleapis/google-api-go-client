@@ -27,14 +27,14 @@ import (
 	"google.golang.org/grpc"
 )
 
-// Check that user optioned grpc.WithDialer option overrides the App Engine hook.
+// Check that user optioned grpc.WithDialer option overwrites App Engine dialer
 func TestGRPCHook(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Millisecond)
 	expected := false
 
 	appengineDialerHook = (func(ctx context.Context) grpc.DialOption {
 		return grpc.WithDialer(func(addr string, timeout time.Duration) (net.Conn, error) {
-			t.Error("did not expect a call to notExpected dialer, got one")
+			t.Error("did not expect a call to appengine dialer, got one")
 			cancel()
 			return nil, errors.New("not expected")
 		})
@@ -56,10 +56,10 @@ func TestGRPCHook(t *testing.T) {
 	if err != nil {
 		t.Errorf("DialGRPC: error %v, want nil", err)
 	}
+	defer conn.Close()
 
 	// gRPC doesn't connect before the first call.
 	grpc.Invoke(ctx, "foo", nil, nil, conn)
-	conn.Close()
 
 	if !expected {
 		t.Error("expected a call to expected dialer, didn't get one")

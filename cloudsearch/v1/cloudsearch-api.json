@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190418",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -2923,7 +2923,7 @@
       "id": "Metaline",
       "properties": {
         "properties": {
-          "description": "The list of displayed properties for the metaline.",
+          "description": "The list of displayed properties for the metaline. The maxiumum number of\nproperties is 5.",
           "items": {
             "$ref": "DisplayedProperty"
           },
@@ -3008,7 +3008,7 @@
       "id": "ObjectDisplayOptions",
       "properties": {
         "metalines": {
-          "description": "Defines the properties that will be displayed in the metalines of the\nsearch results. The property values will be displayed in the order given\nhere. If a property holds multiple values, all of the values will be\ndiplayed before the next properties. For this reason, it is a good practice\nto specify singular properties before repeated properties in this list. All\nof the properties must set\nis_returnable\nto true. The maximum number of elements is 3.",
+          "description": "Defines the properties that will be displayed in the metalines of the\nsearch results. The property values will be displayed in the order given\nhere. If a property holds multiple values, all of the values will be\ndiplayed before the next properties. For this reason, it is a good practice\nto specify singular properties before repeated properties in this list. All\nof the properties must set\nis_returnable\nto true. The maximum number of metalines is 3.",
           "items": {
             "$ref": "Metaline"
           },
@@ -4056,7 +4056,7 @@
           "type": "string"
         },
         "url": {
-          "description": "The URL of the search result. The URL contains a Google redirect to the\nactual item.",
+          "description": "The URL of the search result. The URL contains a Google redirect to the\nactual item. This URL is signed and shouldn't be changed.",
           "type": "string"
         }
       },

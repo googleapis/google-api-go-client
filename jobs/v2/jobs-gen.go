@@ -1651,7 +1651,8 @@ type DeviceInfo struct {
 	//   "ANDROID" - An Android device native application.
 	//   "IOS" - An iOS device native application.
 	//   "BOT" - A bot, as opposed to a device operated by human beings,
-	// such as a web crawler.
+	// such as a web
+	// crawler.
 	//   "OTHER" - Other devices types.
 	DeviceType string `json:"deviceType,omitempty"`
 
@@ -2325,7 +2326,8 @@ type HistogramFacets struct {
 	// CustomAttributeHistogramFacets: Optional.
 	//
 	// Specifies the custom attributes histogram requests.
-	// Duplicate values of CustomAttributeHistogramRequest.key are not
+	// Duplicate values of CustomAttributeHistogramRequest.key are
+	// not
 	// allowed.
 	CustomAttributeHistogramFacets []*CustomAttributeHistogramRequest `json:"customAttributeHistogramFacets,omitempty"`
 
@@ -3551,10 +3553,10 @@ type JobFilters struct {
 	// locale.
 	//
 	//
-	// Language codes should be in BCP-47 format, for example, "en-US" or
-	// "sr-Latn".
-	// For more information, see
-	// [Tags for Identifying
+	// Language codes should be in BCP-47 format, for example, "en-US"
+	// or
+	// "sr-Latn". For more information, see [Tags for
+	// Identifying
 	// Languages](https://tools.ietf.org/html/bcp47).
 	//
 	// At most 10 language code filters are allowed.
@@ -4438,8 +4440,8 @@ type MatchingJob struct {
 	// JobTitleSnippet: Contains snippets of text from the Job.job_title
 	// field most
 	// closely matching a search query's keywords, if available. The
-	// matching query
-	// keywords are enclosed in HTML bold tags.
+	// matching
+	// query keywords are enclosed in HTML bold tags.
 	JobTitleSnippet string `json:"jobTitleSnippet,omitempty"`
 
 	// SearchTextSnippet: Contains snippets of text from the Job.description
@@ -5027,8 +5029,9 @@ type SearchJobsRequest struct {
 	// Possible values:
 	//   "JOB_VIEW_UNSPECIFIED" - Default value.
 	//   "SMALL" - A small view of the job, with the following attributes in
-	// the search results:
-	// Job.name, Job.requisition_id, Job.job_title,
+	// the search
+	// results: Job.name, Job.requisition_id,
+	// Job.job_title,
 	// Job.company_name, Job.job_locations,
 	// Job.description,
 	// Job.visibility.
@@ -5080,10 +5083,10 @@ type SearchJobsRequest struct {
 	// Offset: Optional.
 	//
 	// An integer that specifies the current offset (that is, starting
-	// result location, amongst the jobs deemed by the API as relevant)
-	// in
-	// search results. This field is only considered if page_token is
-	// unset.
+	// result
+	// location, amongst the jobs deemed by the API as relevant) in
+	// search
+	// results. This field is only considered if page_token is unset.
 	//
 	// For example, 0 means to  return results starting from the first
 	// matching
@@ -5265,8 +5268,9 @@ type SearchJobsResponse struct {
 	// Possible values:
 	//   "JOB_VIEW_UNSPECIFIED" - Default value.
 	//   "SMALL" - A small view of the job, with the following attributes in
-	// the search results:
-	// Job.name, Job.requisition_id, Job.job_title,
+	// the search
+	// results: Job.name, Job.requisition_id,
+	// Job.job_title,
 	// Job.company_name, Job.job_locations,
 	// Job.description,
 	// Job.visibility.

@@ -515,10 +515,11 @@ func (s *CorpusQuery) MarshalJSON() ([]byte, error) {
 type DriveExportOptions struct {
 	// IncludeAccessInfo: Set to true to include access level information
 	// for users
-	// with <a
-	// href="https://support.google.com/vault/answer/6099459#metadata">indire
-	// ct access</a>
-	// to files.
+	// with
+	// <a
+	// href="https://support.google.com/vault/answer/6099459#metadata">ind
+	// irect
+	// access</a> to files.
 	IncludeAccessInfo bool `json:"includeAccessInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeAccessInfo")
@@ -1464,7 +1465,8 @@ func (s *Matter) MarshalJSON() ([]byte, error) {
 // resources
 // cease to exist.
 type MatterPermission struct {
-	// AccountId: The account id, as provided by <a
+	// AccountId: The account id, as provided by
+	// <a
 	// href="https://developers.google.com/admin-sdk/">Admin SDK</a>.
 	AccountId string `json:"accountId,omitempty"`
 
@@ -1507,7 +1509,8 @@ func (s *MatterPermission) MarshalJSON() ([]byte, error) {
 type OrgUnitInfo struct {
 	// OrgUnitId: Org unit to search, as provided by the
 	// <a href="https://developers.google.com/admin-sdk/directory/">Admin
-	// SDK Directory API</a>.
+	// SDK
+	// Directory API</a>.
 	OrgUnitId string `json:"orgUnitId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "OrgUnitId") to
@@ -1612,9 +1615,10 @@ type Query struct {
 	TeamDriveInfo *TeamDriveInfo `json:"teamDriveInfo,omitempty"`
 
 	// Terms: The corpus-specific
-	// <a href="https://support.google.com/vault/answer/2474474">search
-	// operators</a>
-	// used to generate search results.
+	// <a
+	// href="https://support.google.com/vault/answer/2474474">search
+	// operator
+	// s</a> used to generate search results.
 	Terms string `json:"terms,omitempty"`
 
 	// TimeZone: The time zone name.

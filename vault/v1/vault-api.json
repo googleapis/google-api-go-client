@@ -1024,7 +1024,7 @@
       }
     }
   },
-  "revision": "20190320",
+  "revision": "20190411",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {
@@ -1193,7 +1193,7 @@
       "id": "DriveExportOptions",
       "properties": {
         "includeAccessInfo": {
-          "description": "Set to true to include access level information for users\nwith \u003ca href=\"https://support.google.com/vault/answer/6099459#metadata\"\u003eindirect access\u003c/a\u003e\nto files.",
+          "description": "Set to true to include access level information for users\nwith \u003ca\nhref=\"https://support.google.com/vault/answer/6099459#metadata\"\u003eindirect\naccess\u003c/a\u003e to files.",
           "type": "boolean"
         }
       },
@@ -1739,7 +1739,7 @@
       "id": "MatterPermission",
       "properties": {
         "accountId": {
-          "description": "The account id, as provided by \u003ca href=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
+          "description": "The account id, as provided by \u003ca\nhref=\"https://developers.google.com/admin-sdk/\"\u003eAdmin SDK\u003c/a\u003e.",
           "type": "string"
         },
         "role": {
@@ -1764,7 +1764,7 @@
       "id": "OrgUnitInfo",
       "properties": {
         "orgUnitId": {
-          "description": "Org unit to search, as provided by the\n\u003ca href=\"https://developers.google.com/admin-sdk/directory/\"\u003eAdmin SDK Directory API\u003c/a\u003e.",
+          "description": "Org unit to search, as provided by the\n\u003ca href=\"https://developers.google.com/admin-sdk/directory/\"\u003eAdmin SDK\nDirectory API\u003c/a\u003e.",
           "type": "string"
         }
       },
@@ -1867,7 +1867,7 @@
           "description": "When 'TEAM_DRIVE' is chosen as search method, team_drive_info needs to be\nspecified."
         },
         "terms": {
-          "description": "The corpus-specific\n\u003ca href=\"https://support.google.com/vault/answer/2474474\"\u003esearch operators\u003c/a\u003e\nused to generate search results.",
+          "description": "The corpus-specific\n\u003ca href=\"https://support.google.com/vault/answer/2474474\"\u003esearch\noperators\u003c/a\u003e used to generate search results.",
           "type": "string"
         },
         "timeZone": {

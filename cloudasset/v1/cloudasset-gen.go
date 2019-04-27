@@ -389,7 +389,7 @@ func (s *BatchGetAssetsHistoryResponse) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -463,8 +463,8 @@ type ExportAssetsRequest struct {
 	// AssetTypes: A list of asset types of which to take a snapshot for.
 	// For example:
 	// "compute.googleapis.com/Disk". If specified, only matching assets
-	// will be returned.
-	// See [Introduction to Cloud
+	// will be
+	// returned. See [Introduction to Cloud
 	// Asset
 	// Inventory](https://cloud.google.com/resource-manager/docs/cloud-
 	// asset-inventory/overview)
@@ -586,6 +586,25 @@ type GcsDestination struct {
 	// -metadata)
 	// for more information.
 	Uri string `json:"uri,omitempty"`
+
+	// UriPrefix: The uri prefix of all generated Cloud Storage objects. For
+	// example:
+	// "gs://bucket_name/object_name_prefix". Each object uri is in
+	// format:
+	// "gs://bucket_name/object_name_prefix/<asset type>/<shard number> and
+	// only
+	// contains assets for that type. <shard number> starts from 0. For
+	// example:
+	// "gs://bucket_name/object_name_prefix/compute.googleapis.com/D
+	// isk/0" is
+	// the first shard of output objects containing
+	// all
+	// compute.googleapis.com/Disk assets. An INVALID_ARGUMENT error will
+	// be
+	// returned if file with the same name
+	// "gs://bucket_name/object_name_prefix"
+	// already exists.
+	UriPrefix string `json:"uriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Uri") to
 	// unconditionally include in API requests. By default, fields with
@@ -1271,9 +1290,10 @@ func (r *V1Service) BatchGetAssetsHistory(parent string) *V1BatchGetAssetsHistor
 // [Resource
 // Names](https://cloud.google.com/apis/design/resource_names#f
 // ull_resource_name)
-// and [Resource Name
-// Format](https://cloud.google.com/resource-manager/docs/cloud-asset-inv
-// entory/resource-name-format)
+// and [Resource
+// Name
+// Format](https://cloud.google.com/resource-manager/docs/cloud-asse
+// t-inventory/resource-name-format)
 // for more info.
 //
 // The request becomes a no-op if the asset name list is empty, and the
@@ -1420,7 +1440,7 @@ func (c *V1BatchGetAssetsHistoryCall) Do(opts ...googleapi.CallOption) (*BatchGe
 	//   ],
 	//   "parameters": {
 	//     "assetNames": {
-	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nand [Resource Name Format](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/resource-name-format)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
+	//       "description": "A list of the full names of the assets. For example:\n`//compute.googleapis.com/projects/my_project_123/zones/zone1/instances/instance1`.\nSee [Resource\nNames](https://cloud.google.com/apis/design/resource_names#full_resource_name)\nand [Resource Name\nFormat](https://cloud.google.com/resource-manager/docs/cloud-asset-inventory/resource-name-format)\nfor more info.\n\nThe request becomes a no-op if the asset name list is empty, and the max\nsize of the asset name list is 100 in one request.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

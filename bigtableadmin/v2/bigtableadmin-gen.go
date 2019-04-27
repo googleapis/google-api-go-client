@@ -479,9 +479,8 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// Condition: The condition that is associated with this binding.
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -7102,7 +7101,18 @@ func (r *ProjectsInstancesTablesService) List(parent string) *ProjectsInstancesT
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // results per page.
-// CURRENTLY UNIMPLEMENTED AND IGNORED.
+//
+// A page_size of zero lets the server choose the number of items to
+// return.
+// A page_size which is strictly positive will return at most that many
+// items.
+// A negative page_size will cause an error.
+//
+// Following the first request, subsequent paginated calls are not
+// required
+// to pass a page_size. If a page_size is set in subsequent calls, it
+// must
+// match the page_size given in the first request.
 func (c *ProjectsInstancesTablesListCall) PageSize(pageSize int64) *ProjectsInstancesTablesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7238,7 +7248,7 @@ func (c *ProjectsInstancesTablesListCall) Do(opts ...googleapi.CallOption) (*Lis
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Maximum number of results per page.\nCURRENTLY UNIMPLEMENTED AND IGNORED.",
+	//       "description": "Maximum number of results per page.\n\nA page_size of zero lets the server choose the number of items to return.\nA page_size which is strictly positive will return at most that many items.\nA negative page_size will cause an error.\n\nFollowing the first request, subsequent paginated calls are not required\nto pass a page_size. If a page_size is set in subsequent calls, it must\nmatch the page_size given in the first request.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

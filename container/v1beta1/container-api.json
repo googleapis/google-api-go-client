@@ -2489,7 +2489,7 @@
       }
     }
   },
-  "revision": "20190319",
+  "revision": "20190411",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2696,7 +2696,7 @@
           "type": "integer"
         },
         "currentNodeVersion": {
-          "description": "[Output only] Deprecated, use\n[NodePool.version](/kubernetes-engine/docs/reference/rest/v1beta1/projects.zones.clusters.nodePool)\ninstead. The current version of the node software components.\nIf they are currently at multiple versions because they're in the process\nof being upgraded, this reflects the minimum version of all nodes.",
+          "description": "[Output only] Deprecated, use\n[NodePool.version](/kubernetes-engine/docs/reference/rest/v1beta1/projects.locations.clusters.nodePools)\ninstead. The current version of the node software components.\nIf they are currently at multiple versions because they're in the process\nof being upgraded, this reflects the minimum version of all nodes.",
           "type": "string"
         },
         "databaseEncryption": {
@@ -3132,43 +3132,43 @@
       "id": "GetOpenIDConfigResponse",
       "properties": {
         "claims_supported": {
-          "description": "NOLINT",
+          "description": "Supported claims.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "grant_types": {
-          "description": "NOLINT",
+          "description": "Supported grant types.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "id_token_signing_alg_values_supported": {
-          "description": "NOLINT",
+          "description": "supported ID Token signing Algorithms.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "issuer": {
-          "description": "NOLINT",
+          "description": "OIDC Issuer.",
           "type": "string"
         },
         "jwks_uri": {
-          "description": "NOLINT",
+          "description": "JSON Web Key uri.",
           "type": "string"
         },
         "response_types_supported": {
-          "description": "NOLINT",
+          "description": "Supported response types.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "subject_types_supported": {
-          "description": "NOLINT",
+          "description": "Supported subject types.",
           "items": {
             "type": "string"
           },
@@ -3297,39 +3297,39 @@
       "id": "Jwk",
       "properties": {
         "alg": {
-          "description": "NOLINT",
+          "description": "Algorithm.",
           "type": "string"
         },
         "crv": {
-          "description": "NOLINT",
+          "description": "Used for ECDSA keys.",
           "type": "string"
         },
         "e": {
-          "description": "NOLINT",
+          "description": "Used for RSA keys.",
           "type": "string"
         },
         "kid": {
-          "description": "NOLINT",
+          "description": "Key ID.",
           "type": "string"
         },
         "kty": {
-          "description": "NOLINT",
+          "description": "Key Type.",
           "type": "string"
         },
         "n": {
-          "description": "Fields for RSA keys.\nNOLINT",
+          "description": "Used for RSA keys.",
           "type": "string"
         },
         "use": {
-          "description": "NOLINT",
+          "description": "Permitted uses for the public keys.",
           "type": "string"
         },
         "x": {
-          "description": "Fields for ECDSA keys.\nNOLINT",
+          "description": "Used for ECDSA keys.",
           "type": "string"
         },
         "y": {
-          "description": "NOLINT",
+          "description": "Used for ECDSA keys.",
           "type": "string"
         }
       },
@@ -3700,6 +3700,10 @@
         "preemptible": {
           "description": "Whether the nodes are created as preemptible VM instances. See:\nhttps://cloud.google.com/compute/docs/instances/preemptible for more\ninforamtion about preemptible VM instances.",
           "type": "boolean"
+        },
+        "sandboxConfig": {
+          "$ref": "SandboxConfig",
+          "description": "Sandbox configuration for this node."
         },
         "serviceAccount": {
           "description": "The Google Cloud Platform Service Account to be used by the node VMs. If\nno Service Account is specified, the \"default\" service account is used.",
@@ -4141,6 +4145,17 @@
         },
         "zone": {
           "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SandboxConfig": {
+      "description": "SandboxConfig contains configurations of the sandbox to use for the node.",
+      "id": "SandboxConfig",
+      "properties": {
+        "sandboxType": {
+          "description": "Type of the sandbox to use for the node (e.g. 'gvisor')",
           "type": "string"
         }
       },

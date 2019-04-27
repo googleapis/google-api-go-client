@@ -909,11 +909,21 @@ type ConsumerInfo struct {
 	// id. New code should not depend on this field anymore.
 	ProjectNumber int64 `json:"projectNumber,omitempty,string"`
 
+	// Type: The type of the consumer which should have been defined
+	// in
+	// [Google Resource
+	// Manager](https://cloud.google.com/resource-manager/).
+	//
 	// Possible values:
-	//   "CONSUMER_TYPE_UNSPECIFIED"
-	//   "PROJECT"
-	//   "FOLDER"
-	//   "ORGANIZATION"
+	//   "CONSUMER_TYPE_UNSPECIFIED" - This is never used.
+	//   "PROJECT" - The consumer is a Google Cloud Project.
+	//   "FOLDER" - The consumer is a Google Cloud Folder.
+	//   "ORGANIZATION" - The consumer is a Google Cloud Organization.
+	//   "SERVICE_SPECIFIC" - Service-specific resource container which is
+	// defined by the service
+	// producer to offer their users the ability to manage service
+	// control
+	// functionalities at a finer level of granularity than the PROJECT.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsumerNumber") to

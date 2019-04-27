@@ -614,7 +614,7 @@
       }
     }
   },
-  "revision": "20190322",
+  "revision": "20190425",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "BatchDeleteJobsRequest": {
@@ -1351,7 +1351,7 @@
             "A mobile device web browser, such as a phone or tablet with a Chrome\nbrowser.",
             "An Android device native application.",
             "An iOS device native application.",
-            "A bot, as opposed to a device operated by human beings, such as a web crawler.",
+            "A bot, as opposed to a device operated by human beings, such as a web\ncrawler.",
             "Other devices types."
           ],
           "type": "string"
@@ -1727,7 +1727,7 @@
           "type": "array"
         },
         "customAttributeHistogramFacets": {
-          "description": "Optional.\n\nSpecifies the custom attributes histogram requests.\nDuplicate values of CustomAttributeHistogramRequest.key are not allowed.",
+          "description": "Optional.\n\nSpecifies the custom attributes histogram requests.\nDuplicate values of CustomAttributeHistogramRequest.key are not\nallowed.",
           "items": {
             "$ref": "CustomAttributeHistogramRequest"
           },
@@ -2409,7 +2409,7 @@
           "description": "Deprecated. Always use compensation_filter.\n\nOptional.\n\nThis search filter is applied only to\nJob.extended_compensation_info. For example, if the filter is specified\nas \"Hourly job with per-hour compensation \u003e $15\", only jobs that meet\nthese criteria are searched. If a filter is not defined, all open jobs\nare searched."
         },
         "languageCodes": {
-          "description": "Optional.\n\nThis filter specifies the locale of jobs to search against,\nfor example, \"en-US\".\n\nIf a value is not specified, the search results may contain jobs in any\nlocale.\n\n\nLanguage codes should be in BCP-47 format, for example, \"en-US\" or \"sr-Latn\".\nFor more information, see\n[Tags for Identifying Languages](https://tools.ietf.org/html/bcp47).\n\nAt most 10 language code filters are allowed.",
+          "description": "Optional.\n\nThis filter specifies the locale of jobs to search against,\nfor example, \"en-US\".\n\nIf a value is not specified, the search results may contain jobs in any\nlocale.\n\n\nLanguage codes should be in BCP-47 format, for example, \"en-US\" or\n\"sr-Latn\". For more information, see [Tags for Identifying\nLanguages](https://tools.ietf.org/html/bcp47).\n\nAt most 10 language code filters are allowed.",
           "items": {
             "type": "string"
           },
@@ -2842,7 +2842,7 @@
           "type": "string"
         },
         "jobTitleSnippet": {
-          "description": "Contains snippets of text from the Job.job_title field most\nclosely matching a search query's keywords, if available. The matching query\nkeywords are enclosed in HTML bold tags.",
+          "description": "Contains snippets of text from the Job.job_title field most\nclosely matching a search query's keywords, if available. The matching\nquery keywords are enclosed in HTML bold tags.",
           "type": "string"
         },
         "searchTextSnippet": {
@@ -3066,7 +3066,7 @@
           ],
           "enumDescriptions": [
             "Default value.",
-            "A small view of the job, with the following attributes in the search results:\nJob.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations, Job.description,\nJob.visibility.\nNote: Job.description is deprecated. It is scheduled to be removed\nfrom MatchingJob.Job objects in the SearchJobsResponse results\non 12/31/2018.",
+            "A small view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations, Job.description,\nJob.visibility.\nNote: Job.description is deprecated. It is scheduled to be removed\nfrom MatchingJob.Job objects in the SearchJobsResponse results\non 12/31/2018.",
             "A minimal view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations.",
             "All available attributes are included in the search results.\nNote: [Job.description, Job.responsibilities,\nJob.qualifications and Job.incentives are deprecated.\nThese fields are scheduled to be removed from MatchingJob.Job objects\nin the SearchJobsResponse results on 12/31/2018.\nSee the alternative MatchingJob.search_text_snippet and\nMatchingJob.job_summary fields."
           ],
@@ -3089,7 +3089,7 @@
           "type": "string"
         },
         "offset": {
-          "description": "Optional.\n\nAn integer that specifies the current offset (that is, starting result location, amongst the jobs deemed by the API as relevant) in\nsearch results. This field is only considered if page_token is unset.\n\nFor example, 0 means to  return results starting from the first matching\njob, and 10 means to return from the 11th job. This can be used for\npagination, (for example, pageSize = 10 and offset = 10 means to return\nfrom the second page).",
+          "description": "Optional.\n\nAn integer that specifies the current offset (that is, starting result\nlocation, amongst the jobs deemed by the API as relevant) in search\nresults. This field is only considered if page_token is unset.\n\nFor example, 0 means to  return results starting from the first matching\njob, and 10 means to return from the 11th job. This can be used for\npagination, (for example, pageSize = 10 and offset = 10 means to return\nfrom the second page).",
           "format": "int32",
           "type": "integer"
         },
@@ -3203,7 +3203,7 @@
           ],
           "enumDescriptions": [
             "Default value.",
-            "A small view of the job, with the following attributes in the search results:\nJob.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations, Job.description,\nJob.visibility.\nNote: Job.description is deprecated. It is scheduled to be removed\nfrom MatchingJob.Job objects in the SearchJobsResponse results\non 12/31/2018.",
+            "A small view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations, Job.description,\nJob.visibility.\nNote: Job.description is deprecated. It is scheduled to be removed\nfrom MatchingJob.Job objects in the SearchJobsResponse results\non 12/31/2018.",
             "A minimal view of the job, with the following attributes in the search\nresults: Job.name, Job.requisition_id, Job.job_title,\nJob.company_name, Job.job_locations.",
             "All available attributes are included in the search results.\nNote: [Job.description, Job.responsibilities,\nJob.qualifications and Job.incentives are deprecated.\nThese fields are scheduled to be removed from MatchingJob.Job objects\nin the SearchJobsResponse results on 12/31/2018.\nSee the alternative MatchingJob.search_text_snippet and\nMatchingJob.job_summary fields."
           ],

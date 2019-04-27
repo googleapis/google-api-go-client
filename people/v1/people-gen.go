@@ -556,6 +556,8 @@ type ContactGroupMembership struct {
 	// Any contact group membership can be removed, but only user group
 	// or
 	// "myContacts" or "starred" system groups memberships can be added.
+	// A
+	// contact must always have at least one contact group membership.
 	ContactGroupResourceName string `json:"contactGroupResourceName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to

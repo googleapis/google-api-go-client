@@ -608,7 +608,8 @@ type AutomaticScaling struct {
 	// CpuUtilization: Target scaling by CPU usage.
 	CpuUtilization *CpuUtilization `json:"cpuUtilization,omitempty"`
 
-	// CustomMetrics: Target scaling by user-provided metrics.
+	// CustomMetrics: Target scaling by user-provided metrics. Only
+	// applicable in the App Engine flexible environment.
 	CustomMetrics []*CustomMetric `json:"customMetrics,omitempty"`
 
 	// DiskUtilization: Target scaling by disk usage.

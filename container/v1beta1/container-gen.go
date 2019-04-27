@@ -692,7 +692,7 @@ type Cluster struct {
 	// CurrentNodeVersion: [Output only] Deprecated,
 	// use
 	// [NodePool.version](/kubernetes-engine/docs/reference/rest/v1beta1/
-	// projects.zones.clusters.nodePool)
+	// projects.locations.clusters.nodePools)
 	// instead. The current version of the node software components.
 	// If they are currently at multiple versions because they're in the
 	// process
@@ -1518,25 +1518,26 @@ func (s *GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
 // document for the cluster.
 // See the OpenID Connect Discovery 1.0 specification for details.
 type GetOpenIDConfigResponse struct {
-	// ClaimsSupported: NOLINT
+	// ClaimsSupported: Supported claims.
 	ClaimsSupported []string `json:"claims_supported,omitempty"`
 
-	// GrantTypes: NOLINT
+	// GrantTypes: Supported grant types.
 	GrantTypes []string `json:"grant_types,omitempty"`
 
-	// IdTokenSigningAlgValuesSupported: NOLINT
+	// IdTokenSigningAlgValuesSupported: supported ID Token signing
+	// Algorithms.
 	IdTokenSigningAlgValuesSupported []string `json:"id_token_signing_alg_values_supported,omitempty"`
 
-	// Issuer: NOLINT
+	// Issuer: OIDC Issuer.
 	Issuer string `json:"issuer,omitempty"`
 
-	// JwksUri: NOLINT
+	// JwksUri: JSON Web Key uri.
 	JwksUri string `json:"jwks_uri,omitempty"`
 
-	// ResponseTypesSupported: NOLINT
+	// ResponseTypesSupported: Supported response types.
 	ResponseTypesSupported []string `json:"response_types_supported,omitempty"`
 
-	// SubjectTypesSupported: NOLINT
+	// SubjectTypesSupported: Supported subject types.
 	SubjectTypesSupported []string `json:"subject_types_supported,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1893,33 +1894,31 @@ func (s *IstioConfig) MarshalJSON() ([]byte, error) {
 
 // Jwk: Jwk is a JSON Web Key as specified in RFC 7517
 type Jwk struct {
-	// Alg: NOLINT
+	// Alg: Algorithm.
 	Alg string `json:"alg,omitempty"`
 
-	// Crv: NOLINT
+	// Crv: Used for ECDSA keys.
 	Crv string `json:"crv,omitempty"`
 
-	// E: NOLINT
+	// E: Used for RSA keys.
 	E string `json:"e,omitempty"`
 
-	// Kid: NOLINT
+	// Kid: Key ID.
 	Kid string `json:"kid,omitempty"`
 
-	// Kty: NOLINT
+	// Kty: Key Type.
 	Kty string `json:"kty,omitempty"`
 
-	// N: Fields for RSA keys.
-	// NOLINT
+	// N: Used for RSA keys.
 	N string `json:"n,omitempty"`
 
-	// Use: NOLINT
+	// Use: Permitted uses for the public keys.
 	Use string `json:"use,omitempty"`
 
-	// X: Fields for ECDSA keys.
-	// NOLINT
+	// X: Used for ECDSA keys.
 	X string `json:"x,omitempty"`
 
-	// Y: NOLINT
+	// Y: Used for ECDSA keys.
 	Y string `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alg") to
@@ -2764,6 +2763,9 @@ type NodeConfig struct {
 	// inforamtion about preemptible VM instances.
 	Preemptible bool `json:"preemptible,omitempty"`
 
+	// SandboxConfig: Sandbox configuration for this node.
+	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
+
 	// ServiceAccount: The Google Cloud Platform Service Account to be used
 	// by the node VMs. If
 	// no Service Account is specified, the "default" service account is
@@ -3439,6 +3441,35 @@ type RollbackNodePoolUpgradeRequest struct {
 
 func (s *RollbackNodePoolUpgradeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackNodePoolUpgradeRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SandboxConfig: SandboxConfig contains configurations of the sandbox
+// to use for the node.
+type SandboxConfig struct {
+	// SandboxType: Type of the sandbox to use for the node (e.g. 'gvisor')
+	SandboxType string `json:"sandboxType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SandboxType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SandboxType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SandboxConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SandboxConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

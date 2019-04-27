@@ -882,6 +882,10 @@ type ApkManifest struct {
 	// "com.example.foo".
 	PackageName string `json:"packageName,omitempty"`
 
+	// TargetSdkVersion: Specifies the API Level on which the application is
+	// designed to run.
+	TargetSdkVersion int64 `json:"targetSdkVersion,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ApplicationLabel") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

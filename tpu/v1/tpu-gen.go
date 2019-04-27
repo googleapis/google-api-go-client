@@ -841,6 +841,9 @@ func (s *ReimageNodeRequest) MarshalJSON() ([]byte, error) {
 type SchedulingConfig struct {
 	Preemptible bool `json:"preemptible,omitempty"`
 
+	// Reserved: Whether the node is created under a reservation.
+	Reserved bool `json:"reserved,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Preemptible") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,

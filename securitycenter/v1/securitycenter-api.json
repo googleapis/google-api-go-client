@@ -898,7 +898,7 @@
       }
     }
   },
-  "revision": "20190419",
+  "revision": "20190424",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1202,7 +1202,7 @@
           "type": "string"
         },
         "filter": {
-          "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following field and operator combinations are supported:\nname | `=`\nupdate_time | `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\niam_policy.policy_blob | '=', ':'\nresource_properties | '=', ':', `\u003e`, `\u003c`, `\u003e=`, `\u003c=`\nsecurity_marks | '=', ':'\nsecurity_center_properties.resource_name | '=', ':'\nsecurity_center_properties.resource_type | '=', ':'\nsecurity_center_properties.resource_parent | '=', ':'\nsecurity_center_properties.resource_project | '=', ':'\nsecurity_center_properties.resource_owners | '=', ':'\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
+          "description": "Expression that defines the filter to apply across assets.\nThe expression is a list of zero or more restrictions combined via logical\noperators `AND` and `OR`.\nParentheses are supported, and `OR` has higher precedence than `AND`.\n\nRestrictions have the form `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e` and may have a `-`\ncharacter in front of them to indicate negation. The fields map to those\ndefined in the Asset resource. Examples include:\n\n* name\n* security_center_properties.resource_name\n* resource_properties.a_property\n* security_marks.marks.marka\n\nThe supported operators are:\n\n* `=` for all value types.\n* `\u003e`, `\u003c`, `\u003e=`, `\u003c=` for integer values.\n* `:`, meaning substring matching, for strings.\n\nThe supported value types are:\n\n* string literals in quotes.\n* integer literals without quotes.\n* boolean literals `true` and `false` without quotes.\n\nThe following field and operator combinations are supported:\nname | '='\nupdate_time | '\u003e', '\u003c', '\u003e=', '\u003c=', '='\ncreate_time | '\u003e', '\u003c', '\u003e=', '\u003c=', '='\niam_policy.policy_blob | '=', ':'\nresource_properties | '=', ':', '\u003e', '\u003c', '\u003e=', '\u003c='\nsecurity_marks | '=', ':'\nsecurity_center_properties.resource_name | '=', ':'\nsecurity_center_properties.resource_type | '=', ':'\nsecurity_center_properties.resource_parent | '=', ':'\nsecurity_center_properties.resource_project | '=', ':'\nsecurity_center_properties.resource_owners | '=', ':'\n\nFor example, `resource_properties.size = 100` is a valid filter string.",
           "type": "string"
         },
         "groupBy": {

@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/uh6pImLtAzfcW3qnOu2tIOip1lc\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/HbPpd0EFfBYGp2v8ZbudbN_BrJo\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -233,7 +233,7 @@
           ]
         },
         "link": {
-          "description": "Performs an action on a link between a Merchant Center account and another account.",
+          "description": "Performs an action on a link between two Merchant Center accounts, namely accountId and linkedAccountId.",
           "httpMethod": "POST",
           "id": "content.accounts.link",
           "parameterOrder": [
@@ -1219,7 +1219,7 @@
     "orderinvoices": {
       "methods": {
         "createchargeinvoice": {
-          "description": "Creates a charge invoice for a shipment group, and triggers a charge capture for non-facilitated payment orders.",
+          "description": "Creates a charge invoice for a shipment group, and triggers a charge capture for orderinvoice enabled orders.",
           "httpMethod": "POST",
           "id": "content.orderinvoices.createchargeinvoice",
           "parameterOrder": [
@@ -1253,7 +1253,7 @@
           ]
         },
         "createrefundinvoice": {
-          "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for non-facilitated payment orders. This can only be used for line items that have previously been charged using createChargeInvoice. All amounts (except for the summary) are incremental with respect to the previous invoice.",
+          "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for orderinvoice enabled orders. This can only be used for line items that have previously been charged using createChargeInvoice. All amounts (except for the summary) are incremental with respect to the previous invoice.",
           "httpMethod": "POST",
           "id": "content.orderinvoices.createrefundinvoice",
           "parameterOrder": [
@@ -2886,7 +2886,7 @@
       }
     }
   },
-  "revision": "20190327",
+  "revision": "20190423",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7636,7 +7636,7 @@
           "description": "Price of the item."
         },
         "productTypes": {
-          "description": "Categories of the item (formatted as in products feed specification).",
+          "description": "Categories of the item (formatted as in products data specification).",
           "items": {
             "type": "string"
           },
@@ -7654,7 +7654,7 @@
           "description": "Advertised sale price of the item."
         },
         "salePriceEffectiveDate": {
-          "description": "Date range during which the item is on sale (see products feed specification).",
+          "description": "Date range during which the item is on sale (see products data specification).",
           "type": "string"
         },
         "sellOnGoogleQuantity": {
@@ -7717,6 +7717,10 @@
           "description": "The CLDR territory code for the item.",
           "type": "string"
         },
+        "taxCategory": {
+          "description": "The tax category of the product, used to configure detailed tax nexus in account-level tax settings.",
+          "type": "string"
+        },
         "taxes": {
           "description": "Tax information.",
           "items": {
@@ -7726,6 +7730,10 @@
         },
         "title": {
           "description": "Title of the item.",
+          "type": "string"
+        },
+        "transitTimeLabel": {
+          "description": "The transit time label of the product, used to group product in account-level transit time tables.",
           "type": "string"
         },
         "unitPricingBaseMeasure": {

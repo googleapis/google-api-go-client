@@ -2386,7 +2386,7 @@
       }
     }
   },
-  "revision": "20190402",
+  "revision": "20190420",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3943,6 +3943,22 @@
         },
         "model": {
           "description": "Optional. Which Speech model to select for the given request. Select the\nmodel best suited to your domain to get best results. If a model is not\nexplicitly specified, then we auto-select a model based on the parameters\nin the InputAudioConfig.\nIf enhanced speech model is enabled for the agent and an enhanced\nversion of the specified model for the language does not exist, then the\nspeech is recognized using the standard version of the specified model.\nRefer to\n[Cloud Speech API\ndocumentation](https://cloud.google.com/speech-to-text/docs/basics#select-model)\nfor more details.",
+          "type": "string"
+        },
+        "modelVariant": {
+          "description": "Optional. Which variant of the Speech model to use.",
+          "enum": [
+            "SPEECH_MODEL_VARIANT_UNSPECIFIED",
+            "USE_BEST_AVAILABLE",
+            "USE_STANDARD",
+            "USE_ENHANCED"
+          ],
+          "enumDescriptions": [
+            "No model variant specified. In this case we default to USE_BEST_AVAILABLE.",
+            "Use the best available variant of the Speech\nmodel that the caller is eligible for.\n\nPlease see the [Dialogflow\ndocs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging) for\nhow to make your project eligible for enhanced models.",
+            "Use standard model variant even if an enhanced model is available.  See the\n[Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\nfor details about enhanced models.",
+            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, we fall back to the\n  standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, we return an error.\n  Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging)\n  for how to make your project eligible."
+          ],
           "type": "string"
         },
         "phraseHints": {

@@ -262,15 +262,16 @@ func (s *DownloadLineItemsResponse) MarshalJSON() ([]byte, error) {
 // DownloadRequest: Request to fetch stored inventory sources,
 // campaigns, insertion orders, line items, TrueView ad groups and ads.
 type DownloadRequest struct {
-	// FileTypes: File types that will be returned.
+	// FileTypes: File types that will be returned. If INVENTORY_SOURCE is
+	// requested, no other file types may be requested.
 	//
 	// Acceptable values are:
 	// - "AD"
 	// - "AD_GROUP"
 	// - "CAMPAIGN"
 	// - "INSERTION_ORDER"
-	// - "LINE_ITEM"
 	// - "INVENTORY_SOURCE"
+	// - "LINE_ITEM"
 	//
 	// Possible values:
 	//   "AD"
@@ -285,7 +286,9 @@ type DownloadRequest struct {
 	// filter entities to fetch. At least one ID must be specified.
 	FilterIds googleapi.Int64s `json:"filterIds,omitempty"`
 
-	// FilterType: Filter type used to filter entities to fetch.
+	// FilterType: Filter type used to filter entities to fetch. PARTNER_ID
+	// and INVENTORY_SOURCE_ID may only be used when downloading inventory
+	// sources.
 	//
 	// Possible values:
 	//   "ADVERTISER_ID"
@@ -740,7 +743,7 @@ type Parameters struct {
 	//   "FILTER_ZIP_CODE"
 	GroupBys []string `json:"groupBys,omitempty"`
 
-	// IncludeInviteData: Whether to include data from Invite Media.
+	// IncludeInviteData: Deprecated. This field is no longer in use.
 	IncludeInviteData bool `json:"includeInviteData,omitempty"`
 
 	// Metrics: Metrics to include as columns in your report.

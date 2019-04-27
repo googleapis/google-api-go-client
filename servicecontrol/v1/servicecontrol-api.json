@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190318",
+  "revision": "20190422",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -626,17 +626,20 @@
           "type": "string"
         },
         "type": {
+          "description": "The type of the consumer which should have been defined in\n[Google Resource Manager](https://cloud.google.com/resource-manager/).",
           "enum": [
             "CONSUMER_TYPE_UNSPECIFIED",
             "PROJECT",
             "FOLDER",
-            "ORGANIZATION"
+            "ORGANIZATION",
+            "SERVICE_SPECIFIC"
           ],
           "enumDescriptions": [
-            "",
-            "",
-            "",
-            ""
+            "This is never used.",
+            "The consumer is a Google Cloud Project.",
+            "The consumer is a Google Cloud Folder.",
+            "The consumer is a Google Cloud Organization.",
+            "Service-specific resource container which is defined by the service\nproducer to offer their users the ability to manage service control\nfunctionalities at a finer level of granularity than the PROJECT."
           ],
           "type": "string"
         }

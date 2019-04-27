@@ -632,7 +632,7 @@
       }
     }
   },
-  "revision": "20190406",
+  "revision": "20190425",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -2453,7 +2453,7 @@
           "type": "integer"
         },
         "orderBy": {
-          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* \"relevance desc\": By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* \"posting`_`publish`_`time desc\": By Job.posting_publish_time descending.\n* \"posting`_`update`_`time desc\": By Job.posting_update_time descending.\n* \"title\": By Job.title ascending.\n* \"title desc\": By Job.title descending.\n* \"annualized`_`base`_`compensation\": By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`base`_`compensation desc\": By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation\": By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation desc\": By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.",
+          "description": "Optional.\n\nThe criteria determining how search results are sorted. Default is\n\"relevance desc\".\n\nSupported options are:\n\n* \"relevance desc\": By relevance descending, as determined by the API\nalgorithms. Relevance thresholding of query results is only available\nwith this ordering.\n* \"posting`_`publish`_`time desc\": By Job.posting_publish_time\ndescending.\n* \"posting`_`update`_`time desc\": By Job.posting_update_time\ndescending.\n* \"title\": By Job.title ascending.\n* \"title desc\": By Job.title descending.\n* \"annualized`_`base`_`compensation\": By job's\nCompensationInfo.annualized_base_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`base`_`compensation desc\": By job's\nCompensationInfo.annualized_base_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation\": By job's\nCompensationInfo.annualized_total_compensation_range ascending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.\n* \"annualized`_`total`_`compensation desc\": By job's\nCompensationInfo.annualized_total_compensation_range descending. Jobs\nwhose annualized base compensation is unspecified are put at the end of\nsearch results.",
           "type": "string"
         },
         "pageSize": {

@@ -223,7 +223,7 @@
       }
     }
   },
-  "revision": "20190409",
+  "revision": "20190425",
   "rootUrl": "https://firebasedynamiclinks.googleapis.com/",
   "schemas": {
     "AnalyticsInfo": {
@@ -730,12 +730,20 @@
           "description": "Scion campaign value to be propagated by iSDK to Scion at post-install.",
           "type": "string"
         },
+        "utmContent": {
+          "description": "Scion content value to be propagated by iSDK to Scion at app-reopen.",
+          "type": "string"
+        },
         "utmMedium": {
           "description": "Scion medium value to be propagated by iSDK to Scion at post-install.",
           "type": "string"
         },
         "utmSource": {
           "description": "Scion source value to be propagated by iSDK to Scion at post-install.",
+          "type": "string"
+        },
+        "utmTerm": {
+          "description": "Scion term value to be propagated by iSDK to Scion at app-reopen.",
           "type": "string"
         }
       },
@@ -784,12 +792,20 @@
           "description": "Scion campaign value to be propagated by iSDK to Scion at app-reopen.",
           "type": "string"
         },
+        "utmContent": {
+          "description": "Scion content value to be propagated by iSDK to Scion at app-reopen.",
+          "type": "string"
+        },
         "utmMedium": {
           "description": "Scion medium value to be propagated by iSDK to Scion at app-reopen.",
           "type": "string"
         },
         "utmSource": {
           "description": "Scion source value to be propagated by iSDK to Scion at app-reopen.",
+          "type": "string"
+        },
+        "utmTerm": {
+          "description": "Scion term value to be propagated by iSDK to Scion at app-reopen.",
           "type": "string"
         }
       },

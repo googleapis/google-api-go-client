@@ -957,6 +957,10 @@ type GetIosPostInstallAttributionResponse struct {
 	// at post-install.
 	UtmCampaign string `json:"utmCampaign,omitempty"`
 
+	// UtmContent: Scion content value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmContent string `json:"utmContent,omitempty"`
+
 	// UtmMedium: Scion medium value to be propagated by iSDK to Scion at
 	// post-install.
 	UtmMedium string `json:"utmMedium,omitempty"`
@@ -964,6 +968,10 @@ type GetIosPostInstallAttributionResponse struct {
 	// UtmSource: Scion source value to be propagated by iSDK to Scion at
 	// post-install.
 	UtmSource string `json:"utmSource,omitempty"`
+
+	// UtmTerm: Scion term value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmTerm string `json:"utmTerm,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1065,6 +1073,10 @@ type GetIosReopenAttributionResponse struct {
 	// at app-reopen.
 	UtmCampaign string `json:"utmCampaign,omitempty"`
 
+	// UtmContent: Scion content value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmContent string `json:"utmContent,omitempty"`
+
 	// UtmMedium: Scion medium value to be propagated by iSDK to Scion at
 	// app-reopen.
 	UtmMedium string `json:"utmMedium,omitempty"`
@@ -1072,6 +1084,10 @@ type GetIosReopenAttributionResponse struct {
 	// UtmSource: Scion source value to be propagated by iSDK to Scion at
 	// app-reopen.
 	UtmSource string `json:"utmSource,omitempty"`
+
+	// UtmTerm: Scion term value to be propagated by iSDK to Scion at
+	// app-reopen.
+	UtmTerm string `json:"utmTerm,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

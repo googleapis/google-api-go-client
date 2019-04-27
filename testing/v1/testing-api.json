@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190325",
+  "revision": "20190424",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -729,6 +729,11 @@
         "packageName": {
           "description": "Full Java-style package name for this application, e.g.\n\"com.example.foo\".",
           "type": "string"
+        },
+        "targetSdkVersion": {
+          "description": "Specifies the API Level on which the application is designed to run.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

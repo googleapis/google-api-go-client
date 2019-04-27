@@ -2399,20 +2399,20 @@ func (s *RunQueryResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Status: The `Status` type defines a logical error model that is
-// suitable for different
-// programming environments, including REST APIs and RPC APIs. It is
-// used by
-// [gRPC](https://github.com/grpc). The error model is designed to
-// be:
+// suitable for
+// different programming environments, including REST APIs and RPC APIs.
+// It is
+// used by [gRPC](https://github.com/grpc). The error model is designed
+// to be:
 //
 // - Simple to use and understand for most users
 // - Flexible enough to meet unexpected needs
 //
 // # Overview
 //
-// The `Status` message contains three pieces of data: error code, error
-// message,
-// and error details. The error code should be an enum value
+// The `Status` message contains three pieces of data: error code,
+// error
+// message, and error details. The error code should be an enum value
 // of
 // google.rpc.Code, but it may accept additional error codes if needed.
 // The
@@ -2923,7 +2923,7 @@ type Write struct {
 	// ment_path}`.
 	Delete string `json:"delete,omitempty"`
 
-	// Transform: Applies a tranformation to a document.
+	// Transform: Applies a transformation to a document.
 	// At most one `transform` per document is allowed in a given
 	// request.
 	// An `update` cannot follow a `transform` on the same document in a

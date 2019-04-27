@@ -628,6 +628,44 @@ func (s *Domain) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Drive: Information about a shared drive.
+type Drive struct {
+	// Name: The resource name of the shared drive. The format
+	// is
+	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
+	// collection
+	// ID for this resource name.
+	Name string `json:"name,omitempty"`
+
+	// Root: The root of this shared drive.
+	Root *DriveItem `json:"root,omitempty"`
+
+	// Title: The title of the shared drive.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Drive) MarshalJSON() ([]byte, error) {
+	type NoMethod Drive
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DriveActivity: A single Drive activity comprising one or more Actions
 // by one or more
 // Actors on one or more Targets. Some Action groupings occur
@@ -653,8 +691,8 @@ type DriveActivity struct {
 	// according to the ConsolidationStrategy in the request.
 	PrimaryActionDetail *ActionDetail `json:"primaryActionDetail,omitempty"`
 
-	// Targets: All Drive objects this activity is about (e.g. file, folder,
-	// Team Drive).
+	// Targets: All Google Drive objects this activity is about (e.g. file,
+	// folder, drive).
 	// This represents the state of the target immediately after the
 	// actions
 	// occurred.
@@ -689,12 +727,58 @@ func (s *DriveActivity) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DriveFile: A Drive item which is a file.
+type DriveFile struct {
+}
+
+// DriveFolder: A Drive item which is a folder.
+type DriveFolder struct {
+	// Type: The type of Drive folder.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The folder type is unknown.
+	//   "MY_DRIVE_ROOT" - The folder is the root of a user's MyDrive.
+	//   "SHARED_DRIVE_ROOT" - The folder is the root of a shared drive.
+	//   "STANDARD_FOLDER" - The folder is a standard, non-root, folder.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveFolder) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveFolder
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DriveItem: A Drive item, such as a file or folder.
 type DriveItem struct {
-	// File: The Drive item is a file.
+	// DriveFile: The Drive item is a file.
+	DriveFile *DriveFile `json:"driveFile,omitempty"`
+
+	// DriveFolder: The Drive item is a folder.
+	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
+
+	// File: This field is deprecated; please use the `driveFile` field
+	// instead.
 	File *File `json:"file,omitempty"`
 
-	// Folder: The Drive item is a folder.
+	// Folder: This field is deprecated; please use the `driveFolder` field
+	// instead.
 	Folder *Folder `json:"folder,omitempty"`
 
 	// MimeType: The MIME type of the Drive item.
@@ -711,7 +795,7 @@ type DriveItem struct {
 	// Title: The title of the Drive item.
 	Title string `json:"title,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "File") to
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -719,8 +803,8 @@ type DriveItem struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "File") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DriveFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -737,10 +821,18 @@ func (s *DriveItem) MarshalJSON() ([]byte, error) {
 // DriveItemReference: A lightweight reference to a Drive item, such as
 // a file or folder.
 type DriveItemReference struct {
-	// File: The Drive item is a file.
+	// DriveFile: The Drive item is a file.
+	DriveFile *DriveFile `json:"driveFile,omitempty"`
+
+	// DriveFolder: The Drive item is a folder.
+	DriveFolder *DriveFolder `json:"driveFolder,omitempty"`
+
+	// File: This field is deprecated; please use the `driveFile` field
+	// instead.
 	File *File `json:"file,omitempty"`
 
-	// Folder: The Drive item is a folder.
+	// Folder: This field is deprecated; please use the `driveFolder` field
+	// instead.
 	Folder *Folder `json:"folder,omitempty"`
 
 	// Name: The target Drive item. The format is "items/ITEM_ID".
@@ -749,7 +841,7 @@ type DriveItemReference struct {
 	// Title: The title of the Drive item.
 	Title string `json:"title,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "File") to
+	// ForceSendFields is a list of field names (e.g. "DriveFile") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -757,8 +849,8 @@ type DriveItemReference struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "File") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "DriveFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -772,11 +864,46 @@ func (s *DriveItemReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DriveReference: A lightweight reference to a shared drive.
+type DriveReference struct {
+	// Name: The resource name of the shared drive. The format
+	// is
+	// "COLLECTION_ID/DRIVE_ID". Clients should not assume a specific
+	// collection
+	// ID for this resource name.
+	Name string `json:"name,omitempty"`
+
+	// Title: The title of the shared drive.
+	Title string `json:"title,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveReference) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Edit: An empty message indicating an object was edited.
 type Edit struct {
 }
 
-// File: A Drive item which is a file.
+// File: This item is deprecated; please see `DriveFile` instead.
 type File struct {
 }
 
@@ -831,17 +958,20 @@ func (s *FileComment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Folder: A Drive item which is a folder.
+// Folder: This item is deprecated; please see `DriveFolder` instead.
 type Folder struct {
-	// Type: The type of Drive folder.
+	// Type: This field is deprecated; please see `DriveFolder.type`
+	// instead.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - The folder type is unknown.
-	//   "MY_DRIVE_ROOT" - The folder is the root of a user's MyDrive.
-	//   "TEAM_DRIVE_ROOT" - The folder is the root of a Team Drive. Note
-	// that this folder is
-	// a Drive item, and is a distinct entity from the Team Drive itself.
-	//   "STANDARD_FOLDER" - The folder is a standard, non-root, folder.
+	//   "TYPE_UNSPECIFIED" - This item is deprecated; please see
+	// `DriveFolder.Type` instead.
+	//   "MY_DRIVE_ROOT" - This item is deprecated; please see
+	// `DriveFolder.Type` instead.
+	//   "TEAM_DRIVE_ROOT" - This item is deprecated; please see
+	// `DriveFolder.Type` instead.
+	//   "STANDARD_FOLDER" - This item is deprecated; please see
+	// `DriveFolder.Type` instead.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -1021,7 +1151,11 @@ type Owner struct {
 	// Domain: The domain of the Drive item owner.
 	Domain *Domain `json:"domain,omitempty"`
 
-	// TeamDrive: The Team Drive that owns the Drive item.
+	// Drive: The drive that owns the item.
+	Drive *DriveReference `json:"drive,omitempty"`
+
+	// TeamDrive: This field is deprecated; please use the `drive` field
+	// instead.
 	TeamDrive *TeamDriveReference `json:"teamDrive,omitempty"`
 
 	// User: The user that owns the Drive item.
@@ -1529,16 +1663,20 @@ func (s *SystemEvent) MarshalJSON() ([]byte, error) {
 
 // Target: Information about the target of activity.
 type Target struct {
+	// Drive: The target is a shared drive.
+	Drive *Drive `json:"drive,omitempty"`
+
 	// DriveItem: The target is a Drive item.
 	DriveItem *DriveItem `json:"driveItem,omitempty"`
 
 	// FileComment: The target is a comment on a Drive file.
 	FileComment *FileComment `json:"fileComment,omitempty"`
 
-	// TeamDrive: The target is a Team Drive.
+	// TeamDrive: This field is deprecated; please use the `drive` field
+	// instead.
 	TeamDrive *TeamDrive `json:"teamDrive,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DriveItem") to
+	// ForceSendFields is a list of field names (e.g. "Drive") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1546,8 +1684,8 @@ type Target struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DriveItem") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Drive") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1563,13 +1701,17 @@ func (s *Target) MarshalJSON() ([]byte, error) {
 
 // TargetReference: A lightweight reference to the target of activity.
 type TargetReference struct {
+	// Drive: The target is a shared drive.
+	Drive *DriveReference `json:"drive,omitempty"`
+
 	// DriveItem: The target is a Drive item.
 	DriveItem *DriveItemReference `json:"driveItem,omitempty"`
 
-	// TeamDrive: The target is a Team Drive.
+	// TeamDrive: This field is deprecated; please use the `drive` field
+	// instead.
 	TeamDrive *TeamDriveReference `json:"teamDrive,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DriveItem") to
+	// ForceSendFields is a list of field names (e.g. "Drive") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1577,8 +1719,8 @@ type TargetReference struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DriveItem") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Drive") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1592,17 +1734,15 @@ func (s *TargetReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TeamDrive: Information about a Team Drive.
+// TeamDrive: This item is deprecated; please see `Drive` instead.
 type TeamDrive struct {
-	// Name: The resource name of the Team Drive. The format
-	// is
-	// "teamDrives/TEAM_DRIVE_ID".
+	// Name: This field is deprecated; please see `Drive.name` instead.
 	Name string `json:"name,omitempty"`
 
-	// Root: The root of this Team Drive.
+	// Root: This field is deprecated; please see `Drive.root` instead.
 	Root *DriveItem `json:"root,omitempty"`
 
-	// Title: The title of the Team Drive.
+	// Title: This field is deprecated; please see `Drive.title` instead.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1628,14 +1768,15 @@ func (s *TeamDrive) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TeamDriveReference: A lightweight reference to a Team Drive.
+// TeamDriveReference: This item is deprecated; please see
+// `DriveReference` instead.
 type TeamDriveReference struct {
-	// Name: The resource name of the Team Drive. The format
-	// is
-	// "teamDrives/TEAM_DRIVE_ID".
+	// Name: This field is deprecated; please see `DriveReference.name`
+	// instead.
 	Name string `json:"name,omitempty"`
 
-	// Title: The title of the Team Drive.
+	// Title: This field is deprecated; please see `DriveReference.title`
+	// instead.
 	Title string `json:"title,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

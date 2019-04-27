@@ -4001,9 +4001,7 @@ func (s *GooglePrivacyDlpV2InspectDataSourceDetails) MarshalJSON() ([]byte, erro
 }
 
 type GooglePrivacyDlpV2InspectJobConfig struct {
-	// Actions: Actions to execute at the completion of the job. Are
-	// executed in the order
-	// provided.
+	// Actions: Actions to execute at the completion of the job.
 	Actions []*GooglePrivacyDlpV2Action `json:"actions,omitempty"`
 
 	// InspectConfig: How and what to scan for.

@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190402",
+  "revision": "20190422",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3303,7 +3303,7 @@
       "id": "GooglePrivacyDlpV2InspectJobConfig",
       "properties": {
         "actions": {
-          "description": "Actions to execute at the completion of the job. Are executed in the order\nprovided.",
+          "description": "Actions to execute at the completion of the job.",
           "items": {
             "$ref": "GooglePrivacyDlpV2Action"
           },

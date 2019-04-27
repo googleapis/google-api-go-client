@@ -678,7 +678,7 @@ func (s *BatchCreateOccurrencesResponse) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -927,6 +927,117 @@ func (s *BuildSignature) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildSignature
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CVSSv3: Common Vulnerability Scoring System version 3.
+// For details, see https://www.first.org/cvss/specification-document
+type CVSSv3 struct {
+	// Possible values:
+	//   "ATTACK_COMPLEXITY_UNSPECIFIED"
+	//   "ATTACK_COMPLEXITY_LOW"
+	//   "ATTACK_COMPLEXITY_HIGH"
+	AttackComplexity string `json:"attackComplexity,omitempty"`
+
+	// AttackVector: Base Metrics
+	// Represents the intrinsic characteristics of a vulnerability that
+	// are
+	// constant over time and across user environments.
+	//
+	// Possible values:
+	//   "ATTACK_VECTOR_UNSPECIFIED"
+	//   "ATTACK_VECTOR_NETWORK"
+	//   "ATTACK_VECTOR_ADJACENT"
+	//   "ATTACK_VECTOR_LOCAL"
+	//   "ATTACK_VECTOR_PHYSICAL"
+	AttackVector string `json:"attackVector,omitempty"`
+
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
+	AvailabilityImpact string `json:"availabilityImpact,omitempty"`
+
+	// BaseScore: The base score is a function of the base metric scores.
+	BaseScore float64 `json:"baseScore,omitempty"`
+
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
+	ConfidentialityImpact string `json:"confidentialityImpact,omitempty"`
+
+	ExploitabilityScore float64 `json:"exploitabilityScore,omitempty"`
+
+	ImpactScore float64 `json:"impactScore,omitempty"`
+
+	// Possible values:
+	//   "IMPACT_UNSPECIFIED"
+	//   "IMPACT_HIGH"
+	//   "IMPACT_LOW"
+	//   "IMPACT_NONE"
+	IntegrityImpact string `json:"integrityImpact,omitempty"`
+
+	// Possible values:
+	//   "PRIVILEGES_REQUIRED_UNSPECIFIED"
+	//   "PRIVILEGES_REQUIRED_NONE"
+	//   "PRIVILEGES_REQUIRED_LOW"
+	//   "PRIVILEGES_REQUIRED_HIGH"
+	PrivilegesRequired string `json:"privilegesRequired,omitempty"`
+
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED"
+	//   "SCOPE_UNCHANGED"
+	//   "SCOPE_CHANGED"
+	Scope string `json:"scope,omitempty"`
+
+	// Possible values:
+	//   "USER_INTERACTION_UNSPECIFIED"
+	//   "USER_INTERACTION_NONE"
+	//   "USER_INTERACTION_REQUIRED"
+	UserInteraction string `json:"userInteraction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttackComplexity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttackComplexity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CVSSv3) MarshalJSON() ([]byte, error) {
+	type NoMethod CVSSv3
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *CVSSv3) UnmarshalJSON(data []byte) error {
+	type NoMethod CVSSv3
+	var s1 struct {
+		BaseScore           gensupport.JSONFloat64 `json:"baseScore"`
+		ExploitabilityScore gensupport.JSONFloat64 `json:"exploitabilityScore"`
+		ImpactScore         gensupport.JSONFloat64 `json:"impactScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BaseScore = float64(s1.BaseScore)
+	s.ExploitabilityScore = float64(s1.ExploitabilityScore)
+	s.ImpactScore = float64(s1.ImpactScore)
+	return nil
 }
 
 // CloudRepoSourceContext: A CloudRepoSourceContext denotes a particular
@@ -3577,6 +3688,9 @@ func (s *Version) MarshalJSON() ([]byte, error) {
 type Vulnerability struct {
 	// CvssScore: The CVSS score for this vulnerability.
 	CvssScore float64 `json:"cvssScore,omitempty"`
+
+	// CvssV3: The full description of the CVSSv3.
+	CvssV3 *CVSSv3 `json:"cvssV3,omitempty"`
 
 	// Details: All information about the package to specifically identify
 	// this

@@ -3422,7 +3422,9 @@ func (s *Metadata) MarshalJSON() ([]byte, error) {
 // with the search
 // result to provide context.
 type Metaline struct {
-	// Properties: The list of displayed properties for the metaline.
+	// Properties: The list of displayed properties for the metaline. The
+	// maxiumum number of
+	// properties is 5.
 	Properties []*DisplayedProperty `json:"properties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Properties") to
@@ -3593,7 +3595,7 @@ type ObjectDisplayOptions struct {
 	// list. All
 	// of the properties must set
 	// is_returnable
-	// to true. The maximum number of elements is 3.
+	// to true. The maximum number of metalines is 3.
 	Metalines []*Metaline `json:"metalines,omitempty"`
 
 	// ObjectDisplayLabel: The user friendly label to display in the search
@@ -5465,7 +5467,7 @@ type SearchResult struct {
 
 	// Url: The URL of the search result. The URL contains a Google redirect
 	// to the
-	// actual item.
+	// actual item. This URL is signed and shouldn't be changed.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClusteredResults") to

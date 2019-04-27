@@ -658,7 +658,7 @@
       }
     }
   },
-  "revision": "20190408",
+  "revision": "20190422",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorType": {
@@ -1043,6 +1043,10 @@
       "id": "SchedulingConfig",
       "properties": {
         "preemptible": {
+          "type": "boolean"
+        },
+        "reserved": {
+          "description": "Whether the node is created under a reservation.",
           "type": "boolean"
         }
       },

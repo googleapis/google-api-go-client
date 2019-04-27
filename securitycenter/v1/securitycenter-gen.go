@@ -871,10 +871,11 @@ type GroupAssetsRequest struct {
 	// * boolean literals `true` and `false` without quotes.
 	//
 	// The following field and operator combinations are supported:
-	// name | `=`
-	// update_time | `>`, `<`, `>=`, `<=`
+	// name | '='
+	// update_time | '>', '<', '>=', '<=', '='
+	// create_time | '>', '<', '>=', '<=', '='
 	// iam_policy.policy_blob | '=', ':'
-	// resource_properties | '=', ':', `>`, `<`, `>=`, `<=`
+	// resource_properties | '=', ':', '>', '<', '>=', '<='
 	// security_marks | '=', ':'
 	// security_center_properties.resource_name | '=',
 	// ':'

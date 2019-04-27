@@ -580,7 +580,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190424",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {
@@ -804,7 +804,7 @@
           "type": "string"
         },
         "contactGroupResourceName": {
-          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.\nOnly contact_group_resource_name can be used for modifying memberships.\nAny contact group membership can be removed, but only user group or\n\"myContacts\" or \"starred\" system groups memberships can be added.",
+          "description": "The resource name for the contact group, assigned by the server. An ASCII\nstring, in the form of `contactGroups/`\u003cvar\u003econtact_group_id\u003c/var\u003e.\nOnly contact_group_resource_name can be used for modifying memberships.\nAny contact group membership can be removed, but only user group or\n\"myContacts\" or \"starred\" system groups memberships can be added. A\ncontact must always have at least one contact group membership.",
           "type": "string"
         }
       },

@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190402",
+  "revision": "20190420",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1794,6 +1794,22 @@
         },
         "languageCode": {
           "description": "Required. The language of the supplied audio. Dialogflow does not do\ntranslations. See [Language\nSupport](https://cloud.google.com/dialogflow-enterprise/docs/reference/language)\nfor a list of the currently supported language codes. Note that queries in\nthe same session do not necessarily need to specify the same language.",
+          "type": "string"
+        },
+        "modelVariant": {
+          "description": "Optional. Which variant of the Speech model to use.",
+          "enum": [
+            "SPEECH_MODEL_VARIANT_UNSPECIFIED",
+            "USE_BEST_AVAILABLE",
+            "USE_STANDARD",
+            "USE_ENHANCED"
+          ],
+          "enumDescriptions": [
+            "No model variant specified. In this case we default to USE_BEST_AVAILABLE.",
+            "Use the best available variant of the Speech\nmodel that the caller is eligible for.\n\nPlease see the [Dialogflow\ndocs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging) for\nhow to make your project eligible for enhanced models.",
+            "Use standard model variant even if an enhanced model is available.  See the\n[Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\nfor details about enhanced models.",
+            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, we fall back to the\n  standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, we return an error.\n  Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging)\n  for how to make your project eligible."
+          ],
           "type": "string"
         },
         "phraseHints": {

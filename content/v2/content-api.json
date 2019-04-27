@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/7PFs3tHKr0DPRTFG-ieZAJUpS6U\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/Lt6l5kBKMD4VGIhJvfB5yMU8azM\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -250,7 +250,7 @@
           ]
         },
         "link": {
-          "description": "Performs an action on a link between a Merchant Center account and another account.",
+          "description": "Performs an action on a link between two Merchant Center accounts, namely accountId and linkedAccountId.",
           "httpMethod": "POST",
           "id": "content.accounts.link",
           "parameterOrder": [
@@ -1524,7 +1524,7 @@
     "orderinvoices": {
       "methods": {
         "createchargeinvoice": {
-          "description": "Creates a charge invoice for a shipment group, and triggers a charge capture for non-facilitated payment orders.",
+          "description": "Creates a charge invoice for a shipment group, and triggers a charge capture for orderinvoice enabled orders.",
           "httpMethod": "POST",
           "id": "content.orderinvoices.createchargeinvoice",
           "parameterOrder": [
@@ -1558,7 +1558,7 @@
           ]
         },
         "createrefundinvoice": {
-          "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for non-facilitated payment orders. This can only be used for line items that have previously been charged using createChargeInvoice. All amounts (except for the summary) are incremental with respect to the previous invoice.",
+          "description": "Creates a refund invoice for one or more shipment groups, and triggers a refund for orderinvoice enabled orders. This can only be used for line items that have previously been charged using createChargeInvoice. All amounts (except for the summary) are incremental with respect to the previous invoice.",
           "httpMethod": "POST",
           "id": "content.orderinvoices.createrefundinvoice",
           "parameterOrder": [
@@ -3484,7 +3484,7 @@
       }
     }
   },
-  "revision": "20190327",
+  "revision": "20190423",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -9070,7 +9070,7 @@
           "type": "array"
         },
         "additionalProductTypes": {
-          "description": "Additional categories of the item (formatted as in products feed specification).",
+          "description": "Additional categories of the item (formatted as in products data specification).",
           "items": {
             "type": "string"
           },
@@ -9331,7 +9331,7 @@
           "description": "Price of the item."
         },
         "productType": {
-          "description": "Your category of the item (formatted as in products feed specification).",
+          "description": "Your category of the item (formatted as in products data specification).",
           "type": "string"
         },
         "promotionIds": {
@@ -9346,7 +9346,7 @@
           "description": "Advertised sale price of the item."
         },
         "salePriceEffectiveDate": {
-          "description": "Date range during which the item is on sale (see products feed specification).",
+          "description": "Date range during which the item is on sale (see products data specification).",
           "type": "string"
         },
         "sellOnGoogleQuantity": {

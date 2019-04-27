@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20190319",
+  "revision": "20190417",
   "rootUrl": "https://firebaserules.googleapis.com/",
   "schemas": {
     "Arg": {
@@ -844,7 +844,7 @@
           "type": "string"
         },
         "visitedExpressions": {
-          "description": "The set of visited expressions for a given test. This returns positions\nand evaluation results of all visited expressions.",
+          "description": "The set of visited permission expressions for a given test. This returns\nthe positions and evaluation results of all visited permission\nexpressions which were relevant to the test case, e.g.\n```\nmatch /path {\n  allow read if: \u003cexpr\u003e\n}\n```\nFor a detailed report of the intermediate evaluation states, see the\n`expression_reports` field",
           "items": {
             "$ref": "VisitedExpression"
           },

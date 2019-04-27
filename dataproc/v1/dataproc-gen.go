@@ -272,10 +272,10 @@ func (s *AcceleratorConfig) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates members with a role.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding. NOTE: an unsatisfied condition will not allow user access
-	// via current binding. Different bindings, including their conditions,
-	// are examined independently.
+	// Condition: The condition that is associated with this binding. NOTE:
+	// An unsatisfied condition will not allow user access via current
+	// binding. Different bindings, including their conditions, are examined
+	// independently.
 	Condition *Expr `json:"condition,omitempty"`
 
 	// Members: Specifies the identities requesting access for a Cloud
@@ -416,9 +416,10 @@ type ClusterConfig struct {
 	// and all worker nodes. You can test a node's role metadata to run an
 	// executable on a master or worker node, as shown below using curl (you
 	// can also use wget):
-	// ROLE=$(curl -H Metadata-Flavor:Google
-	// http://metadata/computeMetadata/v1/instance/attributes/dataproc-role)
-	//
+	// ROLE=$(curl -H
+	// Metadata-Flavor:Google
+	// http://metadata/computeMetadata/v1/instance/att
+	// ributes/dataproc-role)
 	// if [[ "${ROLE}" == 'Master' ]]; then
 	//   ... master specific actions ...
 	// else
@@ -963,8 +964,9 @@ type GceClusterConfig struct {
 	// URL, partial URI, or short name are valid.
 	// Examples:
 	// https://www.googleapis.com/compute/v1/projects/[project_id]/
-	// regions/us-east1/sub0
-	// projects/[project_id]/regions/us-east1/sub0
+	// regions/us-east1/subnetworks/sub0
+	// projects/[project_id]/regions/us-eas
+	// t1/subnetworks/sub0
 	// sub0
 	SubnetworkUri string `json:"subnetworkUri,omitempty"`
 
@@ -2292,7 +2294,8 @@ type SoftwareConfig struct {
 	// ImageVersion: Optional. The version of software inside the cluster.
 	// It must be one of the supported Cloud Dataproc Versions, such as
 	// "1.2" (including a subminor version, such as "1.2.29"), or the
-	// "preview" version. If unspecified, it defaults to the latest version.
+	// "preview" version. If unspecified, it defaults to the latest Debian
+	// version.
 	ImageVersion string `json:"imageVersion,omitempty"`
 
 	// OptionalComponents: The set of optional components to activate on the

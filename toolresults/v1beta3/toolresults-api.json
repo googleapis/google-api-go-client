@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/388xmHrVCsivltfWmDH9YVpDltY\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/MORIh9GJD8kNeP5pxzb7lPxrRsI\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1271,7 +1271,7 @@
       }
     }
   },
-  "revision": "20190408",
+  "revision": "20190425",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1773,6 +1773,11 @@
       "description": "Step Id and outcome of each individual step that was run as a group with other steps with the same configuration.",
       "id": "IndividualOutcome",
       "properties": {
+        "multistepNumber": {
+          "description": "Unique int given to each step. Ranges from 0(inclusive) to total number of steps(exclusive). The primary step is 0.",
+          "format": "int32",
+          "type": "integer"
+        },
         "outcomeSummary": {
           "enum": [
             "failure",
@@ -1791,6 +1796,10 @@
             ""
           ],
           "type": "string"
+        },
+        "runDuration": {
+          "$ref": "Duration",
+          "description": "How long it took for this step to run."
         },
         "stepId": {
           "type": "string"

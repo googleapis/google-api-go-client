@@ -1688,7 +1688,7 @@ func (meth *Method) generateCode() {
 	pn("\n// method id %q:", meth.Id())
 
 	retType := responseType(a, meth.m)
-	if meth.IsRawHTTP() {
+	if meth.IsRawResponse() {
 		retType = "*http.Response"
 	}
 	retTypeComma := retType
@@ -1916,7 +1916,7 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 	pn("var body io.Reader = nil")
-	if meth.IsRawHTTP() {
+	if meth.IsRawRequest() {
 		pn("body = c.body_")
 	} else {
 		if ba := args.bodyArg(); ba != nil && httpMethod != "GET" {
@@ -1996,7 +1996,7 @@ func (meth *Method) generateCode() {
 
 	mapRetType := strings.HasPrefix(retTypeComma, "map[")
 	pn("\n// Do executes the %q call.", meth.m.ID)
-	if retTypeComma != "" && !mapRetType && !meth.IsRawHTTP() {
+	if retTypeComma != "" && !mapRetType && !meth.IsRawResponse() {
 		commentFmtStr := "Exactly one of %v or error will be non-nil. " +
 			"Any non-2xx status code is an error. " +
 			"Response headers are in either %v.ServerResponse.Header " +
@@ -2012,7 +2012,7 @@ func (meth *Method) generateCode() {
 		nilRet = "nil, "
 	}
 	pn(`gensupport.SetOptions(c.urlParams_, opts...)`)
-	if meth.IsRawHTTP() {
+	if meth.IsRawResponse() {
 		pn(`return c.doRequest("")`)
 	} else {
 		pn(`res, err := c.doRequest("json")`)
@@ -2187,12 +2187,30 @@ func resolveRelative(basestr, relstr string) string {
 	return u.String()
 }
 
-func (meth *Method) IsRawHTTP() bool {
+func (meth *Method) IsRawRequest() bool {
 	if meth.m.Request == nil {
 		return false
 	}
 	// TODO(cbro): enable across other APIs.
-	return meth.api.Name == "healthcare" && meth.m.Request.Ref == "HttpBody"
+	if meth.api.Name != "healthcare" {
+		return false
+	}
+	return meth.m.Request.Ref == "HttpBody"
+}
+
+func (meth *Method) IsRawResponse() bool {
+	if meth.m.Response == nil {
+		return false
+	}
+	if meth.IsRawRequest() {
+		// always match raw requests with raw responses.
+		return true
+	}
+	// TODO(cbro): enable across other APIs.
+	if meth.api.Name != "healthcare" {
+		return false
+	}
+	return meth.m.Response.Ref == "HttpBody"
 }
 
 func (meth *Method) NewArguments() *arguments {
@@ -2213,7 +2231,7 @@ func (meth *Method) NewArguments() *arguments {
 		args.AddArg(arg)
 	}
 	if rs := meth.m.Request; rs != nil {
-		if meth.IsRawHTTP() {
+		if meth.IsRawRequest() {
 			args.AddArg(&argument{
 				goname: "body_",
 				gotype: "io.Reader",

@@ -37,7 +37,7 @@ const (
 var (
 	apiToGenerate = flag.String("api", "*", "The API ID to generate, like 'tasks:v1'. A value of '*' means all.")
 	useCache      = flag.Bool("cache", true, "Use cache of discovered Google API discovery documents.")
-	genDir        = flag.String("gendir", "", "Directory to use to write out generated Go files")
+	genDir        = flag.String("gendir", defaultGenDir(), "Directory to use to write out generated Go files")
 	build         = flag.Bool("build", false, "Compile generated packages.")
 	install       = flag.Bool("install", false, "Install generated packages.")
 	apisURL       = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
@@ -369,12 +369,17 @@ func (p *namePool) Get(preferred string) string {
 }
 
 func genDirRoot() string {
-	if *genDir != "" {
-		return *genDir
+	if *genDir == "" {
+		log.Fatalf("-gendir option must be set.")
 	}
+	return *genDir
+}
+
+func defaultGenDir() string {
+	// TODO(cbro): consider using $CWD
 	paths := filepath.SplitList(os.Getenv("GOPATH"))
 	if len(paths) == 0 {
-		log.Fatalf("No GOPATH set.")
+		return ""
 	}
 	return filepath.Join(paths[0], "src", "google.golang.org", "api")
 }

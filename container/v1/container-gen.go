@@ -632,6 +632,8 @@ type Cluster struct {
 	// an
 	// auto-generated name. Do not use this and a node_pool at the same
 	// time.
+	//
+	// This field is deprecated, use node_pool.initial_node_count instead.
 	InitialNodeCount int64 `json:"initialNodeCount,omitempty"`
 
 	// InstanceGroupUrls: Deprecated. Use node_pools.instance_group_urls.
@@ -725,7 +727,6 @@ type Cluster struct {
 	NetworkPolicy *NetworkPolicy `json:"networkPolicy,omitempty"`
 
 	// NodeConfig: Parameters used in creating the cluster's nodes.
-	// See `nodeConfig` for the description of its properties.
 	// For requests, this field should only be used in lieu of a
 	// "node_pool" object, since this configuration (along with
 	// the
@@ -735,9 +736,12 @@ type Cluster struct {
 	// time.
 	// For responses, this field will be populated with the node
 	// configuration of
-	// the first node pool.
+	// the first node pool. (For configuration of each node pool,
+	// see
+	// `node_pool.config`)
 	//
 	// If unspecified, the defaults are used.
+	// This field is deprecated, use node_pool.config instead.
 	NodeConfig *NodeConfig `json:"nodeConfig,omitempty"`
 
 	// NodeIpv4CidrSize: [Output only] The size of the address space on each
@@ -1217,25 +1221,26 @@ func (s *GetJSONWebKeysResponse) MarshalJSON() ([]byte, error) {
 // document for the cluster.
 // See the OpenID Connect Discovery 1.0 specification for details.
 type GetOpenIDConfigResponse struct {
-	// ClaimsSupported: NOLINT
+	// ClaimsSupported: Supported claims.
 	ClaimsSupported []string `json:"claims_supported,omitempty"`
 
-	// GrantTypes: NOLINT
+	// GrantTypes: Supported grant types.
 	GrantTypes []string `json:"grant_types,omitempty"`
 
-	// IdTokenSigningAlgValuesSupported: NOLINT
+	// IdTokenSigningAlgValuesSupported: supported ID Token signing
+	// Algorithms.
 	IdTokenSigningAlgValuesSupported []string `json:"id_token_signing_alg_values_supported,omitempty"`
 
-	// Issuer: NOLINT
+	// Issuer: OIDC Issuer.
 	Issuer string `json:"issuer,omitempty"`
 
-	// JwksUri: NOLINT
+	// JwksUri: JSON Web Key uri.
 	JwksUri string `json:"jwks_uri,omitempty"`
 
-	// ResponseTypesSupported: NOLINT
+	// ResponseTypesSupported: Supported response types.
 	ResponseTypesSupported []string `json:"response_types_supported,omitempty"`
 
-	// SubjectTypesSupported: NOLINT
+	// SubjectTypesSupported: Supported subject types.
 	SubjectTypesSupported []string `json:"subject_types_supported,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1507,33 +1512,31 @@ func (s *IPAllocationPolicy) MarshalJSON() ([]byte, error) {
 
 // Jwk: Jwk is a JSON Web Key as specified in RFC 7517
 type Jwk struct {
-	// Alg: NOLINT
+	// Alg: Algorithm.
 	Alg string `json:"alg,omitempty"`
 
-	// Crv: NOLINT
+	// Crv: Used for ECDSA keys.
 	Crv string `json:"crv,omitempty"`
 
-	// E: NOLINT
+	// E: Used for RSA keys.
 	E string `json:"e,omitempty"`
 
-	// Kid: NOLINT
+	// Kid: Key ID.
 	Kid string `json:"kid,omitempty"`
 
-	// Kty: NOLINT
+	// Kty: Key Type.
 	Kty string `json:"kty,omitempty"`
 
-	// N: Fields for RSA keys.
-	// NOLINT
+	// N: Used for RSA keys.
 	N string `json:"n,omitempty"`
 
-	// Use: NOLINT
+	// Use: Permitted uses for the public keys.
 	Use string `json:"use,omitempty"`
 
-	// X: Fields for ECDSA keys.
-	// NOLINT
+	// X: Used for ECDSA keys.
 	X string `json:"x,omitempty"`
 
-	// Y: NOLINT
+	// Y: Used for ECDSA keys.
 	Y string `json:"y,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Alg") to
@@ -1919,7 +1922,7 @@ func (s *MasterAuth) MarshalJSON() ([]byte, error) {
 // blocks,
 // Google Compute Engine Public IPs and Google Prod IPs.
 type MasterAuthorizedNetworksConfig struct {
-	// CidrBlocks: cidr_blocks define up to 10 external networks that could
+	// CidrBlocks: cidr_blocks define up to 50 external networks that could
 	// access
 	// Kubernetes master through HTTPS.
 	CidrBlocks []*CidrBlock `json:"cidrBlocks,omitempty"`
@@ -2371,6 +2374,10 @@ type NodePool struct {
 
 	// Name: The name of the node pool.
 	Name string `json:"name,omitempty"`
+
+	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in
+	// this node pool.
+	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -5101,10 +5108,7 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	//   "path": "v1/{+parent}/jwks",
 	//   "response": {
 	//     "$ref": "GetJSONWebKeysResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }
@@ -8517,10 +8521,7 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	//   "path": "v1/{+parent}/.well-known/openid-configuration",
 	//   "response": {
 	//     "$ref": "GetOpenIDConfigResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
+	//   }
 	// }
 
 }

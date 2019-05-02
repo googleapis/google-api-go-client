@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190410",
+  "revision": "20190430",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2573,7 +2573,7 @@
       "type": "object"
     },
     "AppContext": {
-      "description": "@OutputOnly The app type the restriction applies to for mobile device.",
+      "description": "Output only. The app type the restriction applies to for mobile device.",
       "id": "AppContext",
       "properties": {
         "appTypes": {
@@ -2595,7 +2595,7 @@
       "type": "object"
     },
     "AuctionContext": {
-      "description": "@OutputOnly The auction type the restriction applies to.",
+      "description": "Output only. The auction type the restriction applies to.",
       "id": "AuctionContext",
       "properties": {
         "auctionTypes": {
@@ -2880,7 +2880,7 @@
       "type": "object"
     },
     "Correction": {
-      "description": "@OutputOnly Shows any corrections that were applied to this creative.",
+      "description": "Output only. Shows any corrections that were applied to this creative.",
       "id": "Correction",
       "properties": {
         "contexts": {
@@ -2954,7 +2954,7 @@
           "type": "string"
         },
         "apiUpdateTime": {
-          "description": "@OutputOnly The last update timestamp of the creative via API.",
+          "description": "Output only. The last update timestamp of the creative via API.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3053,7 +3053,7 @@
           "type": "array"
         },
         "corrections": {
-          "description": "@OutputOnly Shows any corrections that were applied to this creative.",
+          "description": "Output only. Shows any corrections that were applied to this creative.",
           "items": {
             "$ref": "Correction"
           },
@@ -3064,7 +3064,7 @@
           "type": "string"
         },
         "dealsStatus": {
-          "description": "@OutputOnly The top-level deals status of this creative.\nIf disapproved, an entry for 'auctionType=DIRECT_DEALS' (or 'ALL') in\nserving_restrictions will also exist. Note\nthat this may be nuanced with other contextual restrictions, in which case,\nit may be preferable to read from serving_restrictions directly.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+          "description": "Output only. The top-level deals status of this creative.\nIf disapproved, an entry for 'auctionType=DIRECT_DEALS' (or 'ALL') in\nserving_restrictions will also exist. Note\nthat this may be nuanced with other contextual restrictions, in which case,\nit may be preferable to read from serving_restrictions directly.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
           "enum": [
             "STATUS_UNSPECIFIED",
             "NOT_CHECKED",
@@ -3089,7 +3089,7 @@
           "type": "array"
         },
         "detectedAdvertiserIds": {
-          "description": "@OutputOnly Detected advertiser IDs, if any.",
+          "description": "Output only. Detected advertiser IDs, if any.",
           "items": {
             "format": "int64",
             "type": "string"
@@ -3097,21 +3097,21 @@
           "type": "array"
         },
         "detectedDomains": {
-          "description": "@OutputOnly\nThe detected domains for this creative.",
+          "description": "Output only. The detected domains for this creative.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "detectedLanguages": {
-          "description": "@OutputOnly\nThe detected languages for this creative. The order is arbitrary. The codes\nare 2 or 5 characters and are documented at\nhttps://developers.google.com/adwords/api/docs/appendix/languagecodes.",
+          "description": "Output only. The detected languages for this creative. The order is\narbitrary. The codes are 2 or 5 characters and are documented at\nhttps://developers.google.com/adwords/api/docs/appendix/languagecodes.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "detectedProductCategories": {
-          "description": "@OutputOnly Detected product categories, if any.\nSee the ad-product-categories.txt file in the technical documentation\nfor a list of IDs.",
+          "description": "Output only. Detected product categories, if any.\nSee the ad-product-categories.txt file in the technical documentation\nfor a list of IDs.",
           "items": {
             "format": "int32",
             "type": "integer"
@@ -3119,7 +3119,7 @@
           "type": "array"
         },
         "detectedSensitiveCategories": {
-          "description": "@OutputOnly Detected sensitive categories, if any.\nSee the ad-sensitive-categories.txt file in the technical documentation for\na list of IDs. You should use these IDs along with the\nexcluded-sensitive-category field in the bid request to filter your bids.",
+          "description": "Output only. Detected sensitive categories, if any.\nSee the ad-sensitive-categories.txt file in the technical documentation for\na list of IDs. You should use these IDs along with the\nexcluded-sensitive-category field in the bid request to filter your bids.",
           "items": {
             "format": "int32",
             "type": "integer"
@@ -3128,7 +3128,7 @@
         },
         "filteringStats": {
           "$ref": "FilteringStats",
-          "description": "@OutputOnly The filtering stats for this creative.\nDeprecated; please use\nbidders.accounts.filterSets.filteredBids.creatives.list\nmethod instead."
+          "description": "Output only. The filtering stats for this creative.\nDeprecated; please use\nbidders.accounts.filterSets.filteredBids.creatives.list\nmethod instead."
         },
         "html": {
           "$ref": "HtmlContent",
@@ -3146,7 +3146,7 @@
           "description": "A native creative."
         },
         "openAuctionStatus": {
-          "description": "@OutputOnly The top-level open auction status of this creative.\nIf disapproved, an entry for 'auctionType = OPEN_AUCTION' (or 'ALL') in\nserving_restrictions will also exist. Note\nthat this may be nuanced with other contextual restrictions, in which case,\nit may be preferable to read from serving_restrictions directly.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
+          "description": "Output only. The top-level open auction status of this creative.\nIf disapproved, an entry for 'auctionType = OPEN_AUCTION' (or 'ALL') in\nserving_restrictions will also exist. Note\nthat this may be nuanced with other contextual restrictions, in which case,\nit may be preferable to read from serving_restrictions directly.\nCan be used to filter the response of the\ncreatives.list\nmethod.",
           "enum": [
             "STATUS_UNSPECIFIED",
             "NOT_CHECKED",
@@ -3179,7 +3179,7 @@
           "type": "array"
         },
         "servingRestrictions": {
-          "description": "@OutputOnly The granular status of this ad in specific contexts.\nA context here relates to where something ultimately serves (for example,\na physical location, a platform, an HTTPS vs HTTP request, or the type\nof auction).",
+          "description": "Output only. The granular status of this ad in specific contexts.\nA context here relates to where something ultimately serves (for example,\na physical location, a platform, an HTTPS vs HTTP request, or the type\nof auction).",
           "items": {
             "$ref": "ServingRestriction"
           },
@@ -3194,7 +3194,7 @@
           "type": "array"
         },
         "version": {
-          "description": "@OutputOnly The version of this creative.",
+          "description": "Output only. The version of this creative.",
           "format": "int32",
           "type": "integer"
         },
@@ -3312,7 +3312,7 @@
           "type": "string"
         },
         "nativeTemplate": {
-          "description": "The native template for this creative. It will have a value only if\ncreative_size_type = CreativeSizeType.NATIVE.\n@OutputOnly",
+          "description": "Output only. The native template for this creative. It will have a value\nonly if creative_size_type = CreativeSizeType.NATIVE.",
           "enum": [
             "UNKNOWN_NATIVE_TEMPLATE",
             "NATIVE_CONTENT_AD",
@@ -3530,12 +3530,12 @@
           "type": "string"
         },
         "createTime": {
-          "description": "The time of the deal creation.\n@OutputOnly",
+          "description": "Output only. The time of the deal creation.",
           "format": "google-datetime",
           "type": "string"
         },
         "creativePreApprovalPolicy": {
-          "description": "Specifies the creative pre-approval policy.\n@OutputOnly",
+          "description": "Output only. Specifies the creative pre-approval policy.",
           "enum": [
             "CREATIVE_PRE_APPROVAL_POLICY_UNSPECIFIED",
             "SELLER_PRE_APPROVAL_REQUIRED",
@@ -3550,10 +3550,10 @@
         },
         "creativeRestrictions": {
           "$ref": "CreativeRestrictions",
-          "description": "Restricitions about the creatives associated with the deal (i.e., size)\nThis is available for Programmatic Guaranteed/Preferred Deals in Ad\nManager.\n@OutputOnly"
+          "description": "Output only. Restricitions about the creatives associated with the deal\n(i.e., size) This is available for Programmatic Guaranteed/Preferred Deals\nin Ad Manager."
         },
         "creativeSafeFrameCompatibility": {
-          "description": "Specifies whether the creative is safeFrame compatible.\n@OutputOnly",
+          "description": "Output only. Specifies whether the creative is safeFrame compatible.",
           "enum": [
             "CREATIVE_SAFE_FRAME_COMPATIBILITY_UNSPECIFIED",
             "COMPATIBLE",
@@ -3567,12 +3567,12 @@
           "type": "string"
         },
         "dealId": {
-          "description": "A unique deal ID for the deal (server-assigned).\n@OutputOnly",
+          "description": "Output only. A unique deal ID for the deal (server-assigned).",
           "type": "string"
         },
         "dealServingMetadata": {
           "$ref": "DealServingMetadata",
-          "description": "Metadata about the serving status of this deal.\n@OutputOnly"
+          "description": "Output only. Metadata about the serving status of this deal."
         },
         "dealTerms": {
           "$ref": "DealTerms",
@@ -3591,15 +3591,15 @@
           "type": "string"
         },
         "externalDealId": {
-          "description": "The external deal ID assigned to this deal once the deal is finalized.\nThis is the deal ID that shows up in serving/reporting etc.\n@OutputOnly",
+          "description": "Output only. The external deal ID assigned to this deal once the deal is\nfinalized. This is the deal ID that shows up in serving/reporting etc.",
           "type": "string"
         },
         "isSetupComplete": {
-          "description": "True, if the buyside inventory setup is complete for this deal.\n@OutputOnly",
+          "description": "Output only. True, if the buyside inventory setup is complete for this\ndeal.",
           "type": "boolean"
         },
         "programmaticCreativeSource": {
-          "description": "Specifies the creative source for programmatic deals. PUBLISHER means\ncreative is provided by seller and ADVERTISER means creative is\nprovided by buyer.\n@OutputOnly",
+          "description": "Output only. Specifies the creative source for programmatic deals.\nPUBLISHER means creative is provided by seller and ADVERTISER means\ncreative is provided by buyer.",
           "enum": [
             "PROGRAMMATIC_CREATIVE_SOURCE_UNSPECIFIED",
             "ADVERTISER",
@@ -3613,11 +3613,11 @@
           "type": "string"
         },
         "proposalId": {
-          "description": "ID of the proposal that this deal is part of.\n@OutputOnly",
+          "description": "Output only. ID of the proposal that this deal is part of.",
           "type": "string"
         },
         "sellerContacts": {
-          "description": "Seller contact information for the deal.\n@OutputOnly",
+          "description": "Output only. Seller contact information for the deal.",
           "items": {
             "$ref": "ContactInformation"
           },
@@ -3643,7 +3643,7 @@
         },
         "targeting": {
           "$ref": "MarketplaceTargeting",
-          "description": "Specifies the subset of inventory targeted by the deal.\n@OutputOnly"
+          "description": "Output only. Specifies the subset of inventory targeted by the deal."
         },
         "targetingCriterion": {
           "description": "The shared targeting visible to buyers and sellers. Each shared\ntargeting entity is AND'd together.",
@@ -3653,7 +3653,7 @@
           "type": "array"
         },
         "updateTime": {
-          "description": "The time when the deal was last updated.\n@OutputOnly",
+          "description": "Output only. The time when the deal was last updated.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3707,7 +3707,7 @@
       "properties": {
         "dealPauseStatus": {
           "$ref": "DealPauseStatus",
-          "description": "Tracks which parties (if any) have paused a deal.\n@OutputOnly"
+          "description": "Output only. Tracks which parties (if any) have paused a deal."
         }
       },
       "type": "object"
@@ -3767,7 +3767,7 @@
       "id": "DeliveryControl",
       "properties": {
         "creativeBlockingLevel": {
-          "description": "Specified the creative blocking levels to be applied.\n@OutputOnly",
+          "description": "Output only. Specified the creative blocking levels to be applied.",
           "enum": [
             "CREATIVE_BLOCKING_LEVEL_UNSPECIFIED",
             "PUBLISHER_BLOCKING_RULES",
@@ -3781,7 +3781,7 @@
           "type": "string"
         },
         "deliveryRateType": {
-          "description": "Specifies how the impression delivery will be paced.\n@OutputOnly",
+          "description": "Output only. Specifies how the impression delivery will be paced.",
           "enum": [
             "DELIVERY_RATE_TYPE_UNSPECIFIED",
             "EVENLY",
@@ -3797,7 +3797,7 @@
           "type": "string"
         },
         "frequencyCaps": {
-          "description": "Specifies any frequency caps.\n@OutputOnly",
+          "description": "Output only. Specifies any frequency caps.",
           "items": {
             "$ref": "FrequencyCap"
           },
@@ -3807,7 +3807,7 @@
       "type": "object"
     },
     "Disapproval": {
-      "description": "@OutputOnly The reason and details for a disapproval.",
+      "description": "Output only. The reason and details for a disapproval.",
       "id": "Disapproval",
       "properties": {
         "details": {
@@ -4206,7 +4206,7 @@
       "type": "object"
     },
     "FilteringStats": {
-      "description": "@OutputOnly Filtering reasons for this creative during a period of a single\nday (from midnight to midnight Pacific).",
+      "description": "Output only. Filtering reasons for this creative during a period of a single\nday (from midnight to midnight Pacific).",
       "id": "FilteringStats",
       "properties": {
         "date": {
@@ -4766,7 +4766,7 @@
       "type": "object"
     },
     "LocationContext": {
-      "description": "@OutputOnly The Geo criteria the restriction applies to.",
+      "description": "Output only. The Geo criteria the restriction applies to.",
       "id": "LocationContext",
       "properties": {
         "geoCriteriaIds": {
@@ -4982,12 +4982,12 @@
       "id": "Note",
       "properties": {
         "createTime": {
-          "description": "The timestamp for when this note was created.\n@OutputOnly",
+          "description": "Output only. The timestamp for when this note was created.",
           "format": "google-datetime",
           "type": "string"
         },
         "creatorRole": {
-          "description": "The role of the person (buyer/seller) creating the note.\n@OutputOnly",
+          "description": "Output only. The role of the person (buyer/seller) creating the note.",
           "enum": [
             "BUYER_SELLER_ROLE_UNSPECIFIED",
             "BUYER",
@@ -5005,11 +5005,11 @@
           "type": "string"
         },
         "noteId": {
-          "description": "The unique ID for the note.\n@OutputOnly",
+          "description": "Output only. The unique ID for the note.",
           "type": "string"
         },
         "proposalRevision": {
-          "description": "The revision number of the proposal when the note is created.\n@OutputOnly",
+          "description": "Output only. The revision number of the proposal when the note is created.",
           "format": "int64",
           "type": "string"
         }
@@ -5058,7 +5058,7 @@
       "type": "object"
     },
     "PlatformContext": {
-      "description": "@OutputOnly The type of platform the restriction applies to.",
+      "description": "Output only. The type of platform the restriction applies to.",
       "id": "PlatformContext",
       "properties": {
         "platforms": {
@@ -5237,7 +5237,7 @@
       "properties": {
         "billedBuyer": {
           "$ref": "Buyer",
-          "description": "Reference to the buyer that will get billed for this proposal.\n@OutputOnly"
+          "description": "Output only. Reference to the buyer that will get billed for this proposal."
         },
         "buyer": {
           "$ref": "Buyer",
@@ -5266,15 +5266,15 @@
           "type": "string"
         },
         "isRenegotiating": {
-          "description": "True if the proposal is being renegotiated.\n@OutputOnly",
+          "description": "Output only. True if the proposal is being renegotiated.",
           "type": "boolean"
         },
         "isSetupComplete": {
-          "description": "True, if the buyside inventory setup is complete for this proposal.\n@OutputOnly",
+          "description": "Output only. True, if the buyside inventory setup is complete for this\nproposal.",
           "type": "boolean"
         },
         "lastUpdaterOrCommentorRole": {
-          "description": "The role of the last user that either updated the proposal or left a\ncomment.\n@OutputOnly",
+          "description": "Output only. The role of the last user that either updated the proposal or\nleft a comment.",
           "enum": [
             "BUYER_SELLER_ROLE_UNSPECIFIED",
             "BUYER",
@@ -5288,14 +5288,14 @@
           "type": "string"
         },
         "notes": {
-          "description": "The notes associated with this proposal.\n@OutputOnly",
+          "description": "Output only. The notes associated with this proposal.",
           "items": {
             "$ref": "Note"
           },
           "type": "array"
         },
         "originatorRole": {
-          "description": "Indicates whether the buyer/seller created the proposal.\n@OutputOnly",
+          "description": "Output only. Indicates whether the buyer/seller created the proposal.",
           "enum": [
             "BUYER_SELLER_ROLE_UNSPECIFIED",
             "BUYER",
@@ -5309,20 +5309,20 @@
           "type": "string"
         },
         "privateAuctionId": {
-          "description": "Private auction ID if this proposal is a private auction proposal.\n@OutputOnly",
+          "description": "Output only. Private auction ID if this proposal is a private auction\nproposal.",
           "type": "string"
         },
         "proposalId": {
-          "description": "The unique ID of the proposal.\n@OutputOnly",
+          "description": "Output only. The unique ID of the proposal.",
           "type": "string"
         },
         "proposalRevision": {
-          "description": "The revision number for the proposal.\nEach update to the proposal or the deal causes the proposal revision number\nto auto-increment. The buyer keeps track of the last revision number they\nknow of and pass it in when making an update. If the head revision number\non the server has since incremented, then an ABORTED error is returned\nduring the update operation to let the buyer know that a subsequent update\nwas made.\n@OutputOnly",
+          "description": "Output only. The revision number for the proposal.\nEach update to the proposal or the deal causes the proposal revision number\nto auto-increment. The buyer keeps track of the last revision number they\nknow of and pass it in when making an update. If the head revision number\non the server has since incremented, then an ABORTED error is returned\nduring the update operation to let the buyer know that a subsequent update\nwas made.",
           "format": "int64",
           "type": "string"
         },
         "proposalState": {
-          "description": "The current state of the proposal.\n@OutputOnly",
+          "description": "Output only. The current state of the proposal.",
           "enum": [
             "PROPOSAL_STATE_UNSPECIFIED",
             "PROPOSED",
@@ -5346,14 +5346,14 @@
           "description": "Reference to the seller on the proposal.\n\nNote: This field may be set only when creating the resource. Modifying\nthis field while updating the resource will result in an error."
         },
         "sellerContacts": {
-          "description": "Contact information for the seller.\n@OutputOnly",
+          "description": "Output only. Contact information for the seller.",
           "items": {
             "$ref": "ContactInformation"
           },
           "type": "array"
         },
         "updateTime": {
-          "description": "The time when the proposal was last revised.\n@OutputOnly",
+          "description": "Output only. The time when the proposal was last revised.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -5512,7 +5512,7 @@
       "type": "object"
     },
     "SecurityContext": {
-      "description": "@OutputOnly A security context.",
+      "description": "Output only. A security context.",
       "id": "SecurityContext",
       "properties": {
         "securities": {
@@ -5586,7 +5586,7 @@
       "type": "object"
     },
     "ServingRestriction": {
-      "description": "@OutputOnly A representation of the status of an ad in a\nspecific context. A context here relates to where something ultimately serves\n(for example, a user or publisher geo, a platform, an HTTPS vs HTTP request,\nor the type of auction).",
+      "description": "Output only. A representation of the status of an ad in a\nspecific context. A context here relates to where something ultimately serves\n(for example, a user or publisher geo, a platform, an HTTPS vs HTTP request,\nor the type of auction).",
       "id": "ServingRestriction",
       "properties": {
         "contexts": {

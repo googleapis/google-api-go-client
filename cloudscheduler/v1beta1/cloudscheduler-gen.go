@@ -518,7 +518,7 @@ type HttpTarget struct {
 	//
 	// This type of authorization should be used when sending requests to
 	// third
-	// party endpoints.
+	// party endpoints or Cloud Run.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 
 	// Uri: Required.
@@ -913,7 +913,7 @@ func (s *OAuthToken) MarshalJSON() ([]byte, error) {
 // Connect). This
 // type of authorization should be used when sending requests to third
 // party
-// endpoints.
+// endpoints or Cloud Run.
 type OidcToken struct {
 	// Audience: Audience to be used when generating OIDC token. If not
 	// specified, the URI

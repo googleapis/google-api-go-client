@@ -420,7 +420,7 @@
       }
     }
   },
-  "revision": "20190419",
+  "revision": "20190429",
   "rootUrl": "https://storagetransfer.googleapis.com/",
   "schemas": {
     "AwsAccessKey": {
@@ -872,12 +872,12 @@
       "id": "TransferJob",
       "properties": {
         "creationTime": {
-          "description": "This field cannot be changed by user requests.",
+          "description": "Output only. The time that the transfer job was created.",
           "format": "google-datetime",
           "type": "string"
         },
         "deletionTime": {
-          "description": "This field cannot be changed by user requests.",
+          "description": "Output only. The time that the transfer job was deleted.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -886,7 +886,7 @@
           "type": "string"
         },
         "lastModificationTime": {
-          "description": "This field cannot be changed by user requests.",
+          "description": "Output only. The time that the transfer job was last modified.",
           "format": "google-datetime",
           "type": "string"
         },

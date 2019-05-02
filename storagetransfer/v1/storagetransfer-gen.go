@@ -1300,10 +1300,12 @@ func (s *TransferCounters) MarshalJSON() ([]byte, error) {
 // job that runs
 // periodically.
 type TransferJob struct {
-	// CreationTime: This field cannot be changed by user requests.
+	// CreationTime: Output only. The time that the transfer job was
+	// created.
 	CreationTime string `json:"creationTime,omitempty"`
 
-	// DeletionTime: This field cannot be changed by user requests.
+	// DeletionTime: Output only. The time that the transfer job was
+	// deleted.
 	DeletionTime string `json:"deletionTime,omitempty"`
 
 	// Description: A description provided by the user for the job. Its max
@@ -1311,7 +1313,8 @@ type TransferJob struct {
 	// bytes when Unicode-encoded.
 	Description string `json:"description,omitempty"`
 
-	// LastModificationTime: This field cannot be changed by user requests.
+	// LastModificationTime: Output only. The time that the transfer job was
+	// last modified.
 	LastModificationTime string `json:"lastModificationTime,omitempty"`
 
 	// Name: A globally unique name assigned by Storage Transfer Service

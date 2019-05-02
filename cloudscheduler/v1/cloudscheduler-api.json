@@ -417,7 +417,7 @@
       }
     }
   },
-  "revision": "20190326",
+  "revision": "20190429",
   "rootUrl": "https://cloudscheduler.googleapis.com/",
   "schemas": {
     "AppEngineHttpTarget": {
@@ -540,6 +540,14 @@
           ],
           "type": "string"
         },
+        "oauthToken": {
+          "$ref": "OAuthToken",
+          "description": "If specified, an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2)\nwill be generated and attached as an `Authorization` header in the HTTP\nrequest.\n\nThis type of authorization should be used when sending requests to a GCP\nendpoint."
+        },
+        "oidcToken": {
+          "$ref": "OidcToken",
+          "description": "If specified, an\n[OIDC](https://developers.google.com/identity/protocols/OpenIDConnect)\ntoken will be generated and attached as an `Authorization` header in the\nHTTP request.\n\nThis type of authorization should be used when sending requests to third\nparty endpoints or Cloud Run."
+        },
         "uri": {
           "description": "Required.\n\nThe full URI path that the request will be sent to. This string\nmust begin with either \"http://\" or \"https://\". Some examples of\nvalid values for uri are:\n`http://acme.com` and `https://acme.com/sales:8080`. Cloud Scheduler will\nencode some characters for safety and compatibility. The maximum allowed\nURL length is 2083 characters after encoding.",
           "type": "string"
@@ -554,6 +562,11 @@
         "appEngineHttpTarget": {
           "$ref": "AppEngineHttpTarget",
           "description": "App Engine HTTP target."
+        },
+        "attemptDeadline": {
+          "description": "The deadline for job attempts. If the request handler does not respond by\nthis deadline then the request is cancelled and the attempt is marked as a\n`DEADLINE_EXCEEDED` failure. The failed attempt can be viewed in\nexecution logs. Cloud Scheduler will retry the job according\nto the RetryConfig.\n\nThe allowed duration for this deadline is:\n* For HTTP targets, between 15 seconds and 30 minutes.\n* For App Engine HTTP targets, between 15\n  seconds and 24 hours.",
+          "format": "google-duration",
+          "type": "string"
         },
         "description": {
           "description": "Optionally caller-specified in CreateJob or\nUpdateJob.\n\nA human-readable description for the job. This string must not contain\nmore than 500 characters.",
@@ -688,6 +701,36 @@
         },
         "name": {
           "description": "Resource name for the location, which may vary between implementations.\nFor example: `\"projects/example-project/locations/us-east1\"`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OAuthToken": {
+      "description": "Contains information needed for generating an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2).\nThis type of authorization should be used when sending requests to a GCP\nendpoint.",
+      "id": "OAuthToken",
+      "properties": {
+        "scope": {
+          "description": "OAuth scope to be used for generating OAuth access token.\nIf not specified, \"https://www.googleapis.com/auth/cloud-platform\"\nwill be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OAuth token.\nThe service account must be within the same project as the job. The caller\nmust have iam.serviceAccounts.actAs permission for the service account.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OidcToken": {
+      "description": "Contains information needed for generating an\n[OpenID Connect\ntoken](https://developers.google.com/identity/protocols/OpenIDConnect). This\ntype of authorization should be used when sending requests to third party\nendpoints or Cloud Run.",
+      "id": "OidcToken",
+      "properties": {
+        "audience": {
+          "description": "Audience to be used when generating OIDC token. If not specified, the URI\nspecified in target will be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OIDC token.\nThe service account must be within the same project as the job. The caller\nmust have iam.serviceAccounts.actAs permission for the service account.",
           "type": "string"
         }
       },

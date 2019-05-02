@@ -382,53 +382,6 @@ func (s *Annotation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AnnotationConfig: Specifies how to store annotations during
-// de-identification operation.
-type AnnotationConfig struct {
-	// AnnotationStoreName: The name of the annotation store, in the
-	// form
-	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_
-	// id}/annotationStores/{annotation_store_id}`).
-	//
-	//  * The destination dataset must exist if it is different than the
-	//    de-identify operation's output dataset.
-	//  * The destination annotation store must be in the same project as
-	// the
-	//    source data. De-identifying data across multiple projects is not
-	//    supported.
-	//  * The destination annotation store must not exist.
-	AnnotationStoreName string `json:"annotationStoreName,omitempty"`
-
-	// StoreQuote: If set to true, the sensitive texts will be included
-	// in
-	// SensitiveTextAnnotation
-	// of Annotation.
-	StoreQuote bool `json:"storeQuote,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AnnotationStoreName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnnotationStoreName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *AnnotationConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod AnnotationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // AnnotationSource: AnnotationSource holds the source information of
 // the annotation.
 type AnnotationSource struct {
@@ -987,12 +940,6 @@ func (s *DateShiftConfig) MarshalJSON() ([]byte, error) {
 // are
 // applied in a nested manner at runtime.
 type DeidentifyConfig struct {
-	// Annotation: Configures how annotations (such as the location and
-	// infoTypes of sensitive
-	// information that was found) are created during de-identification.
-	// If unspecified, no annotations will be created.
-	Annotation *AnnotationConfig `json:"annotation,omitempty"`
-
 	// Dicom: Configures de-id of application/DICOM content.
 	Dicom *DicomConfig `json:"dicom,omitempty"`
 
@@ -1004,21 +951,12 @@ type DeidentifyConfig struct {
 	// source_dataset.
 	Image *ImageConfig `json:"image,omitempty"`
 
-	// InspectionConfig: Configuration for how inspection occurs on text and
-	// images.
-	InspectionConfig *InspectionConfig `json:"inspectionConfig,omitempty"`
-
 	// Text: Configures de-identification of text wherever it is found in
 	// the
 	// source_dataset.
 	Text *TextConfig `json:"text,omitempty"`
 
-	// TransformationConfig: Configuration for how transformations occur on
-	// annotations of text and
-	// images.
-	TransformationConfig *TransformationConfig `json:"transformationConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotation") to
+	// ForceSendFields is a list of field names (e.g. "Dicom") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1026,8 +964,8 @@ type DeidentifyConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Annotation") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Dicom") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1213,10 +1151,6 @@ type DicomConfig struct {
 
 	// RemoveList: List of tags to remove. Keep all other tags.
 	RemoveList *TagFilterList `json:"removeList,omitempty"`
-
-	// SkipIdRedaction: If set, skip the redaction. Otherwise, all IDs are
-	// redacted.
-	SkipIdRedaction bool `json:"skipIdRedaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FilterProfile") to
 	// unconditionally include in API requests. By default, fields with
@@ -2681,41 +2615,6 @@ func (s *IngestMessageResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InspectionConfig: Specifies how sensitive information is inspected.
-type InspectionConfig struct {
-	// Annotation: Configures how annotations (such as the location and
-	// infoTypes of
-	// sensitive information that was found) are created during
-	// inspection.
-	// If unspecified, no annotations will be created.
-	Annotation *AnnotationConfig `json:"annotation,omitempty"`
-
-	// TextInspectorConfigs: Configures for text inspection.
-	TextInspectorConfigs *TextInspectorConfig `json:"textInspectorConfigs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Annotation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Annotation") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *InspectionConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod InspectionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // ListAnnotationStoresResponse: Lists the Annotation stores
 // in the given dataset.
 type ListAnnotationStoresResponse struct {
@@ -4109,75 +4008,6 @@ type TextConfig struct {
 
 func (s *TextConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TextConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TextInspectorConfig: The configurations to apply to text
-// inspection.
-// If more than one model is specified, the same data will be processed
-// by
-// specified models. Final inspection results will be a combination.
-type TextInspectorConfig struct {
-	// InfoTypes: The list of infoTypes for inspection.
-	// See https://cloud.google.com/dlp/docs/infotypes-reference#global
-	// for valid infoType values.
-	InfoTypes []string `json:"infoTypes,omitempty"`
-
-	// Models: Configures which Inspector to use.
-	// Leaving this field unspecified will use the default model.
-	Models []string `json:"models,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "InfoTypes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InfoTypes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TextInspectorConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod TextInspectorConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// TransformationConfig: Configures how a transformation is applied.
-type TransformationConfig struct {
-	// Image: Configuration for how a transformation is applied to an image.
-	Image *ImageConfig `json:"image,omitempty"`
-
-	// Text: Configuration for how a transformation is applied to text.
-	Text *TextConfig `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Image") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Image") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *TransformationConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod TransformationConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14595,10 +14425,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall struct {
 // return a `412 Precondition Failed` error.
 // If the search criteria identify zero matches, and the supplied
 // resource
-// body contains an `id`, and the FHIR store
-// has
-// [enable_update_create](FhirStore.enable_update_create) set, creates
-// the
+// body contains an `id`, and the FHIR store has
+// enable_update_create set, creates the
 // resource with the client-specified ID. If the search criteria
 // identify zero
 // matches, and the supplied resource body does not contain an `id`,
@@ -14681,7 +14509,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Do(opts .
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "If a resource is found based on the search criteria specified in the query\nparameters, updates the entire contents of that resource.\n\nImplements the FHIR standard [conditional update\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#cond-update).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method.\n\nIf the search criteria identify more than one match, the request will\nreturn a `412 Precondition Failed` error.\nIf the search criteria identify zero matches, and the supplied resource\nbody contains an `id`, and the FHIR store has\n[enable_update_create](FhirStore.enable_update_create) set, creates the\nresource with the client-specified ID. If the search criteria identify zero\nmatches, and the supplied resource body does not contain an `id`, the\nresource will be created with a server-assigned ID as per the\ncreate method.\n\nThe request body must contain a JSON-encoded FHIR resource, and the request\nheaders must contain `Content-Type: application/fhir+json`.\n\nOn success, the response body will contain a JSON-encoded representation\nof the updated resource, including the server-assigned version ID.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "description": "If a resource is found based on the search criteria specified in the query\nparameters, updates the entire contents of that resource.\n\nImplements the FHIR standard [conditional update\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#cond-update).\n\nSearch terms are provided as query parameters following the same pattern as\nthe search method.\n\nIf the search criteria identify more than one match, the request will\nreturn a `412 Precondition Failed` error.\nIf the search criteria identify zero matches, and the supplied resource\nbody contains an `id`, and the FHIR store has\nenable_update_create set, creates the\nresource with the client-specified ID. If the search criteria identify zero\nmatches, and the supplied resource body does not contain an `id`, the\nresource will be created with a server-assigned ID as per the\ncreate method.\n\nThe request body must contain a JSON-encoded FHIR resource, and the request\nheaders must contain `Content-Type: application/fhir+json`.\n\nOn success, the response body will contain a JSON-encoded representation\nof the updated resource, including the server-assigned version ID.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
 	//   "httpMethod": "PUT",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.conditionalUpdate",
@@ -15765,10 +15593,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirUpdateCall struct {
 // .html#update).
 //
 // If the specified resource does
-// not exist and the FHIR store
-// has
-// [enable_update_create](FhirStore.enable_update_create) set, creates
-// the
+// not exist and the FHIR store has
+// enable_update_create set, creates the
 // resource with the client-specified ID.
 //
 // The request body must contain a JSON-encoded FHIR resource, and the
@@ -15848,7 +15674,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirUpdateCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Updates the entire contents of a resource.\n\nImplements the FHIR standard [update\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#update).\n\nIf the specified resource does\nnot exist and the FHIR store has\n[enable_update_create](FhirStore.enable_update_create) set, creates the\nresource with the client-specified ID.\n\nThe request body must contain a JSON-encoded FHIR resource, and the request\nheaders must contain `Content-Type: application/fhir+json`. The resource\nmust contain an `id` element having an identical value to the ID in the\nREST path of the request.\n\nOn success, the response body will contain a JSON-encoded representation\nof the updated resource, including the server-assigned version ID.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
+	//   "description": "Updates the entire contents of a resource.\n\nImplements the FHIR standard [update\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#update).\n\nIf the specified resource does\nnot exist and the FHIR store has\nenable_update_create set, creates the\nresource with the client-specified ID.\n\nThe request body must contain a JSON-encoded FHIR resource, and the request\nheaders must contain `Content-Type: application/fhir+json`. The resource\nmust contain an `id` element having an identical value to the ID in the\nREST path of the request.\n\nOn success, the response body will contain a JSON-encoded representation\nof the updated resource, including the server-assigned version ID.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
 	//   "httpMethod": "PUT",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.update",

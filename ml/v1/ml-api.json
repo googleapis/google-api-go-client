@@ -308,7 +308,7 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ml-engine jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/tensorflow/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
+                  "description": "Optional. Specifies the subset of jobs to retrieve.\nYou can filter on the value of one or more attributes of the job object.\nFor example, retrieve jobs with a job identifier that starts with 'census':\n\u003cp\u003e\u003ccode\u003egcloud ai-platform jobs list --filter='jobId:census*'\u003c/code\u003e\n\u003cp\u003eList all failed jobs with names that start with 'rnn':\n\u003cp\u003e\u003ccode\u003egcloud ai-platform jobs list --filter='jobId:rnn*\nAND state:FAILED'\u003c/code\u003e\n\u003cp\u003eFor more examples, see the guide to\n\u003ca href=\"/ml-engine/docs/tensorflow/monitor-training\"\u003emonitoring jobs\u003c/a\u003e.",
                   "location": "query",
                   "type": "string"
                 },
@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190423",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1083,6 +1083,7 @@
             "NVIDIA_TESLA_P100",
             "NVIDIA_TESLA_V100",
             "NVIDIA_TESLA_P4",
+            "NVIDIA_TESLA_T4",
             "TPU_V2"
           ],
           "enumDescriptions": [
@@ -1091,6 +1092,7 @@
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
+            "Nvidia Tesla T4 GPU.",
             "TPU v2."
           ],
           "type": "string"
@@ -1150,6 +1152,7 @@
             "Nvidia Tesla P100 GPU.",
             "Nvidia Tesla V100 GPU.",
             "Nvidia Tesla P4 GPU.",
+            "Nvidia Tesla T4 GPU.",
             "TPU v2."
           ],
           "items": {
@@ -1159,6 +1162,7 @@
               "NVIDIA_TESLA_P100",
               "NVIDIA_TESLA_V100",
               "NVIDIA_TESLA_P4",
+              "NVIDIA_TESLA_T4",
               "TPU_V2"
             ],
             "type": "string"

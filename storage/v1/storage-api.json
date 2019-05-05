@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/pVz6USaiEn5yRWz7SthUFa68mYI\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/p_spPkWHsRi33PRBHlYtU2G_uKg\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -3196,7 +3196,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190426",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -3768,8 +3768,8 @@
           "type": "string"
         },
         "metadata": {
-          "description": "Key metadata.",
-          "type": "any"
+          "$ref": "HmacKeyMetadata",
+          "description": "Key metadata."
         },
         "secret": {
           "description": "HMAC secret key material.",

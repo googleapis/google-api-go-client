@@ -887,6 +887,9 @@ type BuildTrigger struct {
 	// Substitutions: Substitutions data for Build resource.
 	Substitutions map[string]string `json:"substitutions,omitempty"`
 
+	// Tags: Tags for annotation of a `BuildTrigger`
+	Tags []string `json:"tags,omitempty"`
+
 	// TriggerTemplate: Template describing the types of source changes to
 	// trigger a build.
 	//

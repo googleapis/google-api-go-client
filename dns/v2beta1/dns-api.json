@@ -18,12 +18,12 @@
     }
   },
   "basePath": "/dns/v2beta1/projects/",
-  "baseUrl": "https://www.googleapis.com/dns/v2beta1/projects/",
+  "baseUrl": "https://dns.googleapis.com/dns/v2beta1/projects/",
   "batchPath": "batch/dns/v2beta1",
   "description": "Configures and serves authoritative DNS records.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/cloud-dns",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/z1LqFcwLiODb9dqHQykqHkMGJ5A\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/4ABTsLSkbq4OHuGpz9x2CkaFpsw\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -760,8 +760,8 @@
       }
     }
   },
-  "revision": "20190418",
-  "rootUrl": "https://www.googleapis.com/",
+  "revision": "20190425",
+  "rootUrl": "https://dns.googleapis.com/",
   "schemas": {
     "Change": {
       "description": "A Change represents a set of ResourceRecordSet additions and deletions applied atomically to a ManagedZone. ResourceRecordSets within a ManagedZone are modified by creating a new Change element in the Changes collection. In turn the Changes collection also records the past modifications to the ResourceRecordSets in a ManagedZone. The current state of the ManagedZone is the sum effect of applying all Change elements in the Changes collection in sequence.",

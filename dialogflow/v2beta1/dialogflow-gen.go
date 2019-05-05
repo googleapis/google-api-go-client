@@ -3480,7 +3480,7 @@ func (s *GoogleCloudDialogflowV2beta1ImportAgentRequest) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudDialogflowV2beta1InputAudioConfig: Instructs the speech
-// recognizer how to process the audio content.
+// recognizer on how to process the audio content.
 type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// AudioEncoding: Required. Audio encoding of the audio content to
 	// process.
@@ -3572,7 +3572,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	//
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
-	// this case we default to USE_BEST_AVAILABLE.
+	// this case Dialogflow defaults to
+	// USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the
 	// Speech
 	// model that the caller is eligible for.
@@ -3592,8 +3593,8 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	//   "USE_ENHANCED" - Use an enhanced model variant:
 	//
 	// * If an enhanced variant does not exist for the given
-	//   model and request language, we fall back to the
-	//   standard variant.
+	//   model and request language, Dialogflow falls
+	//   back to the standard variant.
 	//
 	//   The [Cloud Speech
 	//
@@ -3601,9 +3602,9 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// odels)
 	//   describes which models have enhanced variants.
 	//
-	// * If the API caller isn't eligible for enhanced models, we return an
-	// error.
-	//   Please see the [Dialogflow
+	// * If the API caller isn't eligible for enhanced models, Dialogflow
+	// returns
+	//   an error.  Please see the [Dialogflow
 	//
 	// docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging
 	// )

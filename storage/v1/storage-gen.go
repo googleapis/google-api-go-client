@@ -1336,7 +1336,7 @@ type HmacKey struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Metadata: Key metadata.
-	Metadata interface{} `json:"metadata,omitempty"`
+	Metadata *HmacKeyMetadata `json:"metadata,omitempty"`
 
 	// Secret: HMAC secret key material.
 	Secret string `json:"secret,omitempty"`

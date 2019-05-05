@@ -76,7 +76,7 @@ var _ = context.Canceled
 const apiId = "dns:v2beta1"
 const apiName = "dns"
 const apiVersion = "v2beta1"
-const basePath = "https://www.googleapis.com/dns/v2beta1/projects/"
+const basePath = "https://dns.googleapis.com/dns/v2beta1/projects/"
 
 // OAuth2 scopes used by this API.
 const (

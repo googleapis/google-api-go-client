@@ -1358,7 +1358,7 @@
       }
     }
   },
-  "revision": "20190403",
+  "revision": "20190416",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -1378,7 +1378,7 @@
       "properties": {
         "condition": {
           "$ref": "Expr",
-          "description": "Unimplemented. The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
+          "description": "The condition that is associated with this binding.\nNOTE: an unsatisfied condition will not allow user access via current\nbinding. Different bindings, including their conditions, are examined\nindependently."
         },
         "members": {
           "description": "Specifies the identities requesting access for a Cloud Platform resource.\n`members` can have the following values:\n\n* `allUsers`: A special identifier that represents anyone who is\n   on the internet; with or without a Google account.\n\n* `allAuthenticatedUsers`: A special identifier that represents anyone\n   who is authenticated with a Google account or a service account.\n\n* `user:{emailid}`: An email address that represents a specific Google\n   account. For example, `alice@gmail.com` .\n\n\n* `serviceAccount:{emailid}`: An email address that represents a service\n   account. For example, `my-other-app@appspot.gserviceaccount.com`.\n\n* `group:{emailid}`: An email address that represents a Google group.\n   For example, `admins@example.com`.\n\n\n* `domain:{domain}`: The G Suite domain (primary) that represents all the\n   users of that domain. For example, `google.com` or `example.com`.\n\n",
@@ -1586,7 +1586,7 @@
           "type": "string"
         },
         "statements": {
-          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement i are visible to statement\ni+1. Each statement must be a DML statement. Execution will stop at the\nfirst failed statement; the remaining statements will not run.\n\nREQUIRES: statements_size() \u003e 0.",
+          "description": "The list of statements to execute in this batch. Statements are executed\nserially, such that the effects of statement i are visible to statement\ni+1. Each statement must be a DML statement. Execution will stop at the\nfirst failed statement; the remaining statements will not run.\n\nREQUIRES: `statements_size()` \u003e 0.",
           "items": {
             "$ref": "Statement"
           },
@@ -1600,7 +1600,7 @@
       "type": "object"
     },
     "ExecuteBatchDmlResponse": {
-      "description": "The response for ExecuteBatchDml. Contains a list\nof ResultSet, one for each DML statement that has successfully executed.\nIf a statement fails, the error is returned as part of the response payload.\nClients can determine whether all DML statements have run successfully, or if\na statement failed, using one of the following approaches:\n\n  1. Check if 'status' field is OkStatus.\n  2. Check if result_sets_size() equals the number of statements in\n     ExecuteBatchDmlRequest.\n\nExample 1: A request with 5 DML statements, all executed successfully.\nResult: A response with 5 ResultSets, one for each statement in the same\norder, and an OK status.\n\nExample 2: A request with 5 DML statements. The 3rd statement has a syntax\nerror.\nResult: A response with 2 ResultSets, for the first 2 statements that\nrun successfully, and a syntax error (INVALID_ARGUMENT) status. From\nresult_set_size() client can determine that the 3rd statement has failed.",
+      "description": "The response for ExecuteBatchDml. Contains a list\nof ResultSet, one for each DML statement that has successfully executed.\nIf a statement fails, the error is returned as part of the response payload.\nClients can determine whether all DML statements have run successfully, or if\na statement failed, using one of the following approaches:\n\n  1. Check if `'status'` field is `OkStatus`.\n  2. Check if `result_sets_size()` equals the number of statements in\n     ExecuteBatchDmlRequest.\n\nExample 1: A request with 5 DML statements, all executed successfully.\n\nResult: A response with 5 ResultSets, one for each statement in the same\norder, and an `OkStatus`.\n\nExample 2: A request with 5 DML statements. The 3rd statement has a syntax\nerror.\n\nResult: A response with 2 ResultSets, for the first 2 statements that\nrun successfully, and a syntax error (`INVALID_ARGUMENT`) status. From\n`result_set_size()` client can determine that the 3rd statement has failed.",
       "id": "ExecuteBatchDmlResponse",
       "properties": {
         "resultSets": {
@@ -1790,6 +1790,13 @@
         "name": {
           "description": "A unique identifier for the instance configuration.  Values\nare of the form\n`projects/\u003cproject\u003e/instanceConfigs/a-z*`",
           "type": "string"
+        },
+        "replicas": {
+          "description": "The geographic placement of nodes in this instance configuration and their\nreplication properties.",
+          "items": {
+            "$ref": "ReplicaInfo"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -2340,6 +2347,36 @@
       "description": "Message type to initiate a read-write transaction. Currently this\ntransaction type has no options.",
       "id": "ReadWrite",
       "properties": {},
+      "type": "object"
+    },
+    "ReplicaInfo": {
+      "id": "ReplicaInfo",
+      "properties": {
+        "defaultLeaderLocation": {
+          "description": "If true, this location is designated as the default leader location where\nleader replicas are placed. See the [region types\ndocumentation](https://cloud.google.com/spanner/docs/instances#region_types)\nfor more details.",
+          "type": "boolean"
+        },
+        "location": {
+          "description": "The location of the serving resources, e.g. \"us-central1\".",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of replica.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "READ_WRITE",
+            "READ_ONLY",
+            "WITNESS"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Read-write replicas support both reads and writes. These replicas:\n* Maintain a full copy of your data.\n* Serve reads.\n* Can vote whether to commit a write.\n* Participate in leadership election.\n* Are eligible to become a leader.",
+            "Read-only replicas only support reads (not writes). Read-only replicas:\n* Maintain a full copy of your data.\n* Serve reads.\n* Do not participate in voting to commit writes.\n* Are not eligible to become a leader.",
+            "Witness replicas don’t support reads but do participate in voting to\ncommit writes. Witness replicas:\n* Do not maintain a full copy of data.\n* Do not serve reads.\n* Vote whether to commit writes.\n* Participate in leader election but are not eligible to become leader."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "ResultSet": {

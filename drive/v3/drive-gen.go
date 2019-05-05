@@ -428,14 +428,14 @@ func (s *AboutStorageQuota) MarshalJSON() ([]byte, error) {
 }
 
 type AboutTeamDriveThemes struct {
-	// BackgroundImageLink: A link to this Team Drive theme's background
-	// image.
+	// BackgroundImageLink: Deprecated - use driveThemes/backgroundImageLink
+	// instead.
 	BackgroundImageLink string `json:"backgroundImageLink,omitempty"`
 
-	// ColorRgb: The color of this Team Drive theme as an RGB hex string.
+	// ColorRgb: Deprecated - use driveThemes/colorRgb instead.
 	ColorRgb string `json:"colorRgb,omitempty"`
 
-	// Id: The ID of the theme.
+	// Id: Deprecated - use driveThemes/id instead.
 	Id string `json:"id,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BackgroundImageLink")
@@ -2069,29 +2069,18 @@ func (s *PermissionPermissionDetails) MarshalJSON() ([]byte, error) {
 }
 
 type PermissionTeamDrivePermissionDetails struct {
-	// Inherited: Whether this permission is inherited. This field is always
-	// populated. This is an output-only field.
+	// Inherited: Deprecated - use permissionDetails/inherited instead.
 	Inherited bool `json:"inherited,omitempty"`
 
-	// InheritedFrom: The ID of the item from which this permission is
-	// inherited. This is an output-only field and is only populated for
-	// members of the Team Drive.
+	// InheritedFrom: Deprecated - use permissionDetails/inheritedFrom
+	// instead.
 	InheritedFrom string `json:"inheritedFrom,omitempty"`
 
-	// Role: The primary role for this user. While new values may be added
-	// in the future, the following are currently possible:
-	// - organizer
-	// - fileOrganizer
-	// - writer
-	// - commenter
-	// - reader
+	// Role: Deprecated - use permissionDetails/role instead.
 	Role string `json:"role,omitempty"`
 
-	// TeamDrivePermissionType: The Team Drive permission type for this
-	// user. While new values may be added in future, the following are
-	// currently possible:
-	// - file
-	// - member
+	// TeamDrivePermissionType: Deprecated - use
+	// permissionDetails/permissionType instead.
 	TeamDrivePermissionType string `json:"teamDrivePermissionType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Inherited") to
@@ -2430,7 +2419,7 @@ func (s *StartPageToken) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TeamDrive: Representation of a Team Drive.
+// TeamDrive: Deprecated: use the drive collection instead.
 type TeamDrive struct {
 	// BackgroundImageFile: An image file and cropping parameters from which
 	// a background image for this Team Drive is set. This is a write only
@@ -2978,8 +2967,10 @@ func (c *ChangesGetStartPageTokenCall) DriveId(driveId string) *ChangesGetStartP
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *ChangesGetStartPageTokenCall) SupportsAllDrives(supportsAllDrives bool) *ChangesGetStartPageTokenCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -3105,7 +3096,7 @@ func (c *ChangesGetStartPageTokenCall) Do(opts ...googleapi.CallOption) (*StartP
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3175,8 +3166,10 @@ func (c *ChangesListCall) IncludeCorpusRemovals(includeCorpusRemovals bool) *Cha
 }
 
 // IncludeItemsFromAllDrives sets the optional parameter
-// "includeItemsFromAllDrives": Whether both My Drive and shared drive
-// items should be included in results.
+// "includeItemsFromAllDrives": Deprecated - Whether both My Drive and
+// shared drive items should be included in results. This parameter will
+// only be effective until June 1, 2020. Afterwards shared drive items
+// will be included in the results.
 func (c *ChangesListCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *ChangesListCall {
 	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
 	return c
@@ -3224,8 +3217,10 @@ func (c *ChangesListCall) Spaces(spaces string) *ChangesListCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *ChangesListCall) SupportsAllDrives(supportsAllDrives bool) *ChangesListCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -3360,7 +3355,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "includeItemsFromAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether both My Drive and shared drive items should be included in results.",
+	//       "description": "Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3405,7 +3400,7 @@ func (c *ChangesListCall) Do(opts ...googleapi.CallOption) (*ChangeList, error) 
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3477,8 +3472,10 @@ func (c *ChangesWatchCall) IncludeCorpusRemovals(includeCorpusRemovals bool) *Ch
 }
 
 // IncludeItemsFromAllDrives sets the optional parameter
-// "includeItemsFromAllDrives": Whether both My Drive and shared drive
-// items should be included in results.
+// "includeItemsFromAllDrives": Deprecated - Whether both My Drive and
+// shared drive items should be included in results. This parameter will
+// only be effective until June 1, 2020. Afterwards shared drive items
+// will be included in the results.
 func (c *ChangesWatchCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *ChangesWatchCall {
 	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
 	return c
@@ -3526,8 +3523,10 @@ func (c *ChangesWatchCall) Spaces(spaces string) *ChangesWatchCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *ChangesWatchCall) SupportsAllDrives(supportsAllDrives bool) *ChangesWatchCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -3654,7 +3653,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "includeItemsFromAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether both My Drive and shared drive items should be included in results.",
+	//       "description": "Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -3699,7 +3698,7 @@ func (c *ChangesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5668,8 +5667,10 @@ func (c *FilesCopyCall) OcrLanguage(ocrLanguage string) *FilesCopyCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesCopyCall) SupportsAllDrives(supportsAllDrives bool) *FilesCopyCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -5804,7 +5805,7 @@ func (c *FilesCopyCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -5878,8 +5879,10 @@ func (c *FilesCreateCall) OcrLanguage(ocrLanguage string) *FilesCreateCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesCreateCall) SupportsAllDrives(supportsAllDrives bool) *FilesCreateCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -6093,7 +6096,7 @@ func (c *FilesCreateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6149,8 +6152,10 @@ func (r *FilesService) Delete(fileId string) *FilesDeleteCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesDeleteCall) SupportsAllDrives(supportsAllDrives bool) *FilesDeleteCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -6238,7 +6243,7 @@ func (c *FilesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6672,8 +6677,10 @@ func (c *FilesGetCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesGetCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesGetCall) SupportsAllDrives(supportsAllDrives bool) *FilesGetCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -6821,7 +6828,7 @@ func (c *FilesGetCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -6896,8 +6903,10 @@ func (c *FilesListCall) DriveId(driveId string) *FilesListCall {
 }
 
 // IncludeItemsFromAllDrives sets the optional parameter
-// "includeItemsFromAllDrives": Whether both My Drive and shared drive
-// items should be included in results.
+// "includeItemsFromAllDrives": Deprecated - Whether both My Drive and
+// shared drive items should be included in results. This parameter will
+// only be effective until June 1, 2020. Afterwards shared drive items
+// will be included in the results.
 func (c *FilesListCall) IncludeItemsFromAllDrives(includeItemsFromAllDrives bool) *FilesListCall {
 	c.urlParams_.Set("includeItemsFromAllDrives", fmt.Sprint(includeItemsFromAllDrives))
 	return c
@@ -6957,8 +6966,10 @@ func (c *FilesListCall) Spaces(spaces string) *FilesListCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesListCall) SupportsAllDrives(supportsAllDrives bool) *FilesListCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -7102,7 +7113,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//     },
 	//     "includeItemsFromAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether both My Drive and shared drive items should be included in results.",
+	//       "description": "Deprecated - Whether both My Drive and shared drive items should be included in results. This parameter will only be effective until June 1, 2020. Afterwards shared drive items will be included in the results.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7144,7 +7155,7 @@ func (c *FilesListCall) Do(opts ...googleapi.CallOption) (*FileList, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7250,8 +7261,10 @@ func (c *FilesUpdateCall) RemoveParents(removeParents string) *FilesUpdateCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesUpdateCall) SupportsAllDrives(supportsAllDrives bool) *FilesUpdateCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -7481,7 +7494,7 @@ func (c *FilesUpdateCall) Do(opts ...googleapi.CallOption) (*File, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7546,8 +7559,10 @@ func (c *FilesWatchCall) AcknowledgeAbuse(acknowledgeAbuse bool) *FilesWatchCall
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *FilesWatchCall) SupportsAllDrives(supportsAllDrives bool) *FilesWatchCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -7687,7 +7702,7 @@ func (c *FilesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7759,8 +7774,10 @@ func (c *PermissionsCreateCall) SendNotificationEmail(sendNotificationEmail bool
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *PermissionsCreateCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsCreateCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -7907,7 +7924,7 @@ func (c *PermissionsCreateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -7965,8 +7982,10 @@ func (r *PermissionsService) Delete(fileId string, permissionId string) *Permiss
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *PermissionsDeleteCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsDeleteCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -8072,7 +8091,7 @@ func (c *PermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8119,8 +8138,10 @@ func (r *PermissionsService) Get(fileId string, permissionId string) *Permission
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *PermissionsGetCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsGetCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -8264,7 +8285,7 @@ func (c *PermissionsGetCall) Do(opts ...googleapi.CallOption) (*Permission, erro
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8333,8 +8354,10 @@ func (c *PermissionsListCall) PageToken(pageToken string) *PermissionsListCall {
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *PermissionsListCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsListCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -8483,7 +8506,7 @@ func (c *PermissionsListCall) Do(opts ...googleapi.CallOption) (*PermissionList,
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -8566,8 +8589,10 @@ func (c *PermissionsUpdateCall) RemoveExpiration(removeExpiration bool) *Permiss
 }
 
 // SupportsAllDrives sets the optional parameter "supportsAllDrives":
-// Whether the requesting application supports both My Drives and shared
-// drives.
+// Deprecated - Whether the requesting application supports both My
+// Drives and shared drives. This parameter will only be effective until
+// June 1, 2020. Afterwards all applications are assumed to support
+// shared drives.
 func (c *PermissionsUpdateCall) SupportsAllDrives(supportsAllDrives bool) *PermissionsUpdateCall {
 	c.urlParams_.Set("supportsAllDrives", fmt.Sprint(supportsAllDrives))
 	return c
@@ -8718,7 +8743,7 @@ func (c *PermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*Permission, e
 	//     },
 	//     "supportsAllDrives": {
 	//       "default": "false",
-	//       "description": "Whether the requesting application supports both My Drives and shared drives.",
+	//       "description": "Deprecated - Whether the requesting application supports both My Drives and shared drives. This parameter will only be effective until June 1, 2020. Afterwards all applications are assumed to support shared drives.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

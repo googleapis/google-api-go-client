@@ -255,8 +255,7 @@ func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 
 // Binding: Associates `members` with a `role`.
 type Binding struct {
-	// Condition: Unimplemented. The condition that is associated with this
-	// binding.
+	// Condition: The condition that is associated with this binding.
 	// NOTE: an unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
@@ -766,7 +765,7 @@ type ExecuteBatchDmlRequest struct {
 	// first failed statement; the remaining statements will not
 	// run.
 	//
-	// REQUIRES: statements_size() > 0.
+	// REQUIRES: `statements_size()` > 0.
 	Statements []*Statement `json:"statements,omitempty"`
 
 	// Transaction: The transaction to use. A ReadWrite transaction is
@@ -809,24 +808,27 @@ func (s *ExecuteBatchDmlRequest) MarshalJSON() ([]byte, error) {
 // successfully, or if
 // a statement failed, using one of the following approaches:
 //
-//   1. Check if 'status' field is OkStatus.
-//   2. Check if result_sets_size() equals the number of statements in
+//   1. Check if `'status'` field is `OkStatus`.
+//   2. Check if `result_sets_size()` equals the number of statements
+// in
 //      ExecuteBatchDmlRequest.
 //
 // Example 1: A request with 5 DML statements, all executed
 // successfully.
+//
 // Result: A response with 5 ResultSets, one for each statement in the
 // same
-// order, and an OK status.
+// order, and an `OkStatus`.
 //
 // Example 2: A request with 5 DML statements. The 3rd statement has a
 // syntax
 // error.
+//
 // Result: A response with 2 ResultSets, for the first 2 statements
 // that
-// run successfully, and a syntax error (INVALID_ARGUMENT) status.
+// run successfully, and a syntax error (`INVALID_ARGUMENT`) status.
 // From
-// result_set_size() client can determine that the 3rd statement has
+// `result_set_size()` client can determine that the 3rd statement has
 // failed.
 type ExecuteBatchDmlResponse struct {
 	// ResultSets: ResultSets, one for each statement in the request that
@@ -1269,6 +1271,11 @@ type InstanceConfig struct {
 	// are of the form
 	// `projects/<project>/instanceConfigs/a-z*`
 	Name string `json:"name,omitempty"`
+
+	// Replicas: The geographic placement of nodes in this instance
+	// configuration and their
+	// replication properties.
+	Replicas []*ReplicaInfo `json:"replicas,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2658,6 +2665,71 @@ func (s *ReadRequest) MarshalJSON() ([]byte, error) {
 // Currently this
 // transaction type has no options.
 type ReadWrite struct {
+}
+
+type ReplicaInfo struct {
+	// DefaultLeaderLocation: If true, this location is designated as the
+	// default leader location where
+	// leader replicas are placed. See the [region
+	// types
+	// documentation](https://cloud.google.com/spanner/docs/instances#r
+	// egion_types)
+	// for more details.
+	DefaultLeaderLocation bool `json:"defaultLeaderLocation,omitempty"`
+
+	// Location: The location of the serving resources, e.g. "us-central1".
+	Location string `json:"location,omitempty"`
+
+	// Type: The type of replica.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not specified.
+	//   "READ_WRITE" - Read-write replicas support both reads and writes.
+	// These replicas:
+	// * Maintain a full copy of your data.
+	// * Serve reads.
+	// * Can vote whether to commit a write.
+	// * Participate in leadership election.
+	// * Are eligible to become a leader.
+	//   "READ_ONLY" - Read-only replicas only support reads (not writes).
+	// Read-only replicas:
+	// * Maintain a full copy of your data.
+	// * Serve reads.
+	// * Do not participate in voting to commit writes.
+	// * Are not eligible to become a leader.
+	//   "WITNESS" - Witness replicas don’t support reads but do
+	// participate in voting to
+	// commit writes. Witness replicas:
+	// * Do not maintain a full copy of data.
+	// * Do not serve reads.
+	// * Vote whether to commit writes.
+	// * Participate in leader election but are not eligible to become
+	// leader.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultLeaderLocation") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultLeaderLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ResultSet: Results from Read or

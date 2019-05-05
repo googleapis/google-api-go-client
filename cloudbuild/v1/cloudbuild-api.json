@@ -573,7 +573,7 @@
       }
     }
   },
-  "revision": "20190323",
+  "revision": "20190501",
   "rootUrl": "https://cloudbuild.googleapis.com/",
   "schemas": {
     "ArtifactObjects": {
@@ -1050,6 +1050,13 @@
           },
           "description": "Substitutions data for Build resource.",
           "type": "object"
+        },
+        "tags": {
+          "description": "Tags for annotation of a `BuildTrigger`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "triggerTemplate": {
           "$ref": "RepoSource",

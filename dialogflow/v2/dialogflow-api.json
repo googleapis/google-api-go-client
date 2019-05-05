@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190420",
+  "revision": "20190429",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1805,10 +1805,10 @@
             "USE_ENHANCED"
           ],
           "enumDescriptions": [
-            "No model variant specified. In this case we default to USE_BEST_AVAILABLE.",
+            "No model variant specified. In this case Dialogflow defaults to\nUSE_BEST_AVAILABLE.",
             "Use the best available variant of the Speech\nmodel that the caller is eligible for.\n\nPlease see the [Dialogflow\ndocs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging) for\nhow to make your project eligible for enhanced models.",
             "Use standard model variant even if an enhanced model is available.  See the\n[Cloud Speech\ndocumentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\nfor details about enhanced models.",
-            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, we fall back to the\n  standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, we return an error.\n  Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging)\n  for how to make your project eligible."
+            "Use an enhanced model variant:\n\n* If an enhanced variant does not exist for the given\n  model and request language, Dialogflow falls\n  back to the standard variant.\n\n  The [Cloud Speech\n  documentation](https://cloud.google.com/speech-to-text/docs/enhanced-models)\n  describes which models have enhanced variants.\n\n* If the API caller isn't eligible for enhanced models, Dialogflow returns\n  an error. Please see the [Dialogflow\n  docs](https://cloud.google.com/dialogflow-enterprise/docs/data-logging)\n  for how to make your project eligible."
           ],
           "type": "string"
         },
@@ -2584,7 +2584,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2OutputAudioConfig": {
-      "description": "Instructs the speech synthesizer how to generate the output audio content.",
+      "description": "Instructs the speech synthesizer on how to generate the output audio content.",
       "id": "GoogleCloudDialogflowV2OutputAudioConfig",
       "properties": {
         "audioEncoding": {

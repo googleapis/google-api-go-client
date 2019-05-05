@@ -251,9 +251,7 @@ func (s *FileShareConfig) MarshalJSON() ([]byte, error) {
 //     "foo": "bar"
 //   },
 //   "state": READY,
-//   "software_versions": {
-//     "software_update": "cloud-sql-09-28-2018",
-//   },
+//   "software_version": "cloud-sql-09-28-2018",
 //   "maintenance_policy_names": {
 //     "UpdatePolicy":
 //
@@ -271,7 +269,7 @@ func (s *FileShareConfig) MarshalJSON() ([]byte, error) {
 //
 // "projects/cloud-sql/locations/us-east1/rollouts/cloud-sql-09-28-2018-c
 // anary",
-//     },
+//     }
 //
 // "projects/cloud-sql/locations/global/rolloutTypes/instance_restart":
 // {
@@ -320,7 +318,8 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// policy
 	// type. For complete details of MaintenancePolicy, please refer
 	// to
-	// go/cloud-saas-mw-ug.
+	// //depot/google3/google/cloud/saasaccelerator/maintenancepolicy/api/
+	// v1/maintenance_policy_resources.proto
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
 	// Name: Unique name of the resource. It uses the form:
@@ -404,50 +403,6 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 
 func (s *GoogleCloudSaasacceleratorManagementProvidersV1Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1Instance
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata: Node
-// information for custom per-node SLO implementations.
-// SSA does not support per-node SLO, but producers can populate
-// per-node
-// information in SloMetadata for custom precomputations.
-// SSA Eligibility Exporter will emit per-node metric based on this
-// information.
-type GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata struct {
-	// Exclusions: By default node is eligible if instance is eligible.
-	// But individual node might be excluded from SLO by adding entry
-	// here.
-	// For semantic see SloMetadata.exclusions.
-	// If both instance and node level exclusions are present for time
-	// period,
-	// the node level's reason will be reported by Eligibility Exporter.
-	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
-
-	// NodeId: The id of the node.
-	// This should be equal to SaasInstanceNode.node_id.
-	NodeId string `json:"nodeId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Exclusions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Exclusions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -664,15 +619,6 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloMetadata struct {
 	// specified
 	// in the service SLO configuration.
 	Exclusions []*GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion `json:"exclusions,omitempty"`
-
-	// Nodes: Optional: list of nodes.
-	// Some producers need to use per-node metadata to calculate SLO.
-	// This field allows such producers to publish per-node SLO meta
-	// data,
-	// which will be consumed by SSA Eligibility Exporter and published in
-	// the
-	// form of per node metric to Monarch.
-	Nodes []*GoogleCloudSaasacceleratorManagementProvidersV1NodeSloMetadata `json:"nodes,omitempty"`
 
 	// Tier: Name of the SLO tier the Instance belongs to. This name will be
 	// expected to
@@ -978,8 +924,7 @@ type NetworkConfig struct {
 	// IPv4 addresses in the format
 	// {octet 1}.{octet 2}.{octet 3}.{octet 4} or IPv6 addresses in the
 	// format
-	// {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block
-	// 6}:{block
+	// {block 1}:{block 2}:{block 3}:{block 4}:{block 5}:{block 6}:{block
 	// 7}:{block 8}.
 	IpAddresses []string `json:"ipAddresses,omitempty"`
 
@@ -999,17 +944,14 @@ type NetworkConfig struct {
 	Network string `json:"network,omitempty"`
 
 	// ReservedIpRange: A /29 CIDR block in one of the
-	// [internal IP
-	// address
+	// [internal IP address
 	// ranges](https://www.arin.net/knowledge/address_filters.html)
-	// that
-	// identifies the range of IP addresses reserved for this instance.
-	// For
-	// example, 10.0.0.0/29 or 192.168.0.0/29. The range you specify can't
-	// overlap
-	// with either existing subnets or assigned IP address ranges for other
-	// Cloud
-	// Filestore instances in the selected VPC network.
+	// that identifies the range of IP addresses reserved for this
+	// instance. For example, 10.0.0.0/29 or 192.168.0.0/29. The range you
+	// specify
+	// can't overlap with either existing subnets or assigned IP address
+	// ranges
+	// for other Cloud Filestore instances in the selected VPC network.
 	ReservedIpRange string `json:"reservedIpRange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IpAddresses") to

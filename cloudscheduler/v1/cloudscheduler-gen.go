@@ -496,31 +496,6 @@ type HttpTarget struct {
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
 
-	// OauthToken: If specified, an
-	// [OAuth
-	// token](https://developers.google.com/identity/protocols/OAuth2)
-	// will be generated and attached as an `Authorization` header in the
-	// HTTP
-	// request.
-	//
-	// This type of authorization should be used when sending requests to a
-	// GCP
-	// endpoint.
-	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
-
-	// OidcToken: If specified,
-	// an
-	// [OIDC](https://developers.google.com/identity/protocols/OpenIDConne
-	// ct)
-	// token will be generated and attached as an `Authorization` header in
-	// the
-	// HTTP request.
-	//
-	// This type of authorization should be used when sending requests to
-	// third
-	// party endpoints or Cloud Run.
-	OidcToken *OidcToken `json:"oidcToken,omitempty"`
-
 	// Uri: Required.
 	//
 	// The full URI path that the request will be sent to. This string
@@ -562,21 +537,6 @@ func (s *HttpTarget) MarshalJSON() ([]byte, error) {
 type Job struct {
 	// AppEngineHttpTarget: App Engine HTTP target.
 	AppEngineHttpTarget *AppEngineHttpTarget `json:"appEngineHttpTarget,omitempty"`
-
-	// AttemptDeadline: The deadline for job attempts. If the request
-	// handler does not respond by
-	// this deadline then the request is cancelled and the attempt is marked
-	// as a
-	// `DEADLINE_EXCEEDED` failure. The failed attempt can be viewed
-	// in
-	// execution logs. Cloud Scheduler will retry the job according
-	// to the RetryConfig.
-	//
-	// The allowed duration for this deadline is:
-	// * For HTTP targets, between 15 seconds and 30 minutes.
-	// * For App Engine HTTP targets, between 15
-	//   seconds and 24 hours.
-	AttemptDeadline string `json:"attemptDeadline,omitempty"`
 
 	// Description: Optionally caller-specified in CreateJob
 	// or
@@ -855,97 +815,6 @@ type Location struct {
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OAuthToken: Contains information needed for generating an
-// [OAuth
-// token](https://developers.google.com/identity/protocols/OAuth2).
-// This type of authorization should be used when sending requests to a
-// GCP
-// endpoint.
-type OAuthToken struct {
-	// Scope: OAuth scope to be used for generating OAuth access token.
-	// If not specified,
-	// "https://www.googleapis.com/auth/cloud-platform"
-	// will be used.
-	Scope string `json:"scope,omitempty"`
-
-	// ServiceAccountEmail: [Service account
-	// email](https://cloud.google.com/iam/docs/service-accounts)
-	// to be used for generating OAuth token.
-	// The service account must be within the same project as the job. The
-	// caller
-	// must have iam.serviceAccounts.actAs permission for the service
-	// account.
-	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Scope") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Scope") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OAuthToken) MarshalJSON() ([]byte, error) {
-	type NoMethod OAuthToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// OidcToken: Contains information needed for generating an
-// [OpenID
-// Connect
-// token](https://developers.google.com/identity/protocols/OpenID
-// Connect). This
-// type of authorization should be used when sending requests to third
-// party
-// endpoints or Cloud Run.
-type OidcToken struct {
-	// Audience: Audience to be used when generating OIDC token. If not
-	// specified, the URI
-	// specified in target will be used.
-	Audience string `json:"audience,omitempty"`
-
-	// ServiceAccountEmail: [Service account
-	// email](https://cloud.google.com/iam/docs/service-accounts)
-	// to be used for generating OIDC token.
-	// The service account must be within the same project as the job. The
-	// caller
-	// must have iam.serviceAccounts.actAs permission for the service
-	// account.
-	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Audience") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Audience") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *OidcToken) MarshalJSON() ([]byte, error) {
-	type NoMethod OidcToken
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

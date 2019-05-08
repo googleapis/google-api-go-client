@@ -193,7 +193,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region",
+                      "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -221,7 +221,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -237,7 +237,7 @@
                   ]
                 },
                 "failover": {
-                  "description": "Failover the master role to current replica node against a specific\nSTANDARD tier redis instance.",
+                  "description": "Initiates a failover of the master node to current replica node for a\nspecific STANDARD tier Cloud Memorystore for Redis instance.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
                   "httpMethod": "POST",
                   "id": "redis.projects.locations.instances.failover",
@@ -246,7 +246,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -274,7 +274,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
                       "required": true,
@@ -310,7 +310,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region",
+                      "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -486,7 +486,7 @@
       }
     }
   },
-  "revision": "20190327",
+  "revision": "20190502",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -507,7 +507,7 @@
             "FORCE_DATA_LOSS"
           ],
           "enumDescriptions": [
-            "",
+            "Defaults to LIMITED_DATA_LOSS if a data protection mode is not\nspecified.",
             "Instance failover will be protected with data loss control. More\nspecifically, the failover will only be performed if the current\nreplication offset diff between master and replica is under a certain\nthreshold.",
             "Instance failover will be performed without data loss control."
           ],

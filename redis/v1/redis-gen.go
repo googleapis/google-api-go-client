@@ -203,7 +203,9 @@ type FailoverInstanceRequest struct {
 	// default.
 	//
 	// Possible values:
-	//   "DATA_PROTECTION_MODE_UNSPECIFIED"
+	//   "DATA_PROTECTION_MODE_UNSPECIFIED" - Defaults to LIMITED_DATA_LOSS
+	// if a data protection mode is not
+	// specified.
 	//   "LIMITED_DATA_LOSS" - Instance failover will be protected with data
 	// loss control. More
 	// specifically, the failover will only be performed if the
@@ -1390,7 +1392,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region",
+	//       "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1524,7 +1526,7 @@ func (c *ProjectsLocationsInstancesDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -1553,9 +1555,9 @@ type ProjectsLocationsInstancesFailoverCall struct {
 	header_                 http.Header
 }
 
-// Failover: Failover the master role to current replica node against a
-// specific
-// STANDARD tier redis instance.
+// Failover: Initiates a failover of the master node to current replica
+// node for a
+// specific STANDARD tier Cloud Memorystore for Redis instance.
 func (r *ProjectsLocationsInstancesService) Failover(name string, failoverinstancerequest *FailoverInstanceRequest) *ProjectsLocationsInstancesFailoverCall {
 	c := &ProjectsLocationsInstancesFailoverCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1653,7 +1655,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Failover the master role to current replica node against a specific\nSTANDARD tier redis instance.",
+	//   "description": "Initiates a failover of the master node to current replica node for a\nspecific STANDARD tier Cloud Memorystore for Redis instance.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:failover",
 	//   "httpMethod": "POST",
 	//   "id": "redis.projects.locations.instances.failover",
@@ -1662,7 +1664,7 @@ func (c *ProjectsLocationsInstancesFailoverCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -1808,7 +1810,7 @@ func (c *ProjectsLocationsInstancesGetCall) Do(opts ...googleapi.CallOption) (*I
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region",
+	//       "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -1994,7 +1996,7 @@ func (c *ProjectsLocationsInstancesListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region",
+	//       "description": "Required. The resource name of the instance location using the form:\n    `projects/{project_id}/locations/{location_id}`\nwhere `location_id` refers to a GCP region.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

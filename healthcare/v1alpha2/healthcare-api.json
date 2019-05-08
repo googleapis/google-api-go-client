@@ -2296,7 +2296,7 @@
                               "type": "string"
                             },
                             "type": {
-                              "description": "The type of the resource to update.",
+                              "description": "The FHIR resource type to delete, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -2329,7 +2329,7 @@
                               "type": "string"
                             },
                             "type": {
-                              "description": "The type of the resource to update.",
+                              "description": "The FHIR resource type to update, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -2365,7 +2365,7 @@
                               "type": "string"
                             },
                             "type": {
-                              "description": "The type of the resource to update.",
+                              "description": "The FHIR resource type to update, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).\nMust match the resource type in the provided content.",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -2401,7 +2401,7 @@
                               "type": "string"
                             },
                             "type": {
-                              "description": "The type of the resource to create.",
+                              "description": "The FHIR resource type to create, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).\nMust match the resource type in the provided content.",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -3236,7 +3236,7 @@
       }
     }
   },
-  "revision": "20190427",
+  "revision": "20190503",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -4417,7 +4417,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
           "type": "string"
         },
         "response": {
@@ -4605,7 +4605,7 @@
       "id": "SearchResourcesRequest",
       "properties": {
         "resourceType": {
-          "description": "The type of the resource to search.",
+          "description": "The FHIR resource type to search, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).",
           "type": "string"
         }
       },

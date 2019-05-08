@@ -692,7 +692,7 @@
       }
     }
   },
-  "revision": "20190307",
+  "revision": "20190507",
   "rootUrl": "https://accesscontextmanager.googleapis.com/",
   "schemas": {
     "AccessLevel": {
@@ -995,7 +995,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
           "type": "string"
         },
         "response": {

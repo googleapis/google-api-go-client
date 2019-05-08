@@ -1510,14 +1510,6 @@ type Creative struct {
 	// bids.
 	DetectedSensitiveCategories []int64 `json:"detectedSensitiveCategories,omitempty"`
 
-	// FilteringStats: Output only. The filtering stats for this
-	// creative.
-	// Deprecated; please
-	// use
-	// bidders.accounts.filterSets.filteredBids.creatives.list
-	// method instead.
-	FilteringStats *FilteringStats `json:"filteringStats,omitempty"`
-
 	// Html: An HTML creative.
 	Html *HtmlContent `json:"html,omitempty"`
 
@@ -2928,42 +2920,6 @@ type FilteredBidDetailRow struct {
 
 func (s *FilteredBidDetailRow) MarshalJSON() ([]byte, error) {
 	type NoMethod FilteredBidDetailRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// FilteringStats: Output only. Filtering reasons for this creative
-// during a period of a single
-// day (from midnight to midnight Pacific).
-type FilteringStats struct {
-	// Date: The day during which the data was collected.
-	// The data is collected from 00:00:00 to 23:59:59 PT.
-	// During switches from PST to PDT and back, the day may
-	// contain 23 or 25 hours of data instead of the usual 24.
-	Date *Date `json:"date,omitempty"`
-
-	// Reasons: The set of filtering reasons for this date.
-	Reasons []*Reason `json:"reasons,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Date") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Date") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FilteringStats) MarshalJSON() ([]byte, error) {
-	type NoMethod FilteringStats
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5213,43 +5169,6 @@ type RealtimeTimeRange struct {
 
 func (s *RealtimeTimeRange) MarshalJSON() ([]byte, error) {
 	type NoMethod RealtimeTimeRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Reason: A specific filtering status and how many times it occurred.
-type Reason struct {
-	// Count: The number of times the creative was filtered for the status.
-	// The
-	// count is aggregated across all publishers on the exchange.
-	Count int64 `json:"count,omitempty,string"`
-
-	// Status: The filtering status code. Please refer to
-	// the
-	// [creative-status-codes.txt](https://storage.googleapis.com/adx-rtb
-	// -dictionaries/creative-status-codes.txt)
-	// file for different statuses.
-	Status int64 `json:"status,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Count") to
-	// unconditionally include in API requests. By default, fields with
-	// empty values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Reason) MarshalJSON() ([]byte, error) {
-	type NoMethod Reason
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

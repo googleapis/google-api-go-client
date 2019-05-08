@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/Lt6l5kBKMD4VGIhJvfB5yMU8azM\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/mMMp8yQQzEWZalcLtyArHO_bcBQ\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -3484,7 +3484,7 @@
       }
     }
   },
-  "revision": "20190423",
+  "revision": "20190503",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -6221,7 +6221,7 @@
         },
         "marketingRightsInfo": {
           "$ref": "OrderCustomerMarketingRightsInfo",
-          "description": "Customer's marketing preferences."
+          "description": "Customer's marketing preferences. Contains the marketing opt-in information that is current at the time that the merchant call. User preference selections can change from one order to the next so preferences must be checked with every order."
         }
       },
       "type": "object"
@@ -6230,7 +6230,7 @@
       "id": "OrderCustomerMarketingRightsInfo",
       "properties": {
         "explicitMarketingPreference": {
-          "description": "Last known user selection regarding marketing preferences. In certain cases this selection might not be known, so this field would be empty.",
+          "description": "Last known customer selection regarding marketing preferences. In certain cases this selection might not be known, so this field would be empty. If a customer selected granted in their most recent order, they can be subscribed to marketing emails. Customers who have chosen denied must not be subscribed, or must be unsubscribed if already opted-in.",
           "type": "string"
         },
         "lastUpdatedTimestamp": {

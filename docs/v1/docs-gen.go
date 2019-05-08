@@ -2490,6 +2490,48 @@ func (s *InsertPageBreakRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InsertTableColumnRequest: Inserts an empty column into a table.
+type InsertTableColumnRequest struct {
+	// InsertRight: Whether to insert new column to the right of the
+	// reference cell location.
+	//
+	// - `True`: insert to the right.
+	// - `False`: insert to the left.
+	InsertRight bool `json:"insertRight,omitempty"`
+
+	// TableCellLocation: The reference table cell location from which
+	// columns will be inserted.
+	//
+	// A new column will be inserted to the left (or right) of the column
+	// where
+	// the reference cell is. If the reference cell is a merged cell, a
+	// new
+	// column will be inserted to the left (or right) of the merged cell.
+	TableCellLocation *TableCellLocation `json:"tableCellLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InsertRight") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InsertRight") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InsertTableColumnRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertTableColumnRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InsertTableRequest: Inserts a table at the specified location.
 //
 // A newline character will be inserted before the inserted table.
@@ -4435,6 +4477,9 @@ type Request struct {
 	// InsertTable: Inserts a table at the specified location.
 	InsertTable *InsertTableRequest `json:"insertTable,omitempty"`
 
+	// InsertTableColumn: Inserts an empty column into a table.
+	InsertTableColumn *InsertTableColumnRequest `json:"insertTableColumn,omitempty"`
+
 	// InsertTableRow: Inserts an empty row into a table.
 	InsertTableRow *InsertTableRowRequest `json:"insertTableRow,omitempty"`
 
@@ -4447,6 +4492,13 @@ type Request struct {
 	// UpdateParagraphStyle: Updates the paragraph style at the specified
 	// range.
 	UpdateParagraphStyle *UpdateParagraphStyleRequest `json:"updateParagraphStyle,omitempty"`
+
+	// UpdateTableColumnProperties: Updates the properties of columns in a
+	// table.
+	UpdateTableColumnProperties *UpdateTableColumnPropertiesRequest `json:"updateTableColumnProperties,omitempty"`
+
+	// UpdateTableRowStyle: Updates the row style in a table.
+	UpdateTableRowStyle *UpdateTableRowStyleRequest `json:"updateTableRowStyle,omitempty"`
 
 	// UpdateTextStyle: Updates the text style at the specified range.
 	UpdateTextStyle *UpdateTextStyleRequest `json:"updateTextStyle,omitempty"`
@@ -6328,6 +6380,112 @@ type UpdateParagraphStyleRequest struct {
 
 func (s *UpdateParagraphStyleRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateParagraphStyleRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateTableColumnPropertiesRequest: Updates the
+// TableColumnProperties of columns
+// in a table.
+type UpdateTableColumnPropertiesRequest struct {
+	// ColumnIndices: The list of zero-based column indices whose property
+	// should be updated. If
+	// no indices are specified, all columns will be updated.
+	ColumnIndices []int64 `json:"columnIndices,omitempty"`
+
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root
+	// `tableColumnProperties` is
+	// implied and should not be specified. A single "*" can be used
+	// as
+	// short-hand for listing every field.
+	//
+	// For example to update the column width, set `fields` to "width".
+	Fields string `json:"fields,omitempty"`
+
+	// TableColumnProperties: The table column properties to update.
+	//
+	// If the value of `table_column_properties#width` is less than 5
+	// points
+	// (5/72 inch), a 400 bad request error is returned.
+	TableColumnProperties *TableColumnProperties `json:"tableColumnProperties,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ColumnIndices") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ColumnIndices") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateTableColumnPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateTableColumnPropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateTableRowStyleRequest: Updates the TableRowStyle of rows in
+// a
+// table.
+type UpdateTableRowStyleRequest struct {
+	// Fields: The fields that should be updated.
+	//
+	// At least one field must be specified. The root `tableRowStyle` is
+	// implied
+	// and should not be specified. A single "*" can be used as short-hand
+	// for
+	// listing every field.
+	//
+	// For example to update the minimum row height, set `fields`
+	// to
+	// "min_row_height".
+	Fields string `json:"fields,omitempty"`
+
+	// RowIndices: The list of zero-based row indices whose style should be
+	// updated. If no
+	// indices are specified, all rows will be updated.
+	RowIndices []int64 `json:"rowIndices,omitempty"`
+
+	// TableRowStyle: The styles to be set on the rows.
+	TableRowStyle *TableRowStyle `json:"tableRowStyle,omitempty"`
+
+	// TableStartLocation: The location where the table starts in the
+	// document.
+	TableStartLocation *Location `json:"tableStartLocation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fields") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateTableRowStyleRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateTableRowStyleRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

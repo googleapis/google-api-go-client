@@ -2704,7 +2704,8 @@ type Operation struct {
 	// service that
 	// originally returns it. If you use the default HTTP mapping,
 	// the
-	// `name` should have the format of `operations/some/unique/name`.
+	// `name` should be a resource name ending with
+	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success.
@@ -3100,7 +3101,12 @@ func (s *SchemaConfig) MarshalJSON() ([]byte, error) {
 // SearchResourcesRequest: Request to search the resources in the
 // specified FHIR store.
 type SearchResourcesRequest struct {
-	// ResourceType: The type of the resource to search.
+	// ResourceType: The FHIR resource type to search, such as Patient or
+	// Observation. For a
+	// complete list, see the [FHIR
+	// Resource
+	// Index](http://hl7.org/implement/standards/fhir/STU3/resourcel
+	// ist.html).
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ResourceType") to
@@ -11498,7 +11504,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalDeleteCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The type of the resource to delete.",
+	//       "description": "The FHIR resource type to delete, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -11640,7 +11646,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalPatchCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The type of the resource to update.",
+	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -11792,7 +11798,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirConditionalUpdateCall) Do(opts .
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The type of the resource to update.",
+	//       "description": "The FHIR resource type to update, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).\nMust match the resource type in the provided content.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,
@@ -11937,7 +11943,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateCall) Do(opts ...googleapi
 	//       "type": "string"
 	//     },
 	//     "type": {
-	//       "description": "The type of the resource to create.",
+	//       "description": "The FHIR resource type to create, such as Patient or Observation. For a\ncomplete list, see the [FHIR Resource\nIndex](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html).\nMust match the resource type in the provided content.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+$",
 	//       "required": true,

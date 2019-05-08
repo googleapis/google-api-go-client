@@ -4088,7 +4088,10 @@ type OrderCustomer struct {
 	// FullName: Full name of the customer.
 	FullName string `json:"fullName,omitempty"`
 
-	// MarketingRightsInfo: Customer's marketing preferences.
+	// MarketingRightsInfo: Customer's marketing preferences. Contains the
+	// marketing opt-in information that is current at the time that the
+	// merchant call. User preference selections can change from one order
+	// to the next so preferences must be checked with every order.
 	MarketingRightsInfo *OrderCustomerMarketingRightsInfo `json:"marketingRightsInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FullName") to
@@ -4115,9 +4118,12 @@ func (s *OrderCustomer) MarshalJSON() ([]byte, error) {
 }
 
 type OrderCustomerMarketingRightsInfo struct {
-	// ExplicitMarketingPreference: Last known user selection regarding
+	// ExplicitMarketingPreference: Last known customer selection regarding
 	// marketing preferences. In certain cases this selection might not be
-	// known, so this field would be empty.
+	// known, so this field would be empty. If a customer selected granted
+	// in their most recent order, they can be subscribed to marketing
+	// emails. Customers who have chosen denied must not be subscribed, or
+	// must be unsubscribed if already opted-in.
 	ExplicitMarketingPreference string `json:"explicitMarketingPreference,omitempty"`
 
 	// LastUpdatedTimestamp: Timestamp when last time marketing preference

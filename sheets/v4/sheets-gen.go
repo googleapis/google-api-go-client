@@ -262,7 +262,8 @@ type AddChartRequest struct {
 	// where it should be placed. The chartId
 	// field is optional; if one is not set, an id will be randomly
 	// generated. (It
-	// is an error to specify the ID of a chart that already exists.)
+	// is an error to specify the ID of an embedded object that already
+	// exists.)
 	Chart *EmbeddedChart `json:"chart,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Chart") to

@@ -937,9 +937,6 @@ type ScanConfigError struct {
 	//   "APPENGINE_DEFAULT_HOST_MISSING" - One of the seed URLs is an App
 	// Engine URL but the Default Host of the
 	// App Engine is not set.
-	//   "APPENGINE_SEED_URL_NOT_ALLOWED" - One of the seed URLs is an App
-	// Engine URL and the scan targets
-	// Compute Engine only.
 	//   "CANNOT_USE_GOOGLE_COM_ACCOUNT" - Google corporate accounts can not
 	// be used for scanning.
 	//   "CANNOT_USE_OWNER_ACCOUNT" - The account of the scan creator can
@@ -1001,9 +998,6 @@ type ScanConfigError struct {
 	// for the current project.
 	//   "SEED_URL_HAS_NON_ROUTABLE_IP_ADDRESS" - One of the seed URLs has
 	// on-routable IP address.
-	//   "SEED_URL_IP_ADDRESS_NOT_SUPPORTED_FOR_APPENGINE" - One of the
-	// supplied seed URLs has an IP address, and this is not
-	// supported in App Engine-only targeted scan.
 	//   "SEED_URL_HAS_UNRESERVED_IP_ADDRESS" - One of the seed URLs has an
 	// IP address that is not reserved
 	// for the current project.

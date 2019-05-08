@@ -525,7 +525,7 @@
       }
     }
   },
-  "revision": "20190323",
+  "revision": "20190503",
   "rootUrl": "https://websecurityscanner.googleapis.com/",
   "schemas": {
     "Authentication": {
@@ -936,7 +936,6 @@
             "APPENGINE_API_BACKEND_ERROR",
             "APPENGINE_API_NOT_ACCESSIBLE",
             "APPENGINE_DEFAULT_HOST_MISSING",
-            "APPENGINE_SEED_URL_NOT_ALLOWED",
             "CANNOT_USE_GOOGLE_COM_ACCOUNT",
             "CANNOT_USE_OWNER_ACCOUNT",
             "COMPUTE_API_BACKEND_ERROR",
@@ -964,7 +963,6 @@
             "SEED_URL_MAPPED_TO_NON_ROUTABLE_ADDRESS",
             "SEED_URL_MAPPED_TO_UNRESERVED_ADDRESS",
             "SEED_URL_HAS_NON_ROUTABLE_IP_ADDRESS",
-            "SEED_URL_IP_ADDRESS_NOT_SUPPORTED_FOR_APPENGINE",
             "SEED_URL_HAS_UNRESERVED_IP_ADDRESS",
             "SERVICE_ACCOUNT_NOT_CONFIGURED",
             "TOO_MANY_SCANS",
@@ -981,7 +979,6 @@
             "One of the seed URLs is an App Engine URL but we cannot validate the scan\nsettings due to an App Engine API backend error.",
             "One of the seed URLs is an App Engine URL but we cannot access the\nApp Engine API to validate scan settings.",
             "One of the seed URLs is an App Engine URL but the Default Host of the\nApp Engine is not set.",
-            "One of the seed URLs is an App Engine URL and the scan targets\nCompute Engine only.",
             "Google corporate accounts can not be used for scanning.",
             "The account of the scan creator can not be used for scanning.",
             "This scan targets Compute Engine, but we cannot validate scan settings\ndue to a Compute Engine API backend error.",
@@ -1009,7 +1006,6 @@
             "One of the seed URLs is mapped to a non-routable IP address in DNS.",
             "One of the seed URLs is mapped to an IP address which is not reserved\nfor the current project.",
             "One of the seed URLs has on-routable IP address.",
-            "One of the supplied seed URLs has an IP address, and this is not\nsupported in App Engine-only targeted scan.",
             "One of the seed URLs has an IP address that is not reserved\nfor the current project.",
             "The Cloud Security Scanner service account is not configured under the\nproject.",
             "A project has reached the maximum number of scans.",

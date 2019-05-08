@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190430",
+  "revision": "20190507",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -3125,10 +3125,6 @@
             "type": "integer"
           },
           "type": "array"
-        },
-        "filteringStats": {
-          "$ref": "FilteringStats",
-          "description": "Output only. The filtering stats for this creative.\nDeprecated; please use\nbidders.accounts.filterSets.filteredBids.creatives.list\nmethod instead."
         },
         "html": {
           "$ref": "HtmlContent",
@@ -4201,24 +4197,6 @@
         "rowDimensions": {
           "$ref": "RowDimensions",
           "description": "The values of all dimensions associated with metric values in this row."
-        }
-      },
-      "type": "object"
-    },
-    "FilteringStats": {
-      "description": "Output only. Filtering reasons for this creative during a period of a single\nday (from midnight to midnight Pacific).",
-      "id": "FilteringStats",
-      "properties": {
-        "date": {
-          "$ref": "Date",
-          "description": "The day during which the data was collected.\nThe data is collected from 00:00:00 to 23:59:59 PT.\nDuring switches from PST to PDT and back, the day may\ncontain 23 or 25 hours of data instead of the usual 24."
-        },
-        "reasons": {
-          "description": "The set of filtering reasons for this date.",
-          "items": {
-            "$ref": "Reason"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -5441,23 +5419,6 @@
           "description": "The start timestamp of the real-time RTB metrics aggregation.",
           "format": "google-datetime",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Reason": {
-      "description": "A specific filtering status and how many times it occurred.",
-      "id": "Reason",
-      "properties": {
-        "count": {
-          "description": "The number of times the creative was filtered for the status. The\ncount is aggregated across all publishers on the exchange.",
-          "format": "int64",
-          "type": "string"
-        },
-        "status": {
-          "description": "The filtering status code. Please refer to the\n[creative-status-codes.txt](https://storage.googleapis.com/adx-rtb-dictionaries/creative-status-codes.txt)\nfile for different statuses.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"

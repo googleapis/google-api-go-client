@@ -808,7 +808,7 @@
       }
     }
   },
-  "revision": "20190305",
+  "revision": "20190429",
   "rootUrl": "https://sheets.googleapis.com/",
   "schemas": {
     "AddBandingRequest": {
@@ -839,7 +839,7 @@
       "properties": {
         "chart": {
           "$ref": "EmbeddedChart",
-          "description": "The chart that should be added to the spreadsheet, including the position\nwhere it should be placed. The chartId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of a chart that already exists.)"
+          "description": "The chart that should be added to the spreadsheet, including the position\nwhere it should be placed. The chartId\nfield is optional; if one is not set, an id will be randomly generated. (It\nis an error to specify the ID of an embedded object that already exists.)"
         }
       },
       "type": "object"

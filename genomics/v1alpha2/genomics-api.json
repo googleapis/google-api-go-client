@@ -388,7 +388,7 @@
       }
     }
   },
-  "revision": "20190326",
+  "revision": "20190507",
   "rootUrl": "https://genomics.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -679,7 +679,7 @@
             "The operation was attempted past the valid range.  E.g., seeking or\nreading past end-of-file.\n\nUnlike `INVALID_ARGUMENT`, this error indicates a problem that may\nbe fixed if the system state changes. For example, a 32-bit file\nsystem will generate `INVALID_ARGUMENT` if asked to read at an\noffset that is not in the range [0,2^32-1], but it will generate\n`OUT_OF_RANGE` if asked to read from an offset past the current\nfile size.\n\nThere is a fair bit of overlap between `FAILED_PRECONDITION` and\n`OUT_OF_RANGE`.  We recommend using `OUT_OF_RANGE` (the more specific\nerror) when it applies so that callers who are iterating through\na space can easily look for an `OUT_OF_RANGE` error to detect when\nthey are done.\n\nHTTP Mapping: 400 Bad Request",
             "The operation is not implemented or is not supported/enabled in this\nservice.\n\nHTTP Mapping: 501 Not Implemented",
             "Internal errors.  This means that some invariants expected by the\nunderlying system have been broken.  This error code is reserved\nfor serious errors.\n\nHTTP Mapping: 500 Internal Server Error",
-            "The service is currently unavailable.  This is most likely a\ntransient condition, which can be corrected by retrying with\na backoff.\n\nSee the guidelines above for deciding between `FAILED_PRECONDITION`,\n`ABORTED`, and `UNAVAILABLE`.\n\nHTTP Mapping: 503 Service Unavailable",
+            "The service is currently unavailable.  This is most likely a\ntransient condition, which can be corrected by retrying with\na backoff. Note that it is not always safe to retry\nnon-idempotent operations.\n\nSee the guidelines above for deciding between `FAILED_PRECONDITION`,\n`ABORTED`, and `UNAVAILABLE`.\n\nHTTP Mapping: 503 Service Unavailable",
             "Unrecoverable data loss or corruption.\n\nHTTP Mapping: 500 Internal Server Error"
           ],
           "type": "string"
@@ -969,7 +969,7 @@
           "type": "number"
         },
         "noAddress": {
-          "description": "Whether to assign an external IP to the instance. This is an experimental\nfeature that may go away. Defaults to false.\nCorresponds to `--no_address` flag for [gcloud compute instances create]\n(https://cloud.google.com/sdk/gcloud/reference/compute/instances/create).\nIn order to use this, must be true for both create time and run time.\nCannot be true at run time if false at create time. If you need to ssh into\na private IP VM for debugging, you can ssh to a public VM and then ssh into\nthe private VM's Internal IP.  If noAddress is set, this pipeline run may\nonly load docker images from Google Container Registry and not Docker Hub.\nBefore using this, you must\n[configure access to Google services from internal IPs](https://cloud.google.com/compute/docs/configure-private-google-access#configuring_access_to_google_services_from_internal_ips).",
+          "description": "Whether to assign an external IP to the instance. This is an experimental\nfeature that may go away. Defaults to false.\nCorresponds to `--no_address` flag for [gcloud compute instances create]\n(https://cloud.google.com/sdk/gcloud/reference/compute/instances/create).\nIn order to use this, must be true for both create time and run time.\nCannot be true at run time if false at create time. If you need to ssh into\na private IP VM for debugging, you can ssh to a public VM and then ssh into\nthe private VM's Internal IP.  If noAddress is set, this pipeline run may\nonly load docker images from Google Container Registry and not Docker Hub.\nBefore using this, you must\n[configure access to Google services from internal\nIPs](https://cloud.google.com/compute/docs/configure-private-google-access#configuring_access_to_google_services_from_internal_ips).",
           "type": "boolean"
         },
         "preemptible": {
@@ -1167,7 +1167,7 @@
             "The operation was attempted past the valid range.  E.g., seeking or\nreading past end-of-file.\n\nUnlike `INVALID_ARGUMENT`, this error indicates a problem that may\nbe fixed if the system state changes. For example, a 32-bit file\nsystem will generate `INVALID_ARGUMENT` if asked to read at an\noffset that is not in the range [0,2^32-1], but it will generate\n`OUT_OF_RANGE` if asked to read from an offset past the current\nfile size.\n\nThere is a fair bit of overlap between `FAILED_PRECONDITION` and\n`OUT_OF_RANGE`.  We recommend using `OUT_OF_RANGE` (the more specific\nerror) when it applies so that callers who are iterating through\na space can easily look for an `OUT_OF_RANGE` error to detect when\nthey are done.\n\nHTTP Mapping: 400 Bad Request",
             "The operation is not implemented or is not supported/enabled in this\nservice.\n\nHTTP Mapping: 501 Not Implemented",
             "Internal errors.  This means that some invariants expected by the\nunderlying system have been broken.  This error code is reserved\nfor serious errors.\n\nHTTP Mapping: 500 Internal Server Error",
-            "The service is currently unavailable.  This is most likely a\ntransient condition, which can be corrected by retrying with\na backoff.\n\nSee the guidelines above for deciding between `FAILED_PRECONDITION`,\n`ABORTED`, and `UNAVAILABLE`.\n\nHTTP Mapping: 503 Service Unavailable",
+            "The service is currently unavailable.  This is most likely a\ntransient condition, which can be corrected by retrying with\na backoff. Note that it is not always safe to retry\nnon-idempotent operations.\n\nSee the guidelines above for deciding between `FAILED_PRECONDITION`,\n`ABORTED`, and `UNAVAILABLE`.\n\nHTTP Mapping: 503 Service Unavailable",
             "Unrecoverable data loss or corruption.\n\nHTTP Mapping: 500 Internal Server Error"
           ],
           "type": "string"

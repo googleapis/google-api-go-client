@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190408",
+  "revision": "20190501",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -1454,6 +1454,21 @@
       },
       "type": "object"
     },
+    "InsertTableColumnRequest": {
+      "description": "Inserts an empty column into a table.",
+      "id": "InsertTableColumnRequest",
+      "properties": {
+        "insertRight": {
+          "description": "Whether to insert new column to the right of the reference cell location.\n\n- `True`: insert to the right.\n- `False`: insert to the left.",
+          "type": "boolean"
+        },
+        "tableCellLocation": {
+          "$ref": "TableCellLocation",
+          "description": "The reference table cell location from which columns will be inserted.\n\nA new column will be inserted to the left (or right) of the column where\nthe reference cell is. If the reference cell is a merged cell, a new\ncolumn will be inserted to the left (or right) of the merged cell."
+        }
+      },
+      "type": "object"
+    },
     "InsertTableRequest": {
       "description": "Inserts a table at the specified location.\n\nA newline character will be inserted before the inserted table.",
       "id": "InsertTableRequest",
@@ -2536,6 +2551,10 @@
           "$ref": "InsertTableRequest",
           "description": "Inserts a table at the specified location."
         },
+        "insertTableColumn": {
+          "$ref": "InsertTableColumnRequest",
+          "description": "Inserts an empty column into a table."
+        },
         "insertTableRow": {
           "$ref": "InsertTableRowRequest",
           "description": "Inserts an empty row into a table."
@@ -2551,6 +2570,14 @@
         "updateParagraphStyle": {
           "$ref": "UpdateParagraphStyleRequest",
           "description": "Updates the paragraph style at the specified range."
+        },
+        "updateTableColumnProperties": {
+          "$ref": "UpdateTableColumnPropertiesRequest",
+          "description": "Updates the properties of columns in a table."
+        },
+        "updateTableRowStyle": {
+          "$ref": "UpdateTableRowStyleRequest",
+          "description": "Updates the row style in a table."
         },
         "updateTextStyle": {
           "$ref": "UpdateTextStyleRequest",
@@ -3567,6 +3594,62 @@
         "range": {
           "$ref": "Range",
           "description": "The range overlapping the paragraphs to style."
+        }
+      },
+      "type": "object"
+    },
+    "UpdateTableColumnPropertiesRequest": {
+      "description": "Updates the\nTableColumnProperties of columns\nin a table.",
+      "id": "UpdateTableColumnPropertiesRequest",
+      "properties": {
+        "columnIndices": {
+          "description": "The list of zero-based column indices whose property should be updated. If\nno indices are specified, all columns will be updated.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `tableColumnProperties` is\nimplied and should not be specified. A single `\"*\"` can be used as\nshort-hand for listing every field.\n\nFor example to update the column width, set `fields` to `\"width\"`.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "tableColumnProperties": {
+          "$ref": "TableColumnProperties",
+          "description": "The table column properties to update.\n\nIf the value of `table_column_properties#width` is less than 5 points\n(5/72 inch), a 400 bad request error is returned."
+        },
+        "tableStartLocation": {
+          "$ref": "Location",
+          "description": "The location where the table starts in the document."
+        }
+      },
+      "type": "object"
+    },
+    "UpdateTableRowStyleRequest": {
+      "description": "Updates the TableRowStyle of rows in a\ntable.",
+      "id": "UpdateTableRowStyleRequest",
+      "properties": {
+        "fields": {
+          "description": "The fields that should be updated.\n\nAt least one field must be specified. The root `tableRowStyle` is implied\nand should not be specified. A single `\"*\"` can be used as short-hand for\nlisting every field.\n\nFor example to update the minimum row height, set `fields` to\n`\"min_row_height\"`.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "rowIndices": {
+          "description": "The list of zero-based row indices whose style should be updated. If no\nindices are specified, all rows will be updated.",
+          "items": {
+            "format": "int32",
+            "type": "integer"
+          },
+          "type": "array"
+        },
+        "tableRowStyle": {
+          "$ref": "TableRowStyle",
+          "description": "The styles to be set on the rows."
+        },
+        "tableStartLocation": {
+          "$ref": "Location",
+          "description": "The location where the table starts in the document."
         }
       },
       "type": "object"

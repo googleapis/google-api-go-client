@@ -660,7 +660,7 @@
       }
     }
   },
-  "revision": "20190412",
+  "revision": "20190504",
   "rootUrl": "https://accessapproval.googleapis.com/",
   "schemas": {
     "AccessApprovalSettings": {
@@ -759,6 +759,10 @@
         "requestedResourceName": {
           "description": "The resource for which approval is being requested. The format of the\nresource name is defined at\nhttps://cloud.google.com/apis/design/resource_names. The resource name here\nmay either be a \"full\" resource name (e.g.\n\"//library.googleapis.com/shelves/shelf1/books/book2\") or a \"relative\"\nresource name (e.g. \"shelves/shelf1/books/book2\") as described in the\nresource name specification.",
           "type": "string"
+        },
+        "requestedResourceProperties": {
+          "$ref": "ResourceProperties",
+          "description": "Properties related to the resource represented by requested_resource_name."
         }
       },
       "type": "object"
@@ -824,6 +828,17 @@
         "nextPageToken": {
           "description": "Token to retrieve the next page of results, or empty if there are no more.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ResourceProperties": {
+      "description": "The properties associated with the resource of the request.",
+      "id": "ResourceProperties",
+      "properties": {
+        "excludesDescendants": {
+          "description": "Whether an approval will exclude the descendants of the resource being\nrequested.",
+          "type": "boolean"
         }
       },
       "type": "object"

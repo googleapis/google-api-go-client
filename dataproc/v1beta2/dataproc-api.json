@@ -727,7 +727,7 @@
                 "getIamPolicy": {
                   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
                   "flatPath": "v1beta2/projects/{projectsId}/regions/{regionsId}/autoscalingPolicies/{autoscalingPoliciesId}:getIamPolicy",
-                  "httpMethod": "POST",
+                  "httpMethod": "GET",
                   "id": "dataproc.projects.regions.autoscalingPolicies.getIamPolicy",
                   "parameterOrder": [
                     "resource"
@@ -742,9 +742,6 @@
                     }
                   },
                   "path": "v1beta2/{+resource}:getIamPolicy",
-                  "request": {
-                    "$ref": "GetIamPolicyRequest"
-                  },
                   "response": {
                     "$ref": "Policy"
                   },
@@ -2086,7 +2083,7 @@
       }
     }
   },
-  "revision": "20190417",
+  "revision": "20190502",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {

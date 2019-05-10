@@ -15,7 +15,7 @@
   "description": "Reads and publishes results from Firebase Test Lab.",
   "discoveryVersion": "v1",
   "documentationLink": "https://firebase.google.com/docs/test-lab/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/MORIh9GJD8kNeP5pxzb7lPxrRsI\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/L2NlhyPOGzwB1sm_TzrKH1MPv5M\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1271,7 +1271,7 @@
       }
     }
   },
-  "revision": "20190425",
+  "revision": "20190508",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AndroidAppInfo": {
@@ -1592,6 +1592,7 @@
       "type": "object"
     },
     "FailureDetail": {
+      "description": "Details for an outcome with a FAILURE outcome summary.",
       "id": "FailureDetail",
       "properties": {
         "crashed": {
@@ -1756,6 +1757,7 @@
       "type": "object"
     },
     "InconclusiveDetail": {
+      "description": "Details for an outcome with an INCONCLUSIVE outcome summary.",
       "id": "InconclusiveDetail",
       "properties": {
         "abortedByUser": {
@@ -2244,6 +2246,7 @@
       "type": "object"
     },
     "SkippedDetail": {
+      "description": "Details for an outcome with a SKIPPED outcome summary.",
       "id": "SkippedDetail",
       "properties": {
         "incompatibleAppVersion": {
@@ -2416,6 +2419,7 @@
       "type": "object"
     },
     "SuccessDetail": {
+      "description": "Details for an outcome with a SUCCESS outcome summary.",
       "id": "SuccessDetail",
       "properties": {
         "otherNativeCrash": {

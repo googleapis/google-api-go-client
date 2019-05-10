@@ -4903,6 +4903,19 @@ type Snapshot struct {
 	// SourceJobId: The job this snapshot was created from.
 	SourceJobId string `json:"sourceJobId,omitempty"`
 
+	// State: State of the snapshot.
+	//
+	// Possible values:
+	//   "UNKNOWN_SNAPSHOT_STATE" - Unknown state.
+	//   "PENDING" - Snapshot intent to create has been persisted,
+	// snapshotting of state has not
+	// yet started.
+	//   "RUNNING" - Snapshotting is being performed.
+	//   "READY" - Snapshot has been created and is ready to be used.
+	//   "FAILED" - Snapshot failed to be created.
+	//   "DELETED" - Snapshot has been deleted.
+	State string `json:"state,omitempty"`
+
 	// Ttl: The time after which this snapshot will be automatically
 	// deleted.
 	Ttl string `json:"ttl,omitempty"`
@@ -6810,6 +6823,9 @@ func (s *WorkItemStatus) UnmarshalJSON(data []byte) error {
 // WorkerMessage that
 // this health ping belongs to.
 type WorkerHealthReport struct {
+	// Msg: A message describing any unusual health reports.
+	Msg string `json:"msg,omitempty"`
+
 	// Pods: The pods running on the worker.
 	// See:
 	// http://kubernetes.io/v1.1/docs/api-reference/v1/definitions.html#
@@ -6827,13 +6843,19 @@ type WorkerHealthReport struct {
 	// explicitly set by the worker.
 	ReportInterval string `json:"reportInterval,omitempty"`
 
-	// VmIsHealthy: Whether the VM is healthy.
+	// VmIsBroken: Whether the VM is in a permanently broken state.
+	// Broken VMs should be abandoned or deleted ASAP to avoid assigning
+	// or
+	// completing any work.
+	VmIsBroken bool `json:"vmIsBroken,omitempty"`
+
+	// VmIsHealthy: Whether the VM is currently healthy.
 	VmIsHealthy bool `json:"vmIsHealthy,omitempty"`
 
 	// VmStartupTime: The time the VM was booted.
 	VmStartupTime string `json:"vmStartupTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Pods") to
+	// ForceSendFields is a list of field names (e.g. "Msg") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -6841,7 +6863,7 @@ type WorkerHealthReport struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Pods") to include in API
+	// NullFields is a list of field names (e.g. "Msg") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

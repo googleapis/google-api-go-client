@@ -338,7 +338,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190507",
   "rootUrl": "https://serviceusage.googleapis.com/",
   "schemas": {
     "Api": {
@@ -477,17 +477,6 @@
         },
         "selector": {
           "description": "Selects the methods to which this rule applies.\n\nRefer to selector for syntax details.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "AuthorizationConfig": {
-      "description": "Configuration of authorization.\n\nThis section determines the authorization provider, if unspecified, then no\nauthorization check will be done.\n\nExample:\n\n    experimental:\n      authorization:\n        provider: firebaserules.googleapis.com",
-      "id": "AuthorizationConfig",
-      "properties": {
-        "provider": {
-          "description": "The name of the authorization provider, such as\nfirebaserules.googleapis.com.",
           "type": "string"
         }
       },
@@ -968,17 +957,6 @@
       },
       "type": "object"
     },
-    "Experimental": {
-      "description": "Experimental service configuration. These configuration options can\nonly be used by whitelisted users.",
-      "id": "Experimental",
-      "properties": {
-        "authorization": {
-          "$ref": "AuthorizationConfig",
-          "description": "Authorization configuration."
-        }
-      },
-      "type": "object"
-    },
     "Field": {
       "description": "A single field of a message type.",
       "id": "Field",
@@ -1142,10 +1120,6 @@
             "$ref": "Enum"
           },
           "type": "array"
-        },
-        "experimental": {
-          "$ref": "Experimental",
-          "description": "Experimental configuration."
         },
         "http": {
           "$ref": "Http",
@@ -1584,6 +1558,26 @@
           },
           "type": "array"
         },
+        "launchStage": {
+          "description": "Optional. The launch stage of the metric definition.",
+          "enum": [
+            "LAUNCH_STAGE_UNSPECIFIED",
+            "EARLY_ACCESS",
+            "ALPHA",
+            "BETA",
+            "GA",
+            "DEPRECATED"
+          ],
+          "enumDescriptions": [
+            "Do not use this default value.",
+            "Early Access features are limited to a closed group of testers. To use\nthese features, you must sign up in advance and sign a Trusted Tester\nagreement (which includes confidentiality provisions). These features may\nbe unstable, changed in backward-incompatible ways, and are not\nguaranteed to be released.",
+            "Alpha is a limited availability test for releases before they are cleared\nfor widespread use. By Alpha, all significant design issues are resolved\nand we are in the process of verifying functionality. Alpha customers\nneed to apply for access, agree to applicable terms, and have their\nprojects whitelisted. Alpha releases don’t have to be feature complete,\nno SLAs are provided, and there are no technical support obligations, but\nthey will be far enough along that customers can actually use them in\ntest environments or for limited-use tests -- just like they would in\nnormal production cases.",
+            "Beta is the point at which we are ready to open a release for any\ncustomer to use. There are no SLA or technical support obligations in a\nBeta release. Products will be complete from a feature perspective, but\nmay have some open outstanding issues. Beta releases are suitable for\nlimited production use cases.",
+            "GA features are open to all developers and are considered stable and\nfully qualified for production use.",
+            "Deprecated features are scheduled to be shut down and removed. For more\ninformation, see the “Deprecation Policy” section of our [Terms of\nService](https://cloud.google.com/terms/)\nand the [Google Cloud Platform Subject to the Deprecation\nPolicy](https://cloud.google.com/terms/deprecation) documentation."
+          ],
+          "type": "string"
+        },
         "metadata": {
           "$ref": "MetricDescriptorMetadata",
           "description": "Optional. Metadata which can be used to guide usage of the metric."
@@ -1651,7 +1645,7 @@
           "type": "string"
         },
         "launchStage": {
-          "description": "The launch stage of the metric definition.",
+          "description": "Deprecated. Please use the MetricDescriptor.launch_stage instead.\nThe launch stage of the metric definition.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
             "EARLY_ACCESS",

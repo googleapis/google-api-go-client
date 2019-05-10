@@ -928,6 +928,7 @@ func (s *Execution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FailureDetail: Details for an outcome with a FAILURE outcome summary.
 type FailureDetail struct {
 	// Crashed: If the failure was severe because the system (app) under
 	// test crashed.
@@ -1208,6 +1209,8 @@ func (s *Image) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InconclusiveDetail: Details for an outcome with an INCONCLUSIVE
+// outcome summary.
 type InconclusiveDetail struct {
 	// AbortedByUser: If the end user aborted the test execution before a
 	// pass or fail could be determined. For example, the user pressed
@@ -2132,6 +2135,7 @@ func (s *ScreenshotCluster) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SkippedDetail: Details for an outcome with a SKIPPED outcome summary.
 type SkippedDetail struct {
 	// IncompatibleAppVersion: If the App doesn't support the specific API
 	// level.
@@ -2601,6 +2605,7 @@ func (s *StepLabelsEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SuccessDetail: Details for an outcome with a SUCCESS outcome summary.
 type SuccessDetail struct {
 	// OtherNativeCrash: If a native process other than the app crashed.
 	OtherNativeCrash bool `json:"otherNativeCrash,omitempty"`

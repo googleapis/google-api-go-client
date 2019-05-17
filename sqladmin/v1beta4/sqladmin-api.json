@@ -18,7 +18,7 @@
   "description": "Creates and manages Cloud SQL instances, which provide fully managed MySQL or PostgreSQL databases.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/sql/docs/reference/latest",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/QtjhOzVspxdYDcV-neBlaStEry0\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/kwai7B3cC4eEEbSxYFHS0BuBYIc\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1617,7 +1617,7 @@
       }
     }
   },
-  "revision": "20190415",
+  "revision": "20190510",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AclEntry": {
@@ -1677,6 +1677,10 @@
           "description": "This is always sql#backupConfiguration.",
           "type": "string"
         },
+        "location": {
+          "description": "The location of the backup.",
+          "type": "string"
+        },
         "replicationLogArchivingEnabled": {
           "description": "Reserved for future use.",
           "type": "boolean"
@@ -1722,6 +1726,10 @@
         "kind": {
           "default": "sql#backupRun",
           "description": "This is always sql#backupRun.",
+          "type": "string"
+        },
+        "location": {
+          "description": "The location of the backup.",
           "type": "string"
         },
         "selfLink": {

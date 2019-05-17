@@ -748,7 +748,9 @@ type Cluster struct {
 	// node for hosting
 	// containers. This is provisioned from within the
 	// `container_ipv4_cidr`
-	// range.
+	// range. This field will only be set when cluster is in route-based
+	// network
+	// mode.
 	NodeIpv4CidrSize int64 `json:"nodeIpv4CidrSize,omitempty"`
 
 	// NodePools: The node pools associated with this cluster.

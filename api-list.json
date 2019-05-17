@@ -931,7 +931,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
+   "documentationLink": "https://cloud.google.com/private-catalog/",
    "preferred": true
   },
   {
@@ -946,7 +946,7 @@
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
+   "documentationLink": "https://cloud.google.com/private-catalog/",
    "preferred": true
   },
   {
@@ -1825,6 +1825,21 @@
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
    "documentationLink": "https://developers.google.com/fact-check/tools/api/",
+   "preferred": true
+  },
+  {
+   "kind": "discovery#directoryItem",
+   "id": "fcm:v1",
+   "name": "fcm",
+   "version": "v1",
+   "title": "Firebase Cloud Messaging API",
+   "description": "FCM send API that provides a cross-platform messaging solution to reliably deliver messages at no cost.",
+   "discoveryRestUrl": "https://fcm.googleapis.com/$discovery/rest?version=v1",
+   "icons": {
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+   },
+   "documentationLink": "https://firebase.google.com/docs/cloud-messaging",
    "preferred": true
   },
   {

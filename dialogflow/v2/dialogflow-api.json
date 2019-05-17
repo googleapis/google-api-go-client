@@ -1303,7 +1303,7 @@
       }
     }
   },
-  "revision": "20190506",
+  "revision": "20190514",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2Agent": {
@@ -1836,7 +1836,7 @@
           "type": "string"
         },
         "defaultResponsePlatforms": {
-          "description": "Optional. The list of platforms for which the first response will be\ntaken from among the messages assigned to the DEFAULT_PLATFORM.",
+          "description": "Optional. The list of platforms for which the first responses will be\ncopied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
           "enumDescriptions": [
             "Not specified.",
             "Facebook.",
@@ -3186,7 +3186,7 @@
           "type": "string"
         },
         "defaultResponsePlatforms": {
-          "description": "Optional. The list of platforms for which the first response will be\ntaken from among the messages assigned to the DEFAULT_PLATFORM.",
+          "description": "Optional. The list of platforms for which the first responses will be\ncopied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
           "enumDescriptions": [
             "Not specified.",
             "Facebook.",

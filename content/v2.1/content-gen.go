@@ -17953,24 +17953,17 @@ func (c *OrdersListCall) Acknowledged(acknowledged bool) *OrdersListCall {
 // number of orders to return in the response, used for paging. The
 // default value is 25 orders per page, and the maximum allowed value is
 // 250 orders per page.
-// Known issue: All List calls will return all Orders without limit
-// regardless of the value of this field.
 func (c *OrdersListCall) MaxResults(maxResults int64) *OrdersListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": The ordering of the
-// returned list. The only supported value are placedDate desc and
-// placedDate asc for now, which returns orders sorted by placement
-// date. "placedDate desc" stands for listing orders by placement date,
-// from oldest to most recent. "placedDate asc" stands for listing
-// orders by placement date, from most recent to oldest. In future
-// releases we'll support other sorting criteria.
+// OrderBy sets the optional parameter "orderBy": Order results by
+// placement date in descending or ascending order.
 //
-// Possible values:
-//   "placedDate asc"
-//   "placedDate desc"
+// Acceptable values are:
+// - placedDateAsc
+// - placedDateDesc
 func (c *OrdersListCall) OrderBy(orderBy string) *OrdersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -18002,7 +17995,7 @@ func (c *OrdersListCall) PlacedDateStart(placedDateStart string) *OrdersListCall
 // match any of the specified statuses. Multiple values can be specified
 // with comma separation. Additionally, please note that active is a
 // shortcut for pendingShipment and partiallyShipped, and completed is a
-// shortcut for shipped , partiallyDelivered, delivered,
+// shortcut for shipped, partiallyDelivered, delivered,
 // partiallyReturned, returned, and canceled.
 //
 // Possible values:
@@ -18133,7 +18126,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of orders to return in the response, used for paging. The default value is 25 orders per page, and the maximum allowed value is 250 orders per page.\nKnown issue: All List calls will return all Orders without limit regardless of the value of this field.",
+	//       "description": "The maximum number of orders to return in the response, used for paging. The default value is 25 orders per page, and the maximum allowed value is 250 orders per page.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -18146,15 +18139,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "The ordering of the returned list. The only supported value are placedDate desc and placedDate asc for now, which returns orders sorted by placement date. \"placedDate desc\" stands for listing orders by placement date, from oldest to most recent. \"placedDate asc\" stands for listing orders by placement date, from most recent to oldest. In future releases we'll support other sorting criteria.",
-	//       "enum": [
-	//         "placedDate asc",
-	//         "placedDate desc"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         ""
-	//       ],
+	//       "description": "Order results by placement date in descending or ascending order.\n\nAcceptable values are:\n- placedDateAsc\n- placedDateDesc",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -18174,7 +18159,7 @@ func (c *OrdersListCall) Do(opts ...googleapi.CallOption) (*OrdersListResponse, 
 	//       "type": "string"
 	//     },
 	//     "statuses": {
-	//       "description": "Obtains orders that match any of the specified statuses. Multiple values can be specified with comma separation. Additionally, please note that active is a shortcut for pendingShipment and partiallyShipped, and completed is a shortcut for shipped , partiallyDelivered, delivered, partiallyReturned, returned, and canceled.",
+	//       "description": "Obtains orders that match any of the specified statuses. Multiple values can be specified with comma separation. Additionally, please note that active is a shortcut for pendingShipment and partiallyShipped, and completed is a shortcut for shipped, partiallyDelivered, delivered, partiallyReturned, returned, and canceled.",
 	//       "enum": [
 	//         "active",
 	//         "canceled",

@@ -5583,7 +5583,7 @@ func (c *ServicesBatchEnableCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Parent to enable services on.\n\nAn example name would be:\n`projects/123`\nwhere `123` is the project number (not project ID).\n\nThe `BatchEnableServices` method currently only supports projects.",
+	//       "description": "Parent to enable services on.\n\nAn example name would be:\n`projects/123` where `123` is the project number.\n\nThe `BatchEnableServices` method currently only supports projects.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -5733,7 +5733,7 @@ func (c *ServicesDisableCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the consumer and service to disable the service on.\n\nThe enable and disable methods currently only support projects.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+	//       "description": "Name of the consumer and service to disable the service on.\n\nThe enable and disable methods currently only support projects.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -5873,7 +5873,7 @@ func (c *ServicesEnableCall) Do(opts ...googleapi.CallOption) (*Operation, error
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the consumer and service to enable the service on.\n\nThe `EnableService` and `DisableService` methods currently only support\nprojects.\n\nEnabling a service requires that the service is public or is shared with\nthe user enabling the service.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+	//       "description": "Name of the consumer and service to enable the service on.\n\nThe `EnableService` and `DisableService` methods currently only support\nprojects.\n\nEnabling a service requires that the service is public or is shared with\nthe user enabling the service.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6021,7 +6021,7 @@ func (c *ServicesGetCall) Do(opts ...googleapi.CallOption) (*GoogleApiServiceusa
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Name of the consumer and service to get the `ConsumerState` for.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com`\nwhere `123` is the project number (not project ID).",
+	//       "description": "Name of the consumer and service to get the `ConsumerState` for.\n\nAn example name would be:\n`projects/123/services/serviceusage.googleapis.com` where `123` is the\nproject number.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -6217,7 +6217,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Parent to search for services on.\n\nAn example name would be:\n`projects/123`\nwhere `123` is the project number (not project ID).",
+	//       "description": "Parent to search for services on.\n\nAn example name would be:\n`projects/123` where `123` is the project number.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

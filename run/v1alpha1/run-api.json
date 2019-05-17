@@ -814,6 +814,192 @@
               ]
             }
           }
+        },
+        "triggers": {
+          "methods": {
+            "create": {
+              "description": "Creates a new trigger.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/triggers",
+              "httpMethod": "POST",
+              "id": "run.namespaces.triggers.create",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "parent": {
+                  "description": "The project ID or project number in which this trigger should\nbe created.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+parent}/triggers",
+              "request": {
+                "$ref": "Trigger"
+              },
+              "response": {
+                "$ref": "Trigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "delete": {
+              "description": "Rpc to delete a trigger.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/triggers/{triggersId}",
+              "httpMethod": "DELETE",
+              "id": "run.namespaces.triggers.delete",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "apiVersion": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "kind": {
+                  "description": "Cloud Run currently ignores this parameter.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "name": {
+                  "description": "The name of the trigger being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/triggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "propagationPolicy": {
+                  "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+name}",
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "get": {
+              "description": "Rpc to get information about a trigger.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/triggers/{triggersId}",
+              "httpMethod": "GET",
+              "id": "run.namespaces.triggers.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/triggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+name}",
+              "response": {
+                "$ref": "Trigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Rpc to list triggers.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/triggers",
+              "httpMethod": "GET",
+              "id": "run.namespaces.triggers.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "continue": {
+                  "description": "Optional encoded string to continue paging.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "fieldSelector": {
+                  "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeUninitialized": {
+                  "description": "Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "labelSelector": {
+                  "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "limit": {
+                  "description": "The maximum number of records that should be returned.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "parent": {
+                  "description": "The project ID or project number from which the triggers should\nbe listed.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "resourceVersion": {
+                  "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "watch": {
+                  "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+parent}/triggers",
+              "response": {
+                "$ref": "ListTriggersResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "replaceTrigger": {
+              "description": "Rpc to replace a trigger.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/triggers/{triggersId}",
+              "httpMethod": "PUT",
+              "id": "run.namespaces.triggers.replaceTrigger",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/triggers/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+name}",
+              "request": {
+                "$ref": "Trigger"
+              },
+              "response": {
+                "$ref": "Trigger"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
         }
       }
     },
@@ -1653,13 +1839,199 @@
                   ]
                 }
               }
+            },
+            "triggers": {
+              "methods": {
+                "create": {
+                  "description": "Creates a new trigger.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/triggers",
+                  "httpMethod": "POST",
+                  "id": "run.projects.locations.triggers.create",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "The project ID or project number in which this trigger should\nbe created.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/triggers",
+                  "request": {
+                    "$ref": "Trigger"
+                  },
+                  "response": {
+                    "$ref": "Trigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "delete": {
+                  "description": "Rpc to delete a trigger.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "DELETE",
+                  "id": "run.projects.locations.triggers.delete",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "apiVersion": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "kind": {
+                      "description": "Cloud Run currently ignores this parameter.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "name": {
+                      "description": "The name of the trigger being deleted. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "propagationPolicy": {
+                      "description": "Specifies the propagation policy of delete. Cloud Run currently ignores\nthis setting, and deletes in the background. Please see\nkubernetes.io/docs/concepts/workloads/controllers/garbage-collection/ for\nmore information.",
+                      "location": "query",
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Empty"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "get": {
+                  "description": "Rpc to get information about a trigger.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.triggers.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "Trigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Rpc to list triggers.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/triggers",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.triggers.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "continue": {
+                      "description": "Optional encoded string to continue paging.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "fieldSelector": {
+                      "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "includeUninitialized": {
+                      "description": "Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "labelSelector": {
+                      "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "limit": {
+                      "description": "The maximum number of records that should be returned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "The project ID or project number from which the triggers should\nbe listed.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "resourceVersion": {
+                      "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "watch": {
+                      "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/triggers",
+                  "response": {
+                    "$ref": "ListTriggersResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "replaceTrigger": {
+                  "description": "Rpc to replace a trigger.\n\nOnly the spec and metadata labels and annotations are modifiable. After\nthe Update request, Cloud Run will work to make the 'status'\nmatch the requested 'spec'.\n\nMay provide metadata.resourceVersion to enforce update from last read for\noptimistic concurrency control.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/triggers/{triggersId}",
+                  "httpMethod": "PUT",
+                  "id": "run.projects.locations.triggers.replaceTrigger",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/triggers/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "request": {
+                    "$ref": "Trigger"
+                  },
+                  "response": {
+                    "$ref": "Trigger"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
             }
           }
         }
       }
     }
   },
-  "revision": "20190415",
+  "revision": "20190515",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -1860,6 +2232,10 @@
         "revisionTemplate": {
           "$ref": "RevisionTemplate",
           "description": "RevisionTemplate holds the latest specification for the Revision to\nbe stamped out. The template references the container image, and may also\ninclude labels and annotations that should be attached to the Revision.\nTo correlate a Revision, and/or to force a Revision to be created when the\nspec doesn't otherwise change, a nonce label may be provided in the\ntemplate metadata. For more details, see:\nhttps://github.com/knative/serving/blob/master/docs/client-conventions.md#associate-modifications-with-revisions\n\nCloud Run does not currently support referencing a build that is\nresponsible for materializing the container image from source."
+        },
+        "template": {
+          "$ref": "RevisionTemplate",
+          "description": "Template holds the latest specification for the Revision to be stamped out.\nNot currently supported by Cloud Run."
         }
       },
       "type": "object"
@@ -2553,6 +2929,39 @@
       },
       "type": "object"
     },
+    "ListTriggersResponse": {
+      "description": "ListTriggersResponse is a list of Trigger resources.",
+      "id": "ListTriggersResponse",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"v1alpha1\".",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of Triggers.",
+          "items": {
+            "$ref": "Trigger"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "The kind of this resource, in this case \"TriggerList\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ListMeta",
+          "description": "Metadata associated with this Trigger list."
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "LocalObjectReference": {
       "description": "LocalObjectReference contains enough information to let you locate the\nreferenced object inside the same namespace.",
       "id": "LocalObjectReference",
@@ -2680,6 +3089,41 @@
         },
         "uid": {
           "description": "UID is the unique in time and space value for this object. It is typically\ngenerated by the server on successful creation of a resource and is not\nallowed to change on PUT operations.\n\nPopulated by the system.\nRead-only.\nMore info: http://kubernetes.io/docs/user-guide/identifiers#uids\n+optional",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ObjectReference": {
+      "description": "ObjectReference contains enough information to let you inspect or modify the\nreferred object.",
+      "id": "ObjectReference",
+      "properties": {
+        "apiVersion": {
+          "description": "API version of the referent.\n+optional",
+          "type": "string"
+        },
+        "fieldPath": {
+          "description": "If referring to a piece of an object instead of an entire object, this\nstring should contain a valid JSON/Go field access statement, such as\ndesiredState.manifest.containers[2]. For example, if the object reference\nis to a container within a pod, this would take on a value like:\n\"spec.containers{name}\" (where \"name\" refers to the name of the container\nthat triggered the event) or if no container name is specified\n\"spec.containers[2]\" (container with index 2 in this pod). This syntax is\nchosen only to have some well-defined way of referencing a part of an\nobject.",
+          "type": "string"
+        },
+        "kind": {
+          "description": "Kind of the referent.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/api-conventions.md#types-kinds\n+optional",
+          "type": "string"
+        },
+        "name": {
+          "description": "Name of the referent.\nMore info:\nhttps://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names\n+optional",
+          "type": "string"
+        },
+        "namespace": {
+          "description": "Namespace of the referent.\nMore info:\nhttps://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/\n+optional",
+          "type": "string"
+        },
+        "resourceVersion": {
+          "description": "Specific resourceVersion to which this reference is made, if any.\nMore info:\nhttps://git.k8s.io/community/contributors/devel/api-conventions.md#concurrency-control-and-consistency\n+optional",
+          "type": "string"
+        },
+        "uid": {
+          "description": "UID of the referent.\nMore info:\nhttps://kubernetes.io/docs/concepts/overview/working-with-objects/names/#uids\n+optional",
           "type": "string"
         }
       },
@@ -2931,6 +3375,13 @@
           "description": "ContainerConcurrency specifies the maximum allowed in-flight (concurrent)\nrequests per container of the Revision. Values are:\n- `0` thread-safe, the system should manage the max concurrency. This is\n   the default value.\n- `1` not-thread-safe. Single concurrency\n- `2-N` thread-safe, max concurrency of N",
           "format": "int32",
           "type": "integer"
+        },
+        "containers": {
+          "description": "Containers holds the single container that defines the unit of execution\nfor this Revision. In the context of a Revision, we disallow a number of\nfields on this Container, including: name and lifecycle.",
+          "items": {
+            "$ref": "Container"
+          },
+          "type": "array"
         },
         "generation": {
           "description": "Deprecated and not currently populated by Cloud Run. See\nmetadata.generation instead, which is the sequence number containing the\nlatest generation of the desired state.\n\nRead-only.",
@@ -3281,6 +3732,17 @@
         "runLatest": {
           "$ref": "ServiceSpecRunLatest",
           "description": "RunLatest defines a simple Service. It will automatically\nconfigure a route that keeps the latest ready revision\nfrom the supplied configuration running.\n+optional"
+        },
+        "template": {
+          "$ref": "RevisionTemplate",
+          "description": "Template holds the latest specification for the Revision to\nbe stamped out.\n\nNot currently supported by Cloud Run."
+        },
+        "traffic": {
+          "description": "Traffic specifies how to distribute traffic over a collection of Knative\nRevisions and Configurations. This will replace existing service specs\n(ServiceSpecRunLatest, ServiceSpecPinnedType, ServiceSpecReleaseType, and\nServiceSpecManualType).\n\nNot currently supported by Cloud Run.",
+          "items": {
+            "$ref": "TrafficTarget"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3398,6 +3860,20 @@
       },
       "type": "object"
     },
+    "SubscriberSpec": {
+      "id": "SubscriberSpec",
+      "properties": {
+        "ref": {
+          "$ref": "ObjectReference",
+          "description": "Reference to an object that will be used to find the target\nendpoint, which should implement the Addressable duck type.\nFor example, this could be a reference to a Route resource\nor a Knative Service resource."
+        },
+        "uri": {
+          "description": "Reference to a 'known' endpoint where no resolving is done.\nhttp://k8s-service for example\nhttp://myexternalhandler.example.com/foo/bar",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "TCPSocketAction": {
       "description": "TCPSocketAction describes an action based on opening a socket",
       "id": "TCPSocketAction",
@@ -3460,6 +3936,124 @@
         },
         "revisionName": {
           "description": "RevisionName of a specific revision to which to send this portion of\ntraffic. This is mutually exclusive with ConfigurationName.\n\nProviding RevisionName in spec is not currently supported by Cloud Run.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Trigger": {
+      "id": "Trigger",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"v1alpha1\".",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The kind of resource, in this case \"Trigger\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ObjectMeta",
+          "description": "Metadata associated with this Trigger."
+        },
+        "spec": {
+          "$ref": "TriggerSpec",
+          "description": "Spec defines the desired state of the Trigger."
+        },
+        "status": {
+          "$ref": "TriggerStatus",
+          "description": "Status represents the current state of the Trigger. This data may be out of\ndate.\n+optional"
+        }
+      },
+      "type": "object"
+    },
+    "TriggerCondition": {
+      "description": "TriggerCondition contains state information for an Trigger.",
+      "id": "TriggerCondition",
+      "properties": {
+        "lastTransitionTime": {
+          "description": "Last time the condition transitioned from one status to another.\n+optional",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "message": {
+          "description": "Human readable message indicating details about the current status.\n+optional",
+          "type": "string"
+        },
+        "reason": {
+          "description": "One-word CamelCase reason for the condition's current status.\n+optional",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the condition, one of True, False, Unknown.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of Trigger condition.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TriggerFilter": {
+      "id": "TriggerFilter",
+      "properties": {
+        "sourceAndType": {
+          "$ref": "TriggerFilterSourceAndType"
+        }
+      },
+      "type": "object"
+    },
+    "TriggerFilterSourceAndType": {
+      "description": "TriggerFilterSourceAndType filters events based on exact matches on the cloud\nevent's type and source attributes. Only exact matches will pass the filter.",
+      "id": "TriggerFilterSourceAndType",
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "TriggerSpec": {
+      "description": "The desired state of the Trigger.",
+      "id": "TriggerSpec",
+      "properties": {
+        "broker": {
+          "description": "Broker is the broker that this trigger receives events from. If not\nspecified, will default to 'default'.\n\nNot currently supported by Cloud Run.",
+          "type": "string"
+        },
+        "filter": {
+          "$ref": "TriggerFilter",
+          "description": "Filter is the filter to apply against all events from the Broker. Only\nevents that pass this filter will be sent to the Subscriber. If not\nspecified, will default to allowing all events.\n\nThis must be specified in Cloud Run."
+        },
+        "subscriber": {
+          "$ref": "SubscriberSpec",
+          "description": "Subscriber is the addressable that receives events from the Broker that\npass the Filter. It is required.\n\nE.g. https://us-central1-myproject.cloudfunctions.net/myfunction or\n/namespaces/my-project/services/my-service."
+        }
+      },
+      "type": "object"
+    },
+    "TriggerStatus": {
+      "description": "TriggerStatus represents the current state of a Trigger.",
+      "id": "TriggerStatus",
+      "properties": {
+        "conditions": {
+          "description": "Array of observed TriggerConditions, indicating the current state\nof the Trigger.",
+          "items": {
+            "$ref": "TriggerCondition"
+          },
+          "type": "array"
+        },
+        "observedGeneration": {
+          "description": "ObservedGeneration is the 'Generation' of the Trigger that\nwas last processed by the controller.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "subscriberUri": {
+          "description": "SubscriberURI is the resolved URI of the receiver for this Trigger.",
           "type": "string"
         }
       },

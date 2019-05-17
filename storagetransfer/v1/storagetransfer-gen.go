@@ -169,13 +169,12 @@ type TransferOperationsService struct {
 // Credentials](http://docs.aws.amazon.com/general/latest/gr/aws
 // -security-credentials.html)).
 type AwsAccessKey struct {
-	// AccessKeyId: AWS access key ID.
-	// Required.
+	// AccessKeyId: Required. AWS access key ID.
 	AccessKeyId string `json:"accessKeyId,omitempty"`
 
-	// SecretAccessKey: AWS secret access key. This field is not returned in
-	// RPC responses.
-	// Required.
+	// SecretAccessKey: Required. AWS secret access key. This field is not
+	// returned in RPC
+	// responses.
 	SecretAccessKey string `json:"secretAccessKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AccessKeyId") to
@@ -206,19 +205,18 @@ func (s *AwsAccessKey) MarshalJSON() ([]byte, error) {
 // In an AwsS3Data resource, an object's name is the S3 object's key
 // name.
 type AwsS3Data struct {
-	// AwsAccessKey: AWS access key used to sign the API requests to the AWS
-	// S3 bucket.
-	// Permissions on the bucket must be granted to the access ID of the
+	// AwsAccessKey: Required. AWS access key used to sign the API requests
+	// to the AWS S3
+	// bucket. Permissions on the bucket must be granted to the access ID of
+	// the
 	// AWS access key.
-	// Required.
 	AwsAccessKey *AwsAccessKey `json:"awsAccessKey,omitempty"`
 
-	// BucketName: S3 Bucket name (see
+	// BucketName: Required. S3 Bucket name (see
 	// [Creating
 	// a
 	// bucket](http://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket
 	// -get-location-example.html)).
-	// Required.
 	BucketName string `json:"bucketName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AwsAccessKey") to
@@ -323,9 +321,9 @@ type ErrorLogEntry struct {
 	// ErrorDetails: A list of messages that carry the error details.
 	ErrorDetails []string `json:"errorDetails,omitempty"`
 
-	// Url: A URL that refers to the target (a data source, a data sink,
+	// Url: Required. A URL that refers to the target (a data source, a data
+	// sink,
 	// or an object) with which the error is associated.
-	// Required.
 	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorDetails") to
@@ -514,8 +512,7 @@ type ErrorSummary struct {
 	// HTTP Mapping: 500 Internal Server Error
 	ErrorCode string `json:"errorCode,omitempty"`
 
-	// ErrorCount: Count of this type of error.
-	// Required.
+	// ErrorCount: Required. Count of this type of error.
 	ErrorCount int64 `json:"errorCount,omitempty,string"`
 
 	// ErrorLogEntries: Error samples.
@@ -554,12 +551,11 @@ func (s *ErrorSummary) MarshalJSON() ([]byte, error) {
 // which changes when the content or the metadata of the object is
 // updated.
 type GcsData struct {
-	// BucketName: Google Cloud Storage bucket name (see
+	// BucketName: Required. Google Cloud Storage bucket name (see
 	// [Bucket
 	// Name
 	// Requirements](https://cloud.google.com/storage/docs/naming#requir
 	// ements)).
-	// Required.
 	BucketName string `json:"bucketName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BucketName") to
@@ -587,7 +583,7 @@ func (s *GcsData) MarshalJSON() ([]byte, error) {
 
 // GoogleServiceAccount: Google service account
 type GoogleServiceAccount struct {
-	// AccountEmail: Required.
+	// AccountEmail: Email address of the service account.
 	AccountEmail string `json:"accountEmail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -680,12 +676,11 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 // objects
 // to transfer.
 type HttpData struct {
-	// ListUrl: The URL that points to the file that stores the object list
-	// entries.
-	// This file must allow public access.  Currently, only URLs with HTTP
-	// and
-	// HTTPS schemes are supported.
-	// Required.
+	// ListUrl: Required. The URL that points to the file that stores the
+	// object list
+	// entries. This file must allow public access.  Currently, only URLs
+	// with
+	// HTTP and HTTPS schemes are supported.
 	ListUrl string `json:"listUrl,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ListUrl") to
@@ -987,12 +982,11 @@ type Schedule struct {
 	// once.
 	ScheduleEndDate *Date `json:"scheduleEndDate,omitempty"`
 
-	// ScheduleStartDate: The first day the recurring transfer is scheduled
-	// to run. If
+	// ScheduleStartDate: Required. The first day the recurring transfer is
+	// scheduled to run. If
 	// `scheduleStartDate` is in the past, the transfer will run for the
 	// first
 	// time on the following day.
-	// Required.
 	ScheduleStartDate *Date `json:"scheduleStartDate,omitempty"`
 
 	// StartTimeOfDay: The time in UTC at which the transfer will be
@@ -1404,7 +1398,6 @@ type TransferOperation struct {
 
 	// ProjectId: The ID of the Google Cloud Platform Project that owns the
 	// operation.
-	// Required.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// StartTime: Start time of this transfer execution.
@@ -1426,7 +1419,6 @@ type TransferOperation struct {
 	TransferJobName string `json:"transferJobName,omitempty"`
 
 	// TransferSpec: Transfer specification.
-	// Required.
 	TransferSpec *TransferSpec `json:"transferSpec,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Counters") to
@@ -1554,19 +1546,18 @@ func (s *TransferSpec) MarshalJSON() ([]byte, error) {
 
 // UpdateTransferJobRequest: Request passed to UpdateTransferJob.
 type UpdateTransferJobRequest struct {
-	// ProjectId: The ID of the Google Cloud Platform Console project that
-	// owns the job.
-	// Required.
+	// ProjectId: Required. The ID of the Google Cloud Platform Console
+	// project that owns the
+	// job.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// TransferJob: The job to update. `transferJob` is expected to specify
-	// only three fields:
-	// `description`, `transferSpec`, and `status`.  An
-	// UpdateTransferJobRequest
-	// that specifies other fields will be rejected with an
-	// error
-	// `INVALID_ARGUMENT`.
-	// Required.
+	// TransferJob: Required. The job to update. `transferJob` is expected
+	// to specify only
+	// three fields: `description`, `transferSpec`, and `status`.
+	// An
+	// UpdateTransferJobRequest that specifies other fields will be rejected
+	// with
+	// an error `INVALID_ARGUMENT`.
 	TransferJob *TransferJob `json:"transferJob,omitempty"`
 
 	// UpdateTransferJobFieldMask: The field mask of the fields in
@@ -1741,7 +1732,7 @@ func (c *GoogleServiceAccountsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "The ID of the Google Cloud Platform Console project that the Google service\naccount is associated with.\nRequired.",
+	//       "description": "Required. The ID of the Google Cloud Platform Console project that the\nGoogle service account is associated with.",
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
@@ -1900,9 +1891,9 @@ func (r *TransferJobsService) Get(jobName string) *TransferJobsGetCall {
 	return c
 }
 
-// ProjectId sets the optional parameter "projectId": The ID of the
-// Google Cloud Platform Console project that owns the job.
-// Required.
+// ProjectId sets the optional parameter "projectId": Required. The ID
+// of the Google Cloud Platform Console project that owns the
+// job.
 func (c *TransferJobsGetCall) ProjectId(projectId string) *TransferJobsGetCall {
 	c.urlParams_.Set("projectId", projectId)
 	return c
@@ -2015,14 +2006,14 @@ func (c *TransferJobsGetCall) Do(opts ...googleapi.CallOption) (*TransferJob, er
 	//   ],
 	//   "parameters": {
 	//     "jobName": {
-	//       "description": "The job to get.\nRequired.",
+	//       "description": "Required. The job to get.",
 	//       "location": "path",
 	//       "pattern": "^transferJobs/.+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "The ID of the Google Cloud Platform Console project that owns the job.\nRequired.",
+	//       "description": "Required. The ID of the Google Cloud Platform Console project that owns the\njob.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2054,13 +2045,12 @@ func (r *TransferJobsService) List() *TransferJobsListCall {
 	return c
 }
 
-// Filter sets the optional parameter "filter": A list of query
-// parameters specified as JSON text in the form
-// of
+// Filter sets the optional parameter "filter": Required. A list of
+// query parameters specified as JSON text in the form
+// of:
 // {"project_id":"my_project_id",
-// "job_names":["jobid1","jobid2",...],
-//
-// "job_statuses":["status1","status2",...]}.
+//  "job_names":["jobid1","jobid2",...],
+//  "job_statuses":["status1","status2",...]}.
 // Since `job_names` and `job_statuses` support multiple values, their
 // values
 // must be specified with array notation. `project_id` is
@@ -2190,7 +2180,7 @@ func (c *TransferJobsListCall) Do(opts ...googleapi.CallOption) (*ListTransferJo
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A list of query parameters specified as JSON text in the form of\n{\"project_id\":\"my_project_id\",\n\"job_names\":[\"jobid1\",\"jobid2\",...],\n\"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project_id` is required.\n`job_names` and `job_statuses` are optional.  The valid values for\n`job_statuses` are case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of:\n{\"project_id\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"job_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names` and `job_statuses` support multiple values, their values\nmust be specified with array notation. `project_id` is required.\n`job_names` and `job_statuses` are optional.  The valid values for\n`job_statuses` are case-insensitive: `ENABLED`, `DISABLED`, and `DELETED`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2360,7 +2350,7 @@ func (c *TransferJobsPatchCall) Do(opts ...googleapi.CallOption) (*TransferJob, 
 	//   ],
 	//   "parameters": {
 	//     "jobName": {
-	//       "description": "The name of job to update.\nRequired.",
+	//       "description": "Required. The name of job to update.",
 	//       "location": "path",
 	//       "pattern": "^transferJobs/.+$",
 	//       "required": true,
@@ -2823,14 +2813,18 @@ func (r *TransferOperationsService) List(name string) *TransferOperationsListCal
 	return c
 }
 
-// Filter sets the optional parameter "filter": A list of query
-// parameters specified as JSON text in the form of {\"project_id\" :
-// \"my_project_id\", \"job_names\" : [\"jobid1\", \"jobid2\",...],
-// \"operation_names\" : [\"opid1\", \"opid2\",...],
-// \"transfer_statuses\":[\"status1\", \"status2\",...]}. Since
-// `job_names`, `operation_names`, and `transfer_statuses` support
+// Filter sets the optional parameter "filter": Required. A list of
+// query parameters specified as JSON text in the form of:
+// {"project_id":"my_project_id",
+//  "job_names":["jobid1","jobid2",...],
+//  "operation_names":["opid1","opid2",...],
+//  "transfer_statuses":["status1","status2",...]}.
+// Since `job_names`, `operation_names`, and `transfer_statuses` support
 // multiple values, they must be specified with array notation.
-// `job_names`, `operation_names`, and `transfer_statuses` are optional.
+// `project_id` is required. `job_names`, `operation_names`, and
+// `transfer_statuses` are optional. The valid values for
+// `transfer_statuses` are case-insensitive: `IN_PROGRESS`, `PAUSED`,
+// `SUCCESS`, `FAILED`, and `ABORTED`.
 func (c *TransferOperationsListCall) Filter(filter string) *TransferOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2957,12 +2951,12 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A list of query parameters specified as JSON text in the form of {\\\"project_id\\\" : \\\"my_project_id\\\", \\\"job_names\\\" : [\\\"jobid1\\\", \\\"jobid2\\\",...], \\\"operation_names\\\" : [\\\"opid1\\\", \\\"opid2\\\",...], \\\"transfer_statuses\\\":[\\\"status1\\\", \\\"status2\\\",...]}. Since `job_names`, `operation_names`, and `transfer_statuses` support multiple values, they must be specified with array notation. `job_names`, `operation_names`, and `transfer_statuses` are optional.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of: {\"project_id\":\"my_project_id\",\n \"job_names\":[\"jobid1\",\"jobid2\",...],\n \"operation_names\":[\"opid1\",\"opid2\",...],\n \"transfer_statuses\":[\"status1\",\"status2\",...]}.\nSince `job_names`, `operation_names`, and `transfer_statuses` support multiple values, they must be specified with array notation. `project_id` is required. `job_names`, `operation_names`, and `transfer_statuses` are optional. The valid values for `transfer_statuses` are case-insensitive: `IN_PROGRESS`, `PAUSED`, `SUCCESS`, `FAILED`, and `ABORTED`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The value `transferOperations`.",
+	//       "description": "Required. The value `transferOperations`.",
 	//       "location": "path",
 	//       "pattern": "^transferOperations$",
 	//       "required": true,
@@ -3130,7 +3124,7 @@ func (c *TransferOperationsPauseCall) Do(opts ...googleapi.CallOption) (*Empty, 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the transfer operation.\nRequired.",
+	//       "description": "Required. The name of the transfer operation.",
 	//       "location": "path",
 	//       "pattern": "^transferOperations/.+$",
 	//       "required": true,
@@ -3269,7 +3263,7 @@ func (c *TransferOperationsResumeCall) Do(opts ...googleapi.CallOption) (*Empty,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the transfer operation.\nRequired.",
+	//       "description": "Required. The name of the transfer operation.",
 	//       "location": "path",
 	//       "pattern": "^transferOperations/.+$",
 	//       "required": true,

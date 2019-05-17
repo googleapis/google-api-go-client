@@ -2836,6 +2836,7 @@ type GooglePrivacyDlpV2DlpJob struct {
 	//   "DONE" - The job is no longer running.
 	//   "CANCELED" - The job was canceled before it could complete.
 	//   "FAILED" - The job had an error and did not complete.
+	//   "WAITING_FOR_TP_CREATION" - Job waiting on Tenant Project creation.
 	State string `json:"state,omitempty"`
 
 	// Type: The type of job.
@@ -5690,8 +5691,14 @@ func (s *GooglePrivacyDlpV2Proximity) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2PublishSummaryToCscc struct {
 }
 
-// GooglePrivacyDlpV2PublishToPubSub: Publish the results of a DlpJob to
-// a pub sub channel.
+// GooglePrivacyDlpV2PublishToPubSub: Publish a message into given
+// Pub/Sub topic when DlpJob has completed. The
+// message contains a single field, `DlpJobName`, which is equal to
+// the
+// finished
+// job's
+// [`DlpJob.name`](/dlp/docs/reference/rest/v2/projects.dlpJobs#Dlp
+// Job).
 // Compatible with: Inspect, Risk
 type GooglePrivacyDlpV2PublishToPubSub struct {
 	// Topic: Cloud Pub/Sub topic to send notifications to. The topic must
@@ -12201,8 +12208,12 @@ func (r *ProjectsDlpJobsService) List(parent string) *ProjectsDlpJobsListCall {
 //     - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY
 //     - `trigger_name` - The resource name of the trigger that created
 // job.
+//     - 'end_time` - Corresponds to time the job finished.
+//     - 'start_time` - Corresponds to time the job finished.
 // * Supported fields for risk analysis jobs:
 //     - `state` - RUNNING|CANCELED|FINISHED|FAILED
+//     - 'end_time` - Corresponds to time the job finished.
+//     - 'start_time` - Corresponds to time the job finished.
 // * The operator must be `=` or `!=`.
 //
 // Examples:
@@ -12211,6 +12222,7 @@ func (r *ProjectsDlpJobsService) List(parent string) *ProjectsDlpJobsListCall {
 // * inspected_storage = cloud_storage OR inspected_storage = bigquery
 // * inspected_storage = cloud_storage AND (state = done OR state =
 // canceled)
+// * end_time > \"2017-12-12T00:00:00+00:00\"
 //
 // The length of this field should be no more than 500 characters.
 func (c *ProjectsDlpJobsListCall) Filter(filter string) *ProjectsDlpJobsListCall {
@@ -12373,7 +12385,7 @@ func (c *ProjectsDlpJobsListCall) Do(opts ...googleapi.CallOption) (*GooglePriva
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n\nThe length of this field should be no more than 500 characters.",
+	//       "description": "Optional. Allows filtering.\n\nSupported syntax:\n\n* Filter expressions are made up of one or more restrictions.\n* Restrictions can be combined by `AND` or `OR` logical operators. A\nsequence of restrictions implicitly uses `AND`.\n* A restriction has the form of `\u003cfield\u003e \u003coperator\u003e \u003cvalue\u003e`.\n* Supported fields/values for inspect jobs:\n    - `state` - PENDING|RUNNING|CANCELED|FINISHED|FAILED\n    - `inspected_storage` - DATASTORE|CLOUD_STORAGE|BIGQUERY\n    - `trigger_name` - The resource name of the trigger that created job.\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* Supported fields for risk analysis jobs:\n    - `state` - RUNNING|CANCELED|FINISHED|FAILED\n    - 'end_time` - Corresponds to time the job finished.\n    - 'start_time` - Corresponds to time the job finished.\n* The operator must be `=` or `!=`.\n\nExamples:\n\n* inspected_storage = cloud_storage AND state = done\n* inspected_storage = cloud_storage OR inspected_storage = bigquery\n* inspected_storage = cloud_storage AND (state = done OR state = canceled)\n* end_time \u003e \\\"2017-12-12T00:00:00+00:00\\\"\n\nThe length of this field should be no more than 500 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

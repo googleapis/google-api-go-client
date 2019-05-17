@@ -272,7 +272,7 @@
       }
     }
   },
-  "revision": "20190424",
+  "revision": "20190516",
   "rootUrl": "https://testing.googleapis.com/",
   "schemas": {
     "Account": {
@@ -847,11 +847,11 @@
       "properties": {
         "obbFile": {
           "$ref": "ObbFile",
-          "description": "A reference to an opaque binary blob file"
+          "description": "A reference to an opaque binary blob file."
         },
         "regularFile": {
           "$ref": "RegularFile",
-          "description": "A reference to a regular file"
+          "description": "A reference to a regular file."
         }
       },
       "type": "object"
@@ -945,7 +945,7 @@
       "type": "object"
     },
     "GoogleAuto": {
-      "description": "Enables automatic Google account login.\nIf set, the service will automatically generate a Google test account and add\nit to the device, before executing the test. Note that test accounts might be\nreused.\nMany applications show their full set of functionalities when an account is\npresent on the device. Logging into the device with these generated accounts\nallows testing more functionalities.",
+      "description": "Enables automatic Google account login.\nIf set, the service automatically generates a Google test account and adds\nit to the device, before executing the test. Note that test accounts might be\nreused.\nMany applications show their full set of functionalities when an account is\npresent on the device. Logging into the device with these generated accounts\nallows testing more functionalities.",
       "id": "GoogleAuto",
       "properties": {},
       "type": "object"
@@ -1129,7 +1129,7 @@
       "type": "object"
     },
     "IosTestSetup": {
-      "description": "A description of how to set up an iOS device prior to a test.",
+      "description": "A description of how to set up an iOS device prior to running the test.",
       "id": "IosTestSetup",
       "properties": {
         "networkProfile": {
@@ -1330,6 +1330,10 @@
           "$ref": "GoogleCloudStorage",
           "description": "Required."
         },
+        "resultsUrl": {
+          "description": "Output only. URL to the results in the Firebase Web Console.",
+          "type": "string"
+        },
         "toolResultsExecution": {
           "$ref": "ToolResultsExecution",
           "description": "Output only. The tool results execution that results are written to."
@@ -1377,10 +1381,12 @@
       "id": "RoboStartingIntent",
       "properties": {
         "launcherActivity": {
-          "$ref": "LauncherActivityIntent"
+          "$ref": "LauncherActivityIntent",
+          "description": "An intent that starts the main launcher activity."
         },
         "startActivity": {
-          "$ref": "StartActivityIntent"
+          "$ref": "StartActivityIntent",
+          "description": "An intent that starts an activity with specific details."
         },
         "timeout": {
           "description": "Timeout in seconds for each intent.",
@@ -1454,7 +1460,7 @@
       "type": "object"
     },
     "TestExecution": {
-      "description": "Specifies a single test to be executed in a single environment.",
+      "description": "A single test executed in a single environment.",
       "id": "TestExecution",
       "properties": {
         "environment": {
@@ -1462,7 +1468,7 @@
           "description": "Output only. How the host machine(s) are configured."
         },
         "id": {
-          "description": "Output only. Unique id set by the backend.",
+          "description": "Output only. Unique id set by the service.",
           "type": "string"
         },
         "matrixId": {
@@ -1524,7 +1530,7 @@
       "type": "object"
     },
     "TestMatrix": {
-      "description": "A group of one or more TestExecutions, built by taking a\nproduct of values over a pre-defined set of axes.",
+      "description": "TestMatrix captures all details about a test. It contains the environment\nconfiguration, test specification, test executions and overall state and\noutcome.",
       "id": "TestMatrix",
       "properties": {
         "clientInfo": {
@@ -1533,7 +1539,7 @@
         },
         "environmentMatrix": {
           "$ref": "EnvironmentMatrix",
-          "description": "Required. How the host machine(s) are configured."
+          "description": "Required. The devices the tests are being executed on."
         },
         "flakyTestAttempts": {
           "description": "The number of times a TestExecution should be re-attempted if one or more\nof its test cases fail for any reason.\nThe maximum number of reruns allowed is 10.\n\nDefault is 0, which implies no reruns.",
@@ -1595,7 +1601,7 @@
             "There is a conflict in the provided robo_directives.",
             "There is at least one invalid resource name in the provided\nrobo directives",
             "Invalid definition of action in the robo directives\n(e.g. a click or ignore action includes an input text field)",
-            "There there is no test loop intent filter, or the one that is given is\nnot formatted correctly.",
+            "There is no test loop intent filter, or the one that is given is\nnot formatted correctly.",
             "The request contains a scenario label that was not declared in the\nmanifest.",
             "There was an error when parsing a label's value.",
             "The request contains a scenario number that was not declared in the\nmanifest.",
@@ -1614,6 +1620,24 @@
           ],
           "type": "string"
         },
+        "outcomeSummary": {
+          "description": "Output Only. The overall outcome of the test.\nOnly set when the test matrix state is FINISHED.",
+          "enum": [
+            "OUTCOME_SUMMARY_UNSPECIFIED",
+            "SUCCESS",
+            "FAILURE",
+            "INCONCLUSIVE",
+            "SKIPPED"
+          ],
+          "enumDescriptions": [
+            "Do not use. For proto versioning only.",
+            "The test matrix run was successful, for instance:\n- All the test cases passed.\n- Robo did not detect a crash of the application under test.",
+            "A run failed, for instance:\n- One or more test case failed.\n- A test timed out.\n- The application under test crashed.",
+            "Something unexpected happened. The run should still be considered\nunsuccessful but this is likely a transient problem and re-running the\ntest might be successful.",
+            "All tests were skipped, for instance:\n- All device configurations were incompatible."
+          ],
+          "type": "string"
+        },
         "projectId": {
           "description": "The cloud project that owns the test matrix.",
           "type": "string"
@@ -1623,7 +1647,7 @@
           "description": "Required. Where the results for the matrix are written."
         },
         "state": {
-          "description": "Output only. Indicates the current progress of the test matrix\n(e.g., FINISHED).",
+          "description": "Output only. Indicates the current progress of the test matrix.",
           "enum": [
             "TEST_STATE_UNSPECIFIED",
             "VALIDATING",
@@ -1735,11 +1759,11 @@
           "description": "An Android Application with a Test Loop."
         },
         "disablePerformanceMetrics": {
-          "description": "Disables performance metrics recording; may reduce test latency.",
+          "description": "Disables performance metrics recording. May reduce test latency.",
           "type": "boolean"
         },
         "disableVideoRecording": {
-          "description": "Disables video recording; may reduce test latency.",
+          "description": "Disables video recording. May reduce test latency.",
           "type": "boolean"
         },
         "iosTestSetup": {

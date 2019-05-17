@@ -4693,6 +4693,7 @@ func (c *PeopleConnectionsListCall) RequestSyncToken(requestSyncToken bool) *Peo
 //
 // Possible values:
 //   "LAST_MODIFIED_ASCENDING"
+//   "LAST_MODIFIED_DESCENDING"
 //   "FIRST_NAME_ASCENDING"
 //   "LAST_NAME_ASCENDING"
 func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectionsListCall {
@@ -4856,6 +4857,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//       "description": "The order in which the connections should be sorted. Defaults to\n`LAST_MODIFIED_ASCENDING`.",
 	//       "enum": [
 	//         "LAST_MODIFIED_ASCENDING",
+	//         "LAST_MODIFIED_DESCENDING",
 	//         "FIRST_NAME_ASCENDING",
 	//         "LAST_NAME_ASCENDING"
 	//       ],

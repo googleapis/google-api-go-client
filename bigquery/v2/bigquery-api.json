@@ -1174,11 +1174,11 @@
       }
     }
   },
-  "revision": "20190428",
+  "revision": "20190510",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
-      "description": "Aggregate metrics for classification models. For multi-class models,\nthe metrics are either macro-averaged: metrics are calculated for each\nlabel and then an unweighted average is taken of those values or\nmicro-averaged: the metric is calculated globally by counting the total\nnumber of correctly predicted rows.",
+      "description": "Aggregate metrics for classification/classifier models. For multi-class\nmodels, the metrics are either macro-averaged or micro-averaged. When\nmacro-averaged, the metrics are calculated for each label and then an\nunweighted average is taken of those values. When micro-averaged, the\nmetric is calculated globally by counting the total number of correctly\npredicted rows.",
       "id": "AggregateClassificationMetrics",
       "properties": {
         "accuracy": {
@@ -1316,7 +1316,7 @@
       "type": "object"
     },
     "BinaryClassificationMetrics": {
-      "description": "Evaluation metrics for binary classification models.",
+      "description": "Evaluation metrics for binary classification/classifier models.",
       "id": "BinaryClassificationMetrics",
       "properties": {
         "aggregateClassificationMetrics": {
@@ -1824,12 +1824,12 @@
       "type": "object"
     },
     "EvaluationMetrics": {
-      "description": "Evaluation metrics of a model. These are either computed on all\ntraining data or just the eval data based on whether eval data was used\nduring training.",
+      "description": "Evaluation metrics of a model. These are either computed on all training\ndata or just the eval data based on whether eval data was used during\ntraining. These are not present for imported models.",
       "id": "EvaluationMetrics",
       "properties": {
         "binaryClassificationMetrics": {
           "$ref": "BinaryClassificationMetrics",
-          "description": "Populated for binary classification models."
+          "description": "Populated for binary classification/classifier models."
         },
         "clusteringMetrics": {
           "$ref": "ClusteringMetrics",
@@ -1837,7 +1837,7 @@
         },
         "multiClassClassificationMetrics": {
           "$ref": "MultiClassClassificationMetrics",
-          "description": "Populated for multi-class classification models."
+          "description": "Populated for multi-class classification/classifier models."
         },
         "regressionMetrics": {
           "$ref": "RegressionMetrics",
@@ -3078,7 +3078,7 @@
           "type": "string"
         },
         "labelColumns": {
-          "description": "Output only. Label columns that were used to train this model.\nThe output of the model will have a “predicted_” prefix to these columns.",
+          "description": "Output only. Label columns that were used to train this model.\nThe output of the model will have a \"predicted_\" prefix to these columns.",
           "items": {
             "$ref": "StandardSqlField"
           },
@@ -3110,13 +3110,15 @@
             "MODEL_TYPE_UNSPECIFIED",
             "LINEAR_REGRESSION",
             "LOGISTIC_REGRESSION",
-            "KMEANS"
+            "KMEANS",
+            "TENSORFLOW"
           ],
           "enumDescriptions": [
             "",
             "Linear regression model.",
-            "Logistic regression model.",
-            "[Beta] K-means clustering model."
+            "Logistic regression based classification model.",
+            "[Beta] K-means clustering model.",
+            "[Beta] An imported TensorFlow model."
           ],
           "type": "string"
         },
@@ -3181,7 +3183,7 @@
       "type": "object"
     },
     "MultiClassClassificationMetrics": {
-      "description": "Evaluation metrics for multi-class classification models.",
+      "description": "Evaluation metrics for multi-class classification/classifier models.",
       "id": "MultiClassClassificationMetrics",
       "properties": {
         "aggregateClassificationMetrics": {
@@ -4197,11 +4199,11 @@
           "type": "string"
         },
         "earlyStop": {
-          "description": "Whether to stop early when the loss doesn't improve significantly\nany more (compared to min_relative_progress).",
+          "description": "Whether to stop early when the loss doesn't improve significantly\nany more (compared to min_relative_progress). Used only for iterative\ntraining algorithms.",
           "type": "boolean"
         },
         "initialLearnRate": {
-          "description": "Specifies the initial learning rate for line search to start at.",
+          "description": "Specifies the initial learning rate for the line search learn rate\nstrategy.",
           "format": "double",
           "type": "number"
         },
@@ -4227,16 +4229,16 @@
             "format": "double",
             "type": "number"
           },
-          "description": "Weights associated with each label class, for rebalancing the\ntraining data.",
+          "description": "Weights associated with each label class, for rebalancing the\ntraining data. Only applicable for classification models.",
           "type": "object"
         },
         "learnRate": {
-          "description": "Learning rate in training.",
+          "description": "Learning rate in training. Used only for iterative training algorithms.",
           "format": "double",
           "type": "number"
         },
         "learnRateStrategy": {
-          "description": "The strategy to determine learning rate.",
+          "description": "The strategy to determine learn rate for the current iteration.",
           "enum": [
             "LEARN_RATE_STRATEGY_UNSPECIFIED",
             "LINE_SEARCH",
@@ -4264,18 +4266,36 @@
           "type": "string"
         },
         "maxIterations": {
-          "description": "The maximum number of iterations in training.",
+          "description": "The maximum number of iterations in training. Used only for iterative\ntraining algorithms.",
           "format": "int64",
           "type": "string"
         },
         "minRelativeProgress": {
-          "description": "When early_stop is true, stops training when accuracy improvement is\nless than 'min_relative_progress'.",
+          "description": "When early_stop is true, stops training when accuracy improvement is\nless than 'min_relative_progress'. Used only for iterative training\nalgorithms.",
           "format": "double",
           "type": "number"
+        },
+        "modelUri": {
+          "description": "[Beta] Google Cloud Storage URI from which the model was imported. Only\napplicable for imported models.",
+          "type": "string"
         },
         "numClusters": {
           "description": "[Beta] Number of clusters for clustering models.",
           "format": "int64",
+          "type": "string"
+        },
+        "optimizationStrategy": {
+          "description": "Optimization strategy for training linear regression models.",
+          "enum": [
+            "OPTIMIZATION_STRATEGY_UNSPECIFIED",
+            "BATCH_GRADIENT_DESCENT",
+            "NORMAL_EQUATION"
+          ],
+          "enumDescriptions": [
+            "",
+            "Uses an iterative batch gradient descent algorithm.",
+            "Uses a normal equation to solve linear regression problem."
+          ],
           "type": "string"
         },
         "warmStart": {

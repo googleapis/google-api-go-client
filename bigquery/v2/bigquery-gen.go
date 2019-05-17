@@ -229,15 +229,17 @@ type TablesService struct {
 	s *Service
 }
 
-// AggregateClassificationMetrics: Aggregate metrics for classification
-// models. For multi-class models,
-// the metrics are either macro-averaged: metrics are calculated for
-// each
-// label and then an unweighted average is taken of those values
-// or
-// micro-averaged: the metric is calculated globally by counting the
-// total
-// number of correctly predicted rows.
+// AggregateClassificationMetrics: Aggregate metrics for
+// classification/classifier models. For multi-class
+// models, the metrics are either macro-averaged or micro-averaged.
+// When
+// macro-averaged, the metrics are calculated for each label and then
+// an
+// unweighted average is taken of those values. When micro-averaged,
+// the
+// metric is calculated globally by counting the total number of
+// correctly
+// predicted rows.
 type AggregateClassificationMetrics struct {
 	// Accuracy: Accuracy is the fraction of predictions given the correct
 	// label. For
@@ -533,7 +535,7 @@ func (s *BigtableOptions) MarshalJSON() ([]byte, error) {
 }
 
 // BinaryClassificationMetrics: Evaluation metrics for binary
-// classification models.
+// classification/classifier models.
 type BinaryClassificationMetrics struct {
 	// AggregateClassificationMetrics: Aggregate classification metrics.
 	AggregateClassificationMetrics *AggregateClassificationMetrics `json:"aggregateClassificationMetrics,omitempty"`
@@ -1512,20 +1514,20 @@ func (s *ErrorProto) MarshalJSON() ([]byte, error) {
 }
 
 // EvaluationMetrics: Evaluation metrics of a model. These are either
-// computed on all
-// training data or just the eval data based on whether eval data was
-// used
-// during training.
+// computed on all training
+// data or just the eval data based on whether eval data was used
+// during
+// training. These are not present for imported models.
 type EvaluationMetrics struct {
-	// BinaryClassificationMetrics: Populated for binary classification
-	// models.
+	// BinaryClassificationMetrics: Populated for binary
+	// classification/classifier models.
 	BinaryClassificationMetrics *BinaryClassificationMetrics `json:"binaryClassificationMetrics,omitempty"`
 
 	// ClusteringMetrics: [Beta] Populated for clustering models.
 	ClusteringMetrics *ClusteringMetrics `json:"clusteringMetrics,omitempty"`
 
 	// MultiClassClassificationMetrics: Populated for multi-class
-	// classification models.
+	// classification/classifier models.
 	MultiClassClassificationMetrics *MultiClassClassificationMetrics `json:"multiClassClassificationMetrics,omitempty"`
 
 	// RegressionMetrics: Populated for regression models.
@@ -3386,7 +3388,7 @@ type Model struct {
 
 	// LabelColumns: Output only. Label columns that were used to train this
 	// model.
-	// The output of the model will have a “predicted_” prefix to these
+	// The output of the model will have a "predicted_" prefix to these
 	// columns.
 	LabelColumns []*StandardSqlField `json:"labelColumns,omitempty"`
 
@@ -3422,8 +3424,10 @@ type Model struct {
 	// Possible values:
 	//   "MODEL_TYPE_UNSPECIFIED"
 	//   "LINEAR_REGRESSION" - Linear regression model.
-	//   "LOGISTIC_REGRESSION" - Logistic regression model.
+	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
+	// model.
 	//   "KMEANS" - [Beta] K-means clustering model.
+	//   "TENSORFLOW" - [Beta] An imported TensorFlow model.
 	ModelType string `json:"modelType,omitempty"`
 
 	// TrainingRuns: Output only. Information for all training runs in
@@ -3567,7 +3571,7 @@ func (s *ModelReference) MarshalJSON() ([]byte, error) {
 }
 
 // MultiClassClassificationMetrics: Evaluation metrics for multi-class
-// classification models.
+// classification/classifier models.
 type MultiClassClassificationMetrics struct {
 	// AggregateClassificationMetrics: Aggregate classification metrics.
 	AggregateClassificationMetrics *AggregateClassificationMetrics `json:"aggregateClassificationMetrics,omitempty"`
@@ -5215,11 +5219,14 @@ type TrainingOptions struct {
 
 	// EarlyStop: Whether to stop early when the loss doesn't improve
 	// significantly
-	// any more (compared to min_relative_progress).
+	// any more (compared to min_relative_progress). Used only for
+	// iterative
+	// training algorithms.
 	EarlyStop bool `json:"earlyStop,omitempty"`
 
-	// InitialLearnRate: Specifies the initial learning rate for line search
-	// to start at.
+	// InitialLearnRate: Specifies the initial learning rate for the line
+	// search learn rate
+	// strategy.
 	InitialLearnRate float64 `json:"initialLearnRate,omitempty"`
 
 	// InputLabelColumns: Name of input label columns in training data.
@@ -5233,13 +5240,15 @@ type TrainingOptions struct {
 
 	// LabelClassWeights: Weights associated with each label class, for
 	// rebalancing the
-	// training data.
+	// training data. Only applicable for classification models.
 	LabelClassWeights map[string]float64 `json:"labelClassWeights,omitempty"`
 
-	// LearnRate: Learning rate in training.
+	// LearnRate: Learning rate in training. Used only for iterative
+	// training algorithms.
 	LearnRate float64 `json:"learnRate,omitempty"`
 
-	// LearnRateStrategy: The strategy to determine learning rate.
+	// LearnRateStrategy: The strategy to determine learn rate for the
+	// current iteration.
 	//
 	// Possible values:
 	//   "LEARN_RATE_STRATEGY_UNSPECIFIED"
@@ -5256,16 +5265,36 @@ type TrainingOptions struct {
 	//   "MEAN_LOG_LOSS" - Mean log loss, used for logistic regression.
 	LossType string `json:"lossType,omitempty"`
 
-	// MaxIterations: The maximum number of iterations in training.
+	// MaxIterations: The maximum number of iterations in training. Used
+	// only for iterative
+	// training algorithms.
 	MaxIterations int64 `json:"maxIterations,omitempty,string"`
 
 	// MinRelativeProgress: When early_stop is true, stops training when
 	// accuracy improvement is
-	// less than 'min_relative_progress'.
+	// less than 'min_relative_progress'. Used only for iterative
+	// training
+	// algorithms.
 	MinRelativeProgress float64 `json:"minRelativeProgress,omitempty"`
+
+	// ModelUri: [Beta] Google Cloud Storage URI from which the model was
+	// imported. Only
+	// applicable for imported models.
+	ModelUri string `json:"modelUri,omitempty"`
 
 	// NumClusters: [Beta] Number of clusters for clustering models.
 	NumClusters int64 `json:"numClusters,omitempty,string"`
+
+	// OptimizationStrategy: Optimization strategy for training linear
+	// regression models.
+	//
+	// Possible values:
+	//   "OPTIMIZATION_STRATEGY_UNSPECIFIED"
+	//   "BATCH_GRADIENT_DESCENT" - Uses an iterative batch gradient descent
+	// algorithm.
+	//   "NORMAL_EQUATION" - Uses a normal equation to solve linear
+	// regression problem.
+	OptimizationStrategy string `json:"optimizationStrategy,omitempty"`
 
 	// WarmStart: Whether to train a model from the last checkpoint.
 	WarmStart bool `json:"warmStart,omitempty"`

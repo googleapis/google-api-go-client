@@ -1396,7 +1396,6 @@ type CdnSettings struct {
 	//   "dash"
 	//   "hls"
 	//   "rtmp"
-	//   "webrtc"
 	IngestionType string `json:"ingestionType,omitempty"`
 
 	// Resolution: The resolution of the inbound video data.

@@ -1411,8 +1411,9 @@ type GoogleCloudDialogflowV2Intent struct {
 	Action string `json:"action,omitempty"`
 
 	// DefaultResponsePlatforms: Optional. The list of platforms for which
-	// the first response will be
-	// taken from among the messages assigned to the DEFAULT_PLATFORM.
+	// the first responses will be
+	// copied from the messages in PLATFORM_UNSPECIFIED (i.e. default
+	// platform).
 	//
 	// Possible values:
 	//   "PLATFORM_UNSPECIFIED" - Not specified.
@@ -4173,8 +4174,9 @@ type GoogleCloudDialogflowV2beta1Intent struct {
 	Action string `json:"action,omitempty"`
 
 	// DefaultResponsePlatforms: Optional. The list of platforms for which
-	// the first response will be
-	// taken from among the messages assigned to the DEFAULT_PLATFORM.
+	// the first responses will be
+	// copied from the messages in PLATFORM_UNSPECIFIED (i.e. default
+	// platform).
 	//
 	// Possible values:
 	//   "PLATFORM_UNSPECIFIED" - Not specified.

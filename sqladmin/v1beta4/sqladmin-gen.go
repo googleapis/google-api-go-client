@@ -313,6 +313,9 @@ type BackupConfiguration struct {
 	// Kind: This is always sql#backupConfiguration.
 	Kind string `json:"kind,omitempty"`
 
+	// Location: The location of the backup.
+	Location string `json:"location,omitempty"`
+
 	// ReplicationLogArchivingEnabled: Reserved for future use.
 	ReplicationLogArchivingEnabled bool `json:"replicationLogArchivingEnabled,omitempty"`
 
@@ -371,6 +374,9 @@ type BackupRun struct {
 
 	// Kind: This is always sql#backupRun.
 	Kind string `json:"kind,omitempty"`
+
+	// Location: The location of the backup.
+	Location string `json:"location,omitempty"`
 
 	// SelfLink: The URI of this resource.
 	SelfLink string `json:"selfLink,omitempty"`

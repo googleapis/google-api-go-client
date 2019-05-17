@@ -392,7 +392,8 @@ type Operation struct {
 	// service that
 	// originally returns it. If you use the default HTTP mapping,
 	// the
-	// `name` should have the format of `operations/some/unique/name`.
+	// `name` should be a resource name ending with
+	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success.
@@ -448,8 +449,8 @@ func (s *Operation) MarshalJSON() ([]byte, error) {
 type RecognitionAudio struct {
 	// Content: The audio data bytes encoded as specified
 	// in
-	// `RecognitionConfig`. Note: as with all bytes fields, protobuffers use
-	// a
+	// `RecognitionConfig`. Note: as with all bytes fields, proto buffers
+	// use a
 	// pure binary representation, whereas JSON representations use base64.
 	Content string `json:"content,omitempty"`
 
@@ -656,6 +657,12 @@ type RecognitionConfig struct {
 	// is replaced with a single byte containing the block length. Only
 	// Speex
 	// wideband is supported. `sample_rate_hertz` must be 16000.
+	//   "MP3" - MP3 audio. Support all standard MP3 bitrates (which range
+	// from 32-320
+	// kbps)
+	// If using this encoding, then 'sample_rate_hertz' can be optionally
+	// unset
+	// if not known.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: *Required* The language of the supplied audio as

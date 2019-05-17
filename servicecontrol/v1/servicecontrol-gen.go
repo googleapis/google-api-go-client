@@ -864,6 +864,10 @@ type CheckResponse struct {
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
 
+	// ServiceRolloutId: Unimplemented. The current service rollout id used
+	// to process the request.
+	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -2350,6 +2354,10 @@ type ReportResponse struct {
 
 	// ServiceConfigId: The actual config id used to process the request.
 	ServiceConfigId string `json:"serviceConfigId,omitempty"`
+
+	// ServiceRolloutId: Unimplemented. The current service rollout id used
+	// to process the request.
+	ServiceRolloutId string `json:"serviceRolloutId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

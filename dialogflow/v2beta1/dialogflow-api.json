@@ -1279,7 +1279,7 @@
             "knowledgeBases": {
               "methods": {
                 "create": {
-                  "description": "Creates a knowledge base.",
+                  "description": "Creates a knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.agent.knowledgeBases.create",
@@ -1308,7 +1308,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes the specified knowledge base.",
+                  "description": "Deletes the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}",
                   "httpMethod": "DELETE",
                   "id": "dialogflow.projects.agent.knowledgeBases.delete",
@@ -1339,7 +1339,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Retrieves the specified knowledge base.",
+                  "description": "Retrieves the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}",
                   "httpMethod": "GET",
                   "id": "dialogflow.projects.agent.knowledgeBases.get",
@@ -1365,7 +1365,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Returns the list of all knowledge bases of the specified agent.",
+                  "description": "Returns the list of all knowledge bases of the specified agent.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases",
                   "httpMethod": "GET",
                   "id": "dialogflow.projects.agent.knowledgeBases.list",
@@ -1402,7 +1402,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates the specified knowledge base.",
+                  "description": "Updates the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
                   "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}",
                   "httpMethod": "PATCH",
                   "id": "dialogflow.projects.agent.knowledgeBases.patch",
@@ -1441,7 +1441,7 @@
                 "documents": {
                   "methods": {
                     "create": {
-                      "description": "Creates a new document.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                      "description": "Creates a new document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.create",
@@ -1470,7 +1470,7 @@
                       ]
                     },
                     "delete": {
-                      "description": "Deletes the specified document.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: KnowledgeOperationMetadata\u003e",
+                      "description": "Deletes the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: KnowledgeOperationMetadata\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                       "httpMethod": "DELETE",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.delete",
@@ -1496,7 +1496,7 @@
                       ]
                     },
                     "get": {
-                      "description": "Retrieves the specified document.",
+                      "description": "Retrieves the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                       "httpMethod": "GET",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.get",
@@ -1522,7 +1522,7 @@
                       ]
                     },
                     "list": {
-                      "description": "Returns the list of all documents of the knowledge base.",
+                      "description": "Returns the list of all documents of the knowledge base.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents",
                       "httpMethod": "GET",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.list",
@@ -1559,7 +1559,7 @@
                       ]
                     },
                     "patch": {
-                      "description": "Updates the specified document.\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                      "description": "Updates the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                       "httpMethod": "PATCH",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.patch",
@@ -1594,7 +1594,7 @@
                       ]
                     },
                     "reload": {
-                      "description": "Reloads the specified document from its specified source, content_uri or\ncontent. The previously loaded content of the document will be deleted.\nNote: Even when the content of the document has not changed, there still\nmay be side effects because of internal implementation changes.\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                      "description": "Reloads the specified document from its specified source, content_uri or\ncontent. The previously loaded content of the document will be deleted.\nNote: Even when the content of the document has not changed, there still\nmay be side effects because of internal implementation changes.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                       "flatPath": "v2beta1/projects/{projectsId}/agent/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}:reload",
                       "httpMethod": "POST",
                       "id": "dialogflow.projects.agent.knowledgeBases.documents.reload",
@@ -2006,7 +2006,7 @@
         "knowledgeBases": {
           "methods": {
             "create": {
-              "description": "Creates a knowledge base.",
+              "description": "Creates a knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
               "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases",
               "httpMethod": "POST",
               "id": "dialogflow.projects.knowledgeBases.create",
@@ -2035,7 +2035,7 @@
               ]
             },
             "delete": {
-              "description": "Deletes the specified knowledge base.",
+              "description": "Deletes the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
               "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}",
               "httpMethod": "DELETE",
               "id": "dialogflow.projects.knowledgeBases.delete",
@@ -2066,7 +2066,7 @@
               ]
             },
             "get": {
-              "description": "Retrieves the specified knowledge base.",
+              "description": "Retrieves the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
               "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}",
               "httpMethod": "GET",
               "id": "dialogflow.projects.knowledgeBases.get",
@@ -2092,7 +2092,7 @@
               ]
             },
             "list": {
-              "description": "Returns the list of all knowledge bases of the specified agent.",
+              "description": "Returns the list of all knowledge bases of the specified agent.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
               "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases",
               "httpMethod": "GET",
               "id": "dialogflow.projects.knowledgeBases.list",
@@ -2129,7 +2129,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the specified knowledge base.",
+              "description": "Updates the specified knowledge base.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
               "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}",
               "httpMethod": "PATCH",
               "id": "dialogflow.projects.knowledgeBases.patch",
@@ -2168,7 +2168,7 @@
             "documents": {
               "methods": {
                 "create": {
-                  "description": "Creates a new document.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                  "description": "Creates a new document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.knowledgeBases.documents.create",
@@ -2197,7 +2197,7 @@
                   ]
                 },
                 "delete": {
-                  "description": "Deletes the specified document.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: KnowledgeOperationMetadata\u003e",
+                  "description": "Deletes the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: google.protobuf.Empty,\n           metadata: KnowledgeOperationMetadata\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                   "httpMethod": "DELETE",
                   "id": "dialogflow.projects.knowledgeBases.documents.delete",
@@ -2223,7 +2223,7 @@
                   ]
                 },
                 "get": {
-                  "description": "Retrieves the specified document.",
+                  "description": "Retrieves the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                   "httpMethod": "GET",
                   "id": "dialogflow.projects.knowledgeBases.documents.get",
@@ -2249,7 +2249,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Returns the list of all documents of the knowledge base.",
+                  "description": "Returns the list of all documents of the knowledge base.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents",
                   "httpMethod": "GET",
                   "id": "dialogflow.projects.knowledgeBases.documents.list",
@@ -2286,7 +2286,7 @@
                   ]
                 },
                 "patch": {
-                  "description": "Updates the specified document.\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                  "description": "Updates the specified document.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}",
                   "httpMethod": "PATCH",
                   "id": "dialogflow.projects.knowledgeBases.documents.patch",
@@ -2321,7 +2321,7 @@
                   ]
                 },
                 "reload": {
-                  "description": "Reloads the specified document from its specified source, content_uri or\ncontent. The previously loaded content of the document will be deleted.\nNote: Even when the content of the document has not changed, there still\nmay be side effects because of internal implementation changes.\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
+                  "description": "Reloads the specified document from its specified source, content_uri or\ncontent. The previously loaded content of the document will be deleted.\nNote: Even when the content of the document has not changed, there still\nmay be side effects because of internal implementation changes.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.\n\nOperation \u003cresponse: Document,\n           metadata: KnowledgeOperationMetadata\u003e",
                   "flatPath": "v2beta1/projects/{projectsId}/knowledgeBases/{knowledgeBasesId}/documents/{documentsId}:reload",
                   "httpMethod": "POST",
                   "id": "dialogflow.projects.knowledgeBases.documents.reload",
@@ -2386,7 +2386,7 @@
       }
     }
   },
-  "revision": "20190506",
+  "revision": "20190514",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -2555,7 +2555,7 @@
           "type": "string"
         },
         "defaultResponsePlatforms": {
-          "description": "Optional. The list of platforms for which the first response will be\ntaken from among the messages assigned to the DEFAULT_PLATFORM.",
+          "description": "Optional. The list of platforms for which the first responses will be\ncopied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
           "enumDescriptions": [
             "Not specified.",
             "Facebook.",
@@ -3719,7 +3719,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1Document": {
-      "description": "A document resource.\n\nNote: resource `projects.agent.knowledgeBases.documents` is deprecated,\nplease use `projects.knowledgeBases.documents` instead.",
+      "description": "A document resource.\n\nNote: The `projects.agent.knowledgeBases.documents` resource is deprecated;\nonly use `projects.knowledgeBases.documents`.",
       "id": "GoogleCloudDialogflowV2beta1Document",
       "properties": {
         "content": {
@@ -3989,7 +3989,7 @@
           "type": "string"
         },
         "defaultResponsePlatforms": {
-          "description": "Optional. The list of platforms for which the first response will be\ntaken from among the messages assigned to the DEFAULT_PLATFORM.",
+          "description": "Optional. The list of platforms for which the first responses will be\ncopied from the messages in PLATFORM_UNSPECIFIED (i.e. default platform).",
           "enumDescriptions": [
             "Not specified.",
             "Facebook.",
@@ -4761,7 +4761,7 @@
       "type": "object"
     },
     "GoogleCloudDialogflowV2beta1KnowledgeBase": {
-      "description": "Represents knowledge base resource.\n\nNote: resource `projects.agent.knowledgeBases` is deprecated, please use\n`projects.knowledgeBases` instead.",
+      "description": "Represents knowledge base resource.\n\nNote: The `projects.agent.knowledgeBases` resource is deprecated;\nonly use `projects.knowledgeBases`.",
       "id": "GoogleCloudDialogflowV2beta1KnowledgeBase",
       "properties": {
         "displayName": {

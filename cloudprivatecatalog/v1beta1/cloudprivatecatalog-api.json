@@ -14,7 +14,7 @@
   "canonicalName": "Cloud Private Catalog",
   "description": "Enable cloud users to discover enterprise catalogs and products in their organizations.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
+  "documentationLink": "https://cloud.google.com/private-catalog/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -522,7 +522,7 @@
       }
     }
   },
-  "revision": "20190304",
+  "revision": "20190511",
   "rootUrl": "https://cloudprivatecatalog.googleapis.com/",
   "schemas": {
     "GoogleCloudPrivatecatalogV1beta1Catalog": {

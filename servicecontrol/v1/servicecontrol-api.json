@@ -196,7 +196,7 @@
       }
     }
   },
-  "revision": "20190422",
+  "revision": "20190509",
   "rootUrl": "https://servicecontrol.googleapis.com/",
   "schemas": {
     "AllocateInfo": {
@@ -606,6 +606,10 @@
         },
         "serviceConfigId": {
           "description": "The actual config id used to process the request.",
+          "type": "string"
+        },
+        "serviceRolloutId": {
+          "description": "Unimplemented. The current service rollout id used to process the request.",
           "type": "string"
         }
       },
@@ -1386,6 +1390,10 @@
         },
         "serviceConfigId": {
           "description": "The actual config id used to process the request.",
+          "type": "string"
+        },
+        "serviceRolloutId": {
+          "description": "Unimplemented. The current service rollout id used to process the request.",
           "type": "string"
         }
       },

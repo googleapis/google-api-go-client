@@ -287,18 +287,24 @@ func (s *AcknowledgeTaskRequest) MarshalJSON() ([]byte, error) {
 // ard/python/config/appref)
 // Task dispatches also do not follow redirects.
 //
-// The task attempt has succeeded if the app's request handler
-// returns
-// an HTTP response code in the range [`200` - `299`]. `503`
-// is
-// considered an App Engine system error instead of an
-// application
-// error. Requests returning error `503` will be retried regardless
-// of
-// retry configuration and not counted against retry counts.
-// Any other response code or a failure to receive a response before
-// the
-// deadline is a failed attempt.
+// The task attempt has succeeded if the app's request handler returns
+// an HTTP
+// response code in the range [`200` - `299`]. The task attempt has
+// failed if
+// the app's handler returns a non-2xx response code or Cloud Tasks
+// does
+// not receive response before the deadline. Failed
+// tasks will be retried according to the
+// retry configuration. `503` (Service Unavailable) is
+// considered an App Engine system error instead of an application error
+// and
+// will cause Cloud Tasks' traffic congestion control to temporarily
+// throttle
+// the queue's dispatches. Unlike other types of task targets, a `429`
+// (Too Many
+// Requests) response from an app handler does not cause traffic
+// congestion
+// control to throttle the queue.
 type AppEngineHttpRequest struct {
 	// AppEngineRouting: Task-level setting for App Engine routing.
 	//
@@ -5597,14 +5603,17 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Fewer tasks than requested might be returned.
+// PageSize sets the optional parameter "pageSize": Maximum page
+// size.
 //
-// The maximum page size is 1000. If unspecified, the page size will
-// be the maximum. Fewer tasks than requested might be returned,
-// even if more tasks exist; use
-// next_page_token in the
-// response to determine if more tasks exist.
+// Fewer tasks than requested might be returned, even if more tasks
+// exist; use
+// next_page_token in the response to
+// determine if more tasks exist.
+//
+// The maximum page size is 1000. If unspecified, the page size will be
+// the
+// maximum.
 func (c *ProjectsLocationsQueuesTasksListCall) PageSize(pageSize int64) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -5761,7 +5770,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. Fewer tasks than requested might be returned.\n\nThe maximum page size is 1000. If unspecified, the page size will\nbe the maximum. Fewer tasks than requested might be returned,\neven if more tasks exist; use\nnext_page_token in the\nresponse to determine if more tasks exist.",
+	//       "description": "Maximum page size.\n\nFewer tasks than requested might be returned, even if more tasks exist; use\nnext_page_token in the response to\ndetermine if more tasks exist.\n\nThe maximum page size is 1000. If unspecified, the page size will be the\nmaximum.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

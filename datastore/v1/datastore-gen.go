@@ -338,8 +338,10 @@ type CommitRequest struct {
 	//   "MODE_UNSPECIFIED" - Unspecified. This value must not be used.
 	//   "TRANSACTIONAL" - Transactional: The mutations are either all
 	// applied, or none are applied.
-	// Learn about transactions
-	// [here](https://cloud.google.com/datastore/docs/concepts/transactions).
+	// Learn about
+	// transactions
+	// [here](https://cloud.google.com/datastore/docs/concepts/t
+	// ransactions).
 	//   "NON_TRANSACTIONAL" - Non-transactional: The mutations may not
 	// apply as all or none.
 	Mode string `json:"mode,omitempty"`

@@ -1008,10 +1008,12 @@ type Entity struct {
 	// convention, plus whichever additional elements appear in the text:
 	//
 	// * `number` - the actual number, broken down into sections as per
-	// local convention
+	// local
+	// convention
 	// * `national_prefix` - country code, if detected
 	// * `area_code` - region or area code, if detected
-	// * `extension` - phone extension (to be dialed after connection), if
+	// * `extension` - phone extension (to be dialed after connection),
+	// if
 	// detected
 	//   "ADDRESS" - Address
 	//
@@ -1026,10 +1028,12 @@ type Entity struct {
 	// * `country` - country, if detected<
 	// * `broad_region` - administrative area, such as the state, if
 	// detected
-	// * `narrow_region` - smaller administrative area, such as county, if
+	// * `narrow_region` - smaller administrative area, such as county,
+	// if
 	// detected
 	// * `sublocality` - used in Asian addresses to demark a district within
-	// a city, if detected
+	// a
+	// city, if detected
 	//   "DATE" - Date
 	//
 	// The metadata identifies the components of the date:

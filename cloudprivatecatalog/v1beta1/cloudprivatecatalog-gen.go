@@ -6,7 +6,7 @@
 
 // Package cloudprivatecatalog provides access to the Cloud Private Catalog API.
 //
-// For product documentation, see: https://sites.google.com/corp/google.com/cloudprivatecatalog
+// For product documentation, see: https://cloud.google.com/private-catalog/
 //
 // Creating a client
 //

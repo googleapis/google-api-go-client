@@ -554,6 +554,7 @@
                   "description": "The order in which the connections should be sorted. Defaults to\n`LAST_MODIFIED_ASCENDING`.",
                   "enum": [
                     "LAST_MODIFIED_ASCENDING",
+                    "LAST_MODIFIED_DESCENDING",
                     "FIRST_NAME_ASCENDING",
                     "LAST_NAME_ASCENDING"
                   ],
@@ -580,7 +581,7 @@
       }
     }
   },
-  "revision": "20190424",
+  "revision": "20190516",
   "rootUrl": "https://people.googleapis.com/",
   "schemas": {
     "Address": {

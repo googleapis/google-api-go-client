@@ -2458,7 +2458,7 @@
       }
     }
   },
-  "revision": "20190418",
+  "revision": "20190423",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2704,7 +2704,7 @@
           "description": "Parameters used in creating the cluster's nodes.\nFor requests, this field should only be used in lieu of a\n\"node_pool\" object, since this configuration (along with the\n\"initial_node_count\") will be used to create a \"NodePool\" object with an\nauto-generated name. Do not use this and a node_pool at the same time.\nFor responses, this field will be populated with the node configuration of\nthe first node pool. (For configuration of each node pool, see\n`node_pool.config`)\n\nIf unspecified, the defaults are used.\nThis field is deprecated, use node_pool.config instead."
         },
         "nodeIpv4CidrSize": {
-          "description": "[Output only] The size of the address space on each node for hosting\ncontainers. This is provisioned from within the `container_ipv4_cidr`\nrange.",
+          "description": "[Output only] The size of the address space on each node for hosting\ncontainers. This is provisioned from within the `container_ipv4_cidr`\nrange. This field will only be set when cluster is in route-based network\nmode.",
           "format": "int32",
           "type": "integer"
         },

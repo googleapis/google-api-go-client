@@ -256,7 +256,7 @@ func (s *BeginTransactionRequest) MarshalJSON() ([]byte, error) {
 // Binding: Associates `members` with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.
-	// NOTE: an unsatisfied condition will not allow user access via
+	// NOTE: An unsatisfied condition will not allow user access via
 	// current
 	// binding. Different bindings, including their conditions, are
 	// examined
@@ -1209,9 +1209,10 @@ type Instance struct {
 	// in API responses for instances that are not yet in state
 	// `READY`.
 	//
-	// See [the
-	// documentation](https://cloud.google.com/spanner/docs/instances#node_co
-	// unt)
+	// See
+	// [the
+	// documentation](https://cloud.google.com/spanner/docs/instances#no
+	// de_count)
 	// for more information about nodes.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 

@@ -14,7 +14,7 @@
   "canonicalName": "Cloud PrivateCatalog Producer",
   "description": "Enables cloud users to manage and share enterprise catalogs intheir organizations.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://sites.google.com/corp/google.com/cloudprivatecatalog",
+  "documentationLink": "https://cloud.google.com/private-catalog/",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -967,7 +967,7 @@
       }
     }
   },
-  "revision": "20190413",
+  "revision": "20190511",
   "rootUrl": "https://cloudprivatecatalogproducer.googleapis.com/",
   "schemas": {
     "GoogleCloudPrivatecatalogproducerV1beta1Association": {
@@ -1395,7 +1395,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
           "type": "string"
         },
         "response": {

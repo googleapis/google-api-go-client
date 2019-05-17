@@ -6,7 +6,7 @@
 
 // Package cloudprivatecatalogproducer provides access to the Cloud Private Catalog Producer API.
 //
-// For product documentation, see: https://sites.google.com/corp/google.com/cloudprivatecatalog
+// For product documentation, see: https://cloud.google.com/private-catalog/
 //
 // Creating a client
 //
@@ -1398,7 +1398,8 @@ type GoogleLongrunningOperation struct {
 	// service that
 	// originally returns it. If you use the default HTTP mapping,
 	// the
-	// `name` should have the format of `operations/some/unique/name`.
+	// `name` should be a resource name ending with
+	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success.

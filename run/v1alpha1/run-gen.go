@@ -4536,6 +4536,18 @@ type TrafficTarget struct {
 	// Cloud Run currently supports a single ConfigurationName.
 	ConfigurationName string `json:"configurationName,omitempty"`
 
+	// LatestRevision: LatestRevision may be optionally provided to indicate
+	// that the latest
+	// ready Revision of the Configuration should be used for this
+	// traffic
+	// target. When provided LatestRevision must be true if RevisionName
+	// is
+	// empty; it must be false when RevisionName is non-empty.
+	//
+	// Not currently supported in Cloud Run.
+	// +optional
+	LatestRevision bool `json:"latestRevision,omitempty"`
+
 	// Name: Name is optionally used to expose a dedicated hostname for
 	// referencing this
 	// target exclusively.
@@ -4561,6 +4573,25 @@ type TrafficTarget struct {
 	// Providing RevisionName in spec is not currently supported by Cloud
 	// Run.
 	RevisionName string `json:"revisionName,omitempty"`
+
+	// Tag: Tag is optionally used to expose a dedicated url for
+	// referencing
+	// this target exclusively.
+	//
+	// Not currently supported in Cloud Run.
+	// +optional
+	Tag string `json:"tag,omitempty"`
+
+	// Url: Output only. URL displays the URL for accessing named traffic
+	// targets. URL
+	// is displayed in status, and is disallowed on spec. URL must contain
+	// a
+	// scheme (e.g. http://) and a hostname, but may not contain anything
+	// else
+	// (e.g. basic auth, url path, etc.
+	//
+	// Not currently supported in Cloud Run.
+	Url string `json:"url,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfigurationName")
 	// to unconditionally include in API requests. By default, fields with

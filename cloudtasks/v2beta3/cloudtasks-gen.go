@@ -234,10 +234,6 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // app when
 // the task is dispatched.
 //
-// This proto can only be used for tasks in a queue which
-// has
-// app_engine_http_queue set.
-//
 // Using AppEngineHttpRequest
 // requires
 // [`appengine.applications.get`](https://cloud.google.com/appen
@@ -302,18 +298,24 @@ func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 // ard/python/config/appref)
 // Task dispatches also do not follow redirects.
 //
-// The task attempt has succeeded if the app's request handler
-// returns
-// an HTTP response code in the range [`200` - `299`]. `503`
-// is
-// considered an App Engine system error instead of an
-// application
-// error. Requests returning error `503` will be retried regardless
-// of
-// retry configuration and not counted against retry counts.
-// Any other response code or a failure to receive a response before
-// the
-// deadline is a failed attempt.
+// The task attempt has succeeded if the app's request handler returns
+// an HTTP
+// response code in the range [`200` - `299`]. The task attempt has
+// failed if
+// the app's handler returns a non-2xx response code or Cloud Tasks
+// does
+// not receive response before the deadline. Failed
+// tasks will be retried according to the
+// retry configuration. `503` (Service Unavailable) is
+// considered an App Engine system error instead of an application error
+// and
+// will cause Cloud Tasks' traffic congestion control to temporarily
+// throttle
+// the queue's dispatches. Unlike other types of task targets, a `429`
+// (Too Many
+// Requests) response from an app handler does not cause traffic
+// congestion
+// control to throttle the queue.
 type AppEngineHttpRequest struct {
 	// AppEngineRouting: Task-level setting for App Engine routing.
 	//
@@ -881,6 +883,178 @@ func (s *Expr) MarshalJSON() ([]byte, error) {
 type GetIamPolicyRequest struct {
 }
 
+// HttpRequest: HTTP request.
+//
+// Warning: This is an
+// [alpha](https://cloud.google.com/terms/launch-stages)
+// feature. If you haven't already joined, you can [use this form to
+// sign
+// up](https://docs.google.com/forms/d/e/1FAIpQLSfc4uEy9CBHKYUSdnY1h
+// dhKDCX7julVZHy3imOiR-XrU7bUNQ/viewform).
+//
+// The task will be pushed to the worker as an HTTP request. If the
+// worker
+// or the redirected worker acknowledges the task by returning a
+// successful HTTP
+// response code ([`200` - `299`]), the task will removed from the
+// queue. If
+// any other HTTP response code is returned or no response is received,
+// the
+// task will be retried according to the following:
+//
+// * User-specified throttling: retry configuration,
+//   rate limits, and the queue's state.
+//
+// * System throttling: To prevent the worker from overloading, Cloud
+// Tasks may
+//   temporarily reduce the queue's effective rate. User-specified
+// settings
+//   will not be changed.
+//
+//  System throttling happens because:
+//
+//   * Cloud Tasks backoffs on all errors. Normally the backoff
+// specified in
+//     rate limits will be used. But if the worker returns
+//     `429` (Too Many Requests), `503` (Service Unavailable), or the
+// rate of
+//     errors is high, Cloud Tasks will use a higher backoff rate. The
+// retry
+//     specified in the `Retry-After` HTTP response header is
+// considered.
+//
+//   * To prevent traffic spikes and to smooth sudden large traffic
+// spikes,
+//     dispatches ramp up slowly when the queue is newly created or idle
+// and
+//     if large numbers of tasks suddenly become available to dispatch
+// (due to
+//     spikes in create task rates, the queue being unpaused, or many
+// tasks
+//     that are scheduled at the same time).
+type HttpRequest struct {
+	// Body: HTTP request body.
+	//
+	// A request body is allowed only if the
+	// HTTP method is POST, PUT, or PATCH. It is an
+	// error to set body on a task with an incompatible HttpMethod.
+	Body string `json:"body,omitempty"`
+
+	// Headers: HTTP request headers.
+	//
+	// This map contains the header field names and values.
+	// Headers can be set when the
+	// task is created.
+	//
+	// These headers represent a subset of the headers that will accompany
+	// the
+	// task's HTTP request. Some HTTP request headers will be ignored or
+	// replaced.
+	//
+	// A partial list of headers that will be ignored or replaced is:
+	//
+	// * Host: This will be computed by Cloud Tasks and derived from
+	//   HttpRequest.url.
+	// * Content-Length: This will be computed by Cloud Tasks.
+	// * User-Agent: This will be set to "Google-Cloud-Tasks".
+	// * X-Google-*: Google use only.
+	// * X-AppEngine-*: Google use only.
+	//
+	// `Content-Type` won't be set by Cloud Tasks. You can explicitly
+	// set
+	// `Content-Type` to a media type when the
+	//  task is created.
+	//  For example, `Content-Type` can be set to
+	// "application/octet-stream" or
+	//  "application/json".
+	//
+	// Headers which can have multiple values (according to RFC2616) can
+	// be
+	// specified using comma-separated values.
+	//
+	// The size of the headers must be less than 80KB.
+	Headers map[string]string `json:"headers,omitempty"`
+
+	// HttpMethod: The HTTP method to use for the request. The default is
+	// POST.
+	//
+	// Possible values:
+	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
+	//   "POST" - HTTP POST
+	//   "GET" - HTTP GET
+	//   "HEAD" - HTTP HEAD
+	//   "PUT" - HTTP PUT
+	//   "DELETE" - HTTP DELETE
+	//   "PATCH" - HTTP PATCH
+	//   "OPTIONS" - HTTP OPTIONS
+	HttpMethod string `json:"httpMethod,omitempty"`
+
+	// OauthToken: If specified, an
+	// [OAuth
+	// token](https://developers.google.com/identity/protocols/OAuth2)
+	// will be generated and attached as an `Authorization` header in the
+	// HTTP
+	// request.
+	//
+	// This type of authorization should generally only be used when
+	// calling
+	// Google APIs hosted on *.googleapis.com.
+	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
+
+	// OidcToken: If specified,
+	// an
+	// [OIDC](https://developers.google.com/identity/protocols/OpenIDConne
+	// ct)
+	// token will be generated and attached as an `Authorization` header in
+	// the
+	// HTTP request.
+	//
+	// This type of authorization can be used for many scenarios,
+	// including
+	// calling Cloud Run, or endpoints where you intend to validate the
+	// token
+	// yourself.
+	OidcToken *OidcToken `json:"oidcToken,omitempty"`
+
+	// Url: Required. The full url path that the request will be sent
+	// to.
+	//
+	// This string must begin with either "http://" or "https://". Some
+	// examples
+	// are: `http://acme.com` and `https://acme.com/sales:8080`. Cloud Tasks
+	// will
+	// encode some characters for safety and compatibility. The maximum
+	// allowed
+	// URL length is 2083 characters after encoding.
+	//
+	// The `Location` header response from a redirect response [`300` -
+	// `399`]
+	// may be followed. The redirect is not counted as a separate attempt.
+	Url string `json:"url,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Body") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Body") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for
 // Locations.ListLocations.
 type ListLocationsResponse struct {
@@ -1056,6 +1230,101 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OAuthToken: Contains information needed for generating an
+// [OAuth
+// token](https://developers.google.com/identity/protocols/OAuth2).
+// This type of authorization should generally only be used when calling
+// Google
+// APIs hosted on *.googleapis.com.
+type OAuthToken struct {
+	// Scope: OAuth scope to be used for generating OAuth access token.
+	// If not specified,
+	// "https://www.googleapis.com/auth/cloud-platform"
+	// will be used.
+	Scope string `json:"scope,omitempty"`
+
+	// ServiceAccountEmail: [Service account
+	// email](https://cloud.google.com/iam/docs/service-accounts)
+	// to be used for generating OAuth token.
+	// The service account must be within the same project as the queue.
+	// The
+	// caller must have iam.serviceAccounts.actAs permission for the
+	// service
+	// account.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OAuthToken) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthToken
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OidcToken: Contains information needed for generating an
+// [OpenID
+// Connect
+// token](https://developers.google.com/identity/protocols/OpenID
+// Connect).
+// This type of authorization can be used for many scenarios,
+// including
+// calling Cloud Run, or endpoints where you intend to validate the
+// token
+// yourself.
+type OidcToken struct {
+	// Audience: Audience to be used when generating OIDC token. If not
+	// specified, the URI
+	// specified in target will be used.
+	Audience string `json:"audience,omitempty"`
+
+	// ServiceAccountEmail: [Service account
+	// email](https://cloud.google.com/iam/docs/service-accounts)
+	// to be used for generating OIDC token.
+	// The service account must be within the same project as the queue.
+	// The
+	// caller must have iam.serviceAccounts.actAs permission for the
+	// service
+	// account.
+	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Audience") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OidcToken) MarshalJSON() ([]byte, error) {
+	type NoMethod OidcToken
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PauseQueueRequest: Request message for PauseQueue.
 type PauseQueueRequest struct {
 }
@@ -1177,6 +1446,7 @@ type PurgeQueueRequest struct {
 type Queue struct {
 	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only to
 	// App Engine tasks in this queue.
+	// Http tasks are not affected by this proto.
 	AppEngineHttpQueue *AppEngineHttpQueue `json:"appEngineHttpQueue,omitempty"`
 
 	// Name: Caller-specified and required in CreateQueue,
@@ -1267,6 +1537,13 @@ type Queue struct {
 	// documentation](https://cloud.google.com/appengine/docs/standard/python
 	// /taskqueue/push/retrying-tasks).
 	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
+
+	// StackdriverLoggingConfig: Configuration options for writing logs
+	// to
+	// [Stackdriver Logging](https://cloud.google.com/logging/docs/). If
+	// this
+	// field is unset, then no logs are written.
+	StackdriverLoggingConfig *StackdriverLoggingConfig `json:"stackdriverLoggingConfig,omitempty"`
 
 	// State: Output only. The state of the queue.
 	//
@@ -1724,6 +2001,54 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StackdriverLoggingConfig: Configuration options for writing logs
+// to
+// [Stackdriver Logging](https://cloud.google.com/logging/docs/).
+type StackdriverLoggingConfig struct {
+	// SamplingRatio: Specifies the fraction of operations to write
+	// to
+	// [Stackdriver Logging](https://cloud.google.com/logging/docs/).
+	// This field may contain any value between 0.0 and 1.0, inclusive.
+	// 0.0 is the default and means that no operations are logged.
+	SamplingRatio float64 `json:"samplingRatio,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SamplingRatio") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SamplingRatio") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StackdriverLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StackdriverLoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *StackdriverLoggingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod StackdriverLoggingConfig
+	var s1 struct {
+		SamplingRatio gensupport.JSONFloat64 `json:"samplingRatio"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingRatio = float64(s1.SamplingRatio)
+	return nil
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for
 // different programming environments, including REST APIs and RPC APIs.
@@ -1882,6 +2207,8 @@ type Task struct {
 	//
 	// The default and maximum values depend on the type of request:
 	//
+	// * For HTTP tasks, the default is 10 minutes. The deadline
+	//   must be in the interval [15 seconds, 30 minutes].
 	//
 	// * For App Engine tasks, 0 indicates that the
 	//   request has the default deadline. The default deadline depends on
@@ -1919,6 +2246,11 @@ type Task struct {
 	// Only dispatch_time will be set.
 	// The other Attempt information is not retained by Cloud Tasks.
 	FirstAttempt *Attempt `json:"firstAttempt,omitempty"`
+
+	// HttpRequest: HTTP request that is sent to the task's target.
+	//
+	// An HTTP task is a task that has HttpRequest set.
+	HttpRequest *HttpRequest `json:"httpRequest,omitempty"`
 
 	// LastAttempt: Output only. The status of the task's last attempt.
 	LastAttempt *Attempt `json:"lastAttempt,omitempty"`
@@ -4665,14 +4997,17 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Fewer tasks than requested might be returned.
+// PageSize sets the optional parameter "pageSize": Maximum page
+// size.
 //
-// The maximum page size is 1000. If unspecified, the page size will
-// be the maximum. Fewer tasks than requested might be returned,
-// even if more tasks exist; use
-// next_page_token in the
-// response to determine if more tasks exist.
+// Fewer tasks than requested might be returned, even if more tasks
+// exist; use
+// next_page_token in the response to
+// determine if more tasks exist.
+//
+// The maximum page size is 1000. If unspecified, the page size will be
+// the
+// maximum.
 func (c *ProjectsLocationsQueuesTasksListCall) PageSize(pageSize int64) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4829,7 +5164,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Requested page size. Fewer tasks than requested might be returned.\n\nThe maximum page size is 1000. If unspecified, the page size will\nbe the maximum. Fewer tasks than requested might be returned,\neven if more tasks exist; use\nnext_page_token in the\nresponse to determine if more tasks exist.",
+	//       "description": "Maximum page size.\n\nFewer tasks than requested might be returned, even if more tasks exist; use\nnext_page_token in the response to\ndetermine if more tasks exist.\n\nThe maximum page size is 1000. If unspecified, the page size will be the\nmaximum.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

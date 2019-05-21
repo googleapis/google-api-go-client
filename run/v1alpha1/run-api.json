@@ -2031,7 +2031,7 @@
       }
     }
   },
-  "revision": "20190515",
+  "revision": "20190516",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -3925,6 +3925,10 @@
           "description": "ConfigurationName of a configuration to whose latest revision we will\nsend this portion of traffic. When the \"status.latestReadyRevisionName\"\nof the referenced configuration changes, we will automatically migrate\ntraffic from the prior \"latest ready\" revision to the new one. This field\nis never set in Route's status, only its spec. This is mutually exclusive\nwith RevisionName.\n\nCloud Run currently supports a single ConfigurationName.",
           "type": "string"
         },
+        "latestRevision": {
+          "description": "LatestRevision may be optionally provided to indicate that the latest\nready Revision of the Configuration should be used for this traffic\ntarget. When provided LatestRevision must be true if RevisionName is\nempty; it must be false when RevisionName is non-empty.\n\nNot currently supported in Cloud Run.\n+optional",
+          "type": "boolean"
+        },
         "name": {
           "description": "Name is optionally used to expose a dedicated hostname for referencing this\ntarget exclusively.\n\nNot currently supported by Cloud Run.\n+optional",
           "type": "string"
@@ -3936,6 +3940,14 @@
         },
         "revisionName": {
           "description": "RevisionName of a specific revision to which to send this portion of\ntraffic. This is mutually exclusive with ConfigurationName.\n\nProviding RevisionName in spec is not currently supported by Cloud Run.",
+          "type": "string"
+        },
+        "tag": {
+          "description": "Tag is optionally used to expose a dedicated url for referencing\nthis target exclusively.\n\nNot currently supported in Cloud Run.\n+optional",
+          "type": "string"
+        },
+        "url": {
+          "description": "Output only. URL displays the URL for accessing named traffic targets. URL\nis displayed in status, and is disallowed on spec. URL must contain a\nscheme (e.g. http://) and a hostname, but may not contain anything else\n(e.g. basic auth, url path, etc.\n\nNot currently supported in Cloud Run.",
           "type": "string"
         }
       },

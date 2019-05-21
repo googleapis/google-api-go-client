@@ -3123,7 +3123,7 @@ type JobQuery struct {
 	// This filter specifies a list of job names to be excluded during
 	// search.
 	//
-	// At most 200 excluded job names are allowed.
+	// At most 400 excluded job names are allowed.
 	ExcludedJobs []string `json:"excludedJobs,omitempty"`
 
 	// JobCategories: Optional.

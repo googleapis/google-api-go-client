@@ -601,7 +601,7 @@
                       ],
                       "parameters": {
                         "pageSize": {
-                          "description": "Requested page size. Fewer tasks than requested might be returned.\n\nThe maximum page size is 1000. If unspecified, the page size will\nbe the maximum. Fewer tasks than requested might be returned,\neven if more tasks exist; use\nnext_page_token in the\nresponse to determine if more tasks exist.",
+                          "description": "Maximum page size.\n\nFewer tasks than requested might be returned, even if more tasks exist; use\nnext_page_token in the response to\ndetermine if more tasks exist.\n\nThe maximum page size is 1000. If unspecified, the page size will be the\nmaximum.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
@@ -674,7 +674,7 @@
       }
     }
   },
-  "revision": "20190412",
+  "revision": "20190513",
   "rootUrl": "https://cloudtasks.googleapis.com/",
   "schemas": {
     "AppEngineHttpQueue": {
@@ -689,7 +689,7 @@
       "type": "object"
     },
     "AppEngineHttpRequest": {
-      "description": "App Engine HTTP request.\n\nThe message defines the HTTP request that is sent to an App Engine app when\nthe task is dispatched.\n\nThis proto can only be used for tasks in a queue which has\napp_engine_http_queue set.\n\nUsing AppEngineHttpRequest requires\n[`appengine.applications.get`](https://cloud.google.com/appengine/docs/admin-api/access-control)\nGoogle IAM permission for the project\nand the following scope:\n\n`https://www.googleapis.com/auth/cloud-platform`\n\nThe task will be delivered to the App Engine app which belongs to the same\nproject as the queue. For more information, see\n[How Requests are\nRouted](https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)\nand how routing is affected by\n[dispatch\nfiles](https://cloud.google.com/appengine/docs/python/config/dispatchref).\nTraffic is encrypted during transport and never leaves Google datacenters.\nBecause this traffic is carried over a communication mechanism internal to\nGoogle, you cannot explicitly set the protocol (for example, HTTP or HTTPS).\nThe request to the handler, however, will appear to have used the HTTP\nprotocol.\n\nThe AppEngineRouting used to construct the URL that the task is\ndelivered to can be set at the queue-level or task-level:\n\n* If set,\n   app_engine_routing_override\n   is used for all tasks in the queue, no matter what the setting\n   is for the\n   task-level app_engine_routing.\n\n\nThe `url` that the task will be sent to is:\n\n* `url =` host `+`\n  relative_uri\n\nTasks can be dispatched to secure app handlers, unsecure app handlers, and\nURIs restricted with\n[`login:\nadmin`](https://cloud.google.com/appengine/docs/standard/python/config/appref).\nBecause tasks are not run as any user, they cannot be dispatched to URIs\nrestricted with\n[`login:\nrequired`](https://cloud.google.com/appengine/docs/standard/python/config/appref)\nTask dispatches also do not follow redirects.\n\nThe task attempt has succeeded if the app's request handler returns\nan HTTP response code in the range [`200` - `299`]. `503` is\nconsidered an App Engine system error instead of an application\nerror. Requests returning error `503` will be retried regardless of\nretry configuration and not counted against retry counts.\nAny other response code or a failure to receive a response before the\ndeadline is a failed attempt.",
+      "description": "App Engine HTTP request.\n\nThe message defines the HTTP request that is sent to an App Engine app when\nthe task is dispatched.\n\nUsing AppEngineHttpRequest requires\n[`appengine.applications.get`](https://cloud.google.com/appengine/docs/admin-api/access-control)\nGoogle IAM permission for the project\nand the following scope:\n\n`https://www.googleapis.com/auth/cloud-platform`\n\nThe task will be delivered to the App Engine app which belongs to the same\nproject as the queue. For more information, see\n[How Requests are\nRouted](https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)\nand how routing is affected by\n[dispatch\nfiles](https://cloud.google.com/appengine/docs/python/config/dispatchref).\nTraffic is encrypted during transport and never leaves Google datacenters.\nBecause this traffic is carried over a communication mechanism internal to\nGoogle, you cannot explicitly set the protocol (for example, HTTP or HTTPS).\nThe request to the handler, however, will appear to have used the HTTP\nprotocol.\n\nThe AppEngineRouting used to construct the URL that the task is\ndelivered to can be set at the queue-level or task-level:\n\n* If set,\n   app_engine_routing_override\n   is used for all tasks in the queue, no matter what the setting\n   is for the\n   task-level app_engine_routing.\n\n\nThe `url` that the task will be sent to is:\n\n* `url =` host `+`\n  relative_uri\n\nTasks can be dispatched to secure app handlers, unsecure app handlers, and\nURIs restricted with\n[`login:\nadmin`](https://cloud.google.com/appengine/docs/standard/python/config/appref).\nBecause tasks are not run as any user, they cannot be dispatched to URIs\nrestricted with\n[`login:\nrequired`](https://cloud.google.com/appengine/docs/standard/python/config/appref)\nTask dispatches also do not follow redirects.\n\nThe task attempt has succeeded if the app's request handler returns an HTTP\nresponse code in the range [`200` - `299`]. The task attempt has failed if\nthe app's handler returns a non-2xx response code or Cloud Tasks does\nnot receive response before the deadline. Failed\ntasks will be retried according to the\nretry configuration. `503` (Service Unavailable) is\nconsidered an App Engine system error instead of an application error and\nwill cause Cloud Tasks' traffic congestion control to temporarily throttle\nthe queue's dispatches. Unlike other types of task targets, a `429` (Too Many\nRequests) response from an app handler does not cause traffic congestion\ncontrol to throttle the queue.",
       "id": "AppEngineHttpRequest",
       "properties": {
         "appEngineRouting": {
@@ -870,6 +870,61 @@
       "properties": {},
       "type": "object"
     },
+    "HttpRequest": {
+      "description": "HTTP request.\n\nWarning: This is an [alpha](https://cloud.google.com/terms/launch-stages)\nfeature. If you haven't already joined, you can [use this form to sign\nup](https://docs.google.com/forms/d/e/1FAIpQLSfc4uEy9CBHKYUSdnY1hdhKDCX7julVZHy3imOiR-XrU7bUNQ/viewform).\n\nThe task will be pushed to the worker as an HTTP request. If the worker\nor the redirected worker acknowledges the task by returning a successful HTTP\nresponse code ([`200` - `299`]), the task will removed from the queue. If\nany other HTTP response code is returned or no response is received, the\ntask will be retried according to the following:\n\n* User-specified throttling: retry configuration,\n  rate limits, and the queue's state.\n\n* System throttling: To prevent the worker from overloading, Cloud Tasks may\n  temporarily reduce the queue's effective rate. User-specified settings\n  will not be changed.\n\n System throttling happens because:\n\n  * Cloud Tasks backoffs on all errors. Normally the backoff specified in\n    rate limits will be used. But if the worker returns\n    `429` (Too Many Requests), `503` (Service Unavailable), or the rate of\n    errors is high, Cloud Tasks will use a higher backoff rate. The retry\n    specified in the `Retry-After` HTTP response header is considered.\n\n  * To prevent traffic spikes and to smooth sudden large traffic spikes,\n    dispatches ramp up slowly when the queue is newly created or idle and\n    if large numbers of tasks suddenly become available to dispatch (due to\n    spikes in create task rates, the queue being unpaused, or many tasks\n    that are scheduled at the same time).",
+      "id": "HttpRequest",
+      "properties": {
+        "body": {
+          "description": "HTTP request body.\n\nA request body is allowed only if the\nHTTP method is POST, PUT, or PATCH. It is an\nerror to set body on a task with an incompatible HttpMethod.",
+          "format": "byte",
+          "type": "string"
+        },
+        "headers": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "HTTP request headers.\n\nThis map contains the header field names and values.\nHeaders can be set when the\ntask is created.\n\nThese headers represent a subset of the headers that will accompany the\ntask's HTTP request. Some HTTP request headers will be ignored or replaced.\n\nA partial list of headers that will be ignored or replaced is:\n\n* Host: This will be computed by Cloud Tasks and derived from\n  HttpRequest.url.\n* Content-Length: This will be computed by Cloud Tasks.\n* User-Agent: This will be set to `\"Google-Cloud-Tasks\"`.\n* X-Google-*: Google use only.\n* X-AppEngine-*: Google use only.\n\n`Content-Type` won't be set by Cloud Tasks. You can explicitly set\n`Content-Type` to a media type when the\n task is created.\n For example, `Content-Type` can be set to `\"application/octet-stream\"` or\n `\"application/json\"`.\n\nHeaders which can have multiple values (according to RFC2616) can be\nspecified using comma-separated values.\n\nThe size of the headers must be less than 80KB.",
+          "type": "object"
+        },
+        "httpMethod": {
+          "description": "The HTTP method to use for the request. The default is POST.",
+          "enum": [
+            "HTTP_METHOD_UNSPECIFIED",
+            "POST",
+            "GET",
+            "HEAD",
+            "PUT",
+            "DELETE",
+            "PATCH",
+            "OPTIONS"
+          ],
+          "enumDescriptions": [
+            "HTTP method unspecified",
+            "HTTP POST",
+            "HTTP GET",
+            "HTTP HEAD",
+            "HTTP PUT",
+            "HTTP DELETE",
+            "HTTP PATCH",
+            "HTTP OPTIONS"
+          ],
+          "type": "string"
+        },
+        "oauthToken": {
+          "$ref": "OAuthToken",
+          "description": "If specified, an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2)\nwill be generated and attached as an `Authorization` header in the HTTP\nrequest.\n\nThis type of authorization should generally only be used when calling\nGoogle APIs hosted on *.googleapis.com."
+        },
+        "oidcToken": {
+          "$ref": "OidcToken",
+          "description": "If specified, an\n[OIDC](https://developers.google.com/identity/protocols/OpenIDConnect)\ntoken will be generated and attached as an `Authorization` header in the\nHTTP request.\n\nThis type of authorization can be used for many scenarios, including\ncalling Cloud Run, or endpoints where you intend to validate the token\nyourself."
+        },
+        "url": {
+          "description": "Required. The full url path that the request will be sent to.\n\nThis string must begin with either \"http://\" or \"https://\". Some examples\nare: `http://acme.com` and `https://acme.com/sales:8080`. Cloud Tasks will\nencode some characters for safety and compatibility. The maximum allowed\nURL length is 2083 characters after encoding.\n\nThe `Location` header response from a redirect response [`300` - `399`]\nmay be followed. The redirect is not counted as a separate attempt.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ListLocationsResponse": {
       "description": "The response message for Locations.ListLocations.",
       "id": "ListLocationsResponse",
@@ -958,6 +1013,36 @@
       },
       "type": "object"
     },
+    "OAuthToken": {
+      "description": "Contains information needed for generating an\n[OAuth token](https://developers.google.com/identity/protocols/OAuth2).\nThis type of authorization should generally only be used when calling Google\nAPIs hosted on *.googleapis.com.",
+      "id": "OAuthToken",
+      "properties": {
+        "scope": {
+          "description": "OAuth scope to be used for generating OAuth access token.\nIf not specified, \"https://www.googleapis.com/auth/cloud-platform\"\nwill be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OAuth token.\nThe service account must be within the same project as the queue. The\ncaller must have iam.serviceAccounts.actAs permission for the service\naccount.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "OidcToken": {
+      "description": "Contains information needed for generating an\n[OpenID Connect\ntoken](https://developers.google.com/identity/protocols/OpenIDConnect).\nThis type of authorization can be used for many scenarios, including\ncalling Cloud Run, or endpoints where you intend to validate the token\nyourself.",
+      "id": "OidcToken",
+      "properties": {
+        "audience": {
+          "description": "Audience to be used when generating OIDC token. If not specified, the URI\nspecified in target will be used.",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "[Service account email](https://cloud.google.com/iam/docs/service-accounts)\nto be used for generating OIDC token.\nThe service account must be within the same project as the queue. The\ncaller must have iam.serviceAccounts.actAs permission for the service\naccount.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PauseQueueRequest": {
       "description": "Request message for PauseQueue.",
       "id": "PauseQueueRequest",
@@ -1000,7 +1085,7 @@
       "properties": {
         "appEngineHttpQueue": {
           "$ref": "AppEngineHttpQueue",
-          "description": "AppEngineHttpQueue settings apply only to\nApp Engine tasks in this queue."
+          "description": "AppEngineHttpQueue settings apply only to\nApp Engine tasks in this queue.\nHttp tasks are not affected by this proto."
         },
         "name": {
           "description": "Caller-specified and required in CreateQueue,\nafter which it becomes output only.\n\nThe queue name.\n\nThe queue name must have the following format:\n`projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`\n\n* `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),\n   hyphens (-), colons (:), or periods (.).\n   For more information, see\n   [Identifying\n   projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)\n* `LOCATION_ID` is the canonical ID for the queue's location.\n   The list of available locations can be obtained by calling\n   ListLocations.\n   For more information, see https://cloud.google.com/about/locations/.\n* `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or\n  hyphens (-). The maximum length is 100 characters.",
@@ -1018,6 +1103,10 @@
         "retryConfig": {
           "$ref": "RetryConfig",
           "description": "Settings that determine the retry behavior.\n\n* For tasks created using Cloud Tasks: the queue-level retry settings\n  apply to all tasks in the queue that were created using Cloud Tasks.\n  Retry settings cannot be set on individual tasks.\n* For tasks created using the App Engine SDK: the queue-level retry\n  settings apply to all tasks in the queue which do not have retry settings\n  explicitly set on the task and were created by the App Engine SDK. See\n  [App Engine\n  documentation](https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks)."
+        },
+        "stackdriverLoggingConfig": {
+          "$ref": "StackdriverLoggingConfig",
+          "description": "Configuration options for writing logs to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/). If this\nfield is unset, then no logs are written."
         },
         "state": {
           "description": "Output only. The state of the queue.\n\n`state` can only be changed by called\nPauseQueue,\nResumeQueue, or uploading\n[queue.yaml/xml](https://cloud.google.com/appengine/docs/python/config/queueref).\nUpdateQueue cannot be used to change `state`.",
@@ -1130,6 +1219,18 @@
       },
       "type": "object"
     },
+    "StackdriverLoggingConfig": {
+      "description": "Configuration options for writing logs to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/).",
+      "id": "StackdriverLoggingConfig",
+      "properties": {
+        "samplingRatio": {
+          "description": "Specifies the fraction of operations to write to\n[Stackdriver Logging](https://cloud.google.com/logging/docs/).\nThis field may contain any value between 0.0 and 1.0, inclusive.\n0.0 is the default and means that no operations are logged.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for\ndifferent programming environments, including REST APIs and RPC APIs. It is\nused by [gRPC](https://github.com/grpc). The error model is designed to be:\n\n- Simple to use and understand for most users\n- Flexible enough to meet unexpected needs\n\n# Overview\n\nThe `Status` message contains three pieces of data: error code, error\nmessage, and error details. The error code should be an enum value of\ngoogle.rpc.Code, but it may accept additional error codes if needed.  The\nerror message should be a developer-facing English message that helps\ndevelopers *understand* and *resolve* the error. If a localized user-facing\nerror message is needed, put the localized message in the error details or\nlocalize it in the client. The optional error details may contain arbitrary\ninformation about the error. There is a predefined set of error detail types\nin the package `google.rpc` that can be used for common error conditions.\n\n# Language mapping\n\nThe `Status` message is the logical representation of the error model, but it\nis not necessarily the actual wire format. When the `Status` message is\nexposed in different client libraries and different wire protocols, it can be\nmapped differently. For example, it will likely be mapped to some exceptions\nin Java, but more likely mapped to some error codes in C.\n\n# Other uses\n\nThe error model and the `Status` message can be used in a variety of\nenvironments, either with or without APIs, to provide a\nconsistent developer experience across different environments.\n\nExample uses of this error model include:\n\n- Partial errors. If a service needs to return partial errors to the client,\n    it may embed the `Status` in the normal response to indicate the partial\n    errors.\n\n- Workflow errors. A typical workflow has multiple steps. Each step may\n    have a `Status` message for error reporting.\n\n- Batch operations. If a client uses batch request and batch response, the\n    `Status` message should be used directly inside batch response, one for\n    each error sub-response.\n\n- Asynchronous operations. If an API call embeds asynchronous operation\n    results in its response, the status of those operations should be\n    represented directly using the `Status` message.\n\n- Logging. If some API errors are stored in logs, the message `Status` could\n    be used directly after any stripping needed for security/privacy reasons.",
       "id": "Status",
@@ -1176,13 +1277,17 @@
           "type": "integer"
         },
         "dispatchDeadline": {
-          "description": "The deadline for requests sent to the worker. If the worker does not\nrespond by this deadline then the request is cancelled and the attempt\nis marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will retry the\ntask according to the RetryConfig.\n\nNote that when the request is cancelled, Cloud Tasks will stop listing for\nthe response, but whether the worker stops processing depends on the\nworker. For example, if the worker is stuck, it may not react to cancelled\nrequests.\n\nThe default and maximum values depend on the type of request:\n\n\n* For App Engine tasks, 0 indicates that the\n  request has the default deadline. The default deadline depends on the\n  [scaling\n  type](https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)\n  of the service: 10 minutes for standard apps with automatic scaling, 24\n  hours for standard apps with manual and basic scaling, and 60 minutes for\n  flex apps. If the request deadline is set, it must be in the interval [15\n  seconds, 24 hours 15 seconds]. Regardless of the task's\n  `dispatch_deadline`, the app handler will not run for longer than than\n  the service's timeout. We recommend setting the `dispatch_deadline` to\n  at most a few seconds more than the app handler's timeout. For more\n  information see\n  [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).\n\n`dispatch_deadline` will be truncated to the nearest millisecond. The\ndeadline is an approximate deadline.",
+          "description": "The deadline for requests sent to the worker. If the worker does not\nrespond by this deadline then the request is cancelled and the attempt\nis marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will retry the\ntask according to the RetryConfig.\n\nNote that when the request is cancelled, Cloud Tasks will stop listing for\nthe response, but whether the worker stops processing depends on the\nworker. For example, if the worker is stuck, it may not react to cancelled\nrequests.\n\nThe default and maximum values depend on the type of request:\n\n* For HTTP tasks, the default is 10 minutes. The deadline\n  must be in the interval [15 seconds, 30 minutes].\n\n* For App Engine tasks, 0 indicates that the\n  request has the default deadline. The default deadline depends on the\n  [scaling\n  type](https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)\n  of the service: 10 minutes for standard apps with automatic scaling, 24\n  hours for standard apps with manual and basic scaling, and 60 minutes for\n  flex apps. If the request deadline is set, it must be in the interval [15\n  seconds, 24 hours 15 seconds]. Regardless of the task's\n  `dispatch_deadline`, the app handler will not run for longer than than\n  the service's timeout. We recommend setting the `dispatch_deadline` to\n  at most a few seconds more than the app handler's timeout. For more\n  information see\n  [Timeouts](https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).\n\n`dispatch_deadline` will be truncated to the nearest millisecond. The\ndeadline is an approximate deadline.",
           "format": "google-duration",
           "type": "string"
         },
         "firstAttempt": {
           "$ref": "Attempt",
           "description": "Output only. The status of the task's first attempt.\n\nOnly dispatch_time will be set.\nThe other Attempt information is not retained by Cloud Tasks."
+        },
+        "httpRequest": {
+          "$ref": "HttpRequest",
+          "description": "HTTP request that is sent to the task's target.\n\nAn HTTP task is a task that has HttpRequest set."
         },
         "lastAttempt": {
           "$ref": "Attempt",

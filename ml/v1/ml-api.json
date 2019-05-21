@@ -161,7 +161,7 @@
           ]
         },
         "predict": {
-          "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
+          "description": "Performs prediction on the data in the request.\nAI Platform implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
           "flatPath": "v1/projects/{projectsId}:predict",
           "httpMethod": "POST",
           "id": "ml.projects.predict",
@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190423",
+  "revision": "20190514",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -1129,7 +1129,7 @@
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Cloud ML Engine runtime version on which the built-in algorithm was\ntrained.",
+          "description": "AI Platform runtime version on which the built-in algorithm was\ntrained.",
           "type": "string"
         }
       },
@@ -1258,7 +1258,7 @@
       "id": "GoogleCloudMlV1__HyperparameterSpec",
       "properties": {
         "algorithm": {
-          "description": "Optional. The search algorithm specified for the hyperparameter\ntuning job.\nUses the default CloudML Engine hyperparameter tuning\nalgorithm if unspecified.",
+          "description": "Optional. The search algorithm specified for the hyperparameter\ntuning job.\nUses the default AI Platform hyperparameter tuning\nalgorithm if unspecified.",
           "enum": [
             "ALGORITHM_UNSPECIFIED",
             "GRID_SEARCH",
@@ -1294,7 +1294,7 @@
           "type": "string"
         },
         "maxFailedTrials": {
-          "description": "Optional. The number of failed trials that need to be seen before failing\nthe hyperparameter tuning job. You can specify this field to override the\ndefault failing criteria for Cloud ML Engine hyperparameter tuning jobs.\n\nDefaults to zero, which means the service decides when a hyperparameter\njob should fail.",
+          "description": "Optional. The number of failed trials that need to be seen before failing\nthe hyperparameter tuning job. You can specify this field to override the\ndefault failing criteria for AI Platform hyperparameter tuning jobs.\n\nDefaults to zero, which means the service decides when a hyperparameter\njob should fail.",
           "format": "int32",
           "type": "integer"
         },
@@ -1532,15 +1532,15 @@
           "type": "string"
         },
         "onlinePredictionConsoleLogging": {
-          "description": "Optional. If true, enables logging of stderr and stdout streams\nfor online prediction in Stackdriver Logging. These can be more verbose\nthan the standard access logs (see `online_prediction_logging`) and thus\ncan incur higher cost. However, they are helpful for debugging. Note that\nsince Stackdriver logs may incur a cost, particularly if the total QPS\nin your project is high, be sure to estimate your costs before enabling\nthis flag.\n\nDefault is false.",
+          "description": "Optional. If true, online prediction nodes send `stderr` and `stdout`\nstreams to Stackdriver Logging. These can be more verbose than the standard\naccess logs (see `onlinePredictionLogging`) and can incur higher cost.\nHowever, they are helpful for debugging. Note that\n[Stackdriver logs may incur a cost](/stackdriver/pricing), especially if\nyour project receives prediction requests at a high QPS. Estimate your\ncosts before enabling this option.\n\nDefault is false.",
           "type": "boolean"
         },
         "onlinePredictionLogging": {
-          "description": "Optional. If true, online prediction access logs are sent to StackDriver\nLogging. These logs are like standard server access logs, containing\ninformation like timestamp and latency for each request. Note that\nStackdriver logs may incur a cost, particular if the total QPS in your\nproject is high.\n\nDefault is false.",
+          "description": "Optional. If true, online prediction access logs are sent to StackDriver\nLogging. These logs are like standard server access logs, containing\ninformation like timestamp and latency for each request. Note that\n[Stackdriver logs may incur a cost](/stackdriver/pricing), especially if\nyour project receives prediction requests at a high queries per second rate\n(QPS). Estimate your costs before enabling this option.\n\nDefault is false.",
           "type": "boolean"
         },
         "regions": {
-          "description": "Optional. The list of regions where the model is going to be deployed.\nCurrently only one region per model is supported.\nDefaults to 'us-central1' if nothing is set.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor ML Engine services.\nNote:\n*   No matter where a model is deployed, it can always be accessed by\n    users from anywhere, both for online and batch prediction.\n*   The region for a batch prediction job is set by the region field when\n    submitting the batch prediction job and does not take its value from\n    this field.",
+          "description": "Optional. The list of regions where the model is going to be deployed.\nCurrently only one region per model is supported.\nDefaults to 'us-central1' if nothing is set.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.\nNote:\n*   No matter where a model is deployed, it can always be accessed by\n    users from anywhere, both for online and batch prediction.\n*   The region for a batch prediction job is set by the region field when\n    submitting the batch prediction job and does not take its value from\n    this field.",
           "items": {
             "type": "string"
           },
@@ -1768,11 +1768,11 @@
           "type": "string"
         },
         "region": {
-          "description": "Required. The Google Compute Engine region to run the prediction job in.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor ML Engine services.",
+          "description": "Required. The Google Compute Engine region to run the prediction job in.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.",
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Optional. The Cloud ML Engine runtime version to use for this batch\nprediction. If not set, Cloud ML Engine will pick the runtime version used\nduring the CreateVersion request for this model version, or choose the\nlatest stable version when model version information is not available\nsuch as when the model is specified by uri.",
+          "description": "Optional. The AI Platform runtime version to use for this batch\nprediction. If not set, AI Platform will pick the runtime version used\nduring the CreateVersion request for this model version, or choose the\nlatest stable version when model version information is not available\nsuch as when the model is specified by uri.",
           "type": "string"
         },
         "signatureName": {
@@ -1873,7 +1873,7 @@
         },
         "parameterServerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for parameter servers.\n\nYou should only set `parameterServerConfig.acceleratorConfig` if\n`parameterServerConfigType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `parameterServerConfig.imageUri` only if you build a custom image for\nyour parameter server. If `parameterServerConfig.imageUri` has not been\nset, Cloud ML Engine uses the value of `masterConfig.imageUri`.\nLearn more about [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for parameter servers.\n\nYou should only set `parameterServerConfig.acceleratorConfig` if\n`parameterServerConfigType` is set to a Compute Engine machine type. [Learn\nabout restrictions on accelerator configurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `parameterServerConfig.imageUri` only if you build a custom image for\nyour parameter server. If `parameterServerConfig.imageUri` has not been\nset, AI Platform uses the value of `masterConfig.imageUri`.\nLearn more about [configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
         },
         "parameterServerCount": {
           "description": "Optional. The number of parameter server replicas to use for the training\njob. Each replica in the cluster will be of the type specified in\n`parameter_server_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`.If you\nset this value, you must also set `parameter_server_type`.\n\nThe default value is zero.",
@@ -1881,7 +1881,7 @@
           "type": "string"
         },
         "parameterServerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be Cloud ML Engine machine\ntypes or both must be Compute Engine machine types.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's parameter server.\n\nThe supported values are the same as those described in the entry for\n`master_type`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be AI Platform machine\ntypes or both must be Compute Engine machine types.\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`parameter_server_count` is greater than zero.",
           "type": "string"
         },
         "pythonModule": {
@@ -1893,11 +1893,11 @@
           "type": "string"
         },
         "region": {
-          "description": "Required. The Google Compute Engine region to run the training job in.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor ML Engine services.",
+          "description": "Required. The Google Compute Engine region to run the training job in.\nSee the \u003ca href=\"/ml-engine/docs/tensorflow/regions\"\u003eavailable regions\u003c/a\u003e\nfor AI Platform services.",
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Optional. The Cloud ML Engine runtime version to use for training. If not\nset, Cloud ML Engine uses the default stable version, 1.0. For more\ninformation, see the\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime version list\u003c/a\u003e\nand\n\u003ca href=\"/ml-engine/docs/versioning\"\u003ehow to manage runtime versions\u003c/a\u003e.",
+          "description": "Optional. The AI Platform runtime version to use for training. If not\nset, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n\u003ca href=\"/ml-engine/docs/runtime-version-list\"\u003eruntime version list\u003c/a\u003e\nand\n\u003ca href=\"/ml-engine/docs/versioning\"\u003ehow to manage runtime versions\u003c/a\u003e.",
           "type": "string"
         },
         "scaleTier": {
@@ -1922,7 +1922,7 @@
         },
         "workerConfig": {
           "$ref": "GoogleCloudMlV1__ReplicaConfig",
-          "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, Cloud ML Engine uses\nthe value of `masterConfig.imageUri`. Learn more about\n[configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
+          "description": "Optional. The configuration for workers.\n\nYou should only set `workerConfig.acceleratorConfig` if `workerType` is set\nto a Compute Engine machine type. [Learn about restrictions on accelerator\nconfigurations for\ntraining.](/ml-engine/docs/tensorflow/using-gpus#compute-engine-machine-types-with-gpu)\n\nSet `workerConfig.imageUri` only if you build a custom image for your\nworker. If `workerConfig.imageUri` has not been set, AI Platform uses\nthe value of `masterConfig.imageUri`. Learn more about\n[configuring custom\ncontainers](/ml-engine/docs/distributed-training-containers)."
         },
         "workerCount": {
           "description": "Optional. The number of worker replicas to use for the training job. Each\nreplica in the cluster will be of the type specified in `worker_type`.\n\nThis value can only be used when `scale_tier` is set to `CUSTOM`. If you\nset this value, you must also set `worker_type`.\n\nThe default value is zero.",
@@ -1930,7 +1930,7 @@
           "type": "string"
         },
         "workerType": {
-          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be Cloud ML Engine machine\ntypes or both must be Compute Engine machine types.\n\nIf you use `cloud_tpu` for this value, see special instructions for\n[configuring a custom TPU\nmachine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_machine).\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`workerCount` is greater than zero.",
+          "description": "Optional. Specifies the type of virtual machine to use for your training\njob's worker nodes.\n\nThe supported values are the same as those described in the entry for\n`masterType`.\n\nThis value must be consistent with the category of machine type that\n`masterType` uses. In other words, both must be AI Platform machine\ntypes or both must be Compute Engine machine types.\n\nIf you use `cloud_tpu` for this value, see special instructions for\n[configuring a custom TPU\nmachine](/ml-engine/docs/tensorflow/using-tpus#configuring_a_custom_tpu_machine).\n\nThis value must be present when `scaleTier` is set to `CUSTOM` and\n`workerCount` is greater than zero.",
           "type": "string"
         }
       },
@@ -1973,7 +1973,7 @@
       "type": "object"
     },
     "GoogleCloudMlV1__Version": {
-      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).\nNext ID: 30",
+      "description": "Represents a version of the model.\n\nEach version is a trained model deployed in the cloud, ready to handle\nprediction requests. A model can have multiple versions. You can get\ninformation about all of the versions of a given model by calling\n[projects.models.versions.list](/ml-engine/reference/rest/v1/projects.models.versions/list).",
       "id": "GoogleCloudMlV1__Version",
       "properties": {
         "autoScaling": {
@@ -1986,7 +1986,7 @@
           "type": "string"
         },
         "deploymentUri": {
-          "description": "Required. The Google Cloud Storage location of the trained model used to\ncreate the version. See the\n[guide to model\ndeployment](/ml-engine/docs/tensorflow/deploying-models) for more\ninformation.\n\nWhen passing Version to\n[projects.models.versions.create](/ml-engine/reference/rest/v1/projects.models.versions/create)\nthe model service uses the specified location as the source of the model.\nOnce deployed, the model version is hosted by the prediction service, so\nthis location is useful only as a historical record.\nThe total number of model files can't exceed 1000.",
+          "description": "Required. The Cloud Storage location of the trained model used to\ncreate the version. See the\n[guide to model\ndeployment](/ml-engine/docs/tensorflow/deploying-models) for more\ninformation.\n\nWhen passing Version to\n[projects.models.versions.create](/ml-engine/reference/rest/v1/projects.models.versions/create)\nthe model service uses the specified location as the source of the model.\nOnce deployed, the model version is hosted by the prediction service, so\nthis location is useful only as a historical record.\nThe total number of model files can't exceed 1000.",
           "type": "string"
         },
         "description": {
@@ -2003,7 +2003,7 @@
           "type": "string"
         },
         "framework": {
-          "description": "Optional. The machine learning framework Cloud ML Engine uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\n`XGBOOST`. If you do not specify a framework, Cloud ML Engine\nwill analyze files in the deployment_uri to determine a framework. If you\nchoose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime version\nof the model to 1.4 or greater.",
+          "description": "Optional. The machine learning framework AI Platform uses to train\nthis version of the model. Valid values are `TENSORFLOW`, `SCIKIT_LEARN`,\n`XGBOOST`. If you do not specify a framework, AI Platform\nwill analyze files in the deployment_uri to determine a framework. If you\nchoose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime version\nof the model to 1.4 or greater.\n\nDo **not** specify a framework if you're deploying a [custom\nprediction routine](/ml-engine/docs/tensorflow/custom-prediction-routines).",
           "enum": [
             "FRAMEWORK_UNSPECIFIED",
             "TENSORFLOW",
@@ -2047,14 +2047,14 @@
           "type": "string"
         },
         "packageUris": {
-          "description": "Optional. The Google Cloud Storage location of the packages for custom\nprediction and any additional dependencies.",
+          "description": "Optional. Cloud Storage paths (`gs://…`) of packages for [custom\nprediction routines](/ml-engine/docs/tensorflow/custom-prediction-routines)\nor [scikit-learn pipelines with custom\ncode](/ml-engine/docs/scikit/exporting-for-prediction#custom-pipeline-code).\n\nFor a custom prediction routine, one of these packages must contain your\nPredictor class (see\n[`predictionClass`](#Version.FIELDS.prediction_class)). Additionally,\ninclude any dependencies used by your Predictor or scikit-learn pipeline\nuses that are not already included in your selected [runtime\nversion](/ml-engine/docs/tensorflow/runtime-version-list).\n\nIf you specify this field, you must also set\n[`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or greater.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "predictionClass": {
-          "description": "class PredictionClass(object):\n  \"\"\"A Model performs predictions on a given list of instances.\n\n  The input instances are the raw values sent by the user. It is the\n  responsibility of a Model to translate these instances into\n  actual predictions.\n\n  The input instances and the output use python data types. The input\n  instances have been decoded prior to being passed to the predict\n  method. The output, which should use python data types is\n  encoded after being returned from the predict method.\n  \"\"\"\n\n  def predict(self, instances, **kwargs):\n    \"\"\"Returns predictions for the provided instances.\n\n    Instances are the decoded values from the request. Clients need not\n    worry about decoding json nor base64 decoding.\n\n    Args:\n      instances: A list of instances, as described in the API.\n      **kwargs: Additional keyword arguments, will be passed into the\n          client's predict method.\n\n    Returns:\n      A list of outputs containing the prediction results.\n    \"\"\"\n\n  @classmethod\n  def from_path(cls, model_path):\n    \"\"\"Creates a model using the given model path.\n\n    Path is useful, e.g., to load files from the exported directory\n    containing the model.\n\n    Args:\n      model_path: The local directory that contains the exported model\n          file along with any additional files uploaded when creating the\n          version resource.\n\n    Returns:\n      An instance implementing this Model class.\n    \"\"\"",
+          "description": "Optional. The fully qualified name\n(\u003cvar\u003emodule_name\u003c/var\u003e.\u003cvar\u003eclass_name\u003c/var\u003e) of a class that implements\nthe Predictor interface described in this reference field. The module\ncontaining this class should be included in a package provided to the\n[`packageUris` field](#Version.FIELDS.package_uris).\n\nSpecify this field if and only if you are deploying a [custom prediction\nroutine (beta)](/ml-engine/docs/tensorflow/custom-prediction-routines).\nIf you specify this field, you must set\n[`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or greater.\n\nThe following code sample provides the Predictor interface:\n\n```py\nclass Predictor(object):\n\"\"\"Interface for constructing custom predictors.\"\"\"\n\ndef predict(self, instances, **kwargs):\n    \"\"\"Performs custom prediction.\n\n    Instances are the decoded values from the request. They have already\n    been deserialized from JSON.\n\n    Args:\n        instances: A list of prediction input instances.\n        **kwargs: A dictionary of keyword args provided as additional\n            fields on the predict request body.\n\n    Returns:\n        A list of outputs containing the prediction results. This list must\n        be JSON serializable.\n    \"\"\"\n    raise NotImplementedError()\n\n@classmethod\ndef from_path(cls, model_dir):\n    \"\"\"Creates an instance of Predictor using the given path.\n\n    Loading of the predictor should be done in this method.\n\n    Args:\n        model_dir: The local directory that contains the exported model\n            file along with any additional files uploaded when creating the\n            version resource.\n\n    Returns:\n        An instance implementing this Predictor class.\n    \"\"\"\n    raise NotImplementedError()\n```\n\nLearn more about [the Predictor interface and custom prediction\nroutines](/ml-engine/docs/tensorflow/custom-prediction-routines).",
           "type": "string"
         },
         "pythonVersion": {
@@ -2062,7 +2062,7 @@
           "type": "string"
         },
         "runtimeVersion": {
-          "description": "Optional. The Cloud ML Engine runtime version to use for this deployment.\nIf not set, Cloud ML Engine uses the default stable version, 1.0. For more\ninformation, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
+          "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
           "type": "string"
         },
         "state": {
@@ -2272,7 +2272,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
           "type": "string"
         },
         "response": {

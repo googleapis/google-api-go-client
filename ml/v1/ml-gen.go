@@ -481,7 +481,7 @@ type GoogleCloudMlV1__BuiltInAlgorithmOutput struct {
 	// trained.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
-	// RuntimeVersion: Cloud ML Engine runtime version on which the built-in
+	// RuntimeVersion: AI Platform runtime version on which the built-in
 	// algorithm was
 	// trained.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
@@ -687,7 +687,7 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// Algorithm: Optional. The search algorithm specified for the
 	// hyperparameter
 	// tuning job.
-	// Uses the default CloudML Engine hyperparameter tuning
+	// Uses the default AI Platform hyperparameter tuning
 	// algorithm if unspecified.
 	//
 	// Possible values:
@@ -731,7 +731,7 @@ type GoogleCloudMlV1__HyperparameterSpec struct {
 	// be seen before failing
 	// the hyperparameter tuning job. You can specify this field to override
 	// the
-	// default failing criteria for Cloud ML Engine hyperparameter tuning
+	// default failing criteria for AI Platform hyperparameter tuning
 	// jobs.
 	//
 	// Defaults to zero, which means the service decides when a
@@ -1166,19 +1166,18 @@ type GoogleCloudMlV1__Model struct {
 	// The model name must be unique within the project it is created in.
 	Name string `json:"name,omitempty"`
 
-	// OnlinePredictionConsoleLogging: Optional. If true, enables logging of
-	// stderr and stdout streams
-	// for online prediction in Stackdriver Logging. These can be more
-	// verbose
-	// than the standard access logs (see `online_prediction_logging`) and
-	// thus
-	// can incur higher cost. However, they are helpful for debugging. Note
-	// that
-	// since Stackdriver logs may incur a cost, particularly if the total
-	// QPS
-	// in your project is high, be sure to estimate your costs before
-	// enabling
-	// this flag.
+	// OnlinePredictionConsoleLogging: Optional. If true, online prediction
+	// nodes send `stderr` and `stdout`
+	// streams to Stackdriver Logging. These can be more verbose than the
+	// standard
+	// access logs (see `onlinePredictionLogging`) and can incur higher
+	// cost.
+	// However, they are helpful for debugging. Note that
+	// [Stackdriver logs may incur a cost](/stackdriver/pricing), especially
+	// if
+	// your project receives prediction requests at a high QPS. Estimate
+	// your
+	// costs before enabling this option.
 	//
 	// Default is false.
 	OnlinePredictionConsoleLogging bool `json:"onlinePredictionConsoleLogging,omitempty"`
@@ -1189,9 +1188,11 @@ type GoogleCloudMlV1__Model struct {
 	// containing
 	// information like timestamp and latency for each request. Note
 	// that
-	// Stackdriver logs may incur a cost, particular if the total QPS in
-	// your
-	// project is high.
+	// [Stackdriver logs may incur a cost](/stackdriver/pricing), especially
+	// if
+	// your project receives prediction requests at a high queries per
+	// second rate
+	// (QPS). Estimate your costs before enabling this option.
 	//
 	// Default is false.
 	OnlinePredictionLogging bool `json:"onlinePredictionLogging,omitempty"`
@@ -1202,7 +1203,7 @@ type GoogleCloudMlV1__Model struct {
 	// Defaults to 'us-central1' if nothing is set.
 	// See the <a href="/ml-engine/docs/tensorflow/regions">available
 	// regions</a>
-	// for ML Engine services.
+	// for AI Platform services.
 	// Note:
 	// *   No matter where a model is deployed, it can always be accessed
 	// by
@@ -1525,12 +1526,12 @@ type GoogleCloudMlV1__PredictionInput struct {
 	// prediction job in.
 	// See the <a href="/ml-engine/docs/tensorflow/regions">available
 	// regions</a>
-	// for ML Engine services.
+	// for AI Platform services.
 	Region string `json:"region,omitempty"`
 
-	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
-	// for this batch
-	// prediction. If not set, Cloud ML Engine will pick the runtime version
+	// RuntimeVersion: Optional. The AI Platform runtime version to use for
+	// this batch
+	// prediction. If not set, AI Platform will pick the runtime version
 	// used
 	// during the CreateVersion request for this model version, or choose
 	// the
@@ -1889,7 +1890,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// for
 	// your parameter server. If `parameterServerConfig.imageUri` has not
 	// been
-	// set, Cloud ML Engine uses the value of `masterConfig.imageUri`.
+	// set, AI Platform uses the value of `masterConfig.imageUri`.
 	// Learn more about [configuring
 	// custom
 	// containers](/ml-engine/docs/distributed-training-containers).
@@ -1918,7 +1919,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// This value must be consistent with the category of machine type
 	// that
-	// `masterType` uses. In other words, both must be Cloud ML Engine
+	// `masterType` uses. In other words, both must be AI Platform
 	// machine
 	// types or both must be Compute Engine machine types.
 	//
@@ -1943,12 +1944,12 @@ type GoogleCloudMlV1__TrainingInput struct {
 	// training job in.
 	// See the <a href="/ml-engine/docs/tensorflow/regions">available
 	// regions</a>
-	// for ML Engine services.
+	// for AI Platform services.
 	Region string `json:"region,omitempty"`
 
-	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
-	// for training. If not
-	// set, Cloud ML Engine uses the default stable version, 1.0. For
+	// RuntimeVersion: Optional. The AI Platform runtime version to use for
+	// training. If not
+	// set, AI Platform uses the default stable version, 1.0. For
 	// more
 	// information, see the
 	// <a href="/ml-engine/docs/runtime-version-list">runtime version
@@ -2023,7 +2024,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// Set `workerConfig.imageUri` only if you build a custom image for
 	// your
-	// worker. If `workerConfig.imageUri` has not been set, Cloud ML Engine
+	// worker. If `workerConfig.imageUri` has not been set, AI Platform
 	// uses
 	// the value of `masterConfig.imageUri`. Learn more about
 	// [configuring
@@ -2053,7 +2054,7 @@ type GoogleCloudMlV1__TrainingInput struct {
 	//
 	// This value must be consistent with the category of machine type
 	// that
-	// `masterType` uses. In other words, both must be Cloud ML Engine
+	// `masterType` uses. In other words, both must be AI Platform
 	// machine
 	// types or both must be Compute Engine machine types.
 	//
@@ -2168,7 +2169,6 @@ func (s *GoogleCloudMlV1__TrainingOutput) UnmarshalJSON(data []byte) error {
 // calling
 // [projects.models.versions.list](/ml-engine/reference/rest/v1/p
 // rojects.models.versions/list).
-// Next ID: 30
 type GoogleCloudMlV1__Version struct {
 	// AutoScaling: Automatically scale the number of nodes used to serve
 	// the model in
@@ -2180,8 +2180,8 @@ type GoogleCloudMlV1__Version struct {
 	// CreateTime: Output only. The time the version was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// DeploymentUri: Required. The Google Cloud Storage location of the
-	// trained model used to
+	// DeploymentUri: Required. The Cloud Storage location of the trained
+	// model used to
 	// create the version. See the
 	// [guide to
 	// model
@@ -2224,16 +2224,21 @@ type GoogleCloudMlV1__Version struct {
 	// ensure that their change will be applied to the model as intended.
 	Etag string `json:"etag,omitempty"`
 
-	// Framework: Optional. The machine learning framework Cloud ML Engine
-	// uses to train
+	// Framework: Optional. The machine learning framework AI Platform uses
+	// to train
 	// this version of the model. Valid values are `TENSORFLOW`,
 	// `SCIKIT_LEARN`,
-	// `XGBOOST`. If you do not specify a framework, Cloud ML Engine
+	// `XGBOOST`. If you do not specify a framework, AI Platform
 	// will analyze files in the deployment_uri to determine a framework. If
 	// you
 	// choose `SCIKIT_LEARN` or `XGBOOST`, you must also set the runtime
 	// version
 	// of the model to 1.4 or greater.
+	//
+	// Do **not** specify a framework if you're deploying a
+	// [custom
+	// prediction
+	// routine](/ml-engine/docs/tensorflow/custom-prediction-routines).
 	//
 	// Possible values:
 	//   "FRAMEWORK_UNSPECIFIED" - Unspecified framework. Assigns a value
@@ -2304,59 +2309,103 @@ type GoogleCloudMlV1__Version struct {
 	// The version name must be unique within the model it is created in.
 	Name string `json:"name,omitempty"`
 
-	// PackageUris: Optional. The Google Cloud Storage location of the
-	// packages for custom
-	// prediction and any additional dependencies.
+	// PackageUris: Optional. Cloud Storage paths (`gs://…`) of packages
+	// for [custom
+	// prediction
+	// routines](/ml-engine/docs/tensorflow/custom-prediction-routines)
+	// or [scikit-learn pipelines with
+	// custom
+	// code](/ml-engine/docs/scikit/exporting-for-prediction#custom-pi
+	// peline-code).
+	//
+	// For a custom prediction routine, one of these packages must contain
+	// your
+	// Predictor class
+	// (see
+	// [`predictionClass`](#Version.FIELDS.prediction_class)).
+	// Additionally,
+	// include any dependencies used by your Predictor or scikit-learn
+	// pipeline
+	// uses that are not already included in your selected
+	// [runtime
+	// version](/ml-engine/docs/tensorflow/runtime-version-list).
+	//
+	// I
+	// f you specify this field, you must also
+	// set
+	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or
+	// greater.
 	PackageUris []string `json:"packageUris,omitempty"`
 
-	// PredictionClass: class PredictionClass(object):
-	//   """A Model performs predictions on a given list of instances.
+	// PredictionClass: Optional. The fully qualified
+	// name
+	// (<var>module_name</var>.<var>class_name</var>) of a class that
+	// implements
+	// the Predictor interface described in this reference field. The
+	// module
+	// containing this class should be included in a package provided to
+	// the
+	// [`packageUris` field](#Version.FIELDS.package_uris).
 	//
-	//   The input instances are the raw values sent by the user. It is the
-	//   responsibility of a Model to translate these instances into
-	//   actual predictions.
+	// Specify this field if and only if you are deploying a [custom
+	// prediction
+	// routine
+	// (beta)](/ml-engine/docs/tensorflow/custom-prediction-routines).
+	// If you specify this field, you must
+	// set
+	// [`runtimeVersion`](#Version.FIELDS.runtime_version) to 1.4 or
+	// greater.
 	//
-	//   The input instances and the output use python data types. The
-	// input
-	//   instances have been decoded prior to being passed to the predict
-	//   method. The output, which should use python data types is
-	//   encoded after being returned from the predict method.
-	//   """
+	// The following code sample provides the Predictor
+	// interface:
 	//
-	//   def predict(self, instances, **kwargs):
-	//     """Returns predictions for the provided instances.
+	// ```py
+	// class Predictor(object):
+	// """Interface for constructing custom predictors."""
 	//
-	//     Instances are the decoded values from the request. Clients need
-	// not
-	//     worry about decoding json nor base64 decoding.
+	// def predict(self, instances, **kwargs):
+	//     """Performs custom prediction.
+	//
+	//     Instances are the decoded values from the request. They have
+	// already
+	//     been deserialized from JSON.
 	//
 	//     Args:
-	//       instances: A list of instances, as described in the API.
-	//       **kwargs: Additional keyword arguments, will be passed into
-	// the
-	//           client's predict method.
+	//         instances: A list of prediction input instances.
+	//         **kwargs: A dictionary of keyword args provided as
+	// additional
+	//             fields on the predict request body.
 	//
 	//     Returns:
-	//       A list of outputs containing the prediction results.
+	//         A list of outputs containing the prediction results. This
+	// list must
+	//         be JSON serializable.
 	//     """
+	//     raise NotImplementedError()
 	//
-	//   @classmethod
-	//   def from_path(cls, model_path):
-	//     """Creates a model using the given model path.
+	// @classmethod
+	// def from_path(cls, model_dir):
+	//     """Creates an instance of Predictor using the given path.
 	//
-	//     Path is useful, e.g., to load files from the exported directory
-	//     containing the model.
+	//     Loading of the predictor should be done in this method.
 	//
 	//     Args:
-	//       model_path: The local directory that contains the exported
+	//         model_dir: The local directory that contains the exported
 	// model
-	//           file along with any additional files uploaded when creating
-	// the
-	//           version resource.
+	//             file along with any additional files uploaded when
+	// creating the
+	//             version resource.
 	//
 	//     Returns:
-	//       An instance implementing this Model class.
+	//         An instance implementing this Predictor class.
 	//     """
+	//     raise NotImplementedError()
+	// ```
+	//
+	// Learn more about [the Predictor interface and custom
+	// prediction
+	// routines](/ml-engine/docs/tensorflow/custom-prediction-rout
+	// ines).
 	PredictionClass string `json:"predictionClass,omitempty"`
 
 	// PythonVersion: Optional. The version of Python used in prediction. If
@@ -2367,9 +2416,9 @@ type GoogleCloudMlV1__Version struct {
 	// versions.
 	PythonVersion string `json:"pythonVersion,omitempty"`
 
-	// RuntimeVersion: Optional. The Cloud ML Engine runtime version to use
-	// for this deployment.
-	// If not set, Cloud ML Engine uses the default stable version, 1.0. For
+	// RuntimeVersion: Optional. The AI Platform runtime version to use for
+	// this deployment.
+	// If not set, AI Platform uses the default stable version, 1.0. For
 	// more
 	// information, see the
 	// [runtime version list](/ml-engine/docs/runtime-version-list) and
@@ -2936,7 +2985,8 @@ type GoogleLongrunning__Operation struct {
 	// service that
 	// originally returns it. If you use the default HTTP mapping,
 	// the
-	// `name` should have the format of `operations/some/unique/name`.
+	// `name` should be a resource name ending with
+	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success.
@@ -3471,7 +3521,7 @@ type ProjectsPredictCall struct {
 }
 
 // Predict: Performs prediction on the data in the request.
-// Cloud ML Engine implements a custom `predict` verb on top of an HTTP
+// AI Platform implements a custom `predict` verb on top of an HTTP
 // POST
 // method. <p>For details of the request and response format, see the
 // **guide
@@ -3579,7 +3629,7 @@ func (c *ProjectsPredictCall) Do(opts ...googleapi.CallOption) (*GoogleApi__Http
 	ret.Data = b.String()
 	return ret, nil
 	// {
-	//   "description": "Performs prediction on the data in the request.\nCloud ML Engine implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
+	//   "description": "Performs prediction on the data in the request.\nAI Platform implements a custom `predict` verb on top of an HTTP POST\nmethod. \u003cp\u003eFor details of the request and response format, see the **guide\nto the [predict request format](/ml-engine/docs/v1/predict-request)**.",
 	//   "flatPath": "v1/projects/{projectsId}:predict",
 	//   "httpMethod": "POST",
 	//   "id": "ml.projects.predict",

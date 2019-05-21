@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190515",
+  "revision": "20190519",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -2038,7 +2038,7 @@
           "type": "array"
         },
         "excludedJobs": {
-          "description": "Optional.\n\nThis filter specifies a list of job names to be excluded during search.\n\nAt most 200 excluded job names are allowed.",
+          "description": "Optional.\n\nThis filter specifies a list of job names to be excluded during search.\n\nAt most 400 excluded job names are allowed.",
           "items": {
             "type": "string"
           },

@@ -918,7 +918,7 @@
       }
     }
   },
-  "revision": "20190506",
+  "revision": "20190514",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AlwaysOnVpnPackage": {
@@ -2686,7 +2686,7 @@
           "type": "array"
         },
         "complianceRules": {
-          "description": "Rules declaring which mitigating actions to take when a device is not compliant with its policy. When the conditions for multiple rules are satisfied, all of the mitigating actions for the rules are taken. There is a maximum limit of 100 rules.",
+          "description": "Rules declaring which mitigating actions to take when a device is not compliant with its policy. When the conditions for multiple rules are satisfied, all of the mitigating actions for the rules are taken. There is a maximum limit of 100 rules. Use policy enforcement rules instead.",
           "items": {
             "$ref": "ComplianceRule"
           },
@@ -3057,7 +3057,7 @@
           "description": "An action to block access to apps and data on a fully managed device or in a work profile. This action also triggers a user-facing notification with information (where possible) on how to correct the compliance issue. Note: wipeAction must also be specified."
         },
         "settingName": {
-          "description": "The top-level policy to enforce. For example, applications or passwordRequirements.",
+          "description": "The top-level policy to enforce. For example, applications or passwordPolicies.",
           "type": "string"
         },
         "wipeAction": {

@@ -2557,7 +2557,8 @@ type Policy struct {
 	// ComplianceRules: Rules declaring which mitigating actions to take
 	// when a device is not compliant with its policy. When the conditions
 	// for multiple rules are satisfied, all of the mitigating actions for
-	// the rules are taken. There is a maximum limit of 100 rules.
+	// the rules are taken. There is a maximum limit of 100 rules. Use
+	// policy enforcement rules instead.
 	ComplianceRules []*ComplianceRule `json:"complianceRules,omitempty"`
 
 	// CreateWindowsDisabled: Whether creating windows besides app windows
@@ -2913,7 +2914,7 @@ type PolicyEnforcementRule struct {
 	BlockAction *BlockAction `json:"blockAction,omitempty"`
 
 	// SettingName: The top-level policy to enforce. For example,
-	// applications or passwordRequirements.
+	// applications or passwordPolicies.
 	SettingName string `json:"settingName,omitempty"`
 
 	// WipeAction: An action to reset a fully managed device or delete a

@@ -661,6 +661,8 @@ type ListUpdateRequest struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
@@ -781,6 +783,8 @@ type ListUpdateResponse struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Additions") to
@@ -1151,6 +1155,8 @@ type ThreatHit struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// UserInfo: Details about the user that encountered the threat.
@@ -1239,6 +1245,8 @@ type ThreatInfo struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatTypes []string `json:"threatTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformTypes") to
@@ -1323,6 +1331,8 @@ type ThreatListDescriptor struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PlatformType") to
@@ -1415,6 +1425,8 @@ type ThreatMatch struct {
 	// will not be shown for patterns from this list.
 	//   "SUSPICIOUS" - Entities that are suspected to present a threat.
 	//   "TRICK_TO_BILL" - Trick-to-bill threat list.
+	//   "HIGH_CONFIDENCE_ALLOWLIST" - Safe list to ship hashes of known
+	// safe URL expressions.
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to

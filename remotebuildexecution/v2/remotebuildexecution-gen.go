@@ -2473,6 +2473,69 @@ func (s *GoogleDevtoolsRemotebuildbotCommandEvents) UnmarshalJSON(data []byte) e
 	return nil
 }
 
+// GoogleDevtoolsRemotebuildbotCommandStatus: The internal status of the
+// command result.
+type GoogleDevtoolsRemotebuildbotCommandStatus struct {
+	// Code: The status code.
+	//
+	// Possible values:
+	//   "OK" - The command succeeded.
+	//   "INVALID_ARGUMENT" - The command input was invalid.
+	//   "DEADLINE_EXCEEDED" - The command had passed its expiry time while
+	// it was still running.
+	//   "NOT_FOUND" - The resources requested by the command were not
+	// found.
+	//   "PERMISSION_DENIED" - The command failed due to permission errors.
+	//   "INTERNAL" - The command failed because of some invariants expected
+	// by the underlying
+	// system have been broken. This usually indicates a bug wit the system.
+	//   "ABORTED" - The command was aborted.
+	//   "CLEANUP_ERROR" - The bot failed to do the cleanup, e.g. unable to
+	// delete the command
+	// working directory or the command process.
+	//   "DOWNLOAD_INPUTS_ERROR" - The bot failed to download the inputs.
+	//   "UNKNOWN" - Unknown error.
+	//   "UPLOAD_OUTPUTS_ERROR" - The bot failed to upload the outputs.
+	//   "DOCKER_LOGIN_ERROR" - The bot failed to login to docker.
+	//   "DOCKER_IMAGE_PULL_ERROR" - The bot failed to pull docker image.
+	//   "DOCKER_IMAGE_EXIST_ERROR" - The bot failed to check docker images.
+	//   "DUPLICATE_INPUTS" - The inputs contain duplicate files.
+	//   "DOCKER_IMAGE_PERMISSION_DENIED" - The bot doesn't have the
+	// permissions to pull docker images.
+	//   "DOCKER_IMAGE_NOT_FOUND" - The docker image cannot be found.
+	//   "WORKING_DIR_NOT_FOUND" - Working directory is not found.
+	//   "WORKING_DIR_NOT_IN_BASE_DIR" - Working directory is not under the
+	// base directory
+	//   "DOCKER_UNAVAILABLE" - There are issues with docker
+	// service/runtime.
+	Code string `json:"code,omitempty"`
+
+	// Message: The error message.
+	Message string `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsRemotebuildbotCommandStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsRemotebuildbotCommandStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest:
 // The request used for `CreateInstance`.
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaCreateInstanceRequest struct {

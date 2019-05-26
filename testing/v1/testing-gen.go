@@ -1153,10 +1153,10 @@ func (s *Date) MarshalJSON() ([]byte, error) {
 
 // DeviceFile: A single device file description.
 type DeviceFile struct {
-	// ObbFile: A reference to an opaque binary blob file.
+	// ObbFile: A reference to an opaque binary blob file
 	ObbFile *ObbFile `json:"obbFile,omitempty"`
 
-	// RegularFile: A reference to a regular file.
+	// RegularFile: A reference to a regular file
 	RegularFile *RegularFile `json:"regularFile,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ObbFile") to
@@ -1397,8 +1397,8 @@ func (s *GetApkDetailsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleAuto: Enables automatic Google account login.
-// If set, the service automatically generates a Google test account and
-// adds
+// If set, the service will automatically generate a Google test account
+// and add
 // it to the device, before executing the test. Note that test accounts
 // might be
 // reused.
@@ -1683,8 +1683,8 @@ func (s *IosRuntimeConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IosTestSetup: A description of how to set up an iOS device prior to
-// running the test.
+// IosTestSetup: A description of how to set up an iOS device prior to a
+// test.
 type IosTestSetup struct {
 	// NetworkProfile: The network traffic profile used for running the
 	// test.
@@ -2107,10 +2107,6 @@ type ResultStorage struct {
 	// GoogleCloudStorage: Required.
 	GoogleCloudStorage *GoogleCloudStorage `json:"googleCloudStorage,omitempty"`
 
-	// ResultsUrl: Output only. URL to the results in the Firebase Web
-	// Console.
-	ResultsUrl string `json:"resultsUrl,omitempty"`
-
 	// ToolResultsExecution: Output only. The tool results execution that
 	// results are written to.
 	ToolResultsExecution *ToolResultsExecution `json:"toolResultsExecution,omitempty"`
@@ -2210,11 +2206,8 @@ func (s *RoboDirective) MarshalJSON() ([]byte, error) {
 // RoboStartingIntent: Message for specifying the start activities to
 // crawl.
 type RoboStartingIntent struct {
-	// LauncherActivity: An intent that starts the main launcher activity.
 	LauncherActivity *LauncherActivityIntent `json:"launcherActivity,omitempty"`
 
-	// StartActivity: An intent that starts an activity with specific
-	// details.
 	StartActivity *StartActivityIntent `json:"startActivity,omitempty"`
 
 	// Timeout: Timeout in seconds for each intent.
@@ -2363,12 +2356,13 @@ func (s *TestEnvironmentCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TestExecution: A single test executed in a single environment.
+// TestExecution: Specifies a single test to be executed in a single
+// environment.
 type TestExecution struct {
 	// Environment: Output only. How the host machine(s) are configured.
 	Environment *Environment `json:"environment,omitempty"`
 
-	// Id: Output only. Unique id set by the service.
+	// Id: Output only. Unique id set by the backend.
 	Id string `json:"id,omitempty"`
 
 	// MatrixId: Output only. Id of the containing TestMatrix.
@@ -2469,17 +2463,14 @@ func (s *TestExecution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TestMatrix: TestMatrix captures all details about a test. It contains
-// the environment
-// configuration, test specification, test executions and overall state
-// and
-// outcome.
+// TestMatrix: A group of one or more TestExecutions, built by taking
+// a
+// product of values over a pre-defined set of axes.
 type TestMatrix struct {
 	// ClientInfo: Information about the client which invoked the test.
 	ClientInfo *ClientInfo `json:"clientInfo,omitempty"`
 
-	// EnvironmentMatrix: Required. The devices the tests are being executed
-	// on.
+	// EnvironmentMatrix: Required. How the host machine(s) are configured.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
 
 	// FlakyTestAttempts: The number of times a TestExecution should be
@@ -2541,8 +2532,8 @@ type TestMatrix struct {
 	//   "INVALID_DIRECTIVE_ACTION" - Invalid definition of action in the
 	// robo directives
 	// (e.g. a click or ignore action includes an input text field)
-	//   "TEST_LOOP_INTENT_FILTER_NOT_FOUND" - There is no test loop intent
-	// filter, or the one that is given is
+	//   "TEST_LOOP_INTENT_FILTER_NOT_FOUND" - There there is no test loop
+	// intent filter, or the one that is given is
 	// not formatted correctly.
 	//   "SCENARIO_LABEL_NOT_DECLARED" - The request contains a scenario
 	// label that was not declared in the
@@ -2590,28 +2581,6 @@ type TestMatrix struct {
 	// unsupported
 	InvalidMatrixDetails string `json:"invalidMatrixDetails,omitempty"`
 
-	// OutcomeSummary: Output Only. The overall outcome of the test.
-	// Only set when the test matrix state is FINISHED.
-	//
-	// Possible values:
-	//   "OUTCOME_SUMMARY_UNSPECIFIED" - Do not use. For proto versioning
-	// only.
-	//   "SUCCESS" - The test matrix run was successful, for instance:
-	// - All the test cases passed.
-	// - Robo did not detect a crash of the application under test.
-	//   "FAILURE" - A run failed, for instance:
-	// - One or more test case failed.
-	// - A test timed out.
-	// - The application under test crashed.
-	//   "INCONCLUSIVE" - Something unexpected happened. The run should
-	// still be considered
-	// unsuccessful but this is likely a transient problem and re-running
-	// the
-	// test might be successful.
-	//   "SKIPPED" - All tests were skipped, for instance:
-	// - All device configurations were incompatible.
-	OutcomeSummary string `json:"outcomeSummary,omitempty"`
-
 	// ProjectId: The cloud project that owns the test matrix.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -2620,7 +2589,8 @@ type TestMatrix struct {
 	ResultStorage *ResultStorage `json:"resultStorage,omitempty"`
 
 	// State: Output only. Indicates the current progress of the test
-	// matrix.
+	// matrix
+	// (e.g., FINISHED).
 	//
 	// Possible values:
 	//   "TEST_STATE_UNSPECIFIED" - Do not use.  For proto versioning only.
@@ -2793,11 +2763,11 @@ type TestSpecification struct {
 	// AndroidTestLoop: An Android Application with a Test Loop.
 	AndroidTestLoop *AndroidTestLoop `json:"androidTestLoop,omitempty"`
 
-	// DisablePerformanceMetrics: Disables performance metrics recording.
-	// May reduce test latency.
+	// DisablePerformanceMetrics: Disables performance metrics recording;
+	// may reduce test latency.
 	DisablePerformanceMetrics bool `json:"disablePerformanceMetrics,omitempty"`
 
-	// DisableVideoRecording: Disables video recording. May reduce test
+	// DisableVideoRecording: Disables video recording; may reduce test
 	// latency.
 	DisableVideoRecording bool `json:"disableVideoRecording,omitempty"`
 

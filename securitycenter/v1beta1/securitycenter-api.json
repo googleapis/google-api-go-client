@@ -895,7 +895,7 @@
       }
     }
   },
-  "revision": "20190506",
+  "revision": "20190522",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -1630,7 +1630,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "The source’s display name.\nA source’s display name must be unique amongst its siblings, for example,\ntwo sources with the same parent can't share the same display name.\nThe display name must start and end with a letter or digit, may contain\nletters, digits, spaces, hyphens, and underscores, and can be no longer\nthan 32 characters. This is captured by the regular expression:\n[\\p{L}\\p{N}]({\\p{L}\\p{N}_- ]{0,30}[\\p{L}\\p{N}])?.",
+          "description": "The source’s display name.\nA source’s display name must be unique amongst its siblings, for example,\ntwo sources with the same parent can't share the same display name.\nThe display name must have a length between 1 and 64 characters\n(inclusive).",
           "type": "string"
         },
         "name": {

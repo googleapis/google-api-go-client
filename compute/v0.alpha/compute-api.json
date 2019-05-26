@@ -24,12 +24,12 @@
     }
   },
   "basePath": "/compute/alpha/projects/",
-  "baseUrl": "https://compute.googleapis.com/compute/alpha/projects/",
+  "baseUrl": "https://www.googleapis.com/compute/alpha/projects/",
   "batchPath": "batch/compute/alpha",
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/uQDu3JM-DrS2Mfjy08AIZINAfo4\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/aKSq_aUPuAn1vDfZ4ilQirFUTJ4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -2136,7 +2136,6 @@
               "type": "string"
             },
             "guestFlush": {
-              "description": "Application consistent snapshot (ie. VSS).",
               "location": "query",
               "type": "boolean"
             },
@@ -16279,7 +16278,6 @@
               "type": "string"
             },
             "guestFlush": {
-              "description": "Application consistent snapshot (ie. VSS).",
               "location": "query",
               "type": "boolean"
             },
@@ -27687,8 +27685,8 @@
       }
     }
   },
-  "revision": "20190416",
-  "rootUrl": "https://compute.googleapis.com/",
+  "revision": "20190403",
+  "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
       "description": "A specification of the type and number of accelerator cards attached to the instance.",
@@ -36943,23 +36941,9 @@
           "description": "[Output Only] A bit indicating whether the managed instance group is in a stable state. A stable state means that: none of the instances in the managed instance group is currently undergoing any type of change (for example, creation, restart, or deletion); no future changes are scheduled for instances in the managed instance group; and the managed instance group itself is not being modified.",
           "type": "boolean"
         },
-        "stateful": {
-          "$ref": "InstanceGroupManagerStatusStateful",
-          "description": "[Output Only] Stateful status of the given Instance Group Manager."
-        },
         "versionTarget": {
           "$ref": "InstanceGroupManagerStatusVersionTarget",
           "description": "[Output Only] A status of consistency of Instances' versions with their target version specified by version field on Instance Group Manager."
-        }
-      },
-      "type": "object"
-    },
-    "InstanceGroupManagerStatusStateful": {
-      "id": "InstanceGroupManagerStatusStateful",
-      "properties": {
-        "isStateful": {
-          "description": "[Output Only] A bit indicating whether the managed instance group is stateful, i.e. has any disks in Stateful Policy or at least one per-instance config. This is determined based on the user intent, the group may be reported as not stateful even when there is still some preserved state on managed instances.",
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -38764,18 +38748,14 @@
             "BPS_10G",
             "BPS_1G",
             "BPS_200M",
-            "BPS_20G",
             "BPS_2G",
             "BPS_300M",
             "BPS_400M",
             "BPS_500M",
-            "BPS_50G",
             "BPS_50M",
             "BPS_5G"
           ],
           "enumDescriptions": [
-            "",
-            "",
             "",
             "",
             "",
@@ -45184,11 +45164,9 @@
           "description": "These stateful disks will never be deleted during autohealing, update, instance recreate operations. This flag is used to configure if the disk should be deleted after it is no longer used by the group, e.g. when the given instance or the whole MIG is deleted. Note: disks attached in READ_ONLY mode cannot be auto-deleted.",
           "enum": [
             "NEVER",
-            "ON_PERMANENT_INSTANCE_DELETION",
             "WHEN_NOT_IN_USE"
           ],
           "enumDescriptions": [
-            "",
             "",
             ""
           ],
@@ -51534,11 +51512,9 @@
           "description": "These stateful disks will never be deleted during autohealing, update or VM instance recreate operations. This flag is used to configure if the disk should be deleted after it is no longer used by the group, e.g. when the given instance or the whole group is deleted. Note: disks attached in READ_ONLY mode cannot be auto-deleted.",
           "enum": [
             "NEVER",
-            "ON_PERMANENT_INSTANCE_DELETION",
             "WHEN_NOT_IN_USE"
           ],
           "enumDescriptions": [
-            "",
             "",
             ""
           ],

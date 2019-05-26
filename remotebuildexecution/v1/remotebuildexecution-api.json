@@ -337,7 +337,7 @@
       }
     }
   },
-  "revision": "20190507",
+  "revision": "20190521",
   "rootUrl": "https://remotebuildexecution.googleapis.com/",
   "schemas": {
     "BuildBazelRemoteExecutionV2Action": {
@@ -922,6 +922,65 @@
         "numWarnings": {
           "description": "The number of warnings reported.",
           "format": "uint64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsRemotebuildbotCommandStatus": {
+      "description": "The internal status of the command result.",
+      "id": "GoogleDevtoolsRemotebuildbotCommandStatus",
+      "properties": {
+        "code": {
+          "description": "The status code.",
+          "enum": [
+            "OK",
+            "INVALID_ARGUMENT",
+            "DEADLINE_EXCEEDED",
+            "NOT_FOUND",
+            "PERMISSION_DENIED",
+            "INTERNAL",
+            "ABORTED",
+            "CLEANUP_ERROR",
+            "DOWNLOAD_INPUTS_ERROR",
+            "UNKNOWN",
+            "UPLOAD_OUTPUTS_ERROR",
+            "DOCKER_LOGIN_ERROR",
+            "DOCKER_IMAGE_PULL_ERROR",
+            "DOCKER_IMAGE_EXIST_ERROR",
+            "DUPLICATE_INPUTS",
+            "DOCKER_IMAGE_PERMISSION_DENIED",
+            "DOCKER_IMAGE_NOT_FOUND",
+            "WORKING_DIR_NOT_FOUND",
+            "WORKING_DIR_NOT_IN_BASE_DIR",
+            "DOCKER_UNAVAILABLE"
+          ],
+          "enumDescriptions": [
+            "The command succeeded.",
+            "The command input was invalid.",
+            "The command had passed its expiry time while it was still running.",
+            "The resources requested by the command were not found.",
+            "The command failed due to permission errors.",
+            "The command failed because of some invariants expected by the underlying\nsystem have been broken. This usually indicates a bug wit the system.",
+            "The command was aborted.",
+            "The bot failed to do the cleanup, e.g. unable to delete the command\nworking directory or the command process.",
+            "The bot failed to download the inputs.",
+            "Unknown error.",
+            "The bot failed to upload the outputs.",
+            "The bot failed to login to docker.",
+            "The bot failed to pull docker image.",
+            "The bot failed to check docker images.",
+            "The inputs contain duplicate files.",
+            "The bot doesn't have the permissions to pull docker images.",
+            "The docker image cannot be found.",
+            "Working directory is not found.",
+            "Working directory is not under the base directory",
+            "There are issues with docker service/runtime."
+          ],
+          "type": "string"
+        },
+        "message": {
+          "description": "The error message.",
           "type": "string"
         }
       },

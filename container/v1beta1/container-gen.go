@@ -1337,6 +1337,39 @@ func (s *CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ConsumptionMeteringConfig: Parameters for controlling consumption
+// metering.
+type ConsumptionMeteringConfig struct {
+	// Enabled: Whether to enable consumption metering for this cluster. If
+	// enabled, a
+	// second BigQuery table will be created to hold resource
+	// consumption
+	// records.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ConsumptionMeteringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CreateClusterRequest: CreateClusterRequest creates a cluster.
 type CreateClusterRequest struct {
 	// Cluster: A
@@ -1452,7 +1485,7 @@ type DailyMaintenanceWindow struct {
 
 	// StartTime: Time within the maintenance window to start the
 	// maintenance operations.
-	// It must be in format "HH:MM”, where HH : [00-23] and MM : [00-59]
+	// It must be in format "HH:MM", where HH : [00-23] and MM : [00-59]
 	// GMT.
 	StartTime string `json:"startTime,omitempty"`
 
@@ -3424,6 +3457,10 @@ type ResourceUsageExportConfig struct {
 	// destination.
 	BigqueryDestination *BigQueryDestination `json:"bigqueryDestination,omitempty"`
 
+	// ConsumptionMeteringConfig: Configuration to enable resource
+	// consumption metering.
+	ConsumptionMeteringConfig *ConsumptionMeteringConfig `json:"consumptionMeteringConfig,omitempty"`
+
 	// EnableNetworkEgressMetering: Whether to enable network egress
 	// metering for this cluster. If enabled, a
 	// daemonset will be created in the cluster to meter network egress
@@ -4557,6 +4594,9 @@ type UpdateNodePoolRequest struct {
 	// This
 	//  field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// WorkloadMetadataConfig: The desired image type for the node pool.
+	WorkloadMetadataConfig *WorkloadMetadataConfig `json:"workloadMetadataConfig,omitempty"`
 
 	// Zone: Deprecated. The name of the Google Compute
 	// Engine

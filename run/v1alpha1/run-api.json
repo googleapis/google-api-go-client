@@ -399,6 +399,96 @@
             }
           }
         },
+        "eventtypes": {
+          "methods": {
+            "get": {
+              "description": "Rpc to get information about an EventType.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/eventtypes/{eventtypesId}",
+              "httpMethod": "GET",
+              "id": "run.namespaces.eventtypes.get",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+/eventtypes/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+name}",
+              "response": {
+                "$ref": "EventType"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            },
+            "list": {
+              "description": "Rpc to list EventTypes.",
+              "flatPath": "apis/eventing.knative.dev/v1alpha1/namespaces/{namespacesId}/eventtypes",
+              "httpMethod": "GET",
+              "id": "run.namespaces.eventtypes.list",
+              "parameterOrder": [
+                "parent"
+              ],
+              "parameters": {
+                "continue": {
+                  "description": "Optional encoded string to continue paging.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "fieldSelector": {
+                  "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "includeUninitialized": {
+                  "description": "Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                },
+                "labelSelector": {
+                  "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "limit": {
+                  "description": "The maximum number of records that should be returned.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "parent": {
+                  "description": "The project ID or project number from which the EventTypes should be\nlisted.",
+                  "location": "path",
+                  "pattern": "^namespaces/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "resourceVersion": {
+                  "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "watch": {
+                  "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                  "location": "query",
+                  "type": "boolean"
+                }
+              },
+              "path": "apis/eventing.knative.dev/v1alpha1/{+parent}/eventtypes",
+              "response": {
+                "$ref": "ListEventTypesResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform"
+              ]
+            }
+          }
+        },
         "revisions": {
           "methods": {
             "delete": {
@@ -1343,6 +1433,96 @@
                 }
               }
             },
+            "eventtypes": {
+              "methods": {
+                "get": {
+                  "description": "Rpc to get information about an EventType.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/eventtypes/{eventtypesId}",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.eventtypes.get",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "The name of the trigger being retrieved. If needed, replace\n{namespace_id} with the project ID.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/eventtypes/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1alpha1/{+name}",
+                  "response": {
+                    "$ref": "EventType"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "list": {
+                  "description": "Rpc to list EventTypes.",
+                  "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/eventtypes",
+                  "httpMethod": "GET",
+                  "id": "run.projects.locations.eventtypes.list",
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "continue": {
+                      "description": "Optional encoded string to continue paging.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "fieldSelector": {
+                      "description": "Allows to filter resources based on a specific value for a field name.\nSend this in a query string format. i.e. 'metadata.name%3Dlorem'.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "includeUninitialized": {
+                      "description": "Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
+                    "labelSelector": {
+                      "description": "Allows to filter resources based on a label. Supported operations are\n=, !=, exists, in, and notIn.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "limit": {
+                      "description": "The maximum number of records that should be returned.",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "parent": {
+                      "description": "The project ID or project number from which the EventTypes should be\nlisted.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    },
+                    "resourceVersion": {
+                      "description": "The baseline resource version from which the list or watch operation should\nstart. Not currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "string"
+                    },
+                    "watch": {
+                      "description": "Flag that indicates that the client expects to watch this resource as well.\nNot currently used by Cloud Run.",
+                      "location": "query",
+                      "type": "boolean"
+                    }
+                  },
+                  "path": "v1alpha1/{+parent}/eventtypes",
+                  "response": {
+                    "$ref": "ListEventTypesResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                }
+              }
+            },
             "revisions": {
               "methods": {
                 "delete": {
@@ -2031,7 +2211,7 @@
       }
     }
   },
-  "revision": "20190516",
+  "revision": "20190522",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -2165,6 +2345,33 @@
       },
       "type": "object"
     },
+    "ConfigMapVolumeSource": {
+      "description": "Adapts a ConfigMap into a volume.\nThe contents of the target ConfigMap's Data field will be presented in a\nvolume as files using the keys in the Data field as the file names, unless\nthe items element is populated with specific mappings of keys to paths.",
+      "id": "ConfigMapVolumeSource",
+      "properties": {
+        "defaultMode": {
+          "description": "Mode bits to use on created files by default. Must be a value between 0 and\n0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "If unspecified, each key-value pair in the Data field of the referenced\nSecret will be projected into the volume as a file whose name is the\nkey and content is the value. If specified, the listed keys will be\nprojected into the specified paths, and unlisted keys will not be\npresent. If a key is specified which is not present in the Secret,\nthe volume setup will error unless it is marked optional.",
+          "items": {
+            "$ref": "KeyToPath"
+          },
+          "type": "array"
+        },
+        "name": {
+          "description": "Name of the config.",
+          "type": "string"
+        },
+        "optional": {
+          "description": "Specify whether the Secret or its keys must be defined.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Configuration": {
       "description": "Configuration represents the \"floating HEAD\" of a linear history of\nRevisions, and optionally how the containers those revisions reference are\nbuilt. Users create new Revisions by updating the Configuration's spec. The\n\"latest created\" revision's name is available under status, as is the \"latest\nready\" revision's name. See also:\nhttps://github.com/knative/serving/blob/master/docs/spec/overview.md#configuration",
       "id": "Configuration",
@@ -2207,6 +2414,10 @@
         },
         "reason": {
           "description": "One-word CamelCase reason for the condition's last transition.\n+optional",
+          "type": "string"
+        },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
           "type": "string"
         },
         "status": {
@@ -2439,12 +2650,21 @@
       "description": "DomainMappingCondition contains state information for a DomainMapping.",
       "id": "DomainMappingCondition",
       "properties": {
+        "lastTransitionTime": {
+          "description": "Last time the condition transitioned from one status to another.\n+optional",
+          "format": "google-datetime",
+          "type": "string"
+        },
         "message": {
           "description": "Human readable message indicating details about the current status.\n+optional",
           "type": "string"
         },
         "reason": {
           "description": "One-word CamelCase reason for the condition's current status.\n+optional",
+          "type": "string"
+        },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
           "type": "string"
         },
         "status": {
@@ -2552,6 +2772,54 @@
         },
         "value": {
           "description": "Variable references $(VAR_NAME) are expanded\nusing the previous defined environment variables in the container and\nany route environment variables. If a variable cannot be resolved,\nthe reference in the input string will be unchanged. The $(VAR_NAME)\nsyntax can be escaped with a double $$, ie: $$(VAR_NAME). Escaped\nreferences will never be expanded, regardless of whether the variable\nexists or not.\nDefaults to \"\".\n+optional",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EventType": {
+      "id": "EventType",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"v1alpha1\".",
+          "type": "string"
+        },
+        "kind": {
+          "description": "The kind of resource, in this case \"EventType\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ObjectMeta",
+          "description": "Metadata associated with this EventType."
+        },
+        "spec": {
+          "$ref": "EventTypeSpec",
+          "description": "Spec defines the desired state of the EventType."
+        }
+      },
+      "type": "object"
+    },
+    "EventTypeSpec": {
+      "id": "EventTypeSpec",
+      "properties": {
+        "broker": {
+          "description": "Refers to the Broker that can provide the EventType.",
+          "type": "string"
+        },
+        "description": {
+          "description": "Description is a string describing what the EventType is about.\n+optional",
+          "type": "string"
+        },
+        "schema": {
+          "description": "Schema is a URI with the EventType schema. It may be a JSON schema, a\nprotobuf schema, etc.\n+optional",
+          "type": "string"
+        },
+        "source": {
+          "description": "Source is a valid URI. Refers to the CloudEvent source as it enters into\nthe eventing mesh.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type is authoritative. This refers to the CloudEvent type as it enters\ninto the eventing mesh.",
           "type": "string"
         }
       },
@@ -2701,6 +2969,26 @@
       },
       "type": "object"
     },
+    "KeyToPath": {
+      "description": "Maps a string key to a path within a volume.",
+      "id": "KeyToPath",
+      "properties": {
+        "key": {
+          "description": "The key to project.",
+          "type": "string"
+        },
+        "mode": {
+          "description": "Mode bits to use on this file, must be a value between 0 and 0777. If not\nspecified, the volume defaultMode will be used. This might be in conflict\nwith other options that affect the file mode, like fsGroup, and the result\ncan be other mode bits set. +optional",
+          "format": "int32",
+          "type": "integer"
+        },
+        "path": {
+          "description": "The relative path of the file to map the key to.\nMay not be an absolute path.\nMay not contain the path element '..'.\nMay not start with the string '..'.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Lifecycle": {
       "description": "Lifecycle describes actions that the management system should take in\nresponse to container lifecycle events. For the PostStart and PreStop\nlifecycle handlers, management of the container blocks until the action is\ncomplete, unless the container process fails, in which case the handler is\naborted.",
       "id": "Lifecycle",
@@ -2789,6 +3077,39 @@
         "metadata": {
           "$ref": "ListMeta",
           "description": "Metadata associated with this DomainMapping list."
+        }
+      },
+      "type": "object"
+    },
+    "ListEventTypesResponse": {
+      "description": "ListEventTypesResponse is a list of EventType resources.",
+      "id": "ListEventTypesResponse",
+      "properties": {
+        "apiVersion": {
+          "description": "The API version for this call such as \"v1alpha1\".",
+          "type": "string"
+        },
+        "items": {
+          "description": "List of EventTypes.",
+          "items": {
+            "$ref": "EventType"
+          },
+          "type": "array"
+        },
+        "kind": {
+          "description": "The kind of this resource, in this case \"EventTypeList\".",
+          "type": "string"
+        },
+        "metadata": {
+          "$ref": "ListMeta",
+          "description": "Metadata associated with this EventType list."
+        },
+        "unreachable": {
+          "description": "Locations that could not be reached.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3348,6 +3669,10 @@
           "description": "One-word CamelCase reason for the condition's last transition.\n+optional",
           "type": "string"
         },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
+          "type": "string"
+        },
         "status": {
           "description": "Status of the condition, one of True, False, Unknown.",
           "type": "string"
@@ -3412,6 +3737,12 @@
           "description": "TimeoutSeconds holds the max duration the instance is allowed for\nresponding to a request.\nNot currently used by Cloud Run.",
           "format": "int32",
           "type": "integer"
+        },
+        "volumes": {
+          "items": {
+            "$ref": "Volume"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -3504,6 +3835,10 @@
         },
         "reason": {
           "description": "One-word CamelCase reason for the condition's last transition.\n+optional",
+          "type": "string"
+        },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
           "type": "string"
         },
         "status": {
@@ -3612,6 +3947,33 @@
       },
       "type": "object"
     },
+    "SecretVolumeSource": {
+      "description": "The contents of the target Secret's Data field will be presented in a volume\nas files using the keys in the Data field as the file names.",
+      "id": "SecretVolumeSource",
+      "properties": {
+        "defaultMode": {
+          "description": "Mode bits to use on created files by default. Must be a value between 0 and\n0777. Defaults to 0644. Directories within the path are not affected by\nthis setting. This might be in conflict with other options that affect the\nfile mode, like fsGroup, and the result can be other mode bits set.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "items": {
+          "description": "If unspecified, each key-value pair in the Data field of the referenced\nSecret will be projected into the volume as a file whose name is the\nkey and content is the value. If specified, the listed keys will be\nprojected into the specified paths, and unlisted keys will not be\npresent. If a key is specified which is not present in the Secret,\nthe volume setup will error unless it is marked optional.",
+          "items": {
+            "$ref": "KeyToPath"
+          },
+          "type": "array"
+        },
+        "optional": {
+          "description": "Specify whether the Secret or its keys must be defined.",
+          "type": "boolean"
+        },
+        "secretName": {
+          "description": "Name of the secret in the container's namespace to use.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SecurityContext": {
       "description": "SecurityContext holds security configuration that will be applied to a\ncontainer. Some fields are present in both SecurityContext and\nPodSecurityContext.  When both are set, the values in SecurityContext take\nprecedence.",
       "id": "SecurityContext",
@@ -3695,6 +4057,10 @@
         },
         "reason": {
           "description": "One-word CamelCase reason for the condition's last transition.\n+optional",
+          "type": "string"
+        },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
           "type": "string"
         },
         "status": {
@@ -3996,6 +4362,10 @@
           "description": "One-word CamelCase reason for the condition's current status.\n+optional",
           "type": "string"
         },
+        "severity": {
+          "description": "How to interpret failures of this condition, one of Error, Warning, Info\n+optional",
+          "type": "string"
+        },
         "status": {
           "description": "Status of the condition, one of True, False, Unknown.",
           "type": "string"
@@ -4067,6 +4437,23 @@
         "subscriberUri": {
           "description": "SubscriberURI is the resolved URI of the receiver for this Trigger.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Volume": {
+      "description": "Volume represents a named volume in a container.",
+      "id": "Volume",
+      "properties": {
+        "configMap": {
+          "$ref": "ConfigMapVolumeSource"
+        },
+        "name": {
+          "description": "Volume's name.",
+          "type": "string"
+        },
+        "secret": {
+          "$ref": "SecretVolumeSource"
         }
       },
       "type": "object"

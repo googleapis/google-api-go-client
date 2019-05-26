@@ -359,8 +359,14 @@ type ActivityEventsParameters struct {
 	// IntValue: Integral value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
 
+	// MessageValue: Nested value of the parameter.
+	MessageValue *ActivityEventsParametersMessageValue `json:"messageValue,omitempty"`
+
 	// MultiIntValue: Multi-int value of the parameter.
 	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
+
+	// MultiMessageValue: Nested values of the parameter.
+	MultiMessageValue []*ActivityEventsParametersMultiMessageValue `json:"multiMessageValue,omitempty"`
 
 	// MultiValue: Multi-string value of the parameter.
 	MultiValue []string `json:"multiValue,omitempty"`
@@ -390,6 +396,61 @@ type ActivityEventsParameters struct {
 
 func (s *ActivityEventsParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ActivityEventsParametersMessageValue: Nested value of the parameter.
+type ActivityEventsParametersMessageValue struct {
+	// Parameter: Looping to get parameter values.
+	Parameter []*NestedParameter `json:"parameter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameter") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivityEventsParametersMessageValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsParametersMessageValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type ActivityEventsParametersMultiMessageValue struct {
+	// Parameter: Parameter value.
+	Parameter []*NestedParameter `json:"parameter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Parameter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Parameter") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivityEventsParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityEventsParametersMultiMessageValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -495,6 +556,53 @@ type Channel struct {
 
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NestedParameter: JSON template for a parameter used in various
+// reports.
+type NestedParameter struct {
+	// BoolValue: Boolean value of the parameter.
+	BoolValue bool `json:"boolValue,omitempty"`
+
+	// IntValue: Integral value of the parameter.
+	IntValue int64 `json:"intValue,omitempty,string"`
+
+	// MultiBoolValue: Multiple boolean values of the parameter.
+	MultiBoolValue []bool `json:"multiBoolValue,omitempty"`
+
+	// MultiIntValue: Multiple integral values of the parameter.
+	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
+
+	// MultiValue: Multiple string values of the parameter.
+	MultiValue []string `json:"multiValue,omitempty"`
+
+	// Name: The name of the parameter.
+	Name string `json:"name,omitempty"`
+
+	// Value: String value of the parameter.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BoolValue") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NestedParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod NestedParameter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -3793,32 +3793,12 @@
    "version": "v1",
    "title": "YouTube Analytics API",
    "description": "Retrieves your YouTube Analytics data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest",
-   "discoveryLink": "./apis/youtubeAnalytics/v1/rest",
+   "discoveryRestUrl": "https://youtubeanalytics.googleapis.com/$discovery/rest?version=v1",
    "icons": {
-    "x16": "https://www.google.com/images/icons/product/youtube-16.png",
-    "x32": "https://www.google.com/images/icons/product/youtube-32.png"
+    "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+    "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
    },
-   "documentationLink": "http://developers.google.com/youtube/analytics/",
-   "preferred": false
-  },
-  {
-   "kind": "discovery#directoryItem",
-   "id": "youtubeAnalytics:v1beta1",
-   "name": "youtubeAnalytics",
-   "version": "v1beta1",
-   "title": "YouTube Analytics API",
-   "description": "Retrieves your YouTube Analytics data.",
-   "discoveryRestUrl": "https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1beta1/rest",
-   "discoveryLink": "./apis/youtubeAnalytics/v1beta1/rest",
-   "icons": {
-    "x16": "https://www.google.com/images/icons/product/youtube-16.png",
-    "x32": "https://www.google.com/images/icons/product/youtube-32.png"
-   },
-   "documentationLink": "http://developers.google.com/youtube/analytics/",
-   "labels": [
-    "deprecated"
-   ],
+   "documentationLink": "https://developers.google.com/youtube/analytics",
    "preferred": false
   },
   {

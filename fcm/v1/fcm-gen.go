@@ -372,6 +372,9 @@ func (s *AndroidNotification) MarshalJSON() ([]byte, error) {
 // ApnsConfig: [Apple Push Notification Service](https://goo.gl/MXRTPa)
 // specific options.
 type ApnsConfig struct {
+	// FcmOptions: Options for features provided by the FCM SDK for iOS.
+	FcmOptions *ApnsFcmOptions `json:"fcmOptions,omitempty"`
+
 	// Headers: HTTP request headers defined in Apple Push Notification
 	// Service. Refer to
 	// [APNs request headers](https://goo.gl/C6Yhia) for
@@ -386,7 +389,7 @@ type ApnsConfig struct {
 	// and google.firebase.fcm.v1.Notification.body.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Headers") to
+	// ForceSendFields is a list of field names (e.g. "FcmOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -394,7 +397,7 @@ type ApnsConfig struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Headers") to include in
+	// NullFields is a list of field names (e.g. "FcmOptions") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -407,6 +410,10 @@ func (s *ApnsConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ApnsConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ApnsFcmOptions: Options for features provided by the FCM SDK for iOS.
+type ApnsFcmOptions struct {
 }
 
 // Message: Message to send by Firebase Cloud Messaging Service.

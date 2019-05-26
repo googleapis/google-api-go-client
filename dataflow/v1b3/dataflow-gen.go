@@ -237,6 +237,7 @@ func NewProjectsLocationsJobsService(s *Service) *ProjectsLocationsJobsService {
 	rs := &ProjectsLocationsJobsService{s: s}
 	rs.Debug = NewProjectsLocationsJobsDebugService(s)
 	rs.Messages = NewProjectsLocationsJobsMessagesService(s)
+	rs.Snapshots = NewProjectsLocationsJobsSnapshotsService(s)
 	rs.WorkItems = NewProjectsLocationsJobsWorkItemsService(s)
 	return rs
 }
@@ -247,6 +248,8 @@ type ProjectsLocationsJobsService struct {
 	Debug *ProjectsLocationsJobsDebugService
 
 	Messages *ProjectsLocationsJobsMessagesService
+
+	Snapshots *ProjectsLocationsJobsSnapshotsService
 
 	WorkItems *ProjectsLocationsJobsWorkItemsService
 }
@@ -266,6 +269,15 @@ func NewProjectsLocationsJobsMessagesService(s *Service) *ProjectsLocationsJobsM
 }
 
 type ProjectsLocationsJobsMessagesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsJobsSnapshotsService(s *Service) *ProjectsLocationsJobsSnapshotsService {
+	rs := &ProjectsLocationsJobsSnapshotsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsJobsSnapshotsService struct {
 	s *Service
 }
 
@@ -12063,6 +12075,171 @@ func (c *ProjectsLocationsJobsMessagesListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+// method id "dataflow.projects.locations.jobs.snapshots.list":
+
+type ProjectsLocationsJobsSnapshotsListCall struct {
+	s            *Service
+	projectId    string
+	location     string
+	jobId        string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists snapshots.
+func (r *ProjectsLocationsJobsSnapshotsService) List(projectId string, location string, jobId string) *ProjectsLocationsJobsSnapshotsListCall {
+	c := &ProjectsLocationsJobsSnapshotsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.location = location
+	c.jobId = jobId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsSnapshotsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsSnapshotsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsSnapshotsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsSnapshotsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsSnapshotsListCall) Context(ctx context.Context) *ProjectsLocationsJobsSnapshotsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsSnapshotsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsSnapshotsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"location":  c.location,
+		"jobId":     c.jobId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.jobs.snapshots.list" call.
+// Exactly one of *ListSnapshotsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSnapshotsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsJobsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnapshotsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &ListSnapshotsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists snapshots.",
+	//   "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
+	//   "httpMethod": "GET",
+	//   "id": "dataflow.projects.locations.jobs.snapshots.list",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "location",
+	//     "jobId"
+	//   ],
+	//   "parameters": {
+	//     "jobId": {
+	//       "description": "If specified, list snapshots created from this job.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "location": {
+	//       "description": "The location to list snapshots in.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "The project ID to list snapshots for.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
+	//   "response": {
+	//     "$ref": "ListSnapshotsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/compute",
+	//     "https://www.googleapis.com/auth/compute.readonly",
+	//     "https://www.googleapis.com/auth/userinfo.email"
+	//   ]
+	// }
+
+}
+
 // method id "dataflow.projects.locations.jobs.workItems.lease":
 
 type ProjectsLocationsJobsWorkItemsLeaseCall struct {
@@ -12722,6 +12899,13 @@ func (r *ProjectsLocationsSnapshotsService) List(projectId string, location stri
 	return c
 }
 
+// JobId sets the optional parameter "jobId": If specified, list
+// snapshots created from this job.
+func (c *ProjectsLocationsSnapshotsListCall) JobId(jobId string) *ProjectsLocationsSnapshotsListCall {
+	c.urlParams_.Set("jobId", jobId)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -12830,6 +13014,11 @@ func (c *ProjectsLocationsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*
 	//     "location"
 	//   ],
 	//   "parameters": {
+	//     "jobId": {
+	//       "description": "If specified, list snapshots created from this job.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "location": {
 	//       "description": "The location to list snapshots in.",
 	//       "location": "path",
@@ -13756,6 +13945,13 @@ func (r *ProjectsSnapshotsService) List(projectId string) *ProjectsSnapshotsList
 	return c
 }
 
+// JobId sets the optional parameter "jobId": If specified, list
+// snapshots created from this job.
+func (c *ProjectsSnapshotsListCall) JobId(jobId string) *ProjectsSnapshotsListCall {
+	c.urlParams_.Set("jobId", jobId)
+	return c
+}
+
 // Location sets the optional parameter "location": The location to list
 // snapshots in.
 func (c *ProjectsSnapshotsListCall) Location(location string) *ProjectsSnapshotsListCall {
@@ -13869,6 +14065,11 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//     "projectId"
 	//   ],
 	//   "parameters": {
+	//     "jobId": {
+	//       "description": "If specified, list snapshots created from this job.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "location": {
 	//       "description": "The location to list snapshots in.",
 	//       "location": "query",

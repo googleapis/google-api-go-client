@@ -3063,6 +3063,7 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	Action string `json:"action,omitempty"`
 
 	// AllRequiredParamsPresent: This field is set to:
+	//
 	// - `false` if the matched intent has required parameters and not all
 	// of
 	//    the required parameter values have been collected.
@@ -3124,6 +3125,7 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text:
+	//
 	// - If natural language text was provided as input, `query_text`
 	// contains
 	//   a copy of the input.
@@ -3132,7 +3134,9 @@ type GoogleCloudDialogflowV2QueryResult struct {
 	//   contains the speech recognition result. If speech recognizer
 	// produced
 	//   multiple alternatives, a particular one is picked.
-	// - If an event was provided as input, `query_text` is not set.
+	// - If automatic spell correction is enabled, `query_text` will contain
+	// the
+	//   corrected user input.
 	QueryText string `json:"queryText,omitempty"`
 
 	// SentimentAnalysisResult: The sentiment analysis result, which depends
@@ -5782,6 +5786,7 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	Action string `json:"action,omitempty"`
 
 	// AllRequiredParamsPresent: This field is set to:
+	//
 	// - `false` if the matched intent has required parameters and not all
 	// of
 	//    the required parameter values have been collected.
@@ -5848,6 +5853,7 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	Parameters googleapi.RawMessage `json:"parameters,omitempty"`
 
 	// QueryText: The original conversational query text:
+	//
 	// - If natural language text was provided as input, `query_text`
 	// contains
 	//   a copy of the input.
@@ -5856,7 +5862,9 @@ type GoogleCloudDialogflowV2beta1QueryResult struct {
 	//   contains the speech recognition result. If speech recognizer
 	// produced
 	//   multiple alternatives, a particular one is picked.
-	// - If an event was provided as input, `query_text` is not set.
+	// - If automatic spell correction is enabled, `query_text` will contain
+	// the
+	//   corrected user input.
 	QueryText string `json:"queryText,omitempty"`
 
 	// SentimentAnalysisResult: The sentiment analysis result, which depends

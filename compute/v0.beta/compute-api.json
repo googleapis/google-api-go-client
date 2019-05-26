@@ -24,12 +24,12 @@
     }
   },
   "basePath": "/compute/beta/projects/",
-  "baseUrl": "https://compute.googleapis.com/compute/beta/projects/",
+  "baseUrl": "https://www.googleapis.com/compute/beta/projects/",
   "batchPath": "batch/compute/beta",
   "description": "Creates and runs virtual machines on Google Cloud Platform.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/compute/docs/reference/latest/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/naur_LQRDyUWAPDc7IN2l1_gd28\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/FcIdq7K0sVtzHMLqHzM5hbg05bw\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/compute_engine-16.png",
     "x32": "https://www.google.com/images/icons/product/compute_engine-32.png"
@@ -2029,7 +2029,6 @@
               "type": "string"
             },
             "guestFlush": {
-              "description": "Application consistent snapshot (ie. VSS).",
               "location": "query",
               "type": "boolean"
             },
@@ -22463,8 +22462,8 @@
       }
     }
   },
-  "revision": "20190416",
-  "rootUrl": "https://compute.googleapis.com/",
+  "revision": "20190403",
+  "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
       "description": "A specification of the type and number of accelerator cards attached to the instance.",

@@ -1303,6 +1303,51 @@
                     }
                   }
                 },
+                "snapshots": {
+                  "methods": {
+                    "list": {
+                      "description": "Lists snapshots.",
+                      "flatPath": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
+                      "httpMethod": "GET",
+                      "id": "dataflow.projects.locations.jobs.snapshots.list",
+                      "parameterOrder": [
+                        "projectId",
+                        "location",
+                        "jobId"
+                      ],
+                      "parameters": {
+                        "jobId": {
+                          "description": "If specified, list snapshots created from this job.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "location": {
+                          "description": "The location to list snapshots in.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "projectId": {
+                          "description": "The project ID to list snapshots for.",
+                          "location": "path",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1b3/projects/{projectId}/locations/{location}/jobs/{jobId}/snapshots",
+                      "response": {
+                        "$ref": "ListSnapshotsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/compute",
+                        "https://www.googleapis.com/auth/compute.readonly",
+                        "https://www.googleapis.com/auth/userinfo.email"
+                      ]
+                    }
+                  }
+                },
                 "workItems": {
                   "methods": {
                     "lease": {
@@ -1491,6 +1536,11 @@
                     "location"
                   ],
                   "parameters": {
+                    "jobId": {
+                      "description": "If specified, list snapshots created from this job.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "location": {
                       "description": "The location to list snapshots in.",
                       "location": "path",
@@ -1755,6 +1805,11 @@
                 "projectId"
               ],
               "parameters": {
+                "jobId": {
+                  "description": "If specified, list snapshots created from this job.",
+                  "location": "query",
+                  "type": "string"
+                },
                 "location": {
                   "description": "The location to list snapshots in.",
                   "location": "query",
@@ -1917,7 +1972,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190519",
   "rootUrl": "https://dataflow.googleapis.com/",
   "schemas": {
     "ApproximateProgress": {

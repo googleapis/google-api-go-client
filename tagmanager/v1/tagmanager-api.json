@@ -33,7 +33,7 @@
   "description": "Accesses Tag Manager accounts and containers.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/tag-manager/api/v1/",
-  "etag": "\"J3WqvAcMk4eQjJXvfSI4Yr8VouA/TbuGpxqx0Dewg2BYWTVb8kdexNU\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/zCKQQSYtFiBn9FkknoRWdzQYCqs\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -1849,7 +1849,7 @@
       }
     }
   },
-  "revision": "20190220",
+  "revision": "20190516",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -2069,8 +2069,10 @@
               "language",
               "newHistoryFragment",
               "newHistoryState",
+              "newHistoryUrl",
               "oldHistoryFragment",
               "oldHistoryState",
+              "oldHistoryUrl",
               "osVersion",
               "pageHostname",
               "pagePath",
@@ -2093,6 +2095,8 @@
               "videoVisible"
             ],
             "enumDescriptions": [
+              "",
+              "",
               "",
               "",
               "",
@@ -2837,15 +2841,17 @@
               "tagmanager.accounts.containers.variables.update"
             ]
           },
-          "description": "The parameter type. Valid values are: \n- boolean: The value represents a boolean, represented as 'true' or 'false' \n- integer: The value represents a 64-bit signed integer value, in base 10 \n- list: A list of parameters should be specified \n- map: A map of parameters should be specified \n- template: The value represents any text; this can include variable references (even variable references that might return non-string types)",
+          "description": "The parameter type. Valid values are: \n- boolean: The value represents a boolean, represented as 'true' or 'false' \n- integer: The value represents a 64-bit signed integer value, in base 10 \n- list: A list of parameters should be specified \n- map: A map of parameters should be specified \n- template: The value represents any text; this can include variable references (even variable references that might return non-string types) \n- trigger_reference: The value represents a trigger, represented as the trigger id",
           "enum": [
             "boolean",
             "integer",
             "list",
             "map",
-            "template"
+            "template",
+            "triggerReference"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -3203,10 +3209,12 @@
             "pageview",
             "scrollDepth",
             "timer",
+            "triggerGroup",
             "windowLoaded",
             "youTubeVideo"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",

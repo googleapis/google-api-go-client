@@ -1140,7 +1140,7 @@ type DailyMaintenanceWindow struct {
 	// maintenance operations.
 	// Time format should be in
 	// [RFC3339](https://www.ietf.org/rfc/rfc3339.txt)
-	// format "HH:MM”, where HH : [00-23] and MM : [00-59] GMT.
+	// format "HH:MM", where HH : [00-23] and MM : [00-59] GMT.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Duration") to

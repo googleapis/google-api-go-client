@@ -538,8 +538,10 @@ type Container struct {
 	//   "language"
 	//   "newHistoryFragment"
 	//   "newHistoryState"
+	//   "newHistoryUrl"
 	//   "oldHistoryFragment"
 	//   "oldHistoryState"
+	//   "oldHistoryUrl"
 	//   "osVersion"
 	//   "pageHostname"
 	//   "pagePath"
@@ -1421,6 +1423,8 @@ type Parameter struct {
 	// - template: The value represents any text; this can include variable
 	// references (even variable references that might return non-string
 	// types)
+	// - trigger_reference: The value represents a trigger, represented as
+	// the trigger id
 	//
 	// Possible values:
 	//   "boolean"
@@ -1428,6 +1432,7 @@ type Parameter struct {
 	//   "list"
 	//   "map"
 	//   "template"
+	//   "triggerReference"
 	Type string `json:"type,omitempty"`
 
 	// Value: A parameter's value (may contain variable references such as
@@ -1816,6 +1821,7 @@ type Trigger struct {
 	//   "pageview"
 	//   "scrollDepth"
 	//   "timer"
+	//   "triggerGroup"
 	//   "windowLoaded"
 	//   "youTubeVideo"
 	Type string `json:"type,omitempty"`

@@ -684,7 +684,7 @@
                       ]
                     },
                     "searchForInstances": {
-                      "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                      "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/instances",
                       "httpMethod": "GET",
                       "id": "healthcare.projects.locations.datasets.dicomStores.searchForInstances",
@@ -717,7 +717,7 @@
                       ]
                     },
                     "searchForSeries": {
-                      "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                      "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/series",
                       "httpMethod": "GET",
                       "id": "healthcare.projects.locations.datasets.dicomStores.searchForSeries",
@@ -750,7 +750,7 @@
                       ]
                     },
                     "searchForStudies": {
-                      "description": "SearchForStudies returns a list of matching studies. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                      "description": "SearchForStudies returns a list of matching studies. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
                       "httpMethod": "GET",
                       "id": "healthcare.projects.locations.datasets.dicomStores.searchForStudies",
@@ -811,7 +811,7 @@
                       ]
                     },
                     "storeInstances": {
-                      "description": "StoreInstances stores DICOM instances associated with study instance unique\nidentifiers (SUID). See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.6.1.",
+                      "description": "StoreInstances stores DICOM instances associated with study instance unique\nidentifiers (SUID). See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies",
                       "httpMethod": "POST",
                       "id": "healthcare.projects.locations.datasets.dicomStores.storeInstances",
@@ -912,7 +912,7 @@
                           ]
                         },
                         "retrieveMetadata": {
-                          "description": "RetrieveStudyMetadata returns instance associated with the given study\npresented as metadata with the bulk data removed. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.6.",
+                          "description": "RetrieveStudyMetadata returns instance associated with the given study\npresented as metadata with the bulk data removed. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/metadata",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveMetadata",
@@ -945,7 +945,7 @@
                           ]
                         },
                         "retrieveStudy": {
-                          "description": "RetrieveStudy returns all instances within the given study. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.1.",
+                          "description": "RetrieveStudy returns all instances within the given study. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.dicomStores.studies.retrieveStudy",
@@ -978,7 +978,7 @@
                           ]
                         },
                         "searchForInstances": {
-                          "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                          "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/instances",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForInstances",
@@ -1011,7 +1011,7 @@
                           ]
                         },
                         "searchForSeries": {
-                          "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                          "description": "SearchForSeries returns a list of matching series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series",
                           "httpMethod": "GET",
                           "id": "healthcare.projects.locations.datasets.dicomStores.studies.searchForSeries",
@@ -1044,7 +1044,7 @@
                           ]
                         },
                         "storeInstances": {
-                          "description": "StoreInstances stores DICOM instances associated with study instance unique\nidentifiers (SUID). See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.6.1.",
+                          "description": "StoreInstances stores DICOM instances associated with study instance unique\nidentifiers (SUID). See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.5.",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}",
                           "httpMethod": "POST",
                           "id": "healthcare.projects.locations.datasets.dicomStores.studies.storeInstances",
@@ -1117,7 +1117,7 @@
                               ]
                             },
                             "retrieveMetadata": {
-                              "description": "RetrieveSeriesMetadata returns instance associated with the given study and\nseries, presented as metadata with the bulk data removed. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.6.",
+                              "description": "RetrieveSeriesMetadata returns instance associated with the given study and\nseries, presented as metadata with the bulk data removed. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/metadata",
                               "httpMethod": "GET",
                               "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveMetadata",
@@ -1150,7 +1150,7 @@
                               ]
                             },
                             "retrieveSeries": {
-                              "description": "RetrieveSeries returns all instances within the given study and series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.2.",
+                              "description": "RetrieveSeries returns all instances within the given study and series. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}",
                               "httpMethod": "GET",
                               "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.retrieveSeries",
@@ -1183,7 +1183,7 @@
                               ]
                             },
                             "searchForInstances": {
-                              "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.7",
+                              "description": "SearchForInstances returns a list of matching instances. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.6.",
                               "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances",
                               "httpMethod": "GET",
                               "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.searchForInstances",
@@ -1253,7 +1253,7 @@
                                   ]
                                 },
                                 "retrieveInstance": {
-                                  "description": "RetrieveInstance returns instance associated with the given study, series,\nand SOP Instance UID. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.3.",
+                                  "description": "RetrieveInstance returns instance associated with the given study, series,\nand SOP Instance UID. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}",
                                   "httpMethod": "GET",
                                   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveInstance",
@@ -1263,7 +1263,7 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instance/{instance_id}`).",
+                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
                                       "required": true,
@@ -1286,7 +1286,7 @@
                                   ]
                                 },
                                 "retrieveMetadata": {
-                                  "description": "RetrieveInstanceMetadata returns instance associated with the given study,\nseries, and SOP Instance UID presented as metadata with the bulk data\nremoved. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.6.",
+                                  "description": "RetrieveInstanceMetadata returns instance associated with the given study,\nseries, and SOP Instance UID presented as metadata with the bulk data\nremoved. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/metadata",
                                   "httpMethod": "GET",
                                   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveMetadata",
@@ -1319,7 +1319,7 @@
                                   ]
                                 },
                                 "retrieveRendered": {
-                                  "description": "RetrieveRenderedInstance returns instance associated with the given study,\nseries, and SOP Instance UID in an acceptable Rendered Media Type. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.8.",
+                                  "description": "RetrieveRenderedInstance returns instance associated with the given study,\nseries, and SOP Instance UID in an acceptable Rendered Media Type. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/rendered",
                                   "httpMethod": "GET",
                                   "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.retrieveRendered",
@@ -1329,7 +1329,7 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instance/{instance_id}/rendered`).",
+                                      "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/rendered`).",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
                                       "required": true,
@@ -1356,7 +1356,7 @@
                                 "frames": {
                                   "methods": {
                                     "retrieveFrames": {
-                                      "description": "RetrieveFrames returns instances associated with the given study, series,\nSOP Instance UID and frame numbers. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.4.",
+                                      "description": "RetrieveFrames returns instances associated with the given study, series,\nSOP Instance UID and frame numbers. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}",
                                       "httpMethod": "GET",
                                       "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveFrames",
@@ -1366,7 +1366,7 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instance/{instance_id}/frames/{frame_list}`).",
+                                          "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}`).",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
                                           "required": true,
@@ -1389,7 +1389,7 @@
                                       ]
                                     },
                                     "retrieveRendered": {
-                                      "description": "RetrieveRenderedFrames returns instances associated with the given study,\nseries, SOP Instance UID and frame numbers in an acceptable Rendered Media\nType. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_6.5.8.",
+                                      "description": "RetrieveRenderedFrames returns instances associated with the given study,\nseries, SOP Instance UID and frame numbers in an acceptable Rendered Media\nType. See\nhttp://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4.",
                                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/frames/{framesId}/rendered",
                                       "httpMethod": "GET",
                                       "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.frames.retrieveRendered",
@@ -1399,7 +1399,7 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instance/{instance_id}/frames/{frame_list}/rendered`).",
+                                          "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}/rendered`).",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
                                           "required": true,
@@ -2743,7 +2743,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190522",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3041,7 +3041,7 @@
       "properties": {
         "bigqueryDestination": {
           "$ref": "GoogleCloudHealthcareV1beta1DicomBigQueryDestination",
-          "description": "The BigQuery output destination.\n\nFor now, only exporting to a dataset in the current project is supported\n\nThe BigQuery location requires two IAM roles:\n`roles/bigquery.dataEditor` and `roles/bigquery.jobUser`."
+          "description": "The BigQuery output destination.\n\nYou can only export to a BigQuery dataset that's in the same project as\nthe DICOM store you're exporting from.\n\nThe BigQuery location requires two IAM roles:\n`roles/bigquery.dataEditor` and `roles/bigquery.jobUser`."
         },
         "gcsDestination": {
           "$ref": "GoogleCloudHealthcareV1beta1DicomGcsDestination",

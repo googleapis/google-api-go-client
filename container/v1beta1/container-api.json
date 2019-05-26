@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190423",
+  "revision": "20190514",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -3045,6 +3045,17 @@
       },
       "type": "object"
     },
+    "ConsumptionMeteringConfig": {
+      "description": "Parameters for controlling consumption metering.",
+      "id": "ConsumptionMeteringConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether to enable consumption metering for this cluster. If enabled, a\nsecond BigQuery table will be created to hold resource consumption\nrecords.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "CreateClusterRequest": {
       "description": "CreateClusterRequest creates a cluster.",
       "id": "CreateClusterRequest",
@@ -3104,7 +3115,7 @@
           "type": "string"
         },
         "startTime": {
-          "description": "Time within the maintenance window to start the maintenance operations.\nIt must be in format \"HH:MM”, where HH : [00-23] and MM : [00-59] GMT.",
+          "description": "Time within the maintenance window to start the maintenance operations.\nIt must be in format \"HH:MM\", where HH : [00-23] and MM : [00-59] GMT.",
           "type": "string"
         }
       },
@@ -4153,6 +4164,10 @@
           "$ref": "BigQueryDestination",
           "description": "Configuration to use BigQuery as usage export destination."
         },
+        "consumptionMeteringConfig": {
+          "$ref": "ConsumptionMeteringConfig",
+          "description": "Configuration to enable resource consumption metering."
+        },
         "enableNetworkEgressMetering": {
           "description": "Whether to enable network egress metering for this cluster. If enabled, a\ndaemonset will be created in the cluster to meter network egress traffic.",
           "type": "boolean"
@@ -4734,6 +4749,10 @@
         "projectId": {
           "description": "Deprecated. The Google Developers Console [project ID or project\nnumber](https://support.google.com/cloud/answer/6158840).\nThis field has been deprecated and replaced by the name field.",
           "type": "string"
+        },
+        "workloadMetadataConfig": {
+          "$ref": "WorkloadMetadataConfig",
+          "description": "The desired image type for the node pool."
         },
         "zone": {
           "description": "Deprecated. The name of the Google Compute Engine\n[zone](/compute/docs/zones#available) in which the cluster\nresides.\nThis field has been deprecated and replaced by the name field.",

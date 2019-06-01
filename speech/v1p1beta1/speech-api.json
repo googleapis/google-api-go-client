@@ -322,7 +322,7 @@
       }
     }
   },
-  "revision": "20190510",
+  "revision": "20190524",
   "rootUrl": "https://speech.googleapis.com/",
   "schemas": {
     "ListOperationsResponse": {
@@ -512,7 +512,7 @@
             "Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.",
             "Opus encoded audio frames in Ogg container\n([OggOpus](https://wiki.xiph.org/OggOpus)).\n`sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or 48000.",
             "Although the use of lossy encodings is not recommended, if a very low\nbitrate encoding is required, `OGG_OPUS` is highly preferred over\nSpeex encoding. The [Speex](https://speex.org/)  encoding supported by\nCloud Speech API has a header byte in each block, as in MIME type\n`audio/x-speex-with-header-byte`.\nIt is a variant of the RTP Speex encoding defined in\n[RFC 5574](https://tools.ietf.org/html/rfc5574).\nThe stream is a sequence of blocks, one block per RTP packet. Each block\nstarts with a byte containing the length of the block, in bytes, followed\nby one or more frames of Speex data, padded to an integral number of\nbytes (octets) as specified in RFC 5574. In other words, each RTP header\nis replaced with a single byte containing the block length. Only Speex\nwideband is supported. `sample_rate_hertz` must be 16000.",
-            "MP3 audio. Support all standard MP3 bitrates (which range from 32-320\nkbps)\nIf using this encoding, then 'sample_rate_hertz' can be optionally unset\nif not known."
+            "MP3 audio. Support all standard MP3 bitrates (which range from 32-320\nkbps). When using this encoding, `sample_rate_hertz` can be optionally\nunset if not known."
           ],
           "type": "string"
         },
@@ -720,6 +720,11 @@
       "description": "Provides \"hints\" to the speech recognizer to favor specific words and phrases\nin the results.",
       "id": "SpeechContext",
       "properties": {
+        "boost": {
+          "description": "Hint Boost. Positive value will increase the probability that a specific\nphrase will be recognized over other similar sounding phrases. The higher\nthe boost, the higher the chance of false positive recognition as well.\nNegative boost values would correspond to anti-biasing. Anti-biasing is not\nenabled, so negative boost will simply be ignored. Though `boost` can\naccept a wide range of positive values, most use cases are best served with\nvalues between 0 and 20. We recommend using a binary search approach to\nfinding the optimal value for your use case.",
+          "format": "float",
+          "type": "number"
+        },
         "phrases": {
           "description": "*Optional* A list of strings containing words and phrases \"hints\" so that\nthe speech recognition is more likely to recognize them. This can be used\nto improve the accuracy for specific words and phrases, for example, if\nspecific commands are typically spoken by the user. This can also be used\nto add additional words to the vocabulary of the recognizer. See\n[usage limits](/speech-to-text/quotas#content).",
           "items": {

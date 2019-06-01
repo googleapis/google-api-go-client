@@ -2535,7 +2535,7 @@
       }
     }
   },
-  "revision": "20190518",
+  "revision": "20190525",
   "rootUrl": "https://logging.googleapis.com/",
   "schemas": {
     "BucketOptions": {
@@ -2913,7 +2913,7 @@
             "description": "Properties of the object. Contains field @type with type URL.",
             "type": "any"
           },
-          "description": "The log entry payload, represented as a protocol buffer. Some Google Cloud Platform services use this field for their log entry payloads.",
+          "description": "The log entry payload, represented as a protocol buffer. Some Google Cloud Platform services use this field for their log entry payloads.The following protocol buffer types are supported; user-defined types are not supported:\"type.googleapis.com/google.cloud.audit.AuditLog\"  \"type.googleapis.com/google.appengine.logging.v1.RequestLog\"",
           "type": "object"
         },
         "receiveTimestamp": {

@@ -3071,9 +3071,9 @@ type GoogleCloudVisionV1p1beta1InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p1beta1GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -3537,7 +3537,11 @@ type GoogleCloudVisionV1p1beta1Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -5527,9 +5531,9 @@ type GoogleCloudVisionV1p2beta1InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p2beta1GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -5993,7 +5997,11 @@ type GoogleCloudVisionV1p2beta1Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -8087,9 +8095,9 @@ type GoogleCloudVisionV1p3beta1InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p3beta1GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -8553,7 +8561,11 @@ type GoogleCloudVisionV1p3beta1Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -10768,9 +10780,9 @@ type GoogleCloudVisionV1p4beta1InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p4beta1GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -11234,7 +11246,11 @@ type GoogleCloudVisionV1p4beta1Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -13470,9 +13486,9 @@ type GoogleCloudVisionV1p5beta1InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GoogleCloudVisionV1p5beta1GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -14002,7 +14018,11 @@ type GoogleCloudVisionV1p5beta1Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -15614,9 +15634,9 @@ type InputConfig struct {
 	// GcsSource: The Google Cloud Storage location to read the input from.
 	GcsSource *GcsSource `json:"gcsSource,omitempty"`
 
-	// MimeType: The type of the file. Currently only "application/pdf" and
-	// "image/tiff"
-	// are supported. Wildcards are not supported.
+	// MimeType: The type of the file. Currently only "application/pdf",
+	// "image/tiff" and
+	// "image/gif" are supported. Wildcards are not supported.
 	MimeType string `json:"mimeType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Content") to
@@ -16535,7 +16555,11 @@ type Product struct {
 
 	// ProductCategory: The category for the product identified by the
 	// reference image. This should
-	// be either "homegoods", "apparel", or "toys".
+	// be either "homegoods-v2", "apparel-v2", or "toys-v2". The legacy
+	// categories
+	// "homegoods", "apparel", and "toys" are still supported, but these
+	// should
+	// not be used for new products.
 	//
 	// This field is immutable.
 	ProductCategory string `json:"productCategory,omitempty"`
@@ -16607,9 +16631,17 @@ type ProductSearchParams struct {
 
 	// ProductCategories: The list of product categories to search in.
 	// Currently, we only consider
-	// the first category, and either "homegoods", "apparel", or "toys"
-	// should be
-	// specified.
+	// the first category, and either "homegoods-v2", "apparel-v2", or
+	// "toys-v2"
+	// should be specified. The legacy categories "homegoods", "apparel",
+	// and
+	// "toys" are still supported but will be deprecated. For new products,
+	// please
+	// use "homegoods-v2", "apparel-v2", or "toys-v2" for better product
+	// search
+	// accuracy. It is recommended to migrate existing products to
+	// these
+	// categories as well.
 	ProductCategories []string `json:"productCategories,omitempty"`
 
 	// ProductSet: The resource name of a ProductSet to be searched for

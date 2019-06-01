@@ -249,18 +249,21 @@ type AnalyzeCommentResponse struct {
 	// ClientToken: Same token from the original AnalyzeCommentRequest.
 	ClientToken string `json:"clientToken,omitempty"`
 
-	// DetectedLanguages: Contains the language as detected from the text
-	// content.  If no language
-	// was specified in the request, the first (the most likely) language is
-	// used
-	// to select an appropriate model.  Sorted in order of likelihood.
+	// DetectedLanguages: Contains the languages detected from the text
+	// content, sorted in order of
+	// likelihood.
 	DetectedLanguages []string `json:"detectedLanguages,omitempty"`
 
-	// Languages: The language(s) requested by the client, as specified in
-	// the request. If
-	// the request did not specify any language, this will be empty and
-	// the
-	// detected_languages field will be populated.
+	// Languages: The language(s) used by CommentAnalyzer service to choose
+	// which Model to
+	// use when analyzing the comment. Might better be
+	// called
+	// "effective_languages". The logic used to make the choice is as
+	// follows:
+	//   if Request.languages.empty()
+	//     effective_languages = detected_languages
+	//   else
+	//     effective_languages = Request.languages
 	Languages []string `json:"languages,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

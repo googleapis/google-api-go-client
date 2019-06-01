@@ -357,7 +357,7 @@
       }
     }
   },
-  "revision": "20190418",
+  "revision": "20190526",
   "rootUrl": "https://alertcenter.googleapis.com/",
   "schemas": {
     "AccountWarning": {
@@ -869,6 +869,10 @@
       "description": "Entity whose actions triggered a Gmail phishing alert.",
       "id": "MaliciousEntity",
       "properties": {
+        "displayName": {
+          "description": "The header from display name.",
+          "type": "string"
+        },
         "fromHeader": {
           "description": "The sender email address.",
           "type": "string"

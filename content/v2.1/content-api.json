@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/jqePbIodVf2BtUKP8NhT41qx4FU\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/EiQvOfWXNZl6Gyiq-W0yDN3qLHY\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2878,7 +2878,7 @@
       }
     }
   },
-  "revision": "20190513",
+  "revision": "20190524",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5063,7 +5063,7 @@
         },
         "deliveryDetails": {
           "$ref": "OrderDeliveryDetails",
-          "description": "The details for the delivery."
+          "description": "Delivery details for shipments."
         },
         "id": {
           "description": "The REST ID of the order. Globally unique.",

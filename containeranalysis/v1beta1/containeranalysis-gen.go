@@ -1285,8 +1285,10 @@ type Detail struct {
 	// obsolete details.
 	IsObsolete bool `json:"isObsolete,omitempty"`
 
-	// MaxAffectedVersion: The max version of the package in which the
-	// vulnerability exists.
+	// MaxAffectedVersion: Deprecated, do not use. Use fixed_location
+	// instead.
+	//
+	// The max version of the package in which the vulnerability exists.
 	MaxAffectedVersion *Version `json:"maxAffectedVersion,omitempty"`
 
 	// MinAffectedVersion: The min version of the package in which the
@@ -3118,12 +3120,15 @@ func (s *RepoId) MarshalJSON() ([]byte, error) {
 // Resource: An entity that can have metadata. For example, a Docker
 // image.
 type Resource struct {
-	// ContentHash: The hash of the resource content. For example, the
-	// Docker digest.
+	// ContentHash: Deprecated, do not use. Use uri instead.
+	//
+	// The hash of the resource content. For example, the Docker digest.
 	ContentHash *Hash `json:"contentHash,omitempty"`
 
-	// Name: The name of the resource. For example, the name of a Docker
-	// image -
+	// Name: Deprecated, do not use. Use uri instead.
+	//
+	// The name of the resource. For example, the name of a Docker image
+	// -
 	// "Debian".
 	Name string `json:"name,omitempty"`
 

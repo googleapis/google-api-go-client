@@ -1089,6 +1089,11 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 // the size of the cluster and create/delete
 // node pools based on the current needs.
 type ClusterAutoscaling struct {
+	// AutoprovisioningLocations: The list of Google Compute Engine
+	// [zones](/compute/docs/zones#available)
+	// in which the NodePool's nodes can be created by NAP.
+	AutoprovisioningLocations []string `json:"autoprovisioningLocations,omitempty"`
+
 	// AutoprovisioningNodePoolDefaults: AutoprovisioningNodePoolDefaults
 	// contains defaults for a node pool
 	// created by NAP.
@@ -1104,7 +1109,7 @@ type ClusterAutoscaling struct {
 	ResourceLimits []*ResourceLimit `json:"resourceLimits,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AutoprovisioningNodePoolDefaults") to unconditionally include in API
+	// "AutoprovisioningLocations") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
 	// requests. However, any non-pointer, non-interface field appearing in
 	// ForceSendFields will be sent to the server regardless of whether the
@@ -1113,10 +1118,10 @@ type ClusterAutoscaling struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "AutoprovisioningNodePoolDefaults") to include in API requests with
-	// the JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
+	// "AutoprovisioningLocations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
 	// null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2984,6 +2989,11 @@ type NodePool struct {
 	// associated with this node pool.
 	InstanceGroupUrls []string `json:"instanceGroupUrls,omitempty"`
 
+	// Locations: The list of Google Compute Engine
+	// [zones](/compute/docs/zones#available)
+	// in which the NodePool's nodes should be located.
+	Locations []string `json:"locations,omitempty"`
+
 	// Management: NodeManagement configuration for this NodePool.
 	Management *NodeManagement `json:"management,omitempty"`
 
@@ -4560,6 +4570,17 @@ type UpdateNodePoolRequest struct {
 
 	// ImageType: The desired image type for the node pool.
 	ImageType string `json:"imageType,omitempty"`
+
+	// Locations: The desired list of Google Compute
+	// Engine
+	// [zones](/compute/docs/zones#available) in which the node pool's
+	// nodes
+	// should be located. Changing the locations for a node pool will
+	// result
+	// in nodes being either created or removed from the node pool,
+	// depending
+	// on whether locations are being added or removed.
+	Locations []string `json:"locations,omitempty"`
 
 	// Name: The name (project, location, cluster, node pool) of the node
 	// pool to

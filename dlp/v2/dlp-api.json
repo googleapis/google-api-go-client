@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190511",
+  "revision": "20190526",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -3822,6 +3822,18 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2LargeCustomDictionaryStats": {
+      "description": "Summary statistics of a custom dictionary.",
+      "id": "GooglePrivacyDlpV2LargeCustomDictionaryStats",
+      "properties": {
+        "approxNumPhrases": {
+          "description": "Approximate number of distinct phrases in the dictionary.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2LikelihoodAdjustment": {
       "description": "Message for specifying an adjustment to the likelihood of a finding as\npart of a detection rule.",
       "id": "GooglePrivacyDlpV2LikelihoodAdjustment",
@@ -4645,6 +4657,17 @@
       },
       "type": "object"
     },
+    "GooglePrivacyDlpV2StoredInfoTypeStats": {
+      "description": "Statistics for a StoredInfoType.",
+      "id": "GooglePrivacyDlpV2StoredInfoTypeStats",
+      "properties": {
+        "largeCustomDictionary": {
+          "$ref": "GooglePrivacyDlpV2LargeCustomDictionaryStats",
+          "description": "StoredInfoType where findings are defined by a dictionary of phrases."
+        }
+      },
+      "type": "object"
+    },
     "GooglePrivacyDlpV2StoredInfoTypeVersion": {
       "description": "Version of a StoredInfoType, including the configuration used to build it,\ncreate timestamp, and current state.",
       "id": "GooglePrivacyDlpV2StoredInfoTypeVersion",
@@ -4682,6 +4705,10 @@
             "StoredInfoType is no longer valid because artifacts stored in\nuser-controlled storage were modified. To fix an invalid StoredInfoType,\nuse the `UpdateStoredInfoType` method to create a new version."
           ],
           "type": "string"
+        },
+        "stats": {
+          "$ref": "GooglePrivacyDlpV2StoredInfoTypeStats",
+          "description": "Statistics about this storedInfoType version."
         }
       },
       "type": "object"

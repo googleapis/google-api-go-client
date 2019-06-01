@@ -1429,7 +1429,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190522",
   "rootUrl": "https://cloudsearch.googleapis.com/",
   "schemas": {
     "BooleanOperatorOptions": {
@@ -3307,6 +3307,10 @@
         },
         "isSortable": {
           "description": "Indicates that the property can be used for sorting. Cannot be true for\nproperties that are repeatable. Cannot be true for properties whose type\nis object or user identifier. IsReturnable must be true to set this option.\nOnly supported for Boolean, Date, Double, Integer, and Timestamp\nproperties.",
+          "type": "boolean"
+        },
+        "isWildcardSearchable": {
+          "description": "Indicates that users can perform wildcard search for this\nproperty. Only supported for Text properties. IsReturnable must be true to\nset this option. In a given datasource maximum of 5 properties can be\nmarked as is_wildcard_searchable.\n\nNote: This is an alpha feature and is enabled for whitelisted users only.",
           "type": "boolean"
         },
         "name": {

@@ -1004,7 +1004,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190527",
   "rootUrl": "https://vision.googleapis.com/",
   "schemas": {
     "AddProductToProductSetRequest": {
@@ -2567,7 +2567,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -2779,7 +2779,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -3941,7 +3941,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -4153,7 +4153,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -5371,7 +5371,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -5583,7 +5583,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -6848,7 +6848,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -7060,7 +7060,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -8339,7 +8339,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -8586,7 +8586,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -9350,7 +9350,7 @@
           "description": "The Google Cloud Storage location to read the input from."
         },
         "mimeType": {
-          "description": "The type of the file. Currently only \"application/pdf\" and \"image/tiff\"\nare supported. Wildcards are not supported.",
+          "description": "The type of the file. Currently only \"application/pdf\", \"image/tiff\" and\n\"image/gif\" are supported. Wildcards are not supported.",
           "type": "string"
         }
       },
@@ -9828,7 +9828,7 @@
           "type": "string"
         },
         "productCategory": {
-          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods\", \"apparel\", or \"toys\".\n\nThis field is immutable.",
+          "description": "The category for the product identified by the reference image. This should\nbe either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\". The legacy categories\n\"homegoods\", \"apparel\", and \"toys\" are still supported, but these should\nnot be used for new products.\n\nThis field is immutable.",
           "type": "string"
         },
         "productLabels": {
@@ -9854,7 +9854,7 @@
           "type": "string"
         },
         "productCategories": {
-          "description": "The list of product categories to search in. Currently, we only consider\nthe first category, and either \"homegoods\", \"apparel\", or \"toys\" should be\nspecified.",
+          "description": "The list of product categories to search in. Currently, we only consider\nthe first category, and either \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\"\nshould be specified. The legacy categories \"homegoods\", \"apparel\", and\n\"toys\" are still supported but will be deprecated. For new products, please\nuse \"homegoods-v2\", \"apparel-v2\", or \"toys-v2\" for better product search\naccuracy. It is recommended to migrate existing products to these\ncategories as well.",
           "items": {
             "type": "string"
           },

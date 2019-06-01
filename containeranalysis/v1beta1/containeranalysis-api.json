@@ -852,7 +852,7 @@
       }
     }
   },
-  "revision": "20190419",
+  "revision": "20190524",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AliasContext": {
@@ -1501,7 +1501,7 @@
         },
         "maxAffectedVersion": {
           "$ref": "Version",
-          "description": "The max version of the package in which the vulnerability exists."
+          "description": "Deprecated, do not use. Use fixed_location instead.\n\nThe max version of the package in which the vulnerability exists."
         },
         "minAffectedVersion": {
           "$ref": "Version",
@@ -2534,10 +2534,10 @@
       "properties": {
         "contentHash": {
           "$ref": "Hash",
-          "description": "The hash of the resource content. For example, the Docker digest."
+          "description": "Deprecated, do not use. Use uri instead.\n\nThe hash of the resource content. For example, the Docker digest."
         },
         "name": {
-          "description": "The name of the resource. For example, the name of a Docker image -\n\"Debian\".",
+          "description": "Deprecated, do not use. Use uri instead.\n\nThe name of the resource. For example, the name of a Docker image -\n\"Debian\".",
           "type": "string"
         },
         "uri": {

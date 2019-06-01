@@ -659,10 +659,9 @@ type RecognitionConfig struct {
 	// wideband is supported. `sample_rate_hertz` must be 16000.
 	//   "MP3" - MP3 audio. Support all standard MP3 bitrates (which range
 	// from 32-320
-	// kbps)
-	// If using this encoding, then 'sample_rate_hertz' can be optionally
-	// unset
-	// if not known.
+	// kbps). When using this encoding, `sample_rate_hertz` can be
+	// optionally
+	// unset if not known.
 	Encoding string `json:"encoding,omitempty"`
 
 	// LanguageCode: *Required* The language of the supplied audio as
@@ -1062,6 +1061,23 @@ func (s *SpeakerDiarizationConfig) MarshalJSON() ([]byte, error) {
 // specific words and phrases
 // in the results.
 type SpeechContext struct {
+	// Boost: Hint Boost. Positive value will increase the probability that
+	// a specific
+	// phrase will be recognized over other similar sounding phrases. The
+	// higher
+	// the boost, the higher the chance of false positive recognition as
+	// well.
+	// Negative boost values would correspond to anti-biasing. Anti-biasing
+	// is not
+	// enabled, so negative boost will simply be ignored. Though `boost`
+	// can
+	// accept a wide range of positive values, most use cases are best
+	// served with
+	// values between 0 and 20. We recommend using a binary search approach
+	// to
+	// finding the optimal value for your use case.
+	Boost float64 `json:"boost,omitempty"`
+
 	// Phrases: *Optional* A list of strings containing words and phrases
 	// "hints" so that
 	// the speech recognition is more likely to recognize them. This can be
@@ -1075,7 +1091,7 @@ type SpeechContext struct {
 	// [usage limits](/speech-to-text/quotas#content).
 	Phrases []string `json:"phrases,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Phrases") to
+	// ForceSendFields is a list of field names (e.g. "Boost") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1083,8 +1099,8 @@ type SpeechContext struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Phrases") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Boost") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -1096,6 +1112,20 @@ func (s *SpeechContext) MarshalJSON() ([]byte, error) {
 	type NoMethod SpeechContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *SpeechContext) UnmarshalJSON(data []byte) error {
+	type NoMethod SpeechContext
+	var s1 struct {
+		Boost gensupport.JSONFloat64 `json:"boost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Boost = float64(s1.Boost)
+	return nil
 }
 
 // SpeechRecognitionAlternative: Alternative hypotheses (a.k.a. n-best

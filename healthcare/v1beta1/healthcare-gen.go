@@ -2549,8 +2549,8 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // details
 // on the standard.
 type Message struct {
-	// CreateTime: The datetime when the message was created. Set by the
-	// server.
+	// CreateTime: Output only. The datetime when the message was created.
+	// Set by the server.
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Data: Raw message bytes.
@@ -2585,7 +2585,7 @@ type Message struct {
 	// Assigned by the server.
 	Name string `json:"name,omitempty"`
 
-	// ParsedData: The parsed version of the raw message data.
+	// ParsedData: Output only. The parsed version of the raw message data.
 	ParsedData *ParsedData `json:"parsedData,omitempty"`
 
 	// PatientIds: All patient IDs listed in the PID-2, PID-3, and PID-4

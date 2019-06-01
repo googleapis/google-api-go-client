@@ -1019,7 +1019,7 @@
       }
     }
   },
-  "revision": "20190514",
+  "revision": "20190530",
   "rootUrl": "https://ml.googleapis.com/",
   "schemas": {
     "GoogleApi__HttpBody": {
@@ -2063,6 +2063,10 @@
         },
         "runtimeVersion": {
           "description": "Optional. The AI Platform runtime version to use for this deployment.\nIf not set, AI Platform uses the default stable version, 1.0. For more\ninformation, see the\n[runtime version list](/ml-engine/docs/runtime-version-list) and\n[how to manage runtime versions](/ml-engine/docs/versioning).",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "Optional. Specifies the service account for resource access control.",
           "type": "string"
         },
         "state": {

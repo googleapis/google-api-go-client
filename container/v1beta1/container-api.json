@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190514",
+  "revision": "20190524",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2918,6 +2918,13 @@
       "description": "ClusterAutoscaling contains global, per-cluster information\nrequired by Cluster Autoscaler to automatically adjust\nthe size of the cluster and create/delete\nnode pools based on the current needs.",
       "id": "ClusterAutoscaling",
       "properties": {
+        "autoprovisioningLocations": {
+          "description": "The list of Google Compute Engine [zones](/compute/docs/zones#available)\nin which the NodePool's nodes can be created by NAP.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "autoprovisioningNodePoolDefaults": {
           "$ref": "AutoprovisioningNodePoolDefaults",
           "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool\ncreated by NAP."
@@ -3814,6 +3821,13 @@
         },
         "instanceGroupUrls": {
           "description": "[Output only] The resource URLs of the [managed instance\ngroups](/compute/docs/instance-groups/creating-groups-of-managed-instances)\nassociated with this node pool.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "locations": {
+          "description": "The list of Google Compute Engine [zones](/compute/docs/zones#available)\nin which the NodePool's nodes should be located.",
           "items": {
             "type": "string"
           },
@@ -4733,6 +4747,13 @@
         "imageType": {
           "description": "The desired image type for the node pool.",
           "type": "string"
+        },
+        "locations": {
+          "description": "The desired list of Google Compute Engine\n[zones](/compute/docs/zones#available) in which the node pool's nodes\nshould be located. Changing the locations for a node pool will result\nin nodes being either created or removed from the node pool, depending\non whether locations are being added or removed.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "name": {
           "description": "The name (project, location, cluster, node pool) of the node pool to\nupdate. Specified in the format\n'projects/*/locations/*/clusters/*/nodePools/*'.",

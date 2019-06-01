@@ -3902,7 +3902,7 @@ type Order struct {
 	// Customer: The details of the customer who placed the order.
 	Customer *OrderCustomer `json:"customer,omitempty"`
 
-	// DeliveryDetails: The details for the delivery.
+	// DeliveryDetails: Delivery details for shipments.
 	DeliveryDetails *OrderDeliveryDetails `json:"deliveryDetails,omitempty"`
 
 	// Id: The REST ID of the order. Globally unique.

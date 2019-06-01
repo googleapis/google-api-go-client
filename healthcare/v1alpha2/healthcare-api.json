@@ -3236,7 +3236,7 @@
       }
     }
   },
-  "revision": "20190522",
+  "revision": "20190527",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "Annotation": {
@@ -4338,7 +4338,7 @@
       "id": "Message",
       "properties": {
         "createTime": {
-          "description": "The datetime when the message was created. Set by the server.",
+          "description": "Output only. The datetime when the message was created. Set by the server.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -4364,7 +4364,7 @@
         },
         "parsedData": {
           "$ref": "ParsedData",
-          "description": "The parsed version of the raw message data."
+          "description": "Output only. The parsed version of the raw message data."
         },
         "patientIds": {
           "description": "All patient IDs listed in the PID-2, PID-3, and PID-4 segments of this\nmessage.",
@@ -4477,7 +4477,7 @@
           "type": "boolean"
         },
         "segmentTerminator": {
-          "description": "Byte(s) to be used as the segment terminator. If this is unset, '\\r' will\nbe used as segment terminator.",
+          "description": "Byte(s) to be used as the segment terminator. If this is unset, '\\r' will\nbe used as the segment terminator, matching the HL7 version 2\nspecification.",
           "format": "byte",
           "type": "string"
         }
@@ -4575,7 +4575,7 @@
       "type": "object"
     },
     "SchemaConfig": {
-      "description": "Configuration for the FHIR BigQuery and GCS schema. Determines how the server\ngenerates the schema.",
+      "description": "Configuration for the FHIR BigQuery and Cloud Storage schema. Determines\nhow the server generates the schema.",
       "id": "SchemaConfig",
       "properties": {
         "recursiveStructureDepth": {

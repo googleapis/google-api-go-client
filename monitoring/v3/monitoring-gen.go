@@ -8907,7 +8907,7 @@ func (c *ProjectsTimeSeriesListCall) AggregationPerSeriesAligner(aggregationPerS
 // specify a single metric type, and can additionally specify metric
 // labels and other information. For example:
 // metric.type = "compute.googleapis.com/instance/cpu/usage_time" AND
-//     metric.label.instance_name = "my-instance-name"
+//     metric.labels.instance_name = "my-instance-name"
 func (c *ProjectsTimeSeriesListCall) Filter(filter string) *ProjectsTimeSeriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9134,7 +9134,7 @@ func (c *ProjectsTimeSeriesListCall) Do(opts ...googleapi.CallOption) (*ListTime
 	//       "type": "string"
 	//     },
 	//     "filter": {
-	//       "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.label.instance_name = \"my-instance-name\"\n",
+	//       "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

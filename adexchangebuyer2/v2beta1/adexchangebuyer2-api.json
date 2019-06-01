@@ -2485,7 +2485,7 @@
       }
     }
   },
-  "revision": "20190507",
+  "revision": "20190530",
   "rootUrl": "https://adexchangebuyer.googleapis.com/",
   "schemas": {
     "AbsoluteDateRange": {
@@ -2546,6 +2546,25 @@
           "description": "The width of the ad slot in pixels.\nThis field will be present only when size type is `PIXEL`.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AdTechnologyProviders": {
+      "description": "Detected ad technology provider information.",
+      "id": "AdTechnologyProviders",
+      "properties": {
+        "detectedProviderIds": {
+          "description": "The detected ad technology provider IDs for this creative.\nSee https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv for\nmapping of provider ID to provided name, a privacy policy URL, and a list\nof domains which can be attributed to the provider.\n\nIf the creative contains provider IDs that are outside of those listed in\nthe `BidRequest.adslot.consented_providers_settings.consented_providers`\nfield on the (Google bid\nprotocol)[https://developers.google.com/authorized-buyers/rtb/downloads/realtime-bidding-proto]\nand the\n`BidRequest.user.ext.consented_providers_settings.consented_providers`\nfield on the (OpenRTB\nprotocol)[https://developers.google.com/authorized-buyers/rtb/downloads/openrtb-adx-proto],\nand a bid is submitted with that creative for an impression that will\nserve to an EEA user, the bid will be filtered before the auction.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "hasUnidentifiedProvider": {
+          "description": "Whether the creative contains an unidentified ad technology provider.\n\nIf true for a given creative, any bid submitted with that creative for an\nimpression that will serve to an EEA user will be filtered before the\nauction.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -2943,6 +2962,10 @@
         "adChoicesDestinationUrl": {
           "description": "The link to AdChoices destination page.",
           "type": "string"
+        },
+        "adTechnologyProviders": {
+          "$ref": "AdTechnologyProviders",
+          "description": "Output only. The detected ad technology providers."
         },
         "advertiserName": {
           "description": "The name of the company being advertised in the creative.",

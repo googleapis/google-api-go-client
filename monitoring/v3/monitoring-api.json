@@ -1201,7 +1201,7 @@
                   "type": "string"
                 },
                 "filter": {
-                  "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.label.instance_name = \"my-instance-name\"\n",
+                  "description": "A monitoring filter that specifies which time series should be returned. The filter must specify a single metric type, and can additionally specify metric labels and other information. For example:\nmetric.type = \"compute.googleapis.com/instance/cpu/usage_time\" AND\n    metric.labels.instance_name = \"my-instance-name\"\n",
                   "location": "query",
                   "type": "string"
                 },
@@ -1457,7 +1457,7 @@
       }
     }
   },
-  "revision": "20190511",
+  "revision": "20190526",
   "rootUrl": "https://monitoring.googleapis.com/",
   "schemas": {
     "Aggregation": {

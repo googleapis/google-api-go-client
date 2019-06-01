@@ -2743,7 +2743,7 @@
       }
     }
   },
-  "revision": "20190522",
+  "revision": "20190527",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -3658,7 +3658,7 @@
       "id": "Message",
       "properties": {
         "createTime": {
-          "description": "The datetime when the message was created. Set by the server.",
+          "description": "Output only. The datetime when the message was created. Set by the server.",
           "format": "google-datetime",
           "type": "string"
         },
@@ -3684,7 +3684,7 @@
         },
         "parsedData": {
           "$ref": "ParsedData",
-          "description": "The parsed version of the raw message data."
+          "description": "Output only. The parsed version of the raw message data."
         },
         "patientIds": {
           "description": "All patient IDs listed in the PID-2, PID-3, and PID-4 segments of this\nmessage.",

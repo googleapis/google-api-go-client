@@ -1024,10 +1024,13 @@ func (s *MailPhishing) MarshalJSON() ([]byte, error) {
 // MaliciousEntity: Entity whose actions triggered a Gmail phishing
 // alert.
 type MaliciousEntity struct {
+	// DisplayName: The header from display name.
+	DisplayName string `json:"displayName,omitempty"`
+
 	// FromHeader: The sender email address.
 	FromHeader string `json:"fromHeader,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "FromHeader") to
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1035,10 +1038,10 @@ type MaliciousEntity struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "FromHeader") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

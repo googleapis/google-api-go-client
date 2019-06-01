@@ -144,7 +144,7 @@
       }
     }
   },
-  "revision": "20190414",
+  "revision": "20190526",
   "rootUrl": "https://commentanalyzer.googleapis.com/",
   "schemas": {
     "AnalyzeCommentRequest": {
@@ -212,14 +212,14 @@
           "type": "string"
         },
         "detectedLanguages": {
-          "description": "Contains the language as detected from the text content.  If no language\nwas specified in the request, the first (the most likely) language is used\nto select an appropriate model.  Sorted in order of likelihood.",
+          "description": "Contains the languages detected from the text content, sorted in order of\nlikelihood.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "languages": {
-          "description": "The language(s) requested by the client, as specified in the request. If\nthe request did not specify any language, this will be empty and the\ndetected_languages field will be populated.",
+          "description": "The language(s) used by CommentAnalyzer service to choose which Model to\nuse when analyzing the comment. Might better be called\n\"effective_languages\". The logic used to make the choice is as follows:\n  if Request.languages.empty()\n    effective_languages = detected_languages\n  else\n    effective_languages = Request.languages",
           "items": {
             "type": "string"
           },

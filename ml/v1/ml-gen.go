@@ -2425,6 +2425,10 @@ type GoogleCloudMlV1__Version struct {
 	// [how to manage runtime versions](/ml-engine/docs/versioning).
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
 
+	// ServiceAccount: Optional. Specifies the service account for resource
+	// access control.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
 	// State: Output only. The state of a version.
 	//
 	// Possible values:

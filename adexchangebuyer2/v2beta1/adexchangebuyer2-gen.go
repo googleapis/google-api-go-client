@@ -656,6 +656,72 @@ func (s *AdSize) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AdTechnologyProviders: Detected ad technology provider information.
+type AdTechnologyProviders struct {
+	// DetectedProviderIds: The detected ad technology provider IDs for this
+	// creative.
+	// See https://storage.googleapis.com/adx-rtb-dictionaries/providers.csv
+	// for
+	// mapping of provider ID to provided name, a privacy policy URL, and a
+	// list
+	// of domains which can be attributed to the provider.
+	//
+	// If the creative contains provider IDs that are outside of those
+	// listed in
+	// the
+	// `BidRequest.adslot.consented_providers_settings.consented_providers`
+	// f
+	// ield on the (Google
+	// bid
+	// protocol)[https://developers.google.com/authorized-buyers/rtb/down
+	// loads/realtime-bidding-proto]
+	// and
+	// the
+	// `BidRequest.user.ext.consented_providers_settings.consented_provid
+	// ers`
+	// field on the
+	// (OpenRTB
+	// protocol)[https://developers.google.com/authorized-buyers/rtb
+	// /downloads/openrtb-adx-proto],
+	// and a bid is submitted with that creative for an impression that
+	// will
+	// serve to an EEA user, the bid will be filtered before the auction.
+	DetectedProviderIds googleapi.Int64s `json:"detectedProviderIds,omitempty"`
+
+	// HasUnidentifiedProvider: Whether the creative contains an
+	// unidentified ad technology provider.
+	//
+	// If true for a given creative, any bid submitted with that creative
+	// for an
+	// impression that will serve to an EEA user will be filtered before
+	// the
+	// auction.
+	HasUnidentifiedProvider bool `json:"hasUnidentifiedProvider,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectedProviderIds")
+	// to unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectedProviderIds") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AdTechnologyProviders) MarshalJSON() ([]byte, error) {
+	type NoMethod AdTechnologyProviders
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AddDealAssociationRequest: A request for associating a deal and a
 // creative.
 type AddDealAssociationRequest struct {
@@ -1357,6 +1423,10 @@ type Creative struct {
 
 	// AdChoicesDestinationUrl: The link to AdChoices destination page.
 	AdChoicesDestinationUrl string `json:"adChoicesDestinationUrl,omitempty"`
+
+	// AdTechnologyProviders: Output only. The detected ad technology
+	// providers.
+	AdTechnologyProviders *AdTechnologyProviders `json:"adTechnologyProviders,omitempty"`
 
 	// AdvertiserName: The name of the company being advertised in the
 	// creative.

@@ -4168,6 +4168,18 @@ type PropertyDefinition struct {
 	// properties.
 	IsSortable bool `json:"isSortable,omitempty"`
 
+	// IsWildcardSearchable: Indicates that users can perform wildcard
+	// search for this
+	// property. Only supported for Text properties. IsReturnable must be
+	// true to
+	// set this option. In a given datasource maximum of 5 properties can
+	// be
+	// marked as is_wildcard_searchable.
+	//
+	// Note: This is an alpha feature and is enabled for whitelisted users
+	// only.
+	IsWildcardSearchable bool `json:"isWildcardSearchable,omitempty"`
+
 	// Name: The name of the property. Item indexing requests sent to the
 	// Indexing API
 	// should set the property name

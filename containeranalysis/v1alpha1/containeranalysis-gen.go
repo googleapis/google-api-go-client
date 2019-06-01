@@ -1155,9 +1155,10 @@ type Detail struct {
 	// obsolete details.
 	IsObsolete bool `json:"isObsolete,omitempty"`
 
-	// MaxAffectedVersion: The max version of the package in which the
-	// vulnerability exists.
-	// This field can be used as a filter in list requests.
+	// MaxAffectedVersion: Deprecated, do not use. Use fixed_location
+	// instead.
+	//
+	// The max version of the package in which the vulnerability exists.
 	MaxAffectedVersion *Version `json:"maxAffectedVersion,omitempty"`
 
 	// MinAffectedVersion: The min version of the package in which the
@@ -2318,7 +2319,8 @@ type Occurrence struct {
 	// `Note`
 	Remediation string `json:"remediation,omitempty"`
 
-	// Resource: The resource for which the `Occurrence` applies.
+	// Resource:
+	// The resource for which the `Occurrence` applies.
 	Resource *Resource `json:"resource,omitempty"`
 
 	// ResourceUrl: The unique URL of the image or the container for which
@@ -2784,8 +2786,8 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Resource: Resource is an entity that can have metadata. E.g., a
-// Docker image.
+// Resource:
+// Resource is an entity that can have metadata. E.g., a Docker image.
 type Resource struct {
 	// ContentHash: The hash of the resource content. E.g., the Docker
 	// digest.
@@ -3432,8 +3434,9 @@ type VulnerabilityLocation struct {
 	// Package: The package being described.
 	Package string `json:"package,omitempty"`
 
-	// Version: The version of the package being described.
-	// This field can be used as a filter in list requests.
+	// Version: The version of the package being described. This field can
+	// be used as a
+	// filter in list requests.
 	Version *Version `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CpeUri") to

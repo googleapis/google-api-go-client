@@ -4988,6 +4988,37 @@ func (s *GooglePrivacyDlpV2LargeCustomDictionaryConfig) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2LargeCustomDictionaryStats: Summary statistics of a
+// custom dictionary.
+type GooglePrivacyDlpV2LargeCustomDictionaryStats struct {
+	// ApproxNumPhrases: Approximate number of distinct phrases in the
+	// dictionary.
+	ApproxNumPhrases int64 `json:"approxNumPhrases,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "ApproxNumPhrases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApproxNumPhrases") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2LargeCustomDictionaryStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2LargeCustomDictionaryStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2LikelihoodAdjustment: Message for specifying an
 // adjustment to the likelihood of a finding as
 // part of a detection rule.
@@ -6718,6 +6749,38 @@ func (s *GooglePrivacyDlpV2StoredInfoTypeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2StoredInfoTypeStats: Statistics for a
+// StoredInfoType.
+type GooglePrivacyDlpV2StoredInfoTypeStats struct {
+	// LargeCustomDictionary: StoredInfoType where findings are defined by a
+	// dictionary of phrases.
+	LargeCustomDictionary *GooglePrivacyDlpV2LargeCustomDictionaryStats `json:"largeCustomDictionary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LargeCustomDictionary") to unconditionally include in API requests.
+	// By default, fields with empty values are omitted from API requests.
+	// However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LargeCustomDictionary") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2StoredInfoTypeStats) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2StoredInfoTypeStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2StoredInfoTypeVersion: Version of a StoredInfoType,
 // including the configuration used to build it,
 // create timestamp, and current state.
@@ -6769,6 +6832,9 @@ type GooglePrivacyDlpV2StoredInfoTypeVersion struct {
 	// StoredInfoType,
 	// use the `UpdateStoredInfoType` method to create a new version.
 	State string `json:"state,omitempty"`
+
+	// Stats: Statistics about this storedInfoType version.
+	Stats *GooglePrivacyDlpV2StoredInfoTypeStats `json:"stats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Config") to
 	// unconditionally include in API requests. By default, fields with

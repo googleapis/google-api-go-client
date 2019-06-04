@@ -236,6 +236,34 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "export": {
+                  "description": "Export Redis instance data into a Redis RDB format file in GCS.\n\nRedis will continue serving during this operation.\n\nThe returned operation is automatically deleted after a few hours, so\nthere is no need to call DeleteOperation.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:export",
+                  "httpMethod": "POST",
+                  "id": "redis.projects.locations.instances.export",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}:export",
+                  "request": {
+                    "$ref": "ExportInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "get": {
                   "description": "Gets the details of a specific Redis instance.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}",
@@ -256,6 +284,34 @@
                   "path": "v1beta1/{+name}",
                   "response": {
                     "$ref": "Instance"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "import": {
+                  "description": "Import a Redis RDB snapshot file from GCS into a Redis instance.\n\nRedis may stop serving during this operation. Instance state will be\nIMPORTING for entire operation. When complete, the instance will contain\nonly data from the imported file.\n\nThe returned operation is automatically deleted after a few hours, so\nthere is no need to call DeleteOperation.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:import",
+                  "httpMethod": "POST",
+                  "id": "redis.projects.locations.instances.import",
+                  "parameterOrder": [
+                    "name"
+                  ],
+                  "parameters": {
+                    "name": {
+                      "description": "Required. Redis instance resource name using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\nwhere `location_id` refers to a GCP region.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+name}:import",
+                  "request": {
+                    "$ref": "ImportInstanceRequest"
+                  },
+                  "response": {
+                    "$ref": "Operation"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -458,13 +514,46 @@
       }
     }
   },
-  "revision": "20190524",
+  "revision": "20190531",
   "rootUrl": "https://redis.googleapis.com/",
   "schemas": {
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated\nempty messages in your APIs. A typical example is to use it as the request\nor the response type of an API method. For instance:\n\n    service Foo {\n      rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty);\n    }\n\nThe JSON representation for `Empty` is empty JSON object `{}`.",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "ExportInstanceRequest": {
+      "description": "Request for Export.",
+      "id": "ExportInstanceRequest",
+      "properties": {
+        "outputConfig": {
+          "$ref": "OutputConfig",
+          "description": "Required. Specify data to be exported."
+        }
+      },
+      "type": "object"
+    },
+    "GcsDestination": {
+      "description": "The GCS location for the output content",
+      "id": "GcsDestination",
+      "properties": {
+        "uri": {
+          "description": "Required. Data destination URI (e.g.\n'gs://my_bucket/my_object'). Existing files will be overwritten.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GcsSource": {
+      "description": "The GCS location for the input content",
+      "id": "GcsSource",
+      "properties": {
+        "uri": {
+          "description": "Required. Source data URI. (e.g. 'gs://my_bucket/my_object').",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "GoogleCloudCommonOperationMetadata": {
@@ -524,6 +613,28 @@
       "properties": {},
       "type": "object"
     },
+    "ImportInstanceRequest": {
+      "description": "Request for Import.",
+      "id": "ImportInstanceRequest",
+      "properties": {
+        "inputConfig": {
+          "$ref": "InputConfig",
+          "description": "Required. Specify data to be imported."
+        }
+      },
+      "type": "object"
+    },
+    "InputConfig": {
+      "description": "The input content",
+      "id": "InputConfig",
+      "properties": {
+        "gcsSource": {
+          "$ref": "GcsSource",
+          "description": "Google Cloud Storage location where input content is located."
+        }
+      },
+      "type": "object"
+    },
     "Instance": {
       "description": "A Google Cloud Redis instance.",
       "id": "Instance",
@@ -571,6 +682,10 @@
         },
         "name": {
           "description": "Required. Unique name of the resource in this scope including project and\nlocation using the form:\n    `projects/{project_id}/locations/{location_id}/instances/{instance_id}`\n\nNote: Redis instances are managed and addressed at regional level so\nlocation_id here refers to a GCP region; however, users may choose which\nspecific zone (or collection of zones for cross-zone instances) an instance\nshould be provisioned in. Refer to [location_id] and\n[alternative_location_id] fields for more details.",
+          "type": "string"
+        },
+        "persistenceIamIdentity": {
+          "description": "Output only. Cloud IAM identity used by import / export operations to\ntransfer data to/from Cloud Storage. Format is\n\"serviceAccount:\u003cservice_account_email\u003e\". The value may change over time\nfor a given instance so should be checked before each import/export\noperation.",
           "type": "string"
         },
         "port": {
@@ -766,6 +881,17 @@
           },
           "description": "The normal response of the operation in case of success.  If the original\nmethod returns no data on success, such as `Delete`, the response is\n`google.protobuf.Empty`.  If the original method is standard\n`Get`/`Create`/`Update`, the response should be the resource.  For other\nmethods, the response should have the type `XxxResponse`, where `Xxx`\nis the original method name.  For example, if the original method name\nis `TakeSnapshot()`, the inferred response type is\n`TakeSnapshotResponse`.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "OutputConfig": {
+      "description": "The output content",
+      "id": "OutputConfig",
+      "properties": {
+        "gcsDestination": {
+          "$ref": "GcsDestination",
+          "description": "Google Cloud Storage destination for output content."
         }
       },
       "type": "object"

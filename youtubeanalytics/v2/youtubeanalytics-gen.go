@@ -277,6 +277,9 @@ type ErrorProto struct {
 	//   "OTHER" - other location type which can safely be
 	// shared
 	// externally.
+	//   "PARAMETER" - Location is request paramater. This maps to the
+	// {@link PARAMETERS} in
+	// {@link MessageLocation}.
 	LocationType string `json:"locationType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Argument") to

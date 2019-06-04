@@ -662,7 +662,7 @@
       }
     }
   },
-  "revision": "20190519",
+  "revision": "20190531",
   "rootUrl": "https://jobs.googleapis.com/",
   "schemas": {
     "ApplicationInfo": {
@@ -956,7 +956,7 @@
           "description": "Optional.\n\nCompensation range."
         },
         "type": {
-          "description": "Optional.\n\nCompensation type.\n\nDefault is CompensationUnit.OTHER_COMPENSATION_TYPE.",
+          "description": "Optional.\n\nCompensation type.\n\nDefault is CompensationUnit.COMPENSATION_TYPE_UNSPECIFIED.",
           "enum": [
             "COMPENSATION_TYPE_UNSPECIFIED",
             "BASE",
@@ -982,7 +982,7 @@
           "type": "string"
         },
         "unit": {
-          "description": "Optional.\n\nFrequency of the specified amount.\n\nDefault is CompensationUnit.OTHER_COMPENSATION_UNIT.",
+          "description": "Optional.\n\nFrequency of the specified amount.\n\nDefault is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.",
           "enum": [
             "COMPENSATION_UNIT_UNSPECIFIED",
             "HOURLY",
@@ -1013,7 +1013,7 @@
       "id": "CompensationFilter",
       "properties": {
         "includeJobsWithUnspecifiedCompensationRange": {
-          "description": "Optional.\n\nWhether to include jobs whose compensation range is unspecified.",
+          "description": "Optional.\n\nIf set to true, jobs with unspecified compensation range fields are\nincluded.",
           "type": "boolean"
         },
         "range": {

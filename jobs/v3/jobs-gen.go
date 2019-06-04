@@ -820,7 +820,7 @@ type CompensationEntry struct {
 	//
 	// Compensation type.
 	//
-	// Default is CompensationUnit.OTHER_COMPENSATION_TYPE.
+	// Default is CompensationUnit.COMPENSATION_TYPE_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "COMPENSATION_TYPE_UNSPECIFIED" - Default value.
@@ -844,7 +844,7 @@ type CompensationEntry struct {
 	//
 	// Frequency of the specified amount.
 	//
-	// Default is CompensationUnit.OTHER_COMPENSATION_UNIT.
+	// Default is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "COMPENSATION_UNIT_UNSPECIFIED" - Default value.
@@ -900,7 +900,9 @@ func (s *CompensationEntry) UnmarshalJSON(data []byte) error {
 type CompensationFilter struct {
 	// IncludeJobsWithUnspecifiedCompensationRange: Optional.
 	//
-	// Whether to include jobs whose compensation range is unspecified.
+	// If set to true, jobs with unspecified compensation range fields
+	// are
+	// included.
 	IncludeJobsWithUnspecifiedCompensationRange bool `json:"includeJobsWithUnspecifiedCompensationRange,omitempty"`
 
 	// Range: Optional.

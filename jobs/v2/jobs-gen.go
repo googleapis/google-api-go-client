@@ -767,7 +767,7 @@ type CompensationEntry struct {
 	//
 	// Frequency of the specified amount.
 	//
-	// Default is CompensationUnit.OTHER_COMPENSATION_UNIT.
+	// Default is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "COMPENSATION_UNIT_UNSPECIFIED" - Default value. Equivalent to
@@ -1960,7 +1960,7 @@ type ExtendedCompensationInfoCompensationEntry struct {
 	//
 	// Frequency of the specified amount.
 	//
-	// Default is CompensationUnit.OTHER_COMPENSATION_UNIT.
+	// Default is CompensationUnit.COMPENSATION_UNIT_UNSPECIFIED.
 	//
 	// Possible values:
 	//   "EXTENDED_COMPENSATION_UNIT_UNSPECIFIED" - Default value.

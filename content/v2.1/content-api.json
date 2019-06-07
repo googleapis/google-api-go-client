@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/EiQvOfWXNZl6Gyiq-W0yDN3qLHY\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/jbCPNvl4QbL1NbUHBeaCm32fvYA\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2878,7 +2878,7 @@
       }
     }
   },
-  "revision": "20190524",
+  "revision": "20190531",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -8860,6 +8860,13 @@
           },
           "description": "The two-letter ISO 639-1 language code for the item.",
           "type": "string"
+        },
+        "fees": {
+          "description": "Fees for the item. Optional.",
+          "items": {
+            "$ref": "OrderLineItemProductFee"
+          },
+          "type": "array"
         },
         "gtin": {
           "description": "Global Trade Item Number (GTIN) of the item. Optional.",

@@ -1291,10 +1291,6 @@ type Expr struct {
 	// message determines which well-known feature set of CEL is supported.
 	Expression string `json:"expression,omitempty"`
 
-	// Kind: The kind of item this is. For storage, this is always
-	// storage#expr. This field is ignored on input.
-	Kind string `json:"kind,omitempty"`
-
 	// Location: An optional string indicating the location of the
 	// expression for error reporting, e.g. a file name and a position in
 	// the file.

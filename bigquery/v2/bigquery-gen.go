@@ -544,6 +544,12 @@ type BinaryClassificationMetrics struct {
 	// thresholds.
 	BinaryConfusionMatrixList []*BinaryConfusionMatrix `json:"binaryConfusionMatrixList,omitempty"`
 
+	// NegativeLabel: Label representing the negative class.
+	NegativeLabel string `json:"negativeLabel,omitempty"`
+
+	// PositiveLabel: Label representing the positive class.
+	PositiveLabel string `json:"positiveLabel,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AggregateClassificationMetrics") to unconditionally include in API
 	// requests. By default, fields with empty values are omitted from API
@@ -3358,9 +3364,7 @@ type Model struct {
 	// epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// Description: [Optional] A user-friendly description of this
-	// model.
-	// @mutable bigquery.models.patch
+	// Description: [Optional] A user-friendly description of this model.
 	Description string `json:"description,omitempty"`
 
 	// Etag: Output only. A hash of this resource.
@@ -3375,7 +3379,6 @@ type Model struct {
 	// property of the encapsulating dataset can be used to set a
 	// default
 	// expirationTime on newly created models.
-	// @mutable bigquery.models.patch
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
 	// FeatureColumns: Output only. Input feature columns that were used to
@@ -3383,7 +3386,6 @@ type Model struct {
 	FeatureColumns []*StandardSqlField `json:"featureColumns,omitempty"`
 
 	// FriendlyName: [Optional] A descriptive name for this model.
-	// @mutable bigquery.models.patch
 	FriendlyName string `json:"friendlyName,omitempty"`
 
 	// LabelColumns: Output only. Label columns that were used to train this
@@ -3403,7 +3405,6 @@ type Model struct {
 	// Label values are optional. Label keys must start with a letter and
 	// each
 	// label in the list must have a different key.
-	// @mutable bigquery.models.patch
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LastModifiedTime: Output only. The time when this model was last

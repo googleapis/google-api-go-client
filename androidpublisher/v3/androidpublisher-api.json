@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/aTw0jxIoMXy6EsyPRJoCzGu1biA\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/XCj5XS8gg6RZpfYMWcRBa-b3UUE\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2382,7 +2382,7 @@
       }
     }
   },
-  "revision": "20190509",
+  "revision": "20190604",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3253,6 +3253,11 @@
       "description": "A SubscriptionPurchase resource indicates the status of a user's subscription purchase.",
       "id": "SubscriptionPurchase",
       "properties": {
+        "acknowledgementState": {
+          "description": "The acknowledgement state of the subscription product. Possible values are:  \n- Yet to be acknowledged \n- Acknowledged",
+          "format": "int32",
+          "type": "integer"
+        },
         "autoRenewing": {
           "description": "Whether the subscription will automatically be renewed when it reaches its current expiry time.",
           "type": "boolean"

@@ -471,7 +471,7 @@
       }
     }
   },
-  "revision": "20190516",
+  "revision": "20190605",
   "rootUrl": "https://file.googleapis.com/",
   "schemas": {
     "CancelOperationRequest": {
@@ -695,7 +695,7 @@
       "type": "object"
     },
     "GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion": {
-      "description": "A temporal SLO exclusion specification.",
+      "description": "SloExclusion represents an excusion in SLI calculation applies to all SLOs.",
       "id": "GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion",
       "properties": {
         "exclusionDuration": {
@@ -712,8 +712,8 @@
           "description": "Human-readable reason for the exclusion.\nThis should be a static string (e.g. \"Disruptive update in progress\")\nand should not contain dynamically generated data (e.g. instance name).\nCan be left empty.",
           "type": "string"
         },
-        "sloName": {
-          "description": "Name of an SLI/SLO that this exclusion applies to. Can be left empty,\nsignaling that the instance should be excluded from all SLI/SLOs defined\nin the service SLO configuration.",
+        "sliName": {
+          "description": "Name of an SLI that this exclusion applies to. Can be left empty,\nsignaling that the instance should be excluded from all SLIs defined\nin the service SLO configuration.",
           "type": "string"
         }
       },

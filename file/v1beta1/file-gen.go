@@ -631,8 +631,9 @@ func (s *GoogleCloudSaasacceleratorManagementProvidersV1RolloutMetadata) Marshal
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion: A
-// temporal SLO exclusion specification.
+// GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion:
+// SloExclusion represents an excusion in SLI calculation applies to all
+// SLOs.
 type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
 	// ExclusionDuration: Exclusion duration. No restrictions on the
 	// possible values.
@@ -662,12 +663,12 @@ type GoogleCloudSaasacceleratorManagementProvidersV1SloExclusion struct {
 	// Can be left empty.
 	Reason string `json:"reason,omitempty"`
 
-	// SloName: Name of an SLI/SLO that this exclusion applies to. Can be
-	// left empty,
-	// signaling that the instance should be excluded from all SLI/SLOs
+	// SliName: Name of an SLI that this exclusion applies to. Can be left
+	// empty,
+	// signaling that the instance should be excluded from all SLIs
 	// defined
 	// in the service SLO configuration.
-	SloName string `json:"sloName,omitempty"`
+	SliName string `json:"sliName,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExclusionDuration")
 	// to unconditionally include in API requests. By default, fields with

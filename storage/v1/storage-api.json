@@ -26,7 +26,7 @@
   "description": "Stores and retrieves potentially large, immutable data objects.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/storage/docs/json_api/",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/p_spPkWHsRi33PRBHlYtU2G_uKg\"",
+  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/g26t9M1iNI-j1-5ry7bpKWNPs60\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/cloud_storage-16.png",
     "x32": "https://www.google.com/images/icons/product/cloud_storage-32.png"
@@ -3196,7 +3196,7 @@
       }
     }
   },
-  "revision": "20190426",
+  "revision": "20190523",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Bucket": {
@@ -3740,11 +3740,6 @@
         },
         "expression": {
           "description": "Textual representation of an expression in Common Expression Language syntax. The application context of the containing message determines which well-known feature set of CEL is supported.",
-          "type": "string"
-        },
-        "kind": {
-          "default": "storage#expr",
-          "description": "The kind of item this is. For storage, this is always storage#expr. This field is ignored on input.",
           "type": "string"
         },
         "location": {

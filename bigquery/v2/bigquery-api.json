@@ -1174,7 +1174,7 @@
       }
     }
   },
-  "revision": "20190510",
+  "revision": "20190530",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1329,6 +1329,14 @@
             "$ref": "BinaryConfusionMatrix"
           },
           "type": "array"
+        },
+        "negativeLabel": {
+          "description": "Label representing the negative class.",
+          "type": "string"
+        },
+        "positiveLabel": {
+          "description": "Label representing the positive class.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3054,7 +3062,7 @@
           "type": "string"
         },
         "description": {
-          "description": "[Optional] A user-friendly description of this model.\n@mutable bigquery.models.patch",
+          "description": "[Optional] A user-friendly description of this model.",
           "type": "string"
         },
         "etag": {
@@ -3062,7 +3070,7 @@
           "type": "string"
         },
         "expirationTime": {
-          "description": "[Optional] The time when this model expires, in milliseconds since the\nepoch. If not present, the model will persist indefinitely. Expired models\nwill be deleted and their storage reclaimed.  The defaultTableExpirationMs\nproperty of the encapsulating dataset can be used to set a default\nexpirationTime on newly created models.\n@mutable bigquery.models.patch",
+          "description": "[Optional] The time when this model expires, in milliseconds since the\nepoch. If not present, the model will persist indefinitely. Expired models\nwill be deleted and their storage reclaimed.  The defaultTableExpirationMs\nproperty of the encapsulating dataset can be used to set a default\nexpirationTime on newly created models.",
           "format": "int64",
           "type": "string"
         },
@@ -3074,7 +3082,7 @@
           "type": "array"
         },
         "friendlyName": {
-          "description": "[Optional] A descriptive name for this model.\n@mutable bigquery.models.patch",
+          "description": "[Optional] A descriptive name for this model.",
           "type": "string"
         },
         "labelColumns": {
@@ -3088,7 +3096,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "[Optional] The labels associated with this model. You can use these to\norganize and group your models. Label keys and values can be no longer\nthan 63 characters, can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter and each\nlabel in the list must have a different key.\n@mutable bigquery.models.patch",
+          "description": "[Optional] The labels associated with this model. You can use these to\norganize and group your models. Label keys and values can be no longer\nthan 63 characters, can only contain lowercase letters, numeric\ncharacters, underscores and dashes. International characters are allowed.\nLabel values are optional. Label keys must start with a letter and each\nlabel in the list must have a different key.",
           "type": "object"
         },
         "lastModifiedTime": {

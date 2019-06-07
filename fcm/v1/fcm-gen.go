@@ -167,6 +167,9 @@ type AndroidConfig struct {
 	// google.firebase.fcm.v1.Message.data.
 	Data map[string]string `json:"data,omitempty"`
 
+	// FcmOptions: Options for features provided by the FCM SDK for Android.
+	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
+
 	// Notification: Notification to send to android devices.
 	Notification *AndroidNotification `json:"notification,omitempty"`
 
@@ -251,6 +254,37 @@ type AndroidConfig struct {
 
 func (s *AndroidConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidFcmOptions: Options for features provided by the FCM SDK for
+// Android.
+type AndroidFcmOptions struct {
+	// AnalyticsLabel: Label that the message's analytics data will be
+	// associated with.
+	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidFcmOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidFcmOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -414,6 +448,63 @@ func (s *ApnsConfig) MarshalJSON() ([]byte, error) {
 
 // ApnsFcmOptions: Options for features provided by the FCM SDK for iOS.
 type ApnsFcmOptions struct {
+	// AnalyticsLabel: Label that the message's analytics data will be
+	// associated with.
+	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ApnsFcmOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ApnsFcmOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// FcmOptions: Platform independent options for features provided by the
+// FCM SDKs.
+type FcmOptions struct {
+	// AnalyticsLabel: Label that the message's analytics data will be
+	// associated with.
+	AnalyticsLabel string `json:"analyticsLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AnalyticsLabel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AnalyticsLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FcmOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod FcmOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Message: Message to send by Firebase Cloud Messaging Service.
@@ -434,6 +525,11 @@ type Message struct {
 
 	// Data: Input only. Arbitrary key/value payload.
 	Data map[string]string `json:"data,omitempty"`
+
+	// FcmOptions: Input only. Template for FCM SDK feature options to use
+	// across all
+	// platforms.
+	FcmOptions *FcmOptions `json:"fcmOptions,omitempty"`
 
 	// Name: Output Only. The identifier of the message sent, in the format
 	// of

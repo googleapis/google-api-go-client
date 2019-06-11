@@ -29,7 +29,7 @@ func Example_applicationDefaultCredentials() {
 	// Default Creds as specified at https://godoc.org/golang.org/x/oauth2/google#FindDefaultCredentials.
 	//
 	// Note: Given the same set of options, transport.NewHTTPClient and
-	// transport.NewGRPCClient use the same credentials.
+	// transport.DialGRPC use the same credentials.
 	c, _, err := transport.NewHTTPClient(ctx)
 	if err != nil {
 		log.Fatal(err)
@@ -43,7 +43,7 @@ func Example_withCredentialsFile() {
 	// Download service account creds per https://cloud.google.com/docs/authentication/end-user.
 	//
 	// Note: Given the same set of options, transport.NewHTTPClient and
-	// transport.NewGRPCClient use the same credentials.
+	// transport.DialGRPC use the same credentials.
 	c, _, err := transport.NewHTTPClient(ctx, option.WithCredentialsFile("/path/to/service-account-creds.json"))
 	if err != nil {
 		log.Fatal(err)

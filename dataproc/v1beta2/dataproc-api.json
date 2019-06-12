@@ -223,7 +223,7 @@
                   ],
                   "parameters": {
                     "pageSize": {
-                      "description": "Optional. The maximum number of results to return in each response.",
+                      "description": "Optional. The maximum number of results to return in each response. Must be less than or equal to 1000. Defaults to 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -759,7 +759,7 @@
                   ],
                   "parameters": {
                     "pageSize": {
-                      "description": "Optional. The maximum number of results to return in each response.",
+                      "description": "Optional. The maximum number of results to return in each response. Must be less than or equal to 1000. Defaults to 100.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
@@ -2083,7 +2083,7 @@
       }
     }
   },
-  "revision": "20190511",
+  "revision": "20190523",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {

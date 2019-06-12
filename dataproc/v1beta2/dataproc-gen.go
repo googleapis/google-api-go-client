@@ -4386,7 +4386,8 @@ func (r *ProjectsLocationsAutoscalingPoliciesService) List(parent string) *Proje
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in each response.
+// of results to return in each response. Must be less than or equal to
+// 1000. Defaults to 100.
 func (c *ProjectsLocationsAutoscalingPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsAutoscalingPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -4506,7 +4507,7 @@ func (c *ProjectsLocationsAutoscalingPoliciesListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return in each response.",
+	//       "description": "Optional. The maximum number of results to return in each response. Must be less than or equal to 1000. Defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7078,7 +7079,8 @@ func (r *ProjectsRegionsAutoscalingPoliciesService) List(parent string) *Project
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return in each response.
+// of results to return in each response. Must be less than or equal to
+// 1000. Defaults to 100.
 func (c *ProjectsRegionsAutoscalingPoliciesListCall) PageSize(pageSize int64) *ProjectsRegionsAutoscalingPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7198,7 +7200,7 @@ func (c *ProjectsRegionsAutoscalingPoliciesListCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of results to return in each response.",
+	//       "description": "Optional. The maximum number of results to return in each response. Must be less than or equal to 1000. Defaults to 100.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

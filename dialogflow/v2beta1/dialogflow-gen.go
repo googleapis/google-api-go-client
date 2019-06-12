@@ -142,7 +142,7 @@ func (s *Service) userAgent() string {
 
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
-	rs.Agent = NewProjectsAgentService(s)
+	rs.Agent_ = NewProjectsAgentService(s)
 	rs.KnowledgeBases = NewProjectsKnowledgeBasesService(s)
 	rs.Operations = NewProjectsOperationsService(s)
 	return rs
@@ -151,7 +151,7 @@ func NewProjectsService(s *Service) *ProjectsService {
 type ProjectsService struct {
 	s *Service
 
-	Agent *ProjectsAgentService
+	Agent_ *ProjectsAgentService
 
 	KnowledgeBases *ProjectsKnowledgeBasesService
 
@@ -2360,6 +2360,21 @@ func (s *GoogleCloudDialogflowV2WebhookResponse) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudDialogflowV2beta1Agent: Represents a conversational agent.
 type GoogleCloudDialogflowV2beta1Agent struct {
+	// ApiVersion: Optional. API version displayed in Dialogflow console. If
+	// not specified,
+	// V2 API is assumed. Clients are free to query different service
+	// endpoints
+	// for different API versions. However, bots connectors and webhook
+	// calls will
+	// follow the specified API version.
+	//
+	// Possible values:
+	//   "API_VERSION_UNSPECIFIED" - Not specified.
+	//   "API_VERSION_V1" - Legacy V1 API.
+	//   "API_VERSION_V2" - V2 API.
+	//   "API_VERSION_V2_BETA_1" - V2beta1 API.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
 	// AvatarUri: Optional. The URI of the agent's avatar.
 	// Avatars are used throughout the Dialogflow console and in the
 	// self-hosted
@@ -2429,6 +2444,17 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	// `default_language_code`).
 	SupportedLanguageCodes []string `json:"supportedLanguageCodes,omitempty"`
 
+	// Tier: Optional. The agent tier. If not specified, TIER_STANDARD is
+	// assumed.
+	//
+	// Possible values:
+	//   "TIER_UNSPECIFIED" - Not specified. This value should never be
+	// used.
+	//   "TIER_STANDARD" - Standard tier.
+	//   "TIER_ENTERPRISE" - Enterprise tier (Essentials).
+	//   "TIER_ENTERPRISE_PLUS" - Enterprise tier (Plus).
+	Tier string `json:"tier,omitempty"`
+
 	// TimeZone: Required. The time zone of this agent from the
 	// [time zone database](https://www.iana.org/time-zones),
 	// e.g.,
@@ -2439,7 +2465,7 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "AvatarUri") to
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2447,7 +2473,7 @@ type GoogleCloudDialogflowV2beta1Agent struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AvatarUri") to include in
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2997,11 +3023,8 @@ type GoogleCloudDialogflowV2beta1DetectIntentResponse struct {
 	// generated audio content will be empty.
 	OutputAudio string `json:"outputAudio,omitempty"`
 
-	// OutputAudioConfig: Instructs the speech synthesizer how to generate
-	// the output audio. This
-	// field is populated from the agent-level speech synthesizer
-	// configuration,
-	// if enabled.
+	// OutputAudioConfig: The config used by the speech synthesizer to
+	// generate the output audio.
 	OutputAudioConfig *GoogleCloudDialogflowV2beta1OutputAudioConfig `json:"outputAudioConfig,omitempty"`
 
 	// QueryResult: The selected results of the conversational query or
@@ -3542,6 +3565,15 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	// wideband is supported. `sample_rate_hertz` must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
+	// EnableWordInfo: Optional. If `true`, Dialogflow returns
+	// SpeechWordInfo in
+	// StreamingRecognitionResult with information about the recognized
+	// speech
+	// words, e.g. start and end time offsets. If false or unspecified,
+	// Speech
+	// doesn't return any word-level information.
+	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
+
 	// LanguageCode: Required. The language of the supplied audio.
 	// Dialogflow does not do
 	// translations. See
@@ -3618,14 +3650,14 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	//   for how to make your project eligible.
 	ModelVariant string `json:"modelVariant,omitempty"`
 
-	// PhraseHints: Optional. The collection of phrase hints which are used
-	// to boost accuracy
-	// of speech recognition.
-	// Refer to
-	// [Cloud Speech
-	// API
-	// documentation](https://cloud.google.com/speech-to-text/docs/basics
-	// #phrase-hints)
+	// PhraseHints: Optional. A list of strings containing words and phrases
+	// that the speech
+	// recognizer should recognize with higher likelihood.
+	//
+	// See [the Cloud
+	// Speech
+	// documentation](https://cloud.google.com/speech-to-text/docs/bas
+	// ics#phrase-hints)
 	// for more details.
 	PhraseHints []string `json:"phraseHints,omitempty"`
 
@@ -5654,7 +5686,7 @@ func (s *GoogleCloudDialogflowV2beta1OutputAudioConfig) MarshalJSON() ([]byte, e
 //     instructs the speech recognizer how to process the speech
 // audio.
 //
-// 2.  A conversational query in the form of text,.
+// 2.  A conversational query in the form of text.
 //
 // 3.  An event that specifies which intent to trigger.
 type GoogleCloudDialogflowV2beta1QueryInput struct {
@@ -6657,81 +6689,14 @@ type GoogleProtobufEmpty struct {
 // is suitable for
 // different programming environments, including REST APIs and RPC APIs.
 // It is
-// used by [gRPC](https://github.com/grpc). The error model is designed
-// to be:
+// used by [gRPC](https://github.com/grpc). Each `Status` message
+// contains
+// three pieces of data: error code, error message, and error
+// details.
 //
-// - Simple to use and understand for most users
-// - Flexible enough to meet unexpected needs
-//
-// # Overview
-//
-// The `Status` message contains three pieces of data: error code,
-// error
-// message, and error details. The error code should be an enum value
-// of
-// google.rpc.Code, but it may accept additional error codes if needed.
-// The
-// error message should be a developer-facing English message that
-// helps
-// developers *understand* and *resolve* the error. If a localized
-// user-facing
-// error message is needed, put the localized message in the error
-// details or
-// localize it in the client. The optional error details may contain
-// arbitrary
-// information about the error. There is a predefined set of error
-// detail types
-// in the package `google.rpc` that can be used for common error
-// conditions.
-//
-// # Language mapping
-//
-// The `Status` message is the logical representation of the error
-// model, but it
-// is not necessarily the actual wire format. When the `Status` message
-// is
-// exposed in different client libraries and different wire protocols,
-// it can be
-// mapped differently. For example, it will likely be mapped to some
-// exceptions
-// in Java, but more likely mapped to some error codes in C.
-//
-// # Other uses
-//
-// The error model and the `Status` message can be used in a variety
-// of
-// environments, either with or without APIs, to provide a
-// consistent developer experience across different
-// environments.
-//
-// Example uses of this error model include:
-//
-// - Partial errors. If a service needs to return partial errors to the
-// client,
-//     it may embed the `Status` in the normal response to indicate the
-// partial
-//     errors.
-//
-// - Workflow errors. A typical workflow has multiple steps. Each step
-// may
-//     have a `Status` message for error reporting.
-//
-// - Batch operations. If a client uses batch request and batch
-// response, the
-//     `Status` message should be used directly inside batch response,
-// one for
-//     each error sub-response.
-//
-// - Asynchronous operations. If an API call embeds asynchronous
-// operation
-//     results in its response, the status of those operations should
-// be
-//     represented directly using the `Status` message.
-//
-// - Logging. If some API errors are stored in logs, the message
-// `Status` could
-//     be used directly after any stripping needed for security/privacy
-// reasons.
+// You can find out more about this error model and how to work with it
+// in the
+// [API Design Guide](https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -6827,6 +6792,290 @@ func (s *GoogleTypeLatLng) UnmarshalJSON(data []byte) error {
 	s.Latitude = float64(s1.Latitude)
 	s.Longitude = float64(s1.Longitude)
 	return nil
+}
+
+// method id "dialogflow.projects.agent":
+
+type ProjectsAgentCall struct {
+	s                                 *Service
+	parent                            string
+	googleclouddialogflowv2beta1agent *GoogleCloudDialogflowV2beta1Agent
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Agent: Creates/updates the specified agent.
+func (r *ProjectsService) Agent(parent string, googleclouddialogflowv2beta1agent *GoogleCloudDialogflowV2beta1Agent) *ProjectsAgentCall {
+	c := &ProjectsAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleclouddialogflowv2beta1agent = googleclouddialogflowv2beta1agent
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The mask to
+// control which fields get updated.
+func (c *ProjectsAgentCall) UpdateMask(updateMask string) *ProjectsAgentCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAgentCall) Fields(s ...googleapi.Field) *ProjectsAgentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAgentCall) Context(ctx context.Context) *ProjectsAgentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAgentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAgentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleclouddialogflowv2beta1agent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/agent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.agent" call.
+// Exactly one of *GoogleCloudDialogflowV2beta1Agent or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudDialogflowV2beta1Agent.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAgentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDialogflowV2beta1Agent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleCloudDialogflowV2beta1Agent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates/updates the specified agent.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/agent",
+	//   "httpMethod": "POST",
+	//   "id": "dialogflow.projects.agent",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project of this agent.\nFormat: `projects/\u003cProject ID\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The mask to control which fields get updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/agent",
+	//   "request": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1Agent"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudDialogflowV2beta1Agent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
+}
+
+// method id "dialogflow.projects.deleteAgent":
+
+type ProjectsDeleteAgentCall struct {
+	s          *Service
+	parent     string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DeleteAgent: Deletes the specified agent.
+func (r *ProjectsService) DeleteAgent(parent string) *ProjectsDeleteAgentCall {
+	c := &ProjectsDeleteAgentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsDeleteAgentCall) Fields(s ...googleapi.Field) *ProjectsDeleteAgentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsDeleteAgentCall) Context(ctx context.Context) *ProjectsDeleteAgentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsDeleteAgentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsDeleteAgentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+parent}/agent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dialogflow.projects.deleteAgent" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsDeleteAgentCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the specified agent.",
+	//   "flatPath": "v2beta1/projects/{projectsId}/agent",
+	//   "httpMethod": "DELETE",
+	//   "id": "dialogflow.projects.deleteAgent",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The project that the agent to delete is associated with.\nFormat: `projects/\u003cProject ID\u003e`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+parent}/agent",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/dialogflow"
+	//   ]
+	// }
+
 }
 
 // method id "dialogflow.projects.getAgent":

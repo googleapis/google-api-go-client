@@ -1519,7 +1519,7 @@
       }
     }
   },
-  "revision": "20190604",
+  "revision": "20190607",
   "rootUrl": "https://dlp.googleapis.com/",
   "schemas": {
     "GooglePrivacyDlpV2Action": {
@@ -1782,9 +1782,11 @@
             "IMAGE_BMP",
             "IMAGE_PNG",
             "IMAGE_SVG",
-            "TEXT_UTF8"
+            "TEXT_UTF8",
+            "AVRO"
           ],
           "enumDescriptions": [
+            "",
             "",
             "",
             "",
@@ -1953,14 +1955,16 @@
             "Includes all files.",
             "Includes all file extensions not covered by text file types.",
             "Included file extensions:\n  asc, brf, c, cc, cpp, csv, cxx, c++, cs, css, dart, eml, go, h, hh, hpp,\n  hxx, h++, hs, html, htm, shtml, shtm, xhtml, lhs, ini, java, js, json,\n  ocaml, md, mkd, markdown, m, ml, mli, pl, pm, php, phtml, pht, py, pyw,\n  rb, rbw, rs, rc, scala, sh, sql, tex, txt, text, tsv, vcard, vcs, wml,\n  xml, xsl, xsd, yml, yaml.",
-            "Included file extensions:\n  bmp, gif, jpg, jpeg, jpe, png.\nbytes_limit_per_file has no effect on image files."
+            "Included file extensions:\n  bmp, gif, jpg, jpeg, jpe, png.\nbytes_limit_per_file has no effect on image files.",
+            "Included file extensions:\n  avro"
           ],
           "items": {
             "enum": [
               "FILE_TYPE_UNSPECIFIED",
               "BINARY_FILE",
               "TEXT_FILE",
-              "IMAGE"
+              "IMAGE",
+              "AVRO"
             ],
             "type": "string"
           },
@@ -2656,7 +2660,7 @@
       "type": "object"
     },
     "GooglePrivacyDlpV2DetectionRule": {
-      "description": "Rule for modifying a CustomInfoType to alter behavior under certain\ncircumstances, depending on the specific details of the rule. Not supported\nfor the `surrogate_type` custom info type.",
+      "description": "Deprecated; use `InspectionRuleSet` instead. Rule for modifying a\n`CustomInfoType` to alter behavior under certain circumstances, depending\non the specific details of the rule. Not supported for the `surrogate_type`\ncustom infoType.",
       "id": "GooglePrivacyDlpV2DetectionRule",
       "properties": {
         "hotwordRule": {
@@ -2731,8 +2735,7 @@
             "RUNNING",
             "DONE",
             "CANCELED",
-            "FAILED",
-            "WAITING_FOR_TP_CREATION"
+            "FAILED"
           ],
           "enumDescriptions": [
             "",
@@ -2740,8 +2743,7 @@
             "The job is currently running.",
             "The job is no longer running.",
             "The job was canceled before it could complete.",
-            "The job had an error and did not complete.",
-            "Job waiting on Tenant Project creation."
+            "The job had an error and did not complete."
           ],
           "type": "string"
         },

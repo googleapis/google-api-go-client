@@ -742,6 +742,7 @@ type GooglePrivacyDlpV2ByteContentItem struct {
 	//   "IMAGE_PNG"
 	//   "IMAGE_SVG"
 	//   "TEXT_UTF8"
+	//   "AVRO"
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Data") to
@@ -1068,6 +1069,8 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	//   "IMAGE" - Included file extensions:
 	//   bmp, gif, jpg, jpeg, jpe, png.
 	// bytes_limit_per_file has no effect on image files.
+	//   "AVRO" - Included file extensions:
+	//   avro
 	FileTypes []string `json:"fileTypes,omitempty"`
 
 	// FilesLimitPercent: Limits the number of files to scan to this
@@ -2692,11 +2695,13 @@ func (s *GooglePrivacyDlpV2DeltaPresenceEstimationResult) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GooglePrivacyDlpV2DetectionRule: Rule for modifying a CustomInfoType
-// to alter behavior under certain
-// circumstances, depending on the specific details of the rule. Not
-// supported
-// for the `surrogate_type` custom info type.
+// GooglePrivacyDlpV2DetectionRule: Deprecated; use `InspectionRuleSet`
+// instead. Rule for modifying a
+// `CustomInfoType` to alter behavior under certain circumstances,
+// depending
+// on the specific details of the rule. Not supported for the
+// `surrogate_type`
+// custom infoType.
 type GooglePrivacyDlpV2DetectionRule struct {
 	// HotwordRule: Hotword-based detection rule.
 	HotwordRule *GooglePrivacyDlpV2HotwordRule `json:"hotwordRule,omitempty"`
@@ -2836,7 +2841,6 @@ type GooglePrivacyDlpV2DlpJob struct {
 	//   "DONE" - The job is no longer running.
 	//   "CANCELED" - The job was canceled before it could complete.
 	//   "FAILED" - The job had an error and did not complete.
-	//   "WAITING_FOR_TP_CREATION" - Job waiting on Tenant Project creation.
 	State string `json:"state,omitempty"`
 
 	// Type: The type of job.

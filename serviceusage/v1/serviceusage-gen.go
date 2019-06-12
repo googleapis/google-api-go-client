@@ -3461,8 +3461,6 @@ func (s *Mixin) MarshalJSON() ([]byte, error) {
 // provide a `list` method that returns the monitored resource
 // descriptors used
 // by the API.
-//
-// Next ID: 10
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might

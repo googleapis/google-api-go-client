@@ -325,6 +325,14 @@ type AddonsConfig struct {
 	HttpLoadBalancing *HttpLoadBalancing `json:"httpLoadBalancing,omitempty"`
 
 	// KubernetesDashboard: Configuration for the Kubernetes Dashboard.
+	// This addon is deprecated, and will be disabled in 1.15. It is
+	// recommended
+	// to use the Cloud Console to manage and monitor your Kubernetes
+	// clusters,
+	// workloads and applications. For more information,
+	// see:
+	// https://cloud.google.com/kubernetes-engine/docs/concepts/dashboar
+	// ds
 	KubernetesDashboard *KubernetesDashboard `json:"kubernetesDashboard,omitempty"`
 
 	// NetworkPolicyConfig: Configuration for NetworkPolicy. This only
@@ -2180,6 +2188,12 @@ type NodeConfig struct {
 	//  "kube-env"
 	//  "startup-script"
 	//  "user-data"
+	//  "disable-address-manager"
+	//  "windows-startup-script-ps1"
+	//  "common-psm1"
+	//  "k8s-node-setup-psm1"
+	//  "install-ssh-psm1"
+	//  "user-profile-psm1"
 	//
 	// Values are free-form strings, and only have meaning as interpreted
 	// by

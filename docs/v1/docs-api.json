@@ -209,7 +209,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190604",
   "rootUrl": "https://docs.googleapis.com/",
   "schemas": {
     "AutoText": {
@@ -945,7 +945,7 @@
         },
         "size": {
           "$ref": "Size",
-          "description": "The size of the embedded object."
+          "description": "The visible size of the image after cropping."
         },
         "title": {
           "description": "The title of the embedded object. The `title` and `description` are both\ncombined to display alt text.",
@@ -1254,7 +1254,7 @@
         },
         "cropProperties": {
           "$ref": "CropProperties",
-          "description": "The crop properties of the image.\n\nAfter cropping, the image will be stretched to fit in its container."
+          "description": "The crop properties of the image."
         },
         "sourceUri": {
           "description": "The source URI is the URI used to insert the image. The source URI can be\nempty.",
@@ -3113,12 +3113,12 @@
       "type": "object"
     },
     "TableCellBorder": {
-      "description": "A border around a table cell.\n\nTable cell borders cannot be transparent. To hide a table cell border, make\nits width 0.",
+      "description": "A border around a table cell.",
       "id": "TableCellBorder",
       "properties": {
         "color": {
           "$ref": "OptionalColor",
-          "description": "The color of the border.\n\nThis color cannot be transparent."
+          "description": "The color of the border."
         },
         "dashStyle": {
           "description": "The dash style of the border.",

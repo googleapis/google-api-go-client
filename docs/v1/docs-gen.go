@@ -1499,7 +1499,7 @@ type EmbeddedObject struct {
 	// MarginTop: The top margin of the embedded object.
 	MarginTop *Dimension `json:"marginTop,omitempty"`
 
-	// Size: The size of the embedded object.
+	// Size: The visible size of the image after cropping.
 	Size *Size `json:"size,omitempty"`
 
 	// Title: The title of the embedded object. The `title` and
@@ -2011,8 +2011,6 @@ type ImageProperties struct {
 	Contrast float64 `json:"contrast,omitempty"`
 
 	// CropProperties: The crop properties of the image.
-	//
-	// After cropping, the image will be stretched to fit in its container.
 	CropProperties *CropProperties `json:"cropProperties,omitempty"`
 
 	// SourceUri: The source URI is the URI used to insert the image. The
@@ -5570,14 +5568,8 @@ func (s *TableCell) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellBorder: A border around a table cell.
-//
-// Table cell borders cannot be transparent. To hide a table cell
-// border, make
-// its width 0.
 type TableCellBorder struct {
 	// Color: The color of the border.
-	//
-	// This color cannot be transparent.
 	Color *OptionalColor `json:"color,omitempty"`
 
 	// DashStyle: The dash style of the border.

@@ -585,7 +585,7 @@ type CloudFunction struct {
 	//
 	// Possible values:
 	//   "CLOUD_FUNCTION_STATUS_UNSPECIFIED" - Not specified. Invalid state.
-	//   "ACTIVE" - Function has been succesfully deployed and is serving.
+	//   "ACTIVE" - Function has been successfully deployed and is serving.
 	//   "OFFLINE" - Function deployment failed and the function isn’t
 	// serving.
 	//   "DEPLOY_IN_PROGRESS" - Function is being created or updated.

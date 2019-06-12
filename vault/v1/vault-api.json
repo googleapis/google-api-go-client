@@ -1024,7 +1024,7 @@
       }
     }
   },
-  "revision": "20190411",
+  "revision": "20190610",
   "rootUrl": "https://vault.googleapis.com/",
   "schemas": {
     "AccountInfo": {
@@ -1203,6 +1203,10 @@
       "description": "Drive search advanced options",
       "id": "DriveOptions",
       "properties": {
+        "includeSharedDrives": {
+          "description": "Set to true to include shared drive.",
+          "type": "boolean"
+        },
         "includeTeamDrives": {
           "description": "Set to true to include Team Drive.",
           "type": "boolean"
@@ -1441,6 +1445,10 @@
       "description": "Query options for Drive holds.",
       "id": "HeldDriveQuery",
       "properties": {
+        "includeSharedDriveFiles": {
+          "description": "If true, include files in shared drives in the hold.",
+          "type": "boolean"
+        },
         "includeTeamDriveFiles": {
           "description": "If true, include files in Team Drives in the hold.",
           "type": "boolean"
@@ -1833,6 +1841,28 @@
           "$ref": "MailOptions",
           "description": "For mail search, specify more options in this field."
         },
+        "method": {
+          "description": "The search method to use. This field is similar to the search_method field\nbut is introduced to support shared drives. It supports all\nsearch method types. In case the search_method is TEAM_DRIVE the response\nof this field will be SHARED_DRIVE only.",
+          "enum": [
+            "SEARCH_METHOD_UNSPECIFIED",
+            "ACCOUNT",
+            "ORG_UNIT",
+            "TEAM_DRIVE",
+            "ENTIRE_ORG",
+            "ROOM",
+            "SHARED_DRIVE"
+          ],
+          "enumDescriptions": [
+            "A search method must be specified. If a request does not specify a\nsearch method, it will be rejected.",
+            "Will search all accounts provided in account_info.",
+            "Will search all accounts in the OU specified in org_unit_info.",
+            "Will search for all accounts in the Team Drive specified in\nteam_drive_info.",
+            "Will search for all accounts in the organization.\nNo need to set account_info or org_unit_info.",
+            "Will search in the Room specified in\nhangout_chats_info. (read-only)",
+            "Will search for all accounts in the shared drive specified in\nshared_drive_info."
+          ],
+          "type": "string"
+        },
         "orgUnitInfo": {
           "$ref": "OrgUnitInfo",
           "description": "When 'ORG_UNIT' is chosen as as search method, org_unit_info needs\nto be specified."
@@ -1845,7 +1875,8 @@
             "ORG_UNIT",
             "TEAM_DRIVE",
             "ENTIRE_ORG",
-            "ROOM"
+            "ROOM",
+            "SHARED_DRIVE"
           ],
           "enumDescriptions": [
             "A search method must be specified. If a request does not specify a\nsearch method, it will be rejected.",
@@ -1853,9 +1884,14 @@
             "Will search all accounts in the OU specified in org_unit_info.",
             "Will search for all accounts in the Team Drive specified in\nteam_drive_info.",
             "Will search for all accounts in the organization.\nNo need to set account_info or org_unit_info.",
-            "Will search in the Room specified in\nhangout_chats_info. (read-only)"
+            "Will search in the Room specified in\nhangout_chats_info. (read-only)",
+            "Will search for all accounts in the shared drive specified in\nshared_drive_info."
           ],
           "type": "string"
+        },
+        "sharedDriveInfo": {
+          "$ref": "SharedDriveInfo",
+          "description": "When 'SHARED_DRIVE' is chosen as search method, shared_drive_info needs\nto be specified."
         },
         "startTime": {
           "description": "The start time range for the search query. These timestamps are in GMT and\nrounded down to the start of the given date.",
@@ -1957,6 +1993,20 @@
         "savedQueryId": {
           "description": "A unique identifier for the saved query.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SharedDriveInfo": {
+      "description": "Shared drives to search",
+      "id": "SharedDriveInfo",
+      "properties": {
+        "sharedDriveIds": {
+          "description": "List of Shared drive ids, as provided by \u003ca\nhref=\"https://developers.google.com/drive\"\u003eDrive API\u003c/a\u003e.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

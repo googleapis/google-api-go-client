@@ -824,6 +824,226 @@
         }
       }
     },
+    "routines": {
+      "methods": {
+        "delete": {
+          "description": "Deletes the routine specified by routineId from the dataset.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}",
+          "httpMethod": "DELETE",
+          "id": "bigquery.routines.delete",
+          "parameterOrder": [
+            "projectId",
+            "datasetId",
+            "routineId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Dataset ID of the routine to delete",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Project ID of the routine to delete",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "routineId": {
+              "description": "Routine ID of the routine to delete",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/routines/{+routineId}",
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "get": {
+          "description": "Gets the specified routine resource by routine ID.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}",
+          "httpMethod": "GET",
+          "id": "bigquery.routines.get",
+          "parameterOrder": [
+            "projectId",
+            "datasetId",
+            "routineId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Dataset ID of the requested routine",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "fieldMask": {
+              "description": "If set, only the Routine fields in the field mask are returned in the\nresponse. If unset, all Routine fields are returned.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Project ID of the requested routine",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "routineId": {
+              "description": "Routine ID of the requested routine",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/routines/{+routineId}",
+          "response": {
+            "$ref": "Routine"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ]
+        },
+        "insert": {
+          "description": "Creates a new routine in the dataset.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines",
+          "httpMethod": "POST",
+          "id": "bigquery.routines.insert",
+          "parameterOrder": [
+            "projectId",
+            "datasetId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Dataset ID of the new routine",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Project ID of the new routine",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/routines",
+          "request": {
+            "$ref": "Routine"
+          },
+          "response": {
+            "$ref": "Routine"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        },
+        "list": {
+          "description": "Lists all routines in the specified dataset. Requires the READER dataset\nrole.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines",
+          "httpMethod": "GET",
+          "id": "bigquery.routines.list",
+          "parameterOrder": [
+            "projectId",
+            "datasetId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Dataset ID of the routines to list",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "maxResults": {
+              "description": "The maximum number of results per page.",
+              "format": "uint32",
+              "location": "query",
+              "type": "integer"
+            },
+            "pageToken": {
+              "description": "Page token, returned by a previous call, to request the next page of\nresults",
+              "location": "query",
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Project ID of the routines to list",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/routines",
+          "response": {
+            "$ref": "ListRoutinesResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/cloud-platform.read-only"
+          ]
+        },
+        "update": {
+          "description": "Updates information in an existing routine. The update method replaces the\nentire Routine resource.",
+          "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}",
+          "httpMethod": "PUT",
+          "id": "bigquery.routines.update",
+          "parameterOrder": [
+            "projectId",
+            "datasetId",
+            "routineId"
+          ],
+          "parameters": {
+            "datasetId": {
+              "description": "Dataset ID of the routine to update",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "projectId": {
+              "description": "Project ID of the routine to update",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "routineId": {
+              "description": "Routine ID of the routine to update",
+              "location": "path",
+              "pattern": "^[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{+projectId}/datasets/{+datasetId}/routines/{+routineId}",
+          "request": {
+            "$ref": "Routine"
+          },
+          "response": {
+            "$ref": "Routine"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/bigquery",
+            "https://www.googleapis.com/auth/cloud-platform"
+          ]
+        }
+      }
+    },
     "tabledata": {
       "methods": {
         "insertAll": {
@@ -1174,7 +1394,7 @@
       }
     }
   },
-  "revision": "20190530",
+  "revision": "20190609",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "AggregateClassificationMetrics": {
@@ -1215,6 +1435,51 @@
           "description": "Threshold at which the metrics are computed. For binary\nclassification models this is the positive class threshold.\nFor multi-class classfication models this is the confidence\nthreshold.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Argument": {
+      "description": "Input/output argument of a function or a stored procedure.",
+      "id": "Argument",
+      "properties": {
+        "argumentKind": {
+          "description": "Optional. Defaults to FIXED_TYPE.",
+          "enum": [
+            "ARGUMENT_KIND_UNSPECIFIED",
+            "FIXED_TYPE",
+            "ANY_TYPE"
+          ],
+          "enumDescriptions": [
+            "",
+            "The argument is a variable with fully specified type, which can be a\nstruct or an array, but not a table.",
+            "The argument is any type, including struct or array, but not a table.\nTo be added: FIXED_TABLE, ANY_TABLE"
+          ],
+          "type": "string"
+        },
+        "dataType": {
+          "$ref": "StandardSqlDataType",
+          "description": "Required unless argument_kind = ANY_TYPE."
+        },
+        "mode": {
+          "description": "Optional. Specifies whether the argument is input or output.\nCan be set for procedures only.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "IN",
+            "OUT",
+            "INOUT"
+          ],
+          "enumDescriptions": [
+            "",
+            "The argument is input-only.",
+            "The argument is output-only.",
+            "The argument is both an input and an output."
+          ],
+          "type": "string"
+        },
+        "name": {
+          "description": "Optional. The name of this argument. Can be absent for function return\nargument.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -3027,6 +3292,23 @@
       },
       "type": "object"
     },
+    "ListRoutinesResponse": {
+      "id": "ListRoutinesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token to request the next page of results.",
+          "type": "string"
+        },
+        "routines": {
+          "description": "Routines in the requested dataset. Only the following fields are populated:\netag, project_id, dataset_id, routine_id, routine_type, creation_time,\nlast_modified_time, language.",
+          "items": {
+            "$ref": "Routine"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "LocationMetadata": {
       "description": "BigQuery-specific metadata about a location. This will be set on\ngoogle.cloud.location.Location.metadata in Cloud Location API\nresponses.",
       "id": "LocationMetadata",
@@ -3567,6 +3849,81 @@
           "description": "R^2 score.",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Routine": {
+      "description": "A user-defined function or a stored procedure.",
+      "id": "Routine",
+      "properties": {
+        "arguments": {
+          "description": "Optional.",
+          "items": {
+            "$ref": "Argument"
+          },
+          "type": "array"
+        },
+        "creationTime": {
+          "description": "Output only. The time when this routine was created, in milliseconds since\nthe epoch.",
+          "format": "int64",
+          "type": "string"
+        },
+        "definitionBody": {
+          "description": "Required. The body of the routine.\nFor functions, this is the expression in the AS clause.\nIf language=SQL, it is the substring inside (but excluding) the\nparentheses. For example, for the function created with the following\nstatement\n  create function JoinLines(x string, y string) as (concat(x, \"\\n\", y))\ndefinition_body = r'concat(x, \"\\n\", y)' (\\n is not replaced with\nlinebreak).\nIf language=JAVASCRIPT, it is the evaluated string in the AS clause.\nFor example, for the function created with the following statement\n  CREATE FUNCTION f() RETURNS STRING LANGUAGE js AS 'return \"\\n\";\\n'\ndefinition_body = 'return \"\\n\";\\n' (both \\n are replaced with\nlinebreaks).",
+          "type": "string"
+        },
+        "etag": {
+          "description": "Output only. A hash of this resource.",
+          "type": "string"
+        },
+        "importedLibraries": {
+          "description": "Optional. If language = \"JAVASCRIPT\", this field stores the path of the\nimported JAVASCRIPT libraries.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "language": {
+          "description": "Optional. Defaults to \"SQL\".",
+          "enum": [
+            "LANGUAGE_UNSPECIFIED",
+            "SQL",
+            "JAVASCRIPT"
+          ],
+          "enumDescriptions": [
+            "",
+            "SQL language.",
+            "JavaScript language."
+          ],
+          "type": "string"
+        },
+        "lastModifiedTime": {
+          "description": "Output only. The time when this routine was last modified, in milliseconds\nsince the epoch.",
+          "format": "int64",
+          "type": "string"
+        },
+        "returnType": {
+          "$ref": "StandardSqlDataType",
+          "description": "Optional if language = \"SQL\"; required otherwise.\nIf absent, the return type is inferred from definition_body at query time\nin each query that references this routine. If present, then the evaluated\nresult will be cast to the specified returned type at query time.\n\nFor example, for the functions created with the following statements\n  CREATE FUNCTION Add(x FLOAT64, y FLOAT64) RETURNS FLOAT64 AS (x + y);\n  CREATE FUNCTION Increment(x FLOAT64) AS (Add(x, 1));\n  CREATE FUNCTION Decrement(x FLOAT64) RETURNS FLOAT64 AS (Add(x, -1));\nThe return_type is {type_kind: \"FLOAT64\"} for Add and Decrement, and\nis absent for Increment (inferred as FLOAT64 at query time).\nSuppose the function Add is replaced by\n  CREATE OR REPLACE FUNCTION Add(x INT64, y INT64) AS (x + y);\nThen the inferred return type of Increment is automatically changed to\nINT64 at query time, while the return type of Decrement remains FLOAT64."
+        },
+        "routineReference": {
+          "$ref": "RoutineReference",
+          "description": "Required. Reference describing the ID of this routine."
+        },
+        "routineType": {
+          "description": "Required.",
+          "enum": [
+            "ROUTINE_TYPE_UNSPECIFIED",
+            "SCALAR_FUNCTION",
+            "PROCEDURE"
+          ],
+          "enumDescriptions": [
+            "",
+            "Non-builtin permanent scalar function.",
+            "Stored procedure."
+          ],
+          "type": "string"
         }
       },
       "type": "object"

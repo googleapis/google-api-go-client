@@ -1358,7 +1358,7 @@
       }
     }
   },
-  "revision": "20190503",
+  "revision": "20190516",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "BeginTransactionRequest": {
@@ -2370,9 +2370,9 @@
           ],
           "enumDescriptions": [
             "Not specified.",
-            "Read-write replicas support both reads and writes. These replicas:\n* Maintain a full copy of your data.\n* Serve reads.\n* Can vote whether to commit a write.\n* Participate in leadership election.\n* Are eligible to become a leader.",
-            "Read-only replicas only support reads (not writes). Read-only replicas:\n* Maintain a full copy of your data.\n* Serve reads.\n* Do not participate in voting to commit writes.\n* Are not eligible to become a leader.",
-            "Witness replicas don’t support reads but do participate in voting to\ncommit writes. Witness replicas:\n* Do not maintain a full copy of data.\n* Do not serve reads.\n* Vote whether to commit writes.\n* Participate in leader election but are not eligible to become leader."
+            "Read-write replicas support both reads and writes. These replicas:\n\n* Maintain a full copy of your data.\n* Serve reads.\n* Can vote whether to commit a write.\n* Participate in leadership election.\n* Are eligible to become a leader.",
+            "Read-only replicas only support reads (not writes). Read-only replicas:\n\n* Maintain a full copy of your data.\n* Serve reads.\n* Do not participate in voting to commit writes.\n* Are not eligible to become a leader.",
+            "Witness replicas don't support reads but do participate in voting to\ncommit writes. Witness replicas:\n\n* Do not maintain a full copy of data.\n* Do not serve reads.\n* Vote whether to commit writes.\n* Participate in leader election but are not eligible to become leader."
           ],
           "type": "string"
         }

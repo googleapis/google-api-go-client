@@ -2688,6 +2688,7 @@ type ReplicaInfo struct {
 	//   "TYPE_UNSPECIFIED" - Not specified.
 	//   "READ_WRITE" - Read-write replicas support both reads and writes.
 	// These replicas:
+	//
 	// * Maintain a full copy of your data.
 	// * Serve reads.
 	// * Can vote whether to commit a write.
@@ -2695,13 +2696,15 @@ type ReplicaInfo struct {
 	// * Are eligible to become a leader.
 	//   "READ_ONLY" - Read-only replicas only support reads (not writes).
 	// Read-only replicas:
+	//
 	// * Maintain a full copy of your data.
 	// * Serve reads.
 	// * Do not participate in voting to commit writes.
 	// * Are not eligible to become a leader.
-	//   "WITNESS" - Witness replicas don’t support reads but do
-	// participate in voting to
+	//   "WITNESS" - Witness replicas don't support reads but do participate
+	// in voting to
 	// commit writes. Witness replicas:
+	//
 	// * Do not maintain a full copy of data.
 	// * Do not serve reads.
 	// * Vote whether to commit writes.

@@ -539,7 +539,7 @@
       }
     }
   },
-  "revision": "20190529",
+  "revision": "20190521",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -726,7 +726,7 @@
           ],
           "enumDescriptions": [
             "Not specified. Invalid state.",
-            "Function has been successfully deployed and is serving.",
+            "Function has been succesfully deployed and is serving.",
             "Function deployment failed and the function isn’t serving.",
             "Function is being created or updated.",
             "Function is being deleted.",

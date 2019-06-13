@@ -400,7 +400,7 @@
       }
     }
   },
-  "revision": "20190521",
+  "revision": "20190501",
   "rootUrl": "https://cloudasset.googleapis.com/",
   "schemas": {
     "Asset": {
@@ -606,7 +606,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should be a resource name ending with `operations/{unique_id}`.",
+          "description": "The server-assigned name, which is only unique within the same service that\noriginally returns it. If you use the default HTTP mapping, the\n`name` should have the format of `operations/some/unique/name`.",
           "type": "string"
         },
         "response": {

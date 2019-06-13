@@ -5446,10 +5446,14 @@ type OrderShipment struct {
 	// - "lasership"
 	// - "mpx"
 	// - "uds"
+	// - "efw"
 	//
 	// Acceptable values for FR are:
 	// - "colissimo"
 	// - "chronopost"
+	// - "gls"
+	// - "dpd"
+	// - "bpost"
 	Carrier string `json:"carrier,omitempty"`
 
 	// CreationDate: Date on which the shipment has been created, in ISO

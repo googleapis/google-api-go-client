@@ -6448,7 +6448,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForInstancesCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^instances$",
 	//       "required": true,
@@ -6572,7 +6572,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForSeriesCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`series`).",
+	//       "description": "The path of the SearchForSeries DICOMweb request(e.g., `series` or\n`studies/{study_uid}/series`).",
 	//       "location": "path",
 	//       "pattern": "^series$",
 	//       "required": true,
@@ -6697,7 +6697,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSearchForStudiesCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies`).",
+	//       "description": "The path of the SearchForStudies DICOMweb request (e.g., `studies`).",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
@@ -6951,7 +6951,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStoreInstancesCall) Do(opts ...goog
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}`).",
+	//       "description": "The path of the StoreInstances DICOMweb request (e.g.,\n`studies/[{study_id}]`). Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies$",
 	//       "required": true,
@@ -7245,7 +7245,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesDeleteCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}`).",
+	//       "description": "The path of the DeleteStudy request (e.g., `studies/{study_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
@@ -7371,7 +7371,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveMetadataCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}/metadata`.",
+	//       "description": "The path of the RetrieveStudyMetadata DICOMweb request (e.g.,\n`studies/{study_id}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/metadata$",
 	//       "required": true,
@@ -7496,7 +7496,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesRetrieveStudyCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}`).",
+	//       "description": "The path of the RetrieveStudy DICOMweb request (e.g.,\n`studies/{study_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
@@ -7621,7 +7621,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForInstancesCall) Do(o
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/instances$",
 	//       "required": true,
@@ -7745,7 +7745,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSearchForSeriesCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`series`).",
+	//       "description": "The path of the SearchForSeries DICOMweb request(e.g., `series` or\n`studies/{study_uid}/series`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series$",
 	//       "required": true,
@@ -7858,7 +7858,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesStoreInstancesCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}`).",
+	//       "description": "The path of the StoreInstances DICOMweb request (e.g.,\n`studies/[{study_id}]`). Note that the `study_uid` is optional.",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+$",
 	//       "required": true,
@@ -8005,7 +8005,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesDeleteCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}/series/{series_id}`).",
+	//       "description": "The path of the DeleteSeries request (e.g.,\n`studies/{study_id}/series/{series_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
@@ -8131,7 +8131,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveMetadataCall) 
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}/series/{series_id}/metadata`.",
+	//       "description": "The path of the RetrieveSeriesMetadata DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/metadata$",
 	//       "required": true,
@@ -8256,7 +8256,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesRetrieveSeriesCall) Do
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g., `studies/{study_id}/series/{series_id}`).",
+	//       "description": "The path of the RetrieveSeries DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+$",
 	//       "required": true,
@@ -8381,7 +8381,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesSearchForInstancesCall
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`instances`).",
+	//       "description": "The path of the SearchForInstancesRequest DICOMweb request (e.g.,\n`instances` or `series/{series_uid}/instances` or\n`studies/{study_uid}/instances`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances$",
 	//       "required": true,
@@ -8525,7 +8525,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesDeleteCall) D
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
+	//       "description": "The path of the DeleteInstance request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -8651,7 +8651,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveInsta
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
+	//       "description": "The path of the RetrieveInstance DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,
@@ -8779,7 +8779,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveMetad
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/metadata`).",
+	//       "description": "The path of the RetrieveInstanceMetadata DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/metadata`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/metadata$",
 	//       "required": true,
@@ -8905,7 +8905,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesRetrieveRende
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/rendered`).",
+	//       "description": "The path of the RetrieveRenderedInstance DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/rendered`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
 	//       "required": true,
@@ -9031,7 +9031,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}`).",
+	//       "description": "The path of the RetrieveFrames DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
 	//       "required": true,
@@ -9159,7 +9159,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresStudiesSeriesInstancesFramesRetriev
 	//   ],
 	//   "parameters": {
 	//     "dicomWebPath": {
-	//       "description": "The path of the DICOMweb request, as specified in the STOW-RS, WADO-RS, or\nQIDO-RS standard (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}/rendered`).",
+	//       "description": "The path of the RetrieveRenderedFrames DICOMweb request (e.g.,\n`studies/{study_id}/series/{series_id}/instances/{instance_id}/frames/{frame_list}/rendered`).",
 	//       "location": "path",
 	//       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
 	//       "required": true,
@@ -12660,8 +12660,6 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // generic
 // GCP error might be returned instead.
 //
-// # Search Parameters
-//
 // The server's capability statement, retrieved through
 // capabilities, indicates what search parameters
 // are supported on each FHIR resource. A list of all search
@@ -12671,21 +12669,10 @@ type ProjectsLocationsDatasetsFhirStoresFhirSearchCall struct {
 // Registry](http://hl7.org/implement/standards/fhir/STU3/searc
 // hparameter-registry.html).
 //
-// # Search Modifiers
-//
-// Modifier   | Supported
-// ----------- | ---------
-// `:missing`  | Yes
-// `:exact`    | Yes
-// `:contains` | Yes
-// `:text`     | Yes
-// `:in`       | Yes
-// `:not-in`   | Yes
-// `:above`    | Yes
-// `:below`    | Yes
-// `:[type]`   | Yes
-// `:not`      | Yes
-// `:recurse`  | No
+// Supported search modifiers: `:missing`, `:exact`, `:contains`,
+// `:text`,
+// `:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and
+// `:recurse`.
 func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Search(parent string, searchresourcesrequest *SearchResourcesRequest) *ProjectsLocationsDatasetsFhirStoresFhirSearchCall {
 	c := &ProjectsLocationsDatasetsFhirStoresFhirSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12750,7 +12737,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirSearchCall) Do(opts ...googleapi
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
 	// {
-	//   "description": "Searches for resources in the given FHIR store according to criteria\nspecified as query parameters.\n\nImplements the FHIR standard [search\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#search)\nusing the search semantics described in the [FHIR Search\nspecification](http://hl7.org/implement/standards/fhir/STU3/search.html).\n\nSupports three methods of search defined by the specification:\n\n*  `GET [base]?[parameters]` to search across all resources.\n*  `GET [base]/[type]?[parameters]` to search resources of a specified\ntype.\n*  `POST [base]/[type]/_search?[parameters]` as an alternate form having\nthe same semantics as the `GET` method.\n\nThe `GET` methods do not support compartment searches. The `POST` method\ndoes not support `application/x-www-form-urlencoded` search parameters.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\nsearch.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.\n\n# Search Parameters\n\nThe server's capability statement, retrieved through\ncapabilities, indicates what search parameters\nare supported on each FHIR resource. A list of all search parameters\ndefined by the specification can be found in the [FHIR Search Parameter\nRegistry](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html).\n\n# Search Modifiers\n\nModifier   | Supported\n----------- | ---------\n`:missing`  | Yes\n`:exact`    | Yes\n`:contains` | Yes\n`:text`     | Yes\n`:in`       | Yes\n`:not-in`   | Yes\n`:above`    | Yes\n`:below`    | Yes\n`:[type]`   | Yes\n`:not`      | Yes\n`:recurse`  | No",
+	//   "description": "Searches for resources in the given FHIR store according to criteria\nspecified as query parameters.\n\nImplements the FHIR standard [search\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#search)\nusing the search semantics described in the [FHIR Search\nspecification](http://hl7.org/implement/standards/fhir/STU3/search.html).\n\nSupports three methods of search defined by the specification:\n\n*  `GET [base]?[parameters]` to search across all resources.\n*  `GET [base]/[type]?[parameters]` to search resources of a specified\ntype.\n*  `POST [base]/[type]/_search?[parameters]` as an alternate form having\nthe same semantics as the `GET` method.\n\nThe `GET` methods do not support compartment searches. The `POST` method\ndoes not support `application/x-www-form-urlencoded` search parameters.\n\nOn success, the response body will contain a JSON-encoded representation\nof a `Bundle` resource of type `searchset`, containing the results of the\nsearch.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.\n\nThe server's capability statement, retrieved through\ncapabilities, indicates what search parameters\nare supported on each FHIR resource. A list of all search parameters\ndefined by the specification can be found in the [FHIR Search Parameter\nRegistry](http://hl7.org/implement/standards/fhir/STU3/searchparameter-registry.html).\n\nSupported search modifiers: `:missing`, `:exact`, `:contains`, `:text`,\n`:in`, `:not-in`, `:above`, `:below`, `:[type]`, `:not`, and `:recurse`.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/_search",
 	//   "httpMethod": "POST",
 	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.search",

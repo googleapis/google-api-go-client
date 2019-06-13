@@ -4192,6 +4192,9 @@ func (s *OrderDeliveryDetails) MarshalJSON() ([]byte, error) {
 }
 
 type OrderLineItem struct {
+	// Adjustments: Price and tax adjustments applied on the line item.
+	Adjustments []*OrderLineItemAdjustment `json:"adjustments,omitempty"`
+
 	// Annotations: Annotations that are attached to the line item.
 	Annotations []*OrderMerchantProvidedAnnotation `json:"annotations,omitempty"`
 
@@ -4243,7 +4246,7 @@ type OrderLineItem struct {
 	// will be $4.
 	Tax *Price `json:"tax,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "Adjustments") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4251,7 +4254,7 @@ type OrderLineItem struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Annotations") to include
+	// NullFields is a list of field names (e.g. "Adjustments") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -4262,6 +4265,40 @@ type OrderLineItem struct {
 
 func (s *OrderLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod OrderLineItem
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type OrderLineItemAdjustment struct {
+	// PriceAdjustment: Adjustment for total price of the line item.
+	PriceAdjustment *Price `json:"priceAdjustment,omitempty"`
+
+	// TaxAdjustment: Adjustment for total tax of the line item.
+	TaxAdjustment *Price `json:"taxAdjustment,omitempty"`
+
+	// Type: Type of this adjustment.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PriceAdjustment") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PriceAdjustment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OrderLineItemAdjustment) MarshalJSON() ([]byte, error) {
+	type NoMethod OrderLineItemAdjustment
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4822,10 +4859,14 @@ type OrderShipment struct {
 	// - "lasership"
 	// - "mpx"
 	// - "uds"
+	// - "efw"
 	//
 	// Acceptable values for FR are:
 	// - "colissimo"
 	// - "chronopost"
+	// - "gls"
+	// - "dpd"
+	// - "bpost"
 	Carrier string `json:"carrier,omitempty"`
 
 	// CreationDate: Date on which the shipment has been created, in ISO

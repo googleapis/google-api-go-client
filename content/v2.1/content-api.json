@@ -15,7 +15,7 @@
   "description": "Manages product items, inventory, and Merchant Center accounts for Google Shopping.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/shopping-content",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/jbCPNvl4QbL1NbUHBeaCm32fvYA\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/UTHvsJCCNRKQavdD3D9y7tFj2AU\"",
   "icons": {
     "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
     "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -2878,7 +2878,7 @@
       }
     }
   },
-  "revision": "20190531",
+  "revision": "20190607",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Account": {
@@ -5265,6 +5265,13 @@
     "OrderLineItem": {
       "id": "OrderLineItem",
       "properties": {
+        "adjustments": {
+          "description": "Price and tax adjustments applied on the line item.",
+          "items": {
+            "$ref": "OrderLineItemAdjustment"
+          },
+          "type": "array"
+        },
         "annotations": {
           "description": "Annotations that are attached to the line item.",
           "items": {
@@ -5339,6 +5346,24 @@
         "tax": {
           "$ref": "Price",
           "description": "Total tax amount for the line item. For example, if two items are purchased, and each have a cost tax of $2, the total tax amount will be $4."
+        }
+      },
+      "type": "object"
+    },
+    "OrderLineItemAdjustment": {
+      "id": "OrderLineItemAdjustment",
+      "properties": {
+        "priceAdjustment": {
+          "$ref": "Price",
+          "description": "Adjustment for total price of the line item."
+        },
+        "taxAdjustment": {
+          "$ref": "Price",
+          "description": "Adjustment for total tax of the line item."
+        },
+        "type": {
+          "description": "Type of this adjustment.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -5790,7 +5815,7 @@
       "id": "OrderShipment",
       "properties": {
         "carrier": {
-          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\"",
+          "description": "The carrier handling the shipment.\n\nAcceptable values for US are:  \n- \"gsx\" \n- \"ups\" \n- \"usps\" \n- \"fedex\" \n- \"dhl\" \n- \"ecourier\" \n- \"cxt\" \n- \"google\" \n- \"ontrac\" \n- \"emsy\" \n- \"ont\" \n- \"deliv\" \n- \"dynamex\" \n- \"lasership\" \n- \"mpx\" \n- \"uds\" \n- \"efw\"  \n\nAcceptable values for FR are:  \n- \"colissimo\" \n- \"chronopost\" \n- \"gls\" \n- \"dpd\" \n- \"bpost\"",
           "type": "string"
         },
         "creationDate": {

@@ -15,7 +15,7 @@
   "description": "Accesses Android application developers' Google Play accounts.",
   "discoveryVersion": "v1",
   "documentationLink": "https://developers.google.com/android-publisher",
-  "etag": "\"VPK3KBfpaEgZ16pozGOoMYfKc0U/8jtYocl4SBqDCwvVXpDW5TPH4G8\"",
+  "etag": "\"9eZ1uxVRThTDhLJCZHhqs3eQWz4/6wK1DQB5FQzTd770d7wHRHVlGb4\"",
   "icons": {
     "x16": "https://www.google.com/images/icons/product/android-16.png",
     "x32": "https://www.google.com/images/icons/product/android-32.png"
@@ -2483,7 +2483,7 @@
       }
     }
   },
-  "revision": "20190416",
+  "revision": "20190611",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "Apk": {
@@ -3392,7 +3392,7 @@
           "type": "string"
         },
         "profileId": {
-          "description": "The profile id of the user when the subscription was purchased. Only present for purchases made with 'Subscribe with Google'.",
+          "description": "The Google profile id of the user when the subscription was purchased. Only present for purchases made with 'Subscribe with Google'.",
           "type": "string"
         },
         "profileName": {

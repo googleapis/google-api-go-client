@@ -114,6 +114,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Operations = NewOperationsService(s)
+	s.Projects = NewProjectsService(s)
 	s.Videos = NewVideosService(s)
 	return s, nil
 }
@@ -124,6 +125,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Operations *OperationsService
+
+	Projects *ProjectsService
 
 	Videos *VideosService
 }
@@ -137,10 +140,79 @@ func (s *Service) userAgent() string {
 
 func NewOperationsService(s *Service) *OperationsService {
 	rs := &OperationsService{s: s}
+	rs.Projects = NewOperationsProjectsService(s)
 	return rs
 }
 
 type OperationsService struct {
+	s *Service
+
+	Projects *OperationsProjectsService
+}
+
+func NewOperationsProjectsService(s *Service) *OperationsProjectsService {
+	rs := &OperationsProjectsService{s: s}
+	rs.Locations = NewOperationsProjectsLocationsService(s)
+	return rs
+}
+
+type OperationsProjectsService struct {
+	s *Service
+
+	Locations *OperationsProjectsLocationsService
+}
+
+func NewOperationsProjectsLocationsService(s *Service) *OperationsProjectsLocationsService {
+	rs := &OperationsProjectsLocationsService{s: s}
+	rs.Operations = NewOperationsProjectsLocationsOperationsService(s)
+	return rs
+}
+
+type OperationsProjectsLocationsService struct {
+	s *Service
+
+	Operations *OperationsProjectsLocationsOperationsService
+}
+
+func NewOperationsProjectsLocationsOperationsService(s *Service) *OperationsProjectsLocationsOperationsService {
+	rs := &OperationsProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type OperationsProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Locations = NewProjectsLocationsService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Locations *ProjectsLocationsService
+}
+
+func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
+	rs := &ProjectsLocationsService{s: s}
+	rs.Operations = NewProjectsLocationsOperationsService(s)
+	return rs
+}
+
+type ProjectsLocationsService struct {
+	s *Service
+
+	Operations *ProjectsLocationsOperationsService
+}
+
+func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperationsService {
+	rs := &ProjectsLocationsOperationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
@@ -917,6 +989,38 @@ func (s *GoogleCloudVideointelligenceV1ObjectTrackingAnnotation) UnmarshalJSON(d
 	return nil
 }
 
+// GoogleCloudVideointelligenceV1ObjectTrackingConfig: Config for
+// OBJECT_TRACKING.
+type GoogleCloudVideointelligenceV1ObjectTrackingConfig struct {
+	// Model: Model to use for object tracking.
+	// Supported values: "builtin/stable" (the default if unset)
+	// and
+	// "builtin/latest".
+	Model string `json:"model,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Model") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1ObjectTrackingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1ObjectTrackingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudVideointelligenceV1ObjectTrackingFrame: Video frame level
 // annotations for object detection and tracking. This field
 // stores per frame location, time offset, and confidence.
@@ -1282,6 +1386,12 @@ type GoogleCloudVideointelligenceV1TextDetectionConfig struct {
 	// Automatic language detection is performed if no hint is provided.
 	LanguageHints []string `json:"languageHints,omitempty"`
 
+	// Model: Model to use for text detection.
+	// Supported values: "builtin/stable" (the default if unset)
+	// and
+	// "builtin/latest".
+	Model string `json:"model,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "LanguageHints") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
@@ -1397,6 +1507,21 @@ func (s *GoogleCloudVideointelligenceV1TextSegment) UnmarshalJSON(data []byte) e
 // GoogleCloudVideointelligenceV1VideoAnnotationProgress: Annotation
 // progress for a single video.
 type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
+	// Feature: Specifies which feature is being tracked if the request
+	// contains more than
+	// one features.
+	//
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED" - Unspecified.
+	//   "LABEL_DETECTION" - Label detection. Detect objects, such as dog or
+	// flower.
+	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
+	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
+	//   "TEXT_DETECTION" - OCR text detection and tracking.
+	//   "OBJECT_TRACKING" - Object detection and tracking.
+	Feature string `json:"feature,omitempty"`
+
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
@@ -1406,13 +1531,18 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
+	// Segment: Specifies which segment is being tracked if the request
+	// contains more than
+	// one segments.
+	Segment *GoogleCloudVideointelligenceV1VideoSegment `json:"segment,omitempty"`
+
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// ForceSendFields is a list of field names (e.g. "Feature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1420,7 +1550,7 @@ type GoogleCloudVideointelligenceV1VideoAnnotationProgress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// NullFields is a list of field names (e.g. "Feature") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -1512,6 +1642,9 @@ type GoogleCloudVideointelligenceV1VideoContext struct {
 
 	// LabelDetectionConfig: Config for LABEL_DETECTION.
 	LabelDetectionConfig *GoogleCloudVideointelligenceV1LabelDetectionConfig `json:"labelDetectionConfig,omitempty"`
+
+	// ObjectTrackingConfig: Config for OBJECT_TRACKING.
+	ObjectTrackingConfig *GoogleCloudVideointelligenceV1ObjectTrackingConfig `json:"objectTrackingConfig,omitempty"`
 
 	// Segments: Video segments to annotate. The segments may overlap and
 	// are not required
@@ -2496,6 +2629,21 @@ func (s *GoogleCloudVideointelligenceV1beta2TextSegment) UnmarshalJSON(data []by
 // GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
+	// Feature: Specifies which feature is being tracked if the request
+	// contains more than
+	// one features.
+	//
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED" - Unspecified.
+	//   "LABEL_DETECTION" - Label detection. Detect objects, such as dog or
+	// flower.
+	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
+	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
+	//   "TEXT_DETECTION" - OCR text detection and tracking.
+	//   "OBJECT_TRACKING" - Object detection and tracking.
+	Feature string `json:"feature,omitempty"`
+
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
@@ -2505,13 +2653,18 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
+	// Segment: Specifies which segment is being tracked if the request
+	// contains more than
+	// one segments.
+	Segment *GoogleCloudVideointelligenceV1beta2VideoSegment `json:"segment,omitempty"`
+
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// ForceSendFields is a list of field names (e.g. "Feature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2519,7 +2672,7 @@ type GoogleCloudVideointelligenceV1beta2VideoAnnotationProgress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// NullFields is a list of field names (e.g. "Feature") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -3545,6 +3698,21 @@ func (s *GoogleCloudVideointelligenceV1p1beta1TextSegment) UnmarshalJSON(data []
 // GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
+	// Feature: Specifies which feature is being tracked if the request
+	// contains more than
+	// one features.
+	//
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED" - Unspecified.
+	//   "LABEL_DETECTION" - Label detection. Detect objects, such as dog or
+	// flower.
+	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
+	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
+	//   "TEXT_DETECTION" - OCR text detection and tracking.
+	//   "OBJECT_TRACKING" - Object detection and tracking.
+	Feature string `json:"feature,omitempty"`
+
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
@@ -3554,13 +3722,18 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
+	// Segment: Specifies which segment is being tracked if the request
+	// contains more than
+	// one segments.
+	Segment *GoogleCloudVideointelligenceV1p1beta1VideoSegment `json:"segment,omitempty"`
+
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// ForceSendFields is a list of field names (e.g. "Feature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -3568,7 +3741,7 @@ type GoogleCloudVideointelligenceV1p1beta1VideoAnnotationProgress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// NullFields is a list of field names (e.g. "Feature") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4594,6 +4767,21 @@ func (s *GoogleCloudVideointelligenceV1p2beta1TextSegment) UnmarshalJSON(data []
 // GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
+	// Feature: Specifies which feature is being tracked if the request
+	// contains more than
+	// one features.
+	//
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED" - Unspecified.
+	//   "LABEL_DETECTION" - Label detection. Detect objects, such as dog or
+	// flower.
+	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
+	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
+	//   "TEXT_DETECTION" - OCR text detection and tracking.
+	//   "OBJECT_TRACKING" - Object detection and tracking.
+	Feature string `json:"feature,omitempty"`
+
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
@@ -4603,13 +4791,18 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
+	// Segment: Specifies which segment is being tracked if the request
+	// contains more than
+	// one segments.
+	Segment *GoogleCloudVideointelligenceV1p2beta1VideoSegment `json:"segment,omitempty"`
+
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// ForceSendFields is a list of field names (e.g. "Feature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -4617,7 +4810,7 @@ type GoogleCloudVideointelligenceV1p2beta1VideoAnnotationProgress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// NullFields is a list of field names (e.g. "Feature") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -4886,6 +5079,59 @@ func (s *GoogleCloudVideointelligenceV1p3beta1AnnotateVideoResponse) MarshalJSON
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudVideointelligenceV1p3beta1DetectedAttribute: A generic
+// detected attribute represented by name in string format.
+type GoogleCloudVideointelligenceV1p3beta1DetectedAttribute struct {
+	// Confidence: Detected attribute confidence. Range [0, 1].
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Name: The name of the attribute, i.e. glasses, dark_glasses,
+	// mouth_open etc.
+	// A full list of supported type names will be provided in the document.
+	Name string `json:"name,omitempty"`
+
+	// Value: Text value of the detection result. For example, the value for
+	// "HairColor"
+	// can be "black", "blonde", etc.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Confidence") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Confidence") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1DetectedAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1DetectedAttribute
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1DetectedAttribute) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1DetectedAttribute
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // GoogleCloudVideointelligenceV1p3beta1Entity: Detected entity from
 // video analysis.
 type GoogleCloudVideointelligenceV1p3beta1Entity struct {
@@ -5137,6 +5383,49 @@ func (s *GoogleCloudVideointelligenceV1p3beta1LabelSegment) UnmarshalJSON(data [
 	}
 	s.Confidence = float64(s1.Confidence)
 	return nil
+}
+
+// GoogleCloudVideointelligenceV1p3beta1LogoRecognitionAnnotation:
+// Annotation corresponding to one detected, tracked and recognized logo
+// class.
+type GoogleCloudVideointelligenceV1p3beta1LogoRecognitionAnnotation struct {
+	// Entity: Entity category information to specify the logo class that
+	// all the logo
+	// tracks within this LogoRecognitionAnnotation are recognized as.
+	Entity *GoogleCloudVideointelligenceV1p3beta1Entity `json:"entity,omitempty"`
+
+	// Segments: All video segments where the recognized logo appears. There
+	// might be
+	// multiple instances of the same logo class appearing in one
+	// VideoSegment.
+	Segments []*GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segments,omitempty"`
+
+	// Tracks: All logo tracks where the recognized logo appears. Each track
+	// corresponds
+	// to one logo instance appearing in consecutive frames.
+	Tracks []*GoogleCloudVideointelligenceV1p3beta1Track `json:"tracks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Entity") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Entity") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1LogoRecognitionAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1LogoRecognitionAnnotation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudVideointelligenceV1p3beta1NormalizedBoundingBox:
@@ -5730,9 +6019,122 @@ func (s *GoogleCloudVideointelligenceV1p3beta1TextSegment) UnmarshalJSON(data []
 	return nil
 }
 
+// GoogleCloudVideointelligenceV1p3beta1TimestampedObject: For tracking
+// related features, such as LOGO_RECOGNITION,
+// FACE_DETECTION,
+// CELEBRITY_RECOGNITION, PERSON_DETECTION.
+// An object at time_offset with attributes, and located
+// with
+// normalized_bounding_box.
+type GoogleCloudVideointelligenceV1p3beta1TimestampedObject struct {
+	// Attributes: Optional. The attributes of the object in the bounding
+	// box.
+	Attributes []*GoogleCloudVideointelligenceV1p3beta1DetectedAttribute `json:"attributes,omitempty"`
+
+	// NormalizedBoundingBox: Normalized Bounding box in a frame, where the
+	// object is located.
+	NormalizedBoundingBox *GoogleCloudVideointelligenceV1p3beta1NormalizedBoundingBox `json:"normalizedBoundingBox,omitempty"`
+
+	// TimeOffset: Time-offset, relative to the beginning of the
+	// video,
+	// corresponding to the video frame for this object.
+	TimeOffset string `json:"timeOffset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1TimestampedObject) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1TimestampedObject
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudVideointelligenceV1p3beta1Track: A track of an object
+// instance.
+type GoogleCloudVideointelligenceV1p3beta1Track struct {
+	// Attributes: Optional. Attributes in the track level.
+	Attributes []*GoogleCloudVideointelligenceV1p3beta1DetectedAttribute `json:"attributes,omitempty"`
+
+	// Confidence: Optional. The confidence score of the tracked object.
+	Confidence float64 `json:"confidence,omitempty"`
+
+	// Segment: Video segment of a track.
+	Segment *GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segment,omitempty"`
+
+	// TimestampedObjects: The object with timestamp and attributes per
+	// frame in the track.
+	TimestampedObjects []*GoogleCloudVideointelligenceV1p3beta1TimestampedObject `json:"timestampedObjects,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty values are omitted from API requests. However, any non-pointer,
+	// non-interface field appearing in ForceSendFields will be sent to the
+	// server regardless of whether the field is empty or not. This may be
+	// used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Attributes") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1Track) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1Track
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudVideointelligenceV1p3beta1Track) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudVideointelligenceV1p3beta1Track
+	var s1 struct {
+		Confidence gensupport.JSONFloat64 `json:"confidence"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Confidence = float64(s1.Confidence)
+	return nil
+}
+
 // GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress:
 // Annotation progress for a single video.
 type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
+	// Feature: Specifies which feature is being tracked if the request
+	// contains more than
+	// one features.
+	//
+	// Possible values:
+	//   "FEATURE_UNSPECIFIED" - Unspecified.
+	//   "LABEL_DETECTION" - Label detection. Detect objects, such as dog or
+	// flower.
+	//   "SHOT_CHANGE_DETECTION" - Shot change detection.
+	//   "EXPLICIT_CONTENT_DETECTION" - Explicit content detection.
+	//   "SPEECH_TRANSCRIPTION" - Speech transcription.
+	//   "TEXT_DETECTION" - OCR text detection and tracking.
+	//   "OBJECT_TRACKING" - Object detection and tracking.
+	//   "LOGO_RECOGNITION" - Logo detection, tracking, and recognition.
+	Feature string `json:"feature,omitempty"`
+
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
@@ -5742,13 +6144,18 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	// 100 when fully processed.
 	ProgressPercent int64 `json:"progressPercent,omitempty"`
 
+	// Segment: Specifies which segment is being tracked if the request
+	// contains more than
+	// one segments.
+	Segment *GoogleCloudVideointelligenceV1p3beta1VideoSegment `json:"segment,omitempty"`
+
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
 	// UpdateTime: Time of the most recent update.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InputUri") to
+	// ForceSendFields is a list of field names (e.g. "Feature") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -5756,7 +6163,7 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationProgress struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InputUri") to include in
+	// NullFields is a list of field names (e.g. "Feature") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -5789,6 +6196,10 @@ type GoogleCloudVideointelligenceV1p3beta1VideoAnnotationResults struct {
 	// InputUri: Video file location in
 	// [Google Cloud Storage](https://cloud.google.com/storage/).
 	InputUri string `json:"inputUri,omitempty"`
+
+	// LogoRecognitionAnnotations: Annotations for list of logos detected,
+	// tracked and recognized in video.
+	LogoRecognitionAnnotations []*GoogleCloudVideointelligenceV1p3beta1LogoRecognitionAnnotation `json:"logoRecognitionAnnotations,omitempty"`
 
 	// ObjectAnnotations: Annotations for list of objects detected and
 	// tracked in video.
@@ -6029,7 +6440,8 @@ type GoogleLongrunningOperation struct {
 	// service that
 	// originally returns it. If you use the default HTTP mapping,
 	// the
-	// `name` should have the format of `operations/some/unique/name`.
+	// `name` should be a resource name ending with
+	// `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
 
 	// Response: The normal response of the operation in case of success.
@@ -6098,81 +6510,14 @@ type GoogleProtobufEmpty struct {
 // is suitable for
 // different programming environments, including REST APIs and RPC APIs.
 // It is
-// used by [gRPC](https://github.com/grpc). The error model is designed
-// to be:
+// used by [gRPC](https://github.com/grpc). Each `Status` message
+// contains
+// three pieces of data: error code, error message, and error
+// details.
 //
-// - Simple to use and understand for most users
-// - Flexible enough to meet unexpected needs
-//
-// # Overview
-//
-// The `Status` message contains three pieces of data: error code,
-// error
-// message, and error details. The error code should be an enum value
-// of
-// google.rpc.Code, but it may accept additional error codes if needed.
-// The
-// error message should be a developer-facing English message that
-// helps
-// developers *understand* and *resolve* the error. If a localized
-// user-facing
-// error message is needed, put the localized message in the error
-// details or
-// localize it in the client. The optional error details may contain
-// arbitrary
-// information about the error. There is a predefined set of error
-// detail types
-// in the package `google.rpc` that can be used for common error
-// conditions.
-//
-// # Language mapping
-//
-// The `Status` message is the logical representation of the error
-// model, but it
-// is not necessarily the actual wire format. When the `Status` message
-// is
-// exposed in different client libraries and different wire protocols,
-// it can be
-// mapped differently. For example, it will likely be mapped to some
-// exceptions
-// in Java, but more likely mapped to some error codes in C.
-//
-// # Other uses
-//
-// The error model and the `Status` message can be used in a variety
-// of
-// environments, either with or without APIs, to provide a
-// consistent developer experience across different
-// environments.
-//
-// Example uses of this error model include:
-//
-// - Partial errors. If a service needs to return partial errors to the
-// client,
-//     it may embed the `Status` in the normal response to indicate the
-// partial
-//     errors.
-//
-// - Workflow errors. A typical workflow has multiple steps. Each step
-// may
-//     have a `Status` message for error reporting.
-//
-// - Batch operations. If a client uses batch request and batch
-// response, the
-//     `Status` message should be used directly inside batch response,
-// one for
-//     each error sub-response.
-//
-// - Asynchronous operations. If an API call embeds asynchronous
-// operation
-//     results in its response, the status of those operations should
-// be
-//     represented directly using the `Status` message.
-//
-// - Logging. If some API errors are stored in logs, the message
-// `Status` could
-//     be used directly after any stripping needed for security/privacy
-// reasons.
+// You can find out more about this error model and how to work with it
+// in the
+// [API Design Guide](https://cloud.google.com/apis/design/errors).
 type GoogleRpcStatus struct {
 	// Code: The status code, which should be an enum value of
 	// google.rpc.Code.
@@ -6216,12 +6561,11 @@ func (s *GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 // method id "videointelligence.operations.cancel":
 
 type OperationsCancelCall struct {
-	s                                       *Service
-	name                                    string
-	googlelongrunningCanceloperationrequest *GoogleLongrunningCancelOperationRequest
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
 }
 
 // Cancel: Starts asynchronous cancellation on a long-running operation.
@@ -6242,10 +6586,9 @@ type OperationsCancelCall struct {
 // an Operation.error value with a google.rpc.Status.code of
 // 1,
 // corresponding to `Code.CANCELLED`.
-func (r *OperationsService) Cancel(name string, googlelongrunningCanceloperationrequest *GoogleLongrunningCancelOperationRequest) *OperationsCancelCall {
+func (r *OperationsService) Cancel(name string) *OperationsCancelCall {
 	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
-	c.googlelongrunningCanceloperationrequest = googlelongrunningCanceloperationrequest
 	return c
 }
 
@@ -6281,11 +6624,6 @@ func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
 	}
 	reqHeaders.Set("User-Agent", c.s.userAgent())
 	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningCanceloperationrequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/operations/{+name}:cancel")
@@ -6356,9 +6694,6 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobuf
 	//     }
 	//   },
 	//   "path": "v1/operations/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleLongrunning_CancelOperationRequest"
-	//   },
 	//   "response": {
 	//     "$ref": "GoogleProtobuf_Empty"
 	//   },
@@ -6651,10 +6986,877 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunning
 
 }
 
-// method id "videointelligence.operations.list":
+// method id "videointelligence.operations.projects.locations.operations.cancel":
 
-type OperationsListCall struct {
+type OperationsProjectsLocationsOperationsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+//  The server
+// makes a best effort to cancel the operation, but success is
+// not
+// guaranteed.  If the server doesn't support this method, it
+// returns
+// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
+// use
+// Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether
+// the
+// operation completed despite cancellation. On successful
+// cancellation,
+// the operation is not deleted; instead, it becomes an operation
+// with
+// an Operation.error value with a google.rpc.Status.code of
+// 1,
+// corresponding to `Code.CANCELLED`.
+func (r *OperationsProjectsLocationsOperationsService) Cancel(name string) *OperationsProjectsLocationsOperationsCancelCall {
+	c := &OperationsProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *OperationsProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *OperationsProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/operations/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.operations.projects.locations.operations.cancel" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OperationsProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1/operations/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "videointelligence.operations.projects.locations.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/operations/{+name}:cancel",
+	//   "response": {
+	//     "$ref": "GoogleProtobuf_Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.operations.projects.locations.operations.delete":
+
+type OperationsProjectsLocationsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that
+// the client is
+// no longer interested in the operation result. It does not cancel
+// the
+// operation. If the server doesn't support this method, it
+// returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+func (r *OperationsProjectsLocationsOperationsService) Delete(name string) *OperationsProjectsLocationsOperationsDeleteCall {
+	c := &OperationsProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsProjectsLocationsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *OperationsProjectsLocationsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsProjectsLocationsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/operations/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.operations.projects.locations.operations.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OperationsProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "flatPath": "v1/operations/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "videointelligence.operations.projects.locations.operations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/operations/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobuf_Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.operations.projects.locations.operations.get":
+
+type OperationsProjectsLocationsOperationsGetCall struct {
 	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation.  Clients can
+// use this
+// method to poll the operation result at intervals as recommended by
+// the API
+// service.
+func (r *OperationsProjectsLocationsOperationsService) Get(name string) *OperationsProjectsLocationsOperationsGetCall {
+	c := &OperationsProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OperationsProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *OperationsProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OperationsProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *OperationsProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OperationsProjectsLocationsOperationsGetCall) Context(ctx context.Context) *OperationsProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OperationsProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OperationsProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/operations/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.operations.projects.locations.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OperationsProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "flatPath": "v1/operations/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "videointelligence.operations.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/operations/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunning_Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.projects.locations.operations.cancel":
+
+type ProjectsLocationsOperationsCancelCall struct {
+	s                                       *Service
+	name                                    string
+	googlelongrunningCanceloperationrequest *GoogleLongrunningCancelOperationRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation.
+//  The server
+// makes a best effort to cancel the operation, but success is
+// not
+// guaranteed.  If the server doesn't support this method, it
+// returns
+// `google.rpc.Code.UNIMPLEMENTED`.  Clients can
+// use
+// Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether
+// the
+// operation completed despite cancellation. On successful
+// cancellation,
+// the operation is not deleted; instead, it becomes an operation
+// with
+// an Operation.error value with a google.rpc.Status.code of
+// 1,
+// corresponding to `Code.CANCELLED`.
+func (r *ProjectsLocationsOperationsService) Cancel(name string, googlelongrunningCanceloperationrequest *GoogleLongrunningCancelOperationRequest) *ProjectsLocationsOperationsCancelCall {
+	c := &ProjectsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlelongrunningCanceloperationrequest = googlelongrunningCanceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlelongrunningCanceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.projects.locations.operations.cancel" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts asynchronous cancellation on a long-running operation.  The server\nmakes a best effort to cancel the operation, but success is not\nguaranteed.  If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.  Clients can use\nOperations.GetOperation or\nother methods to check whether the cancellation succeeded or whether the\noperation completed despite cancellation. On successful cancellation,\nthe operation is not deleted; instead, it becomes an operation with\nan Operation.error value with a google.rpc.Status.code of 1,\ncorresponding to `Code.CANCELLED`.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "videointelligence.projects.locations.operations.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be cancelled.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "GoogleLongrunning_CancelOperationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleProtobuf_Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.projects.locations.operations.delete":
+
+type ProjectsLocationsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that
+// the client is
+// no longer interested in the operation result. It does not cancel
+// the
+// operation. If the server doesn't support this method, it
+// returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
+	c := &ProjectsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.projects.locations.operations.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a long-running operation. This method indicates that the client is\nno longer interested in the operation result. It does not cancel the\noperation. If the server doesn't support this method, it returns\n`google.rpc.Code.UNIMPLEMENTED`.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "videointelligence.projects.locations.operations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource to be deleted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobuf_Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.projects.locations.operations.get":
+
+type ProjectsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation.  Clients can
+// use this
+// method to poll the operation result at intervals as recommended by
+// the API
+// service.
+func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
+	c := &ProjectsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "videointelligence.projects.locations.operations.get" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, &googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		}
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, err
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the latest state of a long-running operation.  Clients can use this\nmethod to poll the operation result at intervals as recommended by the API\nservice.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
+	//   "httpMethod": "GET",
+	//   "id": "videointelligence.projects.locations.operations.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the operation resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunning_Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "videointelligence.projects.locations.operations.list":
+
+type ProjectsLocationsOperationsListCall struct {
+	s            *Service
+	name         string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -6678,35 +7880,29 @@ type OperationsListCall struct {
 // collection id, however overriding users must ensure the name
 // binding
 // is the parent resource, without the operations collection id.
-func (r *OperationsService) List() *OperationsListCall {
-	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
+	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
 	return c
 }
 
 // Filter sets the optional parameter "filter": The standard list
 // filter.
-func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// Name sets the optional parameter "name": The name of the operation's
-// parent resource.
-func (c *OperationsListCall) Name(name string) *OperationsListCall {
-	c.urlParams_.Set("name", name)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The standard list
 // page size.
-func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": The standard list
 // page token.
-func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
@@ -6714,7 +7910,7 @@ func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
-func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -6724,7 +7920,7 @@ func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
 // getting updates only after the object has changed since the last
 // request. Use googleapi.IsNotModified to check whether the response
 // error from Do is the result of In-None-Match.
-func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
@@ -6732,21 +7928,21 @@ func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
 // Context sets the context to be used in this call's Do method. Any
 // pending HTTP request will be aborted if the provided context is
 // canceled.
-func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
+func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns an http.Header that can be modified by the caller to
 // add HTTP headers to the request.
-func (c *OperationsListCall) Header() http.Header {
+func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := make(http.Header)
 	for k, v := range c.header_ {
 		reqHeaders[k] = v
@@ -6758,17 +7954,20 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/operations")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/operations")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
 		return nil, err
 	}
 	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "videointelligence.operations.list" call.
+// Do executes the "videointelligence.projects.locations.operations.list" call.
 // Exactly one of *GoogleLongrunningListOperationsResponse or error will
 // be non-nil. Any non-2xx status code is an error. Response headers are
 // in either
@@ -6776,7 +7975,7 @@ func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
 // a response was returned at all) in error.(*googleapi.Error).Header.
 // Use googleapi.IsNotModified to check whether the returned error was
 // because http.StatusNotModified was returned.
-func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
+func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -6808,10 +8007,12 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	return ret, nil
 	// {
 	//   "description": "Lists operations that match the specified filter in the request. If the\nserver doesn't support this method, it returns `UNIMPLEMENTED`.\n\nNOTE: the `name` binding allows API services to override the binding\nto use different resource name schemes, such as `users/*/operations`. To\noverride the binding, API services can add a binding such as\n`\"/v1/{name=users/*}/operations\"` to their service configuration.\nFor backwards compatibility, the default name includes the operations\ncollection id, however overriding users must ensure the name binding\nis the parent resource, without the operations collection id.",
-	//   "flatPath": "v1/operations",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/operations",
 	//   "httpMethod": "GET",
-	//   "id": "videointelligence.operations.list",
-	//   "parameterOrder": [],
+	//   "id": "videointelligence.projects.locations.operations.list",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
 	//   "parameters": {
 	//     "filter": {
 	//       "description": "The standard list filter.",
@@ -6820,7 +8021,9 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//     },
 	//     "name": {
 	//       "description": "The name of the operation's parent resource.",
-	//       "location": "query",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
@@ -6835,7 +8038,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "v1/operations",
+	//   "path": "v1/{+name}/operations",
 	//   "response": {
 	//     "$ref": "GoogleLongrunning_ListOperationsResponse"
 	//   },
@@ -6849,7 +8052,7 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunnin
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *OperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
+func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*GoogleLongrunningListOperationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

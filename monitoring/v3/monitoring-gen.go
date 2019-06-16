@@ -2845,7 +2845,7 @@ func (s *MonitoredResource) MarshalJSON() ([]byte, error) {
 // the labels "instance_id" and "zone" to identify particular VM
 // instances.Different APIs can support different monitored resource
 // types. APIs generally provide a list method that returns the
-// monitored resource descriptors used by the API.Next ID: 10
+// monitored resource descriptors used by the API.
 type MonitoredResourceDescriptor struct {
 	// Description: Optional. A detailed description of the monitored
 	// resource type that might be used in documentation.

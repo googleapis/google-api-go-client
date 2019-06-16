@@ -109,6 +109,67 @@
   "resources": {
     "projects": {
       "methods": {
+        "agent": {
+          "description": "Creates/updates the specified agent.",
+          "flatPath": "v2beta1/projects/{projectsId}/agent",
+          "httpMethod": "POST",
+          "id": "dialogflow.projects.agent",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. The project of this agent.\nFormat: `projects/\u003cProject ID\u003e`.",
+              "location": "path",
+              "pattern": "^projects/[^/]+$",
+              "required": true,
+              "type": "string"
+            },
+            "updateMask": {
+              "description": "Optional. The mask to control which fields get updated.",
+              "format": "google-fieldmask",
+              "location": "query",
+              "type": "string"
+            }
+          },
+          "path": "v2beta1/{+parent}/agent",
+          "request": {
+            "$ref": "GoogleCloudDialogflowV2beta1Agent"
+          },
+          "response": {
+            "$ref": "GoogleCloudDialogflowV2beta1Agent"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/dialogflow"
+          ]
+        },
+        "deleteAgent": {
+          "description": "Deletes the specified agent.",
+          "flatPath": "v2beta1/projects/{projectsId}/agent",
+          "httpMethod": "DELETE",
+          "id": "dialogflow.projects.deleteAgent",
+          "parameterOrder": [
+            "parent"
+          ],
+          "parameters": {
+            "parent": {
+              "description": "Required. The project that the agent to delete is associated with.\nFormat: `projects/\u003cProject ID\u003e`.",
+              "location": "path",
+              "pattern": "^projects/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v2beta1/{+parent}/agent",
+          "response": {
+            "$ref": "GoogleProtobufEmpty"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/dialogflow"
+          ]
+        },
         "getAgent": {
           "description": "Retrieves the specified agent.",
           "flatPath": "v2beta1/projects/{projectsId}/agent",
@@ -2386,7 +2447,7 @@
       }
     }
   },
-  "revision": "20190601",
+  "revision": "20190610",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowV2BatchUpdateEntityTypesResponse": {
@@ -3403,6 +3464,22 @@
       "description": "Represents a conversational agent.",
       "id": "GoogleCloudDialogflowV2beta1Agent",
       "properties": {
+        "apiVersion": {
+          "description": "Optional. API version displayed in Dialogflow console. If not specified,\nV2 API is assumed. Clients are free to query different service endpoints\nfor different API versions. However, bots connectors and webhook calls will\nfollow the specified API version.",
+          "enum": [
+            "API_VERSION_UNSPECIFIED",
+            "API_VERSION_V1",
+            "API_VERSION_V2",
+            "API_VERSION_V2_BETA_1"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "Legacy V1 API.",
+            "V2 API.",
+            "V2beta1 API."
+          ],
+          "type": "string"
+        },
         "avatarUri": {
           "description": "Optional. The URI of the agent's avatar.\nAvatars are used throughout the Dialogflow console and in the self-hosted\n[Web\nDemo](https://cloud.google.com/dialogflow-enterprise/docs/integrations/web-demo)\nintegration.",
           "type": "string"
@@ -3452,6 +3529,22 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "tier": {
+          "description": "Optional. The agent tier. If not specified, TIER_STANDARD is assumed.",
+          "enum": [
+            "TIER_UNSPECIFIED",
+            "TIER_STANDARD",
+            "TIER_ENTERPRISE",
+            "TIER_ENTERPRISE_PLUS"
+          ],
+          "enumDescriptions": [
+            "Not specified. This value should never be used.",
+            "Standard tier.",
+            "Enterprise tier (Essentials).",
+            "Enterprise tier (Plus)."
+          ],
+          "type": "string"
         },
         "timeZone": {
           "description": "Required. The time zone of this agent from the\n[time zone database](https://www.iana.org/time-zones), e.g.,\nAmerica/New_York, Europe/Paris.",
@@ -3701,7 +3794,7 @@
         },
         "outputAudioConfig": {
           "$ref": "GoogleCloudDialogflowV2beta1OutputAudioConfig",
-          "description": "Instructs the speech synthesizer how to generate the output audio. This\nfield is populated from the agent-level speech synthesizer configuration,\nif enabled."
+          "description": "The config used by the speech synthesizer to generate the output audio."
         },
         "queryResult": {
           "$ref": "GoogleCloudDialogflowV2beta1QueryResult",

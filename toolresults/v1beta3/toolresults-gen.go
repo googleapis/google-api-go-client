@@ -2619,6 +2619,7 @@ type TestCase struct {
 	// Possible values:
 	//   "error"
 	//   "failed"
+	//   "flaky"
 	//   "passed"
 	//   "skipped"
 	Status string `json:"status,omitempty"`

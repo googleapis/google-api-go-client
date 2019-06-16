@@ -224,7 +224,9 @@ type BuildBazelRemoteExecutionV2Action struct {
 	// ContentAddressableStorage.
 	CommandDigest *BuildBazelRemoteExecutionV2Digest `json:"commandDigest,omitempty"`
 
-	// DoNotCache: If true, then the `Action`'s result cannot be cached.
+	// DoNotCache: If true, then the `Action`'s result cannot be cached, and
+	// in-flight
+	// requests for the same `Action` may not be merged.
 	DoNotCache bool `json:"doNotCache,omitempty"`
 
 	// InputRootDigest: The digest of the root
@@ -397,6 +399,9 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	//   }
 	// }
 	// ```
+	// If an output of the same name was found, but was not a directory,
+	// the
+	// server will return a FAILED_PRECONDITION.
 	OutputDirectories []*BuildBazelRemoteExecutionV2OutputDirectory `json:"outputDirectories,omitempty"`
 
 	// OutputDirectorySymlinks: The output directories of the action that
@@ -409,15 +414,18 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// SymlinkAbsolutePathStrategy.ALLOWED.
 	// For each output directory requested in the `output_directories` field
 	// of
-	// the Action, if the directory file existed after
-	// the action completed, a single entry will be present either in this
-	// field,
-	// or in the `output_directories` field, if the directory was not a
-	// symbolic link.
-	//
-	// If the action does not produce the requested output, or produces
+	// the Action, if the directory existed after the action completed,
 	// a
-	// file where a directory is expected or vice versa, then that
+	// single entry will be present either in this field, or in
+	// the
+	// `output_directories` field, if the directory was not a symbolic
+	// link.
+	//
+	// If an output of the same name was found, but was a symbolic link to a
+	// file
+	// instead of a directory, the server will return a
+	// FAILED_PRECONDITION.
+	// If the action does not produce the requested output, then that
 	// output
 	// will be omitted from the list. The server is free to arrange the
 	// output
@@ -440,9 +448,11 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// or in the `output_files` field, if the file was not a symbolic
 	// link.
 	//
-	// If the action does not produce the requested output, or produces
-	// a
-	// directory where a regular file is expected or vice versa, then that
+	// If an output symbolic link of the same name was found, but its
+	// target
+	// type was not a regular file, the server will return a
+	// FAILED_PRECONDITION.
+	// If the action does not produce the requested output, then that
 	// output
 	// will be omitted from the list. The server is free to arrange the
 	// output
@@ -456,13 +466,14 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// after
 	// the action completed, a single entry will be present either in this
 	// field,
-	// or in the output_file_symlinks field, if the file was a symbolic link
+	// or the `output_file_symlinks` field if the file was a symbolic link
 	// to
 	// another file.
 	//
-	// If the action does not produce the requested output, or produces
-	// a
-	// directory where a regular file is expected or vice versa, then that
+	// If an output of the same name was found, but was a directory
+	// rather
+	// than a regular file, the server will return a FAILED_PRECONDITION.
+	// If the action does not produce the requested output, then that
 	// output
 	// will be omitted from the list. The server is free to arrange the
 	// output
@@ -474,40 +485,32 @@ type BuildBazelRemoteExecutionV2ActionResult struct {
 	// the action, which
 	// can be retrieved from the
 	// ContentAddressableStorage.
-	// See `stderr_raw` for when this will be set.
 	StderrDigest *BuildBazelRemoteExecutionV2Digest `json:"stderrDigest,omitempty"`
 
-	// StderrRaw: The standard error buffer of the action. The server will
-	// determine, based
-	// on the size of the buffer, whether to return it in raw form or to
-	// return
-	// a digest in `stderr_digest` that points to the buffer. If neither is
-	// set,
-	// then the buffer is empty. The client SHOULD NOT assume it will get
-	// one of
-	// the raw buffer or a digest on any given request and should be
-	// prepared to
-	// handle either.
+	// StderrRaw: The standard error buffer of the action. The server SHOULD
+	// NOT inline
+	// stderr unless requested by the client in
+	// the
+	// GetActionResultRequest
+	// message. The server MAY omit inlining, even if requested, and MUST do
+	// so if inlining
+	// would cause the response to exceed message size limits.
 	StderrRaw string `json:"stderrRaw,omitempty"`
 
 	// StdoutDigest: The digest for a blob containing the standard output of
 	// the action, which
 	// can be retrieved from the
 	// ContentAddressableStorage.
-	// See `stdout_raw` for when this will be set.
 	StdoutDigest *BuildBazelRemoteExecutionV2Digest `json:"stdoutDigest,omitempty"`
 
-	// StdoutRaw: The standard output buffer of the action. The server will
-	// determine, based
-	// on the size of the buffer, whether to return it in raw form or to
-	// return
-	// a digest in `stdout_digest` that points to the buffer. If neither is
-	// set,
-	// then the buffer is empty. The client SHOULD NOT assume it will get
-	// one of
-	// the raw buffer or a digest on any given request and should be
-	// prepared to
-	// handle either.
+	// StdoutRaw: The standard output buffer of the action. The server
+	// SHOULD NOT inline
+	// stdout unless requested by the client in
+	// the
+	// GetActionResultRequest
+	// message. The server MAY omit inlining, even if requested, and MUST do
+	// so if inlining
+	// would cause the response to exceed message size limits.
 	StdoutRaw string `json:"stdoutRaw,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -603,7 +606,7 @@ func (s *BuildBazelRemoteExecutionV2BatchReadBlobsResponse) MarshalJSON() ([]byt
 }
 
 // BuildBazelRemoteExecutionV2BatchReadBlobsResponseResponse: A response
-// corresponding to a single blob that the client tried to upload.
+// corresponding to a single blob that the client tried to download.
 type BuildBazelRemoteExecutionV2BatchReadBlobsResponseResponse struct {
 	// Data: The raw binary data.
 	Data string `json:"data,omitempty"`
@@ -786,6 +789,10 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	//   "SHA256" - The Sha-256 digest function.
 	//   "SHA1" - The Sha-1 digest function.
 	//   "MD5" - The MD5 digest function.
+	//   "VSO" - The Microsoft "VSO-Hash" paged SHA256 digest function.
+	// See
+	// https://github.com/microsoft/BuildXL/blob/master/Documentation/Specs/PagedHash.md
+	// .
 	DigestFunction []string `json:"digestFunction,omitempty"`
 
 	// MaxBatchTotalSizeBytes: Maximum total size of blobs to be
@@ -799,7 +806,7 @@ type BuildBazelRemoteExecutionV2CacheCapabilities struct {
 	// supported.
 	//
 	// Possible values:
-	//   "UNKNOWN"
+	//   "UNKNOWN" - Invalid value.
 	//   "DISALLOWED" - Server will return an `INVALID_ARGUMENT` on input
 	// symlinks with absolute
 	// targets.
@@ -903,7 +910,9 @@ type BuildBazelRemoteExecutionV2Command struct {
 	//
 	// An output directory cannot be duplicated or have the same path as any
 	// of
-	// the listed output files.
+	// the listed output files. An output directory is allowed to be a
+	// parent of
+	// another output directory.
 	//
 	// Directories leading up to the output directories (but not the
 	// output
@@ -954,6 +963,8 @@ type BuildBazelRemoteExecutionV2Command struct {
 	// the client SHOULD ensure that running the action on any such worker
 	// will
 	// have the same result.
+	// A detailed lexicon for this can be found in the accompanying
+	// platform.md.
 	Platform *BuildBazelRemoteExecutionV2Platform `json:"platform,omitempty"`
 
 	// WorkingDirectory: The working directory, relative to the input root,
@@ -1127,6 +1138,14 @@ func (s *BuildBazelRemoteExecutionV2Digest) MarshalJSON() ([]byte, error) {
 //   Multiple levels of directory hierarchy may not be collapsed.
 // * Each child in the directory must have a unique path segment (file
 // name).
+//   Note that while the API itself is case-sensitive, the environment
+// where
+//   the Action is executed may or may not be case-sensitive. That is,
+// it is
+//   legal to call the API with a Directory that has both "Foo" and
+// "foo" as
+//   children, but the Action may be rejected by the remote system upon
+//   execution.
 // * The files, directories and symlinks in the directory must each be
 // sorted
 //   in lexicographical order by path. The path strings must be sorted
@@ -1260,8 +1279,10 @@ type BuildBazelRemoteExecutionV2ExecuteOperationMetadata struct {
 	// being executed.
 	ActionDigest *BuildBazelRemoteExecutionV2Digest `json:"actionDigest,omitempty"`
 
+	// Stage: The current stage of execution.
+	//
 	// Possible values:
-	//   "UNKNOWN"
+	//   "UNKNOWN" - Invalid value.
 	//   "CACHE_CHECK" - Checking the result against the cache.
 	//   "QUEUED" - Currently idle, awaiting a free machine to execute.
 	//   "EXECUTING" - Currently being executed by a worker.
@@ -1322,11 +1343,28 @@ type BuildBazelRemoteExecutionV2ExecuteRequest struct {
 	// blobs.
 	ResultsCachePolicy *BuildBazelRemoteExecutionV2ResultsCachePolicy `json:"resultsCachePolicy,omitempty"`
 
-	// SkipCacheLookup: If true, the action will be executed anew even if
-	// its result was already
-	// present in the cache. If false, the result may be served from
-	// the
-	// ActionCache.
+	// SkipCacheLookup: If true, the action will be executed even if its
+	// result is already
+	// present in the ActionCache.
+	// The execution is still allowed to be merged with other in-flight
+	// executions
+	// of the same action, however - semantically, the service MUST only
+	// guarantee
+	// that the results of an execution with this field set were not
+	// visible
+	// before the corresponding execution request was sent.
+	// Note that actions from execution requests setting this field set are
+	// still
+	// eligible to be entered into the action cache upon completion, and
+	// services
+	// SHOULD overwrite any existing entries that may exist. This
+	// allows
+	// skip_cache_lookup requests to be used as a mechanism for replacing
+	// action
+	// cache entries that reference outputs no longer available or that
+	// are
+	// poisoned in any way.
+	// If false, the result may be served from the action cache.
 	SkipCacheLookup bool `json:"skipCacheLookup,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ActionDigest") to
@@ -1506,6 +1544,10 @@ type BuildBazelRemoteExecutionV2ExecutionCapabilities struct {
 	//   "SHA256" - The Sha-256 digest function.
 	//   "SHA1" - The Sha-1 digest function.
 	//   "MD5" - The MD5 digest function.
+	//   "VSO" - The Microsoft "VSO-Hash" paged SHA256 digest function.
+	// See
+	// https://github.com/microsoft/BuildXL/blob/master/Documentation/Specs/PagedHash.md
+	// .
 	DigestFunction string `json:"digestFunction,omitempty"`
 
 	// ExecEnabled: Whether remote execution is enabled for the particular
@@ -1814,9 +1856,17 @@ func (s *BuildBazelRemoteExecutionV2OutputDirectory) MarshalJSON() ([]byte, erro
 // output in an `ActionResult`. It allows a full file path rather
 // than
 // only a name.
-//
-// `OutputFile` is binary-compatible with `FileNode`.
 type BuildBazelRemoteExecutionV2OutputFile struct {
+	// Contents: The contents of the file if inlining was requested. The
+	// server SHOULD NOT inline
+	// file contents unless requested by the client in
+	// the
+	// GetActionResultRequest
+	// message. The server MAY omit inlining, even if requested, and MUST do
+	// so if inlining
+	// would cause the response to exceed message size limits.
+	Contents string `json:"contents,omitempty"`
+
 	// Digest: The digest of the file's content.
 	Digest *BuildBazelRemoteExecutionV2Digest `json:"digest,omitempty"`
 
@@ -1830,7 +1880,7 @@ type BuildBazelRemoteExecutionV2OutputFile struct {
 	// relative path, it MUST NOT begin with a leading forward slash.
 	Path string `json:"path,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Digest") to
+	// ForceSendFields is a list of field names (e.g. "Contents") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -1838,8 +1888,8 @@ type BuildBazelRemoteExecutionV2OutputFile struct {
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Digest") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Contents") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -2068,7 +2118,18 @@ func (s *BuildBazelRemoteExecutionV2PriorityCapabilitiesPriorityRange) MarshalJS
 // canonical proto serialization:
 //
 // * name: `build.bazel.remote.execution.v2.requestmetadata-bin`
-// * contents: the base64 encoded binary `RequestMetadata` message.
+// * contents: the base64 encoded binary `RequestMetadata`
+// message.
+// Note: the gRPC library serializes binary headers encoded in base 64
+// by
+// default
+// (https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md#reques
+// ts).
+// Therefore, if the gRPC library is used to pass/retrieve
+// this
+// metadata, the user may ignore the base64 encoding and assume it is
+// simply
+// serialized as a binary message.
 type BuildBazelRemoteExecutionV2RequestMetadata struct {
 	// ActionId: An identifier that ties multiple requests to the same
 	// action.
@@ -2873,11 +2934,39 @@ func (s *GoogleDevtoolsRemotebuildexecutionAdminV1alphaListInstancesResponse) Ma
 }
 
 type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct {
+	// Filter: Optional. A filter to constrain the pools returned. Filters
+	// have the form:
+	//
+	// <field> <operator> <value> [[AND|OR] <field> <operator>
+	// <value>]...
+	//
+	// <field> is the path for a field or map key in the Pool proto
+	// message.
+	// e.g. "configuration.disk_size_gb" or
+	// "configuration.labels.key".
+	// <operator> can be one of "<", "<=", ">=", ">", "=", "!=", ":".
+	// ":" is a HAS operation for strings and repeated primitive
+	// fields.
+	// <value> is the value to test, case-insensitive for strings. "*"
+	// stands for
+	// any value and can be used to test for key presence.
+	// Parenthesis determine AND/OR precedence. In space separated
+	// restrictions,
+	// AND is implicit, e.g. "a = b x = y" is equivalent to "a = b AND x =
+	// y".
+	//
+	// Example filter:
+	// configuration.labels.key1 = * AND (state = RUNNING OR state =
+	// UPDATING)
+	//
+	// This field is currently ignored in all requests.
+	Filter string `json:"filter,omitempty"`
+
 	// Parent: Resource name of the instance.
 	// Format: `projects/[PROJECT_ID]/instances/[INSTANCE_ID]`.
 	Parent string `json:"parent,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Parent") to
+	// ForceSendFields is a list of field names (e.g. "Filter") to
 	// unconditionally include in API requests. By default, fields with
 	// empty values are omitted from API requests. However, any non-pointer,
 	// non-interface field appearing in ForceSendFields will be sent to the
@@ -2885,7 +2974,7 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaListWorkerPoolsRequest struct
 	// used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// NullFields is a list of field names (e.g. "Filter") to include in API
 	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2987,6 +3076,17 @@ type GoogleDevtoolsRemotebuildexecutionAdminV1alphaWorkerConfig struct {
 	// ction).
 	// Currently only `pd-standard` is supported.
 	DiskType string `json:"diskType,omitempty"`
+
+	// Labels: Labels associated with the workers.
+	// Label keys and values can be no longer than 63 characters, can only
+	// contain
+	// lowercase letters, numeric characters, underscores and
+	// dashes.
+	// International letters are permitted. Keys must start with a letter
+	// but
+	// values are optional.
+	// This field is currently ignored in all requests.
+	Labels map[string]string `json:"labels,omitempty"`
 
 	// MachineType: Required. Machine type of the worker, such as
 	// `n1-standard-2`.
@@ -4849,6 +4949,15 @@ type ActionResultsGetCall struct {
 
 // Get: Retrieve a cached execution result.
 //
+// Implementations SHOULD ensure that any blobs referenced from
+// the
+// ContentAddressableStorage
+// are available at the time of returning the
+// ActionResult and will be
+// for some period of time afterwards. The TTLs of the referenced blobs
+// SHOULD be increased
+// if necessary and applicable.
+//
 // Errors:
 //
 // * `NOT_FOUND`: The requested `ActionResult` is not in the cache.
@@ -4857,6 +4966,33 @@ func (r *ActionResultsService) Get(instanceName string, hash string, sizeBytes i
 	c.instanceName = instanceName
 	c.hash = hash
 	c.sizeBytes = sizeBytes
+	return c
+}
+
+// InlineOutputFiles sets the optional parameter "inlineOutputFiles": A
+// hint to the server to inline the contents of the listed output
+// files.
+// Each path needs to exactly match one path in `output_files` in
+// the
+// Command message.
+func (c *ActionResultsGetCall) InlineOutputFiles(inlineOutputFiles ...string) *ActionResultsGetCall {
+	c.urlParams_.SetMulti("inlineOutputFiles", append([]string{}, inlineOutputFiles...))
+	return c
+}
+
+// InlineStderr sets the optional parameter "inlineStderr": A hint to
+// the server to request inlining stderr in the
+// ActionResult message.
+func (c *ActionResultsGetCall) InlineStderr(inlineStderr bool) *ActionResultsGetCall {
+	c.urlParams_.Set("inlineStderr", fmt.Sprint(inlineStderr))
+	return c
+}
+
+// InlineStdout sets the optional parameter "inlineStdout": A hint to
+// the server to request inlining stdout in the
+// ActionResult message.
+func (c *ActionResultsGetCall) InlineStdout(inlineStdout bool) *ActionResultsGetCall {
+	c.urlParams_.Set("inlineStdout", fmt.Sprint(inlineStdout))
 	return c
 }
 
@@ -4961,7 +5097,7 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieve a cached execution result.\n\nErrors:\n\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
+	//   "description": "Retrieve a cached execution result.\n\nImplementations SHOULD ensure that any blobs referenced from the\nContentAddressableStorage\nare available at the time of returning the\nActionResult and will be\nfor some period of time afterwards. The TTLs of the referenced blobs SHOULD be increased\nif necessary and applicable.\n\nErrors:\n\n* `NOT_FOUND`: The requested `ActionResult` is not in the cache.",
 	//   "flatPath": "v2/{v2Id}/actionResults/{hash}/{sizeBytes}",
 	//   "httpMethod": "GET",
 	//   "id": "remotebuildexecution.actionResults.get",
@@ -4976,6 +5112,22 @@ func (c *ActionResultsGetCall) Do(opts ...googleapi.CallOption) (*BuildBazelRemo
 	//       "location": "path",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "inlineOutputFiles": {
+	//       "description": "A hint to the server to inline the contents of the listed output files.\nEach path needs to exactly match one path in `output_files` in the\nCommand message.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     },
+	//     "inlineStderr": {
+	//       "description": "A hint to the server to request inlining stderr in the\nActionResult message.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "inlineStdout": {
+	//       "description": "A hint to the server to request inlining stdout in the\nActionResult message.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "instanceName": {
 	//       "description": "The instance of the execution system to operate against. A server may\nsupport multiple instances of the execution system (with their own workers,\nstorage, caches, etc.). The server MAY require use of this field to select\nbetween them in an implementation-defined fashion, otherwise it can be\nomitted.",
@@ -6325,7 +6477,15 @@ type V2GetCapabilitiesCall struct {
 }
 
 // GetCapabilities: GetCapabilities returns the server capabilities
-// configuration.
+// configuration of the
+// remote endpoint.
+// Only the capabilities of the services supported by the endpoint
+// will
+// be returned:
+// * Execution + CAS + Action Cache endpoints should return both
+//   CacheCapabilities and ExecutionCapabilities.
+// * Execution only endpoints should return ExecutionCapabilities.
+// * CAS + Action Cache only endpoints should return CacheCapabilities.
 func (r *V2Service) GetCapabilities(instanceName string) *V2GetCapabilitiesCall {
 	c := &V2GetCapabilitiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.instanceName = instanceName
@@ -6432,7 +6592,7 @@ func (c *V2GetCapabilitiesCall) Do(opts ...googleapi.CallOption) (*BuildBazelRem
 	}
 	return ret, nil
 	// {
-	//   "description": "GetCapabilities returns the server capabilities configuration.",
+	//   "description": "GetCapabilities returns the server capabilities configuration of the\nremote endpoint.\nOnly the capabilities of the services supported by the endpoint will\nbe returned:\n* Execution + CAS + Action Cache endpoints should return both\n  CacheCapabilities and ExecutionCapabilities.\n* Execution only endpoints should return ExecutionCapabilities.\n* CAS + Action Cache only endpoints should return CacheCapabilities.",
 	//   "flatPath": "v2/{v2Id}/capabilities",
 	//   "httpMethod": "GET",
 	//   "id": "remotebuildexecution.getCapabilities",
